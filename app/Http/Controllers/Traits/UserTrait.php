@@ -1,7 +1,10 @@
 <?php
 
+namespace App\Http\Controllers\Traits;
+
 use App\Http\Controllers\Traits\RestActions;
 use App\User;
+use Illuminate\Support\Facades\Validator;
 
 trait UserTrait
 {
@@ -9,6 +12,26 @@ trait UserTrait
 
     public function saveUser($request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'parent_id' => 'nullable|exists:users,id',
+                'name' => 'required|strting',
+                'last_name' => 'nullable|strting',
+                'document_type' => 'nullable|exists:parameter_values,id',
+                'document_number' => 'nullable|strting',
+                'email' => 'required|email',
+                'phone' => 'nullable|strting',
+                'password' => 'required|string|confirmed',
+                'role' => 'nullable|exists:roles,id',
+                'state' => 'required|numeric',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+        }
+
         try {
             $user = User::create([
                 'parent_id' => $request->parent_id,
