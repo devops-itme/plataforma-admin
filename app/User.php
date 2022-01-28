@@ -25,4 +25,14 @@ class User extends Model implements AuthenticatableContract
         'role',
         'state'
     ];
+
+    public function getCustomer()
+    {
+        return $this->hasOne(Customer::class, 'id');
+    }
+
+    public function getDocumentType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'document_type');
+    }
 }
