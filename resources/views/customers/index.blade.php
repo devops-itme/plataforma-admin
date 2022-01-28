@@ -173,10 +173,10 @@
                         <td>
                             <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                <a href="{{route('customer.show')}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                     <i class="far fa-folder-open"></i>
                                 </a>
-                                <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                <a href="{{route('customer.edit')}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
