@@ -191,9 +191,12 @@
                                         <a href="{{route('clientes.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
+                                        <form action="{{route('clientes.destroy', $customer->id)}}" method="{{'post'}}">
+                                            @csrf @method('DELETE')
+                                            <button class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
