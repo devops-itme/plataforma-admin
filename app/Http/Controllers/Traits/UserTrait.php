@@ -24,7 +24,7 @@ trait UserTrait
                 'document_number' => ['nullable', 'string', Rule::unique('users', 'document_number')->whereNull('deleted_at')->where('id', '<>', $id)],
                 'email' => ['required', 'email', Rule::unique('users', 'email')->whereNull('deleted_at')->where('id', '<>', $id)],
                 'phone' => ['nullable', 'string', Rule::unique('users', 'phone')->whereNull('deleted_at')->where('id', '<>', $id)],
-                'password' => ['string', $action == 'create' && 'confirmed', Rule::requiredIf($action == 'create')],
+                'password' => ['nullable', 'string', $action == 'create' && 'confirmed', Rule::requiredIf($action == 'create')],
                 'role' => 'nullable|numeric|exists:roles,id',
                 'state' => 'nullable|numeric',
             ]
