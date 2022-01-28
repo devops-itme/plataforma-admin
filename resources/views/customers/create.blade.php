@@ -3,13 +3,13 @@
 
 {{-- Content --}}
 @section('content')
-
 <div class="card card-custom">
     <div class="card-header">
         <h3 class="card-title">
             Crear cliente
         </h3>
     </div>
+    @include('layouts.alerts')
     <!--begin::Form-->
     <form action="{{route('clientes.store')}}" method="post">
         @csrf
@@ -89,7 +89,7 @@
             </div>
             <div class="form-group col-md-3 my-3">
                 <label for="payment_pediod">Periodo de pago <span class="text-danger">*</span></label>
-                <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_pediod" name="payment_pediod">
+                <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_period" name="payment_period">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -106,7 +106,7 @@
                         SI
                     </label>
                     <label class="radio radio-rounded">
-                        <input type="radio" name="credit" value="2" />
+                        <input type="radio" name="credit" value="0" />
                         <span></span>
                         NO
                     </label>
@@ -117,12 +117,12 @@
                 <label>Enviar saldo por Email</label>
                 <div class="radio-inline">
                     <label class="radio radio-rounded">
-                        <input type="radio" checked="checked" name="send_ballances" value="1" />
+                        <input type="radio" checked="checked" name="receive_emails" value="1" />
                         <span></span>
                         SI
                     </label>
                     <label class="radio radio-rounded">
-                        <input type="radio" name="send_ballances" value="2" />
+                        <input type="radio" name="receive_emails" value="0" />
                         <span></span>
                         NO
                     </label>
@@ -132,22 +132,38 @@
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Valor FullFill <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="number" name="fullfill_value" />
+                    type="number" name="fullfill" />
             </div>
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Valor Handling <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="number" name="handling_value" />
+                    type="number" name="handling" />
             </div>
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Valor COD <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="number" name="cod_value" />
+                    type="number" name="COD_value" />
+            </div>
+            <div class="form-group col-md-4 mb-0 py-4">
+                <label>Impuesto <span class="text-danger">*</span></label>
+                <div class="radio-inline">
+                    <label class="radio radio-rounded">
+                        <input type="radio" name="taxes" value="1" />
+                        <span></span>
+                        SI
+                    </label>
+                    <label class="radio radio-rounded">
+                        <input type="radio" checked="checked" name="taxes" value="0" />
+                        <span></span>
+                        NO
+                    </label>
+                </div>
+                <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-6">
                 <label>Nombre de empresa <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="text" name="bussines_name" />
+                    type="text" name="business_name" />
             </div>
             <div class="form-group py-3 m-0 col-md-6">
                 <label>Nombre comercial <span class="text-danger">*</span></label>

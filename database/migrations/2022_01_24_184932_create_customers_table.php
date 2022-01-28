@@ -23,7 +23,7 @@ class CreateCustomersTable extends Migration
             $table->string('contact')->nullable();
             $table->string('payment_period')->nullable();
             $table->string('credit')->nullable();
-            $table->integer('taxes')->nullable();
+            $table->integer('taxes')->nullable()->comment("{0:False;1:True}");
             $table->integer('receive_emails')->nullable();
             $table->integer('fullfill')->nullable();
             $table->integer('handling')->nullable();
