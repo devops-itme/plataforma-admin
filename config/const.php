@@ -37,5 +37,14 @@ return [
         4 => 'Jueves',
         5 => 'Viernes',
         6 => 'Sabado',
+    ],
+    'parameters' => [
+        'dodcument_type' => [
+            'C.C',
+            'C.E',
+            'P.P',
+            'RUC'
+        ]
     ]
+
 ];
