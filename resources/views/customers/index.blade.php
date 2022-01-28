@@ -160,43 +160,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($customers as $customer)
-                        <tr>
-                            <th scope="row">{{$customer->getUser->id}}</th>
-                            <td>{{$customer->getUser->name." ".$customer->getUser->last_name}}</td>
-                            <td>{{$customer->getUser->document_number}}</td>
-                            <td>{{$customer->getUser->email}}</td>
-                            <td>{{$customer->getUser->phone}}</td>
-                            <td>{{$customer->zone_id}}</td>
-                            @if($customer->state == 1)
+                    @if(isset($customers))
+                        @foreach($customers as $customer)
+                            <tr>
+                                <th scope="row">{{$customer->getUser->id}}</th>
+                                <td>{{$customer->getUser->name." ".$customer->getUser->last_name}}</td>
+                                <td>{{$customer->getUser->document_number}}</td>
+                                <td>{{$customer->getUser->email}}</td>
+                                <td>{{$customer->getUser->phone}}</td>
+                                <td>{{$customer->zone_id}}</td>
+                                @if($customer->state == 1)
+                                    <td>
+                                        <span class="label label-inline label-light-success font-weight-bold">
+                                            Activo
+                                        </span>
+                                    </td>
+                                @else
+                                    <td>
+                                        <span class="label label-inline label-light-danger font-weight-bold">
+                                            Inactivo
+                                        </span>
+                                    </td>
+                                @endif
                                 <td>
-                                    <span class="label label-inline label-light-success font-weight-bold">
-                                        Activo
-                                    </span>
-                                </td>
-                            @else
-                                <td>
-                                    <span class="label label-inline label-light-danger font-weight-bold">
-                                        Inactivo
-                                    </span>
-                                </td>
-                            @endif
-                            <td>
-                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                                    <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                    <a href="{{route('clientes.show', $customer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                        <i class="far fa-folder-open"></i>
-                                    </a>
-                                    <a href="{{route('clientes.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
-                            </td>
+                                        <a href="{{route('clientes.show', $customer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                            <i class="far fa-folder-open"></i>
+                                        </a>
+                                        <a href="{{route('clientes.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <th colspan="8"><center>¡No hay clientes registrados!</center></td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
 
