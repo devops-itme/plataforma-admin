@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MessengetTrait;
+use App\Http\Controllers\Traits\MessengerTrait;
 use Illuminate\Http\Request;
 
 class MessengerController extends Controller
 {
-    use MessengetTrait;
+    use MessengerTrait;
     /**
      * Display a listing of the resource.
      *

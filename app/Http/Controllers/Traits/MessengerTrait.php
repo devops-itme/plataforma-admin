@@ -7,9 +7,9 @@ use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
 use App\Messenger;
 use App\ParameterValue;
 use Illuminate\Http\Request;
-use UserTrait;
+use App\Http\Controllers\Traits\UserTrait;
 
-trait MessengetTrait
+trait MessengerTrait
 {
     use TraitsRestActions, UserTrait;
 
