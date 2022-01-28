@@ -20,7 +20,7 @@ class CreateMessengersTable extends Migration
             $table->string('vehicle_plate')->nullable();
             $table->date('admission_date')->nullable();
             $table->double('production_percentage')->nullable();
-            $table->string('contact')->nullable();
+            $table->string('contract')->nullable();
             $table->integer('exclusive')->nullable();
             $table->timestamps();
             $table->softDeletes();

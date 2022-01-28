@@ -58,7 +58,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('customers.show');
     }
 
     /**
@@ -69,7 +69,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('customers.edit');
     }
 
     /**
