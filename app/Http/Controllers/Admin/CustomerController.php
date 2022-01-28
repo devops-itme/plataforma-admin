@@ -10,7 +10,7 @@ use App\Http\Controllers\Traits\CustomerTrait;
 
 class CustomerController extends Controller
 {
-    use CustomerTrait;
+    use CustomerTrait, UserTrait;
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +40,12 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->saveCustomer($request);
+        $response = $this->saveCustomer($request->merge(['role' => 5, 'state' => 1]));
+        if($response['state'] == 200){
+            return redirect()->route('clientes.index')->with('success', 'Cliente registrado exitosamente.');
+        } else {
+            return redirect()->back()->with('danger', $response['error']);
+        }
     }
 
     /**

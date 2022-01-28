@@ -46,9 +46,9 @@ trait UserTrait
                 'state' => $request->state
             ]);
 
-            $this->respond(200, $user, null, 'Usuario creado exitosamente');
-        } catch (Exception $e) {
-            $this->respond(500, [], $e->getMessage() . 'Error al crear usuario');
+            return $this->respond(200, $user, null, 'Usuario creado exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage() . 'Error al crear usuario');
         }
     }
 }
