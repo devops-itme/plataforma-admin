@@ -31,7 +31,7 @@ trait CustomerTrait
         );
 
         if ($validator->fails()) {
-            $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
         try {
             //Crear usuario en la tabla users
