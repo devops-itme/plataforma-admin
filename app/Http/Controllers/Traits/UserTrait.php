@@ -33,7 +33,7 @@ trait UserTrait
 
     public function saveUser($request)
     {
-        $validator = $this->valide($request);
+        $validator = $this->valide($request, 'create');
 
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
