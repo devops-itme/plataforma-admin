@@ -34,6 +34,10 @@
                 <i class="fas fa-users text-muted"></i>
             </a>
 
+            <a href="{{route('messenger.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-toggle="tooltip" title="Mensajeros" data-placement="bottom">
+                <i class="fas fa-people-carry text-muted"></i>
+            </a>
+
             <a href="#" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-toggle="tooltip" title="Usuarios" data-placement="bottom">
                 <i class="fas fa-users-cog text-muted"></i>
             </a>
