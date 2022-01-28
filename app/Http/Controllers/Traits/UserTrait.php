@@ -12,7 +12,7 @@ trait UserTrait
 {
     use RestActions;
 
-    public function valide($request, $action = null)
+    public function valide($request, $action = null, $id = null)
     {
         return Validator::make(
             $request->all(),
@@ -21,10 +21,23 @@ trait UserTrait
                 'name' => 'required|string',
                 'last_name' => 'nullable|string',
                 'document_type' => 'nullable|exists:parameter_values,id',
-                'document_number' => ['nullable', 'string', Rule::unique('users', 'document_number')->whereNull('deleted_at')],
-                'email' => ['required', 'email', Rule::unique('users', 'email')->whereNull('deleted_at')],
-                'phone' => ['nullable', 'string', Rule::unique('users', 'phone')->whereNull('deleted_at')],
-                'password' => ['string', $action == 'create' && 'confirmed', Rule::requiredIf($action == 'create')],
+                'document_number' => [
+                    'nullable', 'string',
+                    Rule::unique('users', 'document_number')->whereNull('deleted_at')->where('id', '<>', $id)
+                ],
+                'email' => [
+                    'required', 'email',
+                    Rule::unique('users', 'email')->whereNull('deleted_at')->where('id', '<>', $id)
+                ],
+                'phone' => [
+                    'nullable', 'string',
+                    Rule::unique('users', 'phone')->whereNull('deleted_at')->where('id', '<>', $id)
+                ],
+                'password' => [
+                    'nullable', 'string',
+                    $action == 'create' && 'confirmed',
+                    Rule::requiredIf($action == 'create')
+                ],
                 'role' => 'nullable|numeric|exists:roles,id',
                 'state' => 'nullable|numeric',
             ]
@@ -33,7 +46,7 @@ trait UserTrait
 
     public function saveUser($request)
     {
-        $validator = $this->valide($request);
+        $validator = $this->valide($request, 'create');
 
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
@@ -88,6 +101,20 @@ trait UserTrait
             return $this->respond(200, $user, null, 'Usuario actualizado exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar usuario');
+        }
+    }
+
+    public function deleteUser($id)
+    {
+        try {
+            $user = User::find($id);
+            if (is_null($user)) {
+                return $this->respond(500, [], 'user not found', 'No se encontro el usuario');
+            }
+            $user->delete();
+            return $this->respond(200, $user, null, 'Usuario eliminado exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar usuario');
         }
     }
 }
