@@ -11,7 +11,7 @@ trait UserTrait
 {
     use RestActions;
 
-    public function valide($request)
+    public function valide($request, $action = null)
     {
         return Validator::make(
             $request->all(),
@@ -23,9 +23,9 @@ trait UserTrait
                 'document_number' => ['nullable', 'string', Rule::unique('users', 'document_number')->whereNull('deleted_at')],
                 'email' => ['required', 'email', Rule::unique('users', 'email')->whereNull('deleted_at')],
                 'phone' => ['nullable', 'string', Rule::unique('users', 'phone')->whereNull('deleted_at')],
-                'password' => 'required|string|confirmed',
+                'password' => ['string', $action == 'create' && 'confirmed', Rule::requiredIf($action == 'create')],
                 'role' => 'nullable|exists:roles,id',
-                'state' => 'required|numeric',
+                'state' => 'nullable|numeric',
             ]
         );
     }
