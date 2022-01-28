@@ -25,7 +25,7 @@ trait UserTrait
                 'email' => ['required', 'email', Rule::unique('users', 'email')->whereNull('deleted_at')],
                 'phone' => ['nullable', 'string', Rule::unique('users', 'phone')->whereNull('deleted_at')],
                 'password' => ['string', $action == 'create' && 'confirmed', Rule::requiredIf($action == 'create')],
-                'role' => 'nullable|numeric|min:2|exists:roles,id',
+                'role' => 'nullable|numeric|exists:roles,id',
                 'state' => 'nullable|numeric',
             ]
         );
@@ -81,7 +81,7 @@ trait UserTrait
                 'email' => $request->email ?? $user->email,
                 'phone' => $request->phone ?? $user->phone,
                 'password' => $request->password ? Hash::make($request->password) : $user->password,
-                'role' => $request->role ?? $user->role,
+                // 'role' => $request->role ?? $user->role,
                 'state' => $request->state ?? $user->state
             ]);
 
