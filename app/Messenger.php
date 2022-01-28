@@ -3,8 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Messenger extends Model
 {
-    //
+    use SoftDeletes;
+
+    protected $table = 'messengers';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'user_id',
+        'vehicle_plate',
+        'admission_date',
+        'production_percentage',
+        'contact',
+        'exclusive'
+    ];
 }
