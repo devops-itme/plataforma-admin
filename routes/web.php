@@ -36,3 +36,6 @@ Route::get('/clientes/editar', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//MESSENGERS
+Route::resource('mensajero', 'Admin\MessengerController');
