@@ -28,7 +28,7 @@
 </head>
 <body class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled subheader-fixed">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -40,7 +40,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -77,21 +76,28 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
 
         <main class="d-flex flex-column flex-root">
             <div class="d-flex flex-row flex-column-fluid page">
+                <div class="@guest d-flex flex-column flex-row-fluid @else d-flex flex-column flex-row-fluid wrapper  @endguest" id="kt_wrapper">
+                    @guest
+                        <div class="d-flex flex-column flex-column-fluid" id="kt_content">
+                            <div>
+                                @yield('content')
+                            </div>
+                        </div>
+                    @else
+                        @include('layouts.header')
 
-                <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
-                    @include('layouts.header')
-
-                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                        @include('layouts.subheader')
-                       <div class="px-5">
-                            @yield('content')
-                       </div>
-                    </div>
-                    @include('layouts.footer')
+                        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                            @include('layouts.subheader')
+                            <div class="px-5">
+                                @yield('content')
+                            </div>
+                        </div>
+                        @include('layouts.footer')
+                    @endguest
                 </div>
             </div>
         </main>
