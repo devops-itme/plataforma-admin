@@ -13,6 +13,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{asset('js/tooltip.js')}}"></script>
 
 
     <!-- Fonts -->
@@ -26,6 +27,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/tooltip.css')}}">
 </head>
 <body class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled subheader-fixed">
     <div id="app">
@@ -79,7 +81,7 @@
             </div>
         </nav> --}}
 
-        <main class="d-flex flex-column flex-root">
+        <main class="d-flex flex-column flex-root" style="height: 100vh;">
             <div class="d-flex flex-row flex-column-fluid page">
                 <div class="@guest d-flex flex-column flex-row-fluid @else d-flex flex-column flex-row-fluid wrapper  @endguest" id="kt_wrapper">
                     @guest
@@ -93,7 +95,7 @@
 
                         <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                             @include('layouts.subheader')
-                            <div class="px-5">
+                            <div class="p-5">
                                 @yield('content')
                             </div>
                         </div>
