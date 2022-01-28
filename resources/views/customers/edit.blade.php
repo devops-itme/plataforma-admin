@@ -10,6 +10,7 @@
             Editar cliente
         </h3>
     </div>
+    @include('layouts.alerts')
     <!--begin::Form-->
     <form action="{{route('clientes.update', $customer->id)}}" method="post">
         @csrf @method('PUT')
@@ -72,7 +73,7 @@
             </div>
             <div class="form-group col-md-3 my-3">
                 <label for="payment_pediod">Periodo de pago <span class="text-danger">*</span></label>
-                <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_pediod">
+                <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_pediod" name="payment_period">
                     <option {{$customer->payment_period == 1 ? 'selected' : ''}}>1</option>
                     <option {{$customer->payment_period == 2 ? 'selected' : ''}}>2</option>
                     <option {{$customer->payment_period == 3 ? 'selected' : ''}}>3</option>
@@ -165,7 +166,7 @@
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">
-            <button type="button" class="btn btn-primary mr-2">Guardar</button>
+            <button type="submit" class="btn btn-primary mr-2">Guardar</button>
             <button type="reset" class="btn btn-secondary">Limpiar</button>
         </div>
     </form>
