@@ -112,6 +112,7 @@ trait UserTrait
                 return $this->respond(500, [], 'user not found', 'No se encontro el usuario');
             }
             $user->delete();
+            return $this->respond(200, $user, null, 'Usuario eliminado exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al eliminar usuario');
         }
