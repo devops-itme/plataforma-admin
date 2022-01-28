@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Customer;
 use App\Http\Controllers\Controller;
 use App\ParameterValue;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use App\Http\Controllers\Traits\CustomerTrait;
 
 class CustomerController extends Controller
 {
-    use CustomerTrait;
+    use CustomerTrait, UserTrait;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +19,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('customers.index');
+        $customers = Customer::get();
+        return view('customers.index', compact('customers'));
     }
 
     /**
@@ -40,7 +42,12 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->saveCustomer($request);
+        $response = $this->saveCustomer($request->merge(['role' => 5, 'state' => 1]));
+        if($response['state'] == 200){
+            return redirect()->route('clientes.index')->with('success', 'Cliente registrado exitosamente.');
+        } else {
+            return redirect()->back()->with('danger', $response['error']);
+        }
     }
 
     /**
@@ -51,7 +58,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('customers.show');
     }
 
     /**
@@ -62,7 +69,9 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customer::where('id', $id)->with('getUser')->first();
+        $documents = ParameterValue::where('parameter_id', 1)->get();
+        return view('customers.edit', compact('customer', 'documents'));
     }
 
     /**

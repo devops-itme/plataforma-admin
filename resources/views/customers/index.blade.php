@@ -149,6 +149,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Nombres</th>
                         <th scope="col">Numero de documento</th>
                         <th scope="col">Correo</th>
@@ -159,84 +160,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Stone</td>
-                        <td>
-                            <span class="label label-inline label-light-primary font-weight-bold">
-                                Pending
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                    @if(isset($customers))
+                        @foreach($customers as $customer)
+                            <tr>
+                                <th scope="row">{{$customer->id}}</th>
+                                <td>{{$customer->getUser->name." ".$customer->getUser->last_name}}</td>
+                                <td>{{$customer->getUser->document_number}}</td>
+                                <td>{{$customer->getUser->email}}</td>
+                                <td>{{$customer->getUser->phone}}</td>
+                                <td>{{$customer->zone_id}}</td>
+                                @if($customer->state == 1)
+                                    <td>
+                                        <span class="label label-inline label-light-success font-weight-bold">
+                                            Activo
+                                        </span>
+                                    </td>
+                                @else
+                                    <td>
+                                        <span class="label label-inline label-light-danger font-weight-bold">
+                                            Inactivo
+                                        </span>
+                                    </td>
+                                @endif
+                                <td>
+                                    <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                <a href="{{route('customer.show')}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="{{route('customer.edit')}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Ana</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Jacobs</td>
-                        <td>
-                            <span class="label label-inline label-light-success font-weight-bold">
-                                Approved
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-
-                                <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Pettis</td>
-                        <td>
-                            <span class="label label-inline label-light-danger font-weight-bold">
-                                New
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-
-                                <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                                        <a href="{{route('clientes.show', $customer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                            <i class="far fa-folder-open"></i>
+                                        </a>
+                                        <a href="{{route('clientes.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <th colspan="8"><center>¡No hay clientes registrados!</center></td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 

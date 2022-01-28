@@ -159,58 +159,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Stone</td>
-                        <td>
-                            <span class="label label-inline label-light-primary font-weight-bold">
-                                Pending
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-
-                                <a href="{{route('messenger.show')}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="{{route('messenger.edit')}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Ana</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Jacobs</td>
-                        <td>
-                            <span class="label label-inline label-light-success font-weight-bold">
-                                Approved
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-
-                                <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach ($messengers as $item)
                     <tr>
                         <th scope="row">3</th>
                         <td>Larry</td>
@@ -237,6 +186,7 @@
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
 
