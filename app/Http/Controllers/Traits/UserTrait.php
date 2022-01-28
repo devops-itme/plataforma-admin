@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Traits;
 use App\Http\Controllers\Traits\RestActions;
 use App\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 trait UserTrait
 {
@@ -19,9 +20,9 @@ trait UserTrait
                 'name' => 'required|string',
                 'last_name' => 'nullable|string',
                 'document_type' => 'nullable|exists:parameter_values,id',
-                'document_number' => 'nullable|string',
-                'email' => 'required|email',
-                'phone' => 'nullable|string',
+                'document_number' => ['nullable', 'string', Rule::unique('users', 'document_number')->whereNull('deleted_at')],
+                'email' => ['required', 'email', Rule::unique('users', 'email')->whereNull('deleted_at')],
+                'phone' => ['nullable', 'string', Rule::unique('users', 'phone')->whereNull('deleted_at')],
                 'password' => 'required|string|confirmed',
                 'role' => 'nullable|exists:roles,id',
                 'state' => 'required|numeric',
@@ -66,7 +67,7 @@ trait UserTrait
         }
 
         try {
-            $user = User::find($request->id);
+            $user = User::find($request->user_id);
             if (is_null($user)) {
                 return $this->respond(500, [], 'user not found', 'No se encontro el usuario');
             }
