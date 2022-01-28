@@ -163,7 +163,7 @@
                     @if(isset($customers))
                         @foreach($customers as $customer)
                             <tr>
-                                <th scope="row">{{$customer->getUser->id}}</th>
+                                <th scope="row">{{$customer->id}}</th>
                                 <td>{{$customer->getUser->name." ".$customer->getUser->last_name}}</td>
                                 <td>{{$customer->getUser->document_number}}</td>
                                 <td>{{$customer->getUser->email}}</td>

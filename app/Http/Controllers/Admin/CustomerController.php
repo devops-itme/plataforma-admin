@@ -69,7 +69,9 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        return view('customers.edit');
+        $customer = Customer::where('id', $id)->with('getUser')->first();
+        $documents = ParameterValue::where('parameter_id', 1)->get();
+        return view('customers.edit', compact('customer', 'documents'));
     }
 
     /**
