@@ -99,6 +99,11 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->deleteCustomer($id);
+        if($response['state'] == 200){
+            return redirect()->route('clientes.index')->with('success', $response['message']);
+        } else {
+            return redirect()->back()->with('danger', $response['message']);
+        }
     }
 }
