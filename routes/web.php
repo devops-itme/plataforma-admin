@@ -34,6 +34,12 @@ Route::get('/clientes/editar', function () {
     return view('customers.edit');
 })->name('customer.edit');
 
+//MESSEGERS
+Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
+
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
