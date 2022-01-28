@@ -16,7 +16,7 @@ class Messenger extends Model
         'vehicle_plate',
         'admission_date',
         'production_percentage',
-        'contact',
+        'contract',
         'exclusive'
     ];
 

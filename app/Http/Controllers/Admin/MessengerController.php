@@ -41,7 +41,9 @@ class MessengerController extends Controller
      */
     public function store(Request $request)
     {
-        return view('messengers.show');
+       $messenger = $this->saveMessenger($request);
+
+       return $this->respond(200, $messenger, null, 'Mensajero creado');
     }
 
     /**
@@ -52,7 +54,7 @@ class MessengerController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('messengers.show');
     }
 
     /**

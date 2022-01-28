@@ -27,11 +27,10 @@ trait MessengerTrait
     {
 
         $request->validate([
-            'vehicle_plate' => 'required',
-            'admission_date' => 'required',
-            'production_percentage' => 'required',
-            'contact' => 'required',
-            'exclusive' => 'required',
+            // 'vehicle_plate' => 'required',
+            // 'admission_date' => 'required',
+            // 'production_percentage' => 'required',
+            // 'exclusive' => 'required',
         ]);
 
         try {

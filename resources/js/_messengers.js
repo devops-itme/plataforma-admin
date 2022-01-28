@@ -1,7 +1,33 @@
 export default class Messengers {
     initialize() {
-        this.example();
+        this.createMessengers();
     }
 
-    example() { return; }
+    createMessengers() {
+        let formCreateMessenger = document.getElementById('formCreateMessenger');
+        if (formCreateMessenger == null) {
+            return;
+        }
+        formCreateMessenger.addEventListener('submit', function(){
+        //    let data = new FormData(this);
+           let token = document
+               .querySelector('meta[name="csrf-token"]')
+               .getAttribute("content");
+           let myHeaders = new Headers();
+           myHeaders.append("accept", "application/json");
+           myHeaders.append("Access-Control-Allow-Origin", "*");
+           myHeaders.append("X-CSRF-TOKEN", token);
+
+           let requestOptions = {
+               method: "POST",
+               headers: myHeaders,
+               body: FormData,
+           };
+
+           fetch("/mensajeros", requestOptions)
+               .then((response) => response.json())
+               .then(function (data) {})
+               .catch((err) => console.warn(err));
+        });
+    }
 }

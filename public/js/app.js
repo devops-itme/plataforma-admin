@@ -37285,12 +37285,35 @@ var Messengers = /*#__PURE__*/function () {
   _createClass(Messengers, [{
     key: "initialize",
     value: function initialize() {
-      this.example();
+      this.createMessengers();
     }
   }, {
-    key: "example",
-    value: function example() {
-      return;
+    key: "createMessengers",
+    value: function createMessengers() {
+      var formCreateMessenger = document.getElementById('formCreateMessenger');
+
+      if (formCreateMessenger == null) {
+        return;
+      }
+
+      formCreateMessenger.addEventListener('submit', function () {
+        //    let data = new FormData(this);
+        var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+        var myHeaders = new Headers();
+        myHeaders.append("accept", "application/json");
+        myHeaders.append("Access-Control-Allow-Origin", "*");
+        myHeaders.append("X-CSRF-TOKEN", token);
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: FormData
+        };
+        fetch("/mensajeros", requestOptions).then(function (response) {
+          return response.json();
+        }).then(function (data) {})["catch"](function (err) {
+          return console.warn(err);
+        });
+      });
     }
   }]);
 
@@ -37384,8 +37407,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
