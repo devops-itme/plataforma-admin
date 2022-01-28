@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class MessengerController extends Controller
 {
-    //
+    public function index()
+    {
+        # code...
+    }
 }
