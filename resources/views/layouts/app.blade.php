@@ -7,7 +7,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Multientrega</title>
+     {{-- Favicon --}}
+     <link rel="shortcut icon" href="{{ asset('/img/favicon-2.png') }}" />
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -15,11 +17,13 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled subheader-fixed">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -72,8 +76,19 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
+        <main class="d-flex flex-column flex-root">
+            <div class="d-flex flex-row flex-column-fluid page">
+
+                <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+                    @include('layouts.header')
+
+                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                        @include('layouts.subheader')
+                        @yield('content')
+                    </div>
+                    @include('layouts.footer')
+                </div>
+            </div>
         </main>
     </div>
 </body>
