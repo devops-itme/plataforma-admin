@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Traits;
 
 use App\Http\Controllers\Traits\RestActions;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 trait UserTrait
 {
     use RestActions;
 
-    public function valide($request)
+    public function valide($request, $action = null)
     {
         return Validator::make(
             $request->all(),
@@ -19,12 +21,12 @@ trait UserTrait
                 'name' => 'required|string',
                 'last_name' => 'nullable|string',
                 'document_type' => 'nullable|exists:parameter_values,id',
-                'document_number' => 'nullable|string',
-                'email' => 'required|email',
-                'phone' => 'nullable|string',
-                'password' => 'required|string|confirmed',
-                'role' => 'nullable|exists:roles,id',
-                'state' => 'required|numeric',
+                'document_number' => ['nullable', 'string', Rule::unique('users', 'document_number')->whereNull('deleted_at')],
+                'email' => ['required', 'email', Rule::unique('users', 'email')->whereNull('deleted_at')],
+                'phone' => ['nullable', 'string', Rule::unique('users', 'phone')->whereNull('deleted_at')],
+                'password' => ['string', $action == 'create' && 'confirmed', Rule::requiredIf($action == 'create')],
+                'role' => 'nullable|numeric|exists:roles,id',
+                'state' => 'nullable|numeric',
             ]
         );
     }
@@ -46,7 +48,7 @@ trait UserTrait
                 'document_number' => $request->document_number,
                 'email' => $request->email,
                 'phone' => $request->phone,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
                 'role' => $request->role,
                 'state' => $request->state
             ]);
@@ -66,21 +68,21 @@ trait UserTrait
         }
 
         try {
-            $user = User::find($request->id);
+            $user = User::find($request->user_id);
             if (is_null($user)) {
                 return $this->respond(500, [], 'user not found', 'No se encontro el usuario');
             }
             $user->update([
-                'parent_id' => $request->parent_id,
-                'name' => $request->name,
-                'last_name' => $request->last_name,
-                'document_type' => $request->document_type,
-                'document_number' => $request->document_number,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'password' => $request->password,
-                'role' => $request->role,
-                'state' => $request->state
+                'parent_id' => $request->parent_id ?? $user->parent_id,
+                'name' => $request->name ?? $user->name,
+                'last_name' => $request->last_name ?? $user->last_name,
+                'document_type' => $request->document_type ?? $user->document_type,
+                'document_number' => $request->document_number ?? $user->document_number,
+                'email' => $request->email ?? $user->email,
+                'phone' => $request->phone ?? $user->phone,
+                'password' => $request->password ? Hash::make($request->password) : $user->password,
+                // 'role' => $request->role ?? $user->role,
+                'state' => $request->state ?? $user->state
             ]);
 
             return $this->respond(200, $user, null, 'Usuario actualizado exitosamente');
