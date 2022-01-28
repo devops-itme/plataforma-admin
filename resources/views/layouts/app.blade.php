@@ -84,7 +84,9 @@
 
                     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                         @include('layouts.subheader')
-                        @yield('content')
+                       <div class="px-5">
+                            @yield('content')
+                       </div>
                     </div>
                     @include('layouts.footer')
                 </div>

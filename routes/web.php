@@ -25,6 +25,14 @@ Route::get('/clientes/crear', function () {
     return view('customers.create');
 })->name('customer.create');
 
+Route::get('/clientes/ver', function () {
+    return view('customers.show');
+})->name('customer.show');
+
+Route::get('/clientes/editar', function () {
+    return view('customers.edit');
+})->name('customer.edit');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

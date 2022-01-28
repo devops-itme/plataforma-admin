@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->foreign('parent_id')->references('id')->on('users');
             $table->string('name');
             $table->string('last_name')->nullable();
-            $table->integer('document_type')->nullable();
+            $table->integer('document_type')->nullable()->comment("it's a parameter_value");
             $table->string('document_number')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
