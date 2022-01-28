@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Customer;
 use App\Http\Controllers\Controller;
 use App\ParameterValue;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('customers.index');
+        $customers = Customer::get();
+        return view('customers.index', compact('customers'));
     }
 
     /**
