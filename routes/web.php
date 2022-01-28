@@ -19,11 +19,11 @@ Route::get('/', function () {
 
 Route::get('/clientes', function () {
     return view('customers.index');
-});
+})->name('customer.index');
 
 Route::get('/clientes/crear', function () {
     return view('customers.create');
-});
+})->name('customer.create');
 
 Auth::routes();
 

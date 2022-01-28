@@ -30,7 +30,7 @@
                 <i class="fas fa-university text-muted"></i>
             </a>
 
-            <a href="#" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-toggle="tooltip" title="Clientes" data-placement="bottom">
+            <a href="{{route('customer.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-toggle="tooltip" title="Clientes" data-placement="bottom">
                 <i class="fas fa-users text-muted"></i>
             </a>
 
