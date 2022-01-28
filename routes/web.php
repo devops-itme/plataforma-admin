@@ -21,6 +21,9 @@ Route::get('/clientes', function () {
     return view('customers.index');
 });
 
+Route::get('/clientes/crear', function () {
+    return view('customers.create');
+});
 
 Auth::routes();
 
