@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers\Traits;
+
+use App\Http\Controllers\Traits\RestActions;
+use App\User;
+use Illuminate\Support\Facades\Validator;
+
+trait UserTrait
+{
+    use RestActions;
+
+    public function saveUser($request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'parent_id' => 'nullable|exists:users,id',
+                'name' => 'required|string',
+                'last_name' => 'nullable|string',
+                'document_type' => 'nullable|exists:parameter_values,id',
+                'document_number' => 'nullable|string',
+                'email' => 'required|email',
+                'phone' => 'nullable|string',
+                'password' => 'required|string|confirmed',
+                'role' => 'nullable|exists:roles,id',
+                'state' => 'required|numeric',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+        }
+
+        try {
+            $user = User::create([
+                'parent_id' => $request->parent_id,
+                'name' => $request->name,
+                'last_name' => $request->last_name,
+                'document_type' => $request->document_type,
+                'document_number' => $request->document_number,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'password' => $request->password,
+                'role' => $request->role,
+                'state' => $request->state
+            ]);
+
+            $this->respond(200, $user, null, 'Usuario creado exitosamente');
+        } catch (\Throwable $e) {
+            $this->respond(500, [], $e->getMessage() . 'Error al crear usuario');
+        }
+    }
+}
