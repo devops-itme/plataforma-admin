@@ -19,6 +19,7 @@ class MessengerController extends Controller
         $messengers = $this->getMessengers();
         $messengers = $messengers['data'];
 
+        // return $messengers;
         return view('messengers.index', ['messengers' => $messengers]);
     }
 
@@ -29,7 +30,7 @@ class MessengerController extends Controller
      */
     public function create()
     {
-        //
+        return view('messengers.create');
     }
 
     /**
@@ -40,7 +41,7 @@ class MessengerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('messengers.show');
     }
 
     /**
@@ -62,7 +63,7 @@ class MessengerController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('messengers.edit');
     }
 
     /**

@@ -34,25 +34,12 @@ Route::get('/clientes/editar', function () {
     return view('customers.edit');
 })->name('customer.edit');
 
-Route::get('/mensajeros', function () {
-    return view('messengers.index');
-})->name('messenger.index');
+//MESSEGERS
+Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
 
-Route::get('/mensajeros/crear', function () {
-    return view('messengers.create');
-})->name('messenger.create');
 
-Route::get('/mensajeros/editar', function () {
-    return view('messengers.edit');
-})->name('messenger.edit');
-
-Route::get('/mensajeros/ver', function () {
-    return view('messengers.show');
-})->name('messenger.show');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//MESSENGERS
-Route::resource('mensajero', 'Admin\MessengerController');
