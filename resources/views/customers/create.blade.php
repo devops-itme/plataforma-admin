@@ -12,7 +12,7 @@
     </div>
     <!--begin::Form-->
     <form>
-        <div class="card-body row">
+        <div class="card-body d-flex flex-row flex-wrap">
 
             <div class="form-group col-md-4">
                 <label>Nombres: <span class="text-danger">*</span></label>
