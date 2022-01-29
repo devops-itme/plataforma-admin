@@ -37290,13 +37290,13 @@ var Messengers = /*#__PURE__*/function () {
   }, {
     key: "createMessengers",
     value: function createMessengers() {
-      var formCreateMessenger = document.getElementById('formCreateMessenger');
+      var formCreateMessenger = document.getElementById("formCreateMessenger");
 
       if (formCreateMessenger == null) {
         return;
       }
 
-      formCreateMessenger.addEventListener('submit', function (e) {
+      formCreateMessenger.addEventListener("submit", function (e) {
         e.preventDefault();
         var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         var myHeaders = new Headers();
@@ -37310,7 +37310,15 @@ var Messengers = /*#__PURE__*/function () {
         };
         fetch("/mensajeros", requestOptions).then(function (response) {
           return response.json();
-        }).then(function (data) {})["catch"](function (err) {
+        }).then(function (data) {
+          if (data.state == 500) {
+            alert(data.message + " " + data.data.message);
+          }
+
+          if (data.state == 200) {
+            alert(data.message);
+          }
+        })["catch"](function (err) {
           return console.warn(err);
         });
       });
