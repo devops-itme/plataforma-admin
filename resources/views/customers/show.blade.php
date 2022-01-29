@@ -47,11 +47,11 @@
                     <div class="row mb-5 pb-5 border-bottom">
                         <div class="col-md-6">
                             <div class="font-weight-bolder mb-3">Nombre de empresa:</div>
-                            <div class="line-height-xl">{{$customer->business_name}}</div>
+                            <div class="line-height-xl">{{$customer->business_name != NULL ? $customer->business_name : 'No registra'}}</div>
                         </div>
                         <div class="col-md-6">
                             <div class="font-weight-bolder mb-3">Nombre comercial:</div>
-                            <div class="line-height-xl">{{$customer->tradename}}</div>
+                            <div class="line-height-xl">{{$customer->tradename != NULL ? $customer->tradename : 'No registra'}}</div>
                         </div>
                     </div>
                     <div class="row mb-5 pb-5 border-bottom">

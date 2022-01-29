@@ -26,8 +26,8 @@ trait CustomerTrait
                 'fullfill' => 'required',
                 'handling' => 'required',
                 'COD_value' => 'required',
-                'business_name' => 'required|string',
-                'tradename' => 'required|string'
+                'business_name' => 'nullable|string',
+                'tradename' => 'nullable|string'
             ]
         );
     }
