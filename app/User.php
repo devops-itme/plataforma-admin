@@ -31,6 +31,11 @@ class User extends Model implements AuthenticatableContract
         return $this->hasOne(Customer::class, 'id');
     }
 
+    public function getMessenger()
+    {
+        return $this->hasOne(Messenger::class, 'id');
+    }
+
     public function getDocumentType()
     {
         return $this->belongsTo(ParameterValue::class, 'document_type');
