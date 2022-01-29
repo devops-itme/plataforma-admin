@@ -8,8 +8,8 @@ export default class Messengers {
         if (formCreateMessenger == null) {
             return;
         }
-        formCreateMessenger.addEventListener('submit', function(){
-        //    let data = new FormData(this);
+        formCreateMessenger.addEventListener('submit', function(e){
+            e.preventDefault()
            let token = document
                .querySelector('meta[name="csrf-token"]')
                .getAttribute("content");
@@ -21,7 +21,7 @@ export default class Messengers {
            let requestOptions = {
                method: "POST",
                headers: myHeaders,
-               body: FormData,
+               body: new FormData(formCreateMessenger),
            };
 
            fetch("/mensajeros", requestOptions)

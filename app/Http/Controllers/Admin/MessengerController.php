@@ -41,9 +41,13 @@ class MessengerController extends Controller
      */
     public function store(Request $request)
     {
-       $messenger = $this->saveMessenger($request);
+        $messenger = $this->saveMessenger($request);
 
-       return $this->respond(200, $messenger, null, 'Mensajero creado');
+        if ($messenger['state'] == 200) {
+            return $this->respond(200, $messenger, null, 'Mensajero creado');
+        } else {
+            return $this->respond(500, $messenger, null, 'Error al crea mensajero');
+        }
     }
 
     /**

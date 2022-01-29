@@ -37296,8 +37296,8 @@ var Messengers = /*#__PURE__*/function () {
         return;
       }
 
-      formCreateMessenger.addEventListener('submit', function () {
-        //    let data = new FormData(this);
+      formCreateMessenger.addEventListener('submit', function (e) {
+        e.preventDefault();
         var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         var myHeaders = new Headers();
         myHeaders.append("accept", "application/json");
@@ -37306,7 +37306,7 @@ var Messengers = /*#__PURE__*/function () {
         var requestOptions = {
           method: "POST",
           headers: myHeaders,
-          body: FormData
+          body: new FormData(formCreateMessenger)
         };
         fetch("/mensajeros", requestOptions).then(function (response) {
           return response.json();

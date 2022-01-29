@@ -63,7 +63,7 @@
 
             <div class="form-group col-md-4">
                 <label>Porcentaje de producción: <span class="text-danger">*</span></label>
-                <input name="production_percentage" type="text" class="form-control form-control-solid" placeholder="" />
+                <input name="production_percentage" type="number" class="form-control form-control-solid" placeholder="" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
@@ -85,17 +85,17 @@
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Contrato <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="file" name="contract" />
+                    type="file" name="contract"/>
             </div>
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Contraseña <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="password" name="password_first" />
+                    type="password" name="password"/>
             </div>
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Repetir Contraseña <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="password" name="password_repeat" />
+                    type="password" name="password_corfirmation"/>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">
