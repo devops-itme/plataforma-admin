@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-center flex-wrap flex-sm-nowrap">
         <div class="d-flex align-items-center">
 
-            <a href="#" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Dashboard" data-placement="bottom">
+            <a href="{{route('home')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Dashboard" data-placement="bottom">
                 <i class="fas fa-home text-muted"></i>
             </a>
 
