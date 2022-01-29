@@ -18,19 +18,19 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Nombres:</div>
-                        <div class="line-height-xl">John Wick</div>
+                        <div class="line-height-xl">{{ $messenger->user->name .' '. $messenger->user->last_name}}</div>
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Email:</div>
-                        <div class="line-height-xl">correo@correo.com</div>
+                        <div class="line-height-xl">{{$messenger->user->email}}</div>
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Telefono:</div>
-                        <div class="line-height-xl">3000000</div>
+                        <div class="line-height-xl">{{$messenger->user->phone}}</div>
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Tipo y numero de documento:</div>
-                        <div class="line-height-xl"><b>CC</b> / 1.125.251.255</div>
+                        <div class="line-height-xl"><b>CC</b> / {{$messenger->user->document_number}}</div>
                     </div>
                 </div>
             </div>
@@ -43,21 +43,21 @@
                 <div class="row mb-5 pb-5 border-bottom">
                     <div class="col-md-4">
                         <div class="font-weight-bolder mb-3">Placa de vehiculo:</div>
-                        <div class="line-height-xl">CQA-897</div>
+                        <div class="line-height-xl">{{$messenger->vehile_plate}}</div>
                     </div>
                     <div class="col-md-4">
                         <div class="font-weight-bolder mb-3">Fecha de ingreso:</div>
-                        <div class="line-height-xl">"02/10/2021"</div>
+                        <div class="line-height-xl">{{$messenger->admission_date}}</div>
                     </div>
                     <div class="col-md-4">
                         <div class="font-weight-bolder mb-3">Porcentaje de producción:</div>
-                        <div class="line-height-xl">10%</div>
+                        <div class="line-height-xl">{{$messenger->production_percentage}}%</div>
                     </div>
                 </div>
                 <div class="row mb-5 pb-5 border-bottom">
                     <div class="col-md-6">
                         <div class="font-weight-bolder mb-3">Exclusivo:</div>
-                        <div class="line-height-xl">NO</div>
+                        <div class="line-height-xl">{{$messenger->exclusive == 1 ? 'SI' : 'NO' }}</div>
                     </div>
                     <div class="col-md-6">
                         <div class="font-weight-bolder mb-3">Contrato:</div>
