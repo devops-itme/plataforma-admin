@@ -34,8 +34,8 @@ trait UserTrait
                     Rule::unique('users', 'phone')->whereNull('deleted_at')->where('id', '<>', $id)
                 ],
                 'password' => [
-                    'nullable', 'string',
-                    $action == 'create' && 'confirmed',
+                    'string',
+                    $action == 'create' ? 'confirmed' : 'nullable',
                     Rule::requiredIf($action == 'create')
                 ],
                 'role' => 'nullable|numeric|exists:roles,id',
