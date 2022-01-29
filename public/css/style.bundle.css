@@ -29031,9 +29031,19 @@ h3 {
 }
 
 .bg-light-success {
-  background-color: #C9F7F5 !important;
+  background-color: #023e8a !important;
 }
 
+.bg-light-blue-v1{
+    background-color: #3d8aed !important;
+}
+
+.bg-light-blue-v2{
+    background-color: #0096c7 !important;
+}
+.bg-light-blue-v3{
+    background-color: #a3e0fc !important;
+}
 .bg-hover-light-success {
   transition: all 0.15s ease;
   cursor: pointer;
