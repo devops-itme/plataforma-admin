@@ -18,21 +18,21 @@
 
             <div class="form-group col-md-4">
                 <label>Nombres: <span class="text-danger">*</span></label>
-                <input name="name" type="text" class="form-control form-control-solid" placeholder="Nombres" />
+                <input name="name" type="text" class="form-control form-control-solid" placeholder="Nombres" value="{{old('name')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
                 <label>Apellidos <span class="text-danger">*</span></label>
-                <input name="last_name" type="text" class="form-control form-control-solid" placeholder="Apellidos" />
+                <input name="last_name" type="text" class="form-control form-control-solid" placeholder="Apellidos" value="{{old('last_name')}}" />
             </div>
             <div class="form-group col-md-4">
                 <label>Email: <span class="text-danger">*</span></label>
-                <input name="email" type="email" class="form-control form-control-solid" placeholder="Email" />
+                <input name="email" type="email" class="form-control form-control-solid" placeholder="Email" value="{{old('email')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
                 <label>Telefono: <span class="text-danger">*</span></label>
-                <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Telefono" />
+                <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Telefono" value="{{old('phone')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
@@ -40,30 +40,30 @@
                 <select name="document_type" class="form-control form-control-solid" id="type_doc">
                     <option selected disabled>Seleccione tipo de documento</option>
                     @foreach($document_type as $document)
-                        <option value="{{$document->id}}">{{$document->name}}</option>
+                        <option {{old('document')==$document->id?'selected ':''}}  value="{{$document->id}}">{{$document->name}}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="form-group col-md-4">
                 <label>Numero de identificación: <span class="text-danger">*</span></label>
-                <input name="document_number" type="text" class="form-control form-control-solid" placeholder="N° de identificación" />
+                <input name="document_number" type="text" class="form-control form-control-solid" placeholder="N° de identificación" value="{{old('document_number')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
                 <label>Placa de vehiculo: <span class="text-danger">*</span></label>
-                <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder="" />
+                <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder="" value="{{old('vehicle_plate')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
                 <label>Fecha de ingreso: <span class="text-danger">*</span></label>
-                <input name="admission_date" type="date" class="form-control form-control-solid" placeholder="" />
+                <input name="admission_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('admission_date')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label>Porcentaje de producción: <span class="text-danger">*</span></label>
-                <input name="production_percentage" type="number" class="form-control form-control-solid" placeholder="" />
+                <input name="production_percentage" type="number" class="form-control form-control-solid" placeholder="" value="{{old('production_percentage')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
@@ -85,12 +85,12 @@
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Contrato <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="file" name="contract"/>
+                    type="file" name="contract" value="{{old('contract')}}"/>
             </div>
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Contraseña <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="password" name="password"/>
+                    type="password" name="password" />
             </div>
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Repetir Contraseña <span class="text-danger">*</span></label>

@@ -23,7 +23,7 @@ trait MessengerTrait
                 'admission_date' => 'required',
                 'production_percentage' => 'required|numeric',
                 'exclusive' => 'required',
-                'contract' => 'required',
+                // 'contract' => 'required',
             ]
         );
     }
