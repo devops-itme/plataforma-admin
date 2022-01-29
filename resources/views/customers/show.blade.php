@@ -18,23 +18,23 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="font-weight-bolder mb-3">Nombres:</div>
-                            <div class="line-height-xl">John Wick</div>
+                            <div class="line-height-xl">{{$customer->getUser->name." ".$customer->getUser->last_name}}</div>
                         </div>
                         <div class="col-md-2">
                             <div class="font-weight-bolder mb-3">Email:</div>
-                            <div class="line-height-xl">correo@correo.com</div>
+                            <div class="line-height-xl">{{$customer->getUser->email}}</div>
                         </div>
                         <div class="col-md-2">
                             <div class="font-weight-bolder mb-3">Telefono:</div>
-                            <div class="line-height-xl">3000000</div>
+                            <div class="line-height-xl">{{$customer->getUser->phone}}</div>
                         </div>
                         <div class="col-md-3">
                             <div class="font-weight-bolder mb-3">Tipo y numero de documento:</div>
-                            <div class="line-height-xl"><b>CC</b> / 1.125.251.255</div>
+                            <div class="line-height-xl"><b>{{$customer->getUser->getDocumentType->name}}</b> / {{$customer->getUser->document_number}}</div>
                         </div>
                         <div class="col-md-2">
                             <div class="font-weight-bolder mb-3">Fecha de nacimiento:</div>
-                            <div class="line-height-xl">12/12/2022</div>
+                            <div class="line-height-xl">{{$customer->birthday}}</div>
                         </div>
                     </div>
                 </div>
@@ -47,51 +47,51 @@
                     <div class="row mb-5 pb-5 border-bottom">
                         <div class="col-md-6">
                             <div class="font-weight-bolder mb-3">Nombre de empresa:</div>
-                            <div class="line-height-xl">Panes calientes de killa S.A</div>
+                            <div class="line-height-xl">{{$customer->business_name}}</div>
                         </div>
                         <div class="col-md-6">
                             <div class="font-weight-bolder mb-3">Nombre comercial:</div>
-                            <div class="line-height-xl">Pan Santana</div>
+                            <div class="line-height-xl">{{$customer->tradename}}</div>
                         </div>
                     </div>
                     <div class="row mb-5 pb-5 border-bottom">
                         <div class="col-md-2">
                             <div class="font-weight-bolder mb-3">Zona:</div>
-                            <div class="line-height-xl">Zona #1</div>
+                            <div class="line-height-xl">{{$customer->getZone->name}}</div>
                         </div>
                         <div class="col-md-3">
                             <div class="font-weight-bolder mb-3">Contacto:</div>
-                            <div class="line-height-xl">Juanito Perez, 3000000</div>
+                            <div class="line-height-xl">{{$customer->contact}}</div>
                         </div>
                         <div class="col-md-2">
                             <div class="font-weight-bolder mb-3">Periodo de pago:</div>
-                            <div class="line-height-xl">Del 15 al 30</div>
+                            <div class="line-height-xl">{{$customer->payment_period}}</div>
                         </div>
                         <div class="col-md-2">
                             <div class="font-weight-bolder mb-3">Credito:</div>
-                            <div class="line-height-xl">SI</div>
+                            <div class="line-height-xl">{{$customer->credit == 1 ? 'Sí' : 'No'}}</div>
                         </div>
                         <div class="col-md-3">
                             <div class="font-weight-bolder mb-3">Recepción de saldo por email:</div>
-                            <div class="line-height-xl">SI</div>
+                            <div class="line-height-xl">{{$customer->receive_emails == 1 ? 'Sí' : 'No'}}</div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="font-weight-bolder mb-3">Valor FullFill:</div>
-                            <div class="line-height-xl">$100.000</div>
+                            <div class="line-height-xl">${{number_format($customer->fullfill)}}</div>
                         </div>
                         <div class="col-md-3">
                             <div class="font-weight-bolder mb-3">Valor Handling:</div>
-                            <div class="line-height-xl">$100.000</div>
+                            <div class="line-height-xl">${{number_format($customer->handling)}}</div>
                         </div>
                         <div class="col-md-3">
                             <div class="font-weight-bolder mb-3">Valor COD:</div>
-                            <div class="line-height-xl">$100.000</div>
+                            <div class="line-height-xl">${{number_format($customer->COD_value)}}</div>
                         </div>
                         <div class="col-md-2">
                             <div class="font-weight-bolder mb-3">Impuesto:</div>
-                            <div class="line-height-xl">SI</div>
+                            <div class="line-height-xl">{{$customer->taxes == 1 ? 'Sí' : 'No'}}</div>
                         </div>
                     </div>
                 </div>
