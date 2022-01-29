@@ -10,6 +10,7 @@
             Crear mensajero
         </h3>
     </div>
+    @include('layouts.alerts')
     <!--begin::Form-->
     <form method="POST" action="{{route('messenger.store')}}" id="formCreateMessenger">
         @csrf

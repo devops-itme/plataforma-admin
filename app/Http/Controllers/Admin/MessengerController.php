@@ -43,12 +43,15 @@ class MessengerController extends Controller
      */
     public function store(Request $request)
     {
-        $messenger = $this->saveMessenger($request);
+        request()->merge(['role' => 3, 'state' => 1]);
+        $user = $this->saveUser($request);
+        $user = $user['data'];
+        $messenger = $this->saveMessenger($request, $user->id);
 
-        if ($messenger['state'] == 200) {
-            return $this->respond(200, $messenger, null, 'Mensajero creado');
+        if($messenger['state'] == 200){
+            return redirect()->route('messenger.index')->with('success', 'Mensajero registrado exitosamente.');
         } else {
-            return $this->respond(500, $messenger, null, 'Error al crear mensajero');
+            return redirect()->back()->with('danger', $messenger['error']);
         }
     }
 
@@ -60,7 +63,10 @@ class MessengerController extends Controller
      */
     public function show($id)
     {
-        return view('messengers.show');
+        $messenger = $this->showMessenger($id);
+        $messenger = $messenger['data'];
+        $document_type = ParameterValue::where('parameter_id', 1)->get();
+        return view('messengers.show', compact('messenger', 'document_type' ));
     }
 
     /**
@@ -71,7 +77,10 @@ class MessengerController extends Controller
      */
     public function edit($id)
     {
-        return view('messengers.edit');
+        $messenger = $this->showMessenger($id);
+        $messenger = $messenger['data'];
+        $document_type = ParameterValue::where('parameter_id', 1)->get();
+        return view('messengers.edit', compact('messenger', 'document_type' ));
     }
 
     /**
@@ -83,7 +92,12 @@ class MessengerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messenger = $this->updateMessenger($request, $id);
+        if ($messenger['state'] == 200) {
+            return redirect()->route('messenger.index')->with('success', $messenger['message']);
+        } else {
+            return redirect()->back()->with('danger', $messenger['message']);
+        }
     }
 
     /**
@@ -94,6 +108,11 @@ class MessengerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->deleteMessenger($id);
+        if($response['state'] == 200){
+            return redirect()->route('clientes.index')->with('success', $response['message']);
+        } else {
+            return redirect()->back()->with('danger', $response['message']);
+        }
     }
 }

@@ -11,6 +11,7 @@
                     {{-- <div class="text-muted pt-2 font-size-sm">Datatable initialized from HTML table</div> --}}
                 </h2>
             </div>
+            @include('layouts.alerts')
             <div class="card-toolbar">
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
@@ -179,10 +180,10 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                    <a href="{{route('messenger.show',$item->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="far fa-folder-open"></i>
                                     </a>
-                                    <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                    <a href="{{route('messenger.edit',$item->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a href="{{route('messenger.destroy',$item->id)}}" role="button"  id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
