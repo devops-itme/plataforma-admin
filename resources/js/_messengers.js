@@ -30,13 +30,24 @@ export default class Messengers {
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.state == 500) {
-                        alert(data.message + " " + data.data.message);
+                        alert(data.message);
                     }
                     if (data.state == 200) {
                         alert(data.message);
                     }
+                    if(data.errors){
+                        alert(data.errors)
+                    }
                 })
                 .catch((err) => console.warn(err));
+        });
+    }
+
+    deleteMessenger() {
+        let deleteMessenger = document.getElementById("deleteMessenger");
+
+        deleteMessenger.addEventListener("submit", function (e) {
+            e.preventDefault();
         });
     }
 }

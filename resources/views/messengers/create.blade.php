@@ -94,7 +94,7 @@
             <div class="form-group py-3 m-0 col-md-4">
                 <label>Repetir Contraseña <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="password" name="password_corfirmation"/>
+                    type="password" name="password_confirmation"/>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">

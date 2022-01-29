@@ -37312,15 +37312,27 @@ var Messengers = /*#__PURE__*/function () {
           return response.json();
         }).then(function (data) {
           if (data.state == 500) {
-            alert(data.message + " " + data.data.message);
+            alert(data.message);
           }
 
           if (data.state == 200) {
             alert(data.message);
           }
+
+          if (data.errors) {
+            alert(data.errors);
+          }
         })["catch"](function (err) {
           return console.warn(err);
         });
+      });
+    }
+  }, {
+    key: "deleteMessenger",
+    value: function deleteMessenger() {
+      var deleteMessenger = document.getElementById("deleteMessenger");
+      deleteMessenger.addEventListener("submit", function (e) {
+        e.preventDefault();
       });
     }
   }]);

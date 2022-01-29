@@ -24,9 +24,8 @@ trait MessengerTrait
         }
     }
 
-    public function saveMessenger(Request $request)
+    public function saveMessenger($request)
     {
-
 
         $validator = Validator::make($request->all(), [
             'vehicle_plate' => 'required',
@@ -34,7 +33,6 @@ trait MessengerTrait
             'production_percentage' => 'required|numeric',
             'exclusive' => 'required',
             'contract' => 'required|mimes:pdf,jpg,JPG,png,PNG,jpeg,JPEG|max:10000'
-
         ]);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());

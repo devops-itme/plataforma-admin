@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MessengerTrait;
+use App\Http\Requests\MessengerRequest;
 use App\ParameterValue;
 use Illuminate\Http\Request;
 
@@ -47,7 +48,7 @@ class MessengerController extends Controller
         if ($messenger['state'] == 200) {
             return $this->respond(200, $messenger, null, 'Mensajero creado');
         } else {
-            return $this->respond(500, $messenger, null, 'Error al crea mensajero');
+            return $this->respond(500, $messenger, null, 'Error al crear mensajero');
         }
     }
 
