@@ -37386,11 +37386,13 @@ var Messengers = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
+!(function webpackMissingModule() { var e = new Error("Cannot find module 'sweetalert'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
-var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_0__["default"]();
+
+var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_1__["default"]();
 document.addEventListener("DOMContentLoaded", function (event) {
   messengers.initialize();
 });

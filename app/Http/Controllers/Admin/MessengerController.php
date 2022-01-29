@@ -45,6 +45,9 @@ class MessengerController extends Controller
     {
         request()->merge(['role' => 3, 'state' => 1]);
         $user = $this->saveUser($request);
+        if($user['state'] != 200){
+            return redirect()->back()->with('danger', $user['message']);
+        }
         $user = $user['data'];
         $messenger = $this->saveMessenger($request, $user->id);
 

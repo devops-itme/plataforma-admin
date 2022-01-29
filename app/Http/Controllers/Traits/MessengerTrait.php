@@ -53,17 +53,15 @@ trait MessengerTrait
         $validator = $this->messengerValidate($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
         }
         try {
 
+            $contract_file = null;
             if ($request->hasFile('contract')) {
                 $contract = $request->file('contract');
                 $contract_file = time() . '-' . $contract->getClientOriginalName();
                 // \Storage::disk('local')->put($document_file,  \File::get($contract));
-            }
-            if (!empty($contract_file)) {
-                $contract_file = $contract_file;
             }
             $messenger = Messenger::create([
                 'user_id' => $id,

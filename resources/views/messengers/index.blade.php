@@ -186,9 +186,12 @@
                                     <a href="{{route('messenger.edit',$item->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{route('messenger.destroy',$item->id)}}" role="button"  id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                    <a onclick="confirmDelete('/messengers'+{{$item->id}})" role="button"  id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
+                                    {{-- <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button> --}}
                                 </div>
                             </td>
                         </tr>
@@ -197,7 +200,7 @@
             </table>
             <!--end: Datatable-->
         </div>
-        <div class="row justify-content-end mt-3">
+        <div class="">
             {{ $messengers->links() }}
         </div>
     </div>
