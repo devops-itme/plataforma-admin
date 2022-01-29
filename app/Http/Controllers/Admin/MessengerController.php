@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MessengerTrait;
+use App\ParameterValue;
 use Illuminate\Http\Request;
 
 class MessengerController extends Controller
@@ -18,7 +19,6 @@ class MessengerController extends Controller
     {
         $messengers = $this->getMessengers();
         $messengers = $messengers['data'];
-
         // return $messengers;
         return view('messengers.index', ['messengers' => $messengers]);
     }
@@ -30,7 +30,8 @@ class MessengerController extends Controller
      */
     public function create()
     {
-        return view('messengers.create');
+        $document_type = ParameterValue::where('parameter_id', 1)->get();
+        return view('messengers.create', compact('document_type'));
     }
 
     /**

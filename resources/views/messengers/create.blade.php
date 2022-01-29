@@ -37,11 +37,10 @@
             <div class="form-group col-md-4">
                 <label for="type_doc">Tipo de documento <span class="text-danger">*</span></label>
                 <select name="document_type" class="form-control form-control-solid" id="type_doc">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option selected disabled>Seleccione tipo de documento</option>
+                    @foreach($document_type as $document)
+                        <option value="{{$document->id}}">{{$document->name}}</option>
+                    @endforeach
                 </select>
             </div>
 

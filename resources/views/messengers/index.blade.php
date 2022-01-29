@@ -86,7 +86,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('messenger.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('messenger.create') }}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -160,38 +160,44 @@
                 </thead>
                 <tbody>
                     @foreach ($messengers as $item)
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Pettis</td>
-                        <td>
-                            <span class="label label-inline label-light-danger font-weight-bold">
-                                New
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-
-                                <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <th scope="row">{{ $item->user->name . ' ' . $item->user->last_name }}</th>
+                            <td>{{ $item->user->document_number }}</td>
+                            <td>{{ $item->vehicle_plate }}</td>
+                            <td>{{ $item->user->email }}</td>
+                            <td>{{ $item->user->phone }}</td>
+                            <td>
+                                @if ($item->user->state == 1)
+                                    <span class="label label-inline label-light-success font-weight-bold">
+                                        Activo
+                                    </span>
+                                @else
+                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                        Inactivo
+                                    </span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <i class="far fa-folder-open"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
-
-
             <!--end: Datatable-->
+        </div>
+        <div class="row justify-content-end mt-3">
+            {{ $messengers->links() }}
         </div>
     </div>
 

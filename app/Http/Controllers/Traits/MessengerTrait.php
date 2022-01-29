@@ -17,7 +17,7 @@ trait MessengerTrait
     public function getMessengers()
     {
         try {
-            $messengers = Messenger::with('user')->all();
+            $messengers = Messenger::with('user')->paginate(10);
             return $this->respond(200, $messengers);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
