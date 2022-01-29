@@ -97,7 +97,7 @@ class MessengerController extends Controller
     {
         $messenger = $this->updateMessenger($request, $id);
         if ($messenger['state'] == 200) {
-            return redirect()->route('messenger.index')->with('success', $messenger['message']);
+            return redirect()->route('messenger.index')->with('success', 'Mensajero actualizado exitosamente.');
         } else {
             return redirect()->back()->with('danger', $messenger['message']);
         }
