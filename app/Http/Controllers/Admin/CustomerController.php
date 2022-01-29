@@ -42,11 +42,15 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->saveCustomer($request->merge(['role' => 5, 'state' => 1]));
+        $saveUserData = $this->saveUser($request->merge(['role' => 5, 'state' => 1]));
+        if($saveUserData['state'] != 200){
+            return redirect()->back()->with('danger', $saveUserData['message']);
+        }
+        $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
         if($response['state'] == 200){
             return redirect()->route('clientes.index')->with('success', 'Cliente registrado exitosamente.');
         } else {
-            return redirect()->back()->with('danger', $response['error']);
+            return redirect()->back()->with('danger', $response['message']);
         }
     }
 

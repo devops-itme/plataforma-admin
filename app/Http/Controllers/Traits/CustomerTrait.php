@@ -40,31 +40,23 @@ trait CustomerTrait
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
         try {
-            //Crear usuario en la tabla users
-            $saveUserData = $this->saveUser($request);
-            if($saveUserData['state'] == 200){
-                $customer = Customer::create([
-                    'user_id' => $saveUserData['data']->id,
-                    'birthday' => $request->birthday,
-                    'zone_id' => $request->zone,
-                    'contact' => $request->contact,
-                    'payment_period' => $request->payment_period,
-                    'credit' => $request->credit,
-                    'taxes' => $request->taxes,
-                    'receive_emails' => $request->receive_emails,
-                    'fullfill' => $request->fullfill,
-                    'handling' => $request->handling,
-                    'COD_value' => $request->COD_value,
-                    'business_name' => $request->business_name,
-                    'tradename' => $request->tradename,
-                    'state' => 1
-                ]);
-
-                return $this->respond(200, $customer, null, 'Usuario creado exitosamente');
-            } else {
-                return $this->respond(500, [], 'Error al crear usuario');
-            }
-
+            $customer = Customer::create([
+                'user_id' => $request->user_id,
+                'birthday' => $request->birthday,
+                'zone_id' => $request->zone,
+                'contact' => $request->contact,
+                'payment_period' => $request->payment_period,
+                'credit' => $request->credit,
+                'taxes' => $request->taxes,
+                'receive_emails' => $request->receive_emails,
+                'fullfill' => $request->fullfill,
+                'handling' => $request->handling,
+                'COD_value' => $request->COD_value,
+                'business_name' => $request->business_name,
+                'tradename' => $request->tradename,
+                'state' => 1
+            ]);
+            return $this->respond(200, $customer, null, 'Usuario creado exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage() . 'Error al crear usuario');
         }
@@ -85,7 +77,7 @@ trait CustomerTrait
             }
             //Actualizar tabla usuario
             $updateUser = $this->updateUser($request->merge(['user_id' => $customer->user_id]));
-            if($updateUser['state'] == 500){
+            if($updateUser['state'] != 200){
                 return $this->respond(500, [], $updateUser['error'], $updateUser['message']);
             }
             $customer->update([
