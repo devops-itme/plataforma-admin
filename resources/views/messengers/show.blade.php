@@ -11,30 +11,59 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="my-5 step" data-wizard-type="step-content" data-wizard-state="current">
-            <h5 class="mb-10 font-weight-bold text-dark">Review your Details and Submit</h5>
+        <div class="my-5">
+            <h5 class="mb-10 font-weight-bold text-dark">Información basica de mensajero</h5>
             <!--begin::Item-->
             <div class="border-bottom mb-5 pb-5">
-                <div class="font-weight-bolder mb-3">Your Account Details:</div>
-                <div class="line-height-xl">John Wick
-                <br>Phone: +61412345678
-                <br>Email: johnwick@reeves.com</div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Nombres:</div>
+                        <div class="line-height-xl">John Wick</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Email:</div>
+                        <div class="line-height-xl">correo@correo.com</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Telefono:</div>
+                        <div class="line-height-xl">3000000</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Tipo y numero de documento:</div>
+                        <div class="line-height-xl"><b>CC</b> / 1.125.251.255</div>
+                    </div>
+                </div>
             </div>
             <!--end::Item-->
+        </div>
+        <div class="my-5">
+            <h5 class="mb-10 font-weight-bold text-dark">Información detallada de mensajero</h5>
             <!--begin::Item-->
-            <div class="border-bottom mb-5 pb-5">
-                <div class="font-weight-bolder mb-3">Your Address Details:</div>
-                <div class="line-height-xl">Address Line 1
-                <br>Address Line 2
-                <br>Melbourne 3000, VIC, Australia</div>
-            </div>
-            <!--end::Item-->
-            <!--begin::Item-->
-            <div>
-                <div class="font-weight-bolder">Payment Details:</div>
-                <div class="line-height-xl">Card Number: xxxx xxxx xxxx 1111
-                <br>Card Name: John Wick
-                <br>Card Expiry: 01/21</div>
+            <div class="mb-5 pb-5">
+                <div class="row mb-5 pb-5 border-bottom">
+                    <div class="col-md-4">
+                        <div class="font-weight-bolder mb-3">Placa de vehiculo:</div>
+                        <div class="line-height-xl">CQA-897</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="font-weight-bolder mb-3">Fecha de ingreso:</div>
+                        <div class="line-height-xl">"02/10/2021"</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="font-weight-bolder mb-3">Porcentaje de producción:</div>
+                        <div class="line-height-xl">10%</div>
+                    </div>
+                </div>
+                <div class="row mb-5 pb-5 border-bottom">
+                    <div class="col-md-6">
+                        <div class="font-weight-bolder mb-3">Exclusivo:</div>
+                        <div class="line-height-xl">NO</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="font-weight-bolder mb-3">Contrato:</div>
+                        <div class="line-height-xl"><a href="#" target="_blank" download="contrato-mensajero.pdf">Descargar contrato</a></div>
+                    </div>
+                </div>
             </div>
             <!--end::Item-->
         </div>
