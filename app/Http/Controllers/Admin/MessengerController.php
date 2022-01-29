@@ -46,7 +46,7 @@ class MessengerController extends Controller
         request()->merge(['role' => 3, 'state' => 1]);
         $user = $this->saveUser($request);
         if($user['state'] != 200){
-            return redirect()->back()->with('danger', $user['message']);
+            return redirect()->back()->withInput()->with('danger', $user['message']);
         }
         $user = $user['data'];
         $messenger = $this->saveMessenger($request, $user->id);
@@ -54,7 +54,7 @@ class MessengerController extends Controller
         if($messenger['state'] == 200){
             return redirect()->route('messenger.index')->with('success', 'Mensajero registrado exitosamente.');
         } else {
-            return redirect()->back()->with('danger', $messenger['error']);
+            return redirect()->back()->withInput()->with('danger', $messenger['error']);
         }
     }
 
