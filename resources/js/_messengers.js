@@ -1,6 +1,6 @@
 export default class Messengers {
     initialize() {
-        this.createMessengers();
+        // this.createMessengers();
     }
 
     // //CREATE MESSENGER
