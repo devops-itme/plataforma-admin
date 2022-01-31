@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <!--begin::Stats Widget 25-->
-                    <div class="card card-custom bg-light-success gutter-b">
+                    <div class="card card-custom gutter-b" style="background-color: #023e8a !important;">
                         <!--begin::Body-->
                         <div class="card-body">
                             <span class="svg-icon svg-icon-2x svg-icon-primary">
@@ -31,7 +31,7 @@
 
                 <div class="col-md-6">
                     <!--begin::Stats Widget 26-->
-                    <div class="card card-custom bg-light-blue-v1 gutter-b">
+                    <div class="card card-custom gutter-b" style=" background-color: #3d8aed !important;">
                         <!--begin::ody-->
                         <div class="card-body">
                             <span class="svg-icon svg-icon-2x svg-icon-primary">
@@ -55,7 +55,7 @@
 
                 <div class="col-md-6">
                     <!--begin::Stats Widget 31-->
-                    <div class="card card-custom bg-light-blue-v2 gutter-b">
+                    <div class="card card-custom gutter-b" style="background-color: #0096c7 !important;">
                         <!--begin::Body-->
                         <div class="card-body">
                             <span class="svg-icon svg-icon-2x svg-icon-white">
@@ -80,7 +80,7 @@
                 </div>
                 <div class="col-md-6">
                     <!--begin::Stats Widget 28-->
-                    <div class="card card-custom bg-light-blue-v3 card-stretch gutter-b">
+                    <div class="card card-custom card-stretch gutter-b" style="background-color: #a3e0fc !important;">
                         <!--begin::Body-->
                         <div class="card-body">
                             <span class="svg-icon svg-icon-2x svg-icon-primary">
