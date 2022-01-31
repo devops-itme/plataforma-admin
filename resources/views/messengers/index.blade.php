@@ -181,16 +181,16 @@
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                     <a href="{{route('messenger.show',$item->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                        <i class="far fa-folder-open"></i>
+                                        <i class="fad fa-folder-open"></i>
                                     </a>
                                     <a href="{{route('messenger.edit',$item->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fad fa-edit"></i>
                                     </a>
                                     <a onclick="confirmDelete('/mensajeros/'+{{$item->id}})" role="button"  id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fad fa-trash-alt"></i>
                                     </a>
                                     {{-- <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fad fa-trash-alt"></i>
                                     </button> --}}
                                 </div>
                             </td>

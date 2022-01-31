@@ -14,7 +14,6 @@
     <form action="{{route('clientes.store')}}" method="post">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
-
             <div class="form-group col-md-4">
                 <label>Nombres: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{old('name')}}" />
@@ -36,23 +35,6 @@
             </div>
             <div class="form-group col-md-4">
                 <label>Tipo de documento</label>
-                {{-- <div class="radio-inline">
-                    <label class="radio radio-rounded">
-                        <input type="radio" checked="checked" name="radios15_1" />
-                        <span></span>
-                        Cedula
-                    </label>
-                    <label class="radio radio-rounded">
-                        <input type="radio" name="radios15_1" />
-                        <span></span>
-                        NIT
-                    </label>
-                    <label class="radio radio-rounded">
-                        <input type="radio" name="radios15_1" />
-                        <span></span>
-                        RUT
-                    </label>
-                </div> --}}
                 <select class="form-control form-control-solid" id="document_type" name="document_type">
                     <option selected disabled>Seleccione</option>
                     @foreach($documents as $document)
