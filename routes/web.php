@@ -26,13 +26,13 @@ Route::resource('/clientes', 'Admin\CustomerController');
 //     return view('customers.create');
 // })->name('customer.create');
 
-Route::get('/clientes/ver', function () {
-    return view('customers.show');
-})->name('customer.show');
+// Route::get('/clientes/ver', function () {
+//     return view('customers.show');
+// })->name('customer.show');
 
-Route::get('/clientes/editar', function () {
-    return view('customers.edit');
-})->name('customer.edit');
+// Route::get('/clientes/editar', function () {
+//     return view('customers.edit');
+// })->name('customer.edit');
 
 //MESSEGERS
 Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
