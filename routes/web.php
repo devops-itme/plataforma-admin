@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/userBanks/{parent_id}', 'Admin\CustomerController@UserBankIndex')->name('userBanks.index');
     Route::get('/userBanks/{parent_id?}/create', 'Admin\CustomerController@UserBankCreate')->name('userBanks.create');
     Route::post('/userBanks/{parent_id?}/store', 'Admin\CustomerController@UserBankStore')->name('userBanks.store');
+    Route::delete('/userBanks/{id}', 'Admin\CustomerController@UserBankDestroy')->name('userBanks.destroy');
 
     //MESSEGERS
     Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');

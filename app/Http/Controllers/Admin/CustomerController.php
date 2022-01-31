@@ -156,4 +156,15 @@ class CustomerController extends Controller
             return redirect()->back()->with('danger', $response['message']);
         }
     }
+
+    public function UserBankDestroy($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->delete();
+            return redirect()->route('userBanks.index', $user->parent_id)->with('success', 'Usuario eliminado exitosamente');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('danger', 'Error al eliminar usuario '.$e->getMessage());
+        }
+    }
 }

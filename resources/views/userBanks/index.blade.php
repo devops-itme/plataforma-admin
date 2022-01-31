@@ -193,7 +193,7 @@
                                         </a>
                                         {{-- <form action="{{route('clientes.destroy', $bank->id)}}" method="{{'post'}}">
                                             @csrf @method('DELETE') --}}
-                                            <button type="button" onclick="confirmDelete('/clientes/'+{{$user->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                            <button type="button" onclick="confirmDelete('/userBanks/'+{{$user->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         {{-- </form> --}}
