@@ -19,7 +19,7 @@
                 <i class="fas fa-people-carry text-muted"></i>
             </a>
 
-            <a href="#" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Usuarios" data-placement="bottom">
+            <a href="{{route('user.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Usuarios" data-placement="bottom">
                 <i class="fas fa-users-cog text-muted"></i>
             </a>
 

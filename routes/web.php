@@ -34,6 +34,18 @@ Route::get('/clientes/editar', function () {
     return view('customers.edit');
 })->name('customer.edit');
 
+Route::get('/usuarios', function () {
+    return view('users.index');
+})->name('user.index');
+
+Route::get('/usuarios/crear', function () {
+    return view('users.create');
+})->name('user.create');
+
+Route::get('/usuarios/editar', function () {
+    return view('users.edit');
+})->name('user.edit');
+
 //MESSEGERS
 Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
 
