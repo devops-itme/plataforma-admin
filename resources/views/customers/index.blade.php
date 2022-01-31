@@ -187,17 +187,22 @@
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
                                         <a href="{{route('clientes.show', $customer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                            <i class="far fa-folder-open"></i>
+                                            <i class="fad fa-folder-open"></i>
                                         </a>
                                         <a href="{{route('clientes.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                            <i class="fas fa-edit"></i>
+                                            <i class="fad fa-edit"></i>
                                         </a>
                                         {{-- <form action="{{route('clientes.destroy', $customer->id)}}" method="{{'post'}}">
                                             @csrf @method('DELETE') --}}
                                             <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                <i class="fas fa-trash-alt"></i>
+                                                <i class="fad fa-trash-alt"></i>
                                             </button>
                                         {{-- </form> --}}
+                                        @if($customer->getUser->role == 4)
+                                            <a href="{{route('userBanks.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
+                                                <i class="fad fa-users-class"></i>
+                                            </a>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

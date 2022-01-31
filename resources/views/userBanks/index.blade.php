@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('clientes.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('userBanks.create', $bankData->id)}}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -186,15 +186,15 @@
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
                                         <a href="{{route('userBanks.show', [$user->parent_id, $user->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                            <i class="far fa-folder-open"></i>
+                                            <i class="fad fa-folder-open"></i>
                                         </a>
-                                        <a href="{{route('clientes.edit', $user->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                            <i class="fas fa-edit"></i>
+                                        <a href="{{route('userBanks.edit', [$user->parent_id, $user->id])}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                            <i class="fad fa-edit"></i>
                                         </a>
                                         {{-- <form action="{{route('clientes.destroy', $bank->id)}}" method="{{'post'}}">
                                             @csrf @method('DELETE') --}}
-                                            <button type="button" onclick="confirmDelete('/userBanks/'+{{$user->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                <i class="fas fa-trash-alt"></i>
+                                            <button type="button" onclick="confirmDelete('/userBanks/'+{{$user->parent_id}}+'/'+{{$user->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                                <i class="fad fa-trash-alt"></i>
                                             </button>
                                         {{-- </form> --}}
                                     </div>
