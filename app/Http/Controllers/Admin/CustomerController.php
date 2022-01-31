@@ -141,7 +141,7 @@ class CustomerController extends Controller
         }
         $response = $this->saveUser($request->merge(['parent_id' => $parent_id ? $parent_id : null, 'role' => 4, 'state' => 1]));
         if($response['state'] == 200){
-            return redirect()->route('clientes.index')->with('success', 'Usuario registrado exitosamente');
+            return redirect()->route('banks.index')->with('success', 'Usuario registrado exitosamente');
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
