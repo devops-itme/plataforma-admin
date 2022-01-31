@@ -121,6 +121,7 @@ class CustomerController extends Controller
             return redirect()->back()->with('danger', $response['message']);
         }
     }
+
     //BANKS
 
     public function BankIndex()
@@ -129,21 +130,63 @@ class CustomerController extends Controller
         return view('banks.index', compact('banks'));
     }
 
-    public function BankCreate($parent_id = null)
+    //USER BANKS
+
+    public function UserBankIndex($parent_id)
     {
-        return view('banks.create', compact('parent_id'));
+        $bankData = User::find($parent_id);
+        $users = User::where('parent_id', $parent_id)->get();
+        return view('userBanks.index', compact('users', 'bankData'));
     }
 
-    public function BankStore(Request $request, $parent_id = null)
+    public function UserBankCreate($parent_id = null)
+    {
+        return view('userBanks.create', compact('parent_id'));
+    }
+
+    public function UserBankStore(Request $request, $parent_id = null)
     {
         if(is_null($request->password) && is_null($request->password_confirmation)){
             $request->merge(['password' => 'Admin1234', 'password_confirmation' => 'Admin1234']);
         }
         $response = $this->saveUser($request->merge(['parent_id' => $parent_id ? $parent_id : null, 'role' => 4, 'state' => 1]));
         if($response['state'] == 200){
-            return redirect()->route('banks.index')->with('success', 'Usuario registrado exitosamente');
+            return redirect()->route('userBanks.index', $parent_id)->with('success', 'Usuario registrado exitosamente');
         } else {
             return redirect()->back()->with('danger', $response['message']);
+        }
+    }
+
+    public function UserBankShow($parent_id, $id)
+    {
+        $user = User::where('id', $id)->with('getParent.getCustomer')->first();
+        return view('userBanks.show', compact('user'));
+    }
+
+    public function UserBankEdit($parent_id, $id)
+    {
+        $user = User::where('id', $id)->first();
+        return view('userBanks.edit', compact('user'));
+    }
+
+    public function UserBankUpdate($parent_id, $id)
+    {
+        $response = $this->updateUser(request()->merge(['user_id' => $id]));
+        if($response['state'] == 200){
+            return redirect()->route('userBanks.index', $parent_id)->with('success', 'Usuario actualizado exitosamente');
+        } else {
+            return redirect()->back()->with('danger', $response['message']);
+        }
+    }
+
+    public function UserBankDestroy($parent_id, $id)
+    {
+        try {
+            $user = User::find($id);
+            $user->delete();
+            return redirect()->route('userBanks.index', $parent_id)->with('success', 'Usuario eliminado exitosamente');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('danger', 'Error al eliminar usuario '.$e->getMessage());
         }
     }
 }

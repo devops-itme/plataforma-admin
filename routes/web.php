@@ -23,18 +23,38 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', 'HomeController@index')->name('home');
 
 
     //CUSTOMER
     Route::resource('/clientes', 'Admin\CustomerController');
+    //BANKS
     Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
-    Route::get('/bancos/{parent_id?}/create', 'Admin\CustomerController@BankCreate')->name('banks.create');
-    Route::post('/bancos/{parent_id?}/store', 'Admin\CustomerController@BankStore')->name('banks.store');
+
+    //USER BANKS
+    Route::get('/userBanks/{parent_id}', 'Admin\CustomerController@UserBankIndex')->name('userBanks.index');
+    Route::get('/userBanks/{parent_id}/create', 'Admin\CustomerController@UserBankCreate')->name('userBanks.create');
+    Route::post('/userBanks/{parent_id}/store', 'Admin\CustomerController@UserBankStore')->name('userBanks.store');
+    Route::get('/userBanks/{parent_id}/{id}', 'Admin\CustomerController@UserBankShow')->name('userBanks.show');
+    Route::get('/userBanks/{parent_id}/{id}/edit', 'Admin\CustomerController@UserBankEdit')->name('userBanks.edit');
+    Route::put('/userBanks/{parent_id}/{id}/update', 'Admin\CustomerController@UserBankUpdate')->name('userBanks.update');
+    Route::delete('/userBanks/{parent_id}/{id}', 'Admin\CustomerController@UserBankDestroy')->name('userBanks.destroy');
 
     //MESSEGERS
     Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
+
+    Route::get('/usuarios', function () {
+        return view('users.index');
+    })->name('user.index');
+
+    Route::get('/usuarios/crear', function () {
+        return view('users.create');
+    })->name('user.create');
+
+    Route::get('/usuarios/editar', function () {
+        return view('users.edit');
+    })->name('user.edit');
 
 });
