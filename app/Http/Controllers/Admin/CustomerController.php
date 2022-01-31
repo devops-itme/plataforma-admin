@@ -8,6 +8,7 @@ use App\ParameterValue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\UserTrait;
 use App\Http\Controllers\Traits\CustomerTrait;
+use App\User;
 
 class CustomerController extends Controller
 {
@@ -120,20 +121,29 @@ class CustomerController extends Controller
             return redirect()->back()->with('danger', $response['message']);
         }
     }
+    //BANKS
 
-    public function UserCreate($parent_id = null)
+    public function BankIndex()
     {
-        $documents = ParameterValue::where('parameter_id', 1)->get();
-        return view('users.create', compact('documents', 'parent_id'));
+        $banks = User::where('role', 4)->where('parent_id', NULL)->with('getCustomer')->get();
+        return view('banks.index', compact('banks'));
     }
 
-    public function UserStore(Request $request, $parent_id = null)
+    public function BankCreate($parent_id = null)
     {
-        $response = $this->saveUser($request->merge(['parent_id' => $parent_id, 'role' => 4, 'state' => 1]));
+        return view('banks.create', compact('parent_id'));
+    }
+
+    public function BankStore(Request $request, $parent_id = null)
+    {
+        if(is_null($request->password) && is_null($request->password_confirmation)){
+            $request->merge(['password' => 'Admin1234', 'password_confirmation' => 'Admin1234']);
+        }
+        $response = $this->saveUser($request->merge(['parent_id' => $parent_id ? $parent_id : null, 'role' => 4, 'state' => 1]));
         if($response['state'] == 200){
             return redirect()->route('clientes.index')->with('success', 'Usuario registrado exitosamente');
         } else {
-            return redirect()->back()->with('danger', $response['error']);
+            return redirect()->back()->with('danger', $response['message']);
         }
     }
 }

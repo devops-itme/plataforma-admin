@@ -7,7 +7,7 @@
                 <i class="fas fa-home text-muted"></i>
             </a>
 
-            <a href="#" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Bancos" data-placement="bottom">
+            <a href="{{route('banks.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Bancos" data-placement="bottom">
                 <i class="fas fa-university text-muted"></i>
             </a>
 

@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract
 
     public function getCustomer()
     {
-        return $this->hasOne(Customer::class, 'id');
+        return $this->hasOne(Customer::class);
     }
 
     public function getMessenger()

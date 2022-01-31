@@ -30,8 +30,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     //CUSTOMER
     Route::resource('/clientes', 'Admin\CustomerController');
-    Route::get('/usuarios/{parent_id?}/create', 'Admin\CustomerController@UserCreate')->name('user.create');
-    Route::post('/usuarios/{parent_id?}/store', 'Admin\CustomerController@UserStore')->name('user.store');
+    Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
+    Route::get('/bancos/{parent_id?}/create', 'Admin\CustomerController@BankCreate')->name('banks.create');
+    Route::post('/bancos/{parent_id?}/store', 'Admin\CustomerController@BankStore')->name('banks.store');
 
     //MESSEGERS
     Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');

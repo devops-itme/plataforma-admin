@@ -11,7 +11,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form action="/usuarios/{{$parent_id}}/store" method="post">
+    <form action="/bancos/{{$parent_id ? $parent_id : null}}/store" method="post">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
 
@@ -21,7 +21,7 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
-                <label>Apellidos <span class="text-danger">*</span></label>
+                <label>Apellidos: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{old('last_name')}}" />
             </div>
             <div class="form-group col-md-4">
@@ -30,32 +30,17 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
-                <label>Telefono: <span class="text-danger">*</span></label>
+                <label>Telefono: </label>
                 <input type="tel" class="form-control form-control-solid" placeholder="Telefono" name="phone" value="{{old('phone')}}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
-                <label>Tipo de documento</label>
-                <select class="form-control form-control-solid" id="document_type" name="document_type">
-                    <option selected disabled>Seleccione</option>
-                    @foreach($documents as $document)
-                        <option value="{{$document->id}}" {{$document->id == old('document_type') ? 'selected' : ''}}>{{$document->name}}</option>
-                    @endforeach
-                </select>
-                <span class="form-text text-muted"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label>Numero de identificación: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{old('document_number')}}" />
-                <span class="form-text text-muted"></span>
-            </div>
-            <div class="form-group py-3 m-0 col-md-6">
-                <label>Contraseña <span class="text-danger">*</span></label>
+            <div class="form-group m-0 col-md-4">
+                <label>Contraseña: </label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
                     type="password" name="password" />
             </div>
-            <div class="form-group py-3 m-0 col-md-6">
-                <label>Repetir Contraseña <span class="text-danger">*</span></label>
+            <div class="form-group m-0 col-md-4">
+                <label>Repetir Contraseña: </label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
                     type="password" name="password_confirmation" />
             </div>
