@@ -11,6 +11,7 @@
                     {{-- <div class="text-muted pt-2 font-size-sm">Datatable initialized from HTML table</div> --}}
                 </h2>
             </div>
+            @include('layouts.alerts')
             <div class="card-toolbar">
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
@@ -160,7 +161,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($customers))
+                    @if(count($customers) > 0)
                         @foreach($customers as $customer)
                             <tr>
                                 <th scope="row">{{$customer->id}}</th>
