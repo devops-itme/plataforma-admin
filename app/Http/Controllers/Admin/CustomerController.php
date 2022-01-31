@@ -57,7 +57,6 @@ class CustomerController extends Controller
             return redirect()->back()->withInput()->with('danger', $saveUserData['message']);
         }
         $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
-        dd($response);
         if($response['state'] == 200){
             return redirect()->route('clientes.index')->with('success', 'Cliente registrado exitosamente.');
         } else {
