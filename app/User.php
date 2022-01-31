@@ -40,4 +40,9 @@ class User extends Model implements AuthenticatableContract
     {
         return $this->belongsTo(ParameterValue::class, 'document_type');
     }
+
+    public function getParent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
 }

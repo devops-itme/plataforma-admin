@@ -121,6 +121,7 @@ class CustomerController extends Controller
             return redirect()->back()->with('danger', $response['message']);
         }
     }
+
     //BANKS
 
     public function BankIndex()
@@ -129,12 +130,21 @@ class CustomerController extends Controller
         return view('banks.index', compact('banks'));
     }
 
-    public function BankCreate($parent_id = null)
+    //USER BANKS
+
+    public function UserBankIndex($parent_id)
     {
-        return view('banks.create', compact('parent_id'));
+        $bankData = User::find($parent_id);
+        $users = User::where('parent_id', $parent_id)->get();
+        return view('userBanks.index', compact('users', 'bankData'));
     }
 
-    public function BankStore(Request $request, $parent_id = null)
+    public function UserBankCreate($parent_id = null)
+    {
+        return view('userBanks.create', compact('parent_id'));
+    }
+
+    public function UserBankStore(Request $request, $parent_id = null)
     {
         if(is_null($request->password) && is_null($request->password_confirmation)){
             $request->merge(['password' => 'Admin1234', 'password_confirmation' => 'Admin1234']);

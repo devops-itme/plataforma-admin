@@ -9,7 +9,7 @@
                 <h2 class="card-label h1">Ver cliente
                 </h2>
                 @if($customer->getUser->role == 4)
-                    <a href="{{route('banks.create', $customer->id)}}" class="btn btn-primary"> Crear usuario</a>
+                    <a href="{{route('userBanks.index', $customer->getUser->id)}}" class="btn btn-primary"> Usuarios</a>
                 @endif
             </div>
         </div>
