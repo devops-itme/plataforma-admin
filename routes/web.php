@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,29 +18,18 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::resource('/clientes', 'Admin\CustomerController');
-// Route::get('/clientes', function () {
-//     return view('customers.index');
-// })->name('customer.index');
-
-// Route::get('/clientes/crear', function () {
-//     return view('customers.create');
-// })->name('customer.create');
-
-Route::get('/clientes/ver', function () {
-    return view('customers.show');
-})->name('customer.show');
-
-Route::get('/clientes/editar', function () {
-    return view('customers.edit');
-})->name('customer.edit');
-
-//MESSEGERS
-Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
-
-
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['middleware' => 'auth'], function () {
+
+
+    //CUSTOMER
+    Route::resource('/clientes', 'Admin\CustomerController');
+
+    //MESSEGERS
+    Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
+
+});
