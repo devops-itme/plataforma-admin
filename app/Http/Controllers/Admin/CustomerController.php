@@ -8,6 +8,7 @@ use App\ParameterValue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\UserTrait;
 use App\Http\Controllers\Traits\CustomerTrait;
+use App\User;
 
 class CustomerController extends Controller
 {
@@ -19,7 +20,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::get();
+        $customers = Customer::latest()->get();
         return view('customers.index', compact('customers'));
     }
 
@@ -118,6 +119,52 @@ class CustomerController extends Controller
             return redirect()->route('clientes.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
+        }
+    }
+
+    //BANKS
+
+    public function BankIndex()
+    {
+        $banks = User::where('role', 4)->where('parent_id', NULL)->with('getCustomer')->get();
+        return view('banks.index', compact('banks'));
+    }
+
+    //USER BANKS
+
+    public function UserBankIndex($parent_id)
+    {
+        $bankData = User::find($parent_id);
+        $users = User::where('parent_id', $parent_id)->get();
+        return view('userBanks.index', compact('users', 'bankData'));
+    }
+
+    public function UserBankCreate($parent_id = null)
+    {
+        return view('userBanks.create', compact('parent_id'));
+    }
+
+    public function UserBankStore(Request $request, $parent_id = null)
+    {
+        if(is_null($request->password) && is_null($request->password_confirmation)){
+            $request->merge(['password' => 'Admin1234', 'password_confirmation' => 'Admin1234']);
+        }
+        $response = $this->saveUser($request->merge(['parent_id' => $parent_id ? $parent_id : null, 'role' => 4, 'state' => 1]));
+        if($response['state'] == 200){
+            return redirect()->route('banks.index')->with('success', 'Usuario registrado exitosamente');
+        } else {
+            return redirect()->back()->with('danger', $response['message']);
+        }
+    }
+
+    public function UserBankDestroy($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->delete();
+            return redirect()->route('userBanks.index', $user->parent_id)->with('success', 'Usuario eliminado exitosamente');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('danger', 'Error al eliminar usuario '.$e->getMessage());
         }
     }
 }

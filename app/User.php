@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract
 
     public function getCustomer()
     {
-        return $this->hasOne(Customer::class, 'id');
+        return $this->hasOne(Customer::class);
     }
 
     public function getMessenger()
@@ -39,5 +39,10 @@ class User extends Model implements AuthenticatableContract
     public function getDocumentType()
     {
         return $this->belongsTo(ParameterValue::class, 'document_type');
+    }
+
+    public function getParent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
     }
 }
