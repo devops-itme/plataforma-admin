@@ -157,6 +157,12 @@ class CustomerController extends Controller
         }
     }
 
+    public function UserBankShow($parent_id, $id)
+    {
+        $user = User::where('id', $id)->with('getParent.getCustomer')->first();
+        return view('userBanks.show', compact('user'));
+    }
+
     public function UserBankDestroy($id)
     {
         try {
