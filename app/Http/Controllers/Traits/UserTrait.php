@@ -44,6 +44,25 @@ trait UserTrait
         );
     }
 
+    public function getUser()
+    {
+        try {
+            $users = User::paginate(10);
+            return $this->respond(200, $users);
+        } catch (\Throwable $e) {
+            return $this->respond(500, [], $e->getMessage());
+        }
+    }
+    public function showUser($id)
+    {
+        try {
+            $users = User::where('id', $id)->first();
+            return $this->respond(200, $users);
+        } catch (\Throwable $e) {
+            return $this->respond(500, [], $e->getMessage());
+        }
+    }
+
     public function saveUser($request)
     {
         $validator = $this->valide($request, 'create');
@@ -63,7 +82,7 @@ trait UserTrait
                 'phone' => $request->phone,
                 'password' => Hash::make($request->password),
                 'role' => $request->role,
-                'state' => $request->state
+                'state' => $request->state ?? 1
             ]);
 
             return $this->respond(200, $user, null, 'Usuario creado exitosamente');

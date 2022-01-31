@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('user.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('user.create') }}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -159,86 +159,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>
-                            <span class="label label-inline label-light-primary font-weight-bold">
-                                Pending
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                    @foreach ($users as $user)
 
-                                <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="{{route('user.edit')}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Ana</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>
-                            <span class="label label-inline label-light-success font-weight-bold">
-                                Approved
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                        <tr>
+                            <th scope="row">{{ $user->name }}</th>
+                            <td>{{ $user->document_number }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->phone }}</td>
+                            <td>
+                                @if ($user->state == 1)
+                                    <span class="label label-inline label-light-success font-weight-bold">
+                                        Activo
+                                    </span>
+                                @else
+                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                        Inactivo
+                                    </span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>Nick</td>
-                        <td>Nick</td>
-                        <td>
-                            <span class="label label-inline label-light-danger font-weight-bold">
-                                New
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-
-                                <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <i class="far fa-folder-open"></i>
+                                    </a>
+                                    <a href="{{ route('user.edit', $user->id) }}"
+                                        class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a onclick="confirmDelete('/usuarios/'+{{$user->id}})" role="button"  id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
-
-
-
             <!--end: Datatable-->
         </div>
     </div>

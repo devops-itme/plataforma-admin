@@ -27,7 +27,8 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
 
-
+    //USER
+    Route::resource('usuarios', 'Admin\UserController')->names('user');
     //CUSTOMER
     Route::resource('/clientes', 'Admin\CustomerController');
     //BANKS
@@ -43,16 +44,6 @@ Route::group(['middleware' => 'auth'], function () {
     //MESSEGERS
     Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
 
-    Route::get('/usuarios', function () {
-        return view('users.index');
-    })->name('user.index');
 
-    Route::get('/usuarios/crear', function () {
-        return view('users.create');
-    })->name('user.create');
-
-    Route::get('/usuarios/editar', function () {
-        return view('users.edit');
-    })->name('user.edit');
 
 });
