@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,33 +17,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
-
-//Clientes
-Route::resource('/clientes', 'Admin\CustomerController');
-Route::get('/usuarios/{parent_id?}/create', 'Admin\CustomerController@UserCreate')->name('user.create');
-Route::post('/usuarios/{parent_id?}/store', 'Admin\CustomerController@UserStore')->name('user.store');
 // Route::get('/clientes', function () {
 //     return view('customers.index');
 // })->name('customer.index');
-
-// Route::get('/clientes/crear', function () {
-//     return view('customers.create');
-// })->name('customer.create');
-
-Route::get('/clientes/ver', function () {
-    return view('customers.show');
-})->name('customer.show');
-
-Route::get('/clientes/editar', function () {
-    return view('customers.edit');
-})->name('customer.edit');
-
-//MESSEGERS
-Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
-
-
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['middleware' => 'auth'], function () {
+
+
+    //CUSTOMER
+    Route::resource('/clientes', 'Admin\CustomerController');
+    Route::get('/usuarios/{parent_id?}/create', 'Admin\CustomerController@UserCreate')->name('user.create');
+    Route::post('/usuarios/{parent_id?}/store', 'Admin\CustomerController@UserStore')->name('user.store');
+
+    //MESSEGERS
+    Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
+
+});
