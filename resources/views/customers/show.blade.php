@@ -8,7 +8,9 @@
             <div class="card-title">
                 <h2 class="card-label h1">Ver cliente
                 </h2>
-                <a href="{{route('user.create', $customer->id)}}" class="btn btn-primary"> Crear usuario</a>
+                @if($customer->getUser->role == 4)
+                    <a href="{{route('user.create', $customer->id)}}" class="btn btn-primary"> Crear usuario</a>
+                @endif
             </div>
         </div>
         <div class="card-body">
