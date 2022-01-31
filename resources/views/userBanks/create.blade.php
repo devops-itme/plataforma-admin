@@ -11,7 +11,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form action="/bancos/{{$parent_id ? $parent_id : null}}/store" method="post">
+    <form action="/userBanks/{{$parent_id ? $parent_id : null}}/store" method="post">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
 

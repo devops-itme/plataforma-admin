@@ -30,9 +30,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     //CUSTOMER
     Route::resource('/clientes', 'Admin\CustomerController');
-    Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
-    Route::get('/bancos/{parent_id?}/create', 'Admin\CustomerController@BankCreate')->name('banks.create');
-    Route::post('/bancos/{parent_id?}/store', 'Admin\CustomerController@BankStore')->name('banks.store');
+    //BANKS
+    Route::get('/bancos', 'Admin\CustomerController@Index')->name('banks.index');
+
+    //USER BANKS
+    Route::get('/userBanks/{parent_id}', 'Admin\CustomerController@UserBankIndex')->name('userBanks.index');
+    Route::get('/userBanks/{parent_id}/create', 'Admin\CustomerController@UserBankCreate')->name('userBanks.create');
+    Route::post('/userBanks/{parent_id}/store', 'Admin\CustomerController@UserBankStore')->name('userBanks.store');
+    Route::get('/userBanks/{parent_id}/{id}', 'Admin\CustomerController@UserBankShow')->name('userBanks.show');
+    Route::delete('/userBanks/{id}', 'Admin\CustomerController@UserBankDestroy')->name('userBanks.destroy');
 
     //MESSEGERS
     Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
