@@ -185,7 +185,7 @@
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                        <a href="{{route('clientes.show', $user->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <a href="{{route('userBanks.show', [$user->parent_id, $user->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="far fa-folder-open"></i>
                                         </a>
                                         <a href="{{route('clientes.edit', $user->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
