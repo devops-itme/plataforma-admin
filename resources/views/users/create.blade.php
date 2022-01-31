@@ -29,36 +29,26 @@
                 <input type="email" class="form-control form-control-solid" placeholder="Email" name="email" value="" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label>Telefono: <span class="text-danger">*</span></label>
                 <input type="tel" class="form-control form-control-solid" placeholder="Telefono" name="phone" value="" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
-                <label>Tipo de documento</label>
-                {{-- <div class="radio-inline">
-                    <label class="radio radio-rounded">
-                        <input type="radio" checked="checked" name="radios15_1" />
-                        <span></span>
-                        Cedula
-                    </label>
-                    <label class="radio radio-rounded">
-                        <input type="radio" name="radios15_1" />
-                        <span></span>
-                        NIT
-                    </label>
-                    <label class="radio radio-rounded">
-                        <input type="radio" name="radios15_1" />
-                        <span></span>
-                        RUT
-                    </label>
-                </div> --}}
+            <div class="form-group col-md-3">
+                <label>Rol</label>
                 <select class="form-control form-control-solid" id="document_type" name="document_type">
                     <option selected disabled>Seleccione</option>
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
+                <label>Tipo de documento</label>
+                <select class="form-control form-control-solid" id="document_type" name="document_type">
+                    <option selected disabled>Seleccione</option>
+                </select>
+                <span class="form-text text-muted"></span>
+            </div>
+            <div class="form-group col-md-3">
                 <label>Numero de identificación: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="" />
                 <span class="form-text text-muted"></span>
