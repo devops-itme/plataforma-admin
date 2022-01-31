@@ -8,6 +8,7 @@
             <div class="card-title">
                 <h2 class="card-label h1">Ver cliente
                 </h2>
+                <a href="{{route('user.create', $customer->id)}}" class="btn btn-primary"> Crear usuario</a>
             </div>
         </div>
         <div class="card-body">

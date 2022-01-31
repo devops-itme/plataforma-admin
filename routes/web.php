@@ -17,7 +17,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+//Clientes
 Route::resource('/clientes', 'Admin\CustomerController');
+Route::get('/usuarios/{parent_id?}/create', 'Admin\CustomerController@UserCreate')->name('user.create');
+Route::post('/usuarios/{parent_id?}/store', 'Admin\CustomerController@UserStore')->name('user.store');
 // Route::get('/clientes', function () {
 //     return view('customers.index');
 // })->name('customer.index');

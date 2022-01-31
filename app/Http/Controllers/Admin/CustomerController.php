@@ -19,7 +19,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::get();
+        $customers = Customer::latest()->get();
         return view('customers.index', compact('customers'));
     }
 
@@ -118,6 +118,22 @@ class CustomerController extends Controller
             return redirect()->route('clientes.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
+        }
+    }
+
+    public function UserCreate($parent_id = null)
+    {
+        $documents = ParameterValue::where('parameter_id', 1)->get();
+        return view('users.create', compact('documents', 'parent_id'));
+    }
+
+    public function UserStore(Request $request, $parent_id = null)
+    {
+        $response = $this->saveUser($request->merge(['parent_id' => $parent_id, 'role' => 4, 'state' => 1]));
+        if($response['state'] == 200){
+            return redirect()->route('clientes.index')->with('success', 'Usuario registrado exitosamente');
+        } else {
+            return redirect()->back()->with('danger', $response['error']);
         }
     }
 }
