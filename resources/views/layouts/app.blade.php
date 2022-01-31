@@ -18,6 +18,8 @@
     <script src="{{ asset('js/alert.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{asset('js/apexcharts.js')}}"></script>
+    <script src="{{asset('js/uikit.min.js')}}"></script>
+    <script src="{{asset('js/uikit-icons.min.js')}}"></script>
 
 
     <!-- Fonts -->
@@ -32,6 +34,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/tooltip.css')}}">
+    <link rel="stylesheet" href="{{asset('css/uikit.min.css')}}">
 </head>
 <body class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled subheader-fixed">
     <div id="app">
