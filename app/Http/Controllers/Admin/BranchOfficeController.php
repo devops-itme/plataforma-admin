@@ -30,9 +30,10 @@ class BranchOfficeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($user_id)
     {
-        //
+        $documents = ParameterValue::where('parameter_id',1)->get();
+        return view('branchOffices.create', compact('documents','user_id'));
     }
 
     /**
@@ -41,9 +42,14 @@ class BranchOfficeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $user_id)
     {
-        //
+        $response = $this->saveBranchOffice($request->merge(['user_id' => $user_id]));
+        if($response['state'] == 200){
+            return redirect()->route('branchOffices.index', $user_id)->with('success', $response['message']);
+        } else {
+            return redirect()->back()->with('danger', $response['message']);
+        }
     }
 
     /**
