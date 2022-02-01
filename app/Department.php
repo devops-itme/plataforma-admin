@@ -12,6 +12,7 @@ class Department extends Model
         'user_id',
         'name',
         'description',
+        'state',
     ];
 
     public function bankUser()

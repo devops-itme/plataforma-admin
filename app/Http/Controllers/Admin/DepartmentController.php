@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\DepartmentTrait;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    use DepartmentTrait;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+        $departments = $this->getDepartments();
+        $departments = $departments['data'];
+        return view('departments.index', compact('departments'));
     }
 
     /**
@@ -24,7 +28,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('departments.create');
     }
 
     /**
@@ -35,7 +39,12 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response = $this->saveDepartment($request, 2);
+        if($response['state'] == 200){
+            return redirect()->route('department.index')->with('success', $response['message']);
+        } else {
+            return redirect()->back()->withInput()->with('danger', $response['error']);
+        }
     }
 
     /**
@@ -46,7 +55,9 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $department = $this->showDepartment($id);
+        $department = $department['data'];
+        return view('departments.show', compact('department'));
     }
 
     /**
@@ -57,7 +68,9 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $department = $this->showDepartment($id);
+        $department = $department['data'];
+        return view('departments.edit', compact('department'));
     }
 
     /**
@@ -69,7 +82,12 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = $this->updateDepartment($request, $id);
+        if ($response['state'] == 200) {
+            return redirect()->route('department.index')->with('success',  $response['message']);
+        } else {
+            return redirect()->back()->with('danger', $response['message']);
+        }
     }
 
     /**
@@ -80,6 +98,11 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->deleteDepartment($id);
+        if($response['state'] == 200){
+            return redirect()->route('department.index')->with('success', $response['message']);
+        } else {
+            return redirect()->back()->with('danger', $response['message']);
+        }
     }
 }

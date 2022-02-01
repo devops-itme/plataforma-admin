@@ -51,4 +51,16 @@ class User extends Model implements AuthenticatableContract
     {
         return $this->hasMany(Department::class, 'user_id');
     }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        //DELETE CASCADE DEPARTMENTS
+        static::deleting(function ($deparments) {
+            $deparments->getDepartments()->delete();
+        });
+
+    }
+
 }
