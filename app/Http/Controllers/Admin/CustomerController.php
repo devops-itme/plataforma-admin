@@ -57,9 +57,11 @@ class CustomerController extends Controller
         if($saveUserData['state'] != 200){
             return redirect()->back()->with('danger', $saveUserData['message']);
         }
-        $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));
-        if($saveBranchOfficeData['state'] != 200){
-            return redirect()->back()->with('danger', $saveBranchOfficeData['error']);
+        if(!is_null($request->branch_office_name)){
+            $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));
+            if($saveBranchOfficeData['state'] != 200){
+                return redirect()->back()->with('danger', $saveBranchOfficeData['error']);
+            }
         }
         $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
         if($response['state'] == 200){
