@@ -20,6 +20,7 @@ class CreateDepartmentsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}")->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

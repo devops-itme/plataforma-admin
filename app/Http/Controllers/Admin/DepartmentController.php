@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\DepartmentTrait;
+use App\User;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -14,11 +15,13 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $departments = $this->getDepartments();
+        $departments = $this->getDepartments($id);
         $departments = $departments['data'];
-        return view('departments.index', compact('departments'));
+        $user_id = User::find($id);
+        $user_id = $user_id->id;
+        return view('departments.index', compact('departments', 'user_id'));
     }
 
     /**
@@ -26,9 +29,9 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('departments.create');
+        return view('departments.create',['user_id' => $id]);
     }
 
     /**
@@ -37,11 +40,11 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $response = $this->saveDepartment($request, 2);
+        $response = $this->saveDepartment($request, $id);
         if($response['state'] == 200){
-            return redirect()->route('department.index')->with('success', $response['message']);
+            return redirect()->route('department.index', $id)->with('success', $response['message']);
         } else {
             return redirect()->back()->withInput()->with('danger', $response['error']);
         }
@@ -83,8 +86,9 @@ class DepartmentController extends Controller
     public function update(Request $request, $id)
     {
         $response = $this->updateDepartment($request, $id);
+        $user_id = $response['data']->user_id;
         if ($response['state'] == 200) {
-            return redirect()->route('department.index')->with('success',  $response['message']);
+            return redirect()->route('department.index', $user_id )->with('success',  $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }

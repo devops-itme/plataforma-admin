@@ -24,10 +24,10 @@ trait DepartmentTrait
             ]
         );
     }
-    public function getDepartments()
+    public function getDepartments($id)
     {
         try {
-            $departments = Department::paginate(10);
+            $departments = Department::where('user_id', $id)->paginate(10);
             return $this->respond(200, $departments);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());

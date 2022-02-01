@@ -18,15 +18,25 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Nombres</div>
-                        <div class="line-height-xl"></div>
+                        <div class="line-height-xl">{{$department->name}}</div>
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Estado</div>
-                        <div class="line-height-xl"></div>
+                        <div class="line-height-xl">
+                            @if ($department->state == 1)
+                            <span class="label label-inline label-light-success font-weight-bold">
+                                Activo
+                            </span>
+                        @else
+                            <span class="label label-inline label-light-danger font-weight-bold">
+                                Inactivo
+                            </span>
+                        @endif
+                        </div>
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Descripción:</div>
-                        <div class="line-height-xl"></div>
+                        <div class="line-height-xl">{{$department->description}}</div>
                     </div>
                 </div>
             </div>

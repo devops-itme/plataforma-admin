@@ -12,7 +12,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form method="POST" action="{{route('department.store')}}">
+    <form method="POST" action="{{route('department.store', $user_id)}}">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
 
