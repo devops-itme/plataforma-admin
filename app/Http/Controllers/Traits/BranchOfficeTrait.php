@@ -42,6 +42,12 @@ trait BranchOfficeTrait
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
         try {
+            if($request->branch_office_default == 1){
+                $defaultOffice = BranchOffice::where('default', 1)->first();
+                if(!is_null($defaultOffice)){
+                    $defaultOffice->update(['default' => 0]);
+                }
+            }
             $branchOffice = BranchOffice::create([
                 'name' => $request->branch_office_name,
                 'description' => $request->branch_office_description,
@@ -76,6 +82,12 @@ trait BranchOfficeTrait
             $branchOffice = BranchOffice::find($request->office_id);
             if (is_null($branchOffice)) {
                 return $this->respond(500, [], 'user not found', 'No se encontro la oficina');
+            }
+            if($request->branch_office_default == 1){
+                $defaultOffice = BranchOffice::where('default', 1)->first();
+                if(!is_null($defaultOffice)){
+                    $defaultOffice->update(['default' => 0]);
+                }
             }
             $branchOffice->update([
                 'name' => $request->branch_office_name,
