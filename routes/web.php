@@ -50,6 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
     //MESSEGERS
     Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
 
+    //BANK DEPARTMENTS
+    Route::resource('departamentos', 'Admin\DepartmentController')->names('department');
 
 
 });

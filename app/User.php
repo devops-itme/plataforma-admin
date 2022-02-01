@@ -45,4 +45,22 @@ class User extends Model implements AuthenticatableContract
     {
         return $this->belongsTo(User::class, 'parent_id');
     }
+
+    //Bank departments
+    public function getDepartments()
+    {
+        return $this->hasMany(Department::class, 'user_id');
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        //DELETE CASCADE DEPARTMENTS
+        static::deleting(function ($deparments) {
+            $deparments->getDepartments()->delete();
+        });
+
+    }
+
 }
