@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('userBanks.create', $bankData->id)}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('branchOffices.create', $bankData->id)}}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
