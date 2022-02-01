@@ -177,9 +177,9 @@
                                         <a href="{{route('branchOffices.show', [$office->user_id, $office->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-folder-open"></i>
                                         </a>
-                                        {{-- <a href="{{route('userBanks.edit', [$user->parent_id, $user->id])}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        <a href="{{route('branchOffices.edit', [$office->user_id, $office->id])}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                             <i class="fad fa-edit"></i>
-                                        </a> --}}
+                                        </a>
                                         <button type="button" onclick="confirmDelete('/sucursales/'+{{$office->user_id}}+'/'+{{$office->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>

@@ -65,9 +65,11 @@ class BranchOfficeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($parent_id, $id)
     {
-        //
+        $office = BranchOffice::where('id', $id)->first();
+        $documents = ParameterValue::where('parameter_id',1)->get();
+        return view('branchOffices.edit', compact('office', 'documents'));
     }
 
     /**
@@ -77,9 +79,14 @@ class BranchOfficeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $parent_id, $id)
     {
-        //
+        $response = $this->updateBranchOffice($request->merge(['office_id' => $id]));
+        if($response['state'] == 200){
+            return redirect()->route('branchOffices.index', $parent_id)->with('success', $response['message']);
+        } else {
+            return redirect()->back()->with('danger', $response['message']);
+        }
     }
 
     /**
