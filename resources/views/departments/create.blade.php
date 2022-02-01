@@ -25,8 +25,8 @@
                 <label>Estado</label>
                 <select class="form-control form-control-solid" id="document_type" name="state">
                     <option selected disabled>Seleccione</option>
-                    <option value="1" {{old('state')==1?'selected':''}} > Activo</option>
-                    <option value="0" {{old('state')==0?'selected':''}} > Inactivo</option>
+                    <option value="1" > Activo</option>
+                    <option value="0" > Inactivo</option>
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
