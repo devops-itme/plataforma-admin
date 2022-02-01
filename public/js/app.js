@@ -37546,6 +37546,58 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/_addresses.js":
+/*!************************************!*\
+  !*** ./resources/js/_addresses.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Addresses; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Addresses = /*#__PURE__*/function () {
+  function Addresses() {
+    _classCallCheck(this, Addresses);
+  }
+
+  _createClass(Addresses, [{
+    key: "initialize",
+    value: function initialize() {
+      this.autocompleteAddress();
+    }
+  }, {
+    key: "autocompleteAddress",
+    value: function autocompleteAddress() {
+      var directionCity = document.getElementById('branch_office_address');
+      google.maps.event.addDomListener(window, 'load', function () {
+        var autocompleteCity = new google.maps.places.Autocomplete(directionCity, {
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
+          types: ['geocode']
+        });
+        autocompleteCity.addListener("place_changed", function () {
+          var place = autocompleteCity.getPlace();
+          document.getElementById('branch_office_address').value = place.formatted_address;
+          document.getElementById('branch_office_lat').value = place.geometry.location.lat();
+          document.getElementById('branch_office_lng').value = place.geometry.location.lng();
+        });
+      });
+    }
+  }]);
+
+  return Addresses;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/_messengers.js":
 /*!*************************************!*\
   !*** ./resources/js/_messengers.js ***!
@@ -37673,13 +37725,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
+/* harmony import */ var _addresses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_addresses */ "./resources/js/_addresses.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
+
 var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_1__["default"]();
+var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_2__["default"]();
 document.addEventListener("DOMContentLoaded", function (event) {
   messengers.initialize();
+  addresses.initialize();
 });
 
 /***/ }),
@@ -37747,8 +37803,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

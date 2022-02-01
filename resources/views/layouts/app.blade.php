@@ -12,6 +12,9 @@
      <link rel="shortcut icon" href="{{ asset('/img/favicon-2.png') }}" />
 
     <!-- Scripts -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9MFKCZ2zM_6wtlJCiaSdalzbubH_tKFk&libraries=places">
+    </script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{asset('js/tooltip.js')}}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -20,7 +23,6 @@
     <script src="{{asset('js/apexcharts.js')}}"></script>
     <script src="{{asset('js/uikit.min.js')}}"></script>
     <script src="{{asset('js/uikit-icons.min.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9MFKCZ2zM_6wtlJCiaSdalzbubH_tKFk&callback=initMap&libraries=places"></script>
 
 
     <!-- Fonts -->
