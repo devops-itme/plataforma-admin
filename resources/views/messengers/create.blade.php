@@ -12,7 +12,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form method="POST" action="{{route('messenger.store')}}" id="formCreateMessenger">
+    <form method="POST" action="{{route('messenger.store')}}" id="formCreateMessenger"  enctype="multipart/form-data">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
 
@@ -40,7 +40,7 @@
                 <select name="document_type" class="form-control form-control-solid" id="type_doc">
                     <option selected disabled>Seleccione tipo de documento</option>
                     @foreach($document_type as $document)
-                        <option {{old('document')==$document->id?'selected ':''}}  value="{{$document->id}}">{{$document->name}}</option>
+                        <option {{old('document_type')==$document->id?'selected ':''}}  value="{{$document->id}}">{{$document->name}}</option>
                     @endforeach
                 </select>
             </div>

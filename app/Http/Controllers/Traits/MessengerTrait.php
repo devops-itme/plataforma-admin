@@ -93,11 +93,11 @@ trait MessengerTrait
             $messenger = Messenger::find($id);
             $messenger->update($request->all());
 
-            $updateUser = $this->updateUser($request->merge(['user_id' => $messenger->user_id]));
+            $updateUser = $this->updateUser($request->merge(['user_id' => $messenger->user_id]), $id);
             if ($updateUser['state'] == 500) {
                 return $this->respond(500, [], $updateUser['error'], $updateUser['message']);
             }
-            return $this->respond(200, $messenger);
+            return $this->respond(200, $messenger, null, 'Mensajero actualizado exitosamente');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }
