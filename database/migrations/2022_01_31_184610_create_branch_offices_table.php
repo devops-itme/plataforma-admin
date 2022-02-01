@@ -29,7 +29,7 @@ class CreateBranchOfficesTable extends Migration
             $table->string('lng')->nullable();
             $table->integer('default')->nullable();
             $table->integer('payment_method')->nullable();
-            $table->integer('phone')->nullable();
+            $table->string('phone')->nullable();
             $table->integer('usage_mode')->nullable()->comment("it's a parameter_value");
             $table->unsignedBigInteger('user_id')->nullable();
             // $table->foreign('user_id')->references('id')->on('users');

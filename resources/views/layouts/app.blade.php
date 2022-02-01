@@ -20,6 +20,7 @@
     <script src="{{asset('js/apexcharts.js')}}"></script>
     <script src="{{asset('js/uikit.min.js')}}"></script>
     <script src="{{asset('js/uikit-icons.min.js')}}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9MFKCZ2zM_6wtlJCiaSdalzbubH_tKFk&callback=initMap&libraries=places"></script>
 
 
     <!-- Fonts -->
