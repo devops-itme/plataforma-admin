@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //BRANCH OFFICES
     Route::get('/sucursales/{parent_id}', 'Admin\BranchOfficeController@index')->name('branchOffices.index');
+    Route::get('/sucursales/{parent_id}/{id}', 'Admin\BranchOfficeController@show')->name('branchOffices.show');
     Route::delete('sucursales/{parent_id}/{id}', 'Admin\BranchOfficeController@destroy')->name('branchOffices.delete');
 
     //MESSEGERS

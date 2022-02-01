@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\BranchOffice;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
+use App\ParameterValue;
 use App\User;
 
 class BranchOfficeController extends Controller
@@ -51,9 +52,11 @@ class BranchOfficeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($parent_id, $id)
     {
-        //
+        $office = BranchOffice::where('id', $id)->first();
+        $documents = ParameterValue::where('parameter_id',1)->get();
+        return view('branchOffices.show', compact('office', 'documents'));
     }
 
     /**
