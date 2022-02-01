@@ -25,4 +25,20 @@ class BranchOffice extends Model
         'usage_mode',
         'user_id'
     ];
+
+
+    //Bank departments
+    public function getDepartments()
+    {
+        return $this->hasMany(Department::class, 'branch_office_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        //DELETE CASCADE DEPARTMENTS
+        static::deleting(function ($deparments) {
+            $deparments->getDepartments()->delete();
+        });
+    }
 }

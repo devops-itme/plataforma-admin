@@ -18,9 +18,9 @@ class Department extends Model
         'state',
     ];
 
-    public function bankUser()
+    public function getBranchOffice()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(BranchOffice::class, 'branch_office_id');
     }
 
 

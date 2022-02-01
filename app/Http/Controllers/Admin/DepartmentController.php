@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\BranchOffice;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\DepartmentTrait;
-use App\User;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -19,9 +19,8 @@ class DepartmentController extends Controller
     {
         $departments = $this->getDepartments($id);
         $departments = $departments['data'];
-        $user_id = User::find($id);
-        $user_id = $user_id->id;
-        return view('departments.index', compact('departments', 'user_id'));
+        $branch_office_id = $id;
+        return view('departments.index', compact('departments', 'branch_office_id'));
     }
 
     /**
@@ -31,7 +30,7 @@ class DepartmentController extends Controller
      */
     public function create($id)
     {
-        return view('departments.create',['user_id' => $id]);
+        return view('departments.create',['branch_office_id' => $id]);
     }
 
     /**
@@ -86,9 +85,9 @@ class DepartmentController extends Controller
     public function update(Request $request, $id)
     {
         $response = $this->updateDepartment($request, $id);
-        $user_id = $response['data']->user_id;
+        $branch_office_id = $response['data']->branch_office_id;
         if ($response['state'] == 200) {
-            return redirect()->route('department.index', $user_id )->with('success',  $response['message']);
+            return redirect()->route('department.index', $branch_office_id )->with('success',  $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }

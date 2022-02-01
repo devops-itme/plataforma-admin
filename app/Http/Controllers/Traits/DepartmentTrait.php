@@ -7,7 +7,6 @@ use App\Http\Controllers\RestActions;
 use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
 use App\ParameterValue;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Traits\UserTrait;
 use Illuminate\Support\Facades\Validator;
 
 trait DepartmentTrait
@@ -27,7 +26,7 @@ trait DepartmentTrait
     public function getDepartments($id)
     {
         try {
-            $departments = Department::where('user_id', $id)->paginate(10);
+            $departments = Department::where('branch_office_id', $id)->paginate(10);
             return $this->respond(200, $departments);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
@@ -52,7 +51,7 @@ trait DepartmentTrait
         }
         try {
             $department = Department::create([
-                'user_id' => $id,
+                'branch_office_id' => $id,
                 'name' => $request->name,
                 'state' => $request->state ?? 1,
                 'description' => $request->description,
