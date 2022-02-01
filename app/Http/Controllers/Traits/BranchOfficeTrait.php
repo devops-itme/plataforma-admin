@@ -65,4 +65,18 @@ trait BranchOfficeTrait
             return $this->respond(500, [], $e->getMessage() . 'Error al crear oficina');
         }
     }
+
+    public function deleteBranchOffice($id)
+    {
+        try {
+            $branchOffice = BranchOffice::find($id);
+            if (is_null($branchOffice)) {
+                return $this->respond(500, [], 'user not found', 'No se encontro la oficina');
+            }
+            $branchOffice->delete();
+            return $this->respond(200, $branchOffice, null, 'Oficina eliminada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar usuario');
+        }
+    }
 }

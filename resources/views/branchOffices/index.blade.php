@@ -7,7 +7,7 @@
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
-                <h2 class="card-label h1">Bancos
+                <h2 class="card-label h1">Sucursales - Banco {{$bankData->getCustomer->business_name}}
                     {{-- <div class="text-muted pt-2 font-size-sm">Datatable initialized from HTML table</div> --}}
                 </h2>
             </div>
@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('clientes.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('userBanks.create', $bankData->id)}}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -151,68 +151,45 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Nombre empresa</th>
-                        <th scope="col">Nombre comercial</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Dirección</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Telefono</th>
-                        <th scope="col">Zona</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">Predeterminada</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if(count($banks) > 0)
-                        @foreach($banks as $bank)
+                    @if(count($branchOffices) > 0)
+                        @foreach($branchOffices as $office)
                             <tr>
-                                <th scope="row">{{$bank->id}}</th>
-                                <td>{{$bank->getCustomer->business_name}}</td>
-                                <td>{{$bank->getCustomer->tradename}}</td>
-                                <td>{{$bank->email}}</td>
-                                <td>{{$bank->phone}}</td>
-                                <td>{{$bank->getCustomer->getZone->name}}</td>
-                                @if($bank->state == 1)
-                                    <td>
-                                        <span class="label label-inline label-light-success font-weight-bold">
-                                            Activo
-                                        </span>
-                                    </td>
-                                @else
-                                    <td>
-                                        <span class="label label-inline label-light-danger font-weight-bold">
-                                            Inactivo
-                                        </span>
-                                    </td>
-                                @endif
+                                <th scope="row">{{$office->id}}</th>
+                                <td>{{$office->name}}</td>
+                                <td>{{$office->description}}</td>
+                                <td>{{$office->address}}</td>
+                                <td>{{$office->email}}</td>
+                                <td>{{$office->phone}}</td>
+                                <td>{{$office->default == 1 ? 'Sí' : 'No'}}</td>
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                        <a href="{{route('clientes.show', $bank->getCustomer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        {{-- <a href="{{route('userBanks.show', [$user->parent_id, $user->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-folder-open"></i>
-                                        </a>
-                                        <a href="{{route('clientes.edit', $bank->getCustomer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        </a> --}}
+                                        {{-- <a href="{{route('userBanks.edit', [$user->parent_id, $user->id])}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                             <i class="fad fa-edit"></i>
-                                        </a>
-                                        {{-- <form action="{{route('clientes.destroy', $bank->id)}}" method="{{'post'}}">
-                                            @csrf @method('DELETE') --}}
-                                            <button type="button" onclick="confirmDelete('/clientes/'+{{$bank->getCustomer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                <i class="fad fa-trash-alt"></i>
-                                            </button>
-                                        {{-- </form> --}}
-                                        {{-- @if($customer->getUser->role == 4) --}}
-                                        <a href="{{route('userBanks.index', $bank->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
-                                            <i class="fad fa-users-class"></i>
-                                        </a>
-                                        <a href="{{route('branchOffices.index', $bank->id)}}" class="btn btn-icon btn-light-info btn-sm mr-2">
-                                            <i class="fad fa-building"></i>
-                                        </a>
-                                        {{-- @endif --}}
+                                        </a> --}}
+                                        <button type="button" onclick="confirmDelete('/userBanks/'+{{$office->user_id}}+'/'+{{$office->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                            <i class="fad fa-trash-alt"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
-                            <th colspan="8"><center>¡No hay bancos registrados!</center></td>
+                            <th colspan="8"><center>¡No hay usuarios registrados!</center></td>
                         </tr>
                     @endif
                 </tbody>
