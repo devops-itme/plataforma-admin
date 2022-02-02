@@ -23,9 +23,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//ORDERS
-Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
 
@@ -66,5 +63,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('departamentos/{id}/edit', 'Admin\DepartmentController@edit')->name('department.edit');
     Route::put('departamentos/{id}', 'Admin\DepartmentController@update')->name('department.update');
     Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('department.destroy');
+
+    //ORDENES
+    Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
+
+    //GUIAS
+    Route::resource('/guias', 'Admin\GuidesController')->names('guias');
+
+    //RUTAS
+    Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
 
 });
