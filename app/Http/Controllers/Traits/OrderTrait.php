@@ -55,7 +55,7 @@ trait OrderTrait
                 'service_type_id ' => $request->service_type_id,
                 'state' => $request->state
             ]);
-            return $this->respond(200, $order, null, 'Oficina actualizada exitosamente');
+            return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar orden');
         }
