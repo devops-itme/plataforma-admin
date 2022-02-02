@@ -23,6 +23,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//ORDERS
+Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
