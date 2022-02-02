@@ -5,8 +5,7 @@ return [
         1 => 'Admin',
         2 => 'Operador',
         3 => 'Mensajero',
-        4 => 'Banco',
-        5 => 'Cliente',
+        4 => 'Cliente',
     ],
     'modules' => [
         1 => 'Dashboard',
