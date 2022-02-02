@@ -53,9 +53,7 @@ trait AddressTrait
             return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
         }
         try {
-            $address = Address::create([
-                $request->all()
-            ]);
+            $address = Address::create($request->all());
             return $this->respond(200, $address, null, 'Dirección creado exitosamente');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al crear dirección');

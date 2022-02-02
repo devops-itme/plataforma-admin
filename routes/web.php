@@ -69,4 +69,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('address');
+//REPORTS
 Route::resource('reportes', 'Admin\ReportController')->names('report');
+//SERVICE TYPES
+Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceType');
+

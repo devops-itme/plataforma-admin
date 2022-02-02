@@ -18,7 +18,7 @@ trait ReportTrait
         return Validator::make(
             $request->all(),
             [
-                'state' => 'required',
+                'state' => 'nullable',
             ]
         );
     }
@@ -48,9 +48,7 @@ trait ReportTrait
             return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
         }
         try {
-            $report = Report::create([
-                $request->all()
-            ]);
+            $report = Report::create($request->all());
             return $this->respond(200, $report, null, 'Reporte creado exitosamente');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al crear reporte');
