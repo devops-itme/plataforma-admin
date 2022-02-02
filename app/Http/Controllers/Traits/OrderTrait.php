@@ -61,10 +61,10 @@ trait OrderTrait
         }
     }
 
-    public function deleteOrder($request)
+    public function deleteOrder($id)
     {
         try {
-            $order = Order::find($request->order_id);
+            $order = Order::find($id);
             if (is_null($order)) {
                 return $this->respond(500, [], 'user not found', 'No se encontro la orden');
             }
