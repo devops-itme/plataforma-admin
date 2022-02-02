@@ -18,6 +18,7 @@ trait AddressTrait
         return Validator::make(
             $request->all(),
             [
+                'user_id'=>'required',
                 'name' => 'required',
                 'description' => 'required',
                 'lat' => 'required',

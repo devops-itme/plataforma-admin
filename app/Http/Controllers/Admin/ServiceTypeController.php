@@ -41,9 +41,9 @@ class ServiceTypeController extends Controller
     {
         $response = $this->saveServiceType($request);
         if($response['state'] == 200){
-            return $this->respond(200, $response, null, $response['message']);
+            return $this->respond(200, $response['data'], null, $response['message']);
         } else {
-            return $this->respond(500, null, $response, $response['message']);
+            return $this->respond(500, null, $response['error'], $response['message']);
         }
     }
 
@@ -81,10 +81,10 @@ class ServiceTypeController extends Controller
     public function update(Request $request, $id)
     {
         $response = $this->updateServiceType($request, $id);
-        if ($response['state'] == 200) {
-            return $this->respond(200, $response, null, $response['message']);
+        if($response['state'] == 200){
+            return $this->respond(200, $response['data'], null, $response['message']);
         } else {
-            return $this->respond(500, null, $response, $response['message']);
+            return $this->respond(500, null, $response['error'], $response['message']);
         }
     }
 
@@ -98,9 +98,9 @@ class ServiceTypeController extends Controller
     {
         $response = $this->deleteServiceType($id);
         if($response['state'] == 200){
-            return $this->respond(200, $response, null, $response['message']);
+            return $this->respond(200, $response['data'], null, $response['message']);
         } else {
-            return $this->respond(500, null, $response, $response['message']);
+            return $this->respond(500, null, $response['error'], $response['message']);
         }
     }
 }
