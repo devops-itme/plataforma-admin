@@ -65,5 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('departamentos/{id}', 'Admin\DepartmentController@update')->name('department.update');
     Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('department.destroy');
 
-
 });
+
+//ADDRESSES
+Route::resource('direcciones', 'Admin\AddressController')->names('address');
