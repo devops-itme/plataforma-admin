@@ -18,7 +18,7 @@ class ReportController extends Controller
     {
         $reports = $this->getReports();
         $reports = $reports['data'];
-        return $this->respond(200, $reports, null, 'Lista de direcciones');
+        return $this->respond(200, $reports, null, 'Lista de reportes');
     }
 
     /**

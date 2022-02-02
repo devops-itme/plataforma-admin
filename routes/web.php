@@ -69,3 +69,4 @@ Route::group(['middleware' => 'auth'], function () {
 
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('address');
+Route::resource('reportes', 'Admin\ReportController')->names('report');
