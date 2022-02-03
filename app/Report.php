@@ -5,14 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MyService extends Model
+class Report extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'my_services';
+    protected $table = 'reports';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'user_id',
+        'order_id',
         'state'
     ];
+
 }

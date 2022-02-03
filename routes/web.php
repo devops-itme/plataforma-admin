@@ -77,3 +77,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
 
 });
+
+//ADDRESSES
+Route::resource('direcciones', 'Admin\AddressController')->names('address');
+//REPORTS
+Route::resource('reportes', 'Admin\ReportController')->names('report');
+//SERVICE TYPES
+Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceType');
+//SERVICES
+Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
+//CHAT
+Route::resource('chat', 'Admin\ChatController');
+

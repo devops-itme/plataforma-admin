@@ -5,14 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MyService extends Model
+class Chat extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'my_services';
+    protected $table = 'chats';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'user_id',
+        'guide_id',
+        'content',
         'state'
     ];
 }

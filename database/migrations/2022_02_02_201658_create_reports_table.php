@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMyServicesTable extends Migration
+class CreateReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateMyServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('my_services', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            // $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('order_id')->nullable();
+            // $table->foreign('order_id')->references('id')->on('orders');
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}")->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +30,6 @@ class CreateMyServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('my_services');
+        Schema::dropIfExists('reports');
     }
 }
