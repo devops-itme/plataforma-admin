@@ -25,7 +25,6 @@
     <script src="{{asset('js/uikit-icons.min.js')}}"></script> --}}
 
 
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">

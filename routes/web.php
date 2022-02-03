@@ -66,6 +66,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     //ORDENES
     Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
+    Route::get('orden', function(){
+        return view('orders.index');
+    })->name('order.index');
+    Route::get('orden/crear', function(){
+        return view('orders.create');
+    })->name('order.create');
 
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias');

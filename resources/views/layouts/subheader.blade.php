@@ -27,7 +27,7 @@
                 <i class="fas fa-user-tie text-muted"></i>
             </a>
 
-            <a href="#" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Ordenes" data-placement="bottom">
+            <a href="{{route('order.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Ordenes" data-placement="bottom">
                 <i class="fas fa-file-edit text-muted"></i>
             </a>
         </div>
