@@ -11,7 +11,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form action="{{ route('user.update', $user->id) }}" method="post">
+    <form action="{{ route('users.update', $user->id) }}" method="post">
         @csrf @method('PUT')
         <div class="card-body d-flex flex-row flex-wrap">
 

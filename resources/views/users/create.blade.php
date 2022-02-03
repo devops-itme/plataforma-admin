@@ -11,7 +11,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form action="{{ route('user.store') }}" method="POST">
+    <form action="{{ route('users.store') }}" method="POST">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
 

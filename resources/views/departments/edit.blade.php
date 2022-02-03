@@ -12,7 +12,7 @@
         </div>
         @include('layouts.alerts')
         <!--begin::Form-->
-        <form action="{{route('department.update', $department->id)}}" method="POST" id="formUpdateMessenger"  enctype="multipart/form-data">
+        <form action="{{route('departments.update', $department->id)}}" method="POST" id="formUpdateMessenger"  enctype="multipart/form-data">
             @csrf @method('PUT')
             <div class="card-body d-flex flex-row flex-wrap">
                 <div class="form-group col-md-6">

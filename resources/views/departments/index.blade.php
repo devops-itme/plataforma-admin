@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{ route('department.create', $branch_office_id) }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('departments.create', $branch_office_id) }}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -174,10 +174,10 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="{{route('department.show',$item->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                    <a href="{{route('departments.show',$item->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
-                                    <a href="{{route('department.edit',$item->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                    <a href="{{route('departments.edit',$item->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fad fa-edit"></i>
                                     </a>
                                     <a onclick="confirmDelete('/departamentos/'+{{$item->id}})" role="button"  id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">

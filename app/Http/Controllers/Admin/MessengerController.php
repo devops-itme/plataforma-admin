@@ -52,7 +52,7 @@ class MessengerController extends Controller
         $messenger = $this->saveMessenger($request, $user->id);
 
         if($messenger['state'] == 200){
-            return redirect()->route('messenger.index')->with('success', 'Mensajero registrado exitosamente.');
+            return redirect()->route('messengers.index')->with('success', 'Mensajero registrado exitosamente.');
         } else {
             return redirect()->back()->withInput()->with('danger', $messenger['error']);
         }
@@ -97,7 +97,7 @@ class MessengerController extends Controller
     {
         $messenger = $this->updateMessenger($request, $id);
         if ($messenger['state'] == 200) {
-            return redirect()->route('messenger.index')->with('success',  $messenger['message']);
+            return redirect()->route('messengers.index')->with('success',  $messenger['message']);
         } else {
             return redirect()->back()->with('danger', $messenger['message']);
         }
@@ -113,7 +113,7 @@ class MessengerController extends Controller
     {
         $response = $this->deleteMessenger($id);
         if($response['state'] == 200){
-            return redirect()->route('messenger.index')->with('success', $response['message']);
+            return redirect()->route('messengers.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
