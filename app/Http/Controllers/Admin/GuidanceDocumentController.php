@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuidanceDocsTrait;
-use App\Http\Controllers\Traits\GuideTrait;
 use Illuminate\Http\Request;
 
-class GuideController extends Controller
+class GuidanceDocumentController extends Controller
 {
-    use GuideTrait, GuidanceDocsTrait;
+    use GuidanceDocsTrait;
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +16,7 @@ class GuideController extends Controller
      */
     public function index()
     {
-        $guides = Guide::get();
-        return json_encode($guides);
+        //
     }
 
     /**
@@ -40,17 +37,11 @@ class GuideController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->storeGuide($request);
+        $response = $this->storeGuidanceDoc($request);
         if($response['state'] == 200){
-            if(!is_null($request->guides_doc)){
-                $guidance_docs = $this->storeGuidanceDoc($request->merge(['guides_id' => $response['data']->id]));
-                if($guidance_docs['state'] != 200){
-                    return json_encode($response, $response['message']);
-                }
-            }
-            return json_encode($response, 'Guia registrada exitosamente');
+            return json_encode($response['data'], 'Guardado exitoso');
         } else {
-            return json_encode($response, $response['message']);
+            return json_encode($response['message'], 'Error');
         }
     }
 
@@ -62,8 +53,7 @@ class GuideController extends Controller
      */
     public function show($id)
     {
-        $guide = Guide::find($id);
-        return json_encode($guide);
+        //
     }
 
     /**
@@ -74,8 +64,7 @@ class GuideController extends Controller
      */
     public function edit($id)
     {
-        $guide = Guide::find($id);
-        return json_encode($guide);
+        //
     }
 
     /**
@@ -87,11 +76,11 @@ class GuideController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->updateGuide($request->merge(['guide_id' => $id]));
+        $response = $this->updateGuidanceDoc($request->merge(['guidance_doc_id' => $id]));
         if($response['state'] == 200){
-            return json_encode($response, 'Guia actualizada exitosamente');
+            return json_encode($response['data'], 'Actualización exitosa');
         } else {
-            return json_encode($response, $response['message']);
+            return json_encode($response['message'], 'Error');
         }
     }
 
@@ -105,9 +94,9 @@ class GuideController extends Controller
     {
         $response = $this->deleteGuide($id);
         if($response['state'] == 200){
-            return json_encode($response, 'Se eliminó la guía');
+            return json_encode($response['data'], 'Eliminación exitosa');
         } else {
-            return json_encode($response, $response['message']);
+            return json_encode($response['message'], 'Error');
         }
     }
 }
