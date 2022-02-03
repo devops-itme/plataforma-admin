@@ -15,11 +15,11 @@
                 <i class="fas fa-users text-muted"></i>
             </a>
 
-            <a href="{{route('messenger.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Mensajeros" data-placement="bottom">
+            <a href="{{route('messengers.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Mensajeros" data-placement="bottom">
                 <i class="fas fa-people-carry text-muted"></i>
             </a>
 
-            <a href="{{route('user.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Usuarios" data-placement="bottom">
+            <a href="{{route('users.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Usuarios" data-placement="bottom">
                 <i class="fas fa-users-cog text-muted"></i>
             </a>
 

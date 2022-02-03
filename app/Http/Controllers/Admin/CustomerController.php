@@ -44,9 +44,12 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        if(is_null($request->name) && is_null($request->business_name)){
+            return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
+        }
         $saveUserData = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
         if($saveUserData['state'] != 200){
-            return redirect()->back()->with('danger', $saveUserData['message']);
+            return redirect()->back()->with('danger', $saveUserData['error']);
         }
         if(!is_null($request->branch_office_name)){
             $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));

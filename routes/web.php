@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
 
     //USER
-    Route::resource('usuarios', 'Admin\UserController')->names('user');
+    Route::resource('usuarios', 'Admin\UserController')->names('users');
     //CUSTOMER
     Route::resource('/clientes', 'Admin\CustomerController');
     //BANKS
@@ -52,17 +52,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('sucursales/{parent_id}/{id}', 'Admin\BranchOfficeController@destroy')->name('branchOffices.delete');
 
     //MESSEGERS
-    Route::resource('mensajeros', 'Admin\MessengerController')->names('messenger');
+    Route::resource('mensajeros', 'Admin\MessengerController')->names('messengers');
 
     //BANK DEPARTMENTS
     // Route::resource('departamentos', 'Admin\DepartmentController')->names('department');
-    Route::get('departamentos/{branch_office_id}', 'Admin\DepartmentController@index')->name('department.index');
-    Route::get('departamentos/{branch_office_id}/create', 'Admin\DepartmentController@create')->name('department.create');
-    Route::post('departamentos/{branch_office_id}/store', 'Admin\DepartmentController@store')->name('department.store');
-    Route::get('departamentos/{id}/detaller', 'Admin\DepartmentController@show')->name('department.show');
-    Route::get('departamentos/{id}/edit', 'Admin\DepartmentController@edit')->name('department.edit');
-    Route::put('departamentos/{id}', 'Admin\DepartmentController@update')->name('department.update');
-    Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('department.destroy');
+    Route::get('departamentos/{branch_office_id}', 'Admin\DepartmentController@index')->name('departments.index');
+    Route::get('departamentos/{branch_office_id}/create', 'Admin\DepartmentController@create')->name('departments.create');
+    Route::post('departamentos/{branch_office_id}/store', 'Admin\DepartmentController@store')->name('departments.store');
+    Route::get('departamentos/{id}/detaller', 'Admin\DepartmentController@show')->name('departments.show');
+    Route::get('departamentos/{id}/edit', 'Admin\DepartmentController@edit')->name('departments.edit');
+    Route::put('departamentos/{id}', 'Admin\DepartmentController@update')->name('departments.update');
+    Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('departments.destroy');
 
     //ORDENES
     Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
@@ -85,13 +85,13 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 //ADDRESSES
-Route::resource('direcciones', 'Admin\AddressController')->names('address');
+Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
 //REPORTS
-Route::resource('reportes', 'Admin\ReportController')->names('report');
+Route::resource('reportes', 'Admin\ReportController')->names('reports');
 //SERVICE TYPES
-Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceType');
+Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceTypes');
 //SERVICES
 Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
 //CHAT
-Route::resource('chat', 'Admin\ChatController');
+Route::resource('chat', 'Admin\ChatController')->names('chats');
 

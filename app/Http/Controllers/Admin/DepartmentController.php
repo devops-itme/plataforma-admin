@@ -43,7 +43,7 @@ class DepartmentController extends Controller
     {
         $response = $this->saveDepartment($request, $id);
         if($response['state'] == 200){
-            return redirect()->route('department.index', $id)->with('success', $response['message']);
+            return redirect()->route('departments.index', $id)->with('success', $response['message']);
         } else {
             return redirect()->back()->withInput()->with('danger', $response['error']);
         }
@@ -87,7 +87,7 @@ class DepartmentController extends Controller
         $response = $this->updateDepartment($request, $id);
         $branch_office_id = $response['data']->branch_office_id;
         if ($response['state'] == 200) {
-            return redirect()->route('department.index', $branch_office_id )->with('success',  $response['message']);
+            return redirect()->route('departments.index', $branch_office_id )->with('success',  $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
@@ -103,7 +103,7 @@ class DepartmentController extends Controller
     {
         $response = $this->deleteDepartment($id);
         if($response['state'] == 200){
-            return redirect()->route('department.index')->with('success', $response['message']);
+            return redirect()->route('departments.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }

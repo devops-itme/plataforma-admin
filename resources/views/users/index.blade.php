@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{ route('user.create') }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('users.create') }}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -183,7 +183,7 @@
                                     <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="far fa-folder-open"></i>
                                     </a>
-                                    <a href="{{ route('user.edit', $user->id) }}"
+                                    <a href="{{ route('users.edit', $user->id) }}"
                                         class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fas fa-edit"></i>
                                     </a>

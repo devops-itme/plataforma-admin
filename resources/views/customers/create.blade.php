@@ -17,13 +17,14 @@
                 <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información basica de cliente</h5>
                 <div class="form-group py-3 m-0 col-md-2">
                     <label>Tipo de persona</label>
-                    <select class="form-control form-control-solid" id="opcion" onchange="typeChange()">
-                        <option selected value="natural">Persona natural</option>
-                        <option value="juridico">Persona juridica</option>
+                    <select class="form-control form-control-solid" id="slc_type">
+                        <option disabled selected> Seleccione </option>
+                        <option value="1">Persona natural</option>
+                        <option value="2">Persona juridica</option>
                     </select>
                     <span class="form-text text-muted"></span>
                 </div>
-                <div class="col-md-7 d-flex px-0" id="nat" style="display:;">
+                <div class="col-md-7 d-flex px-0" id="naturalCustomer">
                     <div class="form-group py-3 m-0 col-md-6">
                         <label>Nombres: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name"
@@ -36,7 +37,7 @@
                             value="{{ old('last_name') }}" />
                     </div>
                 </div>
-                <div class="col-md-7 d-flex px-0" id="jud" style="display:none !important;">
+                <div class="d-none" id="legalCustomer">
                     <div class="form-group py-3 m-0 col-md-6">
                         <label>Nombre de empresa <span class="text-danger">*</span></label>
                         <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text"

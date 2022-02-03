@@ -19,8 +19,7 @@ class CreatePermissionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('module_id');
             $table->foreign('module_id')->references('id')->on('modules');
-            $table->integer('read')->nullable();
-            $table->integer('write')->nullable();
+            $table->string('action')->comment('List actions parameter_value');
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}");
             $table->timestamps();
             $table->softDeletes();

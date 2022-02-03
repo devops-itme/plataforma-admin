@@ -47,7 +47,7 @@ class UserController extends Controller
         $user = $this->saveUser($request);
 
         if($user['state'] == 200){
-            return redirect()->route('user.index')->with('success', 'Usuario registrado exitosamente.');
+            return redirect()->route('users.index')->with('success', 'Usuario registrado exitosamente.');
         } else {
             return redirect()->back()->withInput()->with('danger', $user['error']);
         }
@@ -94,7 +94,7 @@ class UserController extends Controller
         ]);
         $response = $this->updateUser($request, $id);
         if($response['state'] == 200){
-            return redirect()->route('user.index')->with('success', $response['message']);
+            return redirect()->route('users.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
@@ -110,7 +110,7 @@ class UserController extends Controller
     {
         $response = $this->deleteUser($id);
         if($response['state'] == 200){
-            return redirect()->route('user.index')->with('success', $response['message']);
+            return redirect()->route('users.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }

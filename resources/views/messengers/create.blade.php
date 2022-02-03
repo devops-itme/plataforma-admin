@@ -12,7 +12,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form method="POST" action="{{route('messenger.store')}}" id="formCreateMessenger"  enctype="multipart/form-data">
+    <form method="POST" action="{{route('messengers.store')}}" id="formCreateMessenger"  enctype="multipart/form-data">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap pt-2">
             <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de mensajero</h5>
