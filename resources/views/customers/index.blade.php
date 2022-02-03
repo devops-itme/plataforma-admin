@@ -221,6 +221,7 @@
                                         <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-warehouse"></i>
                                         </a>
+                                        {{-- </form> --}}
                                     </div>
                                 </td>
                             </tr>

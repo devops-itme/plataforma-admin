@@ -23,7 +23,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
 
@@ -65,5 +64,28 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('departamentos/{id}', 'Admin\DepartmentController@update')->name('department.update');
     Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('department.destroy');
 
+    //ORDENES
+    Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
+
+    //GUIAS
+    Route::resource('/guias', 'Admin\GuideController')->names('guias');
+
+    //DOCUMENTOS DE GUIAS
+    Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
+
+    //RUTAS
+    Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
 
 });
+
+//ADDRESSES
+Route::resource('direcciones', 'Admin\AddressController')->names('address');
+//REPORTS
+Route::resource('reportes', 'Admin\ReportController')->names('report');
+//SERVICE TYPES
+Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceType');
+//SERVICES
+Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
+//CHAT
+Route::resource('chat', 'Admin\ChatController');
+
