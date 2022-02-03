@@ -70,6 +70,9 @@ Route::group(['middleware' => 'auth'], function () {
     //GUIAS
     Route::resource('/guias', 'Admin\GuidesController')->names('guias');
 
+    //DOCUMENTOS DE GUIAS
+    Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
+
     //RUTAS
     Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
 
