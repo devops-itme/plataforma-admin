@@ -18,9 +18,9 @@ trait ChatTrait
         return Validator::make(
             $request->all(),
             [
-                'guide_id' => 'required',
-                'content' => 'required',
-                'state' => 'required',
+                'guide_id' => 'nullable',
+                'content' => 'nullable',
+                'state' => 'nullable',
 
             ]
         );
@@ -45,6 +45,9 @@ trait ChatTrait
     }
     public function saveChat($request)
     {
+        request()->merge([
+            'content' => json_encode($request->content),
+        ]);
         $validator = $this->chatValidate($request);
 
         if ($validator->fails()) {
