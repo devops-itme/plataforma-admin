@@ -19,6 +19,7 @@ class CreateMyServicesTable extends Migration
             // $table->foreign('user_id')->references('id')->on('users');
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}")->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

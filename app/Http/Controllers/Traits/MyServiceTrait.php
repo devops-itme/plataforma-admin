@@ -18,7 +18,7 @@ trait MyServiceTrait
         return Validator::make(
             $request->all(),
             [
-                'user_id'=>'required',
+                'user_id'=> 'nullable',
                 'state' => 'nullable',
 
             ]
