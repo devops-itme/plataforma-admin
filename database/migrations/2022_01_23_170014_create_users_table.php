@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('users');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('last_name')->nullable();
             $table->integer('document_type')->nullable()->comment("it's a parameter_value");
             $table->string('document_number')->nullable();
