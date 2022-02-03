@@ -67,11 +67,20 @@ return [
         6 => 'Sabado',
     ],
     'parameters' => [
-        'dodcument_type' => [
+        'document_type' => [
             'C.C',
             'C.E',
             'P.P',
             'RUC'
+        ],
+        'action' => [
+            'all',
+            'index',
+            'create',
+            'show',
+            'delete',
+            'update',
+            'assignate'
         ]
     ]
 
