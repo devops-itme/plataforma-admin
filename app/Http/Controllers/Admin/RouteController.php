@@ -41,9 +41,13 @@ class RouteController extends Controller
     {
         $response = $this->storeRoute($request);
         if($response['state'] == 200){
-            return json_encode($response['data'], 'Ruta almacenada exitosamente.');
+            return json_encode([
+                'state' => $response['state'],
+                'data' => $response['data'],
+                'message' => 'Ruta creada exitosamente'
+            ]);
         } else {
-            return json_encode($response['message']);
+            return json_encode($response['error']);
         }
     }
 
@@ -55,7 +59,7 @@ class RouteController extends Controller
      */
     public function show($id)
     {
-        $route = Route::find($id);
+        $route = Route::with(['getMessenger', 'getGuide'])->find($id);
         return json_encode($route);
     }
 
@@ -82,7 +86,11 @@ class RouteController extends Controller
     {
         $response = $this->updateRoute($request->merge(['route_id' => $id]));
         if($response['state'] == 200){
-            return json_encode($response['data'], 'Ruta actualizada exitosamente.');
+            return json_encode([
+                'state' => $response['state'],
+                'data' => $response['data'],
+                'message' => 'Ruta actualizada exitosamente'
+            ]);
         } else {
             return json_encode($response['message']);
         }
@@ -98,7 +106,10 @@ class RouteController extends Controller
     {
         $response = $this->deleteRoute($id);
         if($response['state'] == 200){
-            return json_encode($response['data'], 'Ruta eliminada exitosamente.');
+            return json_encode([
+                'state' => $response['state'],
+                'message' => 'Eliminación exitosa'
+            ]);
         } else {
             return json_encode($response['message']);
         }

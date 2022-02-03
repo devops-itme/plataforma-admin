@@ -11,8 +11,8 @@ class Route extends Model
 
     protected $table = 'routes';
     protected $fillable = [
-        'guide_id ',
-        'messenger_id ',
+        'guide_id',
+        'messenger_id',
         'date'
     ];
 

@@ -23,8 +23,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('/guias', 'Admin\GuideController')->names('guias');
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
 
@@ -70,7 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
 
     //GUIAS
-
+    Route::resource('/guias', 'Admin\GuideController')->names('guias');
 
     //DOCUMENTOS DE GUIAS
     Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
