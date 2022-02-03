@@ -14,14 +14,14 @@
     <!--begin::Form-->
     <form method="POST" action="{{route('messenger.store')}}" id="formCreateMessenger"  enctype="multipart/form-data">
         @csrf
-        <div class="card-body d-flex flex-row flex-wrap">
-
-            <div class="form-group col-md-4">
+        <div class="card-body d-flex flex-row flex-wrap pt-2">
+            <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de mensajero</h5>
+            <div class="form-group col-md-3">
                 <label>Nombres: <span class="text-danger">*</span></label>
                 <input name="name" type="text" class="form-control form-control-solid" placeholder="Nombres" value="{{old('name')}}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label>Apellidos <span class="text-danger">*</span></label>
                 <input name="last_name" type="text" class="form-control form-control-solid" placeholder="Apellidos" value="{{old('last_name')}}" />
             </div>
@@ -30,12 +30,12 @@
                 <input name="email" type="email" class="form-control form-control-solid" placeholder="Email" value="{{old('email')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
                 <label>Telefono: <span class="text-danger">*</span></label>
                 <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Telefono" value="{{old('phone')}}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label for="type_doc">Tipo de documento <span class="text-danger">*</span></label>
                 <select name="document_type" class="form-control form-control-solid" id="type_doc">
                     <option selected disabled>Seleccione tipo de documento</option>
@@ -44,29 +44,44 @@
                     @endforeach
                 </select>
             </div>
-
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label>Numero de identificación: <span class="text-danger">*</span></label>
                 <input name="document_number" type="text" class="form-control form-control-solid" placeholder="N° de identificación" value="{{old('document_number')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
+                <label>Contraseña <span class="text-danger">*</span></label>
+                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
+                    type="password" name="password" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Repetir Contraseña <span class="text-danger">*</span></label>
+                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
+                    type="password" name="password_confirmation"/>
+            </div>
+            <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de mensajero</h5>
+            <div class="form-group col-md-2">
                 <label>Placa de vehiculo: <span class="text-danger">*</span></label>
                 <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder="" value="{{old('vehicle_plate')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
                 <label>Fecha de ingreso: <span class="text-danger">*</span></label>
                 <input name="admission_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('admission_date')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
                 <label>Porcentaje de producción: <span class="text-danger">*</span></label>
                 <input name="production_percentage" type="number" class="form-control form-control-solid" placeholder="" value="{{old('production_percentage')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
+                <label>Contrato <span class="text-danger">*</span></label>
+                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
+                    type="file" name="contract" value="{{old('contract')}}"/>
+            </div>
+            <div class="form-group col-md-2">
                 <label>Exclusivo</label>
                 <div class="radio-inline">
                     <label class="radio radio-rounded">
@@ -81,21 +96,6 @@
                     </label>
                 </div>
                 <span class="form-text text-muted"></span>
-            </div>
-            <div class="form-group py-3 m-0 col-md-4">
-                <label>Contrato <span class="text-danger">*</span></label>
-                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="file" name="contract" value="{{old('contract')}}"/>
-            </div>
-            <div class="form-group py-3 m-0 col-md-4">
-                <label>Contraseña <span class="text-danger">*</span></label>
-                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="password" name="password" />
-            </div>
-            <div class="form-group py-3 m-0 col-md-4">
-                <label>Repetir Contraseña <span class="text-danger">*</span></label>
-                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="password" name="password_confirmation"/>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">

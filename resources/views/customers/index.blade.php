@@ -147,7 +147,7 @@
             <!--begin: Datatable-->
 
 
-            <table class="table">
+            <table class="table table-sm">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -185,24 +185,42 @@
                                 @endif
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-
-                                        <a href="{{route('clientes.show', $customer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                            <i class="fad fa-folder-open"></i>
-                                        </a>
-                                        <a href="{{route('clientes.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                            <i class="fad fa-edit"></i>
-                                        </a>
-                                        {{-- <form action="{{route('clientes.destroy', $customer->id)}}" method="{{'post'}}">
-                                            @csrf @method('DELETE') --}}
-                                            <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                <i class="fad fa-trash-alt"></i>
+                                        <div class="dropdown dropdown-inline">
+                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fad fa-ellipsis-v-alt"></i>
                                             </button>
-                                        {{-- </form> --}}
+                                            <div class="dropdown-menu">
+                                                <a href="{{route('clientes.show', $customer->id)}}" class="dropdown-item align-items-center">
+                                                    <div class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                                        <i class="fad fa-folder-open"></i>
+                                                    </div> Detalle
+                                                </a>
+                                                <a href="{{route('clientes.edit', $customer->id)}}" class="dropdown-item align-items-center">
+                                                    <div class="btn btn-icon btn-light-success btn-sm mr-2">
+                                                        <i class="fad fa-edit"></i>
+                                                    </div> Editar
+                                                </a>
+                                                <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
+                                                    {{-- <form action="{{route('clientes.destroy', $customer->id)}}" method="{{'post'}}">
+                                                        @csrf @method('DELETE') --}}
+                                                        <div class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                                            <i class="fad fa-trash-alt"></i>
+                                                        </div> Eliminar
+                                                    {{-- </form> --}}
+                                                </button>
+                                            </div>
+                                        </div>
                                         @if($customer->getUser->role == 4)
                                             <a href="{{route('userBanks.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
                                                 <i class="fad fa-users-class"></i>
                                             </a>
                                         @endif
+                                        <a href="#" class="btn btn-icon btn-light-info btn-sm mr-2">
+                                            <i class="fad fa-building"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                            <i class="fad fa-warehouse"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
