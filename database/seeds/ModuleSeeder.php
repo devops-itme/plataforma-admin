@@ -2,6 +2,7 @@
 
 use App\Module;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Config;
 
 class ModuleSeeder extends Seeder
 {
@@ -12,16 +13,13 @@ class ModuleSeeder extends Seeder
      */
     public function run()
     {
-        $modulos = Module::insert([
-            //MODULES
-            ['name' => 'Cliente', 'reference' => 'customers', 'parent_id' => null, 'icon' => '<i class="fas fa-home" style="font-size: 20px;"></i>', 'created_at' => now(), 'updated_at' => now(), 'state' => 1],
-            ['name' => 'Mensajero', 'reference' => 'messengers', 'parent_id' => null, 'icon' => '<i class="fas fa-home" style="font-size: 20px;"></i>', 'created_at' => now(), 'updated_at' => now(), 'state' => 1],
-            ['name' => 'Parametros', 'reference' => 'parameters', 'parent_id' => null, 'icon' => '<i class="fas fa-home" style="font-size: 20px;"></i>', 'created_at' => now(), 'updated_at' => now(), 'state' => 1],
-            ['name' => 'Usuarios', 'reference' => 'users', 'parent_id' => null, 'icon' => '<i class="fas fa-home" style="font-size: 20px;"></i>', 'created_at' => now(), 'updated_at' => now(), 'state' => 1],
-            ['name' => 'Ordenes', 'reference' => 'orders', 'parent_id' => null, 'icon' => '<i class="fas fa-home" style="font-size: 20px;"></i>', 'created_at' => now(), 'updated_at' => now(), 'state' => 1],
-            ['name' => 'Tarifas', 'reference' => 'rates', 'parent_id' => null, 'icon' => '<i class="fas fa-home" style="font-size: 20px;"></i>', 'created_at' => now(), 'updated_at' => now(), 'state' => 1],
-            ['name' => 'Zonas', 'reference' => 'zones', 'parent_id' => null, 'icon' => '<i class="fas fa-home" style="font-size: 20px;"></i>', 'created_at' => now(), 'updated_at' => now(), 'state' => 1],
-            ['name' => 'Informes', 'reference' => 'reports', 'parent_id' => null, 'icon' => '<i class="fas fa-home" style="font-size: 20px;"></i>', 'created_at' => now(), 'updated_at' => now(), 'state' => 1],
-        ]);
+        $modules = Config::get('const.modules');
+        foreach($modules as $key => $data){
+                $module = Module::create([
+                    'name' => $data['name'], 'reference' => $data['reference'], 'parent_id' => null, 'icon' => '', 'position' => $data['position']
+                ]);
+
+        }
+
     }
 }
