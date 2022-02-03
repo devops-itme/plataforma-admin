@@ -18,7 +18,7 @@ trait UserTrait
             $request->all(),
             [
                 'parent_id' => 'nullable|exists:users,id',
-                'name' => 'required|string',
+                'name' => 'nullable|string',
                 'last_name' => 'nullable|string',
                 'document_type' => 'nullable|exists:parameter_values,id',
                 'document_number' => [

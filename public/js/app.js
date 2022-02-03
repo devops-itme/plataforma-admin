@@ -37598,6 +37598,57 @@ var Addresses = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/_customers.js":
+/*!************************************!*\
+  !*** ./resources/js/_customers.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Customers; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Customers = /*#__PURE__*/function () {
+  function Customers() {
+    _classCallCheck(this, Customers);
+  }
+
+  _createClass(Customers, [{
+    key: "initialize",
+    value: function initialize() {
+      this.customerFeatures();
+    }
+  }, {
+    key: "customerFeatures",
+    value: function customerFeatures() {
+      var option = document.getElementById("slc_type");
+      var naturalCustomer = document.getElementById("naturalCustomer");
+      var legalCustomer = document.getElementById("legalCustomer");
+      option.addEventListener('change', function (event) {
+        if (option.value == 1) {
+          legalCustomer.className = 'd-none';
+          naturalCustomer.className = 'col-md-7 d-flex px-0';
+        } else if (option.value == 2) {
+          naturalCustomer.className = 'd-none';
+          legalCustomer.className = 'col-md-7 d-flex px-0';
+        }
+      });
+    }
+  }]);
+
+  return Customers;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/_messengers.js":
 /*!*************************************!*\
   !*** ./resources/js/_messengers.js ***!
@@ -37726,16 +37777,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
 /* harmony import */ var _addresses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_addresses */ "./resources/js/_addresses.js");
+/* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
 
 var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_1__["default"]();
 var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_2__["default"]();
+var customers = new _customers__WEBPACK_IMPORTED_MODULE_3__["default"]();
 document.addEventListener("DOMContentLoaded", function (event) {
   messengers.initialize();
   addresses.initialize();
+  customers.initialize();
 });
 
 /***/ }),
