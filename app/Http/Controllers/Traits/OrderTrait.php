@@ -15,9 +15,9 @@ trait OrderTrait
         return Validator::make(
             $request->all(),
             [
-                'user_id ' => 'required|exists:users,id',
-                'service_type_id ' => 'required',
-                'state' => 'required'
+                'user_id' => 'required|exists:users,id',
+                'service_type_id' => 'required',
+                'state' => 'nullable'
             ]
         );
     }
@@ -31,7 +31,7 @@ trait OrderTrait
         try {
             $order = Order::create([
                 'user_id' => $request->user_id,
-                'service_type' => $request->service_type,
+                'service_type_id' => $request->service_type_id,
                 'state' => $request->state
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');
@@ -52,7 +52,7 @@ trait OrderTrait
                 return $this->respond(500, [], 'user not found', 'No se encontro la orden');
             }
             $order->update([
-                'service_type_id ' => $request->service_type_id,
+                'service_type_id' => $request->service_type_id,
                 'state' => $request->state
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');

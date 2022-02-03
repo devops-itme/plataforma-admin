@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -44,9 +45,12 @@ class OrderController extends Controller
         };
         $response = $this->storeOrder($request);
         if($response['state'] == 200){
-            return json_encode($response, 'done');
+            return json_encode([
+                'state' => $response['state'],
+                'data' =>$response['data']
+            ]);
         } else {
-            return json_encode($response, 'error');
+            return json_encode([$response]);
         }
     }
 
@@ -58,8 +62,11 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
-        return json_encode($order);
+        $order = Order::with('getUser')->find($id);
+        return json_encode([
+            'order_data' => $order,
+            'user_data' => $order['get_user']
+        ]);
     }
 
     /**
@@ -86,11 +93,14 @@ class OrderController extends Controller
         if(Auth()->user()->role != 1){
             $request->merge(['user_id' => Auth()->user()->id]);
         };
-        $response = $this->updateOrder($request);
+        $response = $this->updateOrder($request->merge(['order_id' => $id]));
         if($response['state'] == 200){
-            return json_encode($response, 'done');
+            return json_encode([
+                'state' => $response['state'],
+                'data' =>$response['data']
+            ]);
         } else {
-            return json_encode($response, 'error');
+            return json_encode($response['message']);
         }
     }
 
@@ -104,9 +114,12 @@ class OrderController extends Controller
     {
         $response = $this->deleteOrder($id);
         if($response['state'] == 200){
-            return json_encode($response);
+            return json_encode([
+                'state' => $response['state'],
+                'Message' => 'Eliminación exitosa'
+            ]);
         } else {
-            return json_encode($response);
+            return json_encode($response['message']);
         }
     }
 }
