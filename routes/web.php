@@ -83,4 +83,6 @@ Route::resource('reportes', 'Admin\ReportController')->names('report');
 Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceType');
 //SERVICES
 Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
+//CHAT
+Route::resource('chat', 'Admin\ChatController');
 
