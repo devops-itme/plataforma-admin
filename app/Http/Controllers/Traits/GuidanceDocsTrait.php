@@ -59,7 +59,7 @@ trait GuidanceDocsTrait
         }
     }
 
-    public function deleteGuide($id)
+    public function deleteGuidanceDoc($id)
     {
         try {
             $guidance_doc = GuidanceDocument::find($id);

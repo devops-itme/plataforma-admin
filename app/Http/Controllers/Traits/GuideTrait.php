@@ -5,18 +5,21 @@ namespace App\Http\Controllers\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Guide;
+use Illuminate\Validation\Rule;
 
 trait GuideTrait
 {
     use RestActions;
 
-    public function GuideValidate($request)
+    public function GuideValidate($request, $action = null, $id = null)
     {
         return Validator::make(
             $request->all(),
             [
-                'order_id ' => 'required|exists:users,id',
-                'address_id ' => 'required|exists:addresses:id',
+                'order_id' => [$action == 'create' ? 'confirmed' : 'nullable',
+                        Rule::requiredIf($action == 'create'), 'exists:orders,id'
+                ],
+                'address_id' => 'required|exists:addresses,id',
                 'delivery_date' => 'nullable|date',
                 'shipping_cost' => 'nullable'
             ]

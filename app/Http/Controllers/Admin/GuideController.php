@@ -48,9 +48,13 @@ class GuideController extends Controller
                     return json_encode($response, $response['message']);
                 }
             }
-            return json_encode($response, 'Guia registrada exitosamente');
+            return json_encode([
+                'data' => $response['data'],
+                'state' => $response['state'],
+                'message' => 'Guia guardada exitosamente'
+            ]);
         } else {
-            return json_encode($response, $response['message']);
+            return json_encode($response['error']);
         }
     }
 
@@ -89,9 +93,13 @@ class GuideController extends Controller
     {
         $response = $this->updateGuide($request->merge(['guide_id' => $id]));
         if($response['state'] == 200){
-            return json_encode($response, 'Guia actualizada exitosamente');
+            return json_encode([
+                'data' => $response['data'],
+                'state' => $response['state'],
+                'message' => 'Guia guardada exitosamente'
+            ]);
         } else {
-            return json_encode($response, $response['message']);
+            return json_encode($response['message']);
         }
     }
 
@@ -105,9 +113,12 @@ class GuideController extends Controller
     {
         $response = $this->deleteGuide($id);
         if($response['state'] == 200){
-            return json_encode($response, 'Se eliminó la guía');
+            return json_encode([
+                'state' => $response['state'],
+                'message' => 'Guia eliminada'
+            ]);
         } else {
-            return json_encode($response, $response['message']);
+            return json_encode($response['error']);
         }
     }
 }
