@@ -81,4 +81,6 @@ Route::resource('direcciones', 'Admin\AddressController')->names('address');
 Route::resource('reportes', 'Admin\ReportController')->names('report');
 //SERVICE TYPES
 Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceType');
+//SERVICES
+Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
 
