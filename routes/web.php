@@ -25,11 +25,14 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
-
-    //USER
-    Route::resource('usuarios', 'Admin\UserController')->names('users');
+    Route::group(['middleware' => 'auth'], function () {
+        //USER
+        Route::resource('usuarios', 'Admin\UserController')->names('users')->middleware('module:users,action:index');
+    });
     //CUSTOMER
     Route::resource('/clientes', 'Admin\CustomerController');
+    //Obtener sucursales
+    Route::get('/sucursales_cliente/{id}', 'Admin\CustomerController@getBranchOffices');
     //BANKS
     Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
 
@@ -66,10 +69,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //ORDENES
     Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
-    Route::get('orden', function(){
+    Route::get('orden', function () {
         return view('orders.index');
     })->name('order.index');
-    Route::get('orden/crear', function(){
+    Route::get('orden/crear', function () {
         return view('orders.create');
     })->name('order.create');
 
@@ -81,7 +84,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     //RUTAS
     Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
-
 });
 
 //ADDRESSES
@@ -94,4 +96,3 @@ Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serv
 Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
 //CHAT
 Route::resource('chat', 'Admin\ChatController')->names('chats');
-

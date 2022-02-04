@@ -15,7 +15,12 @@ return [
             'name' => 'Ordenes', 'reference' => 'orders', 'icon' => '', 'position' => '2', 'children' => [],
         ],
         'Customers' => [
-            'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3', 'children' => [],
+            'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3',
+            'children' => [
+                'userBanks' => [
+                    'name' => 'Usuario banco', 'reference' => 'userBanks', 'icon' => '', 'position' => '1', 'children' => [],
+                ]
+            ],
         ],
         'Messengers' => [
             'name' => 'Mensajeros', 'reference' => 'messengers', 'icon' => '', 'position' => '4', 'children' => [],
@@ -35,6 +40,7 @@ return [
         'Reports' => [
             'name' => 'Informes', 'reference' => 'reports', 'icon' => '', 'position' => '9', 'children' => [],
         ],
+
 
         // 1 => 'Dashboard',
         // 2 => 'Ordenes',
@@ -77,10 +83,14 @@ return [
             'all',
             'index',
             'create',
+            'store',
             'show',
             'delete',
+            'destroy',
             'update',
-            'assignate'
+            'edit',
+            'assignate',
+            'import'
         ]
     ]
 
