@@ -21,6 +21,7 @@
     <script src="{{ asset('js/alert.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{asset('js/apexcharts.js')}}"></script>
+    <script src="{{asset('js/selectBranchOffice.js')}}"></script>
     {{-- <script src="{{asset('js/uikit.min.js')}}"></script>
     <script src="{{asset('js/uikit-icons.min.js')}}"></script> --}}
 
