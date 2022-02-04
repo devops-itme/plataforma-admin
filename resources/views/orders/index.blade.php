@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="#" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('order.create')}}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -175,7 +175,7 @@
                                 {{-- @endif --}}
                             </td>
                             <td>
-                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row dropleft">
                                     <div class="dropdown dropdown-inline">
                                         <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fad fa-ellipsis-v-alt"></i>

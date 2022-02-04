@@ -145,8 +145,6 @@
             <!--end::Search Form-->
             <!--end: Search Form-->
             <!--begin: Datatable-->
-
-
             <table class="table table-sm">
                 <thead>
                     <tr>
