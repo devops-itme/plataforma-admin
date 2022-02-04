@@ -16,7 +16,7 @@ class CreateModuleActionsTable extends Migration
         Schema::create('module_actions', function (Blueprint $table) {
             $table->id();
             $table->integer('module_id')->nullable();
-            $table->string('action')->nullable();
+            $table->string('actions')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
