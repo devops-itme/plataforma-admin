@@ -9,31 +9,34 @@ return [
     ],
     'modules' => [
         'Dashboard' => [
-            'name' => 'Dashboard', 'reference' => 'dashboard', 'icon' => '', 'position' => '1', 'children' => [],
+            'name' => 'Dashboard', 'reference' => 'dashboard', 'icon' => '', 'position' => '1', 'parent' => null,
         ],
         'Orders' => [
-            'name' => 'Ordenes', 'reference' => 'orders', 'icon' => '', 'position' => '2', 'children' => [],
+            'name' => 'Ordenes', 'reference' => 'orders', 'icon' => '', 'position' => '2', 'parent' => null,
         ],
         'Customers' => [
-            'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3', 'children' => [],
+            'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3', 'parent' => null,
         ],
         'Messengers' => [
-            'name' => 'Mensajeros', 'reference' => 'messengers', 'icon' => '', 'position' => '4', 'children' => [],
+            'name' => 'Mensajeros', 'reference' => 'messengers', 'icon' => '', 'position' => '4', 'parent' => null,
         ],
         'Users' => [
-            'name' => 'Usuarios', 'reference' => 'users', 'icon' => '', 'position' => '5', 'children' => [],
+            'name' => 'Usuarios', 'reference' => 'users', 'icon' => '', 'position' => '5', 'parent' => null,
         ],
         'Parameters' => [
-            'name' => 'Parametros', 'reference' => 'parameters', 'icon' => '', 'position' => '6', 'children' => [],
+            'name' => 'Parametros', 'reference' => 'parameters', 'icon' => '', 'position' => '6', 'parent' => null,
         ],
         'Rates' => [
-            'name' => 'Tarifas', 'reference' => 'rates', 'icon' => '', 'position' => '7', 'children' => [],
+            'name' => 'Tarifas', 'reference' => 'rates', 'icon' => '', 'position' => '7', 'parent' => null,
         ],
         'Zones' => [
-            'name' => 'Zonas', 'reference' => 'zones', 'icon' => '', 'position' => '8', 'children' => [],
+            'name' => 'Zonas', 'reference' => 'zones', 'icon' => '', 'position' => '8', 'parent' => null,
         ],
         'Reports' => [
-            'name' => 'Informes', 'reference' => 'reports', 'icon' => '', 'position' => '9', 'children' => [],
+            'name' => 'Informes', 'reference' => 'reports', 'icon' => '', 'position' => '9', 'parent' => null,
+        ],
+        'userBanks' => [
+            'name' => 'Usuario banco', 'reference' => 'userBanks', 'icon' => '', 'position' => '10', 'parent' => 3,
         ],
 
         // 1 => 'Dashboard',
@@ -77,10 +80,14 @@ return [
             'all',
             'index',
             'create',
+            'store',
             'show',
             'delete',
+            'destroy',
             'update',
-            'assignate'
+            'edit',
+            'assignate',
+            'import'
         ]
     ]
 
