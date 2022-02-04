@@ -14,12 +14,25 @@ class ModuleSeeder extends Seeder
     public function run()
     {
         $modules = Config::get('const.modules');
-        foreach($modules as $key => $data){
-                $module = Module::create([
-                    'name' => $data['name'], 'reference' => $data['reference'], 'parent_id' => $data['parent'], 'icon' => '', 'position' => $data['position']
-                ]);
-
+        foreach ($modules as $key => $data) {
+            $module = Module::create([
+                'name' => $data['name'], 'reference' => $data['reference'], 'icon' => '', 'position' => $data['position']
+            ]);
+            if (count($data['children'])) {
+                $this->createChildren($module->id, $data['children']);
+            }
         }
+    }
 
+    public function createChildren($id, $modules)
+    {
+        foreach ($modules as $key => $data) {
+            $module = Module::create([
+                'name' => $data['name'], 'reference' => $data['reference'], 'parent_id' => $id, 'icon' => '', 'position' => $data['position']
+            ]);
+            if (count($data['children'])) {
+                $this->createChildren($module->id, $data['children']);
+            }
+        }
     }
 }
