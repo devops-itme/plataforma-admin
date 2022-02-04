@@ -215,12 +215,12 @@
                                                 <i class="fad fa-users-class"></i>
                                             </a>
                                         @endif
-                                        <a href="#" class="btn btn-icon btn-light-info btn-sm mr-2">
+                                        <a href="{{route('branchOffices.index', $customer->id)}}" class="btn btn-icon btn-light-info btn-sm mr-2">
                                             <i class="fad fa-building"></i>
                                         </a>
-                                        <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->id}})">
                                             <i class="fad fa-warehouse"></i>
-                                        </a>
+                                        </button>
                                         {{-- </form> --}}
                                     </div>
                                 </td>
@@ -233,7 +233,7 @@
                     @endif
                 </tbody>
             </table>
-
+            @include('customers.modals.selectBranchOffice')
 
             <!--end: Datatable-->
         </div>
@@ -243,5 +243,4 @@
 
 {{-- Styles Section --}}
 @section('styles')
-
 @endsection

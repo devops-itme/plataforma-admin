@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\BranchOffice;
 use App\Customer;
 use App\Http\Controllers\Controller;
 use App\ParameterValue;
@@ -189,5 +190,14 @@ class CustomerController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error al eliminar usuario '.$e->getMessage());
         }
+    }
+
+    public function getBranchOffices($id)
+    {
+        $branchOffices = BranchOffice::where('user_id', $id)->get();
+        if(is_null($branchOffices)){
+            return "500";
+        }
+        return $branchOffices;
     }
 }
