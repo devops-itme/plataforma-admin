@@ -17,8 +17,8 @@ return [
         'Customers' => [
             'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3',
             'children' => [
-                'userBanks' => [
-                    'name' => 'Usuario banco', 'reference' => 'userBanks', 'icon' => '', 'position' => '1', 'children' => [],
+                'bankUsers' => [
+                    'name' => 'Usuario banco', 'reference' => 'bankUsers', 'icon' => '', 'position' => '1', 'children' => [],
                 ]
             ],
         ],
@@ -91,6 +91,10 @@ return [
             'assignate',
             'import',
             'export'
+        ],
+
+        'Permissions' => [
+
         ]
     ]
 

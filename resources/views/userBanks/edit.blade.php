@@ -11,7 +11,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form action="{{route('userBanks.update', [$user->parent_id, $user->id])}}" method="post">
+    <form action="{{route('bankUsers.update', [$user->parent_id, $user->id])}}" method="post">
         @csrf @method('PUT')
         <div class="card-body d-flex flex-row flex-wrap">
             <div class="form-group col-md-4">

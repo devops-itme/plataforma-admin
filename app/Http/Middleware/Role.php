@@ -25,6 +25,7 @@ class Role
         $module = Module::where('reference', $pathRoute)->first(['id']);
         $module_id = $module->id;
 
+
         //role _id of authenticated user
         $role_id = Auth::user()->role;
 

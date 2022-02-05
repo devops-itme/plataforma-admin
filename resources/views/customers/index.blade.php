@@ -211,7 +211,7 @@
                                             </div>
                                         </div>
                                         @if($customer->getUser->role == 4)
-                                            <a href="{{route('userBanks.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
+                                            <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
                                                 <i class="fad fa-users-class"></i>
                                             </a>
                                         @endif

@@ -138,12 +138,12 @@ class CustomerController extends Controller
     {
         $bankData = User::find($parent_id);
         $users = User::where('parent_id', $parent_id)->get();
-        return view('userBanks.index', compact('users', 'bankData'));
+        return view('bankUsers.index', compact('users', 'bankData'));
     }
 
     public function UserBankCreate($parent_id = null)
     {
-        return view('userBanks.create', compact('parent_id'));
+        return view('bankUsers.create', compact('parent_id'));
     }
 
     public function UserBankStore(Request $request, $parent_id = null)
@@ -153,7 +153,7 @@ class CustomerController extends Controller
         }
         $response = $this->saveUser($request->merge(['parent_id' => $parent_id ? $parent_id : null, 'role' => 4, 'state' => 1]));
         if($response['state'] == 200){
-            return redirect()->route('userBanks.index', $parent_id)->with('success', 'Usuario registrado exitosamente');
+            return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario registrado exitosamente');
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
@@ -162,20 +162,20 @@ class CustomerController extends Controller
     public function UserBankShow($parent_id, $id)
     {
         $user = User::where('id', $id)->with('getParent.getCustomer')->first();
-        return view('userBanks.show', compact('user'));
+        return view('bankUsers.show', compact('user'));
     }
 
     public function UserBankEdit($parent_id, $id)
     {
         $user = User::where('id', $id)->first();
-        return view('userBanks.edit', compact('user'));
+        return view('bankUsers.edit', compact('user'));
     }
 
     public function UserBankUpdate($parent_id, $id)
     {
         $response = $this->updateUser(request()->merge(['user_id' => $id]));
         if($response['state'] == 200){
-            return redirect()->route('userBanks.index', $parent_id)->with('success', 'Usuario actualizado exitosamente');
+            return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario actualizado exitosamente');
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
@@ -186,7 +186,7 @@ class CustomerController extends Controller
         try {
             $user = User::find($id);
             $user->delete();
-            return redirect()->route('userBanks.index', $parent_id)->with('success', 'Usuario eliminado exitosamente');
+            return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario eliminado exitosamente');
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error al eliminar usuario '.$e->getMessage());
         }

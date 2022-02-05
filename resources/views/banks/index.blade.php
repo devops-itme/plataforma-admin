@@ -199,7 +199,7 @@
                                             </button>
                                         {{-- </form> --}}
                                         {{-- @if($customer->getUser->role == 4) --}}
-                                        <a href="{{route('userBanks.index', $bank->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
+                                        <a href="{{route('bankUsers.index', $bank->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
                                             <i class="fad fa-users-class"></i>
                                         </a>
                                         <a href="{{route('branchOffices.index', $bank->id)}}" class="btn btn-icon btn-light-info btn-sm mr-2">
