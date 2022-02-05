@@ -1930,7 +1930,7 @@ pre code {
   border-top: 1px solid #EBEDF3;
 }
 .table thead th {
-  vertical-align: bottom;
+  vertical-align: middle;
   border-bottom: 2px solid #EBEDF3;
 }
 .table tbody + tbody {
