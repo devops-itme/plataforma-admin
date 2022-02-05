@@ -25,7 +25,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::group(['middleware' => 'role'], function () {
+    // Route::group(['middleware' => 'role'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');
 
@@ -85,7 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
         //RUTAS
         Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
     });
-});
+// });
 
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
