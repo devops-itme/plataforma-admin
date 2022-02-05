@@ -175,32 +175,16 @@
                                 {{-- @endif --}}
                             </td>
                             <td>
-                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row dropleft">
-                                    <div class="dropdown dropdown-inline">
-                                        <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fad fa-ellipsis-v-alt"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a href="#" class="dropdown-item align-items-center">
-                                                <div class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                                    <i class="fad fa-folder-open"></i>
-                                                </div> Detalle
-                                            </a>
-                                            <a href="#" class="dropdown-item align-items-center">
-                                                <div class="btn btn-icon btn-light-success btn-sm mr-2">
-                                                    <i class="fad fa-edit"></i>
-                                                </div> Editar
-                                            </a>
-                                            <a href="#" class="dropdown-item align-items-center">
-                                                {{-- <form action="{{route('clientes.destroy', $customer->id)}}" method="{{'post'}}">
-                                                    @csrf @method('DELETE') --}}
-                                                    <div class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                        <i class="fad fa-trash-alt"></i>
-                                                    </div> Eliminar
-                                                {{-- </form> --}}
-                                            </a>
-                                        </div>
-                                    </div>
+                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <i class="fad fa-folder-open"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        <i class="fad fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        <i class="fad fa-trash-alt"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
