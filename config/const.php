@@ -86,11 +86,11 @@ return [
             'store',
             'show',
             'delete',
-            'destroy',
             'update',
             'edit',
             'assignate',
-            'import'
+            'import',
+            'export'
         ]
     ]
 

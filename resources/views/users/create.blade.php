@@ -45,7 +45,7 @@
             </div>
             <div class="form-group col-md-3">
                 <label>Rol</label>
-                <select class="form-control form-control-solid" id="document_type" name="role">
+                <select class="form-control form-control-solid" id="role_id" name="role" required>
                     <option selected disabled>Seleccione</option>
                     @foreach ($roles as $role )
                         <option {{old('role')==$role->id?'selected ':''}} value="{{$role->id}}">{{$role->name}}</option>

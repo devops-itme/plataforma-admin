@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('usuarios', 'Admin\UserController')->names('users');
 
         //CUSTOMER
-        Route::resource('/clientes', 'Admin\CustomerController');
+        Route::resource('/clientes', 'Admin\CustomerController')->names('customers');
         //Obtener sucursales
         Route::get('/sucursales_cliente/{id}', 'Admin\CustomerController@getBranchOffices');
         //BANKS
@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/userBanks/{parent_id}/{id}', 'Admin\CustomerController@UserBankShow')->name('userBanks.show');
         Route::get('/userBanks/{parent_id}/{id}/edit', 'Admin\CustomerController@UserBankEdit')->name('userBanks.edit');
         Route::put('/userBanks/{parent_id}/{id}/update', 'Admin\CustomerController@UserBankUpdate')->name('userBanks.update');
-        Route::delete('/userBanks/{parent_id}/{id}', 'Admin\CustomerController@UserBankDestroy')->name('userBanks.destroy');
+        Route::delete('/userBanks/{parent_id}/{id}', 'Admin\CustomerController@UserBankDestroy')->name('userBanks.delete');
 
         //BRANCH OFFICES
         Route::get('/sucursales/{parent_id}', 'Admin\BranchOfficeController@index')->name('branchOffices.index');
@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('departamentos/{id}/detaller', 'Admin\DepartmentController@show')->name('departments.show');
         Route::get('departamentos/{id}/edit', 'Admin\DepartmentController@edit')->name('departments.edit');
         Route::put('departamentos/{id}', 'Admin\DepartmentController@update')->name('departments.update');
-        Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('departments.destroy');
+        Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('departments.delete');
 
         //ORDENES
         Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');

@@ -14,7 +14,8 @@ class Module extends Model
       'reference',
       'parent_id',
       'icon',
-      'state'
+      'state',
+      'actions'
    ];
 
 }

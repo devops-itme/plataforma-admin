@@ -49,7 +49,7 @@ class UserController extends Controller
         if($user['state'] == 200){
             return redirect()->route('users.index')->with('success', 'Usuario registrado exitosamente.');
         } else {
-            return redirect()->back()->withInput()->with('danger', $user['error']);
+            return redirect()->back()->withInput()->with('danger', $user['message']);
         }
 
     }
