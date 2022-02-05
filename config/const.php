@@ -1,5 +1,7 @@
 <?php
 
+use App\Permission;
+
 return [
     'roles' => [
         1 => 'Admin',
@@ -8,37 +10,98 @@ return [
         4 => 'Cliente',
     ],
     'modules' => [
-        'Dashboard' => [
+        'dashboard' => [
             'name' => 'Dashboard', 'reference' => 'dashboard', 'icon' => '', 'position' => '1', 'children' => [],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ],
         ],
-        'Orders' => [
-            'name' => 'Ordenes', 'reference' => 'orders', 'icon' => '', 'position' => '2', 'children' => [],
+        'orders' => [
+            'name' => 'Ordenes', 'reference' => 'orders', 'icon' => '', 'position' => '2',
+            'children' => [],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ]
         ],
-        'Customers' => [
+        'customers' => [
             'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3',
             'children' => [
                 'bankUsers' => [
-                    'name' => 'Usuario banco', 'reference' => 'bankUsers', 'icon' => '', 'position' => '1', 'children' => [],
+                    'name' => 'Usuario banco', 'reference' => 'bankUsers', 'icon' => '', 'position' => '1', 'children' => [], 'permission' => []
                 ]
             ],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ]
         ],
-        'Messengers' => [
-            'name' => 'Mensajeros', 'reference' => 'messengers', 'icon' => '', 'position' => '4', 'children' => [],
+        'messengers' => [
+            'name' => 'Mensajeros', 'reference' => 'messengers', 'icon' => '', 'position' => '4',
+            'children' => [],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ]
         ],
-        'Users' => [
-            'name' => 'Usuarios', 'reference' => 'users', 'icon' => '', 'position' => '5', 'children' => [],
+        'users' => [
+            'name' => 'Usuarios', 'reference' => 'users', 'icon' => '', 'position' => '5',
+            'children' => [],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ]
         ],
-        'Parameters' => [
-            'name' => 'Parametros', 'reference' => 'parameters', 'icon' => '', 'position' => '6', 'children' => [],
+        'parameters' => [
+            'name' => 'Parametros', 'reference' => 'parameters', 'icon' => '', 'position' => '6',
+            'children' => [],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ]
         ],
-        'Rates' => [
-            'name' => 'Tarifas', 'reference' => 'rates', 'icon' => '', 'position' => '7', 'children' => [],
+        'rates' => [
+            'name' => 'Tarifas', 'reference' => 'rates', 'icon' => '', 'position' => '7',
+            'children' => [],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ]
         ],
-        'Zones' => [
-            'name' => 'Zonas', 'reference' => 'zones', 'icon' => '', 'position' => '8', 'children' => [],
+        'zones' => [
+            'name' => 'Zonas', 'reference' => 'zones', 'icon' => '', 'position' => '8',
+            'children' => [],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ]
         ],
-        'Reports' => [
-            'name' => 'Informes', 'reference' => 'reports', 'icon' => '', 'position' => '9', 'children' => [],
+        'reports' => [
+            'name' => 'Informes', 'reference' => 'reports', 'icon' => '', 'position' => '9',
+            'children' => [],
+            'permission' => [
+                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                ['role_id' => 2, 'actions' => '6'],
+                ['role_id' => 3, 'actions' => '6'],
+                ['role_id' => 4, 'actions' => '6'],
+            ]
         ],
 
 
@@ -93,9 +156,7 @@ return [
             'export'
         ],
 
-        'Permissions' => [
-
-        ]
+        'Permissions' => []
     ]
 
 ];

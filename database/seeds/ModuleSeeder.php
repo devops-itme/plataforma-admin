@@ -1,6 +1,7 @@
 <?php
 
 use App\Module;
+use App\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 
@@ -21,6 +22,16 @@ class ModuleSeeder extends Seeder
             if (count($data['children'])) {
                 $this->createChildren($module->id, $data['children']);
             }
+            $name = $data['reference'];
+            if (count($data['permission'])) {
+                $permission = Config::get("const.modules.".$name.".permission");
+
+                foreach ($permission as $key => $data) {
+                    $permission = Permission::create([
+                        'role_id' =>$data['role_id'], 'module_id' =>$module->id, 'actions'=>$data['actions'],
+                    ]);
+                }
+            }
         }
     }
 
@@ -35,4 +46,15 @@ class ModuleSeeder extends Seeder
             }
         }
     }
+    // public function createPermissions($id, $modules)
+    // {
+    //     foreach($modules as $key => $data){
+    //         $permission = Permission::create([
+    //             'role_id'=>$data['role_id'],'module_id'=>$id, 'actions'=>$data['actions']
+    //         ]);
+    //         if (count($data['permission'])) {
+    //             $this->createPermissions($permission->id, $data['permission']);
+    //         }
+    //     }
+    // }
 }
