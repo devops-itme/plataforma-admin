@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
         //Obtener sucursales
         Route::get('/sucursales_cliente/{id}', 'Admin\CustomerController@getBranchOffices');
         //BANKS
-        Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
+        // Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
 
         //USER BANKS
         Route::get('/usuario-banco/{parent_id}', 'Admin\CustomerController@UserBankIndex')->name('bankUsers.index');
