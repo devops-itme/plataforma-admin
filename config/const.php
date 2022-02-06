@@ -38,7 +38,18 @@ return [
                     'children' => [
                         'branchOffices' => [
                             'name' => 'Sucursales', 'reference' => 'branchOffices', 'icon' => '', 'position' => '1',
-                            'children' => [],
+                            'children' => [
+                                'departments'=>[
+                                    'name' => 'Departamentos', 'reference' => 'departments', 'icon' => '', 'position' => '1',
+                                    'children' => [],
+                                    'permission' => [
+                                        'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                                        'Operador' => ['role_id' => 2, 'actions' => '6'],
+                                        'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                                        'Cliente' => ['role_id' => 4, 'actions' => '6'],
+                                    ]
+                                ]
+                            ],
                             'permission' => [
                                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
                                 'Operador' => ['role_id' => 2, 'actions' => '6'],
