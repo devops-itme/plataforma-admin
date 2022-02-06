@@ -34,7 +34,8 @@ class Role
         $actions = $premission->actions ?? '';
 
         //action name
-        $action = $request->route()->getActionMethod();
+        // $action = $request->route()->getActionMethod();
+        $action = explode('.', $request->route()->getName())[1];
         $action = ParameterValue::where('name', $action)->first(['id']);
         $action_id = $action->id;
 
