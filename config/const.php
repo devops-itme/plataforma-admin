@@ -11,96 +11,116 @@ return [
     ],
     'modules' => [
         'dashboard' => [
-            'name' => 'Dashboard', 'reference' => 'dashboard', 'icon' => '', 'position' => '1', 'children' => [],
+            'name' => 'Dashboard', 'reference' => 'dashboard', 'icon' => '', 'position' => '1',
+            'children' => [],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ],
         ],
         'orders' => [
             'name' => 'Ordenes', 'reference' => 'orders', 'icon' => '', 'position' => '2',
             'children' => [],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
         'customers' => [
             'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3',
             'children' => [
                 'bankUsers' => [
-                    'name' => 'Usuario banco', 'reference' => 'bankUsers', 'icon' => '', 'position' => '1', 'children' => [], 'permission' => []
-                ]
+                    'name' => 'Usuario banco', 'reference' => 'bankUsers', 'icon' => '', 'position' => '1',
+                    'children' => [
+                        'branchOffices' => [
+                            'name' => 'Sucursales', 'reference' => 'branchOffices', 'icon' => '', 'position' => '1',
+                            'children' => [],
+                            'permission' => [
+                                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                                'Cliente' => ['role_id' => 4, 'actions' => '6'],
+                            ]
+                        ]
+                    ],
+                    'permission' => [
+                        'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                        'Operador' => ['role_id' => 2, 'actions' => '6'],
+                        'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                        'Cliente' => ['role_id' => 4, 'actions' => '6'],
+                    ]
+                ],
+
             ],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
         'messengers' => [
             'name' => 'Mensajeros', 'reference' => 'messengers', 'icon' => '', 'position' => '4',
             'children' => [],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
         'users' => [
             'name' => 'Usuarios', 'reference' => 'users', 'icon' => '', 'position' => '5',
             'children' => [],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
         'parameters' => [
             'name' => 'Parametros', 'reference' => 'parameters', 'icon' => '', 'position' => '6',
             'children' => [],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
         'rates' => [
             'name' => 'Tarifas', 'reference' => 'rates', 'icon' => '', 'position' => '7',
             'children' => [],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
         'zones' => [
             'name' => 'Zonas', 'reference' => 'zones', 'icon' => '', 'position' => '8',
             'children' => [],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
         'reports' => [
             'name' => 'Informes', 'reference' => 'reports', 'icon' => '', 'position' => '9',
             'children' => [],
             'permission' => [
-                ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
-                ['role_id' => 2, 'actions' => '6'],
-                ['role_id' => 3, 'actions' => '6'],
-                ['role_id' => 4, 'actions' => '6'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
 
@@ -148,6 +168,7 @@ return [
             'create',
             'store',
             'show',
+            'destroy',
             'delete',
             'update',
             'edit',
