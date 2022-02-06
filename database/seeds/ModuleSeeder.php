@@ -22,14 +22,10 @@ class ModuleSeeder extends Seeder
             if (count($data['children'])) {
                 $this->createChildren($module->id, $data['children']);
             }
-            $name = $data['reference'];
+            // $name = $data['reference'];
             if (count($data['permission'])) {
-                $permission = Config::get("const.modules.".$name.".permission");
-
-                foreach ($permission as $key => $data) {
-                    $permission = Permission::create([
-                        'role_id' =>$data['role_id'], 'module_id' =>$module->id, 'actions'=>$data['actions'],
-                    ]);
+                foreach ($data['permission'] as $key => $data) {
+                    $this->createPermission($module->id, $data);
                 }
             }
         }
@@ -38,23 +34,28 @@ class ModuleSeeder extends Seeder
     public function createChildren($id, $modules)
     {
         foreach ($modules as $key => $data) {
+
             $module = Module::create([
                 'name' => $data['name'], 'reference' => $data['reference'], 'parent_id' => $id, 'icon' => '', 'position' => $data['position']
             ]);
             if (count($data['children'])) {
                 $this->createChildren($module->id, $data['children']);
             }
+            if (count($data['permission'])) {
+                foreach ($data['permission'] as $key => $data) {
+                    $this->createPermission($module->id, $data);
+                }
+            }
         }
     }
-    // public function createPermissions($id, $modules)
-    // {
-    //     foreach($modules as $key => $data){
-    //         $permission = Permission::create([
-    //             'role_id'=>$data['role_id'],'module_id'=>$id, 'actions'=>$data['actions']
-    //         ]);
-    //         if (count($data['permission'])) {
-    //             $this->createPermissions($permission->id, $data['permission']);
-    //         }
-    //     }
-    // }
+    public function createPermission($id, $modules)
+    {
+
+        $permission = Permission::create([
+            'role_id' => $modules['role_id'], 'module_id' => $id, 'actions' => $modules['actions']
+        ]);
+
+
+
+    }
 }
