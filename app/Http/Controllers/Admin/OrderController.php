@@ -19,7 +19,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::get();
-        return json_encode($orders);
+        return view('orders.index');
     }
 
     /**
@@ -29,7 +29,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('orders.create');
     }
 
     /**

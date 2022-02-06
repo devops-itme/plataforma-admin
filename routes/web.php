@@ -68,13 +68,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('departments.delete');
 
         //ORDENES
-        Route::resource('/ordenes', 'Admin\OrderController')->names('ordenes');
-        Route::get('orden', function () {
-            return view('orders.index');
-        })->name('order.index');
-        Route::get('orden/crear', function () {
-            return view('orders.create');
-        })->name('order.create');
+        Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
+        // Route::get('orden', function () {
+        //     return view('orders.index');
+        // })->name('orders.index');
+        // Route::get('orden/crear', function () {
+        //     return view('orders.create');
+        // })->name('orders.create');
 
         //GUIAS
         Route::resource('/guias', 'Admin\GuideController')->names('guias');
