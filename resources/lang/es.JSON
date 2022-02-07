@@ -1,6 +1,7 @@
 {
-    "customers" : "clientes",
-    "edit" : "editar",
-    "create" : "crear",
-    "show" : "detalle"
+    "customers" : "Clientes",
+    "edit" : "Editar",
+    "create" : "Crear",
+    "show" : "Detalle",
+    "messengers" : "mensajeros"
 }

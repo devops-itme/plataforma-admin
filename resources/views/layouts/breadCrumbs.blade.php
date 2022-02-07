@@ -3,11 +3,7 @@
         <li class="breadcrumb-item Active"><a href="/" style="color: #6f6f6f !important;">Inicio</a></li>
         @foreach (explode(".",request()->route()->getName()) as $item)
             @if ($item!="index")
-                @if($item == "users")
-                    <li class="breadcrumb-item active" {aria-current="page" }> <a href="{{request()->segment(1)==$item?'/'.request()->segment(1):'#'}}" style="color: #6f6f6f !important;">{{__("usuarios")}}</a> </li>
-                @else
-                    <li class="breadcrumb-item active" {aria-current="page" }> <a href="{{request()->segment(1)==$item?'/'.request()->segment(1):'#'}}" style="color: #6f6f6f !important;">{{__("$item")}}</a> </li>
-                @endif
+                <li class="breadcrumb-item active" {aria-current="page" }> <a href="{{request()->segment(1)==__("$item")?'/'.request()->segment(1):'#'}}" style="color: #6f6f6f !important;">{{__("$item")}}</a> </li>
             @endif
         @endforeach
     </ol>
