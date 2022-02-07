@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('usuarios', 'Admin\UserController')->names('users');
 
         //CUSTOMER
-        Route::resource('/clientes', 'Admin\CustomerController')->names('customers');
+        Route::resource('/clientes', 'Admin\CustomerController')->names('clientes');
         //Obtener sucursales
         Route::get('/sucursales_cliente/{id}', 'Admin\CustomerController@getBranchOffices')->name('branchOffices.index');
         //BANKS

@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
 <div class="card card-custom">
     <div class="card-header">
         <h3 class="card-title">
@@ -12,7 +12,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form action="{{route('customers.update', $customer->id)}}" method="post">
+    <form action="{{route('clientes.update', $customer->id)}}" method="post">
         @csrf @method('PUT')
         <div class="card-body d-flex flex-row flex-wrap">
 

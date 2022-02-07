@@ -2,7 +2,7 @@
 @extends('layouts.app')
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">

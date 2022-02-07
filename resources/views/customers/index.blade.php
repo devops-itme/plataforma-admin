@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('customers.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('clientes.create')}}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -190,12 +190,12 @@
                                                 <i class="fad fa-ellipsis-v-alt"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a href="{{route('customers.show', $customer->id)}}" class="dropdown-item align-items-center">
+                                                <a href="{{route('clientes.show', $customer->id)}}" class="dropdown-item align-items-center">
                                                     <div class="btn btn-icon btn-light-primary btn-sm mr-2">
                                                         <i class="fad fa-folder-open"></i>
                                                     </div> Detalle
                                                 </a>
-                                                <a href="{{route('customers.edit', $customer->id)}}" class="dropdown-item align-items-center">
+                                                <a href="{{route('clientes.edit', $customer->id)}}" class="dropdown-item align-items-center">
                                                     <div class="btn btn-icon btn-light-success btn-sm mr-2">
                                                         <i class="fad fa-edit"></i>
                                                     </div> Editar

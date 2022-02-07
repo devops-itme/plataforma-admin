@@ -7,7 +7,7 @@
                 <i class="fas fa-home text-muted"></i>
             </a>
 
-            <a href="{{route('customers.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Clientes" data-placement="bottom">
+            <a href="{{route('clientes.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Clientes" data-placement="bottom">
                 <i class="fas fa-users text-muted"></i>
             </a>
 
