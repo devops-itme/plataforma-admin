@@ -44,7 +44,7 @@ class LoginController extends Controller
             $messenger_role = Role::where('name', 'Mensajero')->first();
             $messenger_role_id = $messenger_role->id;
 
-            if ($user->role_id != $messenger_role_id) {
+            if ($user->role != $messenger_role_id) {
                 return $this->respond(401,  null, 'Unauthorized', 'El usuario no es un mensajero');
             }
 
