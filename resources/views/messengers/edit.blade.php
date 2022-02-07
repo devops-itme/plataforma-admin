@@ -68,7 +68,12 @@
                         value="{{ $messenger->admission_date }}" />
                     <span class="form-text text-muted"></span>
                 </div>
-
+                <div class="form-group col-md-4">
+                    <label>Fecha de ingreso: <span class="text-danger">*</span></label>
+                    <input name="birth_date" type="date" class="form-control form-control-solid" placeholder=""
+                        value="{{ $messenger->birth_date }}" />
+                    <span class="form-text text-muted"></span>
+                </div>
                 <div class="form-group col-md-4">
                     <label>Porcentaje de producción: <span class="text-danger">*</span></label>
                     <input name="production_percentage" type="text" class="form-control form-control-solid" placeholder=""
