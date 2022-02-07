@@ -6,5 +6,6 @@
     "messengers" : "Mensajeros",
     "users" : "Usuarios",
     "bankUsers" : "Usuario-banco",
-    "branchOffices" : "Sucursales"
+    "branchOffices" : "Sucursales",
+    "departments" : "Departamentos"
 }
