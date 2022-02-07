@@ -1,0 +1,10 @@
+{
+    "customers" : "Clientes",
+    "edit" : "Editar",
+    "create" : "Crear",
+    "show" : "Detalle",
+    "messengers" : "Mensajeros",
+    "users" : "Usuarios",
+    "bankUsers" : "Usuario-banco",
+    "branchOffices" : "Sucursales"
+}

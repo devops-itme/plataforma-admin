@@ -60,7 +60,7 @@ class CustomerController extends Controller
         }
         $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
         if($response['state'] == 200){
-            return redirect()->route('customers.index')->with('success', 'Cliente registrado exitosamente.');
+            return redirect()->route('clientes.index')->with('success', 'Cliente registrado exitosamente.');
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
@@ -102,7 +102,7 @@ class CustomerController extends Controller
     {
         $response = $this->updateCustomer($request, $id);
         if($response['state'] == 200){
-            return redirect()->route('customers.index')->with('success', $response['message']);
+            return redirect()->route('clientes.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
@@ -118,7 +118,7 @@ class CustomerController extends Controller
     {
         $response = $this->deleteCustomer($id);
         if($response['state'] == 200){
-            return redirect()->route('customers.index')->with('success', $response['message']);
+            return redirect()->route('clientes.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }

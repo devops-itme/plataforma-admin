@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('customers.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('clientes.create')}}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -186,10 +186,10 @@
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                        <a href="{{route('customers.show', $bank->getCustomer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <a href="{{route('clientes.show', $bank->getCustomer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-folder-open"></i>
                                         </a>
-                                        <a href="{{route('customers.edit', $bank->getCustomer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        <a href="{{route('clientes.edit', $bank->getCustomer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                             <i class="fad fa-edit"></i>
                                         </a>
                                         {{-- <form action="{{route('clientes.destroy', $bank->id)}}" method="{{'post'}}">
