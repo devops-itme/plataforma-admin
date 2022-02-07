@@ -75,7 +75,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-flex flex-column flex-root">
+    <div class="d-flex flex-column flex-root" style="height: 100vh;">
         <!--begin::Login-->
         <div class="login login-2 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">
             <!--begin::Aside-->

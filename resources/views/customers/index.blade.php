@@ -218,7 +218,7 @@
                                         <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2">
                                             <i class="fad fa-building"></i>
                                         </a>
-                                        <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->id}})">
+                                        <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">
                                             <i class="fad fa-warehouse"></i>
                                         </button>
                                         {{-- </form> --}}
