@@ -191,7 +191,7 @@
                                         <a href="{{route('bankUsers.edit', [$user->parent_id, $user->id])}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                             <i class="fad fa-edit"></i>
                                         </a>
-                                        {{-- <form action="{{route('clientes.destroy', $bank->id)}}" method="{{'post'}}">
+                                        {{-- <form action="{{route('customers.destroy', $bank->id)}}" method="{{'post'}}">
                                             @csrf @method('DELETE') --}}
                                             <button type="button" onclick="confirmDelete('/usuario-banco/'+{{$user->parent_id}}+'/'+{{$user->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                                 <i class="fad fa-trash-alt"></i>

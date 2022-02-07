@@ -30,8 +30,8 @@ return [
                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
-        'clientes' => [
-            'name' => 'Clientes', 'reference' => 'clientes', 'icon' => '', 'position' => '3',
+        'customers' => [
+            'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3',
             'children' => [
                 'bankUsers' => [
                     'name' => 'Usuario banco', 'reference' => 'bankUsers', 'icon' => '', 'position' => '1',

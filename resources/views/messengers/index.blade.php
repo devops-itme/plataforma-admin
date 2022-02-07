@@ -196,7 +196,7 @@
                                                 </div> Editar
                                             </a>
                                             <a type="button" onclick="confirmDelete('/mensajeros/'+{{$item->id}})" role="button"  id="deleteMessenger" class="dropdown-item align-items-center">
-                                                {{-- <form action="{{route('clientes.destroy', $customer->id)}}" method="{{'post'}}">
+                                                {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
                                                     @csrf @method('DELETE') --}}
                                                     <div class="btn btn-icon btn-light-danger btn-sm mr-2">
                                                         <i class="fad fa-trash-alt"></i>
