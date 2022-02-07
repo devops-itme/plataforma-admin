@@ -70,13 +70,17 @@
                 <input name="admission_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('admission_date')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
-
             <div class="form-group col-md-2">
+                <label>Fecha de nacimiento: <span class="text-danger">*</span></label>
+                <input name="birth_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('birth_date')}}"/>
+                <span class="form-text text-muted"></span>
+            </div>
+            <div class="form-group col-md-3">
                 <label>Porcentaje de producción: <span class="text-danger">*</span></label>
                 <input name="production_percentage" type="number" class="form-control form-control-solid" placeholder="" value="{{old('production_percentage')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <label>Contrato <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
                     type="file" name="contract" value="{{old('contract')}}"/>

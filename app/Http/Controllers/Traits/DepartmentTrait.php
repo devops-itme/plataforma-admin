@@ -6,6 +6,7 @@ use App\Department;
 use App\Http\Controllers\RestActions;
 use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
 use App\ParameterValue;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,7 +27,16 @@ trait DepartmentTrait
     public function getDepartments($id)
     {
         try {
-            $departments = Department::where('branch_office_id', $id)->paginate(10);
+
+            if(!is_null(Request()->user_id )){
+                $departments = Department::with('getBranchOffice.getUser')->whereHas('getBranchOffice.getUser', function ($query) use ($id){
+                      $query->where('id', $id);
+                })->paginate(10);
+          }else{
+              $departments = Department::where('branch_office_id', $id)->with('getBranchOffice.getUser')->paginate(10);
+          }
+
+
             return $this->respond(200, $departments);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
@@ -40,7 +50,6 @@ trait DepartmentTrait
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }
-
     }
     public function saveDepartment($request, $id)
     {

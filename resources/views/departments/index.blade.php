@@ -152,6 +152,7 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Descripción</th>
+                        <th scope="col">Sucursal</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                     </tr>
@@ -161,6 +162,11 @@
                         <tr>
                             <th scope="row">{{ $item->name . ' ' . $item->last_name }}</th>
                             <td>{{ $item->description }}</td>
+                            <td>
+                                <span class="label label-inline label-light-warning font-weight-blog">
+                                   {{ $item->getBranchOffice->name }}
+                                </span>
+                            </td>
                             <td>
                                 @if ($item->state == 1)
                                     <span class="label label-inline label-light-success font-weight-bold">
@@ -174,13 +180,16 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="{{route('departments.show',$item->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                    <a href="{{ route('departments.show', $item->id) }}"
+                                        class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
-                                    <a href="{{route('departments.edit',$item->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                    <a href="{{ route('departments.edit', $item->id) }}"
+                                        class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fad fa-edit"></i>
                                     </a>
-                                    <a onclick="confirmDelete('/departamentos/'+{{$item->id}})" role="button"  id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                    <a onclick="confirmDelete('/departamentos/'+{{ $item->id }})" role="button"
+                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                         <i class="fad fa-trash-alt"></i>
                                     </a>
                                 </div>

@@ -184,7 +184,7 @@
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
                                         <a href="{{route('departments.index', $office->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                            <i class="fad fa-folder-open"></i>
+                                            <i class="fad fa-warehouse"></i>
                                         </a>
                                     </div>
                                 </td>

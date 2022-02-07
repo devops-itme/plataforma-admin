@@ -47,6 +47,12 @@ class User extends Model implements AuthenticatableContract
         return $this->belongsTo(User::class, 'parent_id');
     }
 
+    //BRANCH OFFICE
+    public function getBranchOffice()
+    {
+        return $this->hasMany(BranchOffice::class, 'user_id');
+    }
+
 
 
 }
