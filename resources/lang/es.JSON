@@ -4,5 +4,6 @@
     "create" : "Crear",
     "show" : "Detalle",
     "messengers" : "Mensajeros",
-    "users" : "Usuarios"
+    "users" : "Usuarios",
+    "bankUsers" : "Usuario-banco"
 }
