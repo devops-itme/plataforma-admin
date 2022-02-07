@@ -15,53 +15,91 @@
         <form>
             @csrf
             <div class="card-body d-flex flex-row flex-wrap pt-2">
-                <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
-                <div class="form-group col-md-2">
-                    <label>Numero de orden: <span class="text-danger">*</span></label>
-                    <input name="order_num" type="text" class="form-control form-control-solid" placeholder="333" />
-                    <span class="form-text text-muted"></span>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
-                    <select name="orden_type" class="form-control form-control-solid" id="order_type">
-                        <option selected disabled>Seleccione tipo de orden</option>
-                        <option>Ondeman</option>
-                        <option>Multiple</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="customers">Cliente <span class="text-danger">*</span></label>
-                    <select name="customers" class="form-control" id="customers">
-                        <option selected disabled>Seleccione Cliente</option>
-                        <option>Cliente 1</option>
-                        <option>Cliente 2</option>
-                        <option>Cliente 3</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-1 d-flex align-items-center flex-row pt-6">
-                    <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
-                        data-target="#detailCustomer">
-                        <i class="fad fa-eye"></i>
-                    </button>
+                <div class="col-md-6 border-right">
+                    <div class="d-flex flex-row flex-wrap">
+                    <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
+                    <div class="form-group col-md-6">
+                        <label>Numero de orden: <span class="text-danger">*</span></label>
+                        <input name="order_num" type="text" class="form-control form-control-solid" placeholder="333" />
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
+                        <select name="orden_type" class="form-control form-control-solid" id="order_type">
+                            <option selected disabled>Seleccione tipo de orden</option>
+                            <option>Ondeman</option>
+                            <option>Multiple</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="customers">Cliente <span class="text-danger">*</span></label>
+                        <select name="customers" class="form-control" id="customers">
+                            <option selected disabled>Seleccione Cliente</option>
+                            <option>Cliente 1</option>
+                            <option>Cliente 2</option>
+                            <option>Cliente 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
+                        <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
+                            data-target="#detailCustomer">
+                            <i class="fad fa-eye"></i>
+                        </button>
 
-                    <a href="{{ route('customers.create') }}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                        <i class="fad fa-plus"></i>
-                    </a>
+                        <a href="{{ route('customers.create') }}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                            <i class="fad fa-plus"></i>
+                        </a>
+                    </div>
+                   </div>
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="rates">Tarifa <span class="text-danger">*</span></label> <a
-                        href="#"><small>Ver</small></a>
-                    <select name="rates" class="form-control" id="rates">
-                        <option selected disabled>Seleccione Tarifa</option>
-                        <option>Tarifa 1</option>
-                        <option>Tarifa 2</option>
-                        <option>Tarifa 3</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Gastos de envio: <span class="text-danger">*</span></label>
-                    <input name="send_cost" type="text" class="form-control form-control-solid" placeholder="333" />
-                    <span class="form-text text-muted"></span>
+                <div class="col-md-6">
+                    <div class="d-flex flex-row flex-wrap">
+                        <div class="d-flex flex-row flex-wrap col-md-12 justify-content-between">
+                            <h5 class="my-4 font-weight-bold text-dark col-md-3">Totales</h5>
+                            <div class="col-6">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="col-6 p-0">
+                                        <small class="mb-0 label label-sm label-warning label-pill label-inline">Valor total OnDemand</small><br>
+                                        <small class="mb-0 pl-2 text-danger">1.00</small>
+                                    </div>
+                                    <div class="col-6 p-0">
+                                        <small class="mb-0 label label-sm label-warning label-pill label-inline">Valor Pagar Cliente</small><br>
+                                        <small class="mb-0 pl-2 text-danger">1.00</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Valor Orden OnDemand/Corp:</label>
+                            <input name="order_value" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <span class="form-text text-muted"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>FF, COD, Com.Gastos, Seguro:</label>
+                            <input name="sec_value" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <span class="form-text text-muted"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Recibir por COD: </label>
+                            <input name="cod_value" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <span class="form-text text-muted"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Gastos diligencia: </label>
+                            <input name="cost_diligence" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <span class="form-text text-muted"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Producto interno: </label>
+                            <input name="inner_prod" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <span class="form-text text-muted"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Total Tax: </label>
+                            <input name="total_tax" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <ul class="nav nav-light-success nav-pills border-bottom pb-3" id="myTab" role="tablist">
@@ -83,30 +121,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                {{-- <div class="form-group col-md-2">
-                <label>Fecha de ingreso: <span class="text-danger">*</span></label>
-                <input name="admission_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('admission_date')}}"/>
-                <span class="form-text text-muted"></span>
-            </div> --}}
-
-                {{-- <div class="form-group col-md-2">
-                <label>Exclusivo</label>
-                <div class="radio-inline">
-                    <label class="radio radio-rounded">
-                        <input type="radio" checked="checked" name="exclusive" value="1" />
-                        <span></span>
-                        SI
-                    </label>
-                    <label class="radio radio-rounded">
-                        <input type="radio" name="exclusive" value="0" />
-                        <span></span>
-                        NO
-                    </label>
-                </div>
-                <span class="form-text text-muted"></span>
-            </div> --}}
             </div>
 
             <div class="card-footer d-flex justify-content-end">

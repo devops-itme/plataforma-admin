@@ -189,7 +189,10 @@
                               <a class="nav-link" id="facil-tab" data-toggle="tab" href="#facil" role="tab" aria-controls="facil" aria-selected="false">Me Facilities</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link" id="prod-tab" data-toggle="tab" href="#prod" role="tab" aria-controls="prod" aria-selected="false">Contact</a>
+                              <a class="nav-link" id="prod-tab" data-toggle="tab" href="#prod" role="tab" aria-controls="prod" aria-selected="false">Me Productos</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="prod-tab" data-toggle="tab" href="#diligencia" role="tab" aria-controls="diligencia" aria-selected="false">Gastos por diligencia</a>
                             </li>
                           </ul>
                           <div class="tab-content" id="myTabContent">
@@ -219,6 +222,65 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="prod" role="tabpanel" aria-labelledby="prod-tab">
+                                <div class="d-flex pt-4 flex-row flex-wrap">
+                                    <div class="form-group col-md-3">
+                                        <label>Producto: <span class="text-danger">*</span></label>
+                                        <select name="prdc" class="form-control form-control-solid mr-2" id="prdc">
+                                            <option selected disabled>Seleccione producto</option>
+                                            <option>FOTOCOPIA COLOR</option>
+                                            <option>FOTOCOPIA B/N</option>
+                                        </select>
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Cantidad: <span class="text-danger">*</span></label>
+                                        <input name="quantity" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Valor Unidad: <span class="text-danger">*</span></label>
+                                        <input name="unity_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Valor Total: <span class="text-danger">*</span></label>
+                                        <input name="total_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="diligencia" role="tabpanel" aria-labelledby="diligencia-tab">
+                                <div class="d-flex pt-4 flex-row flex-wrap">
+                                    <div class="form-group col-md-2 d-flex align-items-center">
+                                        <div class="checkbox-inline">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="checkCost"/>
+                                                <span></span>
+                                                Si
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Gastos: <span class="text-danger">*</span></label>
+                                        <input name="costs" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Comisión: <span class="text-danger">*</span></label>
+                                        <input name="commission" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Tax: <span class="text-danger">*</span></label>
+                                        <input name="tax_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>Total: <span class="text-danger">*</span></label>
+                                        <input name="total" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                </div>
                             </div>
                           </div>
                     </div>
