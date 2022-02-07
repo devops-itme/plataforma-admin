@@ -34,7 +34,7 @@ class User extends Model implements AuthenticatableContract
 
     public function getMessenger()
     {
-        return $this->hasOne(Messenger::class, 'id');
+        return $this->hasOne(Messenger::class);
     }
 
     public function getDocumentType()
