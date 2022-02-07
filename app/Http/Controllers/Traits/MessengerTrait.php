@@ -69,6 +69,7 @@ trait MessengerTrait
                 'admission_date' => $request->admission_date,
                 'production_percentage' => $request->production_percentage,
                 'exclusive' => $request->exclusive,
+                'birth_date' => $request->birth_date,
                 'contract' => $contract_file
             ]);
             return $this->respond(200, $messenger);

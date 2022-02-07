@@ -187,7 +187,11 @@ return [
             'export'
         ],
 
-        'Permissions' => []
+        'Permissions' => [],
+        'branch_office_types' => [
+            'Interna',
+            'Externa'
+        ],
     ]
 
 ];

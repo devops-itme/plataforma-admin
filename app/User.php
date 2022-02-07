@@ -34,7 +34,7 @@ class User extends Model implements AuthenticatableContract
 
     public function getMessenger()
     {
-        return $this->hasOne(Messenger::class, 'id');
+        return $this->hasOne(Messenger::class);
     }
 
     public function getDocumentType()
@@ -45,6 +45,12 @@ class User extends Model implements AuthenticatableContract
     public function getParent()
     {
         return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    //BRANCH OFFICE
+    public function getBranchOffice()
+    {
+        return $this->hasMany(BranchOffice::class, 'user_id');
     }
 
 

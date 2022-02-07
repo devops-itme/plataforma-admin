@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
@@ -184,7 +184,7 @@
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
                                         <a href="{{route('departments.index', $office->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                            <i class="fad fa-folder-open"></i>
+                                            <i class="fad fa-warehouse"></i>
                                         </a>
                                     </div>
                                 </td>

@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
@@ -200,8 +200,8 @@
                                                         <i class="fad fa-edit"></i>
                                                     </div> Editar
                                                 </a>
-                                                <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
-                                                    {{-- <form action="{{route('clientes.destroy', $customer->id)}}" method="{{'post'}}">
+                                                <button type="button" onclick="confirmDelete('/customers/'+{{$customer->id}})" class="dropdown-item align-items-center">
+                                                    {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
                                                         @csrf @method('DELETE') --}}
                                                         <div class="btn btn-icon btn-light-danger btn-sm mr-2">
                                                             <i class="fad fa-trash-alt"></i>
@@ -218,9 +218,12 @@
                                         <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2">
                                             <i class="fad fa-building"></i>
                                         </a>
-                                        <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">
+                                        <a href="{{route('departments.index', ['branch_office_id' => $customer->user_id, 'user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-warehouse"></i>
-                                        </button>
+                                        </a>
+                                        {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">
+                                            <i class="fad fa-warehouse"></i>
+                                        </button> --}}
                                         {{-- </form> --}}
                                     </div>
                                 </td>

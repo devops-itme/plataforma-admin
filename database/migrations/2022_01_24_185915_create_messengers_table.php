@@ -18,6 +18,7 @@ class CreateMessengersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('vehicle_plate')->nullable();
+            $table->date('birth_date')->nullable();
             $table->date('admission_date')->nullable();
             $table->double('production_percentage')->nullable();
             $table->string('contract')->nullable();

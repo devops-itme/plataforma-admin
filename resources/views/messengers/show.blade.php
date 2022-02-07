@@ -2,7 +2,7 @@
 @extends('layouts.app')
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
 <div class="card card-custom">
     <div class="card-header">
         <div class="card-title">
@@ -41,15 +41,19 @@
             <!--begin::Item-->
             <div class="mb-5 pb-5">
                 <div class="row mb-5 pb-5 border-bottom">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Placa de vehiculo:</div>
-                        <div class="line-height-xl">{{$messenger->vehile_plate}}</div>
+                        <div class="line-height-xl">{{$messenger->vehicle_plate}}</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Fecha de ingreso:</div>
                         <div class="line-height-xl">{{$messenger->admission_date}}</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Fecha de nacimiento:</div>
+                        <div class="line-height-xl">{{$messenger->birth_date}}</div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Porcentaje de producción:</div>
                         <div class="line-height-xl">{{$messenger->production_percentage}}%</div>
                     </div>
