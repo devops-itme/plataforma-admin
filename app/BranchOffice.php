@@ -46,4 +46,36 @@ class BranchOffice extends Model
             $deparments->getDepartments()->delete();
         });
     }
+
+    //SCOPES
+    public function scopeName($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('name', 'like', '%'.$value.'%');
+    }
+    public function scopeDescription($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('description', 'like', '%'.$value.'%');
+    }
+    public function scopeAddress($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('address', 'like', '%'.$value.'%');
+    }
+    public function scopeEmail($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('email', 'like', '%'.$value.'%');
+    }
+    public function scopePhone($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('phone', 'like', '%'.$value.'%');
+    }
+    public function scopeDefault($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('default', $value);
+    }
 }
