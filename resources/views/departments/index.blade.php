@@ -185,7 +185,7 @@
                                         <i class="fad fa-folder-open"></i>
                                     </a>
                                     <a href="{{ route('departments.edit', ['departamento' => $item->id, 'user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}"
-                                        class="btn btn-icon btn-light-success btn-sm mr-2"  data-tooltip title="Editar>
+                                        class="btn btn-icon btn-light-success btn-sm mr-2"  data-tooltip title="Editar">
                                         <i class="fad fa-edit"></i>
                                     </a>
                                     <a onclick="confirmDelete('/departamentos/'+{{ $item->id }})" role="button"
