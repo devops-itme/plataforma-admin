@@ -37630,6 +37630,11 @@ var Customers = /*#__PURE__*/function () {
       var option = document.getElementById("slc_type");
       var naturalCustomer = document.getElementById("naturalCustomer");
       var legalCustomer = document.getElementById("legalCustomer");
+
+      if (option == null) {
+        return;
+      }
+
       option.addEventListener('change', function (event) {
         if (option.value == 1) {
           legalCustomer.className = 'd-none';
@@ -37764,6 +37769,76 @@ var Messengers = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/_orders.js":
+/*!*********************************!*\
+  !*** ./resources/js/_orders.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Orders; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Orders = /*#__PURE__*/function () {
+  function Orders() {
+    _classCallCheck(this, Orders);
+  }
+
+  _createClass(Orders, [{
+    key: "initialize",
+    value: function initialize() {
+      this.addbox();
+      this.removeBox();
+    }
+  }, {
+    key: "addbox",
+    value: function addbox() {
+      var boxes = document.getElementById("add_box");
+      var div = document.createElement("div"); // console.log('gola');
+
+      var x = 0;
+
+      if (boxes == null) {
+        return;
+      }
+
+      boxes.addEventListener("click", function (e) {
+        e.preventDefault();
+        x++;
+        div.className = 'row border mt-0 text-center';
+        div.innerHTML = "\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"id[]\"class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"long[]\" class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"broad[]\"class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"high[]\"class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"vol_weight[]\"class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-3 py-4 border-right\"><input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comertarios\"></div>\n            <div class=\"col-2 py-4\">\n                <div class=\"d-flex flex-row flex-wrap justify-content-center\">\n                    <a  class=\"btn btn-icon btn-light-danger btn-sm mr-2\" data-tooltip title=\"Borrar\">\n                        <i class=\"fad fa-minus-circle\"></i>\n                    </a>\n                    <a role=\"button\" id=\"add_box\" class=\"btn btn-icon btn-light-primary btn-sm mr-2\" data-tooltip title=\"Agregar\">\n                        <i class=\"fad fa-plus-circle\"></i>\n                    </a>\n                </div>\n            </div>";
+        document.getElementById('box_list').appendChild(div);
+      });
+    }
+  }, {
+    key: "removeBox",
+    value: function removeBox() {
+      var boxes = document.getElementById("remove_box");
+
+      if (boxes == null) {
+        return;
+      }
+
+      boxes.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById('box_list').removeChild(a.parentNode);
+      });
+    }
+  }]);
+
+  return Orders;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -37778,7 +37853,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
 /* harmony import */ var _addresses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_addresses */ "./resources/js/_addresses.js");
 /* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
+/* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -37787,7 +37864,9 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_1__["default"]();
 var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var customers = new _customers__WEBPACK_IMPORTED_MODULE_3__["default"]();
+var orders = new _orders__WEBPACK_IMPORTED_MODULE_4__["default"]();
 document.addEventListener("DOMContentLoaded", function (event) {
+  orders.initialize();
   messengers.initialize();
   addresses.initialize();
   customers.initialize();
@@ -37858,8 +37937,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -7,7 +7,9 @@ export default class Customers {
         let option = document.getElementById("slc_type");
         let naturalCustomer = document.getElementById("naturalCustomer");
         let legalCustomer = document.getElementById("legalCustomer");
-
+        if(option == null){
+            return;
+        }
         option.addEventListener('change', (event) => {
             if (option.value == 1) {
                 legalCustomer.className = 'd-none'
