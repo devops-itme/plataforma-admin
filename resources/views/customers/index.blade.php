@@ -218,7 +218,7 @@
                                         <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2">
                                             <i class="fad fa-building"></i>
                                         </a>
-                                        <a href="{{route('departments.index', ['branch_office_id' => $customer->user_id, 'user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <a href="{{route('departments.index', ['user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-warehouse"></i>
                                         </a>
                                         {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">

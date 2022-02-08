@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\BranchOffice;
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\DepartmentTrait;
 use Illuminate\Http\Request;
@@ -15,12 +16,12 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $departments = $this->getDepartments($id);
+        $departments = $this->getDepartments();
         $departments = $departments['data'];
-        $branch_office_id = $id;
-        return view('departments.index', compact('departments', 'branch_office_id'));
+
+        return view('departments.index', compact('departments'));
     }
 
     /**
@@ -28,9 +29,17 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        return view('departments.create',['branch_office_id' => $id]);
+        $branch_offices = null;
+        $user_id = Request()->user_id;
+
+        if (!is_null($user_id)) {
+            $branch_offices = BranchOffice::where('user_id', $user_id)->get();
+        }
+        $branch_office_id = Request()->branch_office_id;
+
+        return view('departments.create', compact('branch_offices', 'branch_office_id', 'user_id'));
     }
 
     /**
@@ -39,11 +48,15 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $response = $this->saveDepartment($request, $id);
-        if($response['state'] == 200){
-            return redirect()->route('departments.index', $id)->with('success', $response['message']);
+        $response = $this->saveDepartment($request);
+        if ($response['state'] == 200) {
+            $exist_user_id = !is_null($request->user_id);
+            $requestName = $exist_user_id ? 'user_id' : 'branch_office_id';
+            $requestData = [$requestName =>  $exist_user_id ? $request->user_id : $request->branch_office_id];
+
+            return redirect()->route('departments.index', $requestData)->with('success', $response['message']);
         } else {
             return redirect()->back()->withInput()->with('danger', $response['error']);
         }
@@ -72,7 +85,13 @@ class DepartmentController extends Controller
     {
         $department = $this->showDepartment($id);
         $department = $department['data'];
-        return view('departments.edit', compact('department'));
+        $user_id = Request()->user_id;
+        $branch_offices = null;
+        if (!is_null($user_id)) {
+            $branch_offices = BranchOffice::where('user_id', $user_id)->get();
+        }
+        $branch_office_id = Request()->branch_office_id;
+        return view('departments.edit', compact('department','branch_offices', 'branch_office_id', 'user_id'));
     }
 
     /**
@@ -85,9 +104,12 @@ class DepartmentController extends Controller
     public function update(Request $request, $id)
     {
         $response = $this->updateDepartment($request, $id);
-        $branch_office_id = $response['data']->branch_office_id;
+
         if ($response['state'] == 200) {
-            return redirect()->route('departments.index', $branch_office_id )->with('success',  $response['message']);
+            $exist_user_id = !is_null($request->user_id);
+            $requestName = $exist_user_id ? 'user_id' : 'branch_office_id';
+            $requestData = [$requestName =>  $exist_user_id ? $request->user_id : $request->branch_office_id];
+            return redirect()->route('departments.index', $requestData)->with('success',  $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
@@ -102,7 +124,7 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         $response = $this->deleteDepartment($id);
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return redirect()->route('departments.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
