@@ -47,7 +47,12 @@ trait UserTrait
     public function getUser()
     {
         try {
-            $users = User::paginate(10);
+            $users = User::name(request()->name)
+            ->document(request()->document)
+            ->email(request()->email)
+            ->phone(request()->phone)
+            ->state(request()->state)
+            ->get();
             return $this->respond(200, $users);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
