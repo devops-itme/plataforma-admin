@@ -186,7 +186,7 @@
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                         <div class="dropdown dropdown-inline">
-                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip title="Acciones">
                                                 <i class="fad fa-ellipsis-v-alt"></i>
                                             </button>
                                             <div class="dropdown-menu">
@@ -211,14 +211,14 @@
                                             </div>
                                         </div>
                                         @if($customer->getUser->role == 4)
-                                            <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
+                                            <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2" data-tooltip title="Usuarios">
                                                 <i class="fad fa-users-class"></i>
                                             </a>
                                         @endif
-                                        <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2">
+                                        <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Sucursales">
                                             <i class="fad fa-building"></i>
                                         </a>
-                                        <a href="{{route('departments.index', ['user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <a href="{{route('departments.index', ['user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Departamentos" >
                                             <i class="fad fa-warehouse"></i>
                                         </a>
                                         {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">

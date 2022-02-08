@@ -120,19 +120,19 @@
                                         </span>
                                     @enderror
                                 </div>
-                                @if (Route::has('password.request'))
+                                {{-- @if (Route::has('password.request'))
                                     <div
                                         class="form-group d-flex flex-wrap justify-content-between align-items-center mt-3">
                                         <a href="{{ route('password.request') }}"
                                             class="text-muted text-hover-primary">Olvide mi contraseña</a>
                                     </div>
-                                @endif
+                                @endif --}}
                                 <div
                                     class="form-group d-flex flex-wrap flex-column justify-content-between align-items-center mt-2">
-                                    <div class="my-3 mr-2">
+                                    {{-- <div class="my-3 mr-2">
                                         <span class="text-muted mr-2">No tienes cuenta?</span>
                                         <a href="#" class="font-weight-bold">Registrate</a>
-                                    </div>
+                                    </div> --}}
                                     <button type="submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3">
                                         {{ __('Login') }}
                                     </button>

@@ -181,15 +181,15 @@
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                     <a href="{{ route('departments.show', $item->id) }}"
-                                        class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Ver">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
                                     <a href="{{ route('departments.edit', ['departamento' => $item->id, 'user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}"
-                                        class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        class="btn btn-icon btn-light-success btn-sm mr-2"  data-tooltip title="Editar>
                                         <i class="fad fa-edit"></i>
                                     </a>
                                     <a onclick="confirmDelete('/departamentos/'+{{ $item->id }})" role="button"
-                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                                         <i class="fad fa-trash-alt"></i>
                                     </a>
                                 </div>
