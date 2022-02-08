@@ -9,6 +9,20 @@
         <h3 class="card-title">
             Editar cliente
         </h3>
+        <div class="w-50"></div>
+        <div class="w-30 mt-2 d-flex justify-content-center align-items-center">
+            @if($customer->getUser->role == 4)
+                <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2" data-tooltip title="Usuarios">
+                    <i class="fad fa-users-class"></i>
+                </a>
+            @endif
+            <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Sucursales">
+                <i class="fad fa-building"></i>
+            </a>
+            <a href="{{route('departments.index', ['user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Departamentos">
+                <i class="fad fa-warehouse"></i>
+            </a>
+        </div>
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->

@@ -200,7 +200,7 @@
                                                         <i class="fad fa-edit"></i>
                                                     </div> Editar
                                                 </a>
-                                                <button type="button" onclick="confirmDelete('/customers/'+{{$customer->id}})" class="dropdown-item align-items-center">
+                                                <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
                                                     {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
                                                         @csrf @method('DELETE') --}}
                                                         <div class="btn btn-icon btn-light-danger btn-sm mr-2">
@@ -231,7 +231,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <th colspan="8"><center>¡No hay clientes registrados!</center></td>
+                            <th colspan="8" class="text-center">¡No hay clientes registrados!</td>
                         </tr>
                     @endif
                 </tbody>

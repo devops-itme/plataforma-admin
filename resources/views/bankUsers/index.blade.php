@@ -203,7 +203,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <th colspan="8"><center>¡No hay usuarios registrados!</center></td>
+                            <th colspan="8" class="text-center">¡No hay usuarios registrados!</td>
                         </tr>
                     @endif
                 </tbody>

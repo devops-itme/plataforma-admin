@@ -212,7 +212,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <th colspan="8"><center>¡No hay bancos registrados!</center></td>
+                            <th colspan="8" class="text-center">¡No hay bancos registrados!</td>
                         </tr>
                     @endif
                 </tbody>
