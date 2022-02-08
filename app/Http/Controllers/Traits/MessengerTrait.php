@@ -98,7 +98,7 @@ trait MessengerTrait
             if ($updateUser['state'] == 500) {
                 return $this->respond(500, [], $updateUser['error'], $updateUser['message']);
             }
-            return $this->respond(200, $messenger, null, 'Mensajero actualizado exitosamente');
+            return $this->respond(200, null, null, 'Mensajero actualizado exitosamente');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }

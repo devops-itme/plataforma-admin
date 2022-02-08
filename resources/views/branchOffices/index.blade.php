@@ -183,7 +183,7 @@
                                         <button type="button" onclick="confirmDelete('/sucursales/'+{{$office->user_id}}+'/'+{{$office->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
-                                        <a href="{{route('departments.index', $office->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <a href="{{route('departments.index', ['branch_office_id' => $office->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-warehouse"></i>
                                         </a>
                                     </div>

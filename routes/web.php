@@ -58,14 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('mensajeros', 'Admin\MessengerController')->names('messengers');
 
         //BANK DEPARTMENTS
-        // Route::resource('departamentos', 'Admin\DepartmentController')->names('department');
-        Route::get('departamentos/{branch_office_id}', 'Admin\DepartmentController@index')->name('departments.index');
-        Route::get('departamentos/{branch_office_id}/create', 'Admin\DepartmentController@create')->name('departments.create');
-        Route::post('departamentos/{branch_office_id}/store', 'Admin\DepartmentController@store')->name('departments.store');
-        Route::get('departamentos/{id}/detaller', 'Admin\DepartmentController@show')->name('departments.show');
-        Route::get('departamentos/{id}/edit', 'Admin\DepartmentController@edit')->name('departments.edit');
-        Route::put('departamentos/{id}', 'Admin\DepartmentController@update')->name('departments.update');
-        Route::delete('departamentos/{id}', 'Admin\DepartmentController@destroy')->name('departments.delete');
+        Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
+
 
         //ORDENES
         Route::resource('/ordenes', 'Admin\OrderController')->names('orders');

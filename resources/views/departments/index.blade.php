@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{ route('departments.create', $branch_office_id) }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('departments.create',['user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -184,8 +184,8 @@
                                         class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Ver">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
-                                    <a href="{{ route('departments.edit', $item->id) }}"
-                                        class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
+                                    <a href="{{ route('departments.edit', ['departamento' => $item->id, 'user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}"
+                                        class="btn btn-icon btn-light-success btn-sm mr-2"  data-tooltip title="Editar">
                                         <i class="fad fa-edit"></i>
                                     </a>
                                     <a onclick="confirmDelete('/departamentos/'+{{ $item->id }})" role="button"
