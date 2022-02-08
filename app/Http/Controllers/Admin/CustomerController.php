@@ -22,7 +22,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::latest()->get();
+        $customers = Customer::name(request()->name)
+            ->document(request()->document)
+            ->email(request()->email)
+            ->phone(request()->phone)
+            ->zone(request()->zone)
+            ->state(request()->state)
+            ->latest()
+            ->get();
         return view('customers.index', compact('customers'));
     }
 
