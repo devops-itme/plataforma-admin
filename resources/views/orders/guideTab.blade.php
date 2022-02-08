@@ -210,19 +210,19 @@
                                     <div class="col-2"></div>
                                 </div>
                                 <div class="row border mt-0 text-center">
-                                    <div class="col-1 py-4 border-right">1</div>
-                                    <div class="col-1 py-4 border-right">10</div>
-                                    <div class="col-1 py-4 border-right">12</div>
-                                    <div class="col-1 py-4 border-right">14</div>
-                                    <div class="col-1 py-4 border-right">5</div>
-                                    <div class="col-2 py-4 border-right">50</div>
-                                    <div class="col-3 py-4 border-right">Caja verde pequeña</div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="1"></div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="10"></div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="14"></div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="14"></div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="5"></div>
+                                    <div class="col-2 py-4 border-right"><input type="number" class="form-control" min="0" value="50"></div>
+                                    <div class="col-3 py-4 border-right"><input type="text" class="form-control" placeholder="comertarios"></div>
                                     <div class="col-2 py-4">
                                         <div class="d-flex flex-row flex-wrap justify-content-center">
-                                            <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                            <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Borrar">
                                                 <i class="fad fa-minus-circle"></i>
                                             </a>
-                                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Agregar">
                                                 <i class="fad fa-plus-circle"></i>
                                             </a>
                                         </div>
