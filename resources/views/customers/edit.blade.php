@@ -10,7 +10,7 @@
             Editar cliente
         </h3>
         <div class="w-50"></div>
-        <div class="w-25 mt-2 d-flex justify-content-center align-items-center">
+        <div class="w-30 mt-2 d-flex justify-content-center align-items-center">
             @if($customer->getUser->role == 4)
                 <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2" data-tooltip title="Usuarios">
                     <i class="fad fa-users-class"></i>
