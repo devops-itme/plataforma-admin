@@ -20,7 +20,14 @@ class BranchOfficeController extends Controller
     public function index($user_id)
     {
         $bankData = User::where('id', $user_id)->with('getCustomer')->first();
-        $branchOffices = BranchOffice::where('user_id', $user_id)->get();
+        $branchOffices = BranchOffice::where('user_id', $user_id)
+            ->name(request()->name)
+            ->description(request()->description)
+            ->address(request()->address)
+            ->email(request()->email)
+            ->phone(request()->phone)
+            ->default(request()->default)
+            ->get();
 
         return view('branchOffices.index', compact('bankData', 'branchOffices'));
     }
