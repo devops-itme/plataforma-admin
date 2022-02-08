@@ -179,7 +179,7 @@
                                     <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
-                                    <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                    <a href="{{route('orders.edit',1)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fad fa-edit"></i>
                                     </a>
                                     <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
