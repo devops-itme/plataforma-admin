@@ -52,7 +52,7 @@ trait UserTrait
             ->email(request()->email)
             ->phone(request()->phone)
             ->state(request()->state)
-            ->get();
+            ->paginate(10);
             return $this->respond(200, $users);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());

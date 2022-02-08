@@ -30,7 +30,14 @@ trait MessengerTrait
     public function getMessengers()
     {
         try {
-            $messengers = Messenger::with('user')->paginate(10);
+            $messengers = Messenger::with('user')
+                ->name(request()->name)
+                ->document(request()->document)
+                ->email(request()->email)
+                ->phone(request()->phone)
+                ->plate(request()->vehicle_plate)
+                ->state(request()->state)
+                ->paginate(10);
             return $this->respond(200, $messengers);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
@@ -108,11 +115,11 @@ trait MessengerTrait
     {
         try {
             $customer = Messenger::find($id);
-            if(is_null($customer)){
+            if (is_null($customer)) {
                 return $this->respond(500, [], 'user not found', 'No se encontro el mensajero');
             }
             $deleteUser = $this->deleteUser($customer->user_id);
-            if($deleteUser['state'] == 500){
+            if ($deleteUser['state'] == 500) {
                 return $this->respond(500, [], $deleteUser['error'], $deleteUser['message']);
             }
             $customer->delete();
