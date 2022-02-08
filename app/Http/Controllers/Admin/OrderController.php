@@ -63,10 +63,10 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('getUser')->find($id);
-        return json_encode([
-            'order_data' => $order,
-            'user_data' => $order['get_user']
-        ]);
+        // return json_encode([
+        //     'order_data' => $order,
+        //     'user_data' => $order['get_user']
+        // ]);
     }
 
     /**
@@ -78,7 +78,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::find($id);
-        return json_encode($order);
+        return view('orders.editFold.edit');
     }
 
     /**
