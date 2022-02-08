@@ -15,7 +15,7 @@ class LoginController extends Controller
     use RestActions;
     public function SignIn(Request $request)
     {
-        $is_numeric = is_numeric($request->phone);
+        $is_numeric = is_numeric($request->user);
 
         $validator = Validator::make($request->all(), [
             'user' => [
@@ -43,7 +43,7 @@ class LoginController extends Controller
 
             $messenger_role = Role::where('name', 'Mensajero')->first();
             $messenger_role_id = $messenger_role->id;
-            
+
             if ($user->role != $messenger_role_id) {
                 return $this->respond(401,  null, 'Unauthorized', 'El usuario no es un mensajero');
             }

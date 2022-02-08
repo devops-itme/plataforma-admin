@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'Api\LoginController@SignIn');
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('messenger/show', 'Api\MessengerController@show')->name('messenger.show');
-    Route::post('messenger/update', 'Api\MessengerController@update')->name('messenger.update');
+    Route::put('messenger/update', 'Api\MessengerController@update')->name('messenger.update');
 });
