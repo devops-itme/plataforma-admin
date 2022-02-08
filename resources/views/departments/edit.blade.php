@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header">
             <h3 class="card-title">

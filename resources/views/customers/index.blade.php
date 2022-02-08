@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('clientes.create')}}" class="btn btn-primary font-weight-bolder">
+                <a href="{{route('customers.create')}}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -186,22 +186,22 @@
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                         <div class="dropdown dropdown-inline">
-                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip title="Acciones">
                                                 <i class="fad fa-ellipsis-v-alt"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a href="{{route('clientes.show', $customer->id)}}" class="dropdown-item align-items-center">
+                                                <a href="{{route('customers.show', $customer->id)}}" class="dropdown-item align-items-center">
                                                     <div class="btn btn-icon btn-light-primary btn-sm mr-2">
                                                         <i class="fad fa-folder-open"></i>
                                                     </div> Detalle
                                                 </a>
-                                                <a href="{{route('clientes.edit', $customer->id)}}" class="dropdown-item align-items-center">
+                                                <a href="{{route('customers.edit', $customer->id)}}" class="dropdown-item align-items-center">
                                                     <div class="btn btn-icon btn-light-success btn-sm mr-2">
                                                         <i class="fad fa-edit"></i>
                                                     </div> Editar
                                                 </a>
-                                                <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
-                                                    {{-- <form action="{{route('clientes.destroy', $customer->id)}}" method="{{'post'}}">
+                                                <button type="button" onclick="confirmDelete('/customers/'+{{$customer->id}})" class="dropdown-item align-items-center">
+                                                    {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
                                                         @csrf @method('DELETE') --}}
                                                         <div class="btn btn-icon btn-light-danger btn-sm mr-2">
                                                             <i class="fad fa-trash-alt"></i>
@@ -211,14 +211,14 @@
                                             </div>
                                         </div>
                                         @if($customer->getUser->role == 4)
-                                            <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2">
+                                            <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2" data-tooltip title="Usuarios">
                                                 <i class="fad fa-users-class"></i>
                                             </a>
                                         @endif
-                                        <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2">
+                                        <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Sucursales">
                                             <i class="fad fa-building"></i>
                                         </a>
-                                        <a href="{{route('departments.index', ['branch_office_id' => $customer->user_id, 'user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <a href="{{route('departments.index', ['branch_office_id' => $customer->user_id, 'user_id' => $customer->getUser->id])}}" data-tooltip title="Departamentos" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-warehouse"></i>
                                         </a>
                                         {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">

@@ -12,7 +12,7 @@
         </div>
         @include('layouts.alerts')
         <!--begin::Form-->
-        <form action="{{ route('clientes.store') }}" method="post">
+        <form action="{{ route('customers.store') }}" method="post">
             @csrf
             <div class="card-body d-flex flex-row flex-wrap">
                 <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información basica de cliente</h5>

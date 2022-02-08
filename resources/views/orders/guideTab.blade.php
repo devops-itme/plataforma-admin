@@ -100,7 +100,7 @@
                             <option>Barrio 2</option>
                         </select>
                     </div>
-                   <div class="form-group col-md-5">
+                   <div class="form-group col-md-3">
                         <label>Concepto: <span class="text-danger">*</span></label>
                         <input name="concept" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
@@ -116,12 +116,12 @@
                             <option>Plena/2</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                         <label>Valor: <span class="text-danger">*</span></label>
                         <input name="value" type="number" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                         <label>Valor Corp: <span class="text-danger">*</span></label>
                         <input name="corp_value" type="number" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
@@ -139,16 +139,18 @@
                         <input name="contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label>Contacto telefono: <span class="text-danger">*</span></label>
-                        <div class="d-flex flex-row">
-                            <select name="zip_code" class="form-control form-control-solid mr-2" id="zip_code">
-                                <option selected disabled>Seleccione zip</option>
-                                <option>507:panama</option>
-                                <option>57:colombia</option>
-                            </select>
-                            <input name="contact" type="tel" class="form-control form-control-solid" placeholder="" />
-                        </div>
+                        <select name="zip_code" class="form-control form-control-solid mr-2" id="zip_code">
+                            <option selected disabled>Seleccione zip</option>
+                            <option>507:panama</option>
+                            <option>57:colombia</option>
+                        </select>
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-3 pt-2">
+                        <label> </label>
+                        <input name="contact" type="tel" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
@@ -181,7 +183,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <ul class="nav nav-tabs nav-bolder" id="tabmodal" role="tablist">
+                        <ul class="nav nav-tabs nav-bolder nav-tabs-line nav-tabs-line-3x" id="tabmodal" role="tablist">
                             <li class="nav-item" role="presentation">
                               <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab" aria-controls="cajas" aria-selected="true">Cajas/Envalaje</a>
                             </li>
@@ -195,8 +197,37 @@
                                 <a class="nav-link" id="prod-tab" data-toggle="tab" href="#diligencia" role="tab" aria-controls="diligencia" aria-selected="false">Gastos por diligencia</a>
                             </li>
                           </ul>
-                          <div class="tab-content" id="myTabContent">
+                          <div class="tab-content min-h-100px " id="myTabContent">
                             <div class="tab-pane fade show active" id="cajas" role="tabpanel" aria-labelledby="cajas-tab">
+                                <div class="row font-weight-bold border bg-gray-200 mt-4 text-center">
+                                    <div class="col-1 border-right">#</div>
+                                    <div class="col-1 border-right">Peso</div>
+                                    <div class="col-1 border-right">Largo</div>
+                                    <div class="col-1 border-right">Ancho</div>
+                                    <div class="col-1 border-right">Alto</div>
+                                    <div class="col-2 border-right">Peso_Vol</div>
+                                    <div class="col-3 border-right">Comentarios</div>
+                                    <div class="col-2"></div>
+                                </div>
+                                <div class="row border mt-0 text-center">
+                                    <div class="col-1 py-4 border-right">1</div>
+                                    <div class="col-1 py-4 border-right">10</div>
+                                    <div class="col-1 py-4 border-right">12</div>
+                                    <div class="col-1 py-4 border-right">14</div>
+                                    <div class="col-1 py-4 border-right">5</div>
+                                    <div class="col-2 py-4 border-right">50</div>
+                                    <div class="col-3 py-4 border-right">Caja verde pequeña</div>
+                                    <div class="col-2 py-4">
+                                        <div class="d-flex flex-row flex-wrap justify-content-center">
+                                            <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                                <i class="fad fa-minus-circle"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                                <i class="fad fa-plus-circle"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="facil" role="tabpanel" aria-labelledby="facil-tab">
                                 <div class="d-flex pt-4 flex-row flex-wrap">

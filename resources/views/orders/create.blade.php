@@ -46,7 +46,7 @@
                             <i class="fad fa-eye"></i>
                         </button>
 
-                        <a href="{{ route('clientes.create') }}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                        <a href="{{ route('customers.create') }}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                             <i class="fad fa-plus"></i>
                         </a>
                     </div>

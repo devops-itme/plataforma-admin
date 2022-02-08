@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
@@ -181,15 +181,15 @@
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                     <a href="{{ route('departments.show', $item->id) }}"
-                                        class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Ver">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
                                     <a href="{{ route('departments.edit', $item->id) }}"
-                                        class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                         <i class="fad fa-edit"></i>
                                     </a>
                                     <a onclick="confirmDelete('/departamentos/'+{{ $item->id }})" role="button"
-                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                                         <i class="fad fa-trash-alt"></i>
                                     </a>
                                 </div>
