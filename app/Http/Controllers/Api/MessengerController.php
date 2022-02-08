@@ -36,12 +36,10 @@ class MessengerController extends Controller
             return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado');
         }
         try {
-
             $messenger = Messenger::where('user_id', $user_id)->first();
             $messenger_id = $messenger->id;
             $response = $this->updateMessenger($request, $messenger_id);
             return $response;
-            // return $this->respond(200, $user, null, 'Datos del mensajero');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }
