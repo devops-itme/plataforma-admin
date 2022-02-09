@@ -25,29 +25,25 @@
                 <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
                 <div class="form-group col-md-6">
                     <label>Numero de orden: <span class="text-danger">*</span></label>
-                    <input name="order_num" type="text" class="form-control form-control-solid" value="333" disabled />
+                    <input name="order_num" type="text" class="form-control form-control-solid" value="{{$order->number}}" disabled />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
                     <select name="orden_type" class="form-control form-control-solid" id="order_type" disabled>
                         <option selected disabled>Seleccione tipo de orden</option>
-                        <option>Ondeman</option>
-                        <option>Multiple</option>
+                        <option {{$order->service_type_id == 1 ? 'selected' : ''}}>Ondeman</option>
+                        <option {{$order->service_type_id == 2 ? 'selected' : ''}}>Multiple</option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="customers">Cliente <span class="text-danger">*</span></label>
-                    <select name="customers" class="form-control" id="customers" disabled>
-                        <option selected disabled>Seleccione Cliente</option>
-                        <option>Cliente 1</option>
-                        <option>Cliente 2</option>
-                        <option>Cliente 3</option>
-                    </select>
+                    <input name="order_num" type="text" class="form-control form-control-solid" value="{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}" disabled />
+                    <span class="form-text text-muted"></span>
                 </div>
+                <input type="hidden" id="slc-Customers" value="{{$order->user_id}}">
                 <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
-                    <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
-                        data-target="#detailCustomer">
+                    <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" id="btn-customerData">
                         <i class="fad fa-eye"></i>
                     </button>
 
@@ -76,32 +72,32 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Valor Orden OnDemand/Corp:</label>
-                        <input name="order_value" type="number" class="form-control form-control-solid" disabled value="5.00" />
+                        <input name="order_value" type="number" class="form-control form-control-solid" disabled value="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>FF, COD, Com.Gastos, Seguro:</label>
-                        <input name="sec_value" type="number" class="form-control form-control-solid" disabled value="5.00" />
+                        <input name="sec_value" type="number" class="form-control form-control-solid" disabled value="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Recibir por COD: </label>
-                        <input name="cod_value" type="number" class="form-control form-control-solid" disabled value="5.00" />
+                        <input name="cod_value" type="number" class="form-control form-control-solid" disabled value="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Gastos diligencia: </label>
-                        <input name="cost_diligence" type="number" class="form-control form-control-solid" disabled value="5.00" />
+                        <input name="cost_diligence" type="number" class="form-control form-control-solid" disabled value="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Producto interno: </label>
-                        <input name="inner_prod" type="number" class="form-control form-control-solid" disabled value="5.00" />
+                        <input name="inner_prod" type="number" class="form-control form-control-solid" disabled value="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Total Tax: </label>
-                        <input name="total_tax" type="number" class="form-control form-control-solid" disabled value="5.00" />
+                        <input name="total_tax" type="number" class="form-control form-control-solid" disabled value="" />
                         <span class="form-text text-muted"></span>
                     </div>
                 </div>

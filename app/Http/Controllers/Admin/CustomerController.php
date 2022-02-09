@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\BranchOffice;
 use App\Customer;
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\ParameterValue;
 use Illuminate\Http\Request;
@@ -87,8 +88,13 @@ class CustomerController extends Controller
 
     public function customerData($id)
     {
-        $customer = Customer::with('getUser')->find($id);
-        return $customer;
+        $customer = Customer::with('getUser')->where('user_id', $id)->first();
+        $branchOffice = BranchOffice::where('user_id', $customer->user_id)->where('default', 1)->first();
+        $department = null;
+        if($branchOffice){
+            $department = Department::where('branch_office_id', $branchOffice->id)->first();
+        }
+        return [$customer, $branchOffice, $department];
     }
 
     /**

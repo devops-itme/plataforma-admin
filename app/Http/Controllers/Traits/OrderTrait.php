@@ -15,8 +15,18 @@ trait OrderTrait
         return Validator::make(
             $request->all(),
             [
+                'number' => 'required|unique:orders',
                 'user_id' => 'required|exists:users,id',
                 'service_type_id' => 'required',
+                'vehicle_type_id' => 'required',
+                'payment_method_id' => 'required',
+                'schedule_date' => 'required',
+                'schedule_time' => 'required',
+                'express_delivery' => 'required',
+                'last_destination_return' => 'required',
+                'insured_value' => 'required',
+                'percentage_receivable' => 'required',
+                'value_receivable' => 'required',
                 'state' => 'nullable'
             ]
         );
@@ -30,8 +40,18 @@ trait OrderTrait
         }
         try {
             $order = Order::create([
+                'number' => $request->number,
                 'user_id' => $request->user_id,
                 'service_type_id' => $request->service_type_id,
+                'vehicle_type_id' => $request->vehicle_type_id,
+                'payment_method_id' => $request->payment_method_id,
+                'schedule_date' => $request->schedule_date,
+                'schedule_time' => $request->schedule_time,
+                'express_delivery' => $request->express_delivery,
+                'last_destination_return' => $request->last_destination_return,
+                'insured_value' => $request->insured_value,
+                'percentage_receivable' => $request->percentage_receivable,
+                'value_receivable' => $request->value_receivable,
                 'state' => $request->state
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');

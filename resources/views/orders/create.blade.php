@@ -12,7 +12,7 @@
         </div>
         @include('layouts.alerts')
         <!--begin::Form-->
-        <form>
+        <form action="{{route('orders.store')}}" method="post">
             @csrf
             <div class="card-body d-flex flex-row flex-wrap pt-2">
                 <div class="col-md-6 border-right">
@@ -20,29 +20,28 @@
                     <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
                     <div class="form-group col-md-6">
                         <label>Numero de orden: <span class="text-danger">*</span></label>
-                        <input name="order_num" type="text" class="form-control form-control-solid" placeholder="333" />
+                        <input name="number" type="number" class="form-control form-control-solid" placeholder="333" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
-                        <select name="orden_type" class="form-control form-control-solid" id="order_type">
+                        <select name="service_type_id" class="form-control form-control-solid" id="order_type">
                             <option selected disabled>Seleccione tipo de orden</option>
-                            <option>Ondeman</option>
-                            <option>Multiple</option>
+                            <option value="1">Ondeman</option>
+                            <option value="2">Multiple</option>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Cliente <span class="text-danger">*</span></label>
-                        <select name="customers" class="form-control" id="customers">
+                        <select name="user_id" class="form-control" id="slc-Customers">
                             <option selected disabled>Seleccione Cliente</option>
-                            <option>Cliente 1</option>
-                            <option>Cliente 2</option>
-                            <option>Cliente 3</option>
+                            @foreach ($customers as $customer)
+                                <option value="{{$customer->user_id}}">{{!is_null($customer->business_name) ? $customer->business_name : $customer->getUser->name." ".$customer->getUser->last_name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
-                        <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
-                            data-target="#detailCustomer">
+                        <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" id="btn-customerData">
                             <i class="fad fa-eye"></i>
                         </button>
 

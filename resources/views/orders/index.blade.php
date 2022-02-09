@@ -159,35 +159,48 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($orders as $order)
                         <tr>
-                            <th scope="row">---</th>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
+                            <th scope="row">{{$order->number}}</th>
                             <td>
-                                {{-- @if ($item->user->state == 1) --}}
+                                @if ($order->service_type_id == 1)
+                                    <span class="label label-inline label-light-warning font-weight-blog">
+                                        Ondeman
+                                    </span>
+                                @else
+                                    <span class="label label-inline label-light-success font-weight-blog">
+                                        Multiple
+                                    </span>
+                                @endif
+                            </td>
+                            <td>{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}</td>
+                            <td>{{format_date(date('Y-n-d', strtotime($order->created_at)))}}</td>
+                            <td>
+                                @if ($order->state == 1)
                                     <span class="label label-inline label-light-success font-weight-bold">
                                         Activo
                                     </span>
-                                    {{-- <span class="label label-inline label-light-danger font-weight-bold">
+                                @else
+                                    <span class="label label-inline label-light-danger font-weight-bold">
                                         Inactivo
-                                    </span> --}}
-                                {{-- @endif --}}
+                                    </span>
+                                @endif
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="{{route('orders.show',1)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                    <a href="{{route('orders.show',$order->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
                                     <a href="{{route('orders.edit',1)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fad fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                    <button type="button" onclick="confirmDelete('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                         <i class="fad fa-trash-alt"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
+                    @endforeach
                 </tbody>
             </table>
             <!--end: Datatable-->
