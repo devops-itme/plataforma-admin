@@ -191,7 +191,7 @@
                                     <a href="{{route('orders.show',$order->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
-                                    <a href="{{route('orders.edit',1)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                    <a href="{{route('orders.edit', $order->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fad fa-edit"></i>
                                     </a>
                                     <button type="button" onclick="confirmDelete('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">

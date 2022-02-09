@@ -3,39 +3,39 @@
         <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de orden</h5>
         <div class="form-group col-md-6">
             <label for="trans_type">Tipo de transporte <span class="text-danger">*</span></label>
-            <select name="trans_type" class="form-control form-control-solid" id="trans_type">
+            <select name="vehicle_type_id" class="form-control form-control-solid" id="trans_type">
                 <option selected disabled>Seleccione tipo de transporte</option>
-                <option>Moto</option>
-                <option>Auto</option>
+                <option value="1"  {{$order->vehicle_type_id == 1 ? 'selected' : ''}}>Moto</option>
+                <option value="2" {{$order->vehicle_type_id == 2 ? 'selected' : ''}}>Auto</option>
             </select>
         </div>
         <div class="form-group col-md-6">
             <label for="pay_method">Metodo de pago <span class="text-danger">*</span></label>
-            <select name="pay_method" class="form-control form-control-solid" id="pay_method">
+            <select name="payment_method_id" class="form-control form-control-solid" id="pay_method">
                 <option selected disabled>Seleccione Metodo de pago</option>
-                <option>Efectivo</option>
-                <option>Cheque</option>
+                <option value="1" {{$order->payment_method_id == 1 ? 'selected':''}}>Efectivo</option>
+                <option value="2" {{$order->payment_method_id == 2 ? 'selected':''}}>Cheque</option>
             </select>
         </div>
         <div class="form-group col-md-6">
             <label>Fecha de programación: <span class="text-danger">*</span></label>
-            <input name="order_num" type="date" class="form-control form-control-solid" placeholder="" />
+            <input name="schedule_date" type="date" class="form-control form-control-solid" placeholder="" value="{{$order->schedule_date}}" />
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
             <label>Hora de programación: <span class="text-danger">*</span></label>
-            <input name="order_num" type="time" class="form-control form-control-solid" placeholder="" />
+            <input name="schedule_time" type="time" class="form-control form-control-solid" placeholder="" value="{{$order->schedule_time}}" />
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-12 m-0 d-flex align-items-center">
             <div class="checkbox-inline">
                 <label class="checkbox">
-                    <input type="checkbox" name="CheckState"/>
+                    <input type="checkbox" name="express_delivery" {{$order->express_delivery == 1 ? 'checked' : ''}} />
                     <span></span>
                     Marcar Urgente Despacho
                 </label>
                 <label class="checkbox">
-                    <input type="checkbox" name="CheckState"/>
+                    <input type="checkbox" name="last_destination_return" {{$order->last_destination_return == 1 ? 'checked' : ''}} />
                     <span></span>
                     Retorno Ultimo Destino
                 </label>
@@ -46,17 +46,17 @@
         <h5 class="my-4 font-weight-bold text-dark col-md-12">Seguro de mercancia</h5>
         <div class="form-group col-md-6">
             <label>Valor asegurado: <span class="text-danger">*</span></label>
-            <input name="save_value" type="number" class="form-control form-control-solid" placeholder="" />
+            <input name="insured_value" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->insured_value}}" />
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
             <label>A cobrar %: <span class="text-danger">*</span></label>
-            <input name="collet_porcent" type="number" class="form-control form-control-solid" placeholder="" />
+            <input name="percentage_receivable" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->percentage_receivable}}" />
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
             <label>A cobrar $: <span class="text-danger">*</span></label>
-            <input name="collet_cash" type="number" class="form-control form-control-solid" placeholder="" />
+            <input name="value_receivable" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->value_receivable}}" />
             <span class="form-text text-muted"></span>
         </div>
     </div>
