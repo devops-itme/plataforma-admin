@@ -71,7 +71,7 @@ class OrderController extends Controller
         //     'order_data' => $order,
         //     'user_data' => $order['get_user']
         // ]);
-        return view('orders.showFold.show');
+        return view('orders.showFold.show', compact('order'));
     }
 
     /**

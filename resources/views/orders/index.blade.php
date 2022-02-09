@@ -188,7 +188,7 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="{{route('orders.show',1)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                    <a href="{{route('orders.show',$order->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
                                     <a href="{{route('orders.edit',1)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
