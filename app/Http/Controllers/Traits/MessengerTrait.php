@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 trait MessengerTrait
 {
-    use TraitsRestActions, UserTrait;
+    use UserTrait;
 
     public function messengerValidate($request)
     {
