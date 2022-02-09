@@ -192,6 +192,10 @@ return [
             'Interna',
             'Externa'
         ],
+        'contract_type'=>[
+            'contrato indefinido',
+            'contrato prestación de servicio'
+        ]
     ]
 
 ];

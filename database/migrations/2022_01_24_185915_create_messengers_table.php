@@ -22,6 +22,8 @@ class CreateMessengersTable extends Migration
             $table->date('admission_date')->nullable();
             $table->double('production_percentage')->nullable();
             $table->string('contract')->nullable();
+            $table->unsignedBigInteger('contract_type_id')->nullable();
+            // $table->foreign('contract_type_id')->references('id')->on('parameter_values');
             $table->integer('exclusive')->nullable();
             $table->timestamps();
             $table->softDeletes();

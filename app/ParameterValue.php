@@ -14,4 +14,9 @@ class ParameterValue extends Model
         'description',
         'state'
     ];
+
+    public function getParameter()
+    {
+        return $this->belongsTo(Parameter::class, 'parameter_id');
+    }
 }
