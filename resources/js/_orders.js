@@ -68,13 +68,12 @@ export default class Orders {
             await fetch(actualLocation+"/customer_data/"+slcCustomer.value)
                 .then(response => response.json())
                 .then(data => {
-                    if(data['name'] != null){
-                        document.getElementById("customer_modal_name").innerHTML = data['name'];
-                        document.getElementById("customer_modal_last_name").innerHTML = data['last_name'];
-                    } else {
-                        document.getElementById("customer_modal_name").innerHTML = data['get_customer']['business_name'];
-                    }
-                    document.getElementById("customer_modal_contact").innerHTML = data['contact'];
+
+                    document.getElementById("customer_modal_name").innerHTML = (data[0]['business_name'] == null) ? data[0]['get_user']['name'] : data[0]['business_name'];
+                    document.getElementById("customer_modal_last_name").innerHTML = (data[0]['business_name'] == null) ? data[0]['get_user']['last_name'] : '----';
+                    document.getElementById("customer_modal_contact").innerHTML = data[0]['contact'];
+                    document.getElementById("customer_modal_branch_office").innerHTML = (data[1] != null) ? data[1]['name'] : '----';
+                    document.getElementById("customer_modal_deparment").innerHTML = (data[2] != null) ? data[2]['name'] : '----';
                     $("#detailCustomer").modal('show');
                 });
         })

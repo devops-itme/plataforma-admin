@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order;
@@ -29,7 +30,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        $customers = Customer::with('getUser')->get();
+        return view('orders.create', compact('customers'));
     }
 
     /**

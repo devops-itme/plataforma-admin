@@ -33,16 +33,15 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Cliente <span class="text-danger">*</span></label>
-                        <select name="customers" class="form-control" id="customers">
+                        <select name="customers" class="form-control" id="slc-Customers">
                             <option selected disabled>Seleccione Cliente</option>
-                            <option>Cliente 1</option>
-                            <option>Cliente 2</option>
-                            <option>Cliente 3</option>
+                            @foreach ($customers as $customer)
+                                <option value="{{$customer->id}}">{{!is_null($customer->business_name) ? $customer->business_name : $customer->getUser->name." ".$customer->getUser->last_name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
-                        <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
-                            data-target="#detailCustomer">
+                        <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" id="btn-customerData">
                             <i class="fad fa-eye"></i>
                         </button>
 
