@@ -20,7 +20,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::get();
-        return view('orders.index');
+        return view('orders.index', compact('orders'));
     }
 
     /**

@@ -159,20 +159,32 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($orders as $order)
                         <tr>
-                            <th scope="row">---</th>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
+                            <th scope="row">{{$order->number}}</th>
                             <td>
-                                {{-- @if ($item->user->state == 1) --}}
+                                @if ($order->service_type_id == 1)
+                                    <span class="label label-inline label-light-warning font-weight-blog">
+                                        Ondeman
+                                    </span>
+                                @else
+                                    <span class="label label-inline label-light-success font-weight-blog">
+                                        Multiple
+                                    </span>
+                                @endif
+                            </td>
+                            <td>{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}</td>
+                            <td>{{format_date(date('Y-n-d', strtotime($order->created_at)))}}</td>
+                            <td>
+                                @if ($order->state == 1)
                                     <span class="label label-inline label-light-success font-weight-bold">
                                         Activo
                                     </span>
-                                    {{-- <span class="label label-inline label-light-danger font-weight-bold">
+                                @else
+                                    <span class="label label-inline label-light-danger font-weight-bold">
                                         Inactivo
-                                    </span> --}}
-                                {{-- @endif --}}
+                                    </span>
+                                @endif
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
@@ -188,6 +200,7 @@
                                 </div>
                             </td>
                         </tr>
+                    @endforeach
                 </tbody>
             </table>
             <!--end: Datatable-->
