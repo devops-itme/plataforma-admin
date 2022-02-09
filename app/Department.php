@@ -23,5 +23,29 @@ class Department extends Model
         return $this->belongsTo(BranchOffice::class, 'branch_office_id');
     }
 
+    //SCOPES
+    public function scopeName($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('name', 'like', '%'.$value.'%');
+    }
+    public function scopeDescription($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('name', 'like', '%'.$value.'%');
+    }
+    public function scopeNameOffice($query, $value)
+    {
+        if (!is_null($value)) {
+            return $query->whereHas('user', function ($q) use ($value) {
+                $q->where('name', 'like', '%' . $value . '%');
+            });
+        }
+    }
+    public function scopeState($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('state',$value);
+    }
 
 }
