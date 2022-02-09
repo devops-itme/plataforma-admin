@@ -15,7 +15,7 @@ use App\User;
 
 class CustomerController extends Controller
 {
-    use CustomerTrait, UserTrait, BranchOfficeTrait;
+    use CustomerTrait;
     /**
      * Display a listing of the resource.
      *
