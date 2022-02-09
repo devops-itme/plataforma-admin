@@ -79,7 +79,8 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::find($id);
-        return view('orders.editFold.edit');
+        $customers = Customer::with('getUser')->get();
+        return view('orders.editFold.edit', compact('order', 'customers'));
     }
 
     /**
@@ -94,14 +95,17 @@ class OrderController extends Controller
         if(Auth()->user()->role != 1){
             $request->merge(['user_id' => Auth()->user()->id]);
         };
+        if($request->express_delivery == 'on'){$request->merge(['express_delivery' => 1]);}
+        else{$request->merge(['express_delivery' => 0]);}
+        if($request->last_destination_return == 'on'){$request->merge(['last_destination_return' => 1]);}
+        else{$request->merge(['last_destination_return' => 0]);}
+        $request->merge(['state' => 1]);
+
         $response = $this->updateOrder($request->merge(['order_id' => $id]));
         if($response['state'] == 200){
-            return json_encode([
-                'state' => $response['state'],
-                'data' =>$response['data']
-            ]);
+            return redirect()->route('orders.index')->with('success', 'Orden creada exitosamente.');
         } else {
-            return json_encode($response['message']);
+            return redirect()->back()->with('danger', $response['message']);
         }
     }
 
