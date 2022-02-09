@@ -7,6 +7,7 @@ use Illuminate\Auth\Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class User extends Model implements AuthenticatableContract
 {
@@ -53,6 +54,31 @@ class User extends Model implements AuthenticatableContract
         return $this->hasMany(BranchOffice::class, 'user_id');
     }
 
-
+    //Scopes
+    public function scopeName($query, $value)
+    {
+        if (!is_null($value))
+            $query->where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$value.'%');
+    }
+    public function scopeDocument($query, $value)
+    {
+        if (!is_null($value))
+        $query->where('document_number', 'like', '%'.$value.'%');
+    }
+    public function scopeEmail($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('email', 'like', '%'.$value.'%');
+    }
+    public function scopePhone($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('phone', 'like', '%'.$value.'%');
+    }
+    public function scopeState($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('state',$value);
+    }
 
 }

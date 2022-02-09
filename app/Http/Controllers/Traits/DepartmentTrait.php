@@ -24,17 +24,28 @@ trait DepartmentTrait
             ]
         );
     }
-    public function getDepartments($id)
+    public function getDepartments()
     {
         try {
-
-            if(!is_null(Request()->user_id )){
-                $departments = Department::with('getBranchOffice.getUser')->whereHas('getBranchOffice.getUser', function ($query) use ($id){
-                      $query->where('id', $id);
-                })->paginate(10);
-          }else{
-              $departments = Department::where('branch_office_id', $id)->with('getBranchOffice.getUser')->paginate(10);
-          }
+            if (!is_null(Request()->user_id)) {
+                $user_id  = Request()->user_id;
+                $departments = Department::with('getBranchOffice.getUser')->whereHas('getBranchOffice.getUser', function ($query) use ($user_id) {
+                    $query->where('id', $user_id);
+                })->name(request()->name)
+                    ->description(request()->description)
+                    ->nameOffice(request()->branch_office_name)
+                    ->state(request()->state)
+                    ->paginate(10);
+            } else {
+                $branch_id = Request()->branch_office_id;
+                $departments = Department::where('branch_office_id', $branch_id)
+                    ->with('getBranchOffice.getUser')
+                    ->name(request()->name)
+                    ->description(request()->description)
+                    ->nameOffice(request()->branch_office_name)
+                    ->state(request()->state)
+                    ->paginate(10);
+            }
 
 
             return $this->respond(200, $departments);
@@ -51,7 +62,7 @@ trait DepartmentTrait
             return $this->respond(500, [], $e->getMessage());
         }
     }
-    public function saveDepartment($request, $id)
+    public function saveDepartment($request)
     {
         $validator = $this->departmentValidate($request);
 
@@ -60,7 +71,7 @@ trait DepartmentTrait
         }
         try {
             $department = Department::create([
-                'branch_office_id' => $id,
+                'branch_office_id' => $request->branch_office_id,
                 'name' => $request->name,
                 'state' => $request->state ?? 1,
                 'description' => $request->description,

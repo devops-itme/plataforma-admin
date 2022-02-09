@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 trait MessengerTrait
 {
-    use TraitsRestActions, UserTrait;
+    use UserTrait;
 
     public function messengerValidate($request)
     {
@@ -23,6 +23,7 @@ trait MessengerTrait
                 'admission_date' => 'required',
                 'production_percentage' => 'required|numeric',
                 'exclusive' => 'required',
+                'contract_type_id' => 'required',
                 // 'contract' => 'required',
             ]
         );
@@ -30,7 +31,14 @@ trait MessengerTrait
     public function getMessengers()
     {
         try {
-            $messengers = Messenger::with('user')->paginate(10);
+            $messengers = Messenger::with('user')
+                ->name(request()->name)
+                ->document(request()->document)
+                ->email(request()->email)
+                ->phone(request()->phone)
+                ->plate(request()->vehicle_plate)
+                ->state(request()->state)
+                ->paginate(10);
             return $this->respond(200, $messengers);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
@@ -39,7 +47,7 @@ trait MessengerTrait
     public function showMessenger($id)
     {
         try {
-            $messengers = Messenger::where('id', $id)->with('user')->first();
+            $messengers = Messenger::where('id', $id)->with(['user', 'getContractType'])->first();
             return $this->respond(200, $messengers);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
@@ -70,7 +78,8 @@ trait MessengerTrait
                 'production_percentage' => $request->production_percentage,
                 'exclusive' => $request->exclusive,
                 'birth_date' => $request->birth_date,
-                'contract' => $contract_file
+                'contract' => $contract_file,
+                'contract_type_id' => $request->contract_type_id
             ]);
             return $this->respond(200, $messenger);
         } catch (\Throwable $e) {
@@ -98,7 +107,7 @@ trait MessengerTrait
             if ($updateUser['state'] == 500) {
                 return $this->respond(500, [], $updateUser['error'], $updateUser['message']);
             }
-            return $this->respond(200, $messenger, null, 'Mensajero actualizado exitosamente');
+            return $this->respond(200, null, null, 'Mensajero actualizado exitosamente');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }
@@ -108,11 +117,11 @@ trait MessengerTrait
     {
         try {
             $customer = Messenger::find($id);
-            if(is_null($customer)){
+            if (is_null($customer)) {
                 return $this->respond(500, [], 'user not found', 'No se encontro el mensajero');
             }
             $deleteUser = $this->deleteUser($customer->user_id);
-            if($deleteUser['state'] == 500){
+            if ($deleteUser['state'] == 500) {
                 return $this->respond(500, [], $deleteUser['error'], $deleteUser['message']);
             }
             $customer->delete();

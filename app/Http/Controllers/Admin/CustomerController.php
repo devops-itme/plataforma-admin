@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\BranchOffice;
 use App\Customer;
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\ParameterValue;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use App\User;
 
 class CustomerController extends Controller
 {
-    use CustomerTrait, UserTrait, BranchOfficeTrait;
+    use CustomerTrait;
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +23,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::latest()->get();
+        $customers = Customer::name(request()->name)
+            ->document(request()->document)
+            ->email(request()->email)
+            ->phone(request()->phone)
+            ->zone(request()->zone)
+            ->state(request()->state)
+            ->latest()
+            ->get();
         return view('customers.index', compact('customers'));
     }
 
@@ -76,6 +84,17 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
         return view('customers.show', compact('customer'));
+    }
+
+    public function customerData($id)
+    {
+        $customer = Customer::with('getUser')->where('user_id', $id)->first();
+        $branchOffice = BranchOffice::where('user_id', $customer->user_id)->where('default', 1)->first();
+        $department = null;
+        if($branchOffice){
+            $department = Department::where('branch_office_id', $branchOffice->id)->first();
+        }
+        return [$customer, $branchOffice, $department];
     }
 
     /**
@@ -137,7 +156,12 @@ class CustomerController extends Controller
     public function UserBankIndex($parent_id)
     {
         $bankData = User::find($parent_id);
-        $users = User::where('parent_id', $parent_id)->get();
+        $users = User::where('parent_id', $parent_id)
+            ->name(request()->name)
+            ->email(request()->email)
+            ->phone(request()->phone)
+            ->state(request()->state)
+            ->get();
         return view('bankUsers.index', compact('users', 'bankData'));
     }
 

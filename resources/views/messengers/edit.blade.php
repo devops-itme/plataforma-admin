@@ -98,6 +98,15 @@
                     </div>
                     <span class="form-text text-muted"></span>
                 </div>
+                <div class="form-group col-md-4">
+                    <label for="type_doc">Tipo de contrato <span class="text-danger">*</span></label>
+                    <select name="contract_type_id" class="form-control form-control-solid" id="type_contract">
+                        <option selected disabled>Seleccione tipo de contrato</option>
+                        @foreach($contract_type as $contract)
+                            <option {{$contract->id == $messenger->contract_type_id ? 'selected ':''}}  value="{{$contract->id}}">{{$contract->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="form-group py-3 m-0 col-md-4">
                     <label>Contrato <span class="text-danger">*</span></label>
                     <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="file"

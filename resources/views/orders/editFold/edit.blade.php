@@ -7,28 +7,28 @@
     <div class="card card-custom">
         <div class="card-header">
             <h3 class="card-title">
-                Crear orden
+                Editar orden
             </h3>
         </div>
         @include('layouts.alerts')
         <!--begin::Form-->
-        <form action="{{route('orders.store')}}" method="post">
-            @csrf
+        <form action="{{route('orders.update', $order->id)}}" method="POST">
+            @csrf @method('PUT')
             <div class="card-body d-flex flex-row flex-wrap pt-2">
                 <div class="col-md-6 border-right">
                     <div class="d-flex flex-row flex-wrap">
                     <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
                     <div class="form-group col-md-6">
                         <label>Numero de orden: <span class="text-danger">*</span></label>
-                        <input name="number" type="number" class="form-control form-control-solid" placeholder="333" />
+                        <input name="number" type="number" class="form-control form-control-solid" placeholder="333" value="{{$order->number}}" readonly />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
                         <select name="service_type_id" class="form-control form-control-solid" id="order_type">
                             <option selected disabled>Seleccione tipo de orden</option>
-                            <option value="1">Ondeman</option>
-                            <option value="2">Multiple</option>
+                            <option value="1" {{$order->service_type_id == 1 ? 'selected' : ''}}>Ondeman</option>
+                            <option value="2" {{$order->service_type_id == 2 ? 'selected' : ''}}>Multiple</option>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
@@ -36,7 +36,7 @@
                         <select name="user_id" class="form-control" id="slc-Customers">
                             <option selected disabled>Seleccione Cliente</option>
                             @foreach ($customers as $customer)
-                                <option value="{{$customer->user_id}}">{{!is_null($customer->business_name) ? $customer->business_name : $customer->getUser->name." ".$customer->getUser->last_name}}</option>
+                                <option value="{{$customer->user_id}}" {{$customer->user_id == $order->user_id ? 'selected' : ''}}>{{!is_null($customer->business_name) ? $customer->business_name : $customer->getUser->name." ".$customer->getUser->last_name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -113,10 +113,10 @@
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
-                            @include('orders.generalTab')
+                            @include('orders.editFold.generalTabEdit')
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            @include('orders.guideTab')
+                            @include('orders.editFold.guideTabEdit')
                         </div>
                     </div>
                 </div>

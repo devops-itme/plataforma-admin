@@ -98,49 +98,52 @@
             <!--begin: Search Form-->
             <!--begin::Search Form-->
             <div class="mb-7">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="row align-items-center">
-                            <div class="col-md-6 my-2 my-md-0">
-                                <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Buscar..."
-                                        id="kt_datatable_search_query" />
-                                    <span>
-                                        <i class="flaticon2-search-1 text-muted"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-3 mb-0 d-none d-md-block">Estado:</label>
-                                    <select class="form-control" id="kt_datatable_search_status">
-                                        <option value="">All</option>
-                                        <option value="1">Pending</option>
-                                        <option value="2">Delivered</option>
-                                        <option value="3">Canceled</option>
-                                        <option value="4">Success</option>
-                                        <option value="5">Info</option>
-                                        <option value="6">Danger</option>
+                <form action="">
+                    <div class="row align-items-center">
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label>Nombre sucursal:</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
+                                value="{{ request()->name }}" />
+                            <span class="form-text text-muted">Filtro nombre</span>
+                        </div>
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label>Descripción sucursal:</label>
+                            <textarea type="text" class="form-control form-control-solid" name="description"> {{ request()->description }} </textarea>
+                            <span class="form-text text-muted">Filtro descripcion</span>
+                        </div>
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label>Dirección sucursal:</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="23 Main Street, New York, NY 10030" name="address"
+                                value="{{ request()->address }}" />
+                            <span class="form-text text-muted">Filtro direccion</span>
+                        </div>
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label>Correo sucursal:</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="email@example.com" name="email"
+                                value="{{ request()->email }}" />
+                            <span class="form-text text-muted">Filtro correo</span>
+                        </div>
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label>Telefono sucursal:</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576" name="phone"
+                                value="{{ request()->phone }}" />
+                            <span class="form-text text-muted">Filtro telefono</span>
+                        </div>
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label for="exampleSelect1">Predeterminada: </label>
+                                    <select class="form-control form-control-solid" id="zone" name="default">
+                                        <option selected disabled> Seleccione </option>
+                                        <option value="1" {{ request()->default == 1 ? 'selected' : '' }}>Sí</option>
+                                        <option value="0" {{ (request()->default != '' && request()->default == 0) ? 'selected' : '' }}>No</option>
                                     </select>
-                                </div>
-                            </div>
-                            {{-- <div class="col-md-4 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-3 mb-0 d-none d-md-block">Type:</label>
-                                    <select class="form-control" id="kt_datatable_search_type">
-                                        <option value="">All</option>
-                                        <option value="1">Online</option>
-                                        <option value="2">Retail</option>
-                                        <option value="3">Direct</option>
-                                    </select>
-                                </div>
-                            </div> --}}
+                            <span class="form-text text-muted">Filtro estado</span>
+                        </div>
+                        <div class="form-group py-2 m-0 col-md-12">
+                            <button type="submit" class="btn btn-primary  btn-block"> Filtrar</button>
+                            <a href="{{route('customers.index')}}" class="btn btn-danger  btn-block">Limpiar</a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
-                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold">Buscar</a>
-                    </div>
-                </div>
+                </form>
             </div>
             <!--end::Search Form-->
             <!--end: Search Form-->
@@ -183,7 +186,7 @@
                                         <button type="button" onclick="confirmDelete('/sucursales/'+{{$office->user_id}}+'/'+{{$office->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
-                                        <a href="{{route('departments.index', $office->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <a href="{{route('departments.index', ['branch_office_id' => $office->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-warehouse"></i>
                                         </a>
                                     </div>
@@ -192,7 +195,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <th colspan="8"><center>¡No hay usuarios registrados!</center></td>
+                            <th colspan="8" class="text-center">¡No hay usuarios registrados!</td>
                         </tr>
                     @endif
                 </tbody>

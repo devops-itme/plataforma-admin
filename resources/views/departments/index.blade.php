@@ -87,7 +87,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{ route('departments.create', $branch_office_id) }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('departments.create',['user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -98,49 +98,45 @@
             <!--begin: Search Form-->
             <!--begin::Search Form-->
             <div class="mb-7">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="row align-items-center">
-                            <div class="col-md-6 my-2 my-md-0">
-                                <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Buscar..."
-                                        id="kt_datatable_search_query" />
-                                    <span>
-                                        <i class="flaticon2-search-1 text-muted"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-3 mb-0 d-none d-md-block">Estado:</label>
-                                    <select class="form-control" id="kt_datatable_search_status">
-                                        <option value="">All</option>
-                                        <option value="1">Pending</option>
-                                        <option value="2">Delivered</option>
-                                        <option value="3">Canceled</option>
-                                        <option value="4">Success</option>
-                                        <option value="5">Info</option>
-                                        <option value="6">Danger</option>
-                                    </select>
-                                </div>
-                            </div>
-                            {{-- <div class="col-md-4 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-3 mb-0 d-none d-md-block">Type:</label>
-                                    <select class="form-control" id="kt_datatable_search_type">
-                                        <option value="">All</option>
-                                        <option value="1">Online</option>
-                                        <option value="2">Retail</option>
-                                        <option value="3">Direct</option>
-                                    </select>
-                                </div>
-                            </div> --}}
+                <form action="{{ route('departments.index') }}">
+                    <div class="row align-items-center">
+                        <input type="hidden" name="user_id" value="{{Request()->user_id}}">
+                        <input type="hidden" name="branch_office_id" value="{{Request()->branch_office_id}}">
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label>Nombre:</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
+                                value="{{ request()->name }}" />
+                            <span class="form-text text-muted">Filtro nombre</span>
+                        </div>
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label>Descripción:</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="Descripción"
+                                name="description" value="{{ request()->document }}" />
+                            <span class="form-text text-muted">Filtro de descripción</span>
+                        </div>
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label>Sucursal:</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="Sucursal" name="branch_office_name"
+                                value="{{ request()->branch_office_name }}" />
+                            <span class="form-text text-muted">Filtro sucursal</span>
+                        </div>
+                        <div class="form-group py-3 m-0 col-md-4">
+                            <label for="exampleSelect1">Estado: </label>
+                            <select class="form-control form-control-solid" id="zone" name="state">
+                                <option selected disabled> Seleccione </option>
+                                <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
+                                <option value="0"
+                                    {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
+                                </option>
+                            </select>
+                            <span class="form-text text-muted">Filtro estado</span>
+                        </div>
+                        <div class="form-group py-6 m-0 col-md-4">
+                            <button type="submit" class="btn btn-primary  btn-block"> Filtrar</button>
+                            <a href="{{ route('departments.index', ['user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}" class="btn btn-danger  btn-block">Limpiar</a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
-                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold">Buscar</a>
-                    </div>
-                </div>
+                </form>
             </div>
             <!--end::Search Form-->
             <!--end: Search Form-->
@@ -184,8 +180,8 @@
                                         class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Ver">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
-                                    <a href="{{ route('departments.edit', $item->id) }}"
-                                        class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
+                                    <a href="{{ route('departments.edit', ['departamento' => $item->id, 'user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}"
+                                        class="btn btn-icon btn-light-success btn-sm mr-2"  data-tooltip title="Editar">
                                         <i class="fad fa-edit"></i>
                                     </a>
                                     <a onclick="confirmDelete('/departamentos/'+{{ $item->id }})" role="button"

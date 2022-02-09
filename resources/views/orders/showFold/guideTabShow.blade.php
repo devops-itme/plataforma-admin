@@ -10,13 +10,13 @@
             <th scope="col">Tarifa</th>
             <th scope="col">Estado</th>
             <th scope="col">
-                <div class="d-flex justify-content-end">
+                {{-- <div class="d-flex justify-content-end">
                     <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalCreate">
                         <span class="svg-icon svg-icon-md">
                             <i class="fas fa-plus"></i>
                         </span>Crear
                     </a>
-                </div>
+                </div> --}}
             </th>
         </tr>
     </thead>
@@ -41,15 +41,6 @@
                         class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                         <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
                             <i class="far fa-folder-open"></i>
-                        </a>
-                        <a href="#"
-                            class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal" data-target="#modalEdit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#"
-                            role="button"
-                            class="btn btn-icon btn-light-danger btn-sm mr-2">
-                            <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
                 </td>
@@ -477,24 +468,22 @@
                                     <div class="col-3 border-right">Comentarios</div>
                                     <div class="col-2"></div>
                                 </div>
-                                <div id="box_list">
-                                    <div class="row border mt-0 text-center" >
-                                        <div class="col-1 py-4 border-right"><input type="number" name="id[]"class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="weight[]" class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="long[]" class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="broad[]"class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="high[]"class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="vol_weight[]"class="form-control" min="0" value="0"></div>
-                                        <div class="col-3 py-4 border-right"><input type="text" name="description[]" class="form-control" placeholder="comertarios"></div>
-                                        <div class="col-2 py-4">
-                                            <div class="d-flex flex-row flex-wrap justify-content-center">
-                                                <a role="button" id="remove_box"  class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Borrar">
-                                                    <i class="fad fa-minus-circle"></i>
-                                                </a>
-                                                <a role="button" id="add_box" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Agregar">
-                                                    <i class="fad fa-plus-circle"></i>
-                                                </a>
-                                            </div>
+                                <div class="row border mt-0 text-center">
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="1"></div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="10"></div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="14"></div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="14"></div>
+                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="5"></div>
+                                    <div class="col-2 py-4 border-right"><input type="number" class="form-control" min="0" value="50"></div>
+                                    <div class="col-3 py-4 border-right"><input type="text" class="form-control" placeholder="comertarios"></div>
+                                    <div class="col-2 py-4">
+                                        <div class="d-flex flex-row flex-wrap justify-content-center">
+                                            <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Borrar">
+                                                <i class="fad fa-minus-circle"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Agregar">
+                                                <i class="fad fa-plus-circle"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
