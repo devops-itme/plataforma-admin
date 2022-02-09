@@ -36,7 +36,7 @@
                         <select name="customers" class="form-control" id="slc-Customers">
                             <option selected disabled>Seleccione Cliente</option>
                             @foreach ($customers as $customer)
-                                <option value="{{$customer->id}}">{{!is_null($customer->business_name) ? $customer->business_name : $customer->getUser->name." ".$customer->getUser->last_name}}</option>
+                                <option value="{{$customer->user_id}}">{{!is_null($customer->business_name) ? $customer->business_name : $customer->getUser->name." ".$customer->getUser->last_name}}</option>
                             @endforeach
                         </select>
                     </div>

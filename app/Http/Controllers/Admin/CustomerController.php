@@ -88,7 +88,7 @@ class CustomerController extends Controller
 
     public function customerData($id)
     {
-        $customer = Customer::with('getUser')->find($id);
+        $customer = Customer::with('getUser')->where('user_id', $id)->first();
         $branchOffice = BranchOffice::where('user_id', $customer->user_id)->where('default', 1)->first();
         $department = null;
         if($branchOffice){
