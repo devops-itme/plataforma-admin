@@ -67,10 +67,6 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('getUser')->find($id);
-        // return json_encode([
-        //     'order_data' => $order,
-        //     'user_data' => $order['get_user']
-        // ]);
         return view('orders.showFold.show', compact('order'));
     }
 
