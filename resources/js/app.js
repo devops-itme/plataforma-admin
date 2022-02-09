@@ -1,6 +1,7 @@
 require('./bootstrap');
 
 import swal from 'sweetalert';
+import bootstrapSelect from 'bootstrap-select';
 
 import Messengers from './_messengers';
 import Addresses from './_addresses';
@@ -13,6 +14,7 @@ let customers = new Customers();
 let orders = new Orders();
 
 document.addEventListener("DOMContentLoaded", function (event) {
+    // bootstrapSelect.initialize();
     orders.initialize();
     messengers.initialize();
     addresses.initialize();

@@ -23,6 +23,7 @@
         "vue-template-compiler": "^2.6.14"
     },
     "dependencies": {
+        "bootstrap-select": "^1.13.18",
         "sweetalert": "^2.1.2"
     }
 }

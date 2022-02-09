@@ -175,7 +175,7 @@
                         @foreach($customers as $customer)
                             <tr>
                                 <th scope="row">{{$customer->id}}</th>
-                                <td>{{$customer->getUser->name." ".$customer->getUser->last_name}}</td>
+                                <td>{{!is_null($customer->getUser->name) ? $customer->getUser->name." ".$customer->getUser->last_name : $customer->business_name}}</td>
                                 <td>{{$customer->getUser->document_number}}</td>
                                 <td>{{$customer->getUser->email}}</td>
                                 <td>{{$customer->getUser->phone}}</td>
@@ -220,7 +220,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        @if($customer->getUser->role == 4)
+                                        @if(is_null($customer->name))
                                             <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2" data-tooltip title="Usuarios">
                                                 <i class="fad fa-users-class"></i>
                                             </a>

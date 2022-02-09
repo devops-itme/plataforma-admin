@@ -85,6 +85,12 @@ class CustomerController extends Controller
         return view('customers.show', compact('customer'));
     }
 
+    public function customerData($id)
+    {
+        $customer = Customer::with('getUser')->find($id);
+        return $customer;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
