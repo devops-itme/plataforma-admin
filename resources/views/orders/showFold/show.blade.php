@@ -4,10 +4,16 @@
 {{-- Content --}}
 @section('content')
 <div class="card card-custom">
-    <div class="card-header">
+    <div class="card-header justify-content-between align-items-center">
         <h3 class="card-title">
             Ver orden
         </h3>
+        {{-- Estado de orden Pendiente --}}
+        <span class="label label-xl label-warning label-pill label-inline mr-2">Pendiente</span>
+        {{-- Estado de orden En despacho --}}
+        {{-- <span class="label label-xl label-primary label-pill label-inline mr-2">En despacho</span> --}}
+        {{-- Estado de orden Entregada --}}
+        {{-- <span class="label label-xl label-success label-pill label-inline mr-2">Entregada</span> --}}
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
@@ -58,11 +64,11 @@
                         <div class="col-6">
                             <div class="d-flex flex-row flex-wrap">
                                 <div class="col-6 p-0">
-                                    <small class="mb-0 label label-sm label-warning label-pill label-inline">Valor total OnDemand</small><br>
+                                    <small class="mb-0 label label-sm label-secondary label-pill label-inline">Valor total OnDemand</small><br>
                                     <small class="mb-0 pl-2 text-danger">1.00</small>
                                 </div>
                                 <div class="col-6 p-0">
-                                    <small class="mb-0 label label-sm label-warning label-pill label-inline">Valor Pagar Cliente</small><br>
+                                    <small class="mb-0 label label-sm label-secondary label-pill label-inline">Valor Pagar Cliente</small><br>
                                     <small class="mb-0 pl-2 text-danger">1.00</small>
                                 </div>
                             </div>
