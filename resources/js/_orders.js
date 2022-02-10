@@ -1,58 +1,113 @@
+let count = 0;
+let boxes = [
+    {
+        weight: 0,
+        long: 0,
+        broad: 0,
+        high: 0,
+        vol_weight: 0,
+        description: '',
+    }
+]
+
 export default class Orders {
     initialize() {
+        this.instantiateBoxes();
         this.addbox();
-        this.removeBox();
     }
 
-    addbox() {
+    instantiateBoxes() {
+        let boxContainer = document.getElementById('box-container');
+        if (boxContainer == null) {
+            return
+        }
+        boxContainer.innerHTML = ``;
+        [].forEach.call(boxes, box => {
+            let row = document.createElement("tr");
+            row.className = `row border mt-0 text-center box-register`;
 
-        let boxes = document.getElementById("add_box");
-        let div = document.createElement("div");
-        // console.log('gola');
-        let x = 0;
-        if (boxes == null) {
-            return;
+            let weightCell = document.createElement("td");
+            weightCell.className = `col-1 py-4 border-right`;
+            weightCell.innerHTML = `<input type="number" name="weight[]" class="form-control" min="0" value="0">`;
+            row.appendChild(weightCell);
+
+            let longCell = document.createElement("td");
+            longCell.className = `col-1 py-4 border-right`;
+            longCell.innerHTML = `<input type="number" name="long[]" class="form-control" min="0" value="0">`;
+            row.appendChild(longCell);
+
+            let broadCell = document.createElement("td");
+            broadCell.className = `col-1 py-4 border-right`;
+            broadCell.innerHTML = `<input type="number" name="broad[]" class="form-control" min="0" value="0">`;
+            row.appendChild(broadCell);
+
+            let highCell = document.createElement("td");
+            highCell.className = `col-1 py-4 border-right`;
+            highCell.innerHTML = `<input type="number" name="high[]" class="form-control" min="0" value="0">`;
+            row.appendChild(highCell);
+
+            let volWeightCell = document.createElement("td");
+            volWeightCell.className = `col-1 py-4 border-right`;
+            volWeightCell.innerHTML = `<input type="number" name="vol_weight[]" class="form-control" min="0" value="0">`;
+            row.appendChild(volWeightCell);
+
+            let descriptionCell = document.createElement("td");
+            descriptionCell.className = `col-3 py-4 border-right`;
+            descriptionCell.innerHTML = `<input type="text" name="description[]" class="form-control" placeholder="comertarios">`;
+            row.appendChild(descriptionCell);
+
+            let btnCell = document.createElement("td");
+            btnCell.className = `col-3 py-4 border-right`;
+            btnCell.innerHTML = ` <div class="d-flex flex-row flex-wrap justify-content-center"></div>`;
+
+            let removeBoxBtn = document.createElement("a");
+            removeBoxBtn.className = 'btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn';
+            removeBoxBtn.id = `remove-box-btn`;
+            removeBoxBtn.title = 'Borrar';
+            removeBoxBtn.setAttribute('data-tooltip', '');
+            removeBoxBtn.innerHTML = `<i class="fad fa-minus-circle"></i>`;
+
+            btnCell.children[0].appendChild(removeBoxBtn);
+            row.appendChild(btnCell);
+
+            boxContainer.appendChild(row);
+        });
+        this.removeBox();
+    };
+
+    addbox() {
+        let addBoxBtn = document.getElementById("add-box-btn");
+
+        if (addBoxBtn == null) {
+            return
         }
 
-        boxes.addEventListener("click", function (e) {
-            e.preventDefault();
-            x++
-            div.className = 'row border mt-0 text-center';
-            div.innerHTML = `
-            <div class="col-1 py-4 border-right"><input type="number" name="id[]"class="form-control" min="0" value="0"></div>
-            <div class="col-1 py-4 border-right"><input type="number" name="weight[]" class="form-control" min="0" value="0"></div>
-            <div class="col-1 py-4 border-right"><input type="number" name="long[]" class="form-control" min="0" value="0"></div>
-            <div class="col-1 py-4 border-right"><input type="number" name="broad[]"class="form-control" min="0" value="0"></div>
-            <div class="col-1 py-4 border-right"><input type="number" name="high[]"class="form-control" min="0" value="0"></div>
-            <div class="col-1 py-4 border-right"><input type="number" name="vol_weight[]"class="form-control" min="0" value="0"></div>
-            <div class="col-3 py-4 border-right"><input type="text" name="description[]" class="form-control" placeholder="comertarios"></div>
-            <div class="col-2 py-4">
-                <div class="d-flex flex-row flex-wrap justify-content-center">
-                    <a  class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Borrar">
-                        <i class="fad fa-minus-circle"></i>
-                    </a>
-                    <a role="button" id="add_box" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Agregar">
-                        <i class="fad fa-plus-circle"></i>
-                    </a>
-                </div>
-            </div>`;
-            document.getElementById('box_list').appendChild(div);
-
+        addBoxBtn.addEventListener('click', () => {
+            boxes.push({
+                weight: 0,
+                long: 0,
+                broad: 0,
+                high: 0,
+                vol_weight: 0,
+                description: '',
+            });
+            this.instantiateBoxes();
         });
-
     }
 
     removeBox() {
-        let boxes = document.getElementById("remove_box");
-        if (boxes == null) {
+        let removeBoxBtn = document.getElementsByClassName("remove-box-btn");
+        if (removeBoxBtn == null) {
             return;
         }
-        boxes.addEventListener("click", function (e) {
-            e.preventDefault();
-            document.getElementById('box_list').removeChild(a.parentNode);
 
+        [].forEach.call(removeBoxBtn, function (btn) {
+            btn.addEventListener('click', () => {
+
+                let box = btn.parentNode.parentNode.parentNode;
+                box.remove();
+            });
         });
-
-
     }
+
 }

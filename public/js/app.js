@@ -37785,6 +37785,16 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+var count = 0;
+var boxes = [{
+  weight: 0,
+  "long": 0,
+  broad: 0,
+  high: 0,
+  vol_weight: 0,
+  description: ''
+}];
+
 var Orders = /*#__PURE__*/function () {
   function Orders() {
     _classCallCheck(this, Orders);
@@ -37793,41 +37803,99 @@ var Orders = /*#__PURE__*/function () {
   _createClass(Orders, [{
     key: "initialize",
     value: function initialize() {
+      this.instantiateBoxes();
       this.addbox();
+    }
+  }, {
+    key: "instantiateBoxes",
+    value: function instantiateBoxes() {
+      var boxContainer = document.getElementById('box-container');
+
+      if (boxContainer == null) {
+        return;
+      }
+
+      boxContainer.innerHTML = "";
+      [].forEach.call(boxes, function (box) {
+        var row = document.createElement("tr");
+        row.className = "row border mt-0 text-center box-register";
+        var weightCell = document.createElement("td");
+        weightCell.className = "col-1 py-4 border-right";
+        weightCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        row.appendChild(weightCell);
+        var longCell = document.createElement("td");
+        longCell.className = "col-1 py-4 border-right";
+        longCell.innerHTML = "<input type=\"number\" name=\"long[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        row.appendChild(longCell);
+        var broadCell = document.createElement("td");
+        broadCell.className = "col-1 py-4 border-right";
+        broadCell.innerHTML = "<input type=\"number\" name=\"broad[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        row.appendChild(broadCell);
+        var highCell = document.createElement("td");
+        highCell.className = "col-1 py-4 border-right";
+        highCell.innerHTML = "<input type=\"number\" name=\"high[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        row.appendChild(highCell);
+        var volWeightCell = document.createElement("td");
+        volWeightCell.className = "col-1 py-4 border-right";
+        volWeightCell.innerHTML = "<input type=\"number\" name=\"vol_weight[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        row.appendChild(volWeightCell);
+        var descriptionCell = document.createElement("td");
+        descriptionCell.className = "col-3 py-4 border-right";
+        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comertarios\">";
+        row.appendChild(descriptionCell);
+        var btnCell = document.createElement("td");
+        btnCell.className = "col-3 py-4 border-right";
+        btnCell.innerHTML = " <div class=\"d-flex flex-row flex-wrap justify-content-center\"></div>";
+        var removeBoxBtn = document.createElement("a");
+        removeBoxBtn.className = 'btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn';
+        removeBoxBtn.id = "remove-box-btn";
+        removeBoxBtn.title = 'Borrar';
+        removeBoxBtn.setAttribute('data-tooltip', '');
+        removeBoxBtn.innerHTML = "<i class=\"fad fa-minus-circle\"></i>";
+        btnCell.children[0].appendChild(removeBoxBtn);
+        row.appendChild(btnCell);
+        boxContainer.appendChild(row);
+      });
       this.removeBox();
     }
   }, {
     key: "addbox",
     value: function addbox() {
-      var boxes = document.getElementById("add_box");
-      var div = document.createElement("div"); // console.log('gola');
+      var _this = this;
 
-      var x = 0;
+      var addBoxBtn = document.getElementById("add-box-btn");
 
-      if (boxes == null) {
+      if (addBoxBtn == null) {
         return;
       }
 
-      boxes.addEventListener("click", function (e) {
-        e.preventDefault();
-        x++;
-        div.className = 'row border mt-0 text-center';
-        div.innerHTML = "\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"id[]\"class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"long[]\" class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"broad[]\"class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"high[]\"class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-1 py-4 border-right\"><input type=\"number\" name=\"vol_weight[]\"class=\"form-control\" min=\"0\" value=\"0\"></div>\n            <div class=\"col-3 py-4 border-right\"><input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comertarios\"></div>\n            <div class=\"col-2 py-4\">\n                <div class=\"d-flex flex-row flex-wrap justify-content-center\">\n                    <a  class=\"btn btn-icon btn-light-danger btn-sm mr-2\" data-tooltip title=\"Borrar\">\n                        <i class=\"fad fa-minus-circle\"></i>\n                    </a>\n                    <a role=\"button\" id=\"add_box\" class=\"btn btn-icon btn-light-primary btn-sm mr-2\" data-tooltip title=\"Agregar\">\n                        <i class=\"fad fa-plus-circle\"></i>\n                    </a>\n                </div>\n            </div>";
-        document.getElementById('box_list').appendChild(div);
+      addBoxBtn.addEventListener('click', function () {
+        boxes.push({
+          weight: 0,
+          "long": 0,
+          broad: 0,
+          high: 0,
+          vol_weight: 0,
+          description: ''
+        });
+
+        _this.instantiateBoxes();
       });
     }
   }, {
     key: "removeBox",
     value: function removeBox() {
-      var boxes = document.getElementById("remove_box");
+      var removeBoxBtn = document.getElementsByClassName("remove-box-btn");
 
-      if (boxes == null) {
+      if (removeBoxBtn == null) {
         return;
       }
 
-      boxes.addEventListener("click", function (e) {
-        e.preventDefault();
-        document.getElementById('box_list').removeChild(a.parentNode);
+      [].forEach.call(removeBoxBtn, function (btn) {
+        btn.addEventListener('click', function () {
+          var box = btn.parentNode.parentNode.parentNode;
+          box.remove();
+        });
       });
     }
   }]);
@@ -37937,8 +38005,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
