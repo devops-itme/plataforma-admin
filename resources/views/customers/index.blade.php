@@ -233,7 +233,7 @@
                                             <a href="{{route('customers.show', $customer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
                                                 <i class="fad fa-folder-open"></i>
                                             </a>
-                                        <a href="{{route('customers.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Sucursales">
+                                        <a href="{{route('customers.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                             <i class="fad fa-edit"></i>
                                         </a>
                                         <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
