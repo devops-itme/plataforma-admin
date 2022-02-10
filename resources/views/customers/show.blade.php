@@ -153,7 +153,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#">
+                <form action="">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label> Descripción </label>
@@ -161,9 +161,9 @@
                         </div>
                         <div class="col-md-6">
                             <label> Dirección *</label>
-                            <input type="text" name="user_address" class="form-control" value="{{old('user_address')}}" id="user_address" placeholder="Introduce una ubicación">
-                            <input type="hidden" name="user_address_lat" id="branch_office_lat" value="{{old('user_address_lat')}}">
-                            <input type="hidden" name="user_address_lng" id="branch_office_lng" value="{{old('user_address_lng')}}">
+                            <input type="text" name="user_address" class="form-control" value="{{old('user_address_edit')}}" id="user_address_edit" placeholder="Introduce una ubicación">
+                            <input type="hidden" name="user_address_lat" id="branch_office_lat" value="{{old('user_address_lat_edit')}}">
+                            <input type="hidden" name="user_address_lng" id="branch_office_lng" value="{{old('user_address_lng_edit')}}">
                         </div>
                     </div>
                 </form>
