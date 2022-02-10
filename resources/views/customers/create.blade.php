@@ -107,11 +107,10 @@
                                 aria-controls="profile" aria-selected="false">Sucursales</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Departamentos</a>
+                            <a class="nav-link" data-toggle="popover" tabindex="0" data-trigger="focus" data-html="true" data-placement='bottom' title="<span class='label label-warning label-pill label-inline'>Notificación</span>" data-content="Debe crear primero un <span class='label label-inline font-weight-bold label-light-danger'>Cliente</span> con su respectiva <span class='label label-inline font-weight-bold label-light-danger'>Sucursal</span>.">Departamentos</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link"  href="{{route('departments.index')}}"
-                                 >Departamentos</a>
+                            <a class="nav-link" data-toggle="popover" tabindex="0" data-trigger="focus" data-html="true" data-placement='bottom' title="<span class='label label-warning label-pill label-inline'>Notificación</span>" data-content="Debe crear primero un <span class='label label-inline font-weight-bold label-light-danger'>Cliente</span>.">Usuarios</a>
                         </li>
 
                     </ul>

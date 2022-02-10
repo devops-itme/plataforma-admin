@@ -41729,6 +41729,15 @@ var General = /*#__PURE__*/function () {
     value: function general() {
       $('.btn-filter').click(function () {
         return $('.form-filter').toggle('slow');
+      }); // document.getElementById('alerta').onclick = function() {
+      //     alert("button was clicked");
+      //  };
+
+      $(function () {
+        $('[data-toggle="popover"]').popover();
+      });
+      $('.popover-dismiss').popover({
+        trigger: 'focus'
       });
     }
   }]);
@@ -42084,8 +42093,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
