@@ -13,6 +13,13 @@
             </div>
             @include('layouts.alerts')
             <div class="card-toolbar">
+                 <!--begin::Button filter-->
+                 <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+                    <span class="svg-icon svg-icon-md">
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    </span>Filtro
+                </button>
+                <!--end::Button filter-->
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -98,56 +105,62 @@
             <!--begin: Search Form-->
             <!--begin::Search Form-->
             <div class="mb-7">
-                <form action="">
-                    <div class="row align-items-center">
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label>Numero de orden:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="3231123" name="number"
-                                value="{{ request()->number }}" />
-                            <span class="form-text text-muted">Filtro numero</span>
+                <div class="form-filter" style="display:none">
+                    <form action="">
+                        <div class="row align-items-center">
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Numero de orden:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="3231123" name="number"
+                                    value="{{ request()->number }}" />
+                                <span class="form-text text-muted">Filtro numero</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label for="exampleSelect1">Tipo de orden:</label>
+                                        <select class="form-control form-control-solid" name="service_type">
+                                            <option selected disabled> Seleccione </option>
+                                            <option value="1" {{ request()->service_type == 1 ? 'selected' : '' }}>Ondeman|</option>
+                                            <option value="2" {{ request()->service_type == 2 ? 'selected' : '' }}>Multiple</option>
+                                        </select>
+                                <span class="form-text text-muted">Filtro tipo de orden</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Nombre del cliente:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson" name="name"
+                                    value="{{ request()->name }}" />
+                                <span class="form-text text-muted">Filtro nombre</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Desde:</label>
+                                <input type="date" class="form-control form-control-solid" placeholder="" name="from"
+                                    value="{{ request()->from }}" />
+                                <span class="form-text text-muted">Filtro desde</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Hasta:</label>
+                                <input type="date" class="form-control form-control-solid" placeholder="" name="to"
+                                    value="{{ request()->to }}" />
+                                <span class="form-text text-muted">Filtro hasta</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label for="exampleSelect1">Estado: </label>
+                                        <select class="form-control form-control-solid" id="zone" name="state">
+                                            <option selected disabled> Seleccione </option>
+                                            <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
+                                            <option value="0" {{ (request()->state != '' && request()->state == 0) ? 'selected' : '' }}>Inactivo</option>
+                                        </select>
+                                <span class="form-text text-muted">Filtro estado</span>
+                            </div>
+                            <div class=" row form-group py-6 m-0 col-md-12">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{route('customers.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label for="exampleSelect1">Tipo de orden:</label>
-                                    <select class="form-control form-control-solid" name="service_type">
-                                        <option selected disabled> Seleccione </option>
-                                        <option value="1" {{ request()->service_type == 1 ? 'selected' : '' }}>Ondeman|</option>
-                                        <option value="2" {{ request()->service_type == 2 ? 'selected' : '' }}>Multiple</option>
-                                    </select>
-                            <span class="form-text text-muted">Filtro tipo de orden</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label>Nombre del cliente:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson" name="name"
-                                value="{{ request()->name }}" />
-                            <span class="form-text text-muted">Filtro nombre</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label>Desde:</label>
-                            <input type="date" class="form-control form-control-solid" placeholder="" name="from"
-                                value="{{ request()->from }}" />
-                            <span class="form-text text-muted">Filtro desde</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label>Hasta:</label>
-                            <input type="date" class="form-control form-control-solid" placeholder="" name="to"
-                                value="{{ request()->to }}" />
-                            <span class="form-text text-muted">Filtro hasta</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label for="exampleSelect1">Estado: </label>
-                                    <select class="form-control form-control-solid" id="zone" name="state">
-                                        <option selected disabled> Seleccione </option>
-                                        <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                        <option value="0" {{ (request()->state != '' && request()->state == 0) ? 'selected' : '' }}>Inactivo</option>
-                                    </select>
-                            <span class="form-text text-muted">Filtro estado</span>
-                        </div>
-                        <div class="form-group py-6 m-0 col-md-12">
-                            <button type="submit" class="btn btn-primary  btn-block"> Filtrar</button>
-                            <a href="{{route('customers.index')}}" class="btn btn-danger  btn-block">Limpiar</a>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             <!--end::Search Form-->
             <!--end: Search Form-->

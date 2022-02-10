@@ -7,11 +7,13 @@ import Messengers from './_messengers';
 import Addresses from './_addresses';
 import Customers from './_customers';
 import Orders from './_orders';
+import General from './_general';
 
 let messengers = new Messengers();
 let addresses = new Addresses();
 let customers = new Customers();
 let orders = new Orders();
+let general = new General();
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // bootstrapSelect.initialize();
@@ -19,4 +21,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
     messengers.initialize();
     addresses.initialize();
     customers.initialize();
+    general.initialize();
 });

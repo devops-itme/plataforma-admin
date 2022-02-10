@@ -41600,7 +41600,8 @@ var Addresses = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.autocompleteAddress();
-    }
+    } //AUTOCOMPLETE BRANCH OFFICES
+
   }, {
     key: "autocompleteAddress",
     value: function autocompleteAddress() {
@@ -41615,6 +41616,33 @@ var Addresses = /*#__PURE__*/function () {
           document.getElementById('branch_office_address').value = place.formatted_address;
           document.getElementById('branch_office_lat').value = place.geometry.location.lat();
           document.getElementById('branch_office_lng').value = place.geometry.location.lng();
+        });
+      }); //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
+
+      var directionCity2 = document.getElementById('user_address');
+      var directionCity2Edit = document.getElementById('user_address_edit');
+      google.maps.event.addDomListener(window, 'load', function () {
+        var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
+          types: ['geocode']
+        });
+        autocompleteCity2.addListener("place_changed", function () {
+          var place = autocompleteCity2.getPlace();
+          document.getElementById('user_address').value = place.formatted_address;
+          document.getElementById('user_address_lat').value = place.geometry.location.lat();
+          document.getElementById('user_address_lng').value = place.geometry.location.lng();
+        });
+      });
+      google.maps.event.addDomListener(window, 'load', function () {
+        var autocompleteCity2Edit = new google.maps.places.Autocomplete(directionCity2Edit, {
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
+          types: ['geocode']
+        });
+        autocompleteCity2Edit.addListener("place_changed", function () {
+          var place = autocompleteCity2Edit.getPlace();
+          document.getElementById('user_address_edit').value = place.formatted_address;
+          document.getElementById('user_address_lat_edit').value = place.geometry.location.lat();
+          document.getElementById('user_address_lng_edit').value = place.geometry.location.lng();
         });
       });
     }
@@ -41677,6 +41705,48 @@ var Customers = /*#__PURE__*/function () {
   }]);
 
   return Customers;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/_general.js":
+/*!**********************************!*\
+  !*** ./resources/js/_general.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return General; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var General = /*#__PURE__*/function () {
+  function General() {
+    _classCallCheck(this, General);
+  }
+
+  _createClass(General, [{
+    key: "initialize",
+    value: function initialize() {
+      this.general();
+    }
+  }, {
+    key: "general",
+    value: function general() {
+      $('.btn-filter').click(function () {
+        return $('.form-filter').toggle('slow');
+      });
+    }
+  }]);
+
+  return General;
 }();
 
 
@@ -42001,7 +42071,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _addresses__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_addresses */ "./resources/js/_addresses.js");
 /* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
 /* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
+/* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -42013,12 +42085,14 @@ var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var customers = new _customers__WEBPACK_IMPORTED_MODULE_4__["default"]();
 var orders = new _orders__WEBPACK_IMPORTED_MODULE_5__["default"]();
+var general = new _general__WEBPACK_IMPORTED_MODULE_6__["default"]();
 document.addEventListener("DOMContentLoaded", function (event) {
   // bootstrapSelect.initialize();
   orders.initialize();
   messengers.initialize();
   addresses.initialize();
   customers.initialize();
+  general.initialize();
 });
 
 /***/ }),

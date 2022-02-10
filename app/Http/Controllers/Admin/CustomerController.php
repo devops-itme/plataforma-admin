@@ -82,7 +82,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::with('getUser')->find($id);
         return view('customers.show', compact('customer'));
     }
 
