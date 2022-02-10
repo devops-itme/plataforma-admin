@@ -97,6 +97,19 @@ class CustomerController extends Controller
         return [$customer, $branchOffice, $department];
     }
 
+    public function search_customer(Request $request)
+    {
+        $data = [];
+        if(!is_null($request->value)){
+            if(is_numeric($request->value)){
+                $data = User::where('document_number', 'like', '%'.$request->value.'%')->with('getCustomer')->get();
+            } else {
+                $data = Customer::where('tradename', 'like', '%'.$request->value.'%')->with('getUser')->get();
+            }
+        }
+        return $data;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
