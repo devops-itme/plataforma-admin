@@ -19,7 +19,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::get();
+        $orders = Order::
+            number(request()->number)
+            ->service_type(request()->service_type)
+            ->customer(request()->customer)
+            ->date(request()->from, request()->to)
+            ->get();
         return view('orders.index', compact('orders'));
     }
 
