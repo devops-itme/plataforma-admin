@@ -41620,6 +41620,7 @@ var Addresses = /*#__PURE__*/function () {
       }); //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
 
       var directionCity2 = document.getElementById('user_address');
+      var directionCity2Edit = document.getElementById('user_address_edit');
       google.maps.event.addDomListener(window, 'load', function () {
         var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
           bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
@@ -41630,6 +41631,18 @@ var Addresses = /*#__PURE__*/function () {
           document.getElementById('user_address').value = place.formatted_address;
           document.getElementById('user_address_lat').value = place.geometry.location.lat();
           document.getElementById('user_address_lng').value = place.geometry.location.lng();
+        });
+      });
+      google.maps.event.addDomListener(window, 'load', function () {
+        var autocompleteCity2Edit = new google.maps.places.Autocomplete(directionCity2Edit, {
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
+          types: ['geocode']
+        });
+        autocompleteCity2Edit.addListener("place_changed", function () {
+          var place = autocompleteCity2Edit.getPlace();
+          document.getElementById('user_address_edit').value = place.formatted_address;
+          document.getElementById('user_address_lat_edit').value = place.geometry.location.lat();
+          document.getElementById('user_address_lng_edit').value = place.geometry.location.lng();
         });
       });
     }
