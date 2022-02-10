@@ -41585,64 +41585,155 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Addresses; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var Addresses = /*#__PURE__*/function () {
   function Addresses() {
     _classCallCheck(this, Addresses);
+
+    _defineProperty(this, "getAddresses", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _address$getElementBy;
+
+      var address, $table, $form, $template, $fragment, res, message;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              address = document, $table = address.querySelector(".address_table"), $form = address.querySelector(".address_form"), $template = (_address$getElementBy = address.getElementById("address-template")) === null || _address$getElementBy === void 0 ? void 0 : _address$getElementBy.content, $fragment = address.createDocumentFragment();
+              _context.prev = 1;
+              _context.next = 4;
+              return fetch("/direcciones").then(function (response) {
+                return response.json();
+              }).then(function (data) {
+                data.data.forEach(function (element) {
+                  $template.getElementById("description").textContent = element.description;
+                  $template.getElementById("name").textContent = element.name;
+                  $template.getElementById("state").textContent = element.state; // $template.querySelector(".edit").dataset.id = el.id;
+                  // $template.querySelector(".edit").dataset.name = el.nombre;
+                  // $template.querySelector(".edit").dataset.constellation = el.constelacion;
+                  // $template.querySelector(".delete").dataset.id = el.id;
+
+                  // $template.querySelector(".edit").dataset.id = el.id;
+                  // $template.querySelector(".edit").dataset.name = el.nombre;
+                  // $template.querySelector(".edit").dataset.constellation = el.constelacion;
+                  // $template.querySelector(".delete").dataset.id = el.id;
+                  var $clone = address.importNode($template, true);
+                  $fragment.appendChild($clone);
+                });
+              });
+
+            case 4:
+              res = _context.sent;
+              $table.querySelector("tbody").appendChild($fragment);
+              _context.next = 12;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](1);
+              message = _context.t0.statusText || "Ocurrió un error";
+              $table.insertAdjacentHTML("afterend", "<p><b>Error ".concat(_context.t0.status, ": ").concat(message, "</b></p>"));
+
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[1, 8]]);
+    })));
   }
 
   _createClass(Addresses, [{
     key: "initialize",
     value: function initialize() {
       this.autocompleteAddress();
+      this.createAddress();
+      this.getAddresses();
     } //AUTOCOMPLETE BRANCH OFFICES
 
   }, {
     key: "autocompleteAddress",
     value: function autocompleteAddress() {
-      var directionCity = document.getElementById('branch_office_address');
-      google.maps.event.addDomListener(window, 'load', function () {
+      var directionCity = document.getElementById("branch_office_address");
+      google.maps.event.addDomListener(window, "load", function () {
         var autocompleteCity = new google.maps.places.Autocomplete(directionCity, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
-          types: ['geocode']
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
+          types: ["geocode"]
         });
         autocompleteCity.addListener("place_changed", function () {
           var place = autocompleteCity.getPlace();
-          document.getElementById('branch_office_address').value = place.formatted_address;
-          document.getElementById('branch_office_lat').value = place.geometry.location.lat();
-          document.getElementById('branch_office_lng').value = place.geometry.location.lng();
+          document.getElementById("branch_office_address").value = place.formatted_address;
+          document.getElementById("branch_office_lat").value = place.geometry.location.lat();
+          document.getElementById("branch_office_lng").value = place.geometry.location.lng();
         });
       }); //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
 
-      var directionCity2 = document.getElementById('user_address');
-      var directionCity2Edit = document.getElementById('user_address_edit');
-      google.maps.event.addDomListener(window, 'load', function () {
+      var directionCity2 = document.getElementById("user_address");
+      google.maps.event.addDomListener(window, "load", function () {
         var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
-          types: ['geocode']
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
+          types: ["geocode"]
         });
         autocompleteCity2.addListener("place_changed", function () {
           var place = autocompleteCity2.getPlace();
-          document.getElementById('user_address').value = place.formatted_address;
-          document.getElementById('user_address_lat').value = place.geometry.location.lat();
-          document.getElementById('user_address_lng').value = place.geometry.location.lng();
+          document.getElementById("user_address").value = place.formatted_address;
+          document.getElementById("user_address_lat").value = place.geometry.location.lat();
+          document.getElementById("user_address_lng").value = place.geometry.location.lng();
         });
       });
-      google.maps.event.addDomListener(window, 'load', function () {
-        var autocompleteCity2Edit = new google.maps.places.Autocomplete(directionCity2Edit, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
-          types: ['geocode']
-        });
-        autocompleteCity2Edit.addListener("place_changed", function () {
-          var place = autocompleteCity2Edit.getPlace();
-          document.getElementById('user_address_edit').value = place.formatted_address;
-          document.getElementById('user_address_lat_edit').value = place.geometry.location.lat();
-          document.getElementById('user_address_lng_edit').value = place.geometry.location.lng();
+    }
+  }, {
+    key: "createAddress",
+    value: //CREATE ADDRESS
+    function createAddress() {
+      var formCreateAddress = document.getElementById("formCreateAddress");
+
+      if (formCreateAddress == null) {
+        return;
+      }
+
+      formCreateAddress.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+        var myHeaders = new Headers();
+        myHeaders.append("accept", "application/json");
+        myHeaders.append("Access-Control-Allow-Origin", "*");
+        myHeaders.append("X-CSRF-TOKEN", token);
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: new FormData(formCreateAddress[0])
+        };
+        fetch("/direcciones", requestOptions).then(function (response) {
+          return response.json();
+        }).then(function (data) {
+          if (data.state == 500) {
+            alert(data.message);
+          }
+
+          if (data.state == 200) {
+            alert(data.message);
+          }
+
+          if (data.errors) {
+            alert(data.errors);
+          }
+        })["catch"](function (err) {
+          return console.warn(err);
         });
       });
     }
