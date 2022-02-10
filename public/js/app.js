@@ -41874,6 +41874,11 @@ var Orders = /*#__PURE__*/function () {
       // $('slc-Customers').selectpicker();
       var slcCustomer = document.getElementById("slc-Customers");
       var btnCustomerData = document.getElementById("btn-customerData");
+
+      if (btnCustomerData == null) {
+        return;
+      }
+
       btnCustomerData.addEventListener("click", /*#__PURE__*/function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
           var actualLocation;

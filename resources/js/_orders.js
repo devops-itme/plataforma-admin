@@ -61,7 +61,9 @@ export default class Orders {
         // $('slc-Customers').selectpicker();
         let slcCustomer = document.getElementById("slc-Customers");
         let btnCustomerData = document.getElementById("btn-customerData");
-
+        if (btnCustomerData == null) {
+            return;
+        }
         btnCustomerData.addEventListener("click", async function (e) {
             let actualLocation = window.location['origin'];
 

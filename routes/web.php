@@ -80,6 +80,9 @@ Route::group(['middleware' => 'auth'], function () {
         //RUTAS
         Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
     });
+    Route::get('permisos', function () {
+        return view('auth.permits');
+    })->name('permits.index');
 });
 
 //ADDRESSES
