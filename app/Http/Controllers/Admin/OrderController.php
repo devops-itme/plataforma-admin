@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order;
@@ -18,8 +19,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::get();
-        return view('orders.index');
+        $orders = Order::
+            number(request()->number)
+            ->service_type(request()->service_type)
+            ->customer(request()->customer)
+            ->date(request()->from, request()->to)
+            ->get();
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -29,7 +35,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        $customers = Customer::with('getUser')->get();
+        return view('orders.create', compact('customers'));
     }
 
     /**
@@ -43,14 +50,16 @@ class OrderController extends Controller
         if(Auth()->user()->role != 1){
             $request->merge(['user_id' => Auth()->user()->id]);
         };
+        if($request->express_delivery == 'on'){$request->merge(['express_delivery' => 1]);}
+        else{$request->merge(['express_delivery' => 0]);}
+        if($request->last_destination_return == 'on'){$request->merge(['last_destination_return' => 1]);}
+        else{$request->merge(['last_destination_return' => 0]);}
+        $request->merge(['state' => 1]);
         $response = $this->storeOrder($request);
         if($response['state'] == 200){
-            return json_encode([
-                'state' => $response['state'],
-                'data' =>$response['data']
-            ]);
+            return redirect()->route('orders.index')->with('success', 'Orden creada exitosamente.');
         } else {
-            return json_encode([$response]);
+            return redirect()->back()->with('danger', $response['error']);
         }
     }
 
@@ -63,10 +72,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('getUser')->find($id);
-        // return json_encode([
-        //     'order_data' => $order,
-        //     'user_data' => $order['get_user']
-        // ]);
+        return view('orders.showFold.show', compact('order'));
     }
 
     /**
@@ -78,7 +84,8 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::find($id);
-        return view('orders.editFold.edit');
+        $customers = Customer::with('getUser')->get();
+        return view('orders.editFold.edit', compact('order', 'customers'));
     }
 
     /**
@@ -93,14 +100,17 @@ class OrderController extends Controller
         if(Auth()->user()->role != 1){
             $request->merge(['user_id' => Auth()->user()->id]);
         };
+        if($request->express_delivery == 'on'){$request->merge(['express_delivery' => 1]);}
+        else{$request->merge(['express_delivery' => 0]);}
+        if($request->last_destination_return == 'on'){$request->merge(['last_destination_return' => 1]);}
+        else{$request->merge(['last_destination_return' => 0]);}
+        $request->merge(['state' => 1]);
+
         $response = $this->updateOrder($request->merge(['order_id' => $id]));
         if($response['state'] == 200){
-            return json_encode([
-                'state' => $response['state'],
-                'data' =>$response['data']
-            ]);
+            return redirect()->route('orders.index')->with('success', 'Orden creada exitosamente.');
         } else {
-            return json_encode($response['message']);
+            return redirect()->back()->with('danger', $response['message']);
         }
     }
 

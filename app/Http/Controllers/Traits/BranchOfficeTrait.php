@@ -8,7 +8,7 @@ use App\BranchOffice;
 
 trait BranchOfficeTrait
 {
-    use RestActions;
+    use UserTrait;
 
     public function branchOfficeValidate($request)
     {

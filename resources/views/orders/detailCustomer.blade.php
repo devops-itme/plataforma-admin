@@ -15,7 +15,7 @@
                         <div class="col-md-4 mb-2">
                             {{-- Cambiar a nombre de empresa si lo es --}}
                             <div class="font-weight-bold mb-3">Nombres:</div>
-                            <div class="line-height-xl">---</div>
+                            <div class="line-height-xl" id="customer_modal_name">---</div>
                         </div>
                         {{-- <div class="col-md-4 mb-2">
                             <div class="font-weight-bold mb-3">Nombre de empresa:</div>
@@ -24,7 +24,7 @@
                         <div class="col-md-4 mb-2">
                             {{-- Cambiar a nombre comercial si lo es --}}
                             <div class="font-weight-bold mb-3">Apellidos:</div>
-                            <div class="line-height-xl">---</div>
+                            <div class="line-height-xl" id="customer_modal_last_name">---</div>
                         </div>
                         {{-- <div class="col-md-4 mb-2">
                             <div class="font-weight-bold mb-3">Nombre de comercial:</div>
@@ -32,15 +32,15 @@
                         </div> --}}
                         <div class="col-md-4 mb-2">
                             <div class="font-weight-bold mb-3">Contacto:</div>
-                            <div class="line-height-xl">---</div>
+                            <div class="line-height-xl" id="customer_modal_contact">---</div>
                         </div>
                         <div class="col-md-4 mb-2">
                             <div class="font-weight-bold mb-3">Sucursal:</div>
-                            <div class="line-height-xl"><b>---</div>
+                            <div class="line-height-xl"><b id="customer_modal_branch_office">---</div>
                         </div>
                         <div class="col-md-4 mb-2">
                             <div class="font-weight-bold mb-3">Departamento:</div>
-                            <div class="line-height-xl"><b>---</div>
+                            <div class="line-height-xl"><b id="customer_modal_deparment">---</div>
                         </div>
 
                     </div>

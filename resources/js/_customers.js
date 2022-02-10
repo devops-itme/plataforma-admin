@@ -4,6 +4,7 @@ export default class Customers {
     }
 
     customerFeatures() {
+
         let option = document.getElementById("slc_type");
         let naturalCustomer = document.getElementById("naturalCustomer");
         let legalCustomer = document.getElementById("legalCustomer");

@@ -47,6 +47,10 @@ class User extends Model implements AuthenticatableContract
     {
         return $this->belongsTo(User::class, 'parent_id');
     }
+    public function getAddresses()
+    {
+        return $this->hasMany(Address::class, 'user_id');
+    }
 
     //BRANCH OFFICE
     public function getBranchOffice()
@@ -59,6 +63,11 @@ class User extends Model implements AuthenticatableContract
     {
         if (!is_null($value))
             $query->where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$value.'%');
+    }
+    public function scopeDocument($query, $value)
+    {
+        if (!is_null($value))
+        $query->where('document_number', 'like', '%'.$value.'%');
     }
     public function scopeEmail($query, $value)
     {

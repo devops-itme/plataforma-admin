@@ -20,7 +20,6 @@ class UserController extends Controller
     {
         $users = $this->getUser();
         $users = $users['data']->whereIn('role',[1,2]);
-
         return view('users.index', compact('users'));
     }
 

@@ -60,17 +60,17 @@
                     type="password" name="password_confirmation"/>
             </div>
             <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de mensajero</h5>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3">
                 <label>Placa de vehiculo: <span class="text-danger">*</span></label>
                 <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder="" value="{{old('vehicle_plate')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3">
                 <label>Fecha de ingreso: <span class="text-danger">*</span></label>
                 <input name="admission_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('admission_date')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3">
                 <label>Fecha de nacimiento: <span class="text-danger">*</span></label>
                 <input name="birth_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('birth_date')}}"/>
                 <span class="form-text text-muted"></span>
@@ -79,6 +79,15 @@
                 <label>Porcentaje de producción: <span class="text-danger">*</span></label>
                 <input name="production_percentage" type="number" class="form-control form-control-solid" placeholder="" value="{{old('production_percentage')}}"/>
                 <span class="form-text text-muted"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="type_doc">Tipo de contrato <span class="text-danger">*</span></label>
+                <select name="contract_type_id" class="form-control form-control-solid" id="type_contract">
+                    <option selected disabled>Seleccione tipo de contrato</option>
+                    @foreach($contract_type as $contract)
+                        <option {{old('contract_type_id')==$contract->id?'selected ':''}}  value="{{$contract->id}}">{{$contract->name}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group col-md-3">
                 <label>Contrato <span class="text-danger">*</span></label>

@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-
+@include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
@@ -13,6 +13,13 @@
             </div>
             @include('layouts.alerts')
             <div class="card-toolbar">
+                 <!--begin::Button filter-->
+                 <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+                    <span class="svg-icon svg-icon-md">
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    </span>Filtro
+                </button>
+                <!--end::Button filter-->
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -98,48 +105,61 @@
             <!--begin: Search Form-->
             <!--begin::Search Form-->
             <div class="mb-7">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
+                <div class="form-filter" style="display:none">
+                    <form action="">
                         <div class="row align-items-center">
-                            <div class="col-md-6 my-2 my-md-0">
-                                <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Buscar..."
-                                        id="kt_datatable_search_query" />
-                                    <span>
-                                        <i class="flaticon2-search-1 text-muted"></i>
-                                    </span>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Numero de orden:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="3231123" name="number"
+                                    value="{{ request()->number }}" />
+                                <span class="form-text text-muted">Filtro numero</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label for="exampleSelect1">Tipo de orden:</label>
+                                        <select class="form-control form-control-solid" name="service_type">
+                                            <option selected disabled> Seleccione </option>
+                                            <option value="1" {{ request()->service_type == 1 ? 'selected' : '' }}>Ondeman|</option>
+                                            <option value="2" {{ request()->service_type == 2 ? 'selected' : '' }}>Multiple</option>
+                                        </select>
+                                <span class="form-text text-muted">Filtro tipo de orden</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Nombre del cliente:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson" name="name"
+                                    value="{{ request()->name }}" />
+                                <span class="form-text text-muted">Filtro nombre</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Desde:</label>
+                                <input type="date" class="form-control form-control-solid" placeholder="" name="from"
+                                    value="{{ request()->from }}" />
+                                <span class="form-text text-muted">Filtro desde</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Hasta:</label>
+                                <input type="date" class="form-control form-control-solid" placeholder="" name="to"
+                                    value="{{ request()->to }}" />
+                                <span class="form-text text-muted">Filtro hasta</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label for="exampleSelect1">Estado: </label>
+                                        <select class="form-control form-control-solid" id="zone" name="state">
+                                            <option selected disabled> Seleccione </option>
+                                            <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
+                                            <option value="0" {{ (request()->state != '' && request()->state == 0) ? 'selected' : '' }}>Inactivo</option>
+                                        </select>
+                                <span class="form-text text-muted">Filtro estado</span>
+                            </div>
+                            <div class=" row form-group py-6 m-0 col-md-12">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{route('customers.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
-                            <div class="col-md-6 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-3 mb-0 d-none d-md-block">Estado:</label>
-                                    <select class="form-control" id="kt_datatable_search_status">
-                                        <option value="">All</option>
-                                        <option value="1">Pending</option>
-                                        <option value="2">Delivered</option>
-                                        <option value="3">Canceled</option>
-                                        <option value="4">Success</option>
-                                        <option value="5">Info</option>
-                                        <option value="6">Danger</option>
-                                    </select>
-                                </div>
-                            </div>
-                            {{-- <div class="col-md-4 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-3 mb-0 d-none d-md-block">Type:</label>
-                                    <select class="form-control" id="kt_datatable_search_type">
-                                        <option value="">All</option>
-                                        <option value="1">Online</option>
-                                        <option value="2">Retail</option>
-                                        <option value="3">Direct</option>
-                                    </select>
-                                </div>
-                            </div> --}}
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
-                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold">Buscar</a>
-                    </div>
+                    </form>
                 </div>
             </div>
             <!--end::Search Form-->
@@ -159,35 +179,48 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($orders as $order)
                         <tr>
-                            <th scope="row">---</th>
-                            <td>---</td>
-                            <td>---</td>
-                            <td>---</td>
+                            <th scope="row">{{$order->number}}</th>
                             <td>
-                                {{-- @if ($item->user->state == 1) --}}
+                                @if ($order->service_type_id == 1)
+                                    <span class="label label-inline label-light-warning font-weight-blog">
+                                        Ondeman
+                                    </span>
+                                @else
+                                    <span class="label label-inline label-light-success font-weight-blog">
+                                        Multiple
+                                    </span>
+                                @endif
+                            </td>
+                            <td>{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}</td>
+                            <td>{{format_date(date('Y-n-d', strtotime($order->created_at)))}}</td>
+                            <td>
+                                @if ($order->state == 1)
                                     <span class="label label-inline label-light-success font-weight-bold">
                                         Activo
                                     </span>
-                                    {{-- <span class="label label-inline label-light-danger font-weight-bold">
+                                @else
+                                    <span class="label label-inline label-light-danger font-weight-bold">
                                         Inactivo
-                                    </span> --}}
-                                {{-- @endif --}}
+                                    </span>
+                                @endif
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                    <a href="{{route('orders.show',$order->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                                         <i class="fad fa-folder-open"></i>
                                     </a>
-                                    <a href="{{route('orders.edit',1)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                    <a href="{{route('orders.edit', $order->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fad fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                    <button type="button" onclick="confirmDelete('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                         <i class="fad fa-trash-alt"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
+                    @endforeach
                 </tbody>
             </table>
             <!--end: Datatable-->

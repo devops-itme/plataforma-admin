@@ -26,6 +26,10 @@
             <a href="{{route('orders.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Ordenes" data-placement="bottom">
                 <i class="fas fa-file-edit text-muted"></i>
             </a>
+
+            <a href="{{route('permits.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="permisos" data-placement="bottom">
+                <i class="fas fa-shield"></i>
+            </a>
         </div>
     </div>
 </div>

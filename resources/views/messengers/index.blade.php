@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-@include('layouts.breadCrumbs')
+    @include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
@@ -13,6 +13,13 @@
             </div>
             @include('layouts.alerts')
             <div class="card-toolbar">
+                <!--begin::Button filter-->
+                <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+                    <span class="svg-icon svg-icon-md">
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    </span>Filtro
+                </button>
+                <!--end::Button filter-->
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -98,48 +105,60 @@
             <!--begin: Search Form-->
             <!--begin::Search Form-->
             <div class="mb-7">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
+                <div class="form-filter" style="display:none">
+                    <form action="{{ route('messengers.index') }}">
                         <div class="row align-items-center">
-                            <div class="col-md-6 my-2 my-md-0">
-                                <div class="input-icon">
-                                    <input type="text" class="form-control" placeholder="Buscar..."
-                                        id="kt_datatable_search_query" />
-                                    <span>
-                                        <i class="flaticon2-search-1 text-muted"></i>
-                                    </span>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Nombre:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
+                                    value="{{ request()->name }}" />
+                                <span class="form-text text-muted">Filtro nombre</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Numero de documento:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Numero de documento"
+                                    name="document" value="{{ request()->document }}" />
+                                <span class="form-text text-muted">Filtro documento</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Correo:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="email@example.com"
+                                    name="email" value="{{ request()->email }}" />
+                                <span class="form-text text-muted">Filtro correo</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Telefono :</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576"
+                                    name="phone" value="{{ request()->phone }}" />
+                                <span class="form-text text-muted">Filtro telefono</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Place:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Placa de vehiculo"
+                                    name="vehicle_plate" value="{{ request()->vehicle_plate }}" />
+                                <span class="form-text text-muted">Filtro placa</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label for="exampleSelect1">Estado: </label>
+                                <select class="form-control form-control-solid" id="zone" name="state">
+                                    <option selected disabled> Seleccione </option>
+                                    <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
+                                    <option value="0" {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>
+                                        Inactivo
+                                    </option>
+                                </select>
+                                <span class="form-text text-muted">Filtro estado</span>
+                            </div>
+                            <div class=" row form-group py-6 m-0 col-md-6">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('messengers.index') }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
-                            <div class="col-md-6 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-3 mb-0 d-none d-md-block">Estado:</label>
-                                    <select class="form-control" id="kt_datatable_search_status">
-                                        <option value="">All</option>
-                                        <option value="1">Pending</option>
-                                        <option value="2">Delivered</option>
-                                        <option value="3">Canceled</option>
-                                        <option value="4">Success</option>
-                                        <option value="5">Info</option>
-                                        <option value="6">Danger</option>
-                                    </select>
-                                </div>
-                            </div>
-                            {{-- <div class="col-md-4 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-3 mb-0 d-none d-md-block">Type:</label>
-                                    <select class="form-control" id="kt_datatable_search_type">
-                                        <option value="">All</option>
-                                        <option value="1">Online</option>
-                                        <option value="2">Retail</option>
-                                        <option value="3">Direct</option>
-                                    </select>
-                                </div>
-                            </div> --}}
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
-                        <a href="#" class="btn btn-light-primary px-6 font-weight-bold">Buscar</a>
-                    </div>
+                    </form>
                 </div>
             </div>
             <!--end::Search Form-->
@@ -181,26 +200,30 @@
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                     <div class="dropdown dropdown-inline">
-                                        <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button type="button" class="btn btn-light-primary btn-icon btn-sm"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fad fa-ellipsis-v-alt"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a href="{{route('messengers.show',$item->id)}}" class="dropdown-item align-items-center">
+                                            <a href="{{ route('messengers.show', $item->id) }}"
+                                                class="dropdown-item align-items-center">
                                                 <div class="btn btn-icon btn-light-primary btn-sm mr-2">
                                                     <i class="fad fa-folder-open"></i>
                                                 </div> Detalle
                                             </a>
-                                            <a href="{{route('messengers.edit',$item->id)}}" class="dropdown-item align-items-center">
+                                            <a href="{{ route('messengers.edit', $item->id) }}"
+                                                class="dropdown-item align-items-center">
                                                 <div class="btn btn-icon btn-light-success btn-sm mr-2">
                                                     <i class="fad fa-edit"></i>
                                                 </div> Editar
                                             </a>
-                                            <a type="button" onclick="confirmDelete('/mensajeros/'+{{$item->id}})" role="button"  id="deleteMessenger" class="dropdown-item align-items-center">
+                                            <a type="button" onclick="confirmDelete('/mensajeros/'+{{ $item->id }})"
+                                                role="button" id="deleteMessenger" class="dropdown-item align-items-center">
                                                 {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
                                                     @csrf @method('DELETE') --}}
-                                                    <div class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                        <i class="fad fa-trash-alt"></i>
-                                                    </div> Eliminar
+                                                <div class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                                    <i class="fad fa-trash-alt"></i>
+                                                </div> Eliminar
                                                 {{-- </form> --}}
                                             </a>
                                         </div>
