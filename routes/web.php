@@ -79,6 +79,9 @@ Route::group(['middleware' => 'auth'], function () {
         //RUTAS
         Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
     });
+        Route::get('despachos', function () {
+            return view('deliveries.index');
+        })->name('delivery.index');
 });
 
 //ADDRESSES
