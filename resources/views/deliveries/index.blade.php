@@ -32,7 +32,7 @@
                         @include('deliveries.byShipment.shipmentIndex')
                     </div>
                     <div class="tab-pane fade" id="despachados" role="tabpanel" aria-labelledby="kt_tab_pane_2">
-                        2
+
                     </div>
                     <div class="tab-pane fade" id="completados" role="tabpanel" aria-labelledby="kt_tab_pane_3">
                         3
@@ -40,7 +40,10 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h5>asdasd</h5>
+                <div class="d-flex flex-row flex-wrap">
+                    <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de orden</h5>
+
+                </div>
             </div>
         </div>
     </div>

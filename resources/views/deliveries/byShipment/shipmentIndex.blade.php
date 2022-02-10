@@ -1,7 +1,7 @@
 <table class="table table-sm table-hover">
     <thead class="thead-light">
         <tr class="text-center">
-            <th scope="col">Ordem</th>
+            <th scope="col">Orden</th>
             <th scope="col">Cliente</th>
             <th scope="col">Fecha</th>
             <th scope="col">Valor</th>
@@ -62,7 +62,7 @@
                     <span class="font-weight-bolder mb-3">Valor: </span>
                     <span class="line-height-xl">$120.00</span>
                 </p>
-                <div class="d-flex flex-row flex-wrap align-items-center">
+                <div class="d-flex flex-row flex-wrap align-items-center justify-content-between">
                     <div class="form-group col-md-8 mb-0 py-0">
                         <label>Pago por:</label>
                         <div class="radio-inline">
