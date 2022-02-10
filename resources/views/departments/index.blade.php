@@ -13,6 +13,13 @@
             </div>
             @include('layouts.alerts')
             <div class="card-toolbar">
+                 <!--begin::Button filter-->
+                 <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+                    <span class="svg-icon svg-icon-md">
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    </span>Filtro
+                </button>
+                <!--end::Button filter-->
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -98,45 +105,51 @@
             <!--begin: Search Form-->
             <!--begin::Search Form-->
             <div class="mb-7">
-                <form action="{{ route('departments.index') }}">
-                    <div class="row align-items-center">
-                        <input type="hidden" name="user_id" value="{{Request()->user_id}}">
-                        <input type="hidden" name="branch_office_id" value="{{Request()->branch_office_id}}">
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label>Nombre:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
-                                value="{{ request()->name }}" />
-                            <span class="form-text text-muted">Filtro nombre</span>
+                <div class="form-filter" style="display:none">
+                    <form action="{{ route('departments.index') }}">
+                        <div class="row align-items-center">
+                            <input type="hidden" name="user_id" value="{{Request()->user_id}}">
+                            <input type="hidden" name="branch_office_id" value="{{Request()->branch_office_id}}">
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Nombre:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
+                                    value="{{ request()->name }}" />
+                                <span class="form-text text-muted">Filtro nombre</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Descripción:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Descripción"
+                                    name="description" value="{{ request()->document }}" />
+                                <span class="form-text text-muted">Filtro de descripción</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Sucursal:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Sucursal" name="branch_office_name"
+                                    value="{{ request()->branch_office_name }}" />
+                                <span class="form-text text-muted">Filtro sucursal</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label for="exampleSelect1">Estado: </label>
+                                <select class="form-control form-control-solid" id="zone" name="state">
+                                    <option selected disabled> Seleccione </option>
+                                    <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
+                                    <option value="0"
+                                        {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
+                                    </option>
+                                </select>
+                                <span class="form-text text-muted">Filtro estado</span>
+                            </div>
+                            <div class=" row form-group py-6 m-0 col-md-8">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('departments.index', ['user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label>Descripción:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="Descripción"
-                                name="description" value="{{ request()->document }}" />
-                            <span class="form-text text-muted">Filtro de descripción</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label>Sucursal:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="Sucursal" name="branch_office_name"
-                                value="{{ request()->branch_office_name }}" />
-                            <span class="form-text text-muted">Filtro sucursal</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-4">
-                            <label for="exampleSelect1">Estado: </label>
-                            <select class="form-control form-control-solid" id="zone" name="state">
-                                <option selected disabled> Seleccione </option>
-                                <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                <option value="0"
-                                    {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
-                                </option>
-                            </select>
-                            <span class="form-text text-muted">Filtro estado</span>
-                        </div>
-                        <div class="form-group py-6 m-0 col-md-4">
-                            <button type="submit" class="btn btn-primary  btn-block"> Filtrar</button>
-                            <a href="{{ route('departments.index', ['user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}" class="btn btn-danger  btn-block">Limpiar</a>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             <!--end::Search Form-->
             <!--end: Search Form-->

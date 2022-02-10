@@ -156,16 +156,14 @@
                 <form action="#">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label> Nombre </label>
-                            <input type="text" name="addresName" class="form-control" placeholder="Nombre">
+                            <label> Descripción </label>
+                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Nombre">
                         </div>
                         <div class="col-md-6">
                             <label> Dirección *</label>
-                            <input type="text" name="address" class="form-control" placeholder="Introduce una ubicación">
-                        </div>
-                        <div class="col-md-6 mt-2">
-                            <label> Referencia </label>
-                            <input type="text" name="description" class="form-control" placeholder="Referencia">
+                            <input type="text" name="user_address" class="form-control" value="{{old('user_address')}}" id="user_address" placeholder="Introduce una ubicación">
+                            <input type="hidden" name="user_address_lat" id="branch_office_lat" value="{{old('user_address_lat')}}">
+                            <input type="hidden" name="user_address_lng" id="branch_office_lng" value="{{old('user_address_lng')}}">
                         </div>
                     </div>
                 </form>
@@ -192,16 +190,14 @@
                 <form action="#">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label> Nombre </label>
-                            <input type="text" name="addresName" class="form-control" placeholder="Nombre">
+                            <label> Descripción </label>
+                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Nombre">
                         </div>
                         <div class="col-md-6">
                             <label> Dirección *</label>
-                            <input type="text" name="address" class="form-control" placeholder="Introduce una ubicación">
-                        </div>
-                        <div class="col-md-6 mt-2">
-                            <label> Referencia </label>
-                            <input type="text" name="description" class="form-control" placeholder="Referencia">
+                            <input type="text" name="user_address" class="form-control" value="{{old('user_address')}}" id="user_address" placeholder="Introduce una ubicación">
+                            <input type="hidden" name="user_address_lat" id="branch_office_lat" value="{{old('user_address_lat')}}">
+                            <input type="hidden" name="user_address_lng" id="branch_office_lng" value="{{old('user_address_lng')}}">
                         </div>
                     </div>
                 </form>
