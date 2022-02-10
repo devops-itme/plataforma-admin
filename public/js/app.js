@@ -41742,6 +41742,15 @@ var General = /*#__PURE__*/function () {
     value: function general() {
       $('.btn-filter').click(function () {
         return $('.form-filter').toggle('slow');
+      }); // document.getElementById('alerta').onclick = function() {
+      //     alert("button was clicked");
+      //  };
+
+      $(function () {
+        $('[data-toggle="popover"]').popover();
+      });
+      $('.popover-dismiss').popover({
+        trigger: 'focus'
       });
     }
   }]);
