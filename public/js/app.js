@@ -41698,6 +41698,48 @@ var Customers = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/_general.js":
+/*!**********************************!*\
+  !*** ./resources/js/_general.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return General; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var General = /*#__PURE__*/function () {
+  function General() {
+    _classCallCheck(this, General);
+  }
+
+  _createClass(General, [{
+    key: "initialize",
+    value: function initialize() {
+      this.general();
+    }
+  }, {
+    key: "general",
+    value: function general() {
+      $('.btn-filter').click(function () {
+        return $('.form-filter').toggle('slow');
+      });
+    }
+  }]);
+
+  return General;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/_messengers.js":
 /*!*************************************!*\
   !*** ./resources/js/_messengers.js ***!
@@ -41953,7 +41995,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _addresses__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_addresses */ "./resources/js/_addresses.js");
 /* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
 /* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
+/* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -41965,12 +42009,14 @@ var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var customers = new _customers__WEBPACK_IMPORTED_MODULE_4__["default"]();
 var orders = new _orders__WEBPACK_IMPORTED_MODULE_5__["default"]();
+var general = new _general__WEBPACK_IMPORTED_MODULE_6__["default"]();
 document.addEventListener("DOMContentLoaded", function (event) {
   // bootstrapSelect.initialize();
   orders.initialize();
   messengers.initialize();
   addresses.initialize();
   customers.initialize();
+  general.initialize();
 });
 
 /***/ }),
