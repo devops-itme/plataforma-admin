@@ -42125,10 +42125,85 @@ var Orders = /*#__PURE__*/function () {
       })));
     }
   }, {
+    key: "requestSelectedCustomerData",
+    value: function () {
+      var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(query) {
+        var actualLocation, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                actualLocation = window.location['origin'];
+                response = {
+                  'state': 500
+                };
+                _context3.next = 4;
+                return fetch(actualLocation + "/customer_data/" + query).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 4:
+                return _context3.abrupt("return", response);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function requestSelectedCustomerData(_x2) {
+        return _requestSelectedCustomerData.apply(this, arguments);
+      }
+
+      return requestSelectedCustomerData;
+    }()
+  }, {
     key: "selectCustomer",
     value: function selectCustomer() {
-      // $('slc-Customers').selectpicker();
-      console.log('hellooooooooo');
+      var _this3 = this;
+
+      var allCustomerChecks = document.getElementsByClassName("customerCheck");
+
+      var _loop = function _loop(i) {
+        allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var response, data, modal;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.next = 2;
+                  return _this3.requestSelectedCustomerData(allCustomerChecks[i].value);
+
+                case 2:
+                  response = _context4.sent;
+                  data = response.data;
+                  document.getElementById("user_code").value = data[0]['id'];
+                  document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
+                  document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
+                  document.getElementById("user_department").value = data[2] != null ? data[2]['name'] : '';
+                  document.getElementById("user_branch_office").value = data[1] != null ? data[1]['name'] : '';
+                  document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
+                  modal = document.getElementById("detailCustomer");
+                  modal.click();
+
+                case 12:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        })));
+      };
+
+      for (var i = 0; i < allCustomerChecks.length; i++) {
+        _loop(i);
+      }
     }
   }]);
 
