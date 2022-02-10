@@ -41923,6 +41923,7 @@ var Orders = /*#__PURE__*/function () {
       this.addbox();
       this.removeBox();
       this.searchCustomerData();
+      this.requestSearchCustomer();
     }
   }, {
     key: "instantiateBoxes",
@@ -42017,59 +42018,29 @@ var Orders = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "searchCustomerData",
-    value: function searchCustomerData() {
-      var actualLocation = window.location['origin'];
-      var btnSearch = document.getElementById("btnSearch");
-
-      if (btnSearch == null) {
-        return;
-      }
-
-      btnSearch.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var tbody, inputValue;
+    key: "requestSearchCustomer",
+    value: function () {
+      var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(query) {
+        var actualLocation, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                tbody = document.querySelector("#table_customers tbody");
-                tbody.innerHTML = '';
-                inputValue = document.getElementById("search_customer").value;
-                _context.next = 5;
-                return fetch(actualLocation + "/search_customers?value=" + inputValue).then(function (response) {
+                actualLocation = window.location['origin'];
+                response = {
+                  'state': 500
+                };
+                _context.next = 4;
+                return fetch(actualLocation + "/search_customers?value=" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  tbody.innerHTML = '';
-
-                  if (data.length > 0) {
-                    for (var i = 0; i < data.length; i++) {
-                      var row = tbody.insertRow(i);
-                      var idCell = row.insertCell(0);
-                      idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
-                      var phoneCell = row.insertCell(1);
-                      phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
-                      var tradenameCell = row.insertCell(2);
-                      tradenameCell.innerHTML = data[i]['name'] ? data[i]['name'] + " " + data[i]['last_name'] : data[i]['tradename'];
-                      var selectCell = row.insertCell(3);
-                      var userCheck = document.createElement("input");
-                      userCheck.setAttribute('class', 'btn btn-success customerCheck');
-                      userCheck.setAttribute('type', 'radio');
-                      userCheck.setAttribute('name', 'customerCheck');
-                      userCheck.setAttribute('id', 'customerCheck');
-                      userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
-                      selectCell.appendChild(userCheck);
-                      tbody.appendChild(row);
-                    }
-                  } else {
-                    var _row = tbody.insertRow(0);
-
-                    var cell = _row.insertCell(0);
-
-                    cell.innerHTML = "No se encontraron registros";
-                    cell.colSpan = 3;
-                    cell.setAttribute('class', 'text-center font-weight-bold');
-                  }
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
                 });
+
+              case 4:
+                return _context.abrupt("return", response);
 
               case 5:
               case "end":
@@ -42077,51 +42048,87 @@ var Orders = /*#__PURE__*/function () {
             }
           }
         }, _callee);
+      }));
+
+      function requestSearchCustomer(_x) {
+        return _requestSearchCustomer.apply(this, arguments);
+      }
+
+      return requestSearchCustomer;
+    }()
+  }, {
+    key: "searchCustomerData",
+    value: function searchCustomerData() {
+      var _this2 = this;
+
+      var btnSearch = document.getElementById("btnSearch");
+
+      if (btnSearch == null) {
+        return;
+      }
+
+      btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var tbody, inputValue, response, data, row, cell, i, _row, idCell, phoneCell, tradenameCell, selectCell, userCheck;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                tbody = document.querySelector("#table_customers tbody");
+                tbody.innerHTML = '';
+                inputValue = document.getElementById("search_customer").value;
+                tbody.innerHTML = '';
+                _context2.next = 6;
+                return _this2.requestSearchCustomer(inputValue);
+
+              case 6:
+                response = _context2.sent;
+                data = response.data;
+
+                if (response.state != 200 || data.length == 0) {
+                  row = tbody.insertRow(0);
+                  cell = row.insertCell(0);
+                  cell.innerHTML = "No se encontraron registros";
+                  cell.colSpan = 3;
+                  cell.setAttribute('class', 'text-center font-weight-bold');
+                }
+
+                if (data.length > 0) {
+                  for (i = 0; i < data.length; i++) {
+                    _row = tbody.insertRow(i);
+                    idCell = _row.insertCell(0);
+                    idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
+                    phoneCell = _row.insertCell(1);
+                    phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
+                    tradenameCell = _row.insertCell(2);
+                    tradenameCell.innerHTML = data[i]['name'] ? data[i]['name'] + " " + data[i]['last_name'] : data[i]['tradename'];
+                    selectCell = _row.insertCell(3);
+                    userCheck = document.createElement("input");
+                    userCheck.setAttribute('class', 'btn btn-success customerCheck');
+                    userCheck.setAttribute('type', 'radio');
+                    userCheck.setAttribute('name', 'customerCheck');
+                    userCheck.setAttribute('id', 'customerCheck');
+                    userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
+                    selectCell.appendChild(userCheck);
+                    tbody.appendChild(_row);
+                  }
+                }
+
+                _this2.selectCustomer();
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       })));
     }
   }, {
     key: "selectCustomer",
     value: function selectCustomer() {
       // $('slc-Customers').selectpicker();
-      var slcCustomer = document.getElementById("slc-Customers");
-      var btnCustomerData = document.getElementById("btn-customerData");
-
-      if (btnCustomerData == null) {
-        return;
-      }
-
-      btnCustomerData.addEventListener("click", /*#__PURE__*/function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
-          var actualLocation;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  actualLocation = window.location['origin'];
-                  _context2.next = 3;
-                  return fetch(actualLocation + "/customer_data/" + slcCustomer.value).then(function (response) {
-                    return response.json();
-                  }).then(function (data) {
-                    document.getElementById("customer_modal_name").innerHTML = data[0]['business_name'] == null ? data[0]['get_user']['name'] : data[0]['business_name'];
-                    document.getElementById("customer_modal_last_name").innerHTML = data[0]['business_name'] == null ? data[0]['get_user']['last_name'] : '----';
-                    document.getElementById("customer_modal_contact").innerHTML = data[0]['contact'];
-                    document.getElementById("customer_modal_branch_office").innerHTML = data[1] != null ? data[1]['name'] : '----';
-                    document.getElementById("customer_modal_deparment").innerHTML = data[2] != null ? data[2]['name'] : '----';
-                    $("#detailCustomer").modal('show');
-                  });
-
-                case 3:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        }));
-
-        return function (_x) {
-          return _ref2.apply(this, arguments);
-        };
-      }());
+      console.log('hellooooooooo');
     }
   }]);
 
@@ -42238,8 +42245,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

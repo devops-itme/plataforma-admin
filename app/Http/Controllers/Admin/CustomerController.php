@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\UserTrait;
 use App\Http\Controllers\Traits\CustomerTrait;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
+use App\Http\Controllers\Traits\RestActions;
 use App\User;
 
 class CustomerController extends Controller
@@ -107,7 +108,10 @@ class CustomerController extends Controller
                 $data = Customer::where('tradename', 'like', '%'.$request->value.'%')->with('getUser')->get();
             }
         }
-        return $data;
+        return json_encode([
+            'state' => 200,
+            'data' => $data
+        ]);
     }
 
     /**

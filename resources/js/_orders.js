@@ -16,6 +16,7 @@ export default class Orders {
         this.addbox();
         this.removeBox();
         this.searchCustomerData();
+        this.requestSearchCustomer();
     }
 
     instantiateBoxes() {
@@ -112,77 +113,71 @@ export default class Orders {
         });
     }
 
-    searchCustomerData(){
+    async requestSearchCustomer(query){
         let actualLocation = window.location['origin'];
+        let response = {
+            'state' : 500
+        };
+        await fetch(actualLocation+"/search_customers?value="+query)
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    searchCustomerData(){
         let btnSearch = document.getElementById("btnSearch");
 
         if(btnSearch == null){
             return;
         }
-        btnSearch.addEventListener("click", async function(){
-            var tbody = document.querySelector("#table_customers tbody");
+        btnSearch.addEventListener('click', async () => {
+            let tbody = document.querySelector("#table_customers tbody");
             tbody.innerHTML = '';
             let inputValue = document.getElementById("search_customer").value;
-            await fetch(actualLocation+"/search_customers?value="+inputValue)
-                .then(response => response.json())
-                .then(data => {
-                    tbody.innerHTML = '';
-                    if(data.length > 0){
-                        for (let i = 0; i < data.length; i++) {
-                            let row = tbody.insertRow(i);
+            tbody.innerHTML = '';
+            let response = await this.requestSearchCustomer(inputValue);
+            let data = response.data;
+            if(response.state != 200 || data.length == 0){
+                let row = tbody.insertRow(0);
+                let cell = row.insertCell(0);
+                cell.innerHTML = "No se encontraron registros";
+                cell.colSpan = 3;
+                cell.setAttribute('class', 'text-center font-weight-bold');
+            }
+            if(data.length > 0){
+                for (let i = 0; i < data.length; i++) {
+                    let row = tbody.insertRow(i);
 
-                            let idCell = row.insertCell(0);
-                            idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
+                    let idCell = row.insertCell(0);
+                    idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
 
-                            let phoneCell = row.insertCell(1);
-                            phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
+                    let phoneCell = row.insertCell(1);
+                    phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
 
-                            let tradenameCell = row.insertCell(2);
-                            tradenameCell.innerHTML = data[i]['name'] ? data[i]['name']+" "+data[i]['last_name'] : data[i]['tradename'];
+                    let tradenameCell = row.insertCell(2);
+                    tradenameCell.innerHTML = data[i]['name'] ? data[i]['name']+" "+data[i]['last_name'] : data[i]['tradename'];
 
-                            let selectCell = row.insertCell(3);
-                            const userCheck = document.createElement("input");
-                            userCheck.setAttribute('class', 'btn btn-success customerCheck');
-                            userCheck.setAttribute('type', 'radio');
-                            userCheck.setAttribute('name', 'customerCheck');
-                            userCheck.setAttribute('id', 'customerCheck');
-                            userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
-                            selectCell.appendChild(userCheck);
+                    let selectCell = row.insertCell(3);
+                    const userCheck = document.createElement("input");
+                    userCheck.setAttribute('class', 'btn btn-success customerCheck');
+                    userCheck.setAttribute('type', 'radio');
+                    userCheck.setAttribute('name', 'customerCheck');
+                    userCheck.setAttribute('id', 'customerCheck');
+                    userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
+                    selectCell.appendChild(userCheck);
 
-                            tbody.appendChild(row);
-                        }
-                    } else {
-                        let row = tbody.insertRow(0);
-                        let cell = row.insertCell(0);
-                        cell.innerHTML = "No se encontraron registros";
-                        cell.colSpan = 3;
-                        cell.setAttribute('class', 'text-center font-weight-bold');
-                    }
-                })
+                    tbody.appendChild(row);
+                }
+            }
+            this.selectCustomer();
         });
     }
 
     selectCustomer(){
         // $('slc-Customers').selectpicker();
-        let slcCustomer = document.getElementById("slc-Customers");
-        let btnCustomerData = document.getElementById("btn-customerData");
-        if (btnCustomerData == null) {
-            return;
-        }
-        btnCustomerData.addEventListener("click", async function (e) {
-            let actualLocation = window.location['origin'];
-
-            await fetch(actualLocation+"/customer_data/"+slcCustomer.value)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("customer_modal_name").innerHTML = (data[0]['business_name'] == null) ? data[0]['get_user']['name'] : data[0]['business_name'];
-                    document.getElementById("customer_modal_last_name").innerHTML = (data[0]['business_name'] == null) ? data[0]['get_user']['last_name'] : '----';
-                    document.getElementById("customer_modal_contact").innerHTML = data[0]['contact'];
-                    document.getElementById("customer_modal_branch_office").innerHTML = (data[1] != null) ? data[1]['name'] : '----';
-                    document.getElementById("customer_modal_deparment").innerHTML = (data[2] != null) ? data[2]['name'] : '----';
-                    $("#detailCustomer").modal('show');
-                });
-        })
-
+        console.log('hellooooooooo');
     }
 }
