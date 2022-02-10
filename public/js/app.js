@@ -38661,7 +38661,7 @@ var Orders = /*#__PURE__*/function () {
       this.instantiateBoxes();
       this.addbox();
       this.removeBox();
-      this.selectCustomer();
+      this.searchCustomerData();
     }
   }, {
     key: "instantiateBoxes",
@@ -38756,6 +38756,69 @@ var Orders = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "searchCustomerData",
+    value: function searchCustomerData() {
+      var actualLocation = window.location['origin'];
+      var btnSearch = document.getElementById("btnSearch");
+
+      if (btnSearch == null) {
+        return;
+      }
+
+      btnSearch.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var tbody, inputValue;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                tbody = document.querySelector("#table_customers tbody");
+                tbody.innerHTML = '';
+                inputValue = document.getElementById("search_customer").value;
+                _context.next = 5;
+                return fetch(actualLocation + "/search_customers?value=" + inputValue).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  tbody.innerHTML = '';
+
+                  if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
+                      var row = tbody.insertRow(i);
+                      var idCell = row.insertCell(0);
+                      idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
+                      var phoneCell = row.insertCell(1);
+                      phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
+                      var tradenameCell = row.insertCell(2);
+                      tradenameCell.innerHTML = data[i]['name'] ? data[i]['name'] + " " + data[i]['last_name'] : data[i]['tradename'];
+                      var selectCell = row.insertCell(3);
+                      var userCheck = document.createElement("input");
+                      userCheck.setAttribute('class', 'btn btn-success customerCheck');
+                      userCheck.setAttribute('type', 'radio');
+                      userCheck.setAttribute('name', 'customerCheck');
+                      userCheck.setAttribute('id', 'customerCheck');
+                      userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
+                      selectCell.appendChild(userCheck);
+                      tbody.appendChild(row);
+                    }
+                  } else {
+                    var _row = tbody.insertRow(0);
+
+                    var cell = _row.insertCell(0);
+
+                    cell.innerHTML = "No se encontraron registros";
+                    cell.colSpan = 3;
+                    cell.setAttribute('class', 'text-center font-weight-bold');
+                  }
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+    }
+  }, {
     key: "selectCustomer",
     value: function selectCustomer() {
       // $('slc-Customers').selectpicker();
@@ -38767,14 +38830,14 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnCustomerData.addEventListener("click", /*#__PURE__*/function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
           var actualLocation;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context.prev = _context.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
                   actualLocation = window.location['origin'];
-                  _context.next = 3;
+                  _context2.next = 3;
                   return fetch(actualLocation + "/customer_data/" + slcCustomer.value).then(function (response) {
                     return response.json();
                   }).then(function (data) {
@@ -38788,14 +38851,14 @@ var Orders = /*#__PURE__*/function () {
 
                 case 3:
                 case "end":
-                  return _context.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee);
+          }, _callee2);
         }));
 
         return function (_x) {
-          return _ref.apply(this, arguments);
+          return _ref2.apply(this, arguments);
         };
       }());
     }
