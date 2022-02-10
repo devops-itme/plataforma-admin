@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 trait MessengerTrait
 {
-    use TraitsRestActions, UserTrait;
+    use UserTrait;
 
     public function messengerValidate($request)
     {
@@ -23,6 +23,7 @@ trait MessengerTrait
                 'admission_date' => 'required',
                 'production_percentage' => 'required|numeric',
                 'exclusive' => 'required',
+                'contract_type_id' => 'required',
                 // 'contract' => 'required',
             ]
         );
@@ -46,7 +47,7 @@ trait MessengerTrait
     public function showMessenger($id)
     {
         try {
-            $messengers = Messenger::where('id', $id)->with('user')->first();
+            $messengers = Messenger::where('id', $id)->with(['user', 'getContractType'])->first();
             return $this->respond(200, $messengers);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
@@ -77,7 +78,8 @@ trait MessengerTrait
                 'production_percentage' => $request->production_percentage,
                 'exclusive' => $request->exclusive,
                 'birth_date' => $request->birth_date,
-                'contract' => $contract_file
+                'contract' => $contract_file,
+                'contract_type_id' => $request->contract_type_id
             ]);
             return $this->respond(200, $messenger);
         } catch (\Throwable $e) {

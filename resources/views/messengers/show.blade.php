@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Tipo y numero de documento:</div>
-                        <div class="line-height-xl"><b>CC</b> / {{$messenger->user->document_number}}</div>
+                        <div class="line-height-xl"><b>{{$messenger->user->getDocumentType->name}}</b> / {{$messenger->user->document_number}}</div>
                     </div>
                 </div>
             </div>
@@ -59,11 +59,15 @@
                     </div>
                 </div>
                 <div class="row mb-5 pb-5 border-bottom">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="font-weight-bolder mb-3">Exclusivo:</div>
                         <div class="line-height-xl">{{$messenger->exclusive == 1 ? 'SI' : 'NO' }}</div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="font-weight-bolder mb-3">Tipo de contrato:</div>
+                        <div class="line-height-xl">{{$messenger->getContractType->name }}</div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="font-weight-bolder mb-3">Contrato:</div>
                         <div class="line-height-xl"><a href="#" target="_blank" download="contrato-mensajero.pdf">Descargar contrato</a></div>
                     </div>

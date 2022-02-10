@@ -9,7 +9,7 @@ use App\User;
 
 trait CustomerTrait
 {
-    use RestActions;
+    use BranchOfficeTrait;
 
     public function customerValidate($request)
     {

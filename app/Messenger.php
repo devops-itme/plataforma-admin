@@ -19,13 +19,20 @@ class Messenger extends Model
         'birth_date',
         'production_percentage',
         'contract',
-        'exclusive'
+        'exclusive',
+        'contract_type_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getContractType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'contract_type_id');
+    }
+
 
     //Scopes
     public function scopeName($query, $value)

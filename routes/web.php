@@ -25,6 +25,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/customer_data/{id}', 'Admin\CustomerController@customerData');
     Route::group(['middleware' => 'role'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');
@@ -82,6 +83,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('despachos', function () {
             return view('deliveries.index');
         })->name('delivery.index');
+    Route::get('permisos', function () {
+        return view('auth.permits');
+    })->name('permits.index');
 });
 
 //ADDRESSES

@@ -31,8 +31,11 @@ class MessengerController extends Controller
      */
     public function create()
     {
+        $contract_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'contract_type');
+        })->get();
         $document_type = ParameterValue::where('parameter_id', 1)->get();
-        return view('messengers.create', compact('document_type'));
+        return view('messengers.create', compact('document_type', 'contract_type'));
     }
 
     /**
@@ -45,13 +48,13 @@ class MessengerController extends Controller
     {
         request()->merge(['role' => 3, 'state' => 1]);
         $user = $this->saveUser($request);
-        if($user['state'] != 200){
+        if ($user['state'] != 200) {
             return redirect()->back()->withInput()->with('danger', $user['message']);
         }
         $user = $user['data'];
         $messenger = $this->saveMessenger($request, $user->id);
 
-        if($messenger['state'] == 200){
+        if ($messenger['state'] == 200) {
             return redirect()->route('messengers.index')->with('success', 'Mensajero registrado exitosamente.');
         } else {
             return redirect()->back()->withInput()->with('danger', $messenger['error']);
@@ -68,8 +71,8 @@ class MessengerController extends Controller
     {
         $messenger = $this->showMessenger($id);
         $messenger = $messenger['data'];
-        $document_type = ParameterValue::where('parameter_id', 1)->get();
-        return view('messengers.show', compact('messenger', 'document_type' ));
+
+        return view('messengers.show', compact('messenger'));
     }
 
     /**
@@ -83,7 +86,10 @@ class MessengerController extends Controller
         $messenger = $this->showMessenger($id);
         $messenger = $messenger['data'];
         $document_type = ParameterValue::where('parameter_id', 1)->get();
-        return view('messengers.edit', compact('messenger', 'document_type' ));
+        $contract_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'contract_type');
+        })->get();
+        return view('messengers.edit', compact('messenger', 'document_type', 'contract_type'));
     }
 
     /**
@@ -112,7 +118,7 @@ class MessengerController extends Controller
     public function destroy($id)
     {
         $response = $this->deleteMessenger($id);
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return redirect()->route('messengers.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);

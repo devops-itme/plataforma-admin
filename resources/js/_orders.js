@@ -2,6 +2,7 @@ export default class Orders {
     initialize() {
         this.addbox();
         this.removeBox();
+        this.selectCustomer();
     }
 
     addbox() {
@@ -54,5 +55,26 @@ export default class Orders {
         });
 
 
+    }
+
+    selectCustomer(){
+        // $('slc-Customers').selectpicker();
+        let slcCustomer = document.getElementById("slc-Customers");
+        let btnCustomerData = document.getElementById("btn-customerData");
+
+        btnCustomerData.addEventListener("click", async function (e) {
+            let actualLocation = window.location['origin'];
+
+            await fetch(actualLocation+"/customer_data/"+slcCustomer.value)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("customer_modal_name").innerHTML = (data[0]['business_name'] == null) ? data[0]['get_user']['name'] : data[0]['business_name'];
+                    document.getElementById("customer_modal_last_name").innerHTML = (data[0]['business_name'] == null) ? data[0]['get_user']['last_name'] : '----';
+                    document.getElementById("customer_modal_contact").innerHTML = data[0]['contact'];
+                    document.getElementById("customer_modal_branch_office").innerHTML = (data[1] != null) ? data[1]['name'] : '----';
+                    document.getElementById("customer_modal_deparment").innerHTML = (data[2] != null) ? data[2]['name'] : '----';
+                    $("#detailCustomer").modal('show');
+                });
+        })
     }
 }

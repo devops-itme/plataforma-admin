@@ -7,5 +7,6 @@
     "users" : "Usuarios",
     "bankUsers" : "Usuario-banco",
     "branchOffices" : "Sucursales",
-    "departments" : "Departamentos"
+    "departments" : "Departamentos",
+    "orders" : "Ordenes"
 }

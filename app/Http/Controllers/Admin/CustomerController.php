@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\BranchOffice;
 use App\Customer;
+use App\Department;
 use App\Http\Controllers\Controller;
 use App\ParameterValue;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use App\User;
 
 class CustomerController extends Controller
 {
-    use CustomerTrait, UserTrait, BranchOfficeTrait;
+    use CustomerTrait;
     /**
      * Display a listing of the resource.
      *
@@ -83,6 +84,17 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
         return view('customers.show', compact('customer'));
+    }
+
+    public function customerData($id)
+    {
+        $customer = Customer::with('getUser')->where('user_id', $id)->first();
+        $branchOffice = BranchOffice::where('user_id', $customer->user_id)->where('default', 1)->first();
+        $department = null;
+        if($branchOffice){
+            $department = Department::where('branch_office_id', $branchOffice->id)->first();
+        }
+        return [$customer, $branchOffice, $department];
     }
 
     /**
