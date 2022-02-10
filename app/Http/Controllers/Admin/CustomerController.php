@@ -89,13 +89,16 @@ class CustomerController extends Controller
 
     public function customerData($id)
     {
-        $customer = Customer::with('getUser')->where('user_id', $id)->first();
+        $customer = User::with(['getCustomer', 'getDocumentType'])->find($id);
         $branchOffice = BranchOffice::where('user_id', $customer->user_id)->where('default', 1)->first();
         $department = null;
         if($branchOffice){
             $department = Department::where('branch_office_id', $branchOffice->id)->first();
         }
-        return [$customer, $branchOffice, $department];
+        return json_encode([
+            'state' => 200,
+            'data' => [$customer, $branchOffice, $department]
+        ]);
     }
 
     public function search_customer(Request $request)

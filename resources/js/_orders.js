@@ -176,8 +176,36 @@ export default class Orders {
         });
     }
 
+    async requestSelectedCustomerData(query){
+        let actualLocation = window.location['origin'];
+        let response = {
+            'state' : 500
+        };
+        await fetch(actualLocation+"/customer_data/"+query)
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
     selectCustomer(){
-        // $('slc-Customers').selectpicker();
-        console.log('hellooooooooo');
+        let allCustomerChecks = document.getElementsByClassName("customerCheck");
+        for (let i = 0; i < allCustomerChecks.length; i++) {
+            allCustomerChecks[i].addEventListener('click', async () => {
+                let response = await this.requestSelectedCustomerData(allCustomerChecks[i].value);
+                let data = response.data;
+                document.getElementById("user_code").value = data[0]['id'];
+                document.getElementById("user_name").value = data[0]['name'] ? data[0]['name']+" "+data[0]['last_name'] : data[0]['get_customer']['tradename'];
+                document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
+                document.getElementById("user_department").value = data[2] != null ? data[2]['name'] : '';
+                document.getElementById("user_branch_office").value = data[1] != null ? data[1]['name'] : '';
+                document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
+
+                let modal = document.getElementById("detailCustomer");
+                modal.click();
+            })
+        }
     }
 }
