@@ -305,10 +305,10 @@
                                     <select class="form-control form-control-solid" id="document_type"
                                         name="branch_office_payment_method">
                                         <option selected disabled>Seleccione</option>
-                                        @foreach ($documents as $document)
-                                            <option value="{{ $document->id }}"
-                                                {{ $document->id == old('branch_office_document_type') ? 'selected' : '' }}>
-                                                {{ $document->name }}</option>
+                                        @foreach ($payment_period as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
+                                                {{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="form-text text-muted"></span>

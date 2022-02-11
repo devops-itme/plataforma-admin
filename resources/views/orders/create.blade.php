@@ -43,11 +43,11 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="customers">Codigo<span class="text-danger">*</span></label>
-                        <input type="text" id="user_code" class="form-control form-control-solid" readonly value="">
+                        <input type="text" id="user_code" class="form-control form-control-solid" readonly value="" name="user_id">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Marca / Nombre Comercial<span class="text-danger">*</span></label>
-                        <input type="text" id="user_code" class="form-control form-control-solid" readonly value="">
+                        <input type="text" id="user_name" class="form-control form-control-solid" readonly value="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Contacto<span class="text-danger">*</span></label>
