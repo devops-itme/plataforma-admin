@@ -79,7 +79,7 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        Operaciones
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li class="dropdown-submenu">
