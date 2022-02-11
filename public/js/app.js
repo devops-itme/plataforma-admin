@@ -42166,7 +42166,6 @@ var Orders = /*#__PURE__*/function () {
       this.addbox();
       this.removeBox();
       this.searchCustomerData();
-      this.requestSearchCustomer();
     }
   }, {
     key: "instantiateBoxes",
