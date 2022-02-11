@@ -42013,6 +42013,10 @@ var Orders = /*#__PURE__*/function () {
       [].forEach.call(removeBoxBtn, function (btn) {
         btn.addEventListener('click', function () {
           var box = btn.parentNode.parentNode.parentNode;
+          var parent = box.parentNode;
+          var index = Array.prototype.indexOf.call(parent.children, box);
+          boxes.splice(index, 1);
+          console.log('index', boxes, index);
           box.remove();
         });
       });
@@ -42245,8 +42249,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
