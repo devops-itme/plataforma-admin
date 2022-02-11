@@ -92,7 +92,13 @@ class BranchOfficeController extends Controller
     {
         $office = BranchOffice::where('id', $id)->first();
         $documents = ParameterValue::where('parameter_id',1)->get();
-        return view('branchOffices.edit', compact('office', 'documents'));
+        //type
+        $branch_office_type_id = Parameter::where('name', 'branch_office_types')->first();
+        $branch_office_type = ParameterValue::where('parameter_id', $branch_office_type_id->id)->get();
+        //method
+        $payment_method_id = Parameter::where('name', 'payment_method')->first();
+        $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
+        return view('branchOffices.edit', compact('office', 'documents', 'branch_office_type', 'payment_method'));
     }
 
     /**
