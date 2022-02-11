@@ -140,7 +140,13 @@ class CustomerController extends Controller
     {
         $customer = Customer::where('id', $id)->with('getUser')->first();
         $documents = ParameterValue::where('parameter_id', 1)->get();
-        return view('customers.edit', compact('customer', 'documents'));
+        //method
+        $payment_method_id = Parameter::where('name', 'payment_method')->first();
+        $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
+        //period
+        $payment_period_id = Parameter::where('name', 'payment_period')->first();
+        $payment_period = ParameterValue::where('parameter_id', $payment_period_id->id)->get();
+        return view('customers.edit', compact('customer', 'documents', 'payment_method', 'payment_period'));
     }
 
     /**
