@@ -53,7 +53,10 @@ class CustomerController extends Controller
         //type
         $branch_office_type_id = Parameter::where('name', 'branch_office_type')->first();
         $branch_office_type = ParameterValue::where('parameter_id', $branch_office_type_id->id)->get();
-        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type'));
+        //use_mode
+        $use_mode_id = Parameter::where('name', 'use_mode')->first();
+        $use_mode = ParameterValue::where('parameter_id', $use_mode_id->id)->get();
+        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode'));
     }
 
     /**

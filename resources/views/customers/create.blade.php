@@ -302,7 +302,7 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Metodo de pago:</label>
-                                    <select class="form-control form-control-solid" id="document_type"
+                                    <select class="form-control form-control-solid" id="payment_method"
                                         name="branch_office_payment_method">
                                         <option selected disabled>Seleccione</option>
                                         @foreach ($payment_method as $item)
@@ -319,8 +319,8 @@
                                         name="branch_office_phone" value="{{ old('branch_office_phone') }}" />
                                     <span class="form-text text-muted"></span>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label>Modo de uso:</label>
+                                <div class="d-none" id="slcPlan">
+                                    <label>Planes:</label>
                                     <select class="form-control form-control-solid" id="document_type"
                                         name="branch_office_usage_mode">
                                         <option selected disabled>Seleccione</option>
@@ -328,6 +328,19 @@
                                             <option value="{{ $document->id }}"
                                                 {{ $document->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
                                                 {{ $document->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                                <div class="d-none" id="useMode">
+                                    <label>Modo de uso:</label>
+                                    <select class="form-control form-control-solid" id="document_type"
+                                        name="branch_office_usage_mode">
+                                        <option selected disabled>Seleccione</option>
+                                        @foreach ($use_mode as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
+                                                {{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="form-text text-muted"></span>
