@@ -16,7 +16,7 @@ export default class Orders {
         this.addbox();
         this.removeBox();
         this.searchCustomerData();
-        // this.requestSearchCustomer();
+        this.requestSearchCustomer();
     }
 
     instantiateBoxes() {
@@ -114,11 +114,11 @@ export default class Orders {
     }
 
     async requestSearchCustomer(query){
-        let actualLocation = window.location['origin'];
+        // let actualLocation = window.location['origin'];
         let response = {
             'state' : 500
         };
-        await fetch(actualLocation+"/search_customers?value="+query)
+        await fetch("/search_customers?value="+query)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -177,11 +177,11 @@ export default class Orders {
     }
 
     async requestSelectedCustomerData(query){
-        let actualLocation = window.location['origin'];
+        // let actualLocation = window.location['origin'];
         let response = {
             'state' : 500
         };
-        await fetch(actualLocation+"/customer_data/"+query)
+        await fetch("/customer_data/"+query)
             .then(response => response.json())
             .then(data => {
                 response = data
