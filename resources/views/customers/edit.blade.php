@@ -34,12 +34,13 @@
                 <label>Tipo de persona</label>
                 <select class="form-control form-control-solid" id="slc_type">
                     <option disabled selected> Seleccione </option>
-                    <option value="1">Persona natural</option>
-                    <option value="2">Persona juridica</option>
+                    <option value="1" {{$customer->getUser->name ? 'selected' : ''}}>Persona natural</option>
+                    <option value="2" {{$customer->business_name ? 'selected' : ''}}>Persona juridica</option>
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="d-flex flex-row flex-wrap col-md-7">
+            <input type="hidden" value="{{$customer->business_name ? '2' : '1'}}" id="customer_type_edit">
+            <div class="col-md-7 d-flex px-0" id="naturalCustomer">
                 <div class="form-group col-md-6">
                     <label>Nombres: <span class="text-danger">*</span></label>
                     <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{$customer->getUser->name}}" />
@@ -48,6 +49,18 @@
                 <div class="form-group col-md-6">
                     <label>Apellidos <span class="text-danger">*</span></label>
                     <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{$customer->getUser->last_name}}" />
+                </div>
+            </div>
+            <div class="d-none" id="legalCustomer">
+                <div class="form-group m-0 col-md-6">
+                    <label>Nombre de empresa <span class="text-danger">*</span></label>
+                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text"
+                        name="business_name" value="{{ $customer->business_name }}" />
+                </div>
+                <div class="form-group m-0 col-md-6">
+                    <label>Nombre comercial <span class="text-danger">*</span></label>
+                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text"
+                        name="tradename" value="{{ $customer->tradename }}" />
                 </div>
             </div>
             <div class="form-group col-md-3">
@@ -138,13 +151,14 @@
                                 <textarea class="form-control form-control-solid" id="exampleTextarea" rows="1" name="contact">{{$customer->contact}}</textarea>
                             </div>
                             <div class="form-group col-md-2 my-3">
-                                <label for="payment_pediod">Periodo de pago <span class="text-danger">*</span></label>
-                                <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_pediod" name="payment_period">
-                                    <option {{$customer->payment_period == 1 ? 'selected' : ''}}>1</option>
-                                    <option {{$customer->payment_period == 2 ? 'selected' : ''}}>2</option>
-                                    <option {{$customer->payment_period == 3 ? 'selected' : ''}}>3</option>
-                                    <option {{$customer->payment_period == 4 ? 'selected' : ''}}>4</option>
-                                    <option {{$customer->payment_period == 5 ? 'selected' : ''}}>5</option>
+                                <label for="payment_period">Periodo de pago <span class="text-danger">*</span></label>
+                                <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_period" name="payment_period">
+                                    <option disabled>Seleccione</option>
+                                    @foreach ($payment_period as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == $customer->payment_period ? 'selected' : '' }}>
+                                            {{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-2 mb-0 py-4">

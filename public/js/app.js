@@ -41655,6 +41655,62 @@ var Addresses = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/_branchOffice.js":
+/*!***************************************!*\
+  !*** ./resources/js/_branchOffice.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BranchOffices; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var BranchOffices = /*#__PURE__*/function () {
+  function BranchOffices() {
+    _classCallCheck(this, BranchOffices);
+  }
+
+  _createClass(BranchOffices, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadPlanFields();
+    }
+  }, {
+    key: "loadPlanFields",
+    value: function loadPlanFields() {
+      var option = document.getElementById("payment_method");
+      var useMode = document.getElementById("useMode");
+      var slcPlan = document.getElementById("slcPlan");
+
+      if (option == null) {
+        return;
+      }
+
+      option.addEventListener('change', function () {
+        if (option.value == 24) {
+          useMode.className = 'd-none';
+          slcPlan.className = 'd-none';
+        } else {
+          useMode.className = 'form-group col-md-3';
+          slcPlan.className = 'form-group col-md-3';
+        }
+      });
+    }
+  }]);
+
+  return BranchOffices;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/_customers.js":
 /*!************************************!*\
   !*** ./resources/js/_customers.js ***!
@@ -41684,12 +41740,23 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "customerFeatures",
     value: function customerFeatures() {
+      var typeSelected = document.getElementById("customer_type_edit");
       var option = document.getElementById("slc_type");
       var naturalCustomer = document.getElementById("naturalCustomer");
       var legalCustomer = document.getElementById("legalCustomer");
 
       if (option == null) {
         return;
+      }
+
+      if (typeSelected != null) {
+        if (typeSelected.value == 1) {
+          legalCustomer.className = 'd-none';
+          naturalCustomer.className = 'col-md-7 d-flex px-0';
+        } else if (typeSelected.value == 2) {
+          naturalCustomer.className = 'd-none';
+          legalCustomer.className = 'col-md-7 d-flex px-0';
+        }
       }
 
       option.addEventListener('change', function (event) {
@@ -42034,10 +42101,6 @@ var Orders = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context.next = 3;
-                return fetch(actualLocation + "/search_customers?value=" + query);
-
-              case 3:
-                _context.next = 5;
                 return fetch("/search_customers?value=" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -42046,10 +42109,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 5:
+              case 3:
                 return _context.abrupt("return", response);
 
-              case 6:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -42104,18 +42167,18 @@ var Orders = /*#__PURE__*/function () {
                   for (i = 0; i < data.length; i++) {
                     _row = tbody.insertRow(i);
                     idCell = _row.insertCell(0);
-                    idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
+                    idCell.innerHTML = data[i].name ? data[i].id : data[i].get_user.id;
                     phoneCell = _row.insertCell(1);
-                    phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
+                    phoneCell.innerHTML = data[i].name ? data[i].phone : data[i].get_user.phone;
                     tradenameCell = _row.insertCell(2);
-                    tradenameCell.innerHTML = data[i]['name'] ? data[i]['name'] + " " + data[i]['last_name'] : data[i]['tradename'];
+                    tradenameCell.innerHTML = data[i].name ? data[i].name + " " + data[i].last_name : data[i].tradename;
                     selectCell = _row.insertCell(3);
                     userCheck = document.createElement("input");
                     userCheck.setAttribute('class', 'btn btn-success customerCheck');
                     userCheck.setAttribute('type', 'radio');
                     userCheck.setAttribute('name', 'customerCheck');
                     userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
+                    userCheck.setAttribute('value', data[i].name ? data[i].id : data[i].get_user.id);
                     selectCell.appendChild(userCheck);
                     tbody.appendChild(_row);
                   }
@@ -42238,7 +42301,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
 /* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
 /* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
+/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -42252,6 +42317,7 @@ var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var customers = new _customers__WEBPACK_IMPORTED_MODULE_4__["default"]();
 var orders = new _orders__WEBPACK_IMPORTED_MODULE_5__["default"]();
 var general = new _general__WEBPACK_IMPORTED_MODULE_6__["default"]();
+var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
 document.addEventListener("DOMContentLoaded", function (event) {
   // bootstrapSelect.initialize();
   orders.initialize();
@@ -42259,6 +42325,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   addresses.initialize();
   customers.initialize();
   general.initialize();
+  branchOffice.initialize();
 });
 
 /***/ }),
@@ -42326,8 +42393,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
