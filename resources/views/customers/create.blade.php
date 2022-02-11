@@ -106,6 +106,13 @@
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                                 aria-controls="profile" aria-selected="false">Sucursales</a>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-toggle="popover" tabindex="0" data-trigger="focus" data-html="true" data-placement='bottom' title="<span class='label label-warning label-pill label-inline'>Notificación</span>" data-content="Debe crear primero un <span class='label label-inline font-weight-bold label-light-danger'>Cliente</span> con su respectiva <span class='label label-inline font-weight-bold label-light-danger'>Sucursal</span>.">Departamentos</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-toggle="popover" tabindex="0" data-trigger="focus" data-html="true" data-placement='bottom' title="<span class='label label-warning label-pill label-inline'>Notificación</span>" data-content="Debe crear primero un <span class='label label-inline font-weight-bold label-light-danger'>Cliente</span>.">Usuarios</a>
+                        </li>
+
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -131,11 +138,12 @@
                                     <label for="payment_pediod">Periodo de pago <span class="text-danger">*</span></label>
                                     <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_period"
                                         name="payment_period">
-                                        <option value="1" {{ old('payment_period') == 1 ? 'selected' : '' }}>1</option>
-                                        <option value="2" {{ old('payment_period') == 2 ? 'selected' : '' }}>2</option>
-                                        <option value="3" {{ old('payment_period') == 3 ? 'selected' : '' }}>3</option>
-                                        <option value="4" {{ old('payment_period') == 4 ? 'selected' : '' }}>4</option>
-                                        <option value="5" {{ old('payment_period') == 5 ? 'selected' : '' }}>5</option>
+                                        <option value="" selected disabled> Seleccione </option>
+                                        @foreach ($payment_period as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
+                                                {{ $item->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-2 mb-0 py-4">
@@ -223,11 +231,10 @@
                                     <select class="form-control form-control-solid" id="branch_office_type"
                                         name="branch_office_type">
                                         <option selected disabled>Seleccione</option>
-                                        @foreach ($documents as $document)
-                                            <option value="{{ $document->id }}"
-                                                {{ $document->id == old('branch_office_type') ? 'selected' : '' }}>
-                                                {{ $document->name }}
-                                            </option>
+                                        @foreach ($branch_office_type as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
+                                                {{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="form-text text-muted"></span>
@@ -295,13 +302,13 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Metodo de pago:</label>
-                                    <select class="form-control form-control-solid" id="document_type"
+                                    <select class="form-control form-control-solid" id="payment_method"
                                         name="branch_office_payment_method">
                                         <option selected disabled>Seleccione</option>
-                                        @foreach ($documents as $document)
-                                            <option value="{{ $document->id }}"
-                                                {{ $document->id == old('branch_office_document_type') ? 'selected' : '' }}>
-                                                {{ $document->name }}</option>
+                                        @foreach ($payment_method as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
+                                                {{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="form-text text-muted"></span>
@@ -312,8 +319,8 @@
                                         name="branch_office_phone" value="{{ old('branch_office_phone') }}" />
                                     <span class="form-text text-muted"></span>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label>Modo de uso:</label>
+                                <div class="d-none" id="slcPlan">
+                                    <label>Planes:</label>
                                     <select class="form-control form-control-solid" id="document_type"
                                         name="branch_office_usage_mode">
                                         <option selected disabled>Seleccione</option>
@@ -321,6 +328,19 @@
                                             <option value="{{ $document->id }}"
                                                 {{ $document->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
                                                 {{ $document->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                                <div class="d-none" id="useMode">
+                                    <label>Modo de uso:</label>
+                                    <select class="form-control form-control-solid" id="document_type"
+                                        name="branch_office_usage_mode">
+                                        <option selected disabled>Seleccione</option>
+                                        @foreach ($use_mode as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
+                                                {{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="form-text text-muted"></span>

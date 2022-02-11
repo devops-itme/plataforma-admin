@@ -5,7 +5,17 @@ export default class General {
 
     general() {
 
-        $('.btn-filter').click(() => $('.form-filter').toggle('slow'))
+        $('.btn-filter').click(() => $('.form-filter').toggle('slow'));
+        // document.getElementById('alerta').onclick = function() {
+        //     alert("button was clicked");
+        //  };
+         $(function () {
+            $('[data-toggle="popover"]').popover()
+          });
+
+          $('.popover-dismiss').popover({
+            trigger: 'focus'
+          });
 
     }
 }

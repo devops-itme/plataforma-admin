@@ -8,12 +8,14 @@ import Addresses from './_addresses';
 import Customers from './_customers';
 import Orders from './_orders';
 import General from './_general';
+import BranchOffices from './_branchOffice';
 
 let messengers = new Messengers();
 let addresses = new Addresses();
 let customers = new Customers();
 let orders = new Orders();
 let general = new General();
+let branchOffice = new BranchOffices();
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // bootstrapSelect.initialize();
@@ -22,4 +24,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
     addresses.initialize();
     customers.initialize();
     general.initialize();
+    branchOffice.initialize();
 });

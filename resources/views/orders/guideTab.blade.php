@@ -11,7 +11,8 @@
             <th scope="col">Estado</th>
             <th scope="col">
                 <div class="d-flex justify-content-end">
-                    <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalCreate">
+                    <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal"
+                        data-target="#modalCreate">
                         <span class="svg-icon svg-icon-md">
                             <i class="fas fa-plus"></i>
                         </span>Crear
@@ -21,45 +22,43 @@
         </tr>
     </thead>
     <tbody>
-            <tr>
-                <th scope="row">---</th>
-                <td>---</td>
-                <td>---</td>
-                <td>---</td>
-                <td>---</td>
-                <td>---</td>
-                <td>
-                        <span class="label label-inline label-light-success font-weight-bold">
-                            Activo
-                        </span>
-                        {{-- <span class="label label-inline label-light-danger font-weight-bold">
+        <tr>
+            <th scope="row">---</th>
+            <td>---</td>
+            <td>---</td>
+            <td>---</td>
+            <td>---</td>
+            <td>---</td>
+            <td>
+                <span class="label label-inline label-light-success font-weight-bold">
+                    Activo
+                </span>
+                {{-- <span class="label label-inline label-light-danger font-weight-bold">
                             Inactivo
                         </span> --}}
-                </td>
-                <td>
-                    <div
-                        class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                        <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                            <i class="far fa-folder-open"></i>
-                        </a>
-                        <a href="#"
-                            class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal" data-target="#modalEdit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#"
-                            role="button"
-                            class="btn btn-icon btn-light-danger btn-sm mr-2">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
+            </td>
+            <td>
+                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                        <i class="far fa-folder-open"></i>
+                    </a>
+                    <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
+                        data-target="#modalEdit">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="#" role="button" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
     </tbody>
 </table>
 <!--end: Datatable-->
 
 <!-- Modal Create-->
-<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="modalCreateLabel" aria-hidden="true">
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="modalCreateLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -100,7 +99,7 @@
                             <option>Barrio 2</option>
                         </select>
                     </div>
-                   <div class="form-group col-md-3">
+                    <div class="form-group col-md-3">
                         <label>Concepto: <span class="text-danger">*</span></label>
                         <input name="concept" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
@@ -155,7 +154,8 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Contacto Email: <span class="text-danger">*</span></label>
-                        <input name="contact_email" type="email" class="form-control form-control-solid" placeholder="" />
+                        <input name="contact_email" type="email" class="form-control form-control-solid"
+                            placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
@@ -166,17 +166,17 @@
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2"/>
+                                <input type="checkbox" name="Checkboxes2" />
                                 <span></span>
                                 Some Day Delivery
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2"/>
+                                <input type="checkbox" name="Checkboxes2" />
                                 <span></span>
                                 Firmar
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2"/>
+                                <input type="checkbox" name="Checkboxes2" />
                                 <span></span>
                                 Tomar Foto
                             </label>
@@ -185,21 +185,25 @@
                     <div class="col-md-12">
                         <ul class="nav nav-tabs nav-bolder nav-tabs-line nav-tabs-line-3x" id="tabmodal" role="tablist">
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab" aria-controls="cajas" aria-selected="true">Cajas/Envalaje</a>
+                              <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab" aria-controls="cajas" aria-selected="true">Cajas/Embalaje</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link" id="facil-tab" data-toggle="tab" href="#facil" role="tab" aria-controls="facil" aria-selected="false">Me Facilities</a>
+                                <a class="nav-link" id="facil-tab" data-toggle="tab" href="#facil" role="tab"
+                                    aria-controls="facil" aria-selected="false">Me Facilities</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link" id="prod-tab" data-toggle="tab" href="#prod" role="tab" aria-controls="prod" aria-selected="false">Me Productos</a>
+                                <a class="nav-link" id="prod-tab" data-toggle="tab" href="#prod" role="tab"
+                                    aria-controls="prod" aria-selected="false">Me Productos</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="prod-tab" data-toggle="tab" href="#diligencia" role="tab" aria-controls="diligencia" aria-selected="false">Gastos por diligencia</a>
+                                <a class="nav-link" id="prod-tab" data-toggle="tab" href="#diligencia" role="tab"
+                                    aria-controls="diligencia" aria-selected="false">Gastos por diligencia</a>
                             </li>
-                          </ul>
-                          <div class="tab-content min-h-100px " id="myTabContent">
-                            <div class="tab-pane fade show active" id="cajas" role="tabpanel" aria-labelledby="cajas-tab">
-                                <div class="row font-weight-bold border bg-gray-200 mt-4 text-center">
+                        </ul>
+                        <div class="tab-content min-h-100px " id="myTabContent">
+                            <div class="table-responsive tab-pane fade show active" id="cajas" role="tabpanel"
+                                aria-labelledby="cajas-tab">
+                                {{-- <div class="row font-weight-bold border bg-gray-200 mt-4 text-center">
                                     <div class="col-1 border-right">#</div>
                                     <div class="col-1 border-right">Peso</div>
                                     <div class="col-1 border-right">Largo</div>
@@ -207,43 +211,109 @@
                                     <div class="col-1 border-right">Alto</div>
                                     <div class="col-2 border-right">Peso_Vol</div>
                                     <div class="col-3 border-right">Comentarios</div>
-                                    <div class="col-2"></div>
-                                </div>
-                                <div class="row border mt-0 text-center">
-                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="1"></div>
-                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="10"></div>
-                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="14"></div>
-                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="14"></div>
-                                    <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="5"></div>
-                                    <div class="col-2 py-4 border-right"><input type="number" class="form-control" min="0" value="50"></div>
-                                    <div class="col-3 py-4 border-right"><input type="text" class="form-control" placeholder="comertarios"></div>
-                                    <div class="col-2 py-4">
-                                        <div class="d-flex flex-row flex-wrap justify-content-center">
-                                            <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Borrar">
-                                                <i class="fad fa-minus-circle"></i>
-                                            </a>
-                                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Agregar">
-                                                <i class="fad fa-plus-circle"></i>
-                                            </a>
-                                        </div>
+                                    <div class="col-2">
+                                        <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2 add-box-btn"
+                                            id="add-box-btn" data-tooltip title="Agregar">
+                                            <i class="fad fa-plus-circle"></i>
+                                        </a>
                                     </div>
                                 </div>
+                                <div id="box-container">
+                                    <div class="row border mt-0 text-center box-register" id="0">
+                                        <div class="col-1 py-4 border-right"><input type="number" name="id[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="weight[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="long[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="broad[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="high[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="vol_weight[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-4 py-4 border-right"><input type="text" name="description[]"
+                                                class="form-control" placeholder="comertarios"></div>
+                                        <div class="col-1 py-4">
+                                            <div class="d-flex flex-row flex-wrap justify-content-center">
+                                                <a href="#"
+                                                    class="btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn"
+                                                    id="0" data-tooltip title="Borrar">
+                                                    <i class="fad fa-minus-circle"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                <table class="table table-sm align-items-center table-flush tab-pane fade show active" id="cajas"
+                                    role="tabpanel">
+                                    <thead class="row font-weight-bold border bg-gray-200 mt-4 text-center">
+                                        <tr>
+                                            <th scope="col" class="border-right">#</th>
+                                            <th scope="col" class="col-1 border-right">Peso</th>
+                                            <th scope="col" class="col-1 border-right">Largo</th>
+                                            <th scope="col" class="col-1 border-right">Ancho</th>
+                                            <th scope="col" class="col-1 border-right">Alto</th>
+                                            <th scope="col" class="col-1 border-right">Peso_Vol</th>
+                                            <th scope="col" class="col-3 border-right">Comentarios</th>
+                                            <th scope="col" class="col-2">
+                                                <div class="d-flex flex-row flex-wrap justify-content-center">
+                                                    <a href="#"
+                                                        class="btn btn-icon btn-light-primary btn-sm mr-2 add-box-btn"
+                                                        id="add-box-btn" data-tooltip title="Agregar">
+                                                        <i class="fad fa-plus-circle"></i>
+                                                    </a>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="box-container">
+                                        {{-- <tr class="row border mt-0 text-center box-register">
+                                            <td class="col-1 py-4 border-right"><input type="number" name="id[]"
+                                                    class="form-control" min="0" value="0"></td>
+                                            <td class="col-1 py-4 border-right"><input type="number" name="weight[]"
+                                                    class="form-control" min="0" value="0"></td>
+                                            <td class="col-1 py-4 border-right"><input type="number" name="long[]"
+                                                    class="form-control" min="0" value="0"></td>
+                                            <td class="col-1 py-4 border-right"><input type="number" name="broad[]"
+                                                    class="form-control" min="0" value="0"></td>
+                                            <td class="col-1 py-4 border-right"><input type="number" name="high[]"
+                                                    class="form-control" min="0" value="0"></td>
+                                            <td class="col-1 py-4 border-right"><input type="number"
+                                                    name="vol_weight[]" class="form-control" min="0" value="0"></td>
+                                            <td class="col-3 py-4 border-right"><input type="text" name="description[]"
+                                                    class="form-control" placeholder="comertarios"></td>
+                                            <td class="col-2 py-4">
+                                                <div class="d-flex flex-row flex-wrap justify-content-center">
+                                                    <a href="#"
+                                                        class="btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn"
+                                                        id="0" data-tooltip title="Borrar">
+                                                        <i class="fad fa-minus-circle"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr> --}}
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="tab-pane fade" id="facil" role="tabpanel" aria-labelledby="facil-tab">
                                 <div class="d-flex pt-4 flex-row flex-wrap">
                                     <div class="form-group col-md-3">
                                         <label>Full-Fillment(FF): <span class="text-danger">*</span></label>
-                                        <input name="full_fill" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="full_fill" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Cobrar X Paquete COD: <span class="text-danger">*</span></label>
-                                        <input name="cost_pack" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="cost_pack" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>CashOnDelivery (COD): <span class="text-danger">*</span></label>
-                                        <input name="delivery" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="delivery" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -265,27 +335,31 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Cantidad: <span class="text-danger">*</span></label>
-                                        <input name="quantity" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="quantity" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Valor Unidad: <span class="text-danger">*</span></label>
-                                        <input name="unity_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="unity_value" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Valor Total: <span class="text-danger">*</span></label>
-                                        <input name="total_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="total_value" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="diligencia" role="tabpanel" aria-labelledby="diligencia-tab">
+                            <div class="tab-pane fade" id="diligencia" role="tabpanel"
+                                aria-labelledby="diligencia-tab">
                                 <div class="d-flex pt-4 flex-row flex-wrap">
                                     <div class="form-group col-md-2 d-flex align-items-center">
                                         <div class="checkbox-inline">
                                             <label class="checkbox">
-                                                <input type="checkbox" name="checkCost"/>
+                                                <input type="checkbox" name="checkCost" />
                                                 <span></span>
                                                 Si
                                             </label>
@@ -293,33 +367,38 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Gastos: <span class="text-danger">*</span></label>
-                                        <input name="costs" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="costs" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Comisión: <span class="text-danger">*</span></label>
-                                        <input name="commission" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="commission" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Tax: <span class="text-danger">*</span></label>
-                                        <input name="tax_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="tax_value" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Total: <span class="text-danger">*</span></label>
-                                        <input name="total" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="total" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                 </div>
                             </div>
-                          </div>
+                        </div>
                     </div>
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold"
+                    data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary font-weight-bold">Guardar</button>
             </div>
         </div>
@@ -327,7 +406,8 @@
 </div>
 
 <!-- Modal edit-->
-<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -368,7 +448,7 @@
                             <option>Barrio 2</option>
                         </select>
                     </div>
-                   <div class="form-group col-md-3">
+                    <div class="form-group col-md-3">
                         <label>Concepto: <span class="text-danger">*</span></label>
                         <input name="concept" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
@@ -391,7 +471,8 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor Corp: <span class="text-danger">*</span></label>
-                        <input name="corp_value" type="number" class="form-control form-control-solid" placeholder="" />
+                        <input name="corp_value" type="number" class="form-control form-control-solid"
+                            placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
@@ -423,7 +504,8 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Contacto Email: <span class="text-danger">*</span></label>
-                        <input name="contact_email" type="email" class="form-control form-control-solid" placeholder="" />
+                        <input name="contact_email" type="email" class="form-control form-control-solid"
+                            placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
@@ -434,39 +516,44 @@
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2"/>
+                                <input type="checkbox" name="Checkboxes2" />
                                 <span></span>
                                 Some Day Delivery
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2"/>
+                                <input type="checkbox" name="Checkboxes2" />
                                 <span></span>
                                 Firmar
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2"/>
+                                <input type="checkbox" name="Checkboxes2" />
                                 <span></span>
                                 Tomar Foto
                             </label>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <ul class="nav nav-tabs nav-bolder nav-tabs-line nav-tabs-line-3x" id="tabmodal" role="tablist">
+                        <ul class="nav nav-tabs nav-bolder nav-tabs-line nav-tabs-line-3x" id="tabmodal"
+                            role="tablist">
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab" aria-controls="cajas" aria-selected="true">Cajas/Envalaje</a>
+                              <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab" aria-controls="cajas" aria-selected="true">Cajas/Embalaje</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link" id="facil-tab" data-toggle="tab" href="#facil" role="tab" aria-controls="facil" aria-selected="false">Me Facilities</a>
+                                <a class="nav-link" id="facil-tab" data-toggle="tab" href="#facil" role="tab"
+                                    aria-controls="facil" aria-selected="false">Me Facilities</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link" id="prod-tab" data-toggle="tab" href="#prod" role="tab" aria-controls="prod" aria-selected="false">Me Productos</a>
+                                <a class="nav-link" id="prod-tab" data-toggle="tab" href="#prod" role="tab"
+                                    aria-controls="prod" aria-selected="false">Me Productos</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="prod-tab" data-toggle="tab" href="#diligencia" role="tab" aria-controls="diligencia" aria-selected="false">Gastos por diligencia</a>
+                                <a class="nav-link" id="prod-tab" data-toggle="tab" href="#diligencia" role="tab"
+                                    aria-controls="diligencia" aria-selected="false">Gastos por diligencia</a>
                             </li>
-                          </ul>
-                          <div class="tab-content min-h-100px " id="myTabContent">
-                            <div class="tab-pane fade show active" id="cajas" role="tabpanel" aria-labelledby="cajas-tab">
+                        </ul>
+                        <div class="tab-content min-h-100px " id="myTabContent">
+                            <div class="tab-pane fade show active" id="cajas" role="tabpanel"
+                                aria-labelledby="cajas-tab">
                                 <div class="row font-weight-bold border bg-gray-200 mt-4 text-center">
                                     <div class="col-1 border-right">#</div>
                                     <div class="col-1 border-right">Peso</div>
@@ -478,20 +565,31 @@
                                     <div class="col-2"></div>
                                 </div>
                                 <div id="box_list">
-                                    <div class="row border mt-0 text-center" >
-                                        <div class="col-1 py-4 border-right"><input type="number" name="id[]"class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="weight[]" class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="long[]" class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="broad[]"class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="high[]"class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="vol_weight[]"class="form-control" min="0" value="0"></div>
-                                        <div class="col-3 py-4 border-right"><input type="text" name="description[]" class="form-control" placeholder="comertarios"></div>
+                                    <div class="row border mt-0 text-center">
+                                        <div class="col-1 py-4 border-right"><input type="number" name="id[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="weight[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="long[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="broad[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="high[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-1 py-4 border-right"><input type="number" name="vol_weight[]"
+                                                class="form-control" min="0" value="0"></div>
+                                        <div class="col-3 py-4 border-right"><input type="text" name="description[]"
+                                                class="form-control" placeholder="comertarios"></div>
                                         <div class="col-2 py-4">
                                             <div class="d-flex flex-row flex-wrap justify-content-center">
-                                                <a role="button" id="remove_box"  class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Borrar">
+                                                <a role="button" id="remove_box"
+                                                    class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
+                                                    title="Borrar">
                                                     <i class="fad fa-minus-circle"></i>
                                                 </a>
-                                                <a role="button" id="add_box" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Agregar">
+                                                <a role="button" id="add_box"
+                                                    class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
+                                                    title="Agregar">
                                                     <i class="fad fa-plus-circle"></i>
                                                 </a>
                                             </div>
@@ -503,17 +601,20 @@
                                 <div class="d-flex pt-4 flex-row flex-wrap">
                                     <div class="form-group col-md-3">
                                         <label>Full-Fillment(FF): <span class="text-danger">*</span></label>
-                                        <input name="full_fill" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="full_fill" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Cobrar X Paquete COD: <span class="text-danger">*</span></label>
-                                        <input name="cost_pack" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="cost_pack" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>CashOnDelivery (COD): <span class="text-danger">*</span></label>
-                                        <input name="delivery" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="delivery" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -535,27 +636,31 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Cantidad: <span class="text-danger">*</span></label>
-                                        <input name="quantity" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="quantity" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Valor Unidad: <span class="text-danger">*</span></label>
-                                        <input name="unity_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="unity_value" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Valor Total: <span class="text-danger">*</span></label>
-                                        <input name="total_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="total_value" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="diligencia" role="tabpanel" aria-labelledby="diligencia-tab">
+                            <div class="tab-pane fade" id="diligencia" role="tabpanel"
+                                aria-labelledby="diligencia-tab">
                                 <div class="d-flex pt-4 flex-row flex-wrap">
                                     <div class="form-group col-md-2 d-flex align-items-center">
                                         <div class="checkbox-inline">
                                             <label class="checkbox">
-                                                <input type="checkbox" name="checkCost"/>
+                                                <input type="checkbox" name="checkCost" />
                                                 <span></span>
                                                 Si
                                             </label>
@@ -563,33 +668,38 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Gastos: <span class="text-danger">*</span></label>
-                                        <input name="costs" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="costs" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Comisión: <span class="text-danger">*</span></label>
-                                        <input name="commission" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="commission" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Tax: <span class="text-danger">*</span></label>
-                                        <input name="tax_value" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="tax_value" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Total: <span class="text-danger">*</span></label>
-                                        <input name="total" type="number" class="form-control form-control-solid" placeholder="" />
+                                        <input name="total" type="number" class="form-control form-control-solid"
+                                            placeholder="" />
                                         <span class="form-text text-muted"></span>
                                     </div>
                                 </div>
                             </div>
-                          </div>
+                        </div>
                     </div>
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold"
+                    data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary font-weight-bold">Guardar</button>
             </div>
         </div>
