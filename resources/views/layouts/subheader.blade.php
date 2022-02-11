@@ -59,6 +59,21 @@
             left: 100%;
         }
 
+        .subcolaboradores>.menucolaboradores {
+            top: 65%;
+            left: 100%;
+        }
+
+        .submoviles>.menumoviles {
+            top: 75%;
+            left: 100%;
+        }
+
+        .subMovPagos>.menuMovPagos {
+            top: 85%;
+            left: 100%;
+        }
+
         .dropdown-item {
             display: flex;
             justify-content: space-between;
@@ -97,6 +112,62 @@
                         <li><a class="dropdown-item" href="#">Mensajes Entre Usuarios</a></li>
                         <li><a class="dropdown-item" href="#">Mensajes A Móviles</a></li>
                         <li><a class="dropdown-item" href="#">Asignar Dinero A Móviles</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Información
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="">Mi perfil</a></li>
+                        <li><a class="dropdown-item" href="#">Clientes (Web)</a></li>
+                        <li><a class="dropdown-item" href="#">Móviles</a></li>
+                        <li><a class="dropdown-item" href="#">Planes</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Facturación </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="">Liquidación Ondemand Clientes</a></li>
+                        <li><a class="dropdown-item" href="#">Liquidación Packs Clientes</a></li>
+                        <li><a class="dropdown-item" href="#">Facturas de Móviles</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+                        Nómina</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">Conceptos</a></li>
+                        <li><a class="dropdown-item" href="#">Moviles Periodos</a></li>
+                        <li><a class="dropdown-item" href="#">Moviles Conceptos Parámetros</a></li>
+                        <li><a class="dropdown-item" href="#">Colaboradores Cargos</a></li>
+                        <li><a class="dropdown-item" href="#">Colaboradores</a></li>
+                        <li><a class="dropdown-item" href="#">Colaboradores Periodos</a></li>
+                        <li class="dropdown-submenu subcolaboradores">
+                            <a class="dropdown-item" href="">Colaboradores Prestamos<i class="fas fa-angle-right"></i></a>
+                            <ul class="dropdown-menu menucolaboradores" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Prestamos</a></li>
+                                <li><a class="dropdown-item" href="#">Pagos</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu submoviles">
+                            <a class="dropdown-item" href="">Móviles Liquidaciones<i class="fas fa-angle-right"></i></a>
+                            <ul class="dropdown-menu menumoviles" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Prestamos</a></li>
+                                <li><a class="dropdown-item" href="#">Pagos</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu subMovPagos">
+                            <a class="dropdown-item" href="">Móviles Pagos<i class="fas fa-angle-right"></i></a>
+                            <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Prestamos</a></li>
+                                <li><a class="dropdown-item" href="#">Pagos</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>
