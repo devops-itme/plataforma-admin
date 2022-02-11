@@ -76176,7 +76176,7 @@ code {
 
 .scroll {
   position: relative;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 .scroll.scroll-pull {
   padding-right: 12px;
@@ -80534,4 +80534,8 @@ body {
   .aside-enabled.aside-minimize.footer-fixed .footer {
     left: 70px;
   }
+}
+/* MODAL AUTOCOMPLETE Z-INDEX */
+.pac-container {
+    z-index: 1051 !important;
 }

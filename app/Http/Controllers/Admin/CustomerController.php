@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\UserTrait;
 use App\Http\Controllers\Traits\CustomerTrait;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
+use App\Http\Controllers\Traits\RestActions;
 use App\User;
 
 class CustomerController extends Controller
@@ -82,19 +83,38 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::with('getUser')->find($id);
         return view('customers.show', compact('customer'));
     }
 
     public function customerData($id)
     {
-        $customer = Customer::with('getUser')->where('user_id', $id)->first();
+        $customer = User::with(['getCustomer', 'getDocumentType'])->find($id);
         $branchOffice = BranchOffice::where('user_id', $customer->user_id)->where('default', 1)->first();
         $department = null;
         if($branchOffice){
             $department = Department::where('branch_office_id', $branchOffice->id)->first();
         }
-        return [$customer, $branchOffice, $department];
+        return json_encode([
+            'state' => 200,
+            'data' => [$customer, $branchOffice, $department]
+        ]);
+    }
+
+    public function search_customer(Request $request)
+    {
+        $data = [];
+        if(!is_null($request->value)){
+            if(is_numeric($request->value)){
+                $data = User::where('document_number', 'like', '%'.$request->value.'%')->with('getCustomer')->get();
+            } else {
+                $data = Customer::where('tradename', 'like', '%'.$request->value.'%')->with('getUser')->get();
+            }
+        }
+        return json_encode([
+            'state' => 200,
+            'data' => $data
+        ]);
     }
 
     /**

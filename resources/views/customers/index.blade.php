@@ -13,6 +13,13 @@
             </div>
             @include('layouts.alerts')
             <div class="card-toolbar">
+                 <!--begin::Button filter-->
+                 <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+                    <span class="svg-icon svg-icon-md">
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    </span>Filtro
+                </button>
+                <!--end::Button filter-->
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -98,59 +105,65 @@
             <!--begin: Search Form-->
             <!--begin::Search Form-->
             <div class="mb-7">
-                <form action="">
-                    <div class="row align-items-center">
-                        <div class="form-group py-3 m-0 col-md-3">
-                            <label>Nombre del cliente:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
-                                value="{{ request()->name }}" />
-                            <span class="form-text text-muted">Filtro nombre</span>
+                <div class="form-filter" style="display:none">
+                    <form action="">
+                        <div class="row align-items-center">
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Nombre del cliente:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
+                                    value="{{ request()->name }}" />
+                                <span class="form-text text-muted">Filtro nombre</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Numero de documento del cliente:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Numero de documento" name="document"
+                                    value="{{ request()->document }}" />
+                                <span class="form-text text-muted">Filtro documento</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Correo del cliente:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="email@example.com" name="email"
+                                    value="{{ request()->email }}" />
+                                <span class="form-text text-muted">Filtro correo</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label>Telefono del cliente:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576" name="phone"
+                                    value="{{ request()->phone }}" />
+                                <span class="form-text text-muted">Filtro telefono</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label for="exampleSelect1">Zona:</label>
+                                        <select class="form-control form-control-solid" id="zone" name="zone">
+                                            <option selected disabled> Seleccione </option>
+                                            <option value="1" {{ request()->zone == 1 ? 'selected' : '' }}>Zona 1</option>
+                                            <option value="2" {{ request()->zone == 2 ? 'selected' : '' }}>Zona 2</option>
+                                            <option value="3" {{ request()->zone == 3 ? 'selected' : '' }}>Zona 3</option>
+                                            <option value="4" {{ request()->zone == 4 ? 'selected' : '' }}>Zona 4</option>
+                                            <option value="5" {{ request()->zone == 5 ? 'selected' : '' }}>Zona 5</option>
+                                        </select>
+                                <span class="form-text text-muted">Filtro zona</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-3">
+                                <label for="exampleSelect1">Estado: </label>
+                                        <select class="form-control form-control-solid" id="zone" name="state">
+                                            <option selected disabled> Seleccione </option>
+                                            <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
+                                            <option value="0" {{ (request()->state != '' && request()->state == 0) ? 'selected' : '' }}>Inactivo</option>
+                                        </select>
+                                <span class="form-text text-muted">Filtro estado</span>
+                            </div>
+                            <div class=" row form-group py-6 m-0 col-md-6">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{route('customers.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group py-3 m-0 col-md-3">
-                            <label>Numero de documento del cliente:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="Numero de documento" name="document"
-                                value="{{ request()->document }}" />
-                            <span class="form-text text-muted">Filtro documento</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-3">
-                            <label>Correo del cliente:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="email@example.com" name="email"
-                                value="{{ request()->email }}" />
-                            <span class="form-text text-muted">Filtro correo</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-3">
-                            <label>Telefono del cliente:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576" name="phone"
-                                value="{{ request()->phone }}" />
-                            <span class="form-text text-muted">Filtro telefono</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-3">
-                            <label for="exampleSelect1">Zona:</label>
-                                    <select class="form-control form-control-solid" id="zone" name="zone">
-                                        <option selected disabled> Seleccione </option>
-                                        <option value="1" {{ request()->zone == 1 ? 'selected' : '' }}>Zona 1</option>
-                                        <option value="2" {{ request()->zone == 2 ? 'selected' : '' }}>Zona 2</option>
-                                        <option value="3" {{ request()->zone == 3 ? 'selected' : '' }}>Zona 3</option>
-                                        <option value="4" {{ request()->zone == 4 ? 'selected' : '' }}>Zona 4</option>
-                                        <option value="5" {{ request()->zone == 5 ? 'selected' : '' }}>Zona 5</option>
-                                    </select>
-                            <span class="form-text text-muted">Filtro zona</span>
-                        </div>
-                        <div class="form-group py-3 m-0 col-md-3">
-                            <label for="exampleSelect1">Estado: </label>
-                                    <select class="form-control form-control-solid" id="zone" name="state">
-                                        <option selected disabled> Seleccione </option>
-                                        <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                        <option value="0" {{ (request()->state != '' && request()->state == 0) ? 'selected' : '' }}>Inactivo</option>
-                                    </select>
-                            <span class="form-text text-muted">Filtro estado</span>
-                        </div>
-                        <div class="form-group py-6 m-0 col-md-6">
-                            <button type="submit" class="btn btn-primary  btn-block"> Filtrar</button>
-                            <a href="{{route('customers.index')}}" class="btn btn-danger  btn-block">Limpiar</a>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             <!--end::Search Form-->
             <!--end: Search Form-->
@@ -195,7 +208,7 @@
                                 @endif
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                        <div class="dropdown dropdown-inline">
+                                        {{-- <div class="dropdown dropdown-inline">
                                             <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip title="Acciones">
                                                 <i class="fad fa-ellipsis-v-alt"></i>
                                             </button>
@@ -211,26 +224,21 @@
                                                     </div> Editar
                                                 </a>
                                                 <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
-                                                    {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
-                                                        @csrf @method('DELETE') --}}
                                                         <div class="btn btn-icon btn-light-danger btn-sm mr-2">
                                                             <i class="fad fa-trash-alt"></i>
                                                         </div> Eliminar
-                                                    {{-- </form> --}}
                                                 </button>
                                             </div>
-                                        </div>
-                                        @if(is_null($customer->name))
-                                            <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2" data-tooltip title="Usuarios">
-                                                <i class="fad fa-users-class"></i>
+                                        </div> --}}
+                                            <a href="{{route('customers.show', $customer->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
+                                                <i class="fad fa-folder-open"></i>
                                             </a>
-                                        @endif
-                                        <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Sucursales">
-                                            <i class="fad fa-building"></i>
+                                        <a href="{{route('customers.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
+                                            <i class="fad fa-edit"></i>
                                         </a>
-                                        <a href="{{route('departments.index', ['user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Departamentos">
-                                            <i class="fad fa-warehouse"></i>
-                                        </a>
+                                        <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
+                                            <i class="fad fa-trash-alt"></i>
+                                        </button>
                                         {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">
                                             <i class="fad fa-warehouse"></i>
                                         </button> --}}
