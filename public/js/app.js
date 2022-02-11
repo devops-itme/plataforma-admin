@@ -41922,7 +41922,8 @@ var Orders = /*#__PURE__*/function () {
       this.instantiateBoxes();
       this.addbox();
       this.removeBox();
-      this.searchCustomerData(); // this.requestSearchCustomer();
+      this.searchCustomerData();
+      this.requestSearchCustomer();
     }
   }, {
     key: "instantiateBoxes",
@@ -42012,6 +42013,10 @@ var Orders = /*#__PURE__*/function () {
       [].forEach.call(removeBoxBtn, function (btn) {
         btn.addEventListener('click', function () {
           var box = btn.parentNode.parentNode.parentNode;
+          var parent = box.parentNode;
+          var index = Array.prototype.indexOf.call(parent.children, box);
+          boxes.splice(index, 1);
+          console.log('index', boxes, index);
           box.remove();
         });
       });
@@ -42020,17 +42025,20 @@ var Orders = /*#__PURE__*/function () {
     key: "requestSearchCustomer",
     value: function () {
       var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(query) {
-        var actualLocation, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                actualLocation = window.location['origin'];
                 response = {
                   'state': 500
                 };
-                _context.next = 4;
-                return fetch(actualLocation + "/search_customers?value=" + query).then(function (response) {
+                _context.next = 3;
+                return fetch(actualLocation + "/search_customers?value=" + query);
+
+              case 3:
+                _context.next = 5;
+                return fetch("/search_customers?value=" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -42038,10 +42046,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 4:
+              case 5:
                 return _context.abrupt("return", response);
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -42127,17 +42135,16 @@ var Orders = /*#__PURE__*/function () {
     key: "requestSelectedCustomerData",
     value: function () {
       var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(query) {
-        var actualLocation, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                actualLocation = window.location['origin'];
                 response = {
                   'state': 500
                 };
-                _context3.next = 4;
-                return fetch(actualLocation + "/customer_data/" + query).then(function (response) {
+                _context3.next = 3;
+                return fetch("/customer_data/" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -42145,10 +42152,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 4:
+              case 3:
                 return _context3.abrupt("return", response);
 
-              case 5:
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -42319,8 +42326,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

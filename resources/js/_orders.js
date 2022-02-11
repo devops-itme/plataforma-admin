@@ -108,17 +108,21 @@ export default class Orders {
             btn.addEventListener('click', () => {
 
                 let box = btn.parentNode.parentNode.parentNode;
+                let parent = box.parentNode;
+                let index = Array.prototype.indexOf.call(parent.children, box);
+                boxes.splice(index, 1);
+                console.log('index', boxes, index)
                 box.remove();
             });
         });
     }
 
-    async requestSearchCustomer(query){
-        // let actualLocation = window.location['origin'];
+    async requestSearchCustomer(query) {
         let response = {
-            'state' : 500
+            'state': 500
         };
-        await fetch("/search_customers?value="+query)
+        await fetch(actualLocation + "/search_customers?value=" + query)
+        await fetch("/search_customers?value=" + query)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -127,10 +131,10 @@ export default class Orders {
         return response;
     }
 
-    searchCustomerData(){
+    searchCustomerData() {
         let btnSearch = document.getElementById("btnSearch");
 
-        if(btnSearch == null){
+        if (btnSearch == null) {
             return;
         }
         btnSearch.addEventListener('click', async () => {
@@ -140,14 +144,14 @@ export default class Orders {
             tbody.innerHTML = '';
             let response = await this.requestSearchCustomer(inputValue);
             let data = response.data;
-            if(response.state != 200 || data.length == 0){
+            if (response.state != 200 || data.length == 0) {
                 let row = tbody.insertRow(0);
                 let cell = row.insertCell(0);
                 cell.innerHTML = "No se encontraron registros";
                 cell.colSpan = 3;
                 cell.setAttribute('class', 'text-center font-weight-bold');
             }
-            if(data.length > 0){
+            if (data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
                     let row = tbody.insertRow(i);
 
@@ -158,7 +162,7 @@ export default class Orders {
                     phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
 
                     let tradenameCell = row.insertCell(2);
-                    tradenameCell.innerHTML = data[i]['name'] ? data[i]['name']+" "+data[i]['last_name'] : data[i]['tradename'];
+                    tradenameCell.innerHTML = data[i]['name'] ? data[i]['name'] + " " + data[i]['last_name'] : data[i]['tradename'];
 
                     let selectCell = row.insertCell(3);
                     const userCheck = document.createElement("input");
@@ -176,12 +180,11 @@ export default class Orders {
         });
     }
 
-    async requestSelectedCustomerData(query){
-        // let actualLocation = window.location['origin'];
+    async requestSelectedCustomerData(query) {
         let response = {
-            'state' : 500
+            'state': 500
         };
-        await fetch("/customer_data/"+query)
+        await fetch("/customer_data/" + query)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -190,14 +193,14 @@ export default class Orders {
         return response;
     }
 
-    selectCustomer(){
+    selectCustomer() {
         let allCustomerChecks = document.getElementsByClassName("customerCheck");
         for (let i = 0; i < allCustomerChecks.length; i++) {
             allCustomerChecks[i].addEventListener('click', async () => {
                 let response = await this.requestSelectedCustomerData(allCustomerChecks[i].value);
                 let data = response.data;
                 document.getElementById("user_code").value = data[0]['id'];
-                document.getElementById("user_name").value = data[0]['name'] ? data[0]['name']+" "+data[0]['last_name'] : data[0]['get_customer']['tradename'];
+                document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
                 document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
                 document.getElementById("user_department").value = data[2] != null ? data[2]['name'] : '';
                 document.getElementById("user_branch_office").value = data[1] != null ? data[1]['name'] : '';

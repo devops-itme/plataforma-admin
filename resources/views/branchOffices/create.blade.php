@@ -24,8 +24,10 @@
                 <label>Tipo de sucursal</label>
                 <select class="form-control form-control-solid" id="branch_office_type" name="branch_office_type" value="{{old('branch_office_type')}}">
                     <option selected disabled>Seleccione</option>
-                    @foreach($documents as $document)
-                        <option value="{{$document->id}}" {{$document->id == old('branch_office_type') ? 'selected' : ''}}>{{$document->name}}</option>
+                    @foreach ($branch_office_type as $item)
+                        <option value="{{ $item->id }}"
+                            {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
+                            {{ $item->name }}</option>
                     @endforeach
                 </select>
                 <span class="form-text text-muted"></span>
@@ -81,8 +83,10 @@
                 <label>Metodo de pago:</label>
                 <select class="form-control form-control-solid" id="document_type" name="branch_office_payment_method" >
                     <option selected disabled>Seleccione</option>
-                    @foreach($documents as $document)
-                        <option value="{{$document->id}}" {{$document->id == old('branch_office_payment_method') ? 'selected' : ''}}>{{$document->name}}</option>
+                    @foreach ($payment_method as $item)
+                        <option value="{{ $item->id }}"
+                            {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
+                            {{ $item->name }}</option>
                     @endforeach
                 </select>
                 <span class="form-text text-muted"></span>
