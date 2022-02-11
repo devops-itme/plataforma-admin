@@ -195,6 +195,11 @@ return [
         'contract_type'=>[
             'contrato indefinido',
             'contrato prestación de servicio'
+        ],
+        'payment_period' => [
+            'Semanal',
+            'Quincenal',
+            'Mensual'
         ]
     ]
 
