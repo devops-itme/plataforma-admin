@@ -16,7 +16,7 @@ export default class Orders {
         this.addbox();
         this.removeBox();
         this.searchCustomerData();
-        this.requestSearchCustomer();
+        // this.requestSearchCustomer();
     }
 
     instantiateBoxes() {

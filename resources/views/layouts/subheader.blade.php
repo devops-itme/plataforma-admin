@@ -30,6 +30,9 @@
             <a href="{{route('permits.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="permisos" data-placement="bottom">
                 <i class="fas fa-shield text-muted"></i>
             </a>
+            <a href="{{route('delivery.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Despachos" data-placement="bottom">
+                <i class="fad fa-person-dolly"></i>
+            </a>
         </div>
 
     </div>
