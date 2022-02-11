@@ -34,12 +34,13 @@
                 <label>Tipo de persona</label>
                 <select class="form-control form-control-solid" id="slc_type">
                     <option disabled selected> Seleccione </option>
-                    <option value="1">Persona natural</option>
-                    <option value="2">Persona juridica</option>
+                    <option value="1" {{$customer->getUser->name ? 'selected' : ''}}>Persona natural</option>
+                    <option value="2" {{$customer->business_name ? 'selected' : ''}}>Persona juridica</option>
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="d-flex flex-row flex-wrap col-md-7">
+            <input type="hidden" value="{{$customer->business_name ? '2' : '1'}}" id="customer_type_edit">
+            <div class="col-md-7 d-flex px-0" id="naturalCustomer">
                 <div class="form-group col-md-6">
                     <label>Nombres: <span class="text-danger">*</span></label>
                     <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{$customer->getUser->name}}" />
@@ -48,6 +49,18 @@
                 <div class="form-group col-md-6">
                     <label>Apellidos <span class="text-danger">*</span></label>
                     <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{$customer->getUser->last_name}}" />
+                </div>
+            </div>
+            <div class="d-none" id="legalCustomer">
+                <div class="form-group m-0 col-md-6">
+                    <label>Nombre de empresa <span class="text-danger">*</span></label>
+                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text"
+                        name="business_name" value="{{ $customer->business_name }}" />
+                </div>
+                <div class="form-group m-0 col-md-6">
+                    <label>Nombre comercial <span class="text-danger">*</span></label>
+                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text"
+                        name="tradename" value="{{ $customer->tradename }}" />
                 </div>
             </div>
             <div class="form-group col-md-3">
