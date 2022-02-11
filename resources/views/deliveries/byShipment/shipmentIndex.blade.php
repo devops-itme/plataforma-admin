@@ -43,17 +43,17 @@
     <div class="col-md-10">
         <div class="d-flex flex-row flex-wrap">
             <div class="col-md-5">
-                <p class="mb-0">
+                <p class="mb-2">
                     <span class="font-weight-bolder mb-3">Orden seleccionada: </span>
                     <span class="line-height-xl">104-00333333</span>
                 </p>
-                <p class="mb-0">
-                    <span class="font-weight-bolder mb-3">Mensajero Nro: </span>
-                    <span class="line-height-xl">9013</span>
-                </p>
-                <p class="mb-0">
-                    <span class="font-weight-bolder mb-3">Frank De Jesus Navarro Reyes</span>
-                </p>
+                <div class="mb-2 d-flex flex-row flex-wrap align-items-center justify-content-between">
+                    <span class="font-weight-bolder mb-0">Nro Mensajero: </span>
+                    <input type="number" class="form-control col-7" value="9013">
+                </div>
+                <div class="mb-0">
+                    <input type="text" class="form-control col-12" value="Frank De Jesus Navarro Reyes">
+                </div>
             </div>
             <div class="col-md-7">
                 <p class="mb-0 text-right">
