@@ -195,6 +195,22 @@ return [
         'contract_type'=>[
             'contrato indefinido',
             'contrato prestación de servicio'
+        ],
+        'payment_period' => [
+            'Semanal',
+            'Quincenal',
+            'Mensual'
+        ],
+        'payment_method' => [
+            'Credito',
+            'Plan'
+        ],
+        'use_mode' => [
+            'Saldo',
+            'Credito',
+            'Contado',
+            'Cantidad',
+            'Saldo a favor'
         ]
     ]
 

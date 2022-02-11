@@ -12,7 +12,9 @@ use App\Http\Controllers\Traits\UserTrait;
 use App\Http\Controllers\Traits\CustomerTrait;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
 use App\Http\Controllers\Traits\RestActions;
+use App\Parameter;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -43,7 +45,19 @@ class CustomerController extends Controller
     public function create()
     {
         $documents = ParameterValue::where('parameter_id', 1)->get();
-        return view('customers.create', compact('documents'));
+        //period
+        $payment_period_id = Parameter::where('name', 'payment_period')->first();
+        $payment_period = ParameterValue::where('parameter_id', $payment_period_id->id)->get();
+        //method
+        $payment_method_id = Parameter::where('name', 'payment_method')->first();
+        $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
+        //type
+        $branch_office_type_id = Parameter::where('name', 'branch_office_types')->first();
+        $branch_office_type = ParameterValue::where('parameter_id', $branch_office_type_id->id)->get();
+        //use_mode
+        $use_mode_id = Parameter::where('name', 'use_mode')->first();
+        $use_mode = ParameterValue::where('parameter_id', $use_mode_id->id)->get();
+        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode'));
     }
 
     /**
@@ -109,6 +123,9 @@ class CustomerController extends Controller
                 $data = User::where('document_number', 'like', '%'.$request->value.'%')->with('getCustomer')->get();
             } else {
                 $data = Customer::where('tradename', 'like', '%'.$request->value.'%')->with('getUser')->get();
+                if(count($data) == 0){
+                    $data = User::where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$request->value.'%')->with('getCustomer')->get();
+                }
             }
         }
         return json_encode([
@@ -127,7 +144,13 @@ class CustomerController extends Controller
     {
         $customer = Customer::where('id', $id)->with('getUser')->first();
         $documents = ParameterValue::where('parameter_id', 1)->get();
-        return view('customers.edit', compact('customer', 'documents'));
+        //method
+        $payment_method_id = Parameter::where('name', 'payment_method')->first();
+        $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
+        //period
+        $payment_period_id = Parameter::where('name', 'payment_period')->first();
+        $payment_period = ParameterValue::where('parameter_id', $payment_period_id->id)->get();
+        return view('customers.edit', compact('customer', 'documents', 'payment_method', 'payment_period'));
     }
 
     /**

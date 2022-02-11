@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\BranchOffice;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
+use App\Parameter;
 use App\ParameterValue;
 use App\User;
 
@@ -40,7 +41,16 @@ class BranchOfficeController extends Controller
     public function create($user_id)
     {
         $documents = ParameterValue::where('parameter_id',1)->get();
-        return view('branchOffices.create', compact('documents','user_id'));
+        //method
+        $payment_method_id = Parameter::where('name', 'payment_method')->first();
+        $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
+        //type
+        $branch_office_type_id = Parameter::where('name', 'branch_office_type')->first();
+        $branch_office_type = ParameterValue::where('parameter_id', $branch_office_type_id->id)->get();
+        //use_mode
+        $use_mode_id = Parameter::where('name', 'use_mode')->first();
+        $use_mode = ParameterValue::where('parameter_id', $use_mode_id->id)->get();
+        return view('branchOffices.create', compact('documents','user_id', 'payment_method', 'branch_office_type', 'use_mode'));
     }
 
     /**
@@ -82,7 +92,13 @@ class BranchOfficeController extends Controller
     {
         $office = BranchOffice::where('id', $id)->first();
         $documents = ParameterValue::where('parameter_id',1)->get();
-        return view('branchOffices.edit', compact('office', 'documents'));
+        //type
+        $branch_office_type_id = Parameter::where('name', 'branch_office_types')->first();
+        $branch_office_type = ParameterValue::where('parameter_id', $branch_office_type_id->id)->get();
+        //method
+        $payment_method_id = Parameter::where('name', 'payment_method')->first();
+        $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
+        return view('branchOffices.edit', compact('office', 'documents', 'branch_office_type', 'payment_method'));
     }
 
     /**

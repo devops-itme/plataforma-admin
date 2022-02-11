@@ -41585,70 +41585,302 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Addresses; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var Addresses = /*#__PURE__*/function () {
   function Addresses() {
     _classCallCheck(this, Addresses);
+
+    _defineProperty(this, "getAddresses", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _address$getElementBy;
+
+      var address, $table, $template, $fragment, user_id, res, message;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              address = document, $table = address.querySelector(".address_table"), $template = (_address$getElementBy = address.getElementById("address-template")) === null || _address$getElementBy === void 0 ? void 0 : _address$getElementBy.content, $fragment = address.createDocumentFragment();
+              user_id = $table === null || $table === void 0 ? void 0 : $table.id;
+              $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").replaceChildren($fragment);
+              _context.prev = 3;
+              _context.next = 6;
+              return fetch("/direcciones?user_id=+".concat(user_id)).then(function (response) {
+                return response.json();
+              }).then(function (data) {
+                data.data.forEach(function (element) {
+                  $template.getElementById("description").textContent = element.description;
+                  $template.getElementById("name").textContent = element.name;
+                  $template.getElementById("state").textContent = element.state;
+                  $template.querySelector(".edit").dataset.id = element.id;
+                  $template.querySelector(".edit").dataset.description = element.description;
+                  $template.querySelector(".edit").dataset.name = element.name;
+                  $template.querySelector(".edit").dataset.lat = element.lat;
+                  $template.querySelector(".edit").dataset.lng = element.lng;
+                  $template.querySelector(".delete").dataset.id = element.id;
+                  var $clone = address.importNode($template, true); // populate_with_new_rows(address);
+                  // old_tbody.parentNode.replaceChild(address, old_tbody)
+
+                  // populate_with_new_rows(address);
+                  // old_tbody.parentNode.replaceChild(address, old_tbody)
+                  $fragment.appendChild($clone);
+                });
+              });
+
+            case 6:
+              res = _context.sent;
+              $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").appendChild($fragment);
+              _context.next = 14;
+              break;
+
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](3);
+              message = _context.t0.statusText || "Ocurrió un error";
+              $table === null || $table === void 0 ? void 0 : $table.insertAdjacentHTML("afterend", "<p><b>Error ".concat(_context.t0.status, ": ").concat(message, "</b></p>"));
+
+            case 14:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[3, 10]]);
+    })));
   }
 
   _createClass(Addresses, [{
     key: "initialize",
     value: function initialize() {
       this.autocompleteAddress();
+      this.createAddress();
+      this.getAddresses();
+      this.deleteAddress();
     } //AUTOCOMPLETE BRANCH OFFICES
 
   }, {
     key: "autocompleteAddress",
     value: function autocompleteAddress() {
-      var directionCity = document.getElementById('branch_office_address');
-      google.maps.event.addDomListener(window, 'load', function () {
+      var directionCity = document.getElementById("branch_office_address");
+      google.maps.event.addDomListener(window, "load", function () {
         var autocompleteCity = new google.maps.places.Autocomplete(directionCity, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
-          types: ['geocode']
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
+          types: ["geocode"]
         });
         autocompleteCity.addListener("place_changed", function () {
           var place = autocompleteCity.getPlace();
-          document.getElementById('branch_office_address').value = place.formatted_address;
-          document.getElementById('branch_office_lat').value = place.geometry.location.lat();
-          document.getElementById('branch_office_lng').value = place.geometry.location.lng();
+          document.getElementById("branch_office_address").value = place.formatted_address;
+          document.getElementById("branch_office_lat").value = place.geometry.location.lat();
+          document.getElementById("branch_office_lng").value = place.geometry.location.lng();
         });
       }); //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
 
-      var directionCity2 = document.getElementById('user_address');
-      var directionCity2Edit = document.getElementById('user_address_edit');
-      google.maps.event.addDomListener(window, 'load', function () {
-        var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
-          types: ['geocode']
-        });
-        autocompleteCity2.addListener("place_changed", function () {
-          var place = autocompleteCity2.getPlace();
-          document.getElementById('user_address').value = place.formatted_address;
-          document.getElementById('user_address_lat').value = place.geometry.location.lat();
-          document.getElementById('user_address_lng').value = place.geometry.location.lng();
-        });
-      });
-      google.maps.event.addDomListener(window, 'load', function () {
-        var autocompleteCity2Edit = new google.maps.places.Autocomplete(directionCity2Edit, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.703790)),
-          types: ['geocode']
-        });
-        autocompleteCity2Edit.addListener("place_changed", function () {
-          var place = autocompleteCity2Edit.getPlace();
-          document.getElementById('user_address_edit').value = place.formatted_address;
-          document.getElementById('user_address_lat_edit').value = place.geometry.location.lat();
-          document.getElementById('user_address_lng_edit').value = place.geometry.location.lng();
+      var directionCity2 = document.getElementsByName("address");
+      directionCity2.forEach(function callback(directionCity2, index) {
+        google.maps.event.addDomListener(window, "load", function () {
+          var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
+            bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
+            types: ["geocode"]
+          });
+          autocompleteCity2.addListener("place_changed", function () {
+            var place = autocompleteCity2.getPlace();
+            document.getElementsByName("address")[index].value = place.formatted_address;
+            document.getElementsByName("lat")[index].value = place.geometry.location.lat();
+            document.getElementsByName("lng")[index].value = place.geometry.location.lng();
+          });
         });
       });
+    }
+  }, {
+    key: "createAddress",
+    value: //CREATE ADDRESS
+    function createAddress() {
+      var _this = this;
+
+      var formCreateAddress = document.getElementById("formCreateAddress");
+
+      if (formCreateAddress == null) {
+        return;
+      }
+
+      formCreateAddress.style.display = "none";
+      formCreateAddress.addEventListener("submit", /*#__PURE__*/function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
+          var token, myHeaders, formData, requestOptions, response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  e.preventDefault();
+                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                  myHeaders = new Headers();
+                  myHeaders.append("accept", "application/json");
+                  myHeaders.append("Access-Control-Allow-Origin", "*");
+                  myHeaders.append("Content-Type", "application/json");
+                  myHeaders.append("X-CSRF-TOKEN", token);
+                  formData = JSON.stringify({
+                    user_id: e.target.user_id.value,
+                    name: e.target.address.value,
+                    lat: e.target.lat.value,
+                    lng: e.target.lng.value,
+                    description: e.target.description.value
+                  });
+                  requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: formData
+                  };
+                  _context2.next = 11;
+                  return _this.requestCreateAddress(requestOptions);
+
+                case 11:
+                  response = _context2.sent;
+
+                  if (response.state != 200) {
+                    console.log(formCreateAddress);
+                  }
+
+                  _this.getAddresses();
+
+                case 14:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        }));
+
+        return function (_x) {
+          return _ref2.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
+    key: "requestCreateAddress",
+    value: function () {
+      var _requestCreateAddress = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                response = {
+                  data: 500
+                };
+                _context3.next = 3;
+                return fetch("/direcciones", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 3:
+                return _context3.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function requestCreateAddress(_x2) {
+        return _requestCreateAddress.apply(this, arguments);
+      }
+
+      return requestCreateAddress;
+    }()
+  }, {
+    key: "deleteAddress",
+    value: function deleteAddress() {// let template = document.getElementById("address-template");
+      // if (template == null) {
+      //     return;
+      // }
+      // let btn_delete = template.getElementsByClassName("deleteAddress");
+      // console.log(btn_delete);
+      // template.addEventListener("click", async (e) => {
+      //     e.preventDefault();
+      //     if (e.target.matches(".delete")) {
+      //         let isDelete = confirm(
+      //             `¿Estás seguro de eliminar el id ${e.target.dataset.id}?`
+      //         );
+      //     }
+      // });
     }
   }]);
 
   return Addresses;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/_branchOffice.js":
+/*!***************************************!*\
+  !*** ./resources/js/_branchOffice.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BranchOffices; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var BranchOffices = /*#__PURE__*/function () {
+  function BranchOffices() {
+    _classCallCheck(this, BranchOffices);
+  }
+
+  _createClass(BranchOffices, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadPlanFields();
+    }
+  }, {
+    key: "loadPlanFields",
+    value: function loadPlanFields() {
+      var option = document.getElementById("payment_method");
+      var useMode = document.getElementById("useMode");
+      var slcPlan = document.getElementById("slcPlan");
+
+      if (option == null) {
+        return;
+      }
+
+      option.addEventListener('change', function () {
+        if (option.value == 24) {
+          useMode.className = 'd-none';
+          slcPlan.className = 'd-none';
+        } else {
+          useMode.className = 'form-group col-md-3';
+          slcPlan.className = 'form-group col-md-3';
+        }
+      });
+    }
+  }]);
+
+  return BranchOffices;
 }();
 
 
@@ -41684,12 +41916,23 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "customerFeatures",
     value: function customerFeatures() {
+      var typeSelected = document.getElementById("customer_type_edit");
       var option = document.getElementById("slc_type");
       var naturalCustomer = document.getElementById("naturalCustomer");
       var legalCustomer = document.getElementById("legalCustomer");
 
       if (option == null) {
         return;
+      }
+
+      if (typeSelected != null) {
+        if (typeSelected.value == 1) {
+          legalCustomer.className = 'd-none';
+          naturalCustomer.className = 'col-md-7 d-flex px-0';
+        } else if (typeSelected.value == 2) {
+          naturalCustomer.className = 'd-none';
+          legalCustomer.className = 'col-md-7 d-flex px-0';
+        }
       }
 
       option.addEventListener('change', function (event) {
@@ -42013,6 +42256,10 @@ var Orders = /*#__PURE__*/function () {
       [].forEach.call(removeBoxBtn, function (btn) {
         btn.addEventListener('click', function () {
           var box = btn.parentNode.parentNode.parentNode;
+          var parent = box.parentNode;
+          var index = Array.prototype.indexOf.call(parent.children, box);
+          boxes.splice(index, 1);
+          console.log('index', boxes, index);
           box.remove();
         });
       });
@@ -42021,17 +42268,16 @@ var Orders = /*#__PURE__*/function () {
     key: "requestSearchCustomer",
     value: function () {
       var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(query) {
-        var actualLocation, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                actualLocation = window.location['origin'];
                 response = {
                   'state': 500
                 };
-                _context.next = 4;
-                return fetch(actualLocation + "/search_customers?value=" + query).then(function (response) {
+                _context.next = 3;
+                return fetch("/search_customers?value=" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -42039,10 +42285,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 4:
+              case 3:
                 return _context.abrupt("return", response);
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -42097,18 +42343,18 @@ var Orders = /*#__PURE__*/function () {
                   for (i = 0; i < data.length; i++) {
                     _row = tbody.insertRow(i);
                     idCell = _row.insertCell(0);
-                    idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
+                    idCell.innerHTML = data[i].name ? data[i].id : data[i].get_user.id;
                     phoneCell = _row.insertCell(1);
-                    phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
+                    phoneCell.innerHTML = data[i].name ? data[i].phone : data[i].get_user.phone;
                     tradenameCell = _row.insertCell(2);
-                    tradenameCell.innerHTML = data[i]['name'] ? data[i]['name'] + " " + data[i]['last_name'] : data[i]['tradename'];
+                    tradenameCell.innerHTML = data[i].name ? data[i].name + " " + data[i].last_name : data[i].tradename;
                     selectCell = _row.insertCell(3);
                     userCheck = document.createElement("input");
                     userCheck.setAttribute('class', 'btn btn-success customerCheck');
                     userCheck.setAttribute('type', 'radio');
                     userCheck.setAttribute('name', 'customerCheck');
                     userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
+                    userCheck.setAttribute('value', data[i].name ? data[i].id : data[i].get_user.id);
                     selectCell.appendChild(userCheck);
                     tbody.appendChild(_row);
                   }
@@ -42128,17 +42374,16 @@ var Orders = /*#__PURE__*/function () {
     key: "requestSelectedCustomerData",
     value: function () {
       var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(query) {
-        var actualLocation, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                actualLocation = window.location['origin'];
                 response = {
                   'state': 500
                 };
-                _context3.next = 4;
-                return fetch(actualLocation + "/customer_data/" + query).then(function (response) {
+                _context3.next = 3;
+                return fetch("/customer_data/" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -42146,10 +42391,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 4:
+              case 3:
                 return _context3.abrupt("return", response);
 
-              case 5:
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -42232,7 +42477,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
 /* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
 /* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
+/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -42246,6 +42493,7 @@ var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var customers = new _customers__WEBPACK_IMPORTED_MODULE_4__["default"]();
 var orders = new _orders__WEBPACK_IMPORTED_MODULE_5__["default"]();
 var general = new _general__WEBPACK_IMPORTED_MODULE_6__["default"]();
+var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
 document.addEventListener("DOMContentLoaded", function (event) {
   // bootstrapSelect.initialize();
   orders.initialize();
@@ -42253,6 +42501,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   addresses.initialize();
   customers.initialize();
   general.initialize();
+  branchOffice.initialize();
 });
 
 /***/ }),
@@ -42320,8 +42569,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
