@@ -27,12 +27,12 @@
     <div class="card-body px-5">
         <div class="d-flex flex-row flex-wrap">
             <div class="col-md-8 border-right">
-                <div class="tab-content">
+                <div class="tab-content h-500px">
                     <div class="tab-pane fade show active" id="pordespachar" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                         @include('deliveries.byShipment.shipmentIndex')
                     </div>
                     <div class="tab-pane fade" id="despachados" role="tabpanel" aria-labelledby="kt_tab_pane_2">
-
+                        @include('deliveries.shipmented.shipmentedIndex')
                     </div>
                     <div class="tab-pane fade" id="completados" role="tabpanel" aria-labelledby="kt_tab_pane_3">
                         3
@@ -88,6 +88,7 @@
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
                     <a href="#" class="btn btn-light-success font-weight-bold mr-2">Imprimir</a>
                     <a href="#" class="btn btn-light-primary font-weight-bold mr-2">Detalle GPS</a>
+                    <a href="#" class="btn btn-light-primary font-weight-bold mr-2">Volver a despachar</a>
                 </div>
             </div>
         </div>
