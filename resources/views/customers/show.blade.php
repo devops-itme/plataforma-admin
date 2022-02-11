@@ -134,7 +134,7 @@
                 <td id="name" >Rebolo, Atlántico, Colombia</td>
                 <td id="state">Activa</td>
                 <td>
-                    <button type="button" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal">
+                    <button type="button" id="deleteAddress" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal">
                         <i class="fas fa-edit"></i>
                     </button>
                     <button type="button" class="delete btn btn-icon btn-light-danger">
@@ -206,11 +206,11 @@
                             <input type="hidden" name="lng" id="branch_office_lng_edit" value="{{old('lng')}}">
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                        <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>GUARDAR</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>GUARDAR</button>
             </div>
         </div>
     </div>

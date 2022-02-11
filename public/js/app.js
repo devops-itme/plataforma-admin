@@ -41615,38 +41615,49 @@ var Addresses = /*#__PURE__*/function () {
             case 0:
               address = document, $table = address.querySelector(".address_table"), $template = (_address$getElementBy = address.getElementById("address-template")) === null || _address$getElementBy === void 0 ? void 0 : _address$getElementBy.content, $fragment = address.createDocumentFragment();
               user_id = $table === null || $table === void 0 ? void 0 : $table.id;
-              _context.prev = 2;
-              _context.next = 5;
-              return fetch('/direcciones?user_id=' + user_id).then(function (response) {
+              $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").replaceChildren($fragment);
+              _context.prev = 3;
+              _context.next = 6;
+              return fetch("/direcciones?user_id=+".concat(user_id)).then(function (response) {
                 return response.json();
               }).then(function (data) {
                 data.data.forEach(function (element) {
                   $template.getElementById("description").textContent = element.description;
                   $template.getElementById("name").textContent = element.name;
                   $template.getElementById("state").textContent = element.state;
-                  var $clone = address.importNode($template, true);
+                  $template.querySelector(".edit").dataset.id = element.id;
+                  $template.querySelector(".edit").dataset.description = element.description;
+                  $template.querySelector(".edit").dataset.name = element.name;
+                  $template.querySelector(".edit").dataset.lat = element.lat;
+                  $template.querySelector(".edit").dataset.lng = element.lng;
+                  $template.querySelector(".delete").dataset.id = element.id;
+                  var $clone = address.importNode($template, true); // populate_with_new_rows(address);
+                  // old_tbody.parentNode.replaceChild(address, old_tbody)
+
+                  // populate_with_new_rows(address);
+                  // old_tbody.parentNode.replaceChild(address, old_tbody)
                   $fragment.appendChild($clone);
                 });
               });
 
-            case 5:
+            case 6:
               res = _context.sent;
               $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").appendChild($fragment);
-              _context.next = 13;
+              _context.next = 14;
               break;
 
-            case 9:
-              _context.prev = 9;
-              _context.t0 = _context["catch"](2);
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](3);
               message = _context.t0.statusText || "Ocurrió un error";
               $table === null || $table === void 0 ? void 0 : $table.insertAdjacentHTML("afterend", "<p><b>Error ".concat(_context.t0.status, ": ").concat(message, "</b></p>"));
 
-            case 13:
+            case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[2, 9]]);
+      }, _callee, null, [[3, 10]]);
     })));
   }
 
@@ -41656,6 +41667,7 @@ var Addresses = /*#__PURE__*/function () {
       this.autocompleteAddress();
       this.createAddress();
       this.getAddresses();
+      this.deleteAddress();
     } //AUTOCOMPLETE BRANCH OFFICES
 
   }, {
@@ -41793,6 +41805,23 @@ var Addresses = /*#__PURE__*/function () {
 
       return requestCreateAddress;
     }()
+  }, {
+    key: "deleteAddress",
+    value: function deleteAddress() {// let template = document.getElementById("address-template");
+      // if (template == null) {
+      //     return;
+      // }
+      // let btn_delete = template.getElementsByClassName("deleteAddress");
+      // console.log(btn_delete);
+      // template.addEventListener("click", async (e) => {
+      //     e.preventDefault();
+      //     if (e.target.matches(".delete")) {
+      //         let isDelete = confirm(
+      //             `¿Estás seguro de eliminar el id ${e.target.dataset.id}?`
+      //         );
+      //     }
+      // });
+    }
   }]);
 
   return Addresses;
@@ -42540,8 +42569,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
