@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MessengerTrait;
-use App\Http\Controllers\Traits\RestActions;
-// use App\Http\Controllers\Traits\UserTrait;
 use App\Messenger;
 use App\User;
 use Illuminate\Http\Request;
@@ -13,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MessengerController extends Controller
 {
-    use RestActions, MessengerTrait;
+    use MessengerTrait;
 
     public function show()
     {
