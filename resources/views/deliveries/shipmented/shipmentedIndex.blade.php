@@ -51,17 +51,17 @@
             <div class="col-md-8 d-flex flex-row flex-wrap">
                 <div class="form-group py-3 m-0 col-md-3">
                     <label>Nro Mensajero:</label>
-                    <input type="number" class="form-control form-control-solid" value="9013" />
+                    <input type="number" class="form-control" value="9013" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group py-3 m-0 col-md-3">
                     <label>Orden:</label>
-                    <input type="text" class="form-control form-control-solid" value="104-2312333" />
+                    <input type="text" class="form-control" value="104-2312333" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group py-3 m-0 col-md-5">
                     <label>Cliente:</label>
-                    <input type="text" class="form-control form-control-solid" value="Juanito Perez" />
+                    <input type="text" class="form-control" value="Juanito Perez" />
                     <span class="form-text text-muted"></span>
                 </div>
             </div>
