@@ -115,7 +115,7 @@
         </div>
     </div>
     <div class="card-body">
-        <table class="address_table table align-items-center text-center table-flush">
+        <table class="address_table table align-items-center text-center table-flush" id="{{$customer->user_id}}">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Descripción</th>
@@ -162,13 +162,13 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label> Descripción </label>
-                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Nombre">
+                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Descripción">
                         </div>
                         <div class="col-md-6">
                             <label> Dirección *</label>
-                            <input type="text" name="user_address" class="form-control" value="{{old('user_address')}}" id="user_address" placeholder="Introduce una ubicación">
-                            <input type="hidden" name="user_address_lat" id="branch_office_lat" value="{{old('user_address_lat')}}">
-                            <input type="hidden" name="user_address_lng" id="branch_office_lng" value="{{old('user_address_lng')}}">
+                            <input type="text" name="address" class="form-control" value="{{old('address')}}" id="address" placeholder="Introduce una ubicación">
+                            <input type="hidden" name="lat" id="branch_office_lat" value="{{old('lat')}}">
+                            <input type="hidden" name="lng" id="branch_office_lng" value="{{old('lng')}}">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -193,16 +193,17 @@
             </div>
             <div class="modal-body">
                 <form action="#">
+                    <input type="text" hidden name="user_id" value="{{$customer->user_id}}">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label> Descripción </label>
-                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Nombre">
+                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Descripción">
                         </div>
                         <div class="col-md-6">
                             <label> Dirección *</label>
-                            <input type="text" name="user_address" class="form-control" value="{{old('user_address')}}" id="user_address" placeholder="Introduce una ubicación">
-                            <input type="hidden" name="user_address_lat" id="branch_office_lat" value="{{old('user_address_lat')}}">
-                            <input type="hidden" name="user_address_lng" id="branch_office_lng" value="{{old('user_address_lng')}}">
+                            <input type="text" name="address" class="form-control" value="{{old('address')}}" id="address_edit" placeholder="Introduce una ubicación">
+                            <input type="hidden" name="lat" id="branch_office_lat_edit" value="{{old('lat')}}">
+                            <input type="hidden" name="lng" id="branch_office_lng_edit" value="{{old('lng')}}">
                         </div>
                     </div>
                 </form>

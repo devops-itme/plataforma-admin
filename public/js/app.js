@@ -41608,52 +41608,45 @@ var Addresses = /*#__PURE__*/function () {
     _defineProperty(this, "getAddresses", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var _address$getElementBy;
 
-      var address, $table, $form, $template, $fragment, res, message;
+      var address, $table, $template, $fragment, user_id, res, message;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              address = document, $table = address.querySelector(".address_table"), $form = address.querySelector(".address_form"), $template = (_address$getElementBy = address.getElementById("address-template")) === null || _address$getElementBy === void 0 ? void 0 : _address$getElementBy.content, $fragment = address.createDocumentFragment();
-              _context.prev = 1;
-              _context.next = 4;
-              return fetch("/direcciones").then(function (response) {
+              address = document, $table = address.querySelector(".address_table"), $template = (_address$getElementBy = address.getElementById("address-template")) === null || _address$getElementBy === void 0 ? void 0 : _address$getElementBy.content, $fragment = address.createDocumentFragment();
+              user_id = $table === null || $table === void 0 ? void 0 : $table.id;
+              _context.prev = 2;
+              _context.next = 5;
+              return fetch('/direcciones?user_id=' + user_id).then(function (response) {
                 return response.json();
               }).then(function (data) {
                 data.data.forEach(function (element) {
                   $template.getElementById("description").textContent = element.description;
                   $template.getElementById("name").textContent = element.name;
-                  $template.getElementById("state").textContent = element.state; // $template.querySelector(".edit").dataset.id = el.id;
-                  // $template.querySelector(".edit").dataset.name = el.nombre;
-                  // $template.querySelector(".edit").dataset.constellation = el.constelacion;
-                  // $template.querySelector(".delete").dataset.id = el.id;
-
-                  // $template.querySelector(".edit").dataset.id = el.id;
-                  // $template.querySelector(".edit").dataset.name = el.nombre;
-                  // $template.querySelector(".edit").dataset.constellation = el.constelacion;
-                  // $template.querySelector(".delete").dataset.id = el.id;
+                  $template.getElementById("state").textContent = element.state;
                   var $clone = address.importNode($template, true);
                   $fragment.appendChild($clone);
                 });
               });
 
-            case 4:
+            case 5:
               res = _context.sent;
-              $table.querySelector("tbody").appendChild($fragment);
-              _context.next = 12;
+              $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").appendChild($fragment);
+              _context.next = 13;
               break;
 
-            case 8:
-              _context.prev = 8;
-              _context.t0 = _context["catch"](1);
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](2);
               message = _context.t0.statusText || "Ocurrió un error";
-              $table.insertAdjacentHTML("afterend", "<p><b>Error ".concat(_context.t0.status, ": ").concat(message, "</b></p>"));
+              $table === null || $table === void 0 ? void 0 : $table.insertAdjacentHTML("afterend", "<p><b>Error ".concat(_context.t0.status, ": ").concat(message, "</b></p>"));
 
-            case 12:
+            case 13:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 8]]);
+      }, _callee, null, [[2, 9]]);
     })));
   }
 
@@ -41682,17 +41675,19 @@ var Addresses = /*#__PURE__*/function () {
         });
       }); //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
 
-      var directionCity2 = document.getElementById("user_address");
-      google.maps.event.addDomListener(window, "load", function () {
-        var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
-          types: ["geocode"]
-        });
-        autocompleteCity2.addListener("place_changed", function () {
-          var place = autocompleteCity2.getPlace();
-          document.getElementById("user_address").value = place.formatted_address;
-          document.getElementById("user_address_lat").value = place.geometry.location.lat();
-          document.getElementById("user_address_lng").value = place.geometry.location.lng();
+      var directionCity2 = document.getElementsByName("address");
+      directionCity2.forEach(function callback(directionCity2, index) {
+        google.maps.event.addDomListener(window, "load", function () {
+          var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
+            bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
+            types: ["geocode"]
+          });
+          autocompleteCity2.addListener("place_changed", function () {
+            var place = autocompleteCity2.getPlace();
+            document.getElementsByName("address")[index].value = place.formatted_address;
+            document.getElementsByName("lat")[index].value = place.geometry.location.lat();
+            document.getElementsByName("lng")[index].value = place.geometry.location.lng();
+          });
         });
       });
     }
@@ -41700,43 +41695,104 @@ var Addresses = /*#__PURE__*/function () {
     key: "createAddress",
     value: //CREATE ADDRESS
     function createAddress() {
+      var _this = this;
+
       var formCreateAddress = document.getElementById("formCreateAddress");
 
       if (formCreateAddress == null) {
         return;
       }
 
-      formCreateAddress.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-        var myHeaders = new Headers();
-        myHeaders.append("accept", "application/json");
-        myHeaders.append("Access-Control-Allow-Origin", "*");
-        myHeaders.append("X-CSRF-TOKEN", token);
-        var requestOptions = {
-          method: "POST",
-          headers: myHeaders,
-          body: new FormData(formCreateAddress[0])
+      formCreateAddress.style.display = "none";
+      formCreateAddress.addEventListener("submit", /*#__PURE__*/function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
+          var token, myHeaders, formData, requestOptions, response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  e.preventDefault();
+                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                  myHeaders = new Headers();
+                  myHeaders.append("accept", "application/json");
+                  myHeaders.append("Access-Control-Allow-Origin", "*");
+                  myHeaders.append("Content-Type", "application/json");
+                  myHeaders.append("X-CSRF-TOKEN", token);
+                  formData = JSON.stringify({
+                    user_id: e.target.user_id.value,
+                    name: e.target.address.value,
+                    lat: e.target.lat.value,
+                    lng: e.target.lng.value,
+                    description: e.target.description.value
+                  });
+                  requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: formData
+                  };
+                  _context2.next = 11;
+                  return _this.requestCreateAddress(requestOptions);
+
+                case 11:
+                  response = _context2.sent;
+
+                  if (response.state != 200) {
+                    console.log(formCreateAddress);
+                  }
+
+                  _this.getAddresses();
+
+                case 14:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        }));
+
+        return function (_x) {
+          return _ref2.apply(this, arguments);
         };
-        fetch("/direcciones", requestOptions).then(function (response) {
-          return response.json();
-        }).then(function (data) {
-          if (data.state == 500) {
-            alert(data.message);
-          }
-
-          if (data.state == 200) {
-            alert(data.message);
-          }
-
-          if (data.errors) {
-            alert(data.errors);
-          }
-        })["catch"](function (err) {
-          return console.warn(err);
-        });
-      });
+      }());
     }
+  }, {
+    key: "requestCreateAddress",
+    value: function () {
+      var _requestCreateAddress = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                response = {
+                  data: 500
+                };
+                _context3.next = 3;
+                return fetch("/direcciones", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 3:
+                return _context3.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function requestCreateAddress(_x2) {
+        return _requestCreateAddress.apply(this, arguments);
+      }
+
+      return requestCreateAddress;
+    }()
   }]);
 
   return Addresses;

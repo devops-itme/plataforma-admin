@@ -21,68 +21,59 @@ export default class Addresses {
 
             autocompleteCity.addListener("place_changed", () => {
                 const place = autocompleteCity.getPlace();
-                document.getElementById("branch_office_address").value =
-                    place.formatted_address;
-                document.getElementById("branch_office_lat").value =
-                    place.geometry.location.lat();
-                document.getElementById("branch_office_lng").value =
-                    place.geometry.location.lng();
+                document.getElementById("branch_office_address").value = place.formatted_address;
+                document.getElementById("branch_office_lat").value = place.geometry.location.lat();
+                document.getElementById("branch_office_lng").value = place.geometry.location.lng();
             });
         });
 
         //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
-        const directionCity2 = document.getElementById("user_address");
-
-        google.maps.event.addDomListener(window, "load", function () {
-            const autocompleteCity2 = new google.maps.places.Autocomplete(
-                directionCity2,
-                {
-                    bounds: new google.maps.LatLngBounds(
-                        new google.maps.LatLng(40.416775, -3.70379)
-                    ),
-                    types: ["geocode"],
-                }
-            );
-
-            autocompleteCity2.addListener("place_changed", () => {
-                const place = autocompleteCity2.getPlace();
-                document.getElementById("user_address").value =place.formatted_address;
-                document.getElementById("user_address_lat").value =place.geometry.location.lat();
-                document.getElementById("user_address_lng").value =place.geometry.location.lng();
+        const directionCity2 = document.getElementsByName("address");
+        directionCity2.forEach(function callback(directionCity2, index) {
+            google.maps.event.addDomListener(window, "load", function () {
+                const autocompleteCity2 = new google.maps.places.Autocomplete(
+                    directionCity2,
+                    {
+                        bounds: new google.maps.LatLngBounds(
+                            new google.maps.LatLng(40.416775, -3.70379)
+                        ),
+                        types: ["geocode"],
+                    }
+                );
+                autocompleteCity2.addListener("place_changed", () => {
+                    const place = autocompleteCity2.getPlace();
+                    document.getElementsByName("address")[index].value =place.formatted_address;
+                    document.getElementsByName("lat")[index].value =place.geometry.location.lat();
+                    document.getElementsByName("lng")[index].value =place.geometry.location.lng();
+                });
             });
         });
-
     }
 
     getAddresses = async () => {
         const address = document,
             $table = address.querySelector(".address_table"),
-            $form = address.querySelector(".address_form"),
             $template = address.getElementById("address-template")?.content,
             $fragment = address.createDocumentFragment();
+            let user_id = $table?.id;
 
         try {
-            let res = await fetch("/direcciones")
+            let res = await fetch('/direcciones?user_id='+user_id)
             .then((response) => response.json())
             .then(function (data) {
                 data.data.forEach(element => {
                     $template.getElementById("description").textContent = element.description;
                     $template.getElementById("name").textContent = element.name;
                     $template.getElementById("state").textContent = element.state;
-                    // $template.querySelector(".edit").dataset.id = el.id;
-                    // $template.querySelector(".edit").dataset.name = el.nombre;
-                    // $template.querySelector(".edit").dataset.constellation = el.constelacion;
-                    // $template.querySelector(".delete").dataset.id = el.id;
-
                     let $clone = address.importNode($template, true);
                     $fragment.appendChild($clone);
                });
 
             })
-            $table.querySelector("tbody").appendChild($fragment);
+            $table?.querySelector("tbody").appendChild($fragment);
         } catch (err) {
             let message = err.statusText || "Ocurrió un error";
-            $table.insertAdjacentHTML(
+            $table?.insertAdjacentHTML(
               "afterend",
               `<p><b>Error ${err.status}: ${message}</b></p>`
             );
@@ -94,37 +85,51 @@ export default class Addresses {
         if (formCreateAddress == null) {
             return;
         }
-        formCreateAddress.addEventListener("submit", function (e) {
+
+        formCreateAddress.style.display = "none"
+        formCreateAddress.addEventListener("submit", async (e) => {
             e.preventDefault();
-            let token = document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute("content");
+            let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
             myHeaders.append("Access-Control-Allow-Origin", "*");
+            myHeaders.append("Content-Type", "application/json");
             myHeaders.append("X-CSRF-TOKEN", token);
+
+            let formData = JSON.stringify({
+                user_id: e.target.user_id.value,
+                name: e.target.address.value,
+                lat:  e.target.lat.value,
+                lng: e.target.lng.value,
+                description: e.target.description.value
+            });
 
             let requestOptions = {
                 method: "POST",
                 headers: myHeaders,
-                body: new FormData(formCreateAddress[0]),
+                body: formData,
             };
+            let response = await this.requestCreateAddress(requestOptions);
 
-            fetch("/direcciones", requestOptions)
-                .then((response) => response.json())
-                .then(function (data) {
-                    if (data.state == 500) {
-                        alert(data.message);
-                    }
-                    if (data.state == 200) {
-                        alert(data.message);
-                    }
-                    if (data.errors) {
-                        alert(data.errors);
-                    }
-                })
-                .catch((err) => console.warn(err));
+            if(response.state != 200){
+                console.log(formCreateAddress)
+            }
+            this.getAddresses();
+
+
         });
+    }
+
+    async requestCreateAddress(requestOptions){
+        let response = {data:500};
+       await fetch("/direcciones", requestOptions)
+        .then((response) => response.json())
+        .then(function (data) {
+            response = data;
+        })
+        .catch((err) => console.warn(err));
+
+        return response;
     }
 
 }

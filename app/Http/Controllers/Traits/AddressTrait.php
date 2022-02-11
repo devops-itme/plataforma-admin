@@ -23,15 +23,13 @@ trait AddressTrait
                 'description' => 'required',
                 'lat' => 'required',
                 'lng' => 'required',
-                'state' => 'required',
-
             ]
         );
     }
     public function getAddresses()
     {
         try {
-            $addresses = Address::get();
+            $addresses = Address::where('user_id', Request()->user_id)->get();
             return $this->respond(200, $addresses);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
