@@ -35,7 +35,7 @@
                         @include('deliveries.shipmented.shipmentedIndex')
                     </div>
                     <div class="tab-pane fade" id="completados" role="tabpanel" aria-labelledby="kt_tab_pane_3">
-                        3
+                        @include('deliveries.finished.finishedIndex')
                     </div>
                 </div>
             </div>
