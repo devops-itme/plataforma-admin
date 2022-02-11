@@ -44,9 +44,16 @@ class CustomerController extends Controller
     public function create()
     {
         $documents = ParameterValue::where('parameter_id', 1)->get();
+        //period
         $payment_period_id = Parameter::where('name', 'payment_period')->first();
         $payment_period = ParameterValue::where('parameter_id', $payment_period_id->id)->get();
-        return view('customers.create', compact('documents', 'payment_period'));
+        //method
+        $payment_method_id = Parameter::where('name', 'payment_method')->first();
+        $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
+        //type
+        $branch_office_type_id = Parameter::where('name', 'branch_office_type')->first();
+        $branch_office_type = ParameterValue::where('parameter_id', $branch_office_type_id->id)->get();
+        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type'));
     }
 
     /**

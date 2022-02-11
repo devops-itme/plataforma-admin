@@ -200,6 +200,14 @@ return [
             'Semanal',
             'Quincenal',
             'Mensual'
+        ],
+        'payment_method' => [
+            'Credito',
+            'Plan'
+        ],
+        'branch_office_type' => [
+            'Interna',
+            'Externa'
         ]
     ]
 

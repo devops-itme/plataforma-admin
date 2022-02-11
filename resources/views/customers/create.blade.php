@@ -138,11 +138,12 @@
                                     <label for="payment_pediod">Periodo de pago <span class="text-danger">*</span></label>
                                     <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_period"
                                         name="payment_period">
-                                        <option value="1" {{ old('payment_period') == 1 ? 'selected' : '' }}>1</option>
-                                        <option value="2" {{ old('payment_period') == 2 ? 'selected' : '' }}>2</option>
-                                        <option value="3" {{ old('payment_period') == 3 ? 'selected' : '' }}>3</option>
-                                        <option value="4" {{ old('payment_period') == 4 ? 'selected' : '' }}>4</option>
-                                        <option value="5" {{ old('payment_period') == 5 ? 'selected' : '' }}>5</option>
+                                        <option value="" selected disabled> Seleccione </option>
+                                        @foreach ($payment_period as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
+                                                {{ $item->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-2 mb-0 py-4">
@@ -230,11 +231,10 @@
                                     <select class="form-control form-control-solid" id="branch_office_type"
                                         name="branch_office_type">
                                         <option selected disabled>Seleccione</option>
-                                        @foreach ($documents as $document)
-                                            <option value="{{ $document->id }}"
-                                                {{ $document->id == old('branch_office_type') ? 'selected' : '' }}>
-                                                {{ $document->name }}
-                                            </option>
+                                        @foreach ($branch_office_type as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
+                                                {{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="form-text text-muted"></span>
@@ -305,7 +305,7 @@
                                     <select class="form-control form-control-solid" id="document_type"
                                         name="branch_office_payment_method">
                                         <option selected disabled>Seleccione</option>
-                                        @foreach ($payment_period as $item)
+                                        @foreach ($payment_method as $item)
                                             <option value="{{ $item->id }}"
                                                 {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
                                                 {{ $item->name }}</option>
