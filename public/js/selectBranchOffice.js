@@ -1,8 +1,5 @@
 async function selectBranchOffice(id) {
-
-    let actualLocation = window.location['origin'];
-
-    await fetch(actualLocation+"/sucursales_cliente/"+id)
+    await fetch("/sucursales_cliente/"+id)
     .then(response => response.json())
     .then(data =>{
 

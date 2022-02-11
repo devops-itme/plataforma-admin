@@ -42090,10 +42090,6 @@ var Orders = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context.next = 3;
-                return fetch(actualLocation + "/search_customers?value=" + query);
-
-              case 3:
-                _context.next = 5;
                 return fetch("/search_customers?value=" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -42102,10 +42098,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 5:
+              case 3:
                 return _context.abrupt("return", response);
 
-              case 6:
+              case 4:
               case "end":
                 return _context.stop();
             }

@@ -121,7 +121,6 @@ export default class Orders {
         let response = {
             'state': 500
         };
-        await fetch(actualLocation + "/search_customers?value=" + query)
         await fetch("/search_customers?value=" + query)
             .then(response => response.json())
             .then(data => {
