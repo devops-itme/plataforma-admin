@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar-nav li:hover > ul.dropdown-menu {
+    display: block;
+}
+.drop {
+    position: relative;
+}
