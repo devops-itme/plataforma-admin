@@ -155,13 +155,13 @@ export default class Orders {
                     let row = tbody.insertRow(i);
 
                     let idCell = row.insertCell(0);
-                    idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
+                    idCell.innerHTML = data[i].name ? data[i].id : data[i].get_user.id;
 
                     let phoneCell = row.insertCell(1);
-                    phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
+                    phoneCell.innerHTML = data[i].name ? data[i].phone : data[i].get_user.phone;
 
                     let tradenameCell = row.insertCell(2);
-                    tradenameCell.innerHTML = data[i]['name'] ? data[i]['name'] + " " + data[i]['last_name'] : data[i]['tradename'];
+                    tradenameCell.innerHTML = data[i].name ? data[i].name+" "+ data[i].last_name : data[i].tradename;
 
                     let selectCell = row.insertCell(3);
                     const userCheck = document.createElement("input");
@@ -169,7 +169,7 @@ export default class Orders {
                     userCheck.setAttribute('type', 'radio');
                     userCheck.setAttribute('name', 'customerCheck');
                     userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
+                    userCheck.setAttribute('value', data[i].name ? data[i].id : data[i].get_user.id);
                     selectCell.appendChild(userCheck);
 
                     tbody.appendChild(row);

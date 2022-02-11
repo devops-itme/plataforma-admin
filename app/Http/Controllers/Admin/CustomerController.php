@@ -14,6 +14,7 @@ use App\Http\Controllers\Traits\BranchOfficeTrait;
 use App\Http\Controllers\Traits\RestActions;
 use App\Parameter;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -51,7 +52,7 @@ class CustomerController extends Controller
         $payment_method_id = Parameter::where('name', 'payment_method')->first();
         $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
         //type
-        $branch_office_type_id = Parameter::where('name', 'branch_office_type')->first();
+        $branch_office_type_id = Parameter::where('name', 'branch_office_types')->first();
         $branch_office_type = ParameterValue::where('parameter_id', $branch_office_type_id->id)->get();
         //use_mode
         $use_mode_id = Parameter::where('name', 'use_mode')->first();
@@ -122,6 +123,9 @@ class CustomerController extends Controller
                 $data = User::where('document_number', 'like', '%'.$request->value.'%')->with('getCustomer')->get();
             } else {
                 $data = Customer::where('tradename', 'like', '%'.$request->value.'%')->with('getUser')->get();
+                if(count($data) == 0){
+                    $data = User::where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$request->value.'%')->with('getCustomer')->get();
+                }
             }
         }
         return json_encode([

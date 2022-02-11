@@ -42167,18 +42167,18 @@ var Orders = /*#__PURE__*/function () {
                   for (i = 0; i < data.length; i++) {
                     _row = tbody.insertRow(i);
                     idCell = _row.insertCell(0);
-                    idCell.innerHTML = data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id'];
+                    idCell.innerHTML = data[i].name ? data[i].id : data[i].get_user.id;
                     phoneCell = _row.insertCell(1);
-                    phoneCell.innerHTML = data[i]['name'] ? data[i]['phone'] : data[i]['get_user']['phone'];
+                    phoneCell.innerHTML = data[i].name ? data[i].phone : data[i].get_user.phone;
                     tradenameCell = _row.insertCell(2);
-                    tradenameCell.innerHTML = data[i]['name'] ? data[i]['name'] + " " + data[i]['last_name'] : data[i]['tradename'];
+                    tradenameCell.innerHTML = data[i].name ? data[i].name + " " + data[i].last_name : data[i].tradename;
                     selectCell = _row.insertCell(3);
                     userCheck = document.createElement("input");
                     userCheck.setAttribute('class', 'btn btn-success customerCheck');
                     userCheck.setAttribute('type', 'radio');
                     userCheck.setAttribute('name', 'customerCheck');
                     userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', data[i]['name'] ? data[i]['id'] : data[i]['get_user']['id']);
+                    userCheck.setAttribute('value', data[i].name ? data[i].id : data[i].get_user.id);
                     selectCell.appendChild(userCheck);
                     tbody.appendChild(_row);
                   }

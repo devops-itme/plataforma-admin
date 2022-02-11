@@ -205,10 +205,6 @@ return [
             'Credito',
             'Plan'
         ],
-        'branch_office_type' => [
-            'Interna',
-            'Externa'
-        ],
         'use_mode' => [
             'Saldo',
             'Credito',
