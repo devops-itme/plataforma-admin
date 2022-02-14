@@ -10,6 +10,14 @@
         <div class="card-title">
             <h3 class="card-label">Despachos</h3>
         </div>
+        <div class="card-title">
+            <h6 class=" card-label">Desde:</h6>
+            <input type="date" value="2022-10-02" min="2000-01-01" style="margin-right: 20px;">
+            <h6 class="card-label">Hasta:</h6>
+            <input type="date" value="2022-10-02" min="2000-01-01" style="margin-right: 10px;">
+            <input type="checkbox" id="check" style="margin-right: 5px;">
+            <h6 class=" card-text">Ver todo</h6>
+        </div>
         <div class="card-toolbar">
             <ul class="nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-3x">
                 <li class="nav-item">
@@ -21,6 +29,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#completados">Completados</a>
                 </li>
+
             </ul>
         </div>
     </div>
@@ -60,7 +69,7 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Telefono:</div>
-                        <div class="line-height-xl">3002220000</div>
+                        <div class="line-height-x1">3002220000</div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Contacto:</div>
@@ -74,6 +83,51 @@
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Medio de pago:</div>
                         <div class="line-height-xl">Efectivo</div>
+                    </div>
+                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Movil:</div>
+                        <div class="line-height-xl">381, YEMAYEL ARIEL</div>
+                    </div>
+                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">(1) Adicional*0:</div>
+                        <div class="line-height-xl">$0</div>
+                    </div>
+                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Cliente Depto:</div>
+                        <div class="line-height-x1">84: PRINCIPAL</div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
+                        <div class="line-height-x1">1179: PRINCIPAL</div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Cliente Documento:</div>
+                        <div class="line-height-x1">1191: DELIVERY</div>
+                    </div>
+                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Concepto:</div>
+                        <div class="line-height-xl">RETIRAR FIANZA A NOMBRE DE EDEMET</div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Dirección:</div>
+                        <div class="line-height-xl">CLL 50: SAN FRANCISCO: PANAMA</div>
+                    </div>
+                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Contacto:</div>
+                        <div class="line-height-xl"></div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Contacto Email:</div>
+                        <div class="line-height-xl"></div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Contacto Phone:</div>
+                        <div class="line-height-xl">+507</div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 border-bottom justify-content-center">

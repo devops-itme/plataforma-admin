@@ -80541,7 +80541,7 @@ body {
 }
 
 /* BARRA DE NAVEGACION */
-  .navbar-nav li:hover>ul.dropdown-menu {
+ .navbar-nav li:hover>ul.dropdown-menu {
         display: block;
     }
 
