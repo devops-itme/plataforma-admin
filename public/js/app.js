@@ -42214,12 +42214,18 @@ var Orders = /*#__PURE__*/function () {
           return;
         }
 
-        [].forEach.call(elements, function (e) {
-          e.addEventListener('keyup', function () {
-            console.log('e', e.parentNode.parentNode.parentNode);
-            var parent = e.parentNode.parentNode.parentNode;
-            var index = Array.prototype.indexOf.call(parent.children, e);
-            console.log('index', index, parent);
+        [].forEach.call(elements, function (el) {
+          el.addEventListener('keyup', function () {
+            var parent = el.parentNode.parentNode.parentNode; // console.log('parent', parent);
+
+            var children = el.parentNode.parentNode; // console.log("children", children);
+
+            var index = Array.prototype.indexOf.call(parent.children, children); // console.log('index', index);
+
+            var name = input.replace('[]', ''); // console.log('name', name);
+            // console.log('el', el.value);
+
+            boxes[index][name] = el.value;
           });
         });
       });
