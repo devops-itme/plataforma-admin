@@ -79,7 +79,7 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
-                    Informacion
+                    Información
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li><a class="dropdown-item" href="{{route('users.index')}}">Mi perfil</a></li>
