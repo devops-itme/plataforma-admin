@@ -19,7 +19,7 @@ trait AddressTrait
             $request->all(),
             [
                 'user_id'=>'required',
-                'name' => 'required',
+                'address' => 'required',
                 'description' => 'required',
                 'lat' => 'required',
                 'lng' => 'required',
@@ -52,6 +52,9 @@ trait AddressTrait
             return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
         }
         try {
+            request()->merge([
+                'name'=> $request->address
+            ]);
             $address = Address::create($request->all());
             return $this->respond(200, $address, null, 'Dirección creado exitosamente');
         } catch (\Throwable $e) {
@@ -65,6 +68,9 @@ trait AddressTrait
             if ($validator->fails()) {
                 return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
             }
+            request()->merge([
+                'name'=> $request->address
+            ]);
             $address = Address::find($id);
             $address->update($request->all());
 

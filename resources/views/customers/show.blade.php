@@ -10,6 +10,7 @@
             </h2>
         </div>
     </div>
+    @include('layouts.alerts')
     <div class="card-body">
         <div class="my-5">
             <h5 class="mb-10 font-weight-bold text-dark">Información basica de cliente</h5>
@@ -125,7 +126,69 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($customer->getUser->getAddresses as $item)
+                <tr>
+                    <td id="description" >{{$item->description}}</td>
+                    <td id="name" >{{$item->name}}</td>
+                    @if($customer->state == 1)
+                    <td>
+                        <span class="label label-inline label-light-success font-weight-bold">
+                            Activo
+                        </span>
+                    </td>
+                    @else
+                        <td>
+                            <span class="label label-inline label-light-danger font-weight-bold">
+                                Inactivo
+                            </span>
+                        </td>
+                    @endif
+                    <td>
+                        <button type="button" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal{{$item->id}}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <!-- MODAL EDIT-->
+                        <div class="modal fade" id="editModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">EDITAR DIRECCIÓN</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ route('addresses.update', $item->id) }}" method="POST">
+                                            @csrf @method('PUT')
+                                            <input type="text" hidden name="user_id" value="{{$item->user_id}}">
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label> Descripción </label>
+                                                    <input type="text" name="description" class="form-control" value="{{$item->description}}" placeholder="Descripción">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label> Dirección *</label>
+                                                    <input type="text" name="address" class="form-control" value="{{$item->name}}" id="address_edit" placeholder="Introduce una ubicación">
+                                                    <input type="hidden" name="lat" id="branch_office_lat_edit" value="{{$item->lat}}">
+                                                    <input type="hidden" name="lng" id="branch_office_lng_edit" value="{{$item->lng}}">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                                                <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>GUARDAR</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <button type="button" onclick="confirmDelete('{{route('addresses.destroy', $item->id)}}')" class="delete btn btn-icon btn-light-danger">
+                            <i class="fas fa-eraser"></i>
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
         <template id="address-template">
@@ -134,17 +197,19 @@
                 <td id="name" >Rebolo, Atlántico, Colombia</td>
                 <td id="state">Activa</td>
                 <td>
-                    <button type="button" id="deleteAddress" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal">
+                    <button type="button" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button type="button" class="delete btn btn-icon btn-light-danger">
+                    <a type="button" name="deleteAddress" class="delete btn btn-icon btn-light-danger">
                         <i class="fas fa-eraser"></i>
-                    </button>
+                    </a>
                 </td>
             </tr>
           </template>
     </div>
 </div>
+
+
 <!-- MODAL CREATE-->
 <div class="modal fade" id="formCreateAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -181,40 +246,6 @@
     </div>
 </div>
 
-<!-- MODAL EDIT-->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">EDITAR DIRECCIÓN</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="#">
-                    <input type="text" hidden name="user_id" value="{{$customer->user_id}}">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label> Descripción </label>
-                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Descripción">
-                        </div>
-                        <div class="col-md-6">
-                            <label> Dirección *</label>
-                            <input type="text" name="address" class="form-control" value="{{old('address')}}" id="address_edit" placeholder="Introduce una ubicación">
-                            <input type="hidden" name="lat" id="branch_office_lat_edit" value="{{old('lat')}}">
-                            <input type="hidden" name="lng" id="branch_office_lng_edit" value="{{old('lng')}}">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                        <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>GUARDAR</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <br>

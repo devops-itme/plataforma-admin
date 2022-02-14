@@ -1,9 +1,9 @@
 export default class Addresses {
     initialize() {
         this.autocompleteAddress();
-        this.createAddress();
-        this.getAddresses();
-        this.deleteAddress();
+        // this.createAddress();
+        // this.getAddresses();
+        // this.deleteAddress();
     }
     //AUTOCOMPLETE BRANCH OFFICES
     autocompleteAddress() {
@@ -58,14 +58,13 @@ export default class Addresses {
     }
 
     getAddresses = async () => {
-
         const address = document,
             $table = address.querySelector(".address_table"),
             $template = address.getElementById("address-template")?.content,
             $fragment = address.createDocumentFragment();
         let user_id = $table?.id;
 
-        $table?.querySelector("tbody").replaceChildren($fragment)
+        $table?.querySelector("tbody").replaceChildren($fragment);
         try {
             let res = await fetch(`/direcciones?user_id=+${user_id}`)
                 .then((response) => response.json())
@@ -97,7 +96,7 @@ export default class Addresses {
                         $fragment.appendChild($clone);
                     });
                 });
-
+            //    let response = await this.deleteAddress(address);
 
             $table?.querySelector("tbody").appendChild($fragment);
         } catch (err) {
@@ -161,20 +160,55 @@ export default class Addresses {
     }
 
     deleteAddress() {
-        // let template = document.getElementById("address-template");
-        // if (template == null) {
-        //     return;
-        // }
-        // let btn_delete = template.getElementsByClassName("deleteAddress");
-        // console.log(btn_delete);
-        // template.addEventListener("click", async (e) => {
-        //     e.preventDefault();
-
-        //     if (e.target.matches(".delete")) {
-        //         let isDelete = confirm(
-        //             `¿Estás seguro de eliminar el id ${e.target.dataset.id}?`
-        //         );
-        //     }
-        // });
+        let deleteAddress = document.getElementsByClassName("delete");
+        if (deleteAddress == null) {
+            return;
+        }
+        [].forEach.call(deleteAddress, function (btn) {
+            btn.addEventListener("click", () => {
+                console.log(btn);
+                let address = btn.dataset.id;
+                console.log(address);
+                Swal.fire({
+                    title: "Eliminar esta dirección!",
+                    text: "¿Seguro que quieres continuar?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "Confirmar",
+                    cancelButtonText: "Cancelar",
+                }).then((result) => {
+                    if (!result.value) {
+                        return;
+                    }
+                    let token = document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content");
+                    let url = "/direcciones/" + address.id;
+                    console.log(url);
+                    fetch(url, {
+                        method: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": token,
+                        },
+                    })
+                        .then(() => {
+                            Swal.fire({
+                                title: "Categoria de Producto eliminada",
+                                icon: "success",
+                                confirmButtonText: "Ok",
+                            });
+                            address.remove();
+                        })
+                        .catch(function () {
+                            Swal.fire({
+                                title: "Ups!",
+                                text: "Ha ocurrido un error. Intentalo mas tarde",
+                                icon: "error",
+                                confirmButtonText: "Ok",
+                            });
+                        });
+                });
+            });
+        });
     }
 }

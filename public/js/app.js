@@ -41642,6 +41642,7 @@ var Addresses = /*#__PURE__*/function () {
 
             case 6:
               res = _context.sent;
+              //    let response = await this.deleteAddress(address);
               $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").appendChild($fragment);
               _context.next = 14;
               break;
@@ -41664,10 +41665,9 @@ var Addresses = /*#__PURE__*/function () {
   _createClass(Addresses, [{
     key: "initialize",
     value: function initialize() {
-      this.autocompleteAddress();
-      this.createAddress();
-      this.getAddresses();
-      this.deleteAddress();
+      this.autocompleteAddress(); // this.createAddress();
+      // this.getAddresses();
+      // this.deleteAddress();
     } //AUTOCOMPLETE BRANCH OFFICES
 
   }, {
@@ -41807,20 +41807,56 @@ var Addresses = /*#__PURE__*/function () {
     }()
   }, {
     key: "deleteAddress",
-    value: function deleteAddress() {// let template = document.getElementById("address-template");
-      // if (template == null) {
-      //     return;
-      // }
-      // let btn_delete = template.getElementsByClassName("deleteAddress");
-      // console.log(btn_delete);
-      // template.addEventListener("click", async (e) => {
-      //     e.preventDefault();
-      //     if (e.target.matches(".delete")) {
-      //         let isDelete = confirm(
-      //             `¿Estás seguro de eliminar el id ${e.target.dataset.id}?`
-      //         );
-      //     }
-      // });
+    value: function deleteAddress() {
+      var deleteAddress = document.getElementsByClassName("delete");
+
+      if (deleteAddress == null) {
+        return;
+      }
+
+      [].forEach.call(deleteAddress, function (btn) {
+        btn.addEventListener("click", function () {
+          console.log(btn);
+          var address = btn.dataset.id;
+          console.log(address);
+          Swal.fire({
+            title: "Eliminar esta dirección!",
+            text: "¿Seguro que quieres continuar?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Confirmar",
+            cancelButtonText: "Cancelar"
+          }).then(function (result) {
+            if (!result.value) {
+              return;
+            }
+
+            var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var url = "/direcciones/" + address.id;
+            console.log(url);
+            fetch(url, {
+              method: "DELETE",
+              headers: {
+                "X-CSRF-TOKEN": token
+              }
+            }).then(function () {
+              Swal.fire({
+                title: "Categoria de Producto eliminada",
+                icon: "success",
+                confirmButtonText: "Ok"
+              });
+              address.remove();
+            })["catch"](function () {
+              Swal.fire({
+                title: "Ups!",
+                text: "Ha ocurrido un error. Intentalo mas tarde",
+                icon: "error",
+                confirmButtonText: "Ok"
+              });
+            });
+          });
+        });
+      });
     }
   }]);
 
@@ -42589,8 +42625,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
