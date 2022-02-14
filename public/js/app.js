@@ -42166,7 +42166,27 @@ var Orders = /*#__PURE__*/function () {
       this.addbox();
       this.removeBox();
       this.searchCustomerData();
-      this.requestSearchCustomer();
+    }
+  }, {
+    key: "setInput",
+    value: function setInput() {
+      var inputs = ['weight[]', 'long[]', 'broad[]', 'high[]', 'vol_weight[]', 'description[]'];
+      [].forEach.call(inputs, function (input) {
+        var elements = document.getElementsByName(input);
+
+        if (elements == null) {
+          return;
+        }
+
+        [].forEach.call(elements, function (e) {
+          e.addEventListener('keyup', function () {
+            console.log('e', e.parentNode.parentNode.parentNode);
+            var parent = e.parentNode.parentNode.parentNode;
+            var index = Array.prototype.indexOf.call(parent.children, e);
+            console.log('index', index, parent);
+          });
+        });
+      });
     }
   }, {
     key: "instantiateBoxes",
@@ -42183,27 +42203,27 @@ var Orders = /*#__PURE__*/function () {
         row.className = "row border mt-0 text-center box-register";
         var weightCell = document.createElement("td");
         weightCell.className = "col-1 py-4 border-right";
-        weightCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        weightCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.weight, "\">");
         row.appendChild(weightCell);
         var longCell = document.createElement("td");
         longCell.className = "col-1 py-4 border-right";
-        longCell.innerHTML = "<input type=\"number\" name=\"long[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        longCell.innerHTML = "<input type=\"number\" name=\"long[]\" class=\"form-control\" min=\"0\" value=\"".concat(box["long"], "\">");
         row.appendChild(longCell);
         var broadCell = document.createElement("td");
         broadCell.className = "col-1 py-4 border-right";
-        broadCell.innerHTML = "<input type=\"number\" name=\"broad[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        broadCell.innerHTML = "<input type=\"number\" name=\"broad[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.broad, "\">");
         row.appendChild(broadCell);
         var highCell = document.createElement("td");
         highCell.className = "col-1 py-4 border-right";
-        highCell.innerHTML = "<input type=\"number\" name=\"high[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        highCell.innerHTML = "<input type=\"number\" name=\"high[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.high, "\">");
         row.appendChild(highCell);
         var volWeightCell = document.createElement("td");
         volWeightCell.className = "col-1 py-4 border-right";
-        volWeightCell.innerHTML = "<input type=\"number\" name=\"vol_weight[]\" class=\"form-control\" min=\"0\" value=\"0\">";
+        volWeightCell.innerHTML = "<input type=\"number\" name=\"vol_weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.vol_weight, "\">");
         row.appendChild(volWeightCell);
         var descriptionCell = document.createElement("td");
         descriptionCell.className = "col-3 py-4 border-right";
-        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comertarios\">";
+        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comertarios\" value=\"".concat(box.description, "\">");
         row.appendChild(descriptionCell);
         var btnCell = document.createElement("td");
         btnCell.className = "col-3 py-4 border-right";
@@ -42218,6 +42238,7 @@ var Orders = /*#__PURE__*/function () {
         row.appendChild(btnCell);
         boxContainer.appendChild(row);
       });
+      this.setInput();
       this.removeBox();
     }
   }, {
@@ -42259,7 +42280,6 @@ var Orders = /*#__PURE__*/function () {
           var parent = box.parentNode;
           var index = Array.prototype.indexOf.call(parent.children, box);
           boxes.splice(index, 1);
-          console.log('index', boxes, index);
           box.remove();
         });
       });
@@ -42569,8 +42589,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

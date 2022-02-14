@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Auth
-Route::post('login', 'Api\LoginController@SignIn');
+Route::post('login', 'Api\AuthController@SignIn');
+Route::post('logout', 'Api\AuthController@signOut');
+Route::post('forgotPassword', 'Api\AuthController@recovery');
+Route::post('confirmCode', 'Api\AuthController@verifyCode');
+Route::post('restorePassword', 'Api\AuthController@restore');
+Route::post('resendCode', 'Api\AuthController@forward');
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('messenger/show', 'Api\MessengerController@show')->name('messenger.show');
     Route::put('messenger/update', 'Api\MessengerController@update')->name('messenger.update');
