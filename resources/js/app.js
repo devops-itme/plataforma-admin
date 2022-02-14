@@ -2,9 +2,6 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import swal from 'sweetalert';
-import bootstrapSelect from 'bootstrap-select';
-
 import Messengers from './_messengers';
 import Addresses from './_addresses';
 import Customers from './_customers';
@@ -13,7 +10,8 @@ import General from './_general';
 import BranchOffices from './_branchOffice';
 
 //Vue Components
-Vue.component('example-component', require('./components/exampleComponent.vue'));
+Vue.component('example-component', require('./components/exampleComponent.vue').default);
+Vue.component('deliveries', require('./components/deliveries/deliveries.vue').default);
 
 let messengers = new Messengers();
 let addresses = new Addresses();

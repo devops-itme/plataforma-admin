@@ -3,8 +3,5 @@
 
 {{-- Content --}}
 @section('content')
-
-
-    <example-component></example-component>
-
+    <deliveries></deliveries>
 @endsection

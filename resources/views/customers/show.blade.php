@@ -109,41 +109,44 @@
             </h3>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-sm font-weight-bold btn-primary" data-toggle="modal" data-target="#createModal">
+            <button type="button" class="btn btn-sm font-weight-bold btn-primary" data-toggle="modal" data-target="#formCreateAddress">
                 <i class="fas fa-plus"></i>CREAR DIRECCION
             </button>
         </div>
     </div>
     <div class="card-body">
-        <table class="table align-items-center text-center table-flush">
+        <table class="address_table table align-items-center text-center table-flush" id="{{$customer->user_id}}">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
                     <th scope="col">Dirección</th>
                     <th scope="col">Estado</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Emanuel C</td>
-                    <td>Rebolo, Atlántico, Colombia</td>
-                    <td>Activa</td>
-                    <td>
-                        <button type="button" class="btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-icon btn-light-danger">
-                            <i class="fas fa-eraser"></i>
-                        </button>
-                    </td>
-                </tr>
+
             </tbody>
         </table>
+        <template id="address-template">
+            <tr>
+                <td id="description" >Casa</td>
+                <td id="name" >Rebolo, Atlántico, Colombia</td>
+                <td id="state">Activa</td>
+                <td>
+                    <button type="button" id="deleteAddress" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="delete btn btn-icon btn-light-danger">
+                        <i class="fas fa-eraser"></i>
+                    </button>
+                </td>
+            </tr>
+          </template>
     </div>
 </div>
 <!-- MODAL CREATE-->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="formCreateAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -153,24 +156,26 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{ route('addresses.store') }}" method="POST" id="formCreateAddress">
+                    @csrf
+                    <input type="text" hidden name="user_id" value="{{$customer->user_id}}">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label> Descripción </label>
-                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Nombre">
+                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Descripción">
                         </div>
                         <div class="col-md-6">
                             <label> Dirección *</label>
-                            <input type="text" name="user_address" class="form-control" value="{{old('user_address_edit')}}" id="user_address_edit" placeholder="Introduce una ubicación">
-                            <input type="hidden" name="user_address_lat" id="branch_office_lat" value="{{old('user_address_lat_edit')}}">
-                            <input type="hidden" name="user_address_lng" id="branch_office_lng" value="{{old('user_address_lng_edit')}}">
+                            <input type="text" name="address" class="form-control" value="{{old('address')}}" id="address" placeholder="Introduce una ubicación">
+                            <input type="hidden" name="lat" id="branch_office_lat" value="{{old('lat')}}">
+                            <input type="hidden" name="lng" id="branch_office_lng" value="{{old('lng')}}">
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>GUARGAR</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                <button type="button" class="btn btn-primary"><i class="fas fa-save"></i>GUARGAR</button>
             </div>
         </div>
     </div>
@@ -188,23 +193,24 @@
             </div>
             <div class="modal-body">
                 <form action="#">
+                    <input type="text" hidden name="user_id" value="{{$customer->user_id}}">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label> Descripción </label>
-                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Nombre">
+                            <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Descripción">
                         </div>
                         <div class="col-md-6">
                             <label> Dirección *</label>
-                            <input type="text" name="user_address" class="form-control" value="{{old('user_address')}}" id="user_address" placeholder="Introduce una ubicación">
-                            <input type="hidden" name="user_address_lat" id="branch_office_lat" value="{{old('user_address_lat')}}">
-                            <input type="hidden" name="user_address_lng" id="branch_office_lng" value="{{old('user_address_lng')}}">
+                            <input type="text" name="address" class="form-control" value="{{old('address')}}" id="address_edit" placeholder="Introduce una ubicación">
+                            <input type="hidden" name="lat" id="branch_office_lat_edit" value="{{old('lat')}}">
+                            <input type="hidden" name="lng" id="branch_office_lng_edit" value="{{old('lng')}}">
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                        <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>GUARDAR</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>GUARDAR</button>
             </div>
         </div>
     </div>

@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "bootstrap-select": "^1.13.18",
-        "sweetalert": "^2.1.2"
+        "sweetalert": "^2.1.2",
+        "vuedraggable": "^2.24.3"
     }
 }
