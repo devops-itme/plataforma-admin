@@ -33,6 +33,9 @@
             <a href="{{route('delivery.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Despachos" data-placement="bottom">
                 <i class="fad fa-person-dolly"></i>
             </a>
+            <a href="{{route('deliveryPacking.index')}}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2" data-tooltip title="Despachos Packing" data-placement="bottom">
+                <i class="fad fa-hand-holding-box"></i>
+            </a>
         </div>
 
     </div>

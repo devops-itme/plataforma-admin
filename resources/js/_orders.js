@@ -34,13 +34,22 @@ export default class Orders {
             if (elements == null) {
                 return
             }
-            [].forEach.call(elements, e => {
-                e.addEventListener('keyup', () => {
-                    console.log('e', e.parentNode.parentNode.parentNode)
+            [].forEach.call(elements, el => {
+                el.addEventListener('keyup', () => {
 
-                    let parent = e.parentNode.parentNode.parentNode;
-                    let index = Array.prototype.indexOf.call(parent.children, e);
-                    console.log('index', index, parent)
+                    let parent = el.parentNode.parentNode.parentNode;
+                    // console.log('parent', parent);
+                    let children = el.parentNode.parentNode;
+                    // console.log("children", children);
+
+                    let index = Array.prototype.indexOf.call(parent.children, children);
+                    // console.log('index', index);
+
+                    let name = input.replace('[]', '');
+                    // console.log('name', name);
+
+                    // console.log('el', el.value);
+                    boxes[index][name] = el.value;
                 });
             });
         });
@@ -188,7 +197,7 @@ export default class Orders {
                     phoneCell.innerHTML = data[i].name ? data[i].phone : data[i].get_user.phone;
 
                     let tradenameCell = row.insertCell(2);
-                    tradenameCell.innerHTML = data[i].name ? data[i].name+" "+ data[i].last_name : data[i].tradename;
+                    tradenameCell.innerHTML = data[i].name ? data[i].name + " " + data[i].last_name : data[i].tradename;
 
                     let selectCell = row.insertCell(3);
                     const userCheck = document.createElement("input");

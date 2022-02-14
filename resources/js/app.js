@@ -1,7 +1,6 @@
 require('./bootstrap');
 
-import swal from 'sweetalert';
-import bootstrapSelect from 'bootstrap-select';
+window.Vue = require('vue');
 
 import Messengers from './_messengers';
 import Addresses from './_addresses';
@@ -10,12 +9,20 @@ import Orders from './_orders';
 import General from './_general';
 import BranchOffices from './_branchOffice';
 
+//Vue Components
+Vue.component('example-component', require('./components/exampleComponent.vue').default);
+Vue.component('deliveries', require('./components/deliveries/deliveries.vue').default);
+
 let messengers = new Messengers();
 let addresses = new Addresses();
 let customers = new Customers();
 let orders = new Orders();
 let general = new General();
 let branchOffice = new BranchOffices();
+
+const app = new Vue({
+    el: '#app'
+});
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // bootstrapSelect.initialize();
@@ -25,4 +32,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
     customers.initialize();
     general.initialize();
     branchOffice.initialize();
+
 });
