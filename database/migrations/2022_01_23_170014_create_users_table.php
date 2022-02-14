@@ -28,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->foreign('role')->references('id')->on('roles');
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}");
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('code')->nullable();
+            $table->integer('code_confirmed')->default('1')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

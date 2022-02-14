@@ -8,7 +8,7 @@ let boxes = [
         vol_weight: 0,
         description: '',
     }
-]
+];
 
 export default class Orders {
     initialize() {
@@ -16,6 +16,43 @@ export default class Orders {
         this.addbox();
         this.removeBox();
         this.searchCustomerData();
+    }
+
+    setInput() {
+        const inputs = [
+            'weight[]',
+            'long[]',
+            'broad[]',
+            'high[]',
+            'vol_weight[]',
+            'description[]',
+        ];
+
+        [].forEach.call(inputs, input => {
+            let elements = document.getElementsByName(input);
+
+            if (elements == null) {
+                return
+            }
+            [].forEach.call(elements, el => {
+                el.addEventListener('keyup', () => {
+
+                    let parent = el.parentNode.parentNode.parentNode;
+                    // console.log('parent', parent);
+                    let children = el.parentNode.parentNode;
+                    // console.log("children", children);
+
+                    let index = Array.prototype.indexOf.call(parent.children, children);
+                    // console.log('index', index);
+
+                    let name = input.replace('[]', '');
+                    // console.log('name', name);
+
+                    // console.log('el', el.value);
+                    boxes[index][name] = el.value;
+                });
+            });
+        });
     }
 
     instantiateBoxes() {
@@ -30,32 +67,32 @@ export default class Orders {
 
             let weightCell = document.createElement("td");
             weightCell.className = `col-1 py-4 border-right`;
-            weightCell.innerHTML = `<input type="number" name="weight[]" class="form-control" min="0" value="0">`;
+            weightCell.innerHTML = `<input type="number" name="weight[]" class="form-control" min="0" value="${box.weight}">`;
             row.appendChild(weightCell);
 
             let longCell = document.createElement("td");
             longCell.className = `col-1 py-4 border-right`;
-            longCell.innerHTML = `<input type="number" name="long[]" class="form-control" min="0" value="0">`;
+            longCell.innerHTML = `<input type="number" name="long[]" class="form-control" min="0" value="${box.long}">`;
             row.appendChild(longCell);
 
             let broadCell = document.createElement("td");
             broadCell.className = `col-1 py-4 border-right`;
-            broadCell.innerHTML = `<input type="number" name="broad[]" class="form-control" min="0" value="0">`;
+            broadCell.innerHTML = `<input type="number" name="broad[]" class="form-control" min="0" value="${box.broad}">`;
             row.appendChild(broadCell);
 
             let highCell = document.createElement("td");
             highCell.className = `col-1 py-4 border-right`;
-            highCell.innerHTML = `<input type="number" name="high[]" class="form-control" min="0" value="0">`;
+            highCell.innerHTML = `<input type="number" name="high[]" class="form-control" min="0" value="${box.high}">`;
             row.appendChild(highCell);
 
             let volWeightCell = document.createElement("td");
             volWeightCell.className = `col-1 py-4 border-right`;
-            volWeightCell.innerHTML = `<input type="number" name="vol_weight[]" class="form-control" min="0" value="0">`;
+            volWeightCell.innerHTML = `<input type="number" name="vol_weight[]" class="form-control" min="0" value="${box.vol_weight}">`;
             row.appendChild(volWeightCell);
 
             let descriptionCell = document.createElement("td");
             descriptionCell.className = `col-3 py-4 border-right`;
-            descriptionCell.innerHTML = `<input type="text" name="description[]" class="form-control" placeholder="comertarios">`;
+            descriptionCell.innerHTML = `<input type="text" name="description[]" class="form-control" placeholder="comertarios" value="${box.description}">`;
             row.appendChild(descriptionCell);
 
             let btnCell = document.createElement("td");
@@ -74,6 +111,7 @@ export default class Orders {
 
             boxContainer.appendChild(row);
         });
+        this.setInput();
         this.removeBox();
     };
 
@@ -110,7 +148,6 @@ export default class Orders {
                 let parent = box.parentNode;
                 let index = Array.prototype.indexOf.call(parent.children, box);
                 boxes.splice(index, 1);
-                console.log('index', boxes, index)
                 box.remove();
             });
         });
@@ -160,7 +197,7 @@ export default class Orders {
                     phoneCell.innerHTML = data[i].name ? data[i].phone : data[i].get_user.phone;
 
                     let tradenameCell = row.insertCell(2);
-                    tradenameCell.innerHTML = data[i].name ? data[i].name+" "+ data[i].last_name : data[i].tradename;
+                    tradenameCell.innerHTML = data[i].name ? data[i].name + " " + data[i].last_name : data[i].tradename;
 
                     let selectCell = row.insertCell(3);
                     const userCheck = document.createElement("input");

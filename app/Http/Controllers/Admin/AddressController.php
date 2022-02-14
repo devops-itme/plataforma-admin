@@ -38,11 +38,13 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
+
         $response = $this->saveAddress($request);
+
         if($response['state'] == 200){
-            return $this->respond(200, $response['data'], null, $response['message']);
+            return redirect()->back()->with('success', $response['message']);
         } else {
-            return $this->respond(500, null, $response['error'], $response['message']);
+            return redirect()->back()->with('danger', $response['message']);
         }
     }
 
@@ -82,9 +84,9 @@ class AddressController extends Controller
     {
         $response = $this->updateAddress($request, $id);
         if($response['state'] == 200){
-            return $this->respond(200, $response['data'], null, $response['message']);
+            return redirect()->back()->with('success', $response['message']);
         } else {
-            return $this->respond(500, null, $response['error'], $response['message']);
+            return redirect()->back()->with('danger', $response['message']);
         }
     }
 

@@ -69,10 +69,10 @@
                     </li>
                     <li><a class="dropdown-item" href="#">ODS Inter-Sucursal</a></li>
                     <li><a class="dropdown-item" href="#">ODS Planes Corporativos (Ventas)</a></li>
-                    <li><a class="dropdown-item" href="#">Despachos</a></li>
+                    <li><a class="dropdown-item" href="{{route('delivery.index')}}">Despachos</a></li>
                     <li><a class="dropdown-item" href="#">UDPro Driver</a></li>
-                    <li><a class="dropdown-item" href="#">Mensajes Entre Usuarios</a></li>
-                    <li><a class="dropdown-item" href="#">Mensajes A Móviles</a></li>
+                    <li><a class="dropdown-item" href="{{route('messengers.index')}}">Mensajes Entre Usuarios</a></li>
+                    <li><a class="dropdown-item" href="{{route('messengers.index')}}">Mensajes A Móviles</a></li>
                     <li><a class="dropdown-item" href="#">Asignar Dinero A Móviles</a></li>
                 </ul>
             </li>
@@ -82,8 +82,8 @@
                     Información
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="">Mi perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Clientes (Web)</a></li>
+                    <li><a class="dropdown-item" href="{{route('users.index')}}">Mi perfil</a></li>
+                    <li><a class="dropdown-item" href="{{route('customers.index')}}">Clientes (Web)</a></li>
                     <li><a class="dropdown-item" href="#">Móviles</a></li>
                     <li><a class="dropdown-item" href="#">Planes</a></li>
                 </ul>

@@ -17,7 +17,7 @@ class CreateDepartmentsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
-            $table->unsignedBigInteger('branch_office_id')->nullable();
+            // $table->unsignedBigInteger('branch_office_id')->nullable();
             // $table->foreign('branch_office_id')->references('id')->on('branch_offices');
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}")->nullable();
             $table->timestamps();
