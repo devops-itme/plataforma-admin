@@ -2202,6 +2202,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -42631,15 +42643,26 @@ var render = function () {
         "div",
         { staticClass: "col-md-6 p-4 d-flex flex-row flex-wrap border-right" },
         [
-          _c("h5", { staticClass: "font-weight-bold text-dark" }, [
-            _vm._v(
-              "\n                Destinos por " +
-                _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
-                "\n            "
-            ),
-          ]),
+          _c(
+            "div",
+            {
+              staticClass:
+                "col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center",
+            },
+            [
+              _c("h5", { staticClass: "font-weight-bold text-dark" }, [
+                _vm._v(
+                  "\n                     Destinos por " +
+                    _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+                    "\n                "
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(0),
+            ]
+          ),
           _vm._v(" "),
-          _vm._m(0),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "min-h-500px col-md-12" }, [
             _c("div", { staticClass: "table-responsive" }, [
@@ -42650,7 +42673,7 @@ var render = function () {
                   staticStyle: { "table-layout": "auto", width: "1100px" },
                 },
                 [
-                  _vm._m(1),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "draggable",
@@ -42712,15 +42735,24 @@ var render = function () {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-6 p-4 d-flex flex-row flex-wrap" }, [
-        _c("h5", { staticClass: "font-weight-bold text-dark" }, [
-          _vm._v(
-            "\n                Seleccionados por " +
-              _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
-              "\n            "
-          ),
-        ]),
+        _c(
+          "div",
+          {
+            staticClass:
+              "col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center",
+          },
+          [
+            _c("h5", { staticClass: "font-weight-bold text-dark" }, [
+              _vm._v(
+                "\n                    Seleccionados por " +
+                  _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+                  "\n                "
+              ),
+            ]),
+          ]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "min-h-500px col-md-12" }, [
+        _c("div", { staticClass: "min-h-350px col-md-12" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c(
               "table",
@@ -42729,7 +42761,7 @@ var render = function () {
                 staticStyle: { "table-layout": "auto", width: "1100px" },
               },
               [
-                _vm._m(2),
+                _vm._m(3),
                 _vm._v(" "),
                 _c(
                   "draggable",
@@ -42788,7 +42820,7 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(3),
+        _vm._m(4),
       ]),
     ]),
   ])
@@ -42798,11 +42830,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-12" }, [
-      _c("label", [_vm._v("Filtro")]),
-      _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } }),
+    return _c("div", { staticClass: "col-md-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-light-success font-weight-bold btn-block",
+          attrs: {
+            type: "button",
+            "data-toggle": "collapse",
+            "data-target": "#collapseExample",
+            "aria-expanded": "false",
+            "aria-controls": "collapseExample",
+          },
+        },
+        [_vm._v("\n                        Filtrar\n                    ")]
+      ),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "collapse col-md-12", attrs: { id: "collapseExample" } },
+      [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Filtrar" },
+        }),
+      ]
+    )
   },
   function () {
     var _vm = this
@@ -42873,9 +42931,34 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group col-md-12" }, [
-      _c("label", [_vm._v("Filtro")]),
+      _c("label", { staticClass: "font-weight-bolder" }, [_vm._v("Mensajero")]),
       _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } }),
+      _c(
+        "div",
+        {
+          staticClass: "d-flex flex-row flex-wrap justify-content-around px-0",
+        },
+        [
+          _c("input", {
+            staticClass: "form-control col-md-3",
+            attrs: { type: "text" },
+          }),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control col-md-5",
+            attrs: { type: "text" },
+          }),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-light-primary font-weight-bold col-md-3",
+              attrs: { href: "#" },
+            },
+            [_vm._v("Despachar")]
+          ),
+        ]
+      ),
     ])
   },
 ]
@@ -58878,8 +58961,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
