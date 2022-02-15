@@ -2142,6 +2142,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2165,7 +2225,21 @@ __webpack_require__.r(__webpack_exports__);
         deliveryTime: "22h",
         createDate: "22-12-2022",
         type: "Normal"
-      }]
+      }, {
+        id: 2,
+        order: "123-1234556",
+        guide: 7377847,
+        extref: 888835,
+        progDate: "12-12-2022",
+        customer: "Juanito Perez",
+        contact: "Carmenza Patiño",
+        zone: "Avenida Siempreviva",
+        address: "Calle 12 # 22 - 22",
+        deliveryTime: "22h",
+        createDate: "22-12-2022",
+        type: "Normal"
+      }],
+      myArray2: []
     };
   }
 });
@@ -42579,9 +42653,107 @@ var render = function () {
                   _vm._m(1),
                   _vm._v(" "),
                   _c(
-                    "tbody",
+                    "draggable",
+                    {
+                      staticStyle: { cursor: "move" },
+                      attrs: {
+                        list: _vm.myArray,
+                        group: "orders",
+                        tag: "tbody",
+                      },
+                      on: {
+                        start: function ($event) {
+                          _vm.drag = true
+                        },
+                        end: function ($event) {
+                          _vm.drag = false
+                        },
+                      },
+                    },
                     _vm._l(_vm.myArray, function (tblItem) {
-                      return _c("tr", { key: tblItem.id }, [
+                      return _c(
+                        "tr",
+                        { key: tblItem.id, staticClass: "text-center" },
+                        [
+                          _c("td", [_vm._v(_vm._s(tblItem.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.order))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.guide))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.extref))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.progDate))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.customer))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.contact))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.zone))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.address))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.deliveryTime))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.createDate))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(tblItem.type))]),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                ],
+                1
+              ),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6 p-4 d-flex flex-row flex-wrap" }, [
+        _c("h5", { staticClass: "font-weight-bold text-dark" }, [
+          _vm._v(
+            "\n                Seleccionados por " +
+              _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+              "\n            "
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "min-h-500px col-md-12" }, [
+          _c("div", { staticClass: "table-responsive" }, [
+            _c(
+              "table",
+              {
+                staticClass: "table table-sm",
+                staticStyle: { "table-layout": "auto", width: "1100px" },
+              },
+              [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "draggable",
+                  {
+                    staticStyle: { cursor: "move" },
+                    attrs: {
+                      list: _vm.myArray2,
+                      group: "orders",
+                      tag: "tbody",
+                    },
+                    on: {
+                      start: function ($event) {
+                        _vm.drag = true
+                      },
+                      end: function ($event) {
+                        _vm.drag = false
+                      },
+                    },
+                  },
+                  _vm._l(_vm.myArray2, function (tblItem) {
+                    return _c(
+                      "tr",
+                      { key: tblItem.id, staticClass: "text-center" },
+                      [
                         _c("td", [_vm._v(_vm._s(tblItem.id))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(tblItem.order))]),
@@ -42605,18 +42777,19 @@ var render = function () {
                         _c("td", [_vm._v(_vm._s(tblItem.createDate))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(tblItem.type))]),
-                      ])
-                    }),
-                    0
-                  ),
-                ]
-              ),
-            ]),
+                      ]
+                    )
+                  }),
+                  0
+                ),
+              ],
+              1
+            ),
           ]),
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }),
+        ]),
+        _vm._v(" "),
+        _vm._m(3),
+      ]),
     ]),
   ])
 }
@@ -42636,7 +42809,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-light" }, [
-      _c("tr", {}, [
+      _c("tr", { staticClass: "text-center" }, [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Orden")]),
@@ -42661,6 +42834,48 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo")]),
       ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", { staticClass: "text-center" }, [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Orden")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ExtRef")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Prog")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cliente")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Contacto")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Barrio/Zona")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Dirección")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("H.Entrega")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Creación")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-12" }, [
+      _c("label", [_vm._v("Filtro")]),
+      _vm._v(" "),
+      _c("input", { staticClass: "form-control", attrs: { type: "text" } }),
     ])
   },
 ]
