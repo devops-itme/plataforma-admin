@@ -11,9 +11,9 @@
                 </div>
                 <div class="min-h-500px col-md-12">
                     <div class="table-responsive">
-                    <table class="table table-sm">
+                    <table class="table table-sm" style="table-layout: auto; width: 1100px;">
                             <thead class="thead-light">
-                                <tr>
+                                <tr class="">
                                     <th scope="col">#</th>
                                     <th scope="col">Orden</th>
                                     <th scope="col">Destino</th>
@@ -62,14 +62,6 @@
         </draggable> -->
     </div>
 </template>
-<style>
-    thead.thead-light>tr>th{
-        width: 50px; padding:0;
-    }
-    table.table-sm>tbody>tr>td{
-        width: 30px !important;
-    }
-</style>
 
 <script>
 import draggable from "vuedraggable";
