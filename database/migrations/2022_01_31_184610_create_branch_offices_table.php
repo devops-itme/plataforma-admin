@@ -33,6 +33,7 @@ class CreateBranchOfficesTable extends Migration
             $table->integer('usage_mode')->nullable()->comment("it's a parameter_value");
             $table->unsignedBigInteger('user_id')->nullable();
             // $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('state')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

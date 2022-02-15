@@ -9,6 +9,7 @@ use App\Http\Controllers\Traits\BranchOfficeTrait;
 use App\Parameter;
 use App\ParameterValue;
 use App\User;
+use App\UserBranch;
 
 class BranchOfficeController extends Controller
 {
@@ -61,11 +62,22 @@ class BranchOfficeController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $response = $this->saveBranchOffice($request->merge(['user_id' => $user_id]));
+        if($request->branch_office_payment_method == 24){
+            $request->merge(['branch_office_usage_mode' => null]);
+        }
+        $response = $this->saveBranchOffice($request);
         if($response['state'] == 200){
-            return redirect()->route('branchOffices.index', $user_id)->with('success', $response['message']);
+            // return redirect()->route('branchOffices.index', $user_id)->with('success', $response['message']);
+            return json_encode([
+                'state' => 200,
+                'data' => $response['data']
+            ]);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return json_encode([
+                'state' => 500,
+                'data' => $response['data'],
+                'error' => $response['error']
+            ]);
         }
     }
 
@@ -132,5 +144,19 @@ class BranchOfficeController extends Controller
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
+    }
+
+    public function unassigned_branch_offices()
+    {
+        $allAssignedBranches = UserBranch::get('branch_office_id');
+        $branch_ids = [];
+        foreach ($allAssignedBranches as $key) {
+            array_push($branch_ids, $key->branch_office_id);
+        }
+        $allUnassignedBranches = BranchOffice::whereNotIn('id', $branch_ids)->with(['getType', 'getZone'])->get();
+        return json_encode([
+            'state' => 200,
+            'data' => $allUnassignedBranches
+        ]);
     }
 }

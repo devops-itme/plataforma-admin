@@ -58012,7 +58012,7 @@ var BranchOffices = /*#__PURE__*/function () {
   }, {
     key: "loadPlanFields",
     value: function loadPlanFields() {
-      var option = document.getElementById("payment_method");
+      var option = document.getElementById("branch_office_payment_method");
       var useMode = document.getElementById("useMode");
       var slcPlan = document.getElementById("slcPlan");
 
@@ -58049,6 +58049,14 @@ var BranchOffices = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Customers; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -58065,6 +58073,7 @@ var Customers = /*#__PURE__*/function () {
     value: function initialize() {
       this.customerFeatures();
       this.saveBranchOffices();
+      this.listBranchOffices();
     }
   }, {
     key: "customerFeatures",
@@ -58101,8 +58110,227 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "saveBranchOffices",
     value: function saveBranchOffices() {
-      console.log('hola');
+      var _this = this;
+
+      var btnSendData = document.getElementById("saveBranchOffice");
+
+      if (btnSendData == null) {
+        return;
+      }
+
+      btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('branch_office_name', document.getElementById("branch_office_name").value);
+                formData.append('branch_office_type', document.getElementById("branch_office_type").value);
+                formData.append('branch_office_description', document.getElementById("branch_office_description").value);
+                formData.append('branch_office_zone', document.getElementById("branch_office_zone").value);
+                formData.append('branch_office_address', document.getElementById("branch_office_address").value);
+                formData.append('branch_office_lat', document.getElementById("branch_office_lat").value);
+                formData.append('branch_office_lng', document.getElementById("branch_office_lng").value);
+                formData.append('branch_office_email', document.getElementById("branch_office_email").value);
+                formData.append('branch_office_contact', document.getElementById("branch_office_contact").value);
+                formData.append('branch_office_document_type', document.getElementById("branch_office_document_type").value);
+                formData.append('branch_office_document_number', document.getElementById("branch_office_document_number").value);
+                formData.append('branch_office_payment_method', document.getElementById("branch_office_payment_method").value);
+                formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
+                formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
+                formData.append('branch_office_default', document.getElementById("branch_office_default").value);
+                _context.next = 18;
+                return _this.sendBranchOfficeData(formData);
+
+              case 18:
+                response = _context.sent;
+
+                if (response['state'] == 200) {
+                  alert('Sucursal creada exitosamente.');
+                  modal = document.getElementById("modalCreate");
+                  modal.click();
+                } else {
+                  alert('Ocurrió un error al crear la sucursal.');
+                  console.log('Error ocurrido: ' + response['error']);
+                }
+
+              case 20:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
     }
+  }, {
+    key: "sendBranchOfficeData",
+    value: function () {
+      var _sendBranchOfficeData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/sucursales/null/store", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context2.sent;
+                return _context2.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function sendBranchOfficeData(_x) {
+        return _sendBranchOfficeData.apply(this, arguments);
+      }
+
+      return sendBranchOfficeData;
+    }()
+  }, {
+    key: "listBranchOffices",
+    value: function () {
+      var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var tbody, assignedBranchOffices, data, i, row, nameCell, typeCell, zoneCell, contactCell, stateCell, selectCell, branchCheck, showBranch, branchEdit, branchDelete, buttonsDiv;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                tbody = document.querySelector("#branch_offices_table tbody");
+                tbody.innerHTML = '';
+                _context3.next = 4;
+                return this.requestBranchOffices();
+
+              case 4:
+                assignedBranchOffices = _context3.sent;
+
+                if (assignedBranchOffices['state'] == 200) {
+                  data = assignedBranchOffices['data'];
+
+                  if (data.length > 0) {
+                    for (i = 0; i < data.length; i++) {
+                      row = tbody.insertRow();
+                      nameCell = row.insertCell(0);
+                      nameCell.innerHTML = data[i].name;
+                      typeCell = row.insertCell(1);
+                      typeCell.innerHTML = data[i].get_type.name;
+                      zoneCell = row.insertCell(2);
+                      zoneCell.innerHTML = data[i].get_zone.name;
+                      contactCell = row.insertCell(3);
+                      contactCell.innerHTML = data[i].contact;
+                      stateCell = row.insertCell(4);
+
+                      if (data[i].state == 1) {
+                        stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                                    Activo\
+                                                </span>';
+                      } else {
+                        stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                    Inactivo\
+                                                </span>';
+                      }
+
+                      selectCell = row.insertCell(5);
+                      branchCheck = document.createElement("input");
+                      branchCheck.setAttribute('class', 'checkbox-inline mt-3');
+                      branchCheck.setAttribute('type', 'checkbox');
+                      branchCheck.setAttribute('name', 'branchCheck');
+                      branchCheck.setAttribute('value', data[i].id); //Show button
+
+                      showBranch = document.createElement("button");
+                      showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
+                      showBranch.setAttribute('type', 'button');
+                      showBranch.innerHTML = '<i class="far fa-folder-open"></i>'; //Edit button
+
+                      branchEdit = document.createElement("button");
+                      branchEdit.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                      branchEdit.setAttribute('type', 'button');
+                      branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
+
+                      branchDelete = document.createElement("button");
+                      branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                      branchDelete.setAttribute('type', 'button');
+                      branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                      buttonsDiv = document.createElement("div");
+                      buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                      buttonsDiv.appendChild(branchCheck);
+                      buttonsDiv.appendChild(showBranch);
+                      buttonsDiv.appendChild(branchEdit);
+                      buttonsDiv.appendChild(branchDelete);
+                      selectCell.appendChild(buttonsDiv);
+                      tbody.appendChild(row);
+                    }
+                  }
+                }
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function listBranchOffices() {
+        return _listBranchOffices.apply(this, arguments);
+      }
+
+      return listBranchOffices;
+    }()
+  }, {
+    key: "requestBranchOffices",
+    value: function () {
+      var _requestBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context4.next = 3;
+                return fetch("/unassigned_branch_offices").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context4.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function requestBranchOffices() {
+        return _requestBranchOffices.apply(this, arguments);
+      }
+
+      return requestBranchOffices;
+    }()
   }]);
 
   return Customers;

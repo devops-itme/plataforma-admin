@@ -23,7 +23,8 @@ class BranchOffice extends Model
         'payment_method',
         'phone',
         'usage_mode',
-        'user_id'
+        'user_id',
+        'state'
     ];
 
 
@@ -36,6 +37,16 @@ class BranchOffice extends Model
     public function getUser()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'type');
+    }
+
+    public function getZone()
+    {
+        return $this->belongsTo(Zone::class, 'zone_id');
     }
 
     protected static function boot()
