@@ -1,6 +1,7 @@
 export default class Customers {
     initialize() {
         this.customerFeatures();
+        this.saveBranchOffices();
     }
 
     customerFeatures() {
@@ -30,5 +31,9 @@ export default class Customers {
                 legalCustomer.className = 'col-md-7 d-flex px-0'
             }
         })
+    }
+
+    saveBranchOffices(){
+        console.log('hola');
     }
 }

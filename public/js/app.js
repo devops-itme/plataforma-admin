@@ -58412,6 +58412,7 @@ var Customers = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.customerFeatures();
+      this.saveBranchOffices();
     }
   }, {
     key: "customerFeatures",
@@ -58444,6 +58445,11 @@ var Customers = /*#__PURE__*/function () {
           legalCustomer.className = 'col-md-7 d-flex px-0';
         }
       });
+    }
+  }, {
+    key: "saveBranchOffices",
+    value: function saveBranchOffices() {
+      console.log('hola');
     }
   }]);
 
@@ -59321,8 +59327,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
