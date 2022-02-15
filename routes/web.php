@@ -81,15 +81,13 @@ Route::group(['middleware' => 'auth'], function () {
         //RUTAS
         Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
     });
-        Route::get('despachos', function () {
-            return view('deliveries.index');
-        })->name('delivery.index');
-        Route::get('despachos-packing', function () {
-            return view('deliveriesPacking.index');
-        })->name('deliveryPacking.index');
-    Route::get('permisos', function () {
-        return view('auth.permits');
-    })->name('permits.index');
+    Route::get('despachos', function () {
+        return view('deliveries.index');
+    })->name('delivery.index');
+    Route::get('despachos-packing', function () {
+        return view('deliveriesPacking.index');
+    })->name('deliveryPacking.index');
+    Route::resource('permisos', 'PermissionController')->names('permits');
 });
 
 //ADDRESSES
