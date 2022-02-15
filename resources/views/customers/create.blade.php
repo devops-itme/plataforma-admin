@@ -392,10 +392,10 @@
                                     <table class="table table-sm">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Nombre de Sucursal</th>
-                                                <th scope="col">Tipo de Sucursal</th>
-                                                <th scope="col">Zona de Sucursal</th>
-                                                <th scope="col">Contacto de Sucursal</th>
+                                                <th scope="col">Nombre de Departamento</th>
+                                                <th scope="col">Tipo de Departamento</th>
+                                                <th scope="col">Zona de Departamento</th>
+                                                <th scope="col">Contacto de Departamento</th>
                                                 <th scope="col">Estado</th>
                                                 <th scope="col">
                                                     <div class="d-flex justify-content-end">

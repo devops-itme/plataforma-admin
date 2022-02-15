@@ -4,15 +4,15 @@
 {{-- Content --}}
 @section('content')
 @include('layouts.breadCrumbs')
-    <div class="card card-custom">
-        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-            <div class="card-title">
-                <h2 class="card-label h1">Departamentos
-                    {{-- <div class="text-muted pt-2 font-size-sm">Datatable initialized from HTML table</div> --}}
-                </h2>
-            </div>
-            @include('layouts.alerts')
-            <div class="card-toolbar">
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h2 class="card-label h1">Departamentos
+                {{-- <div class="text-muted pt-2 font-size-sm">Datatable initialized from HTML table</div> --}}
+            </h2>
+        </div>
+        @include('layouts.alerts')
+        {{--<div class="card-toolbar">
                  <!--begin::Button filter-->
                  <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
                     <span class="svg-icon svg-icon-md">
@@ -95,124 +95,203 @@
                 <!--end::Dropdown-->
                 <!--begin::Button-->
                 <a href="{{ route('departments.create',['user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}" class="btn btn-primary font-weight-bolder">
-                    <span class="svg-icon svg-icon-md">
-                        <i class="fas fa-plus"></i>
-                    </span>Crear</a>
-                <!--end::Button-->
-            </div>
-        </div>
-        <div class="card-body">
-            <!--begin: Search Form-->
-            <!--begin::Search Form-->
-            <div class="mb-7">
-                <div class="form-filter" style="display:none">
-                    <form action="{{ route('departments.index') }}">
-                        <div class="row align-items-center">
-                            <input type="hidden" name="user_id" value="{{Request()->user_id}}">
-                            <input type="hidden" name="branch_office_id" value="{{Request()->branch_office_id}}">
-                            <div class="form-group py-3 m-0 col-md-4">
-                                <label>Nombre:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
-                                    value="{{ request()->name }}" />
-                                <span class="form-text text-muted">Filtro nombre</span>
-                            </div>
-                            <div class="form-group py-3 m-0 col-md-4">
-                                <label>Descripción:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Descripción"
-                                    name="description" value="{{ request()->document }}" />
-                                <span class="form-text text-muted">Filtro de descripción</span>
-                            </div>
-                            <div class="form-group py-3 m-0 col-md-4">
-                                <label>Sucursal:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Sucursal" name="branch_office_name"
-                                    value="{{ request()->branch_office_name }}" />
-                                <span class="form-text text-muted">Filtro sucursal</span>
-                            </div>
-                            <div class="form-group py-3 m-0 col-md-4">
-                                <label for="exampleSelect1">Estado: </label>
-                                <select class="form-control form-control-solid" id="zone" name="state">
-                                    <option selected disabled> Seleccione </option>
-                                    <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                    <option value="0"
-                                        {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
-                                    </option>
-                                </select>
-                                <span class="form-text text-muted">Filtro estado</span>
-                            </div>
-                            <div class=" row form-group py-6 m-0 col-md-8">
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
-                                </div>
-                                <div class="col-md-6">
-                                    <a href="{{ route('departments.index', ['user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
-                                </div>
-                            </div>
+        <span class="svg-icon svg-icon-md">
+            <i class="fas fa-plus"></i>
+        </span>Crear</a>
+        <!--end::Button-->
+    </div>--}}
+</div>
+<div class="card-body">
+    <!--begin: Search Form-->
+    <!--begin::Search Form-->
+    <div class="mb-7">
+        <div class="form-filter" style="display:none">
+            <form action="{{ route('departments.index') }}">
+                <div class="row align-items-center">
+                    <input type="hidden" name="user_id" value="{{Request()->user_id}}">
+                    <input type="hidden" name="branch_office_id" value="{{Request()->branch_office_id}}">
+                    <div class="form-group py-3 m-0 col-md-4">
+                        <label>Nombre:</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name" value="{{ request()->name }}" />
+                        <span class="form-text text-muted">Filtro nombre</span>
+                    </div>
+                    <div class="form-group py-3 m-0 col-md-4">
+                        <label>Descripción:</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Descripción" name="description" value="{{ request()->document }}" />
+                        <span class="form-text text-muted">Filtro de descripción</span>
+                    </div>
+                    <div class="form-group py-3 m-0 col-md-4">
+                        <label>Sucursal:</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Sucursal" name="branch_office_name" value="{{ request()->branch_office_name }}" />
+                        <span class="form-text text-muted">Filtro sucursal</span>
+                    </div>
+                    <div class="form-group py-3 m-0 col-md-4">
+                        <label for="exampleSelect1">Estado: </label>
+                        <select class="form-control form-control-solid" id="zone" name="state">
+                            <option selected disabled> Seleccione </option>
+                            <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
+                            <option value="0" {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
+                            </option>
+                        </select>
+                        <span class="form-text text-muted">Filtro estado</span>
+                    </div>
+                    <div class=" row form-group py-6 m-0 col-md-8">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
                         </div>
-                    </form>
+                        <div class="col-md-6">
+                            <a href="{{ route('departments.index', ['user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!--end::Search Form-->
-            <!--end: Search Form-->
-            <!--begin: Datatable-->
-
-
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Sucursal</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($departments as $item)
-                        <tr>
-                            <th scope="row">{{ $item->name . ' ' . $item->last_name }}</th>
-                            <td>{{ $item->description }}</td>
-                            <td>
-                                <span class="label label-inline label-light-warning font-weight-blog">
-                                   {{ $item->getBranchOffice->name }}
-                                </span>
-                            </td>
-                            <td>
-                                @if ($item->state == 1)
-                                    <span class="label label-inline label-light-success font-weight-bold">
-                                        Activo
-                                    </span>
-                                @else
-                                    <span class="label label-inline label-light-danger font-weight-bold">
-                                        Inactivo
-                                    </span>
-                                @endif
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="{{ route('departments.show', $item->id) }}"
-                                        class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Ver">
-                                        <i class="fad fa-folder-open"></i>
-                                    </a>
-                                    <a href="{{ route('departments.edit', ['departamento' => $item->id, 'user_id' => Request()->user_id, 'branch_office_id' => Request()->branch_office_id]) }}"
-                                        class="btn btn-icon btn-light-success btn-sm mr-2"  data-tooltip title="Editar">
-                                        <i class="fad fa-edit"></i>
-                                    </a>
-                                    <a onclick="confirmDelete('/departamentos/'+{{ $item->id }})" role="button"
-                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
-                                        <i class="fad fa-trash-alt"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <!--end: Datatable-->
-        </div>
-        <div class="">
-            {{-- {{ $messengers->links() }} --}}
+            </form>
         </div>
     </div>
+    <!--end::Search Form-->
+    <!--end: Search Form-->
+    <!--begin: Datatable-->
+
+    <form action="#" class="departament-form">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre de Departamento</th>
+                    <th scope="col">Tipo de Departamento</th>
+                    <th scope="col">Zona de Departamento/th>
+                    <th scope="col">Contacto de Departamento</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">
+                        <div class="d-flex justify-content-end">
+                            <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalCreateDep">
+                                <span class="svg-icon svg-icon-md">
+                                    <i class="fas fa-plus"></i>
+                                </span>Crear
+                            </a>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">---</th>
+                    <td>---</td>
+                    <td>---</td>
+                    <td>---</td>
+                    <td>
+                        <span class="label label-inline label-light-success font-weight-bold">
+                            Activo
+                        </span>
+
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                <i class="far fa-folder-open"></i>
+                            </a>
+                            <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal" data-target="#modalEditDep">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="#" role="button" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Modal Create Departament -->
+        <div class="modal fade" id="modalCreateDep" tabindex="-1" role="dialog" aria-labelledby="modalCreateLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCreateLabel">Crear Departamentos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="far fa-times h5"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card d-flex flex-row flex-wrap">
+
+                            <div class="form-group col-md-6">
+                                <label>Nombres: <span class="text-danger">*</span></label>
+                                <input name="name" type="text" class="form-control form-control-solid" placeholder="Nombre" value="" />
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Estado</label>
+                                <select class="form-control form-control-solid" id="document_type" name="state">
+                                    <option selected disabled>Seleccione</option>
+                                    <option value="1"> Activo</option>
+                                    <option value="0"> Inactivo</option>
+                                </select>
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Descripción</label>
+                                <textarea name="description" class="form-control form-control-solid" cols="30" rows="10">
+
+                                        </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary font-weight-bold">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Edit Departament -->
+        <div class="modal fade" id="modalEditDep" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCreateLabel">Editar Departamentos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="far fa-times h5"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card d-flex flex-row flex-wrap">
+
+                            <div class="form-group col-md-6">
+                                <label>Nombres: <span class="text-danger">*</span></label>
+                                <input name="name" type="text" class="form-control form-control-solid" placeholder="Nombre" value="" />
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Estado</label>
+                                <select class="form-control form-control-solid" id="document_type" name="state">
+                                    <option selected disabled>Seleccione</option>
+                                    <option value="1"> Activo</option>
+                                    <option value="0"> Inactivo</option>
+                                </select>
+                                <span class="form-text text-muted"></span>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Descripción</label>
+                                <textarea name="description" class="form-control form-control-solid" cols="30" rows="10">
+
+                                        </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary font-weight-bold">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!--end: Datatable-->
+</div>
+<div class="">
+    {{-- {{ $messengers->links() }} --}}
+</div>
+</div>
 
 @endsection
 
