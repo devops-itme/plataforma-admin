@@ -49,7 +49,7 @@
             </div>
             <div class="form-group col-md-4">
                 <label>Dirección de sucursal: </label>
-                <input type="text" class="form-control form-control-solid" placeholder="Dirección" name="branch_office_address" value="{{old('branch_office_address')}}" id="branch_office_address" />
+                <input type="text" class="form-control form-control-solid" placeholder="Dirección" name="branch_office_address" value="{{old('branch_office_address')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
             <input type="hidden" name="branch_office_lat" id="branch_office_lat" value="{{old('branch_office_lat')}}">
