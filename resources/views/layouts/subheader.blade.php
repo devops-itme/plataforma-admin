@@ -84,7 +84,7 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li><a class="dropdown-item" href="{{route('users.index')}}">Mi perfil</a></li>
                     <li><a class="dropdown-item" href="{{route('customers.index')}}">Clientes (Web)</a></li>
-                    <li><a class="dropdown-item" href="#">Móviles</a></li>
+                    <li><a class="dropdown-item" href="{{route('messengers.index')}}">Móviles</a></li>
                     <li><a class="dropdown-item" href="#">Planes</a></li>
                 </ul>
             </li>
