@@ -64,7 +64,7 @@ trait BranchOfficeTrait
                 'payment_method' => $request->branch_office_payment_method,
                 'phone' => $request->branch_office_phone,
                 'usage_mode' => $request->branch_office_usage_mode,
-                'user_id' => $request->user_id
+                // 'user_id' => $request->user_id
             ]);
             return $this->respond(200, $branchOffice, null, 'Sucursal creada exitosamente');
         } catch (\Exception $e) {

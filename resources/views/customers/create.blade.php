@@ -266,7 +266,7 @@
                                 </div>
                                 <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <!--tabla de datos-->
-                                    <table class="table table-sm">
+                                    <table class="table table-sm" id="branch_offices_table">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Nombre de Sucursal</th>
@@ -285,33 +285,7 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">---</th>
-                                                <td>---</td>
-                                                <td>---</td>
-                                                <td>---</td>
-                                                <td>
-                                                    <span class="label label-inline label-light-success font-weight-bold">
-                                                        Activo
-                                                    </span>
-
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                                        <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                                            <i class="far fa-folder-open"></i>
-                                                        </a>
-                                                        <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal" data-target="#modalEdit">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        <a href="#" role="button" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
+                                        <tbody></tbody>
                                     </table>
 
                                 </div>
@@ -469,7 +443,7 @@
                         <div class="d-flex flex-row flex-wrap">
                             <div class="form-group col-md-3">
                                 <label>Nombre de sucursal: </label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Nombre sucursal" name="branch_office_name" value="{{ old('branch_office_name') }}" />
+                                <input type="text" class="form-control form-control-solid" placeholder="Nombre sucursal" name="branch_office_name" id="branch_office_name" value="{{ old('branch_office_name') }}" />
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="form-group col-md-2">
@@ -486,12 +460,12 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Descripción de sucursal:</label>
-                                <textarea class="form-control form-control-solid" id="exampleTextarea" rows="1" name="branch_office_description">{{ old('branch_office_description') }}</textarea>
+                                <textarea class="form-control form-control-solid" id="branch_office_description" rows="1" name="branch_office_description">{{ old('branch_office_description') }}</textarea>
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Zona de sucursal:</label>
-                                <select class="form-control form-control-solid" id="document_type" name="branch_office_zone">
+                                <select class="form-control form-control-solid" id="branch_office_zone" name="branch_office_zone">
                                     <option selected disabled>Seleccione</option>
                                     @foreach ($documents as $document)
                                     <option value="{{ $document->id }}" {{ $document->id == old('branch_office_zone') ? 'selected' : '' }}>
@@ -510,17 +484,17 @@
                             <input type="hidden" name="branch_office_lng" id="branch_office_lng">
                             <div class="form-group col-md-4">
                                 <label>Email de sucursal: </label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Email" name="branch_office_email" value="{{ old('branch_office_email') }}" />
+                                <input type="text" class="form-control form-control-solid" placeholder="Email" name="branch_office_email" id="branch_office_email" value="{{ old('branch_office_email') }}" />
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Contacto de sucursal: </label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Contacto" name="branch_office_contact" value="{{ old('branch_office_email') }}" />
+                                <input type="text" class="form-control form-control-solid" placeholder="Contacto" name="branch_office_contact" value="{{ old('branch_office_email') }}" id="branch_office_contact" />
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Tipo de documento sucursal:</label>
-                                <select class="form-control form-control-solid" id="document_type" name="branch_office_document_type">
+                                <select class="form-control form-control-solid" id="branch_office_document_type" name="branch_office_document_type">
                                     <option selected disabled>Seleccione</option>
                                     @foreach ($documents as $document)
                                     <option value="{{ $document->id }}" {{ $document->id == old('branch_office_document_type') ? 'selected' : '' }}>
@@ -532,12 +506,12 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Documento de sucursal: </label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Numero de documento" name="branch_office_document_number" value="{{ old('branch_office_document_number') }}" />
+                                <input type="text" class="form-control form-control-solid" id="branch_office_document_number" placeholder="Numero de documento" name="branch_office_document_number" value="{{ old('branch_office_document_number') }}" />
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Metodo de pago:</label>
-                                <select class="form-control form-control-solid" id="payment_method" name="branch_office_payment_method">
+                                <select class="form-control form-control-solid" id="branch_office_payment_method" name="branch_office_payment_method">
                                     <option selected disabled>Seleccione</option>
                                     @foreach ($payment_method as $item)
                                     <option value="{{ $item->id }}" {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
@@ -549,12 +523,12 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Telefono de sucursal: </label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Telefono" name="branch_office_phone" value="{{ old('branch_office_phone') }}" />
+                                <input type="text" class="form-control form-control-solid" placeholder="Telefono" name="branch_office_phone" value="{{ old('branch_office_phone') }}" id="branch_office_phone" />
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="d-none" id="slcPlan">
                                 <label>Planes:</label>
-                                <select class="form-control form-control-solid" id="document_type" name="branch_office_usage_mode">
+                                <select class="form-control form-control-solid">
                                     <option selected disabled>Seleccione</option>
                                     @foreach ($documents as $document)
                                     <option value="{{ $document->id }}" {{ $document->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
@@ -566,7 +540,7 @@
                             </div>
                             <div class="d-none" id="useMode">
                                 <label>Modo de uso:</label>
-                                <select class="form-control form-control-solid" id="document_type" name="branch_office_usage_mode">
+                                <select class="form-control form-control-solid" id="branch_office_usage_mode" name="branch_office_usage_mode">
                                     <option selected disabled>Seleccione</option>
                                     @foreach ($use_mode as $item)
                                     <option value="{{ $item->id }}" {{ $item->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
@@ -580,24 +554,23 @@
                                 <label>¿Sucursal predeterminada?</label>
                                 <div class="radio-inline">
                                     <label class="radio radio-rounded">
-                                        <input type="radio" checked="checked" name="branch_office_default" value="1" {{ old('branch_office_default') == 1 ? 'checked="checked"' : '' }} />
+                                        <input type="radio" checked="checked" name="branch_office_default" value="1" {{ old('branch_office_default') == 1 ? 'checked="checked"' : '' }} id="branch_office_default" />
                                         <span></span>
                                         SI
                                     </label>
                                     <label class="radio radio-rounded">
-                                        <input type="radio" name="branch_office_default" value="0" {{ old('branch_office_default') == 0 ? 'checked="checked"' : '' }} />
+                                        <input type="radio" name="branch_office_default" value="0" {{ old('branch_office_default') == 0 ? 'checked="checked"' : '' }} id="branch_office_default" />
                                         <span></span>
                                         NO
                                     </label>
                                 </div>
                                 <span class="form-text text-muted"></span>
                             </div>
-
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary font-weight-bold">Guardar</button>
+                        <button type="button" class="btn btn-primary font-weight-bold" id="saveBranchOffice">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -766,7 +739,7 @@
 
                             <div class="form-group col-md-6">
                                 <label>Nombres: <span class="text-danger">*</span></label>
-                                <input name="name" type="text" class="form-control form-control-solid" placeholder="Nombre" value="" />
+                                <input name="department_name" type="text" class="form-control form-control-solid" placeholder="Nombre" value="" />
                                 <span class="form-text text-muted"></span>
                             </div>
                             <div class="form-group col-md-6">

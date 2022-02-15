@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/customer_data/{id}', 'Admin\CustomerController@customerData');
     Route::get('/search_customers', 'Admin\CustomerController@search_customer');
+    Route::get('/unassigned_branch_offices', 'Admin\BranchOfficeController@unassigned_branch_offices');
     Route::group(['middleware' => 'role'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');
