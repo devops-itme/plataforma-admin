@@ -3,6 +3,16 @@
 use App\Permission;
 
 return [
+    'states' => [
+        1 => [
+           'name' => 'Activo',
+           'color' => 'success'
+        ],
+        0 => [
+           'name' => 'Inactivo',
+           'color' => 'warning'
+        ],
+    ],
     'roles' => [
         1 => 'Admin',
         2 => 'Operador',
