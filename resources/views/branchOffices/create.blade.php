@@ -96,9 +96,9 @@
                 <input type="text" class="form-control form-control-solid" placeholder="Telefono" name="branch_office_phone" value="{{old('branch_office_phone')}}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="d-none" id="slcPlan">
+            <div class="d-none">
                 <label>Planes:</label>
-                <select class="form-control form-control-solid" id="document_type"
+                <select class="form-control form-control-solid" id=""
                     name="branch_office_usage_mode">
                     <option selected disabled>Seleccione</option>
                     @foreach ($documents as $document)
@@ -109,7 +109,7 @@
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="d-none" id="useMode">
+            <div class="d-none">
                 <label>Modo de uso:</label>
                 <select class="form-control form-control-solid" id="document_type"
                     name="branch_office_usage_mode">

@@ -2202,6 +2202,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -42631,15 +42643,26 @@ var render = function () {
         "div",
         { staticClass: "col-md-6 p-4 d-flex flex-row flex-wrap border-right" },
         [
-          _c("h5", { staticClass: "font-weight-bold text-dark" }, [
-            _vm._v(
-              "\n                Destinos por " +
-                _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
-                "\n            "
-            ),
-          ]),
+          _c(
+            "div",
+            {
+              staticClass:
+                "col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center",
+            },
+            [
+              _c("h5", { staticClass: "font-weight-bold text-dark" }, [
+                _vm._v(
+                  "\n                     Destinos por " +
+                    _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+                    "\n                "
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(0),
+            ]
+          ),
           _vm._v(" "),
-          _vm._m(0),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "min-h-500px col-md-12" }, [
             _c("div", { staticClass: "table-responsive" }, [
@@ -42650,7 +42673,7 @@ var render = function () {
                   staticStyle: { "table-layout": "auto", width: "1100px" },
                 },
                 [
-                  _vm._m(1),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "draggable",
@@ -42712,15 +42735,24 @@ var render = function () {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-6 p-4 d-flex flex-row flex-wrap" }, [
-        _c("h5", { staticClass: "font-weight-bold text-dark" }, [
-          _vm._v(
-            "\n                Seleccionados por " +
-              _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
-              "\n            "
-          ),
-        ]),
+        _c(
+          "div",
+          {
+            staticClass:
+              "col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center",
+          },
+          [
+            _c("h5", { staticClass: "font-weight-bold text-dark" }, [
+              _vm._v(
+                "\n                    Seleccionados por " +
+                  _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+                  "\n                "
+              ),
+            ]),
+          ]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "min-h-500px col-md-12" }, [
+        _c("div", { staticClass: "min-h-350px col-md-12" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c(
               "table",
@@ -42729,7 +42761,7 @@ var render = function () {
                 staticStyle: { "table-layout": "auto", width: "1100px" },
               },
               [
-                _vm._m(2),
+                _vm._m(3),
                 _vm._v(" "),
                 _c(
                   "draggable",
@@ -42788,7 +42820,7 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _vm._m(3),
+        _vm._m(4),
       ]),
     ]),
   ])
@@ -42798,11 +42830,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-12" }, [
-      _c("label", [_vm._v("Filtro")]),
-      _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } }),
+    return _c("div", { staticClass: "col-md-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-light-success font-weight-bold btn-block",
+          attrs: {
+            type: "button",
+            "data-toggle": "collapse",
+            "data-target": "#collapseExample",
+            "aria-expanded": "false",
+            "aria-controls": "collapseExample",
+          },
+        },
+        [_vm._v("\n                        Filtrar\n                    ")]
+      ),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "collapse col-md-12", attrs: { id: "collapseExample" } },
+      [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Filtrar" },
+        }),
+      ]
+    )
   },
   function () {
     var _vm = this
@@ -42873,9 +42931,34 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group col-md-12" }, [
-      _c("label", [_vm._v("Filtro")]),
+      _c("label", { staticClass: "font-weight-bolder" }, [_vm._v("Mensajero")]),
       _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } }),
+      _c(
+        "div",
+        {
+          staticClass: "d-flex flex-row flex-wrap justify-content-around px-0",
+        },
+        [
+          _c("input", {
+            staticClass: "form-control col-md-3",
+            attrs: { type: "text" },
+          }),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control col-md-5",
+            attrs: { type: "text" },
+          }),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-light-primary font-weight-bold col-md-3",
+              attrs: { href: "#" },
+            },
+            [_vm._v("Despachar")]
+          ),
+        ]
+      ),
     ])
   },
 ]
@@ -57929,7 +58012,7 @@ var BranchOffices = /*#__PURE__*/function () {
   }, {
     key: "loadPlanFields",
     value: function loadPlanFields() {
-      var option = document.getElementById("payment_method");
+      var option = document.getElementById("branch_office_payment_method");
       var useMode = document.getElementById("useMode");
       var slcPlan = document.getElementById("slcPlan");
 
@@ -57966,6 +58049,14 @@ var BranchOffices = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Customers; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -57982,6 +58073,7 @@ var Customers = /*#__PURE__*/function () {
     value: function initialize() {
       this.customerFeatures();
       this.saveBranchOffices();
+      this.listBranchOffices();
     }
   }, {
     key: "customerFeatures",
@@ -58018,8 +58110,240 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "saveBranchOffices",
     value: function saveBranchOffices() {
-      console.log('hola');
+      var _this = this;
+
+      var btnSendData = document.getElementById("saveBranchOffice");
+
+      if (btnSendData == null) {
+        return;
+      }
+
+      btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('branch_office_name', document.getElementById("branch_office_name").value);
+                formData.append('branch_office_type', document.getElementById("branch_office_type").value);
+                formData.append('branch_office_description', document.getElementById("branch_office_description").value);
+                formData.append('branch_office_zone', document.getElementById("branch_office_zone").value);
+                formData.append('branch_office_address', document.getElementById("branch_office_address").value);
+                formData.append('branch_office_lat', document.getElementById("branch_office_lat").value);
+                formData.append('branch_office_lng', document.getElementById("branch_office_lng").value);
+                formData.append('branch_office_email', document.getElementById("branch_office_email").value);
+                formData.append('branch_office_contact', document.getElementById("branch_office_contact").value);
+                formData.append('branch_office_document_type', document.getElementById("branch_office_document_type").value);
+                formData.append('branch_office_document_number', document.getElementById("branch_office_document_number").value);
+                formData.append('branch_office_payment_method', document.getElementById("branch_office_payment_method").value);
+                formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
+                formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
+                formData.append('branch_office_default', document.getElementById("branch_office_default").value);
+                _context.next = 18;
+                return _this.sendBranchOfficeData(formData);
+
+              case 18:
+                response = _context.sent;
+
+                if (response['state'] == 200) {
+                  alert('Sucursal creada exitosamente.');
+                  modal = document.getElementById("modalCreate");
+                  modal.click();
+
+                  _this.listBranchOffices();
+                } else {
+                  alert('Ocurrió un error al crear la sucursal.');
+                  console.log('Error ocurrido: ' + response['error']);
+                }
+
+              case 20:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
     }
+  }, {
+    key: "sendBranchOfficeData",
+    value: function () {
+      var _sendBranchOfficeData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/sucursales/null/store", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context2.sent;
+                return _context2.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function sendBranchOfficeData(_x) {
+        return _sendBranchOfficeData.apply(this, arguments);
+      }
+
+      return sendBranchOfficeData;
+    }()
+  }, {
+    key: "listBranchOffices",
+    value: function () {
+      var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var tbody, assignedBranchOffices;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                tbody = document.querySelector("#branch_offices_table tbody");
+                tbody.innerHTML = '';
+                _context3.next = 4;
+                return this.requestBranchOffices();
+
+              case 4:
+                assignedBranchOffices = _context3.sent;
+
+                if (assignedBranchOffices['state'] == 200) {
+                  (function () {
+                    var data = assignedBranchOffices['data'];
+
+                    if (data.length > 0) {
+                      var _loop = function _loop(i) {
+                        var row = tbody.insertRow();
+                        var nameCell = row.insertCell(0);
+                        nameCell.innerHTML = data[i].name;
+                        var typeCell = row.insertCell(1);
+                        typeCell.innerHTML = data[i].get_type.name;
+                        var zoneCell = row.insertCell(2);
+                        zoneCell.innerHTML = data[i].get_zone.name;
+                        var contactCell = row.insertCell(3);
+                        contactCell.innerHTML = data[i].contact;
+                        var stateCell = row.insertCell(4);
+
+                        if (data[i].state == 1) {
+                          stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                                    Activo\
+                                                </span>';
+                        } else {
+                          stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                    Inactivo\
+                                                </span>';
+                        }
+
+                        var selectCell = row.insertCell(5);
+                        var branchCheck = document.createElement("input");
+                        branchCheck.setAttribute('class', 'checkbox-inline mt-3');
+                        branchCheck.setAttribute('type', 'checkbox');
+                        branchCheck.setAttribute('name', 'branchCheck[]');
+                        branchCheck.setAttribute('value', data[i].id); //Show button
+
+                        var showBranch = document.createElement("button");
+                        showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
+                        showBranch.setAttribute('type', 'button');
+                        showBranch.innerHTML = '<i class="far fa-folder-open"></i>'; //Edit button
+
+                        var branchEdit = document.createElement("button");
+                        branchEdit.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                        branchEdit.setAttribute('type', 'button');
+                        branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
+
+                        var branchDelete = document.createElement("button");
+
+                        branchDelete.onclick = function () {
+                          confirmDelete('/sucursales/null/' + data[i].id);
+                        };
+
+                        branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                        branchDelete.setAttribute('type', 'button');
+                        branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                        var buttonsDiv = document.createElement("div");
+                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                        buttonsDiv.appendChild(branchCheck);
+                        buttonsDiv.appendChild(showBranch);
+                        buttonsDiv.appendChild(branchEdit);
+                        buttonsDiv.appendChild(branchDelete);
+                        selectCell.appendChild(buttonsDiv);
+                        tbody.appendChild(row);
+                      };
+
+                      for (var i = 0; i < data.length; i++) {
+                        _loop(i);
+                      }
+                    }
+                  })();
+                }
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function listBranchOffices() {
+        return _listBranchOffices.apply(this, arguments);
+      }
+
+      return listBranchOffices;
+    }()
+  }, {
+    key: "requestBranchOffices",
+    value: function () {
+      var _requestBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context4.next = 3;
+                return fetch("/unassigned_branch_offices").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context4.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function requestBranchOffices() {
+        return _requestBranchOffices.apply(this, arguments);
+      }
+
+      return requestBranchOffices;
+    }()
   }]);
 
   return Customers;
@@ -59012,8 +59336,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -3,7 +3,7 @@ export default class BranchOffices {
         this.loadPlanFields();
     }
     loadPlanFields(){
-        let option = document.getElementById("payment_method");
+        let option = document.getElementById("branch_office_payment_method");
         let useMode = document.getElementById("useMode");
         let slcPlan = document.getElementById("slcPlan");
         if(option == null){
