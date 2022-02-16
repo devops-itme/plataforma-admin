@@ -120,7 +120,7 @@ export default class Customers {
                     const branchCheck = document.createElement("input");
                     branchCheck.setAttribute('class', 'checkbox-inline mt-3')
                     branchCheck.setAttribute('type', 'checkbox');
-                    branchCheck.setAttribute('name', 'branchCheck');
+                    branchCheck.setAttribute('name', 'branchCheck[]');
                     branchCheck.setAttribute('value', data[i].id);
                     //Show button
                     const showBranch = document.createElement("button");

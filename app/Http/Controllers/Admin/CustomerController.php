@@ -75,12 +75,16 @@ class CustomerController extends Controller
         if($saveUserData['state'] != 200){
             return redirect()->back()->with('danger', $saveUserData['error']);
         }
-        if(!is_null($request->branch_office_name)){
-            $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));
-            if($saveBranchOfficeData['state'] != 200){
-                return redirect()->back()->with('danger', $saveBranchOfficeData['error']);
-            }
+        $assignBranches = $this->storeUserBranch($saveUserData['data']->id, $request->branchCheck);
+        if($assignBranches['state'] != 200){
+            return redirect()->back()->with('danger', $assignBranches['error']);
         }
+        // if(!is_null($request->branch_office_name)){
+        //     $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));
+        //     if($saveBranchOfficeData['state'] != 200){
+        //         return redirect()->back()->with('danger', $saveBranchOfficeData['error']);
+        //     }
+        // }
         $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
         if($response['state'] == 200){
             return redirect()->route('customers.index')->with('success', 'Cliente registrado exitosamente.');

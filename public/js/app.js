@@ -58166,7 +58166,7 @@ var Customers = /*#__PURE__*/function () {
                       branchCheck = document.createElement("input");
                       branchCheck.setAttribute('class', 'checkbox-inline mt-3');
                       branchCheck.setAttribute('type', 'checkbox');
-                      branchCheck.setAttribute('name', 'branchCheck');
+                      branchCheck.setAttribute('name', 'branchCheck[]');
                       branchCheck.setAttribute('value', data[i].id); //Show button
 
                       showBranch = document.createElement("button");
@@ -59106,8 +59106,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

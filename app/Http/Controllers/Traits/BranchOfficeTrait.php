@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\BranchOffice;
+use App\UserBranch;
 
 trait BranchOfficeTrait
 {
@@ -123,6 +124,21 @@ trait BranchOfficeTrait
             return $this->respond(200, $branchOffice, null, 'Oficina eliminada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al eliminar usuario');
+        }
+    }
+
+    public function storeUserBranch($user_id, $offices)
+    {
+        try {
+            foreach ($offices as $key) {
+                UserBranch::create([
+                    'user_id' => $user_id,
+                    'branch_office_id' => $key
+                ]);
+            }
+            return $this->respond(200, [], null, 'Sucursales asignadas de forma correcta');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al asignar la sucursal');
         }
     }
 }
