@@ -58794,6 +58794,11 @@ var Addresses = /*#__PURE__*/function () {
     key: "autocompleteAddress",
     value: function autocompleteAddress() {
       var directionCity = document.getElementById("branch_office_address");
+
+      if (directionCity == null) {
+        return;
+      }
+
       google.maps.event.addDomListener(window, "load", function () {
         var autocompleteCity = new google.maps.places.Autocomplete(directionCity, {
           bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
@@ -59154,6 +59159,8 @@ var Customers = /*#__PURE__*/function () {
                   alert('Sucursal creada exitosamente.');
                   modal = document.getElementById("modalCreate");
                   modal.click();
+
+                  _this.listBranchOffices();
                 } else {
                   alert('Ocurrió un error al crear la sucursal.');
                   console.log('Error ocurrido: ' + response['error']);
@@ -59210,7 +59217,7 @@ var Customers = /*#__PURE__*/function () {
     key: "listBranchOffices",
     value: function () {
       var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var tbody, assignedBranchOffices, data, i, row, nameCell, typeCell, zoneCell, contactCell, stateCell, selectCell, branchCheck, showBranch, branchEdit, branchDelete, buttonsDiv;
+        var tbody, assignedBranchOffices;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -59224,63 +59231,74 @@ var Customers = /*#__PURE__*/function () {
                 assignedBranchOffices = _context3.sent;
 
                 if (assignedBranchOffices['state'] == 200) {
-                  data = assignedBranchOffices['data'];
+                  (function () {
+                    var data = assignedBranchOffices['data'];
 
-                  if (data.length > 0) {
-                    for (i = 0; i < data.length; i++) {
-                      row = tbody.insertRow();
-                      nameCell = row.insertCell(0);
-                      nameCell.innerHTML = data[i].name;
-                      typeCell = row.insertCell(1);
-                      typeCell.innerHTML = data[i].get_type.name;
-                      zoneCell = row.insertCell(2);
-                      zoneCell.innerHTML = data[i].get_zone.name;
-                      contactCell = row.insertCell(3);
-                      contactCell.innerHTML = data[i].contact;
-                      stateCell = row.insertCell(4);
+                    if (data.length > 0) {
+                      var _loop = function _loop(i) {
+                        var row = tbody.insertRow();
+                        var nameCell = row.insertCell(0);
+                        nameCell.innerHTML = data[i].name;
+                        var typeCell = row.insertCell(1);
+                        typeCell.innerHTML = data[i].get_type.name;
+                        var zoneCell = row.insertCell(2);
+                        zoneCell.innerHTML = data[i].get_zone.name;
+                        var contactCell = row.insertCell(3);
+                        contactCell.innerHTML = data[i].contact;
+                        var stateCell = row.insertCell(4);
 
-                      if (data[i].state == 1) {
-                        stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                        if (data[i].state == 1) {
+                          stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
                                                     Activo\
                                                 </span>';
-                      } else {
-                        stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                        } else {
+                          stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
                                                     Inactivo\
                                                 </span>';
+                        }
+
+                        var selectCell = row.insertCell(5);
+                        var branchCheck = document.createElement("input");
+                        branchCheck.setAttribute('class', 'checkbox-inline mt-3');
+                        branchCheck.setAttribute('type', 'checkbox');
+                        branchCheck.setAttribute('name', 'branchCheck[]');
+                        branchCheck.setAttribute('value', data[i].id); //Show button
+
+                        var showBranch = document.createElement("button");
+                        showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
+                        showBranch.setAttribute('type', 'button');
+                        showBranch.innerHTML = '<i class="far fa-folder-open"></i>'; //Edit button
+
+                        var branchEdit = document.createElement("button");
+                        branchEdit.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                        branchEdit.setAttribute('type', 'button');
+                        branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
+
+                        var branchDelete = document.createElement("button");
+
+                        branchDelete.onclick = function () {
+                          confirmDelete('/sucursales/null/' + data[i].id);
+                        };
+
+                        branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                        branchDelete.setAttribute('type', 'button');
+                        branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                        var buttonsDiv = document.createElement("div");
+                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                        buttonsDiv.appendChild(branchCheck);
+                        buttonsDiv.appendChild(showBranch);
+                        buttonsDiv.appendChild(branchEdit);
+                        buttonsDiv.appendChild(branchDelete);
+                        selectCell.appendChild(buttonsDiv);
+                        tbody.appendChild(row);
+                      };
+
+                      for (var i = 0; i < data.length; i++) {
+                        _loop(i);
                       }
-
-                      selectCell = row.insertCell(5);
-                      branchCheck = document.createElement("input");
-                      branchCheck.setAttribute('class', 'checkbox-inline mt-3');
-                      branchCheck.setAttribute('type', 'checkbox');
-                      branchCheck.setAttribute('name', 'branchCheck');
-                      branchCheck.setAttribute('value', data[i].id); //Show button
-
-                      showBranch = document.createElement("button");
-                      showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
-                      showBranch.setAttribute('type', 'button');
-                      showBranch.innerHTML = '<i class="far fa-folder-open"></i>'; //Edit button
-
-                      branchEdit = document.createElement("button");
-                      branchEdit.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
-                      branchEdit.setAttribute('type', 'button');
-                      branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
-
-                      branchDelete = document.createElement("button");
-                      branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                      branchDelete.setAttribute('type', 'button');
-                      branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
-
-                      buttonsDiv = document.createElement("div");
-                      buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                      buttonsDiv.appendChild(branchCheck);
-                      buttonsDiv.appendChild(showBranch);
-                      buttonsDiv.appendChild(branchEdit);
-                      buttonsDiv.appendChild(branchDelete);
-                      selectCell.appendChild(buttonsDiv);
-                      tbody.appendChild(row);
                     }
-                  }
+                  })();
                 }
 
               case 6:
@@ -59875,6 +59893,216 @@ var Orders = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/_permissions.js":
+/*!**************************************!*\
+  !*** ./resources/js/_permissions.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Permissions; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var requestPermissions = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(url) {
+    var response, token;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            response = {
+              state: 500
+            };
+            token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            _context.next = 4;
+            return fetch(url, {
+              method: 'GET',
+              headers: {
+                'X-CSRF-TOKEN': token
+              }
+            }).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              console.log(e);
+            });
+
+          case 4:
+            return _context.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestPermissions(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var Permissions = /*#__PURE__*/function () {
+  function Permissions() {
+    _classCallCheck(this, Permissions);
+  }
+
+  _createClass(Permissions, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadPermissions();
+    }
+  }, {
+    key: "loadPermissions",
+    value: function loadPermissions() {
+      var configurationBtn = document.getElementsByClassName("configuration-btn");
+
+      if (configurationBtn == null) {
+        return;
+      }
+
+      console.log(configurationBtn);
+      [].forEach.call(configurationBtn, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          var row, role_id, url, response, data, modules;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  row = btn.parentNode.parentNode;
+                  role_id = row.id;
+                  url = '/permisos/getPermissions/' + role_id;
+                  _context2.next = 5;
+                  return requestPermissions(url);
+
+                case 5:
+                  response = _context2.sent;
+                  console.log(response);
+
+                  if (!(response.state != 200)) {
+                    _context2.next = 9;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 9:
+                  data = response.data;
+                  console.log(data);
+                  modules = data.modules;
+                  [].forEach.call(modules, function (module) {
+                    console.log(module);
+                  });
+
+                case 13:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        })));
+      });
+    }
+  }]);
+
+  return Permissions;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/_zones.js":
+/*!********************************!*\
+  !*** ./resources/js/_zones.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Zones; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Zones = /*#__PURE__*/function () {
+  function Zones() {
+    _classCallCheck(this, Zones);
+  }
+
+  _createClass(Zones, [{
+    key: "initialize",
+    value: function initialize() {
+      this.initMap();
+    }
+  }, {
+    key: "initMap",
+    value: function initMap() {
+      // The location of panama 8.689078613386496, -81.13166771577085
+      var panama = {
+        lat: 8.689,
+        lng: -81.131
+      };
+      var mapTemplate = document.getElementById("map");
+
+      if (mapTemplate == null) {
+        return;
+      } // The map, centered at panama
+
+
+      var map = new google.maps.Map(mapTemplate, {
+        zoom: 7,
+        center: panama,
+        mapTypeId: google.maps.MapTypeId.RoadMap
+      }); // The marker, positioned at Uluru
+      // const marker = new google.maps.Marker({
+      //     position: panama,
+      //     map: map,
+      // });
+
+      var triangleCoords = [new google.maps.LatLng(8.827520901431855, -82.07374528457048), new google.maps.LatLng(8.281601970995954, -81.7386623009158) // new google.maps.LatLng(8.71351334406503, -81.26075706193294)
+      ];
+      var myPolygon = new google.maps.Polygon({
+        paths: triangleCoords,
+        draggable: true,
+        // turn off if it gets annoying
+        editable: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35
+      });
+      myPolygon.setMap(map);
+    }
+  }]);
+
+  return Zones;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -59889,10 +60117,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
 /* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
 /* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
-/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
+/* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_permissions */ "./resources/js/_permissions.js");
+/* harmony import */ var _zones__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_zones */ "./resources/js/_zones.js");
+/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+
 
 
 
@@ -59907,7 +60139,9 @@ var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_1__["default"]();
 var customers = new _customers__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var orders = new _orders__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var general = new _general__WEBPACK_IMPORTED_MODULE_4__["default"]();
-var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_5__["default"]();
+var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_5__["default"]();
+var zones = new _zones__WEBPACK_IMPORTED_MODULE_6__["default"]();
+var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
 var app = new Vue({
   el: '#app'
 });
@@ -59918,6 +60152,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
   addresses.initialize();
   customers.initialize();
   general.initialize();
+  permissions.initialize();
+  zones.initialize();
   branchOffice.initialize();
 });
 
@@ -60211,8 +60447,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

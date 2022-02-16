@@ -62,6 +62,7 @@ export default class Customers {
                 alert('Sucursal creada exitosamente.');
                 let modal = document.getElementById("modalCreate");
                 modal.click();
+                this.listBranchOffices();
             } else {
                 alert('Ocurrió un error al crear la sucursal.');
                 console.log('Error ocurrido: '+response['error']);
@@ -120,7 +121,7 @@ export default class Customers {
                     const branchCheck = document.createElement("input");
                     branchCheck.setAttribute('class', 'checkbox-inline mt-3')
                     branchCheck.setAttribute('type', 'checkbox');
-                    branchCheck.setAttribute('name', 'branchCheck');
+                    branchCheck.setAttribute('name', 'branchCheck[]');
                     branchCheck.setAttribute('value', data[i].id);
                     //Show button
                     const showBranch = document.createElement("button");
@@ -134,6 +135,7 @@ export default class Customers {
                     branchEdit.innerHTML = '<i class="fas fa-edit"></i>';
                     //Delete button
                     const branchDelete = document.createElement("button");
+                    branchDelete.onclick = function(){confirmDelete('/sucursales/null/'+data[i].id)};
                     branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                     branchDelete.setAttribute('type', 'button');
                     branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';

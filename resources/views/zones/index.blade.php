@@ -45,7 +45,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    ...
+                    <h3>My Google Maps Demo</h3>
+                    <div id="map" style="height: 400px; width: 100%;"></div>
                 </div>
             </div>
         </div>
