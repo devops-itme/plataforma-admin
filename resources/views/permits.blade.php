@@ -71,9 +71,7 @@
           <div class="col-12">
             <div class="card my-2">
               <div class="card-body">
-                <form id="idFormUpdateRol" method="POST">
-                  @csrf
-                  @method('put')
+               
                   <div class="row">
                     <div class="col-3 align-self-center">
                       <h6 class="mb-0 text-muted font-weight-bold">Dashboard</h6>
@@ -101,7 +99,7 @@
                       </div>
                     </div>
                   </div>
-              </form>
+              
               </div>
             </div>
           </div>

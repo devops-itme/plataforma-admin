@@ -9,6 +9,10 @@ export default class Addresses {
     autocompleteAddress() {
         const directionCity = document.getElementById("branch_office_address");
 
+        if (directionCity == null) {
+            return;
+        }
+
         google.maps.event.addDomListener(window, "load", function () {
             const autocompleteCity = new google.maps.places.Autocomplete(
                 directionCity,
