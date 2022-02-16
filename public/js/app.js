@@ -58150,6 +58150,8 @@ var Customers = /*#__PURE__*/function () {
                   alert('Sucursal creada exitosamente.');
                   modal = document.getElementById("modalCreate");
                   modal.click();
+
+                  _this.listBranchOffices();
                 } else {
                   alert('Ocurrió un error al crear la sucursal.');
                   console.log('Error ocurrido: ' + response['error']);

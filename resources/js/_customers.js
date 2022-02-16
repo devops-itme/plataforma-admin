@@ -62,6 +62,7 @@ export default class Customers {
                 alert('Sucursal creada exitosamente.');
                 let modal = document.getElementById("modalCreate");
                 modal.click();
+                this.listBranchOffices();
             } else {
                 alert('Ocurrió un error al crear la sucursal.');
                 console.log('Error ocurrido: '+response['error']);
