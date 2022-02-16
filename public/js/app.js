@@ -58208,7 +58208,7 @@ var Customers = /*#__PURE__*/function () {
     key: "listBranchOffices",
     value: function () {
       var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var tbody, assignedBranchOffices, data, i, row, nameCell, typeCell, zoneCell, contactCell, stateCell, selectCell, branchCheck, showBranch, branchEdit, branchDelete, buttonsDiv;
+        var tbody, assignedBranchOffices;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -58222,63 +58222,74 @@ var Customers = /*#__PURE__*/function () {
                 assignedBranchOffices = _context3.sent;
 
                 if (assignedBranchOffices['state'] == 200) {
-                  data = assignedBranchOffices['data'];
+                  (function () {
+                    var data = assignedBranchOffices['data'];
 
-                  if (data.length > 0) {
-                    for (i = 0; i < data.length; i++) {
-                      row = tbody.insertRow();
-                      nameCell = row.insertCell(0);
-                      nameCell.innerHTML = data[i].name;
-                      typeCell = row.insertCell(1);
-                      typeCell.innerHTML = data[i].get_type.name;
-                      zoneCell = row.insertCell(2);
-                      zoneCell.innerHTML = data[i].get_zone.name;
-                      contactCell = row.insertCell(3);
-                      contactCell.innerHTML = data[i].contact;
-                      stateCell = row.insertCell(4);
+                    if (data.length > 0) {
+                      var _loop = function _loop(i) {
+                        var row = tbody.insertRow();
+                        var nameCell = row.insertCell(0);
+                        nameCell.innerHTML = data[i].name;
+                        var typeCell = row.insertCell(1);
+                        typeCell.innerHTML = data[i].get_type.name;
+                        var zoneCell = row.insertCell(2);
+                        zoneCell.innerHTML = data[i].get_zone.name;
+                        var contactCell = row.insertCell(3);
+                        contactCell.innerHTML = data[i].contact;
+                        var stateCell = row.insertCell(4);
 
-                      if (data[i].state == 1) {
-                        stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                        if (data[i].state == 1) {
+                          stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
                                                     Activo\
                                                 </span>';
-                      } else {
-                        stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                        } else {
+                          stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
                                                     Inactivo\
                                                 </span>';
+                        }
+
+                        var selectCell = row.insertCell(5);
+                        var branchCheck = document.createElement("input");
+                        branchCheck.setAttribute('class', 'checkbox-inline mt-3');
+                        branchCheck.setAttribute('type', 'checkbox');
+                        branchCheck.setAttribute('name', 'branchCheck[]');
+                        branchCheck.setAttribute('value', data[i].id); //Show button
+
+                        var showBranch = document.createElement("button");
+                        showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
+                        showBranch.setAttribute('type', 'button');
+                        showBranch.innerHTML = '<i class="far fa-folder-open"></i>'; //Edit button
+
+                        var branchEdit = document.createElement("button");
+                        branchEdit.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                        branchEdit.setAttribute('type', 'button');
+                        branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
+
+                        var branchDelete = document.createElement("button");
+
+                        branchDelete.onclick = function () {
+                          confirmDelete('/sucursales/null/' + data[i].id);
+                        };
+
+                        branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                        branchDelete.setAttribute('type', 'button');
+                        branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                        var buttonsDiv = document.createElement("div");
+                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                        buttonsDiv.appendChild(branchCheck);
+                        buttonsDiv.appendChild(showBranch);
+                        buttonsDiv.appendChild(branchEdit);
+                        buttonsDiv.appendChild(branchDelete);
+                        selectCell.appendChild(buttonsDiv);
+                        tbody.appendChild(row);
+                      };
+
+                      for (var i = 0; i < data.length; i++) {
+                        _loop(i);
                       }
-
-                      selectCell = row.insertCell(5);
-                      branchCheck = document.createElement("input");
-                      branchCheck.setAttribute('class', 'checkbox-inline mt-3');
-                      branchCheck.setAttribute('type', 'checkbox');
-                      branchCheck.setAttribute('name', 'branchCheck[]');
-                      branchCheck.setAttribute('value', data[i].id); //Show button
-
-                      showBranch = document.createElement("button");
-                      showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
-                      showBranch.setAttribute('type', 'button');
-                      showBranch.innerHTML = '<i class="far fa-folder-open"></i>'; //Edit button
-
-                      branchEdit = document.createElement("button");
-                      branchEdit.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
-                      branchEdit.setAttribute('type', 'button');
-                      branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
-
-                      branchDelete = document.createElement("button");
-                      branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                      branchDelete.setAttribute('type', 'button');
-                      branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
-
-                      buttonsDiv = document.createElement("div");
-                      buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                      buttonsDiv.appendChild(branchCheck);
-                      buttonsDiv.appendChild(showBranch);
-                      buttonsDiv.appendChild(branchEdit);
-                      buttonsDiv.appendChild(branchDelete);
-                      selectCell.appendChild(buttonsDiv);
-                      tbody.appendChild(row);
                     }
-                  }
+                  })();
                 }
 
               case 6:

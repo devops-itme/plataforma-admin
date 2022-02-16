@@ -123,7 +123,7 @@ trait BranchOfficeTrait
             $branchOffice->delete();
             return $this->respond(200, $branchOffice, null, 'Oficina eliminada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar usuario');
+            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar oficina');
         }
     }
 

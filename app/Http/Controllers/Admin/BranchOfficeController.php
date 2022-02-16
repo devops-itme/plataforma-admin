@@ -140,9 +140,10 @@ class BranchOfficeController extends Controller
     {
         $response = $this->deleteBranchOffice($id);
         if($response['state'] == 200){
-            return redirect()->route('branchOffices.index', $parent_id)->with('success', $response['message']);
+            return redirect()->back()->with('success', $response['message']);
+            // return redirect()->route('branchOffices.index', $parent_id)->with('success', $response['message']);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return redirect()->back()->with('danger', $response['error']);
         }
     }
 
