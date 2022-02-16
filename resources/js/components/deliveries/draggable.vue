@@ -2,12 +2,18 @@
     <div>
         <div class="d-flex flex-row flex-wrap py-4">
             <div class="col-md-6 p-4 d-flex flex-row flex-wrap border-right">
-                <h5 class="font-weight-bold text-dark">
-                    Destinos por {{ selected == 1 ? "Entregar" : "Recoger" }}
-                </h5>
-                <div class="form-group col-md-12">
-                    <label>Filtro</label>
-                    <input type="text" class="form-control" />
+                <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center">
+                    <h5 class="font-weight-bold text-dark">
+                         Destinos por {{ selected == 1 ? "Entregar" : "Recoger" }}
+                    </h5>
+                    <div class="col-md-2">
+                        <button class="btn btn-light-success font-weight-bold btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse col-md-12" id="collapseExample">
+                    <input type="text" class="form-control" placeholder="Filtrar"/>
                 </div>
                 <div class="min-h-500px col-md-12">
                     <div class="table-responsive">
@@ -61,10 +67,12 @@
                 </div>
             </div>
             <div class="col-md-6 p-4 d-flex flex-row flex-wrap">
-                <h5 class="font-weight-bold text-dark">
-                    Seleccionados por {{ selected == 1 ? "Entregar" : "Recoger" }}
-                </h5>
-                <div class="min-h-500px col-md-12">
+                <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center">
+                    <h5 class="font-weight-bold text-dark">
+                        Seleccionados por {{ selected == 1 ? "Entregar" : "Recoger" }}
+                    </h5>
+                </div>
+                <div class="min-h-350px col-md-12">
                     <div class="table-responsive">
                         <table
                             class="table table-sm"
@@ -115,8 +123,12 @@
                     </div>
                 </div>
                  <div class="form-group col-md-12">
-                    <label>Filtro</label>
-                    <input type="text" class="form-control" />
+                        <label class="font-weight-bolder">Mensajero</label>
+                       <div class="d-flex flex-row flex-wrap justify-content-around px-0">
+                            <input type="text" class="form-control col-md-3" />
+                            <input type="text" class="form-control col-md-5" />
+                            <a href="#" class="btn btn-light-primary font-weight-bold col-md-3">Despachar</a>
+                       </div>
                 </div>
             </div>
         </div>
