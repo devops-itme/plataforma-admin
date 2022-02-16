@@ -58560,6 +58560,132 @@ var Orders = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/_permissions.js":
+/*!**************************************!*\
+  !*** ./resources/js/_permissions.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Permissions; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Permissions = /*#__PURE__*/function () {
+  function Permissions() {
+    _classCallCheck(this, Permissions);
+  }
+
+  _createClass(Permissions, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadPermissions();
+    }
+  }, {
+    key: "loadPermissions",
+    value: function loadPermissions() {
+      var configurationBtn = document.getElementsByClassName("configuration-btn");
+
+      if (configurationBtn == null) {
+        return;
+      }
+
+      console.log(configurationBtn);
+      [].forEach.call(configurationBtn, function (btn) {
+        btn.addEventListener('click', function () {
+          console.log(btn);
+        });
+      });
+    }
+  }]);
+
+  return Permissions;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/_zones.js":
+/*!********************************!*\
+  !*** ./resources/js/_zones.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Zones; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Zones = /*#__PURE__*/function () {
+  function Zones() {
+    _classCallCheck(this, Zones);
+  }
+
+  _createClass(Zones, [{
+    key: "initialize",
+    value: function initialize() {
+      this.initMap();
+    }
+  }, {
+    key: "initMap",
+    value: function initMap() {
+      // The location of panama 8.689078613386496, -81.13166771577085
+      var panama = {
+        lat: 8.689,
+        lng: -81.131
+      };
+      var mapTemplate = document.getElementById("map");
+
+      if (mapTemplate == null) {
+        return;
+      } // The map, centered at panama
+
+
+      var map = new google.maps.Map(mapTemplate, {
+        zoom: 7,
+        center: panama,
+        mapTypeId: google.maps.MapTypeId.RoadMap
+      }); // The marker, positioned at Uluru
+      // const marker = new google.maps.Marker({
+      //     position: panama,
+      //     map: map,
+      // });
+
+      var triangleCoords = [new google.maps.LatLng(8.827520901431855, -82.07374528457048), new google.maps.LatLng(8.281601970995954, -81.7386623009158) // new google.maps.LatLng(8.71351334406503, -81.26075706193294)
+      ];
+      var myPolygon = new google.maps.Polygon({
+        paths: triangleCoords,
+        draggable: true,
+        // turn off if it gets annoying
+        editable: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35
+      });
+      myPolygon.setMap(map);
+    }
+  }]);
+
+  return Zones;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -58574,10 +58700,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
 /* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
 /* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
-/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
+/* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_permissions */ "./resources/js/_permissions.js");
+/* harmony import */ var _zones__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_zones */ "./resources/js/_zones.js");
+/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+
 
 
 
@@ -58592,7 +58722,9 @@ var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_1__["default"]();
 var customers = new _customers__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var orders = new _orders__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var general = new _general__WEBPACK_IMPORTED_MODULE_4__["default"]();
-var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_5__["default"]();
+var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_5__["default"]();
+var zones = new _zones__WEBPACK_IMPORTED_MODULE_6__["default"]();
+var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
 var app = new Vue({
   el: '#app'
 });
@@ -58603,6 +58735,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
   addresses.initialize();
   customers.initialize();
   general.initialize();
+  permissions.initialize();
+  zones.initialize();
   branchOffice.initialize();
 });
 
