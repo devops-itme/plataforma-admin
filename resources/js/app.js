@@ -7,6 +7,8 @@ import Addresses from './_addresses';
 import Customers from './_customers';
 import Orders from './_orders';
 import General from './_general';
+import Permissions from './_permissions';
+import Zones from './_zones';
 import BranchOffices from './_branchOffice';
 
 //Vue Components
@@ -18,6 +20,8 @@ let addresses = new Addresses();
 let customers = new Customers();
 let orders = new Orders();
 let general = new General();
+let permissions = new Permissions();
+let zones = new Zones();
 let branchOffice = new BranchOffices();
 
 const app = new Vue({
@@ -31,6 +35,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     addresses.initialize();
     customers.initialize();
     general.initialize();
+    permissions.initialize();
+    zones.initialize();
     branchOffice.initialize();
 
 });
