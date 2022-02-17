@@ -2090,22 +2090,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       activeIndex: null,
       shipmented: [],
       completed: [],
-      showData: []
+      showData: [],
+      tabs: [{
+        id: 1,
+        name: "Por despachar",
+        href: "pordespachar"
+      }, {
+        id: 2,
+        name: "Despachados",
+        href: "despachados"
+      }, {
+        id: 3,
+        name: "Completados",
+        href: "completados"
+      }],
+      currentTab: 1
     };
   },
   watch: {},
   methods: {
-    getOrders: function getOrders() {
+    getOrders: function getOrders(type_id) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var type, _this, myHeaders, requestOptions;
+        var _this, myHeaders, requestOptions;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                type = 1;
                 _this = _this2;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
@@ -2114,8 +2127,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   method: "GET",
                   headers: myHeaders
                 };
-                _context.next = 8;
-                return fetch("/orders_delivery/".concat(type), requestOptions).then(function (response) {
+                _context.next = 7;
+                return fetch("/orders_delivery/".concat(type_id), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   var orders = data.data;
@@ -2124,7 +2137,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return console.warn(err);
                 });
 
-              case 8:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -2142,12 +2155,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     rowClick: function rowClick(data, index) {
       console.log(data);
+      console.log(this.tabs);
+      console.log(this.currentTab);
       this.showData = data;
       this.activeIndex = index;
     }
   },
   mounted: function mounted() {
-    this.getOrders();
+    this.getOrders(this.currentTab);
   }
 });
 

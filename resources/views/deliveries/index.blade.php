@@ -19,7 +19,11 @@
                 </div>
                 <div class="card-toolbar">
                     <ul class="nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-3x">
-                        <li class="nav-item">
+                        <li  class="nav-item"  v-for="(tab, index) in tabs" :key="tab.id" >
+                            <a class="nav-link" @click="getOrders(tab.id)"
+                            :class="{'active': currentTab === tab.id}" data-toggle="tab" :href="`#${tab.href}`" v-text=tab.name></a>
+                        </li>
+                        {{-- <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#pordespachar">Por despachar</a>
                         </li>
                         <li class="nav-item">
@@ -27,7 +31,10 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#completados">Completados</a>
-                        </li>
+                        </li> --}}
+
+                    </ul>
+                    <ul class="overlay-panel-actions-primary">
 
                     </ul>
                 </div>
@@ -53,7 +60,8 @@
                             <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de orden</h5>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Nro Orden:</div>
-                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.user_id}-${ showData.number }`"></div>
+                                <div class="line-height-xl" v-show="showData.id"
+                                    v-text="`${showData.user_id}-${ showData.number }`"></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Referencia de cliente:</div>
@@ -65,7 +73,8 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Cliente:</div>
-                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_user?.name} ${showData.get_user?.last_name}`"></div>
+                                <div class="line-height-xl" v-show="showData.id"
+                                    v-text="`${showData.get_user?.name} ${showData.get_user?.last_name}`"></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Telefono:</div>

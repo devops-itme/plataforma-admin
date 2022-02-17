@@ -7,13 +7,19 @@ export default {
             shipmented: [],
             completed: [],
             showData: [],
+            tabs: [
+                { id: 1, name: "Por despachar", href: "pordespachar" },
+                { id: 2, name: "Despachados", href: "despachados"},
+                { id: 3, name: "Completados", href: "completados"},
+            ],
+            currentTab: 1,
+
         };
     },
     watch: {},
 
     methods: {
-        async getOrders() {
-            let type = 1;
+        async getOrders(type_id) {
             let _this = this;
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -22,13 +28,15 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/orders_delivery/${type}`, requestOptions)
+            await fetch(`/orders_delivery/${type_id}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     let orders = data.data;
                     _this.data = orders;
                 })
                 .catch((err) => console.warn(err));
+
+
         },
 
         rowTotal(item) {
@@ -40,13 +48,16 @@ export default {
 
         rowClick(data, index) {
             console.log(data);
+            console.log(this.tabs);
+            console.log(this.currentTab)
             this.showData = data;
             this.activeIndex = index;
         },
+
     },
 
     mounted() {
-        this.getOrders();
+        this.getOrders(this.currentTab);
     },
 };
 </script>
