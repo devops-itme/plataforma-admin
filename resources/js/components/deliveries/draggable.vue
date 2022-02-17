@@ -242,12 +242,12 @@
 </template>
 <style>
     .sortableSelected {
-  background-color: yellow;
+  background-color: #caf0f8;
 }
 </style>
 <script>
 // import { Sortable, MultiDrag } from 'sortablejs';
-import draggable from "vuedraggable";
+import draggable from "vuedraggable-multi";
 //  Sortable.mount(new MultiDrag());
 export default {
     components: {
