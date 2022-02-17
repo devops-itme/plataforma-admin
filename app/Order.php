@@ -31,6 +31,10 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function getGuides()
+    {
+        return $this->hasMany(Guide::class, 'order_id');
+    }
     //SCOPES
 
     public function scopeNumber($query, $value)
