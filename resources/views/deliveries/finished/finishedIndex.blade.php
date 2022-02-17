@@ -11,29 +11,14 @@
             </tr>
         </thead>
         <tbody class="text-center max-h-300px" style="overflow-y: scroll;">
-            <tr>
-                <td>104-00332345</td>
+            <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}]"
+            @click="rowClick(order,index)">
+                <td v-text="`${order.user_id}-${ order.number }`"></td>
                 <td>22333233</td>
-                <td>Juanito Perez</td>
+                <td v-text=order.get_user.name></td>
                 <td>Snoop Dogg</td>
-                <td>01/23 | 07:00</td>
-                <td>40.00</td>
-            </tr>
-            <tr>
-                <td>107-00332355</td>
-                <td>72342834</td>
-                <td>Juanito Perez</td>
-                <td>Riki Rikon</td>
-                <td>01/22 | 07:00</td>
-                <td>50.00</td>
-            </tr>
-            <tr>
-                <td>104-00332344</td>
-                <td>73747474</td>
-                <td>Bob Scott</td>
-                <td>John Travolta</td>
-                <td>02/10 | 07:00</td>
-                <td>30.00</td>
+                <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
+                <td v-text="`$${rowTotal(order.get_guides)}`"></td>
             </tr>
         </tbody>
     </table>

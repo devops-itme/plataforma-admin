@@ -182,7 +182,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <button type="button" onclick="confirmDelete('{{route('addresses.destroy', $item->id)}}')" class="delete btn btn-icon btn-light-danger">
                             <i class="fas fa-eraser"></i>
                         </button>
@@ -191,21 +190,6 @@
                 @endforeach
             </tbody>
         </table>
-        <template id="address-template">
-            <tr>
-                <td id="description" >Casa</td>
-                <td id="name" >Rebolo, Atlántico, Colombia</td>
-                <td id="state">Activa</td>
-                <td>
-                    <button type="button" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <a type="button" name="deleteAddress" class="delete btn btn-icon btn-light-danger">
-                        <i class="fas fa-eraser"></i>
-                    </a>
-                </td>
-            </tr>
-          </template>
     </div>
 </div>
 
