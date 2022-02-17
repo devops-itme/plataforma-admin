@@ -23,7 +23,8 @@ class BranchOffice extends Model
         'payment_method',
         'phone',
         'usage_mode',
-        'user_id'
+        'user_id',
+        'state'
     ];
 
 
@@ -38,14 +39,24 @@ class BranchOffice extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    protected static function boot()
+    public function getType()
     {
-        parent::boot();
-        //DELETE CASCADE DEPARTMENTS
-        static::deleting(function ($deparments) {
-            $deparments->getDepartments()->delete();
-        });
+        return $this->belongsTo(ParameterValue::class, 'type');
     }
+
+    public function getZone()
+    {
+        return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     //DELETE CASCADE DEPARTMENTS
+    //     static::deleting(function ($deparments) {
+    //         $deparments->getDepartments()->delete();
+    //     });
+    // }
 
     //SCOPES
     public function scopeName($query, $value)

@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/customer_data/{id}', 'Admin\CustomerController@customerData');
     Route::get('/search_customers', 'Admin\CustomerController@search_customer');
+    Route::get('/unassigned_branch_offices', 'Admin\BranchOfficeController@unassigned_branch_offices');
     Route::group(['middleware' => 'role'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');
@@ -81,23 +82,32 @@ Route::group(['middleware' => 'auth'], function () {
         //RUTAS
         Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
     });
-        Route::get('despachos', function () {
-            return view('deliveries.index');
-        })->name('delivery.index');
-        Route::get('despachos-packing', function () {
-            return view('deliveriesPacking.index');
-        })->name('deliveryPacking.index');
-        Route::get('permisos', function () {
-            return view('auth.permits');
-        })->name('permits.index');
+    Route::get('despachos', function () {
+        return view('deliveries.index');
+    })->name('delivery.index');
+    Route::get('despachos-packing', function () {
+        return view('deliveriesPacking.index');
+    })->name('deliveryPacking.index');
 
-        Route::get('zonas', function () {
-            return view('zones.index');
-        })->name('zone.index');
+    Route::get('zonas', function () {
+        return view('zones.index');
+    })->name('zone.index');
 
-        Route::get('perfil', function () {
-            return view('profile.index');
-        })->name('profile');
+    Route::get('perfil', function () {
+        return view('profile.index');
+    })->name('profile');
+
+    Route::resource('permisos', 'PermissionController')->names('permits');
+    Route::get('permisos/getPermissions/{role_id}', 'PermissionController@getPermissions')->name('permits.getPermissions');
+    Route::get('despachos', function () {
+        return view('deliveries.index');
+    })->name('delivery.index');
+    Route::get('despachos-packing', function () {
+        return view('deliveriesPacking.index');
+    })->name('deliveryPacking.index');
+    Route::get('zonas', function () {
+        return view('zones.index');
+    })->name('zone.index');
 });
 
 //ADDRESSES
