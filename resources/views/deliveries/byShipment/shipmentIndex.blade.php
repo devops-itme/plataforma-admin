@@ -32,7 +32,8 @@
                 <div class="col-md-5">
                     <p class="mb-2">
                         <span class="font-weight-bolder mb-3">Orden seleccionada: </span>
-                        <span class="line-height-xl">104-00333333</span>
+                        <span class="line-height-xl" v-show="showData.id"
+                        v-text="`${showData.user_id}-${ showData.number }`"></span>
                     </p>
                     <div class="mb-2 d-flex flex-row flex-wrap align-items-center justify-content-between">
                         <span class="font-weight-bolder mb-0">Nro Mensajero: </span>

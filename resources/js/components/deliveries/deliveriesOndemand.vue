@@ -35,8 +35,6 @@ export default {
                     _this.data = orders;
                 })
                 .catch((err) => console.warn(err));
-
-
         },
 
         rowTotal(item) {
@@ -47,9 +45,9 @@ export default {
         },
 
         rowClick(data, index) {
-            console.log(data);
-            console.log(this.tabs);
-            console.log(this.currentTab)
+            // console.log(data);
+            // console.log(this.tabs);
+            // console.log(this.currentTab)
             this.showData = data;
             this.activeIndex = index;
         },

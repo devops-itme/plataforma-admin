@@ -2154,9 +2154,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sum;
     },
     rowClick: function rowClick(data, index) {
-      console.log(data);
-      console.log(this.tabs);
-      console.log(this.currentTab);
+      // console.log(data);
+      // console.log(this.tabs);
+      // console.log(this.currentTab)
       this.showData = data;
       this.activeIndex = index;
     }

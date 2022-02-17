@@ -32,7 +32,6 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#completados">Completados</a>
                         </li> --}}
-
                     </ul>
                     <ul class="overlay-panel-actions-primary">
 
