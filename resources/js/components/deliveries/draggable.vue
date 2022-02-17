@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="d-flex flex-row flex-wrap py-4">
-            <div class="col-md-9 d-flex flex-row flex-wrap">
+            <div class="col-md-12 d-flex flex-row flex-wrap">
                 <div class="col-md-6 p-4 d-flex flex-row flex-wrap border-right">
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center px-0">
                         <h5 class="font-weight-bold text-dark">
@@ -28,8 +28,8 @@
                             placeholder="Filtrar"
                         />
                     </div>
-                    <div class="min-h-500px col-md-12 border rounded px-0 mt-3">
-                        <div class="table-responsive">
+                    <div class="max-h-500px h-500px col-md-12 border rounded px-0 mt-3">
+                        <div class="table-responsive h-500px">
                             <table
                                 class="table table-sm"
                                 style="table-layout: auto; width: 1100px"
@@ -59,6 +59,7 @@
                                     @start="drag = true"
                                     @end="drag = false"
                                     style="cursor: move"
+                                    @select="handleChange"
                                 >
                                     <tr
                                         v-for="tblItem of myArray"
@@ -90,8 +91,8 @@
                             {{ selected == 1 ? "Entregar" : "Recoger" }}
                         </h5>
                     </div>
-                    <div class="min-h-425px col-md-12 border rounded px-0">
-                        <div class="table-responsive">
+                    <div class="max-h-425px h-425px col-md-12 border rounded px-0">
+                        <div class="table-responsive h-425px">
                             <table
                                 class="table table-sm"
                                 style="table-layout: auto; width: 1100px"
@@ -120,6 +121,7 @@
                                     selected-class="sortableSelected"
                                     @start="drag = true"
                                     @end="drag = false"
+                                    @select="handleChange"
                                     style="cursor: move"
                                 >
                                     <tr
@@ -160,83 +162,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
-                    <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
-                    <a href="#" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</a>
-                </div>
-                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
-                    <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
-                    <div class="col-md-6 mb-2">
-                        <div class="font-weight-bolder mb-1">Tipo de orden:</div>
-                        <div class="line-height-xl">Packing</div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Cliente:</div>
-                        <div class="line-height-xl">Juanito Perez</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <div class="font-weight-bolder mb-1">Destino:</div>
-                        <div class="line-height-xl">3534534</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <div class="font-weight-bolder mb-1">Despacho:</div>
-                        <div class="line-height-xl">0</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <div class="font-weight-bolder mb-1">Ref.Cliente:</div>
-                        <div class="line-height-xl">---</div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <div class="font-weight-bolder mb-1">Programado:</div>
-                        <div class="line-height-xl">2022/02/04</div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Transporte:</div>
-                        <div class="line-height-xl">Moto</div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Movil:</div>
-                        <div class="line-height-xl">381, YEMAYEL ARIEL</div>
-                    </div>
-                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
-                    <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Cliente Depto:</div>
-                        <div class="line-height-x1">84: PRINCIPAL</div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
-                        <div class="line-height-x1">1179: PRINCIPAL</div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Cliente Documento:</div>
-                        <div class="line-height-x1">1191: DELIVERY</div>
-                    </div>
-                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
-                    <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Concepto:</div>
-                        <div class="line-height-xl">RETIRAR FIANZA A NOMBRE DE EDEMET</div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Dirección:</div>
-                        <div class="line-height-xl">CLL 50: SAN FRANCISCO: PANAMA</div>
-                    </div>
-                </div>
-                <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
-                    <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
-                    <div class="col-md-12 symbol-group symbol-hover">
-                        <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div>
-                        <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div>
-                        <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </template>
@@ -287,9 +213,46 @@ export default {
                     createDate: "22-12-2022",
                     type: "Normal",
                 },
+                {
+                    id: 3,
+                    order: "123-1234556",
+                    guide: 7377847,
+                    extref: 888835,
+                    progDate: "12-12-2022",
+                    customer: "Patriicia",
+                    contact: "Carmenza Patiño",
+                    zone: "Avenida Siempreviva",
+                    address: "Calle 12 # 22 - 22",
+                    deliveryTime: "22h",
+                    createDate: "22-12-2022",
+                    type: "Normal",
+                },
+                {
+                    id: 4,
+                    order: "123-1234556",
+                    guide: 7377847,
+                    extref: 888835,
+                    progDate: "12-12-2022",
+                    customer: "Lucas cien",
+                    contact: "Carmenza Patiño",
+                    zone: "Avenida Siempreviva",
+                    address: "Calle 12 # 22 - 22",
+                    deliveryTime: "22h",
+                    createDate: "22-12-2022",
+                    type: "Normal",
+                },
             ],
             myArray2: [],
         };
     },
+    methods: {
+        // Called when an item is selected
+	onSelect: function(evt) {
+		console.log(evt.item); // The selected item
+	},
+    handleChange(evt) {
+      console.log(evt.item);
+    },
+    }
 };
 </script>
