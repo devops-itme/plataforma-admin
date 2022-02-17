@@ -89,6 +89,14 @@ Route::group(['middleware' => 'auth'], function () {
         return view('deliveriesPacking.index');
     })->name('deliveryPacking.index');
 
+    Route::get('zonas', function () {
+        return view('zones.index');
+    })->name('zone.index');
+
+    Route::get('perfil', function () {
+        return view('profile.index');
+    })->name('profile');
+
     Route::resource('permisos', 'PermissionController')->names('permits');
     Route::get('permisos/getPermissions/{role_id}', 'PermissionController@getPermissions')->name('permits.getPermissions');
     Route::get('despachos', function () {
