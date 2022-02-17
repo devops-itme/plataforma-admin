@@ -91,7 +91,11 @@ class BranchOfficeController extends Controller
     {
         $office = BranchOffice::where('id', $id)->first();
         $documents = ParameterValue::where('parameter_id',1)->get();
-        return view('branchOffices.show', compact('office', 'documents'));
+        // return view('branchOffices.show', compact('office', 'documents'));
+        return json_encode([
+            'state' => '200',
+            'data' => [$office, $documents]
+        ]);
     }
 
     /**
@@ -124,9 +128,18 @@ class BranchOfficeController extends Controller
     {
         $response = $this->updateBranchOffice($request->merge(['office_id' => $id]));
         if($response['state'] == 200){
-            return redirect()->route('branchOffices.index', $parent_id)->with('success', $response['message']);
+            return json_encode([
+                    'state' => 200,
+                    'data' => $response['data'],
+                    'message' => $response['message']
+                ]);
+            // return redirect()->route('branchOffices.index', $parent_id)->with('success', $response['message']);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            // return redirect()->back()->with('danger', $response['message']);
+            return json_encode([
+                'state' => 500,
+                'error' => $response['error']
+            ]);
         }
     }
 
@@ -140,9 +153,10 @@ class BranchOfficeController extends Controller
     {
         $response = $this->deleteBranchOffice($id);
         if($response['state'] == 200){
-            return redirect()->route('branchOffices.index', $parent_id)->with('success', $response['message']);
+            return redirect()->back()->with('success', $response['message']);
+            // return redirect()->route('branchOffices.index', $parent_id)->with('success', $response['message']);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return redirect()->back()->with('danger', $response['error']);
         }
     }
 

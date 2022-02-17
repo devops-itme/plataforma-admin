@@ -88,16 +88,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('despachos-packing', function () {
         return view('deliveriesPacking.index');
     })->name('deliveryPacking.index');
+
+    Route::get('zonas', function () {
+        return view('zones.index');
+    })->name('zone.index');
+
+    Route::get('perfil', function () {
+        return view('profile.index');
+    })->name('profile');
+
     Route::resource('permisos', 'PermissionController')->names('permits');
-        Route::get('despachos', function () {
-            return view('deliveries.index');
-        })->name('delivery.index');
-        Route::get('despachos-packing', function () {
-            return view('deliveriesPacking.index');
-        })->name('deliveryPacking.index');
-        Route::get('zonas', function () {
-            return view('zones.index');
-        })->name('zone.index');
+    Route::get('permisos/getPermissions/{role_id}', 'PermissionController@getPermissions')->name('permits.getPermissions');
+    Route::get('despachos', function () {
+        return view('deliveries.index');
+    })->name('delivery.index');
+    Route::get('despachos-packing', function () {
+        return view('deliveriesPacking.index');
+    })->name('deliveryPacking.index');
+    Route::get('zonas', function () {
+        return view('zones.index');
+    })->name('zone.index');
 });
 //Orders delivery
 Route::get('orders_delivery/{type}', 'Admin\DeliveryController@orders');

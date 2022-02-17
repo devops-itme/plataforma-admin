@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BranchOffice extends Model
 {
+    use SoftDeletes;
     protected $table = 'branch_offices';
     protected $fillable = [
         'name',
@@ -49,14 +51,14 @@ class BranchOffice extends Model
         return $this->belongsTo(Zone::class, 'zone_id');
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        //DELETE CASCADE DEPARTMENTS
-        static::deleting(function ($deparments) {
-            $deparments->getDepartments()->delete();
-        });
-    }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     //DELETE CASCADE DEPARTMENTS
+    //     static::deleting(function ($deparments) {
+    //         $deparments->getDepartments()->delete();
+    //     });
+    // }
 
     //SCOPES
     public function scopeName($query, $value)
