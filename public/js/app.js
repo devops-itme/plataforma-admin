@@ -58066,6 +58066,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Customers = /*#__PURE__*/function () {
   function Customers() {
     _classCallCheck(this, Customers);
+
+    this.branchId = '';
   }
 
   _createClass(Customers, [{
@@ -58074,6 +58076,7 @@ var Customers = /*#__PURE__*/function () {
       this.customerFeatures();
       this.saveBranchOffices();
       this.listBranchOffices();
+      this.updateBranchOffice();
     }
   }, {
     key: "customerFeatures",
@@ -58253,15 +58256,18 @@ var Customers = /*#__PURE__*/function () {
                         branchCheck.setAttribute('class', 'checkbox-inline mt-3');
                         branchCheck.setAttribute('type', 'checkbox');
                         branchCheck.setAttribute('name', 'branchCheck[]');
-                        branchCheck.setAttribute('value', data[i].id); //Show button
-
-                        var showBranch = document.createElement("button");
-                        showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
-                        showBranch.setAttribute('type', 'button');
-                        showBranch.innerHTML = '<i class="far fa-folder-open"></i>'; //Edit button
+                        branchCheck.setAttribute('value', data[i].id); // //Show button
+                        // const showBranch = document.createElement("button");
+                        // showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
+                        // showBranch.setAttribute('type', 'button');
+                        // showBranch.innerHTML = '<i class="far fa-folder-open"></i>';
+                        //Edit button
 
                         var branchEdit = document.createElement("button");
-                        branchEdit.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                        branchEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                        branchEdit.setAttribute('data-toggle', 'modal');
+                        branchEdit.setAttribute('data-target', '#modalEdit');
+                        branchEdit.setAttribute('id', 'branch-' + data[i].id);
                         branchEdit.setAttribute('type', 'button');
                         branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
 
@@ -58277,8 +58283,8 @@ var Customers = /*#__PURE__*/function () {
 
                         var buttonsDiv = document.createElement("div");
                         buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                        buttonsDiv.appendChild(branchCheck);
-                        buttonsDiv.appendChild(showBranch);
+                        buttonsDiv.appendChild(branchCheck); // buttonsDiv.appendChild(showBranch);
+
                         buttonsDiv.appendChild(branchEdit);
                         buttonsDiv.appendChild(branchDelete);
                         selectCell.appendChild(buttonsDiv);
@@ -58292,7 +58298,9 @@ var Customers = /*#__PURE__*/function () {
                   })();
                 }
 
-              case 6:
+                this.editBranches();
+
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -58343,6 +58351,232 @@ var Customers = /*#__PURE__*/function () {
       }
 
       return requestBranchOffices;
+    }()
+  }, {
+    key: "editBranches",
+    value: function editBranches() {
+      var _this2 = this;
+
+      var branches = document.getElementsByClassName("btnEdit");
+
+      if (branches == null) {
+        return;
+      }
+
+      [].forEach.call(branches, function (branch) {
+        branch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+          var response, data, slcBranchType, slcZone, slcDocumentType, slcPaymentMethod, inpDefault;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+            while (1) {
+              switch (_context5.prev = _context5.next) {
+                case 0:
+                  _this2.branchId = branch['id'].split('-')[1];
+                  _context5.next = 3;
+                  return _this2.requestBranchToEdit(_this2.branchId);
+
+                case 3:
+                  response = _context5.sent;
+                  data = response.data[0];
+                  document.getElementById("branch_office_name_edit").value = data.name;
+                  slcBranchType = document.getElementById("branch_office_type_edit");
+                  [].forEach.call(slcBranchType, function (key) {
+                    if (key.value == data.type) {
+                      key.setAttribute('selected', 'selected');
+                    }
+                  });
+                  document.getElementById("branch_office_description_edit").value = data.description;
+                  slcZone = document.getElementById("branch_office_zone_edit");
+                  [].forEach.call(slcZone, function (key) {
+                    if (key.value == data.zone_id) {
+                      key.setAttribute('selected', 'selected');
+                    }
+                  });
+                  document.getElementById("branch_office_address_edit").value = data.address;
+                  document.getElementById("branch_office_lat_edit").value = data.lat;
+                  document.getElementById("branch_office_lng_edit").value = data.lng;
+                  document.getElementById("branch_office_email_edit").value = data.email;
+                  document.getElementById("branch_office_contact_edit").value = data.contact;
+                  slcDocumentType = document.getElementById("branch_office_document_type_edit");
+                  [].forEach.call(slcDocumentType, function (key) {
+                    if (key.value == data.document_type) {
+                      key.setAttribute('selected', 'selected');
+                    }
+                  });
+                  document.getElementById("branch_office_document_number_edit").value = data.document_number;
+                  slcPaymentMethod = document.getElementById("branch_office_payment_method_edit");
+                  [].forEach.call(slcPaymentMethod, function (key) {
+                    if (key.value == data.payment_method) {
+                      if (key.value != 24) {
+                        document.getElementById("slcPlanEdit").className = 'form-group col-md-3';
+                        document.getElementById("useModeEdit").className = 'form-group col-md-3';
+                      } else {
+                        document.getElementById("slcPlanEdit").className = 'd-none';
+                        document.getElementById("useModeEdit").className = 'd-none';
+                      }
+
+                      key.setAttribute('selected', 'selected');
+                    }
+                  });
+                  document.getElementById("branch_office_phone_edit").value = data.phone;
+                  inpDefault = document.getElementsByName("branch_office_default_edit");
+                  [].forEach.call(inpDefault, function (key) {
+                    if (key.value == data["default"]) {
+                      key.setAttribute('checked', 'checked');
+                    }
+                  });
+
+                case 24:
+                case "end":
+                  return _context5.stop();
+              }
+            }
+          }, _callee5);
+        })));
+      });
+    }
+  }, {
+    key: "requestBranchToEdit",
+    value: function () {
+      var _requestBranchToEdit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context6.next = 3;
+                return fetch("/sucursales/null/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context6.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function requestBranchToEdit(_x2) {
+        return _requestBranchToEdit.apply(this, arguments);
+      }
+
+      return requestBranchToEdit;
+    }()
+  }, {
+    key: "updateBranchOffice",
+    value: function updateBranchOffice() {
+      var _this3 = this;
+
+      var formUpdateBranch = document.getElementById("formUpdate");
+      var btnSubmit = document.getElementById("updateBranchOffice");
+
+      if (formUpdateBranch == null) {
+        return;
+      }
+
+      if (btnSubmit == null) {
+        return;
+      }
+
+      btnSubmit.addEventListener('click', /*#__PURE__*/function () {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(e) {
+          var formData, token, myHeaders, requestOptions, response, modal;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+            while (1) {
+              switch (_context7.prev = _context7.next) {
+                case 0:
+                  e.preventDefault();
+                  formData = new FormData(formUpdateBranch);
+                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                  myHeaders = new Headers();
+                  myHeaders.append("Accept", "application/json");
+                  myHeaders.append("Access-Control-Allow-Origin", "*");
+                  myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                  myHeaders.append('Content-Type', "application/json");
+                  myHeaders.append('Content-Type', "multipart/form-data");
+                  myHeaders.append("X-CSRF-TOKEN", token);
+                  requestOptions = {
+                    method: "PUT",
+                    headers: myHeaders,
+                    body: JSON.stringify(Object.fromEntries(formData))
+                  };
+                  _context7.next = 13;
+                  return _this3.sendDataToUpdate(_this3.branchId, requestOptions);
+
+                case 13:
+                  response = _context7.sent;
+
+                  if (response.state == 200) {
+                    alert(response.message);
+                    modal = document.getElementById("modalEdit");
+                    modal.click();
+
+                    _this3.listBranchOffices();
+                  } else {
+                    alert('Ha ocurrido un error al actualizar la sucursal.');
+                    console.log('Error ' + response.error);
+                  }
+
+                case 15:
+                case "end":
+                  return _context7.stop();
+              }
+            }
+          }, _callee7);
+        }));
+
+        return function (_x3) {
+          return _ref3.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
+    key: "sendDataToUpdate",
+    value: function () {
+      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context8.next = 3;
+                return fetch("/sucursales/" + null + "/" + id + "/update", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context8.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function sendDataToUpdate(_x4, _x5) {
+        return _sendDataToUpdate.apply(this, arguments);
+      }
+
+      return sendDataToUpdate;
     }()
   }]);
 
