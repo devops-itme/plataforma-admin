@@ -92,7 +92,7 @@
                 <span class="svg-icon svg-icon-md">
                     <i class="fas fa-plus"></i>
                 </span>Crear</a>
-           
+
             <!--end::Button-->
         </div>
     </div>
@@ -245,7 +245,7 @@
 @endif
 </tbody>
 </table>
-@include('customers.modals.selectBranchOffice')
+@include('customers.modals.branches.selectBranchOffice')
 
 <!--end: Datatable-->
 </div>
