@@ -58976,37 +58976,73 @@ var Permissions = /*#__PURE__*/function () {
       console.log(configurationBtn);
       [].forEach.call(configurationBtn, function (btn) {
         btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var row, role_id, url, response, data, modules;
+          var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   row = btn.parentNode.parentNode;
                   role_id = row.id;
+                  form = document.getElementById("permits-form");
+                  form.setAttribute("action", "/permisos/".concat(role_id));
                   url = '/permisos/getPermissions/' + role_id;
-                  _context2.next = 5;
+                  _context2.next = 7;
                   return requestPermissions(url);
 
-                case 5:
+                case 7:
                   response = _context2.sent;
                   console.log(response);
 
                   if (!(response.state != 200)) {
-                    _context2.next = 9;
+                    _context2.next = 11;
                     break;
                   }
 
                   return _context2.abrupt("return");
 
-                case 9:
+                case 11:
                   data = response.data;
                   console.log(data);
                   modules = data.modules;
+                  actions = data.actions;
+                  permissions = data.permissions;
+                  cardBody = document.getElementById("card-body");
+                  cardBody.innerHTML = "";
                   [].forEach.call(modules, function (module) {
-                    console.log(module);
+                    var _module$actions$split, _module$actions, _module_permissions$a, _module_permissions$a2;
+
+                    var module_actions = (_module$actions$split = module === null || module === void 0 ? void 0 : (_module$actions = module.actions) === null || _module$actions === void 0 ? void 0 : _module$actions.split(',')) !== null && _module$actions$split !== void 0 ? _module$actions$split : [];
+                    var module_permissions = permissions.find(function (element) {
+                      return element.module_id == module.id;
+                    });
+                    var allowed_actions = (_module_permissions$a = module_permissions === null || module_permissions === void 0 ? void 0 : (_module_permissions$a2 = module_permissions.actions) === null || _module_permissions$a2 === void 0 ? void 0 : _module_permissions$a2.split(',')) !== null && _module_permissions$a !== void 0 ? _module_permissions$a : [];
+                    var mainContainer = document.createElement('div');
+                    mainContainer.className = "row";
+                    var nameContainer = document.createElement("div");
+                    nameContainer.className = "col-3 align-self-center";
+                    nameContainer.innerHTML = "<h6 class=\"mb-0 text-muted font-weight-bold\">".concat(module.name, "</h6>");
+                    mainContainer.appendChild(nameContainer);
+                    var checkContainer = document.createElement("div");
+                    checkContainer.className = "col-9 align-self-center";
+                    checkContainer.innerHTML = "<div class=\"form-check\"></div>";
+                    [].forEach.call(actions, function (action) {
+                      var action_found = module_actions.find(function (element) {
+                        return element == action.id;
+                      });
+                      var permission_found = allowed_actions.find(function (element) {
+                        return element == action.id;
+                      });
+                      var label = document.createElement("label");
+                      label.className = "form-check-label text-uppercase font-weight-bold mx-4";
+                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\"\n                         name=\"".concat(module.reference, "-").concat(action.name, "\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        "); // label.innerText = action.name;
+
+                      checkContainer.childNodes[0].appendChild(label);
+                    });
+                    mainContainer.appendChild(checkContainer);
+                    cardBody.appendChild(mainContainer);
                   });
 
-                case 13:
+                case 19:
                 case "end":
                   return _context2.stop();
               }

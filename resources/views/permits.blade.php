@@ -69,39 +69,17 @@
       <div class="card-body">
         <div class="row align-items-center">
           <div class="col-12">
-            <div class="card my-2">
-              <div class="card-body">
-               
-                  <div class="row">
-                    <div class="col-3 align-self-center">
-                      <h6 class="mb-0 text-muted font-weight-bold">Dashboard</h6>
-                    </div>
-                    <div class="col-9 align-self-center">
-                      <div class="form-check">
-                        <label class="form-check-label text-uppercase font-weight-bold">
-                          <input class="form-check-input" type="checkbox">
-                          ver
-                        </label>
-                      </div>
-                    </div>
+            <form id="permits-form" method="POST">
+              @csrf @method('PUT')
+              <div class="card my-2">               
+                  
+                  <div class="card-body" id="card-body">
+                            
                   </div>
-
-                  <div class="row">
-                    <div class="col-3 align-self-center">
-                      <h6 class="mb-0 text-muted font-weight-bold">Clientes</h6>
-                    </div>
-                    <div class="col-9 align-self-center">
-                      <div class="form-check">
-                        <label class="form-check-label text-uppercase font-weight-bold">
-                          <input class="form-check-input" type="checkbox">
-                          ver
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-              
+                
               </div>
-            </div>
+              <input type="submit" class="btn" value="Guardar Cambios">
+            </form>
           </div>
         </div>
       </div>
