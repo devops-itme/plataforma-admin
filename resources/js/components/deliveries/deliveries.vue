@@ -93,14 +93,15 @@
                     >
                 </li>
             </ul>
-            <div class="tab-content" id="myTabContent">
-                <div
-                    class="tab-pane fade show active"
+           <div class="d-flex flex-row flex-wrap">
+                <div class="col-md-9">
+                <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active"
                     id="porRecoger"
                     role="tabpanel"
-                    aria-labelledby="porRecoger-tab"
-                >
-                    <draggables :selected=selected></draggables>
+                    aria-labelledby="porRecoger-tab">
+                        <draggables :selected=selected></draggables>
+
                 </div>
                 <div
                     class="tab-pane fade"
@@ -108,7 +109,7 @@
                     role="tabpanel"
                     aria-labelledby="enproceso-tab"
                 >
-                    2
+                    <tabledy :rows=columns.inProcess.length :columnsNames=columns.inProcess :widthTable=1100></tabledy>
                 </div>
                 <div
                     class="tab-pane fade"
@@ -116,17 +117,98 @@
                     role="tabpanel"
                     aria-labelledby="consultas-tab"
                 >
-                    3
+                    <tabledy :rows=columns.inEdit.length :columnsNames=columns.inEdit :widthTable=1600></tabledy>
                 </div>
             </div>
+            </div>
+            <div class="col-md-3 py-4">
+                <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
+                    <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
+                    <a href="#" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</a>
+                </div>
+                <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
+                    <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Tipo de orden:</div>
+                        <div class="line-height-xl">Packing</div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Cliente:</div>
+                        <div class="line-height-xl">Juanito Perez</div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Destino:</div>
+                        <div class="line-height-xl">3534534</div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Despacho:</div>
+                        <div class="line-height-xl">0</div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Ref.Cliente:</div>
+                        <div class="line-height-xl">---</div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Programado:</div>
+                        <div class="line-height-xl">2022/02/04</div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Transporte:</div>
+                        <div class="line-height-xl">Moto</div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Movil:</div>
+                        <div class="line-height-xl">381, YEMAYEL ARIEL</div>
+                    </div>
+                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Cliente Depto:</div>
+                        <div class="line-height-x1">84: PRINCIPAL</div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
+                        <div class="line-height-x1">1179: PRINCIPAL</div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Cliente Documento:</div>
+                        <div class="line-height-x1">1191: DELIVERY</div>
+                    </div>
+                    <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Concepto:</div>
+                        <div class="line-height-xl">RETIRAR FIANZA A NOMBRE DE EDEMET</div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Dirección:</div>
+                        <div class="line-height-xl">CLL 50: SAN FRANCISCO: PANAMA</div>
+                    </div>
+                </div>
+                <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
+                    <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
+                    <div class="col-md-12 symbol-group symbol-hover">
+                        <div class="symbol">
+                            <img alt="Pic" src="https://placem.at/things?h=100"/>
+                        </div>
+                        <div class="symbol">
+                            <img alt="Pic" src="https://placem.at/things?h=100"/>
+                        </div>
+                        <div class="symbol">
+                            <img alt="Pic" src="https://placem.at/things?h=100"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
         </div>
     </div>
 </template>
 <script>
 import draggables from "./draggable.vue";
+import tabledy from "./tableDynamic.vue";
 export default {
     components: {
         draggables,
+        tabledy,
     },
     data() {
         return {
@@ -135,7 +217,14 @@ export default {
                 { value: 1, text: "Entregas" },
                 { value: 2, text: "Recogidas" },
             ],
+            columns:{
+                inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
+                inEdit:["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
+            }
         };
+    },
+    mounted(){
+        console.log(this.columns.inProcess.length);
     },
 };
 </script>

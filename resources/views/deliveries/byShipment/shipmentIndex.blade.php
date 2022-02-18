@@ -9,31 +9,17 @@
                 <th scope="col">Barrios</th>
             </tr>
         </thead>
-        <tbody class="text-center max-h-300px" style="overflow-y: scroll;">
-            <tr>
-                <td>104-00332345</td>
-                <td>Juanito Perez</td>
-                <td>01/23 | 07:00</td>
-                <td>40.00</td>
-                <td>Boston City</td>
-            </tr>
-            <tr>
-                <td>107-00332355</td>
-                <td>Juanito Perez</td>
-                <td>01/22 | 07:00</td>
-                <td>50.00</td>
-                <td>Panama City</td>
-            </tr>
-            <tr>
-                <td>104-00332344</td>
-                <td>Bob Scott</td>
-                <td>02/10 | 07:00</td>
-                <td>30.00</td>
+        <tbody class="text-center max-h-300px" style="overflow-y: scroll">
+            <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}]"
+                @click="rowClick(order,index)">
+                <td v-text="`${order.user_id}-${ order.number }`"></td>
+                <td v-text=order.get_user.name></td>
+                <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
+                <td v-text="`$${rowTotal(order.get_guides)}`"></td>
                 <td>Boston City</td>
             </tr>
         </tbody>
     </table>
-
     <div class="d-flex flex-row flex-wrap align-items-stretch border-top pt-3">
         <a href="#" class="btn btn-light-primary d-flex align-items-center btn-lg col-md-2">
             <span class="svg-icon">
@@ -46,14 +32,15 @@
                 <div class="col-md-5">
                     <p class="mb-2">
                         <span class="font-weight-bolder mb-3">Orden seleccionada: </span>
-                        <span class="line-height-xl">104-00333333</span>
+                        <span class="line-height-xl" v-show="showData.id"
+                        v-text="`${showData.user_id}-${ showData.number }`"></span>
                     </p>
                     <div class="mb-2 d-flex flex-row flex-wrap align-items-center justify-content-between">
                         <span class="font-weight-bolder mb-0">Nro Mensajero: </span>
-                        <input type="number" class="form-control col-7" value="9013">
+                        <input type="number" class="form-control col-7"  v-model="searchMessenger" >
                     </div>
                     <div class="mb-0">
-                        <input type="text" class="form-control col-12" value="Frank De Jesus Navarro Reyes">
+                        <input type="text" class="form-control col-12" disabled v-if="setMessenger" v-model="messengerName">
                     </div>
                 </div>
                 <div class="col-md-7">
@@ -68,8 +55,7 @@
                             <label>Pago por:</label>
                             <div class="radio-inline">
                                 <label class="radio radio-rounded">
-                                    <input type="radio" checked="checked" name="pay_comision" value="1"
-                                         />
+                                    <input type="radio" checked="checked" name="pay_comision" value="1" />
                                     <span></span>
                                     Comisón
                                 </label>
@@ -81,9 +67,9 @@
                             </div>
                             <span class="form-text text-muted"></span>
                         </div>
-                       <div class="col-md-3">
-                        <a href="#" class="btn btn-light-success font-weight-bold mr-2">Despachar</a>
-                       </div>
+                        <div class="col-md-3">
+                            <a href="#" class="btn btn-light-success font-weight-bold mr-2">Despachar</a>
+                        </div>
                     </div>
                 </div>
             </div>
