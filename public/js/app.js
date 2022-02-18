@@ -2170,7 +2170,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       data: [],
-      searchMessenger: null,
       activeIndex: null,
       shipmented: [],
       completed: [],
@@ -2189,36 +2188,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         href: "completados"
       }],
       currentTab: 1,
-      messengers: [{
-        id: 1,
-        name: "German",
-        last_name: "Vega",
-        code: "1234"
-      }, {
-        id: 2,
-        name: "Pepito",
-        last_name: "Perez",
-        code: "1235"
-      }, {
-        id: 3,
-        name: "Mia",
-        last_name: "khalifa",
-        code: "1236"
-      }]
+      messengers: [],
+      searchMessenger: null,
+      messenger: null,
+      messengerName: null
     };
   },
   computed: {
-    filterMessagers: function filterMessagers() {
+    filterMessengers: function filterMessengers() {
       var _this2 = this;
 
       if (this.searchMessenger) {
         return this.messengers.filter(function (item) {
-          return _this2.searchMessenger.toString().toLowerCase().split(' ').every(function (v) {
-            return item.code.toLowerCase().includes(v);
+          return _this2.searchMessenger.toString().toLowerCase().split(" ").every(function (v) {
+            return item.user.document_number.toLowerCase().includes(v);
           });
         });
-      } else {
-        return this.messengers;
+      }
+    },
+    setMessenger: function setMessenger() {
+      if (this.searchMessenger) {
+        var _this$filterMessenger, _this$filterMessenger2;
+
+        this.messengerName = ((_this$filterMessenger = this.filterMessengers[0]) === null || _this$filterMessenger === void 0 ? void 0 : _this$filterMessenger.user.name) + ' ' + ((_this$filterMessenger2 = this.filterMessengers[0]) === null || _this$filterMessenger2 === void 0 ? void 0 : _this$filterMessenger2.user.last_name);
+        return this.messenger = this.filterMessengers[0];
       }
     }
   },
@@ -2237,27 +2230,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this = _this3;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
                 requestOptions = {
                   method: "GET",
                   headers: myHeaders
                 };
-                _context.next = 7;
+                _context.next = 6;
                 return fetch("/orders_delivery/".concat(type_id), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  var orders = data.data;
-                  _this.data = orders;
+                  _this.data = data.data;
                 })["catch"](function (err) {
                   return console.warn(err);
                 });
 
-              case 7:
+              case 6:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
+      }))();
+    },
+    getMessengers: function getMessengers() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this = _this4;
+                myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                requestOptions = {
+                  method: "GET",
+                  headers: myHeaders
+                };
+                _context2.next = 6;
+                return fetch("/messengers_delivery", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  _this.messengers = data.data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     },
     rowTotal: function rowTotal(item) {
@@ -2272,12 +2297,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // console.log(data);
       // console.log(this.tabs);
       // console.log(this.currentTab)
+      // console.log(this.messenger);
       this.showData = data;
       this.activeIndex = index;
     }
   },
   mounted: function mounted() {
     this.getOrders(this.currentTab);
+    this.getMessengers();
   }
 });
 
@@ -7027,7 +7054,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -59477,8 +59504,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -40,7 +40,7 @@
                         <input type="number" class="form-control col-7"  v-model="searchMessenger" >
                     </div>
                     <div class="mb-0">
-                        <input type="text" class="form-control col-12">
+                        <input type="text" class="form-control col-12" disabled v-if="setMessenger" v-model="messengerName">
                     </div>
                 </div>
                 <div class="col-md-7">

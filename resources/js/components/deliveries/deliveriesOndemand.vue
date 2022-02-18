@@ -3,7 +3,6 @@ export default {
     data() {
         return {
             data: [],
-            searchMessenger: null,
             activeIndex: null,
             shipmented: [],
             completed: [],
@@ -14,36 +13,31 @@ export default {
                 { id: 3, name: "Completados", href: "completados" },
             ],
             currentTab: 1,
-            messengers: [
-                {
-                    id: 1,
-                    name: "German",
-                    last_name: "Vega",
-                    code: "1234",
-                },
-                {
-                    id: 2,
-                    name: "Pepito",
-                    last_name: "Perez",
-                    code: "1235",
-                },
-                {
-                    id: 3,
-                    name: "Mia",
-                    last_name: "khalifa",
-                    code: "1236",
-                },
-            ],
+
+            messengers: [],
+            searchMessenger: null,
+            messenger: null,
+            messengerName: null,
+
         };
     },
     computed: {
-        filterMessagers() {
+        filterMessengers() {
             if (this.searchMessenger) {
-                  return this.messengers.filter((item)=>{
-                    return this.searchMessenger.toString().toLowerCase().split(' ').every(v => item.code.toLowerCase().includes(v))
-                })
-            } else {
-                return this.messengers;
+                return this.messengers.filter((item) => {
+                    return this.searchMessenger
+                        .toString()
+                        .toLowerCase()
+                        .split(" ")
+                        .every((v) => item.user.document_number.toLowerCase().includes(v));
+                });
+            }
+        },
+
+        setMessenger(){
+            if (this.searchMessenger) {
+                this.messengerName = this.filterMessengers[0]?.user.name+' '+this.filterMessengers[0]?.user.last_name;
+                return this.messenger = this.filterMessengers[0];
             }
         },
     },
@@ -54,7 +48,6 @@ export default {
             let _this = this;
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
-            myHeaders.append("Access-Control-Allow-Origin", "*");
             let requestOptions = {
                 method: "GET",
                 headers: myHeaders,
@@ -62,8 +55,23 @@ export default {
             await fetch(`/orders_delivery/${type_id}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
-                    let orders = data.data;
-                    _this.data = orders;
+                    _this.data = data.data;
+                })
+                .catch((err) => console.warn(err));
+        },
+
+         async getMessengers() {
+            let _this = this;
+            let myHeaders = new Headers();
+            myHeaders.append("accept", "application/json");
+            let requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+            };
+            await fetch(`/messengers_delivery`, requestOptions)
+                .then((response) => response.json())
+                .then(function (data) {
+                    _this.messengers = data.data;
                 })
                 .catch((err) => console.warn(err));
         },
@@ -79,13 +87,17 @@ export default {
             // console.log(data);
             // console.log(this.tabs);
             // console.log(this.currentTab)
+            // console.log(this.messenger);
             this.showData = data;
             this.activeIndex = index;
         },
+
+
     },
 
     mounted() {
         this.getOrders(this.currentTab);
+        this.getMessengers();
     },
 };
 </script>
