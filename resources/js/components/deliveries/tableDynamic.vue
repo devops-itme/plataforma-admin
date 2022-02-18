@@ -15,25 +15,14 @@
             </div>
         </div>
         <div class="table-responsive col-md-12 px-0 border rounded h-400px">
-            <table class="table table-sm" style="table-layout: auto; width: 1100px">
+            <table class="table table-sm" :style="{'width': widthTable+'px', 'table-layout': 'auto'}">
                 <thead class="thead-light">
                     <tr class="text-center">
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Fecha evento</th>
-                        <th scope="col">Despacho</th>
-                        <th scope="col">Destino</th>
-                        <th scope="col">F.Prog</th>
-                        <th scope="col">Mensajero</th>
-                        <th scope="col">Estado App</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Contacto</th>
-                        <th scope="col">Barrio/Zona</th>
-                        <th scope="col">Dirección</th>
+                        <th scope="col" v-for="item of columnsNames" :key="item">{{item}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="text-center">
+                    <!-- <tr class="text-center">
                         <td>Normal</td>
                         <td>Recogido</td>
                         <td>18/02/2022</td>
@@ -46,7 +35,7 @@
                         <td>5757848</td>
                         <td>City:Malambo</td>
                         <td>Calle Siempreviva</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>
@@ -54,6 +43,10 @@
 </template>
 <script>
 export default {
-
+    props: {
+        rows: Number,
+        columnsNames: Array,
+        widthTable: Number,
+    }
 }
 </script>

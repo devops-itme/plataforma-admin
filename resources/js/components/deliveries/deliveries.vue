@@ -109,7 +109,7 @@
                     role="tabpanel"
                     aria-labelledby="enproceso-tab"
                 >
-                    <tabledy></tabledy>
+                    <tabledy :rows=columns.inProcess.length :columnsNames=columns.inProcess :widthTable=1100></tabledy>
                 </div>
                 <div
                     class="tab-pane fade"
@@ -117,7 +117,7 @@
                     role="tabpanel"
                     aria-labelledby="consultas-tab"
                 >
-                    3
+                    <tabledy :rows=columns.inEdit.length :columnsNames=columns.inEdit :widthTable=1600></tabledy>
                 </div>
             </div>
             </div>
@@ -217,7 +217,14 @@ export default {
                 { value: 1, text: "Entregas" },
                 { value: 2, text: "Recogidas" },
             ],
+            columns:{
+                inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
+                inEdit:["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
+            }
         };
+    },
+    mounted(){
+        console.log(this.columns.inProcess.length);
     },
 };
 </script>
