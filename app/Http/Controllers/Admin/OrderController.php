@@ -50,10 +50,10 @@ class OrderController extends Controller
         if(Auth()->user()->role != 1){
             $request->merge(['user_id' => Auth()->user()->id]);
         };
-        if($request->express_delivery == 'on'){$request->merge(['express_delivery' => 1]);}
-        else{$request->merge(['express_delivery' => 0]);}
-        if($request->last_destination_return == 'on'){$request->merge(['last_destination_return' => 1]);}
-        else{$request->merge(['last_destination_return' => 0]);}
+        if($request->urgent_dispatch == 'on'){$request->merge(['urgent_dispatch' => 1]);}
+        else{$request->merge(['urgent_dispatch' => 0]);}
+        if($request->return_last_destination == 'on'){$request->merge(['return_last_destination' => 1]);}
+        else{$request->merge(['return_last_destination' => 0]);}
         $request->merge(['state' => 1]);
         $response = $this->storeOrder($request);
         if($response['state'] == 200){
@@ -140,6 +140,26 @@ class OrderController extends Controller
             return $this->respond(200, $orders, null, 'Lista de ordenes');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
+        }
+    }
+
+    public function orderNumber()
+    {
+        //Search Orders
+        $orders = Order::get();
+        if(count($orders) > 0){
+            $last_order = $orders[count($orders) - 1]->order_number;
+            $order_number = explode('_', $last_order)[1];
+            $orderNumber = 'Orden_'.($order_number + 1);
+            return json_encode([
+                'state' => 200,
+                'data' => $orderNumber,
+            ]);
+        } else {
+            return json_encode([
+                'state' => 200,
+                'data' => 'Orden_1',
+            ]);
         }
     }
 }

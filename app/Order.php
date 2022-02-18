@@ -11,19 +11,31 @@ class Order extends Model
     use SoftDeletes;
     protected $table = 'orders';
     protected $fillable = [
-        'number',
+        'order_number',
         'user_id',
-        'service_type_id',
-        'vehicle_type_id',
-        'payment_method_id',
+        'order_type',
+        'document_type',
+        'order_value',
+        'receive_by_COD',
+        'internal_product',
+        'expenses',
+        'diligence_expenses',
+        'tax_total',
+        'payment_method',
+        'urgent_dispatch',
+        'return_last_destination',
         'schedule_date',
         'schedule_time',
-        'express_delivery',
-        'last_destination_return',
         'insured_value',
-        'percentage_receivable',
-        'value_receivable',
-        'state'
+        'money_to_collect',
+        'percentage_to_collect',
+        'customer_user_id',
+        'creator_user_id',
+        'zone',
+        'state',
+        'service_type',
+        'department_id',
+        'branch_office'
     ];
 
     public function getUser()

@@ -90,6 +90,9 @@ export default class Customers {
 
     async listBranchOffices(){
         let tbody = document.querySelector("#branch_offices_table tbody");
+        if(tbody == null){
+            return;
+        }
         tbody.innerHTML = '';
         let assignedBranchOffices = await this.requestBranchOffices();
         if(assignedBranchOffices['state'] == 200){
