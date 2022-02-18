@@ -2087,6 +2087,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       data: [],
+      searchMessenger: null,
       activeIndex: null,
       shipmented: [],
       completed: [],
@@ -2104,13 +2105,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: "Completados",
         href: "completados"
       }],
-      currentTab: 1
+      currentTab: 1,
+      messengers: [{
+        id: 1,
+        name: "German",
+        last_name: "Vega",
+        code: "1234"
+      }, {
+        id: 2,
+        name: "Pepito",
+        last_name: "Perez",
+        code: "1235"
+      }, {
+        id: 3,
+        name: "Mia",
+        last_name: "khalifa",
+        code: "1236"
+      }]
     };
+  },
+  computed: {
+    filterMessagers: function filterMessagers() {
+      var _this2 = this;
+
+      if (this.searchMessenger) {
+        return this.messengers.filter(function (item) {
+          return _this2.searchMessenger.toString().toLowerCase().split(' ').every(function (v) {
+            return item.code.toLowerCase().includes(v);
+          });
+        });
+      } else {
+        return this.messengers;
+      }
+    }
   },
   watch: {},
   methods: {
     getOrders: function getOrders(type_id) {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _this, myHeaders, requestOptions;
@@ -2119,7 +2151,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this = _this2;
+                _this = _this3;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");

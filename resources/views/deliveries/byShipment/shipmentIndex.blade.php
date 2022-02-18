@@ -37,10 +37,10 @@
                     </p>
                     <div class="mb-2 d-flex flex-row flex-wrap align-items-center justify-content-between">
                         <span class="font-weight-bolder mb-0">Nro Mensajero: </span>
-                        <input type="number" class="form-control col-7" value="9013">
+                        <input type="number" class="form-control col-7"  v-model="searchMessenger" >
                     </div>
                     <div class="mb-0">
-                        <input type="text" class="form-control col-12" value="Frank De Jesus Navarro Reyes">
+                        <input type="text" class="form-control col-12">
                     </div>
                 </div>
                 <div class="col-md-7">
