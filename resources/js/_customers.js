@@ -1,8 +1,12 @@
 export default class Customers {
+    constructor(){
+        this.branchId = '';
+    }
     initialize() {
         this.customerFeatures();
         this.saveBranchOffices();
         this.listBranchOffices();
+        this.updateBranchOffice();
     }
 
     customerFeatures() {
@@ -56,7 +60,6 @@ export default class Customers {
             formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
             formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
             formData.append('branch_office_default', document.getElementById("branch_office_default").value);
-
             let response = await this.sendBranchOfficeData(formData);
             if(response['state'] == 200){
                 alert('Sucursal creada exitosamente.');
@@ -87,6 +90,9 @@ export default class Customers {
 
     async listBranchOffices(){
         let tbody = document.querySelector("#branch_offices_table tbody");
+        if(tbody == null){
+            return;
+        }
         tbody.innerHTML = '';
         let assignedBranchOffices = await this.requestBranchOffices();
         if(assignedBranchOffices['state'] == 200){
@@ -123,14 +129,17 @@ export default class Customers {
                     branchCheck.setAttribute('type', 'checkbox');
                     branchCheck.setAttribute('name', 'branchCheck[]');
                     branchCheck.setAttribute('value', data[i].id);
-                    //Show button
-                    const showBranch = document.createElement("button");
-                    showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
-                    showBranch.setAttribute('type', 'button');
-                    showBranch.innerHTML = '<i class="far fa-folder-open"></i>';
+                    // //Show button
+                    // const showBranch = document.createElement("button");
+                    // showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
+                    // showBranch.setAttribute('type', 'button');
+                    // showBranch.innerHTML = '<i class="far fa-folder-open"></i>';
                     //Edit button
                     const branchEdit = document.createElement("button");
-                    branchEdit.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                    branchEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                    branchEdit.setAttribute('data-toggle', 'modal');
+                    branchEdit.setAttribute('data-target', '#modalEdit');
+                    branchEdit.setAttribute('id', 'branch-'+data[i].id);
                     branchEdit.setAttribute('type', 'button');
                     branchEdit.innerHTML = '<i class="fas fa-edit"></i>';
                     //Delete button
@@ -143,7 +152,7 @@ export default class Customers {
                     const buttonsDiv = document.createElement("div");
                     buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
                     buttonsDiv.appendChild(branchCheck);
-                    buttonsDiv.appendChild(showBranch);
+                    // buttonsDiv.appendChild(showBranch);
                     buttonsDiv.appendChild(branchEdit);
                     buttonsDiv.appendChild(branchDelete);
                     selectCell.appendChild(buttonsDiv);
@@ -151,6 +160,7 @@ export default class Customers {
                 }
             }
         }
+        this.editBranches();
     }
 
     async requestBranchOffices(){
@@ -159,6 +169,133 @@ export default class Customers {
         };
         await fetch("/unassigned_branch_offices")
             .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    editBranches(){
+        let branches = document.getElementsByClassName("btnEdit");
+        if (branches == null) {
+            return
+        }
+        [].forEach.call(branches, branch => {
+            branch.addEventListener('click', async () =>{
+                this.branchId = branch['id'].split('-')[1];
+                let response = await this.requestBranchToEdit(this.branchId);
+                let data = response.data[0];
+                document.getElementById("branch_office_name_edit").value = data.name;
+                let slcBranchType = document.getElementById("branch_office_type_edit");
+                [].forEach.call(slcBranchType, key => {
+                    if(key.value == data.type){
+                        key.setAttribute('selected', 'selected');
+                    }
+                });
+                document.getElementById("branch_office_description_edit").value = data.description;
+                let slcZone = document.getElementById("branch_office_zone_edit");
+                [].forEach.call(slcZone, key => {
+                    if(key.value == data.zone_id){
+                        key.setAttribute('selected', 'selected');
+                    }
+                });
+                document.getElementById("branch_office_address_edit").value = data.address;
+                document.getElementById("branch_office_lat_edit").value = data.lat;
+                document.getElementById("branch_office_lng_edit").value = data.lng;
+                document.getElementById("branch_office_email_edit").value = data.email;
+                document.getElementById("branch_office_contact_edit").value = data.contact;
+                let slcDocumentType = document.getElementById("branch_office_document_type_edit");
+                [].forEach.call(slcDocumentType, key => {
+                    if(key.value == data.document_type){
+                        key.setAttribute('selected', 'selected');
+                    }
+                });
+                document.getElementById("branch_office_document_number_edit").value = data.document_number;
+                let slcPaymentMethod = document.getElementById("branch_office_payment_method_edit");
+                [].forEach.call(slcPaymentMethod, key => {
+                    if(key.value == data.payment_method){
+                        if(key.value != 24){
+                            document.getElementById("slcPlanEdit").className = 'form-group col-md-3';
+                            document.getElementById("useModeEdit").className = 'form-group col-md-3';
+                        } else {
+                            document.getElementById("slcPlanEdit").className = 'd-none';
+                            document.getElementById("useModeEdit").className = 'd-none';
+                        }
+                        key.setAttribute('selected', 'selected');
+                    }
+                });
+                document.getElementById("branch_office_phone_edit").value = data.phone;
+                let inpDefault = document.getElementsByName("branch_office_default_edit");
+                [].forEach.call(inpDefault, key => {
+                    if(key.value == data.default){
+                        key.setAttribute('checked', 'checked');
+                    }
+                });
+            })
+        });
+    }
+
+    async requestBranchToEdit(id){
+        let response = {
+            'state': 500
+        };
+        await fetch("/sucursales/null/"+id)
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    updateBranchOffice(){
+        let formUpdateBranch = document.getElementById("formUpdate");
+        let btnSubmit = document.getElementById("updateBranchOffice");
+        if(formUpdateBranch == null){
+            return;
+        }
+        if(btnSubmit == null){
+            return;
+        }
+        btnSubmit.addEventListener('click', async (e) =>  {
+            e.preventDefault();
+            let formData = new FormData(formUpdateBranch);
+
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify(Object.fromEntries(formData))
+            };
+            let response = await this.sendDataToUpdate(this.branchId, requestOptions);
+            if(response.state == 200){
+                alert(response.message);
+                let modal = document.getElementById("modalEdit");
+                modal.click();
+                this.listBranchOffices();
+            } else {
+                alert('Ha ocurrido un error al actualizar la sucursal.');
+                console.log('Error '+response.error);
+            }
+        });
+    }
+
+    async sendDataToUpdate(id, requestOptions){
+        let response = {
+            'state': 500
+        };
+        await fetch("/sucursales/"+null+"/"+id+"/update", requestOptions)
+            .then((response) => response.json())
             .then(data => {
                 response = data
             })

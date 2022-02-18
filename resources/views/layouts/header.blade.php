@@ -16,7 +16,7 @@
 
 
         <div class="btn-group">
-            <a href="#" class="btn btn-primary">Admin</a>
+            <a href="perfil" class="btn btn-primary">Admin</a>
             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="sr-only">Toggle Dropdown</span>
@@ -25,7 +25,9 @@
                 <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
+                    <div>
+                        <p class="mb-0">Cerrar Sesión</p>
+                    </div>
                 </a>
 
              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

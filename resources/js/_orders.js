@@ -15,7 +15,8 @@ export default class Orders {
         this.instantiateBoxes();
         this.addbox();
         this.removeBox();
-        this.searchCustomerData();
+        this.loadCustomerModal();
+        this.loadOrderNumber();
     }
 
     setInput() {
@@ -153,6 +154,16 @@ export default class Orders {
         });
     }
 
+    loadCustomerModal(){
+        let btnDetailCustomer = document.getElementById("btnDetailCustomer");
+        if(btnDetailCustomer == null){
+            return;
+        }
+        btnDetailCustomer.addEventListener('click', () => {
+            this.searchCustomerData();
+        });
+    }
+
     async requestSearchCustomer(query) {
         let response = {
             'state': 500
@@ -179,6 +190,8 @@ export default class Orders {
             tbody.innerHTML = '';
             let response = await this.requestSearchCustomer(inputValue);
             let data = response.data;
+            let type = response.type;
+
             if (response.state != 200 || data.length == 0) {
                 let row = tbody.insertRow(0);
                 let cell = row.insertCell(0);
@@ -191,13 +204,17 @@ export default class Orders {
                     let row = tbody.insertRow(i);
 
                     let idCell = row.insertCell(0);
-                    idCell.innerHTML = data[i].name ? data[i].id : data[i].get_user.id;
+                    idCell.innerHTML = type == 1 ? data[i].id : data[i].get_user.id;
 
                     let phoneCell = row.insertCell(1);
-                    phoneCell.innerHTML = data[i].name ? data[i].phone : data[i].get_user.phone;
+                    phoneCell.innerHTML = type == 1 ? data[i].phone : data[i].get_user.phone;
 
                     let tradenameCell = row.insertCell(2);
-                    tradenameCell.innerHTML = data[i].name ? data[i].name + " " + data[i].last_name : data[i].tradename;
+                    if(type == 1){
+                        tradenameCell.innerHTML = (data[i].name != null) ? data[i].name + " " + data[i].last_name : data[i].get_customer.tradename;
+                    } else {
+                        tradenameCell.innerHTML = (data[i].name != null) ? data[i].name + " " + data[i].last_name : data[i].tradename;
+                    }
 
                     let selectCell = row.insertCell(3);
                     const userCheck = document.createElement("input");
@@ -205,7 +222,7 @@ export default class Orders {
                     userCheck.setAttribute('type', 'radio');
                     userCheck.setAttribute('name', 'customerCheck');
                     userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', data[i].name ? data[i].id : data[i].get_user.id);
+                    userCheck.setAttribute('value', type == 1 ? data[i].id : data[i].get_user.id);
                     selectCell.appendChild(userCheck);
 
                     tbody.appendChild(row);
@@ -240,10 +257,33 @@ export default class Orders {
                 document.getElementById("user_department").value = data[2] != null ? data[2]['name'] : '';
                 document.getElementById("user_branch_office").value = data[1] != null ? data[1]['name'] : '';
                 document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
+                document.getElementById("id_branch_office").value = data[1] != null ? data[1].id : null;
 
                 let modal = document.getElementById("detailCustomer");
                 modal.click();
             })
         }
+    }
+
+    async requestOrderNumber(){
+        let response = {
+            'state': 500
+        };
+        await fetch("/order_number")
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    async loadOrderNumber(){
+        let orderNumber = document.getElementById("order_number");
+        if(orderNumber == null){
+            return;
+        }
+        let response = await this.requestOrderNumber();
+        orderNumber.setAttribute('value', response.data);
     }
 }

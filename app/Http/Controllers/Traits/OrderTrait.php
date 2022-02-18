@@ -16,19 +16,25 @@ trait OrderTrait
         return Validator::make(
             $request->all(),
             [
-                'number' => [$action == 'create' ? 'confirmed' : 'nullable',
-                    Rule::requiredIf($action == 'create'), 'unique:orders,number,'.$id],
+                'order_number' => [$action == 'create' ? 'confirmed' : 'nullable',
+                    Rule::requiredIf($action == 'create'), 'unique:orders,order_number,'.$id],
                 'user_id' => 'required|exists:users,id',
-                'service_type_id' => 'required',
-                'vehicle_type_id' => 'required',
-                'payment_method_id' => 'required',
+                'order_type' => 'required',
+                'order_value' => 'required',
+                'receive_by_COD' => 'required',
+                'internal_product' => 'required',
+                'expenses' => 'required',
+                'diligence_expenses' => 'required',
+                'tax_total' => 'required',
+                'payment_method' => 'required',
+                'urgent_dispatch' => 'required',
+                'return_last_destination' => 'required',
                 'schedule_date' => 'required',
                 'schedule_time' => 'required',
-                'express_delivery' => 'required',
-                'last_destination_return' => 'required',
                 'insured_value' => 'required',
-                'percentage_receivable' => 'required',
-                'value_receivable' => 'required',
+                'money_to_collect' => 'required',
+                'percentage_to_collect' => 'required',
+                'branch_office' => 'nullable',
                 'state' => 'nullable'
             ]
         );
@@ -42,19 +48,25 @@ trait OrderTrait
         }
         try {
             $order = Order::create([
-                'number' => $request->number,
+                'order_number' => $request->order_number,
                 'user_id' => $request->user_id,
-                'service_type_id' => $request->service_type_id,
-                'vehicle_type_id' => $request->vehicle_type_id,
-                'payment_method_id' => $request->payment_method_id,
+                'order_type' => $request->order_type,
+                'order_value' => $request->order_value,
+                'receive_by_COD' => $request->receive_by_COD,
+                'internal_product' => $request->internal_product,
+                'expenses' => $request->expenses,
+                'diligence_expenses' => $request->diligence_expenses,
+                'tax_total' => $request->tax_total,
+                'payment_method' => $request->payment_method,
+                'urgent_dispatch' => $request->urgent_dispatch,
+                'return_last_destination' => $request->return_last_destination,
                 'schedule_date' => $request->schedule_date,
                 'schedule_time' => $request->schedule_time,
-                'express_delivery' => $request->express_delivery,
-                'last_destination_return' => $request->last_destination_return,
                 'insured_value' => $request->insured_value,
-                'percentage_receivable' => $request->percentage_receivable,
-                'value_receivable' => $request->value_receivable,
-                'state' => $request->state
+                'money_to_collect' => $request->money_to_collect,
+                'percentage_to_collect' => $request->percentage_to_collect,
+                'customer_user_id' => $request->user_id,
+                'branch_office' => $request->branch_office
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');
         } catch (\Exception $e) {

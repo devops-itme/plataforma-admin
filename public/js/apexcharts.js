@@ -177,8 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     };
 
-    var chart = new ApexCharts(document.querySelector("#records-processed"), options);
-
-    chart.render();
-
+    var chart = new ApexCharts(document.getElementById("records-processed"), options);
+    if (chart.el != null) {
+        chart.render();
+    }
 });

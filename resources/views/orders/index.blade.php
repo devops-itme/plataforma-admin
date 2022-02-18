@@ -179,48 +179,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($orders as $order)
+                    @if(count($orders) > 0)
+                        @foreach ($orders as $order)
+                            <tr>
+                                <th scope="row">{{$order->order_number}}</th>
+                                <td>
+                                    @if ($order->service_type_id == 1)
+                                        <span class="label label-inline label-light-warning font-weight-blog">
+                                            Ondeman
+                                        </span>
+                                    @else
+                                        <span class="label label-inline label-light-success font-weight-blog">
+                                            Multiple
+                                        </span>
+                                    @endif
+                                </td>
+                                <td>{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}</td>
+                                <td>{{format_date(date('Y-n-d', strtotime($order->created_at)))}}</td>
+                                <td>
+                                    @if ($order->state == 1)
+                                        <span class="label label-inline label-light-success font-weight-bold">
+                                            Activo
+                                        </span>
+                                    @else
+                                        <span class="label label-inline label-light-danger font-weight-bold">
+                                            Inactivo
+                                        </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                                        <a href="{{route('orders.show',$order->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                            <i class="fad fa-folder-open"></i>
+                                        </a>
+                                        <a href="{{route('orders.edit', $order->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                            <i class="fad fa-edit"></i>
+                                        </a>
+                                        <button type="button" onclick="confirmDelete('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                            <i class="fad fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <th scope="row">{{$order->number}}</th>
-                            <td>
-                                @if ($order->service_type_id == 1)
-                                    <span class="label label-inline label-light-warning font-weight-blog">
-                                        Ondeman
-                                    </span>
-                                @else
-                                    <span class="label label-inline label-light-success font-weight-blog">
-                                        Multiple
-                                    </span>
-                                @endif
-                            </td>
-                            <td>{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}</td>
-                            <td>{{format_date(date('Y-n-d', strtotime($order->created_at)))}}</td>
-                            <td>
-                                @if ($order->state == 1)
-                                    <span class="label label-inline label-light-success font-weight-bold">
-                                        Activo
-                                    </span>
-                                @else
-                                    <span class="label label-inline label-light-danger font-weight-bold">
-                                        Inactivo
-                                    </span>
-                                @endif
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="{{route('orders.show',$order->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                        <i class="fad fa-folder-open"></i>
-                                    </a>
-                                    <a href="{{route('orders.edit', $order->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
-                                        <i class="fad fa-edit"></i>
-                                    </a>
-                                    <button type="button" onclick="confirmDelete('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                        <i class="fad fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </td>
+                            <th colspan="8" class="text-center">¡No hay ordenes registradas!</td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
             <!--end: Datatable-->

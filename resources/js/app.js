@@ -12,6 +12,7 @@ import Zones from './_zones';
 import BranchOffices from './_branchOffice';
 
 //Vue Components
+Vue.component('deliveries-ondemand', require('./components/deliveries/deliveriesOndemand.vue').default);
 Vue.component('example-component', require('./components/exampleComponent.vue').default);
 Vue.component('deliveries', require('./components/deliveries/deliveries.vue').default);
 
