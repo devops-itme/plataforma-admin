@@ -246,13 +246,9 @@ export default {
         };
     },
     methods: {
-        // Called when an item is selected
-	onSelect: function(evt) {
-		console.log(evt.item); // The selected item
-	},
-    handleChange(evt) {
-      console.log(evt.item);
-    },
+        handleChange(evt) {
+            console.log(evt.item);
+        },
     }
 };
 </script>

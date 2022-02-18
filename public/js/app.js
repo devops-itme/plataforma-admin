@@ -2148,10 +2148,10 @@ __webpack_require__.r(__webpack_exports__);
         inEdit: ["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
       }
     };
-  },
-  mounted: function mounted() {
-    console.log(this.columns.inProcess.length);
-  }
+  } // mounted(){
+  //     console.log(this.columns.inProcess.length);
+  // },
+
 });
 
 /***/ }),
@@ -2570,10 +2570,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // Called when an item is selected
-    onSelect: function onSelect(evt) {
-      console.log(evt.item); // The selected item
-    },
     handleChange: function handleChange(evt) {
       console.log(evt.item);
     }
@@ -7056,7 +7052,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -39863,7 +39859,12 @@ var render = function () {
                     "aria-labelledby": "porRecoger-tab",
                   },
                 },
-                [_c("draggables", { attrs: { selected: _vm.selected } })],
+                [
+                  _c("draggables", {
+                    ref: "childcomponent",
+                    attrs: { selected: _vm.selected },
+                  }),
+                ],
                 1
               ),
               _vm._v(" "),
@@ -59480,8 +59481,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
