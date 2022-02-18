@@ -81,7 +81,14 @@ Route::group(['middleware' => 'auth'], function () {
 
         //RUTAS
         Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
+
+
     });
+    //Orders delivery
+    Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');
+    //Messengers delivery
+    Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
+
     Route::get('despachos', function () {
         return view('deliveries.index');
     })->name('delivery.index');
@@ -109,8 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('zones.index');
     })->name('zone.index');
 });
-//Orders delivery
-Route::get('orders_delivery/{type}', 'Admin\DeliveryController@orders');
+
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
 //REPORTS
