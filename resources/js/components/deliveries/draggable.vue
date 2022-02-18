@@ -248,7 +248,7 @@ export default {
     },
     methods: {
         handleChange(evt) {
-            console.log(evt.item);
+            console.log(evt.items);
         },
     }
 };

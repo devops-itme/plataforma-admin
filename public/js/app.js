@@ -2572,7 +2572,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleChange: function handleChange(evt) {
-      console.log(evt.item);
+      console.log(evt.items);
     }
   }
 });
