@@ -2501,6 +2501,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // import { Sortable, MultiDrag } from 'sortablejs';
  //  Sortable.mount(new MultiDrag());
 
@@ -7071,7 +7072,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n  background-color: #caf0f8;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -40287,7 +40288,7 @@ var render = function () {
                   _c(
                     "table",
                     {
-                      staticClass: "table table-sm",
+                      staticClass: "table table-sm table-bordered",
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
@@ -40391,7 +40392,7 @@ var render = function () {
                   _c(
                     "table",
                     {
-                      staticClass: "table table-sm",
+                      staticClass: "table table-sm table-bordered",
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
@@ -40644,7 +40645,7 @@ var render = function () {
         _c(
           "table",
           {
-            staticClass: "table table-sm",
+            staticClass: "table table-sm table-bordered",
             style: { width: _vm.widthTable + "px", "table-layout": "auto" },
           },
           [
