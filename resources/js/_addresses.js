@@ -5,36 +5,8 @@ export default class Addresses {
         // this.getAddresses();
         // this.deleteAddress();
     }
-    //AUTOCOMPLETE BRANCH OFFICES
-    autocompleteAddress() {
-        const directionCity = document.getElementById("branch_office_address");
 
-        if (directionCity == null) {
-            return;
-        }
-
-        google.maps.event.addDomListener(window, "load", function () {
-            const autocompleteCity = new google.maps.places.Autocomplete(
-                directionCity,
-                {
-                    bounds: new google.maps.LatLngBounds(
-                        new google.maps.LatLng(40.416775, -3.70379)
-                    ),
-                    types: ["geocode"],
-                }
-            );
-
-            autocompleteCity.addListener("place_changed", () => {
-                const place = autocompleteCity.getPlace();
-                document.getElementById("branch_office_address").value =
-                    place.formatted_address;
-                document.getElementById("branch_office_lat").value =
-                    place.geometry.location.lat();
-                document.getElementById("branch_office_lng").value =
-                    place.geometry.location.lng();
-            });
-        });
-
+    autocompleteAddress(){
         //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
         const directionCity2 = document.getElementsByName("address");
         directionCity2.forEach(function callback(directionCity2, index) {
