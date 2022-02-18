@@ -2142,8 +2142,15 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         value: 2,
         text: "Recogidas"
-      }]
+      }],
+      columns: {
+        inProcess: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
+        inEdit: ["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
+      }
     };
+  },
+  mounted: function mounted() {
+    console.log(this.columns.inProcess.length);
   }
 });
 
@@ -2568,18 +2575,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    rows: Number,
+    columnsNames: Array,
+    widthTable: Number
+  }
+});
 
 /***/ }),
 
@@ -39816,7 +39818,15 @@ var render = function () {
                     "aria-labelledby": "enproceso-tab",
                   },
                 },
-                [_c("tabledy")],
+                [
+                  _c("tabledy", {
+                    attrs: {
+                      rows: _vm.columns.inProcess.length,
+                      columnsNames: _vm.columns.inProcess,
+                      widthTable: 1100,
+                    },
+                  }),
+                ],
                 1
               ),
               _vm._v(" "),
@@ -39830,7 +39840,16 @@ var render = function () {
                     "aria-labelledby": "consultas-tab",
                   },
                 },
-                [_vm._v("\n                3\n            ")]
+                [
+                  _c("tabledy", {
+                    attrs: {
+                      rows: _vm.columns.inEdit.length,
+                      columnsNames: _vm.columns.inEdit,
+                      widthTable: 1600,
+                    },
+                  }),
+                ],
+                1
               ),
             ]
           ),
@@ -40551,19 +40570,53 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "d-flex flex-row flex-wrap mt-4" }, [
+    _c("h5", { staticClass: "font-weight-bold text-dark col-md-12 px-0" }, [
+      _vm._v(" Lista de Destinos"),
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "table-responsive col-md-12 px-0 border rounded h-400px" },
+      [
+        _c(
+          "table",
+          {
+            staticClass: "table table-sm",
+            style: { width: _vm.widthTable + "px", "table-layout": "auto" },
+          },
+          [
+            _c("thead", { staticClass: "thead-light" }, [
+              _c(
+                "tr",
+                { staticClass: "text-center" },
+                _vm._l(_vm.columnsNames, function (item) {
+                  return _c("th", { key: item, attrs: { scope: "col" } }, [
+                    _vm._v(_vm._s(item)),
+                  ])
+                }),
+                0
+              ),
+            ]),
+            _vm._v(" "),
+            _c("tbody"),
+          ]
+        ),
+      ]
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex flex-row flex-wrap mt-4" }, [
-      _c("h5", { staticClass: "font-weight-bold text-dark col-md-12 px-0" }, [
-        _vm._v(" Lista de Destinos"),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "d-flex flex-row flex-wrap col-md-12 px-0" }, [
+    return _c(
+      "div",
+      { staticClass: "d-flex flex-row flex-wrap col-md-12 px-0" },
+      [
         _c("div", { staticClass: "form-group col-md-6 pl-0" }, [
           _c("label", { staticClass: "font-weight-bolder" }, [
             _vm._v("Filtro"),
@@ -40592,85 +40645,8 @@ var staticRenderFns = [
             }),
           ]),
         ]),
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "table-responsive col-md-12 px-0 border rounded h-400px",
-        },
-        [
-          _c(
-            "table",
-            {
-              staticClass: "table table-sm",
-              staticStyle: { "table-layout": "auto", width: "1100px" },
-            },
-            [
-              _c("thead", { staticClass: "thead-light" }, [
-                _c("tr", { staticClass: "text-center" }, [
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [
-                    _vm._v("Fecha evento"),
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Despacho")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("F.Prog")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Mensajero")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado App")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Cliente")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Contacto")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [
-                    _vm._v("Barrio/Zona"),
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Dirección")]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tbody", [
-                _c("tr", { staticClass: "text-center" }, [
-                  _c("td", [_vm._v("Normal")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Recogido")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("18/02/2022")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("9988383")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("0084774")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("17/02/2022")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("9013")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Leido")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Marta ayega")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("5757848")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("City:Malambo")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Calle Siempreviva")]),
-                ]),
-              ]),
-            ]
-          ),
-        ]
-      ),
-    ])
+      ]
+    )
   },
 ]
 render._withStripped = true
