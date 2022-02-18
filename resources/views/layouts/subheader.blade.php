@@ -133,7 +133,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button"
                                 data-toggle="dropdown" aria-expanded="false">
-                                Facturación </a>
+                                <i class="fas fa-file-invoice"></i> Facturación</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="">Liquidación Ondemand Clientes</a></li>
                                 <li><a class="dropdown-item" href="#">Liquidación Packs Clientes</a></li>
@@ -144,7 +144,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button"
                                 data-toggle="dropdown" aria-expanded="false">
-                                Nómina</a>
+                                <i class="fas fa-money-check-edit-alt"></i> Nómina</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="#">Conceptos</a></li>
                                 <li><a class="dropdown-item" href="#">Moviles Periodos</a></li>
