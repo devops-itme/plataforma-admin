@@ -57449,30 +57449,11 @@ var Addresses = /*#__PURE__*/function () {
       this.autocompleteAddress(); // this.createAddress();
       // this.getAddresses();
       // this.deleteAddress();
-    } //AUTOCOMPLETE BRANCH OFFICES
-
+    }
   }, {
     key: "autocompleteAddress",
     value: function autocompleteAddress() {
-      var directionCity = document.getElementById("branch_office_address");
-
-      if (directionCity == null) {
-        return;
-      }
-
-      google.maps.event.addDomListener(window, "load", function () {
-        var autocompleteCity = new google.maps.places.Autocomplete(directionCity, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
-          types: ["geocode"]
-        });
-        autocompleteCity.addListener("place_changed", function () {
-          var place = autocompleteCity.getPlace();
-          document.getElementById("branch_office_address").value = place.formatted_address;
-          document.getElementById("branch_office_lat").value = place.geometry.location.lat();
-          document.getElementById("branch_office_lng").value = place.geometry.location.lng();
-        });
-      }); //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
-
+      //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
       var directionCity2 = document.getElementsByName("address");
       directionCity2.forEach(function callback(directionCity2, index) {
         google.maps.event.addDomListener(window, "load", function () {
@@ -57678,6 +57659,7 @@ var BranchOffices = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.loadPlanFields();
+      this.autocompleteAddress();
     }
   }, {
     key: "loadPlanFields",
@@ -57698,6 +57680,28 @@ var BranchOffices = /*#__PURE__*/function () {
           useMode.className = 'form-group col-md-3';
           slcPlan.className = 'form-group col-md-3';
         }
+      });
+    }
+  }, {
+    key: "autocompleteAddress",
+    value: function autocompleteAddress() {
+      var directionCity = document.getElementById("branch_office_address");
+
+      if (directionCity == null) {
+        return;
+      }
+
+      google.maps.event.addDomListener(window, "load", function () {
+        var autocompleteCity = new google.maps.places.Autocomplete(directionCity, {
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
+          types: ["geocode"]
+        });
+        autocompleteCity.addListener("place_changed", function () {
+          var place = autocompleteCity.getPlace();
+          document.getElementById("branch_office_address").value = place.formatted_address;
+          document.getElementById("branch_office_lat").value = place.geometry.location.lat();
+          document.getElementById("branch_office_lng").value = place.geometry.location.lng();
+        });
       });
     }
   }]);
