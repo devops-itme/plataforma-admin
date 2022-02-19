@@ -16,12 +16,32 @@ trait GuideTrait
         return Validator::make(
             $request->all(),
             [
-                'order_id' => [$action == 'create' ? 'confirmed' : 'nullable',
-                        Rule::requiredIf($action == 'create'), 'exists:orders,id'
-                ],
-                'address_id' => 'required|exists:addresses,id',
-                'delivery_date' => 'nullable|date',
-                'shipping_cost' => 'nullable'
+                // 'order_id' => [$action == 'create' ? 'confirmed' : 'nullable',
+                //         Rule::requiredIf($action == 'create'), 'exists:orders,id'
+                // ],
+                'order_id' => 'nullable',
+                'branch_office' => 'nullable',
+                'transport_type' => 'nullable',
+                'dispatched' => 'nullable',
+                'addres_name' => 'nullable',
+                'addres_lat' => 'nullable',
+                'addres_lng' => 'nullable',
+                'address_description' => 'nullable',
+                'zone' => 'nullable',
+                'concept' => 'nullable',
+                'rate' => 'nullable',
+                'value' => 'nullable',
+                'corp_value' => 'nullable',
+                'document_type_customes' => 'nullable',
+                'contact' => 'nullable',
+                'phone_contact' => 'nullable',
+                'email_contact' => 'nullable',
+                'invoice_contact' => 'nullable',
+                'same_day_delivery' => 'nullable',
+                'sign' => 'nullable',
+                'take_photo' => 'nullable',
+                'packaging' => 'nullable',
+                'state' => 'nullable'
             ]
         );
     }
@@ -34,10 +54,28 @@ trait GuideTrait
         }
         try {
             $order = Guide::create([
-                'order_id' => $request->order_id,
-                'address_id' => $request->address_id,
-                'delivery_date' => $request->delivery_date,
-                'shipping_cost' => $request->shipping_cost
+                'branch_office' => $request->branch_office,
+                'transport_type' => $request->transport_type,
+                'dispatched' => $request->dispatched,
+                'addres_name' => $request->addres_name,
+                'addres_lat' => $request->addres_lat,
+                'addres_lng' => $request->addres_lng,
+                'address_description' => $request->address_description,
+                'zone' => $request->zone,
+                'concept' => $request->concept,
+                'rate' => $request->rate,
+                'value' => $request->value,
+                'corp_value' => $request->corp_value,
+                'document_type_customes' => $request->document_type_customes,
+                'contact' => $request->contact,
+                'phone_contact' => $request->phone_contact,
+                'email_contact' => $request->email_contact,
+                'invoice_contact' => $request->invoice_contact,
+                'same_day_delivery' => $request->same_day_delivery,
+                'sign' => $request->sign,
+                'take_photo' => $request->take_photo,
+                'packaging' => $request->packaging,
+                'state' => $request->state
             ]);
             return $this->respond(200, $order, null, 'Guia creada exitosamente');
         } catch (\Exception $e) {

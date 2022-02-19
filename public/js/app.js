@@ -59176,6 +59176,8 @@ var Orders = /*#__PURE__*/function () {
       this.removeBox();
       this.loadCustomerModal();
       this.loadOrderNumber();
+      this.saveGuides();
+      this.listGuides();
     }
   }, {
     key: "setInput",
@@ -59587,6 +59589,289 @@ var Orders = /*#__PURE__*/function () {
 
       return loadOrderNumber;
     }()
+  }, {
+    key: "saveGuides",
+    value: function saveGuides() {
+      var _this5 = this;
+
+      var btnStoreGuide = document.getElementById("btnStoreGuide");
+
+      if (btnStoreGuide == null) {
+        return;
+      }
+
+      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var branch_office, transport_type, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                branch_office = document.getElementById("id_branch_office").value;
+                transport_type = document.getElementById("trans_type").value;
+                dispatched = document.getElementById("dispatched").value;
+                address_name = document.getElementById("address").value;
+                address_lat = document.getElementById("lat").value;
+                address_lng = document.getElementById("lng").value;
+                address_description = document.getElementById("address_description").value;
+                concept = document.getElementById("concept").value;
+                rate = document.getElementById("rate").value;
+                value = document.getElementById("value").value;
+                corp_value = document.getElementById("corp_value").value;
+                document_type_customes = document.getElementById("document_type_customes").value;
+                contact = document.getElementById("contact").value;
+                phone_contact = document.getElementById("phone_contact").value;
+                email_contact = document.getElementById("email_contact").value;
+                invoice_contact = document.getElementById("invoice_contact").value;
+                same_day_delivery = document.getElementById("same_day_delivery").value;
+                sign = document.getElementById("sign").value;
+                take_photo = document.getElementById("take_photo").value;
+                formData = new FormData();
+                formData.append('branch_office', branch_office);
+                formData.append('transport_type', transport_type);
+                formData.append('dispatched', dispatched);
+                formData.append('address_name', address_name);
+                formData.append('address_lat', address_lat);
+                formData.append('address_lng', address_lng);
+                formData.append('address_description', address_description);
+                formData.append('concept', concept);
+                formData.append('rate', rate);
+                formData.append('value', value);
+                formData.append('corp_value', corp_value);
+                formData.append('document_type_customes', document_type_customes);
+                formData.append('contact', contact);
+                formData.append('phone_contact', phone_contact);
+                formData.append('email_contact', email_contact);
+                formData.append('invoice_contact', invoice_contact);
+                formData.append('same_day_delivery', same_day_delivery);
+                formData.append('sign', sign);
+                formData.append('take_photo', take_photo);
+                _context7.next = 41;
+                return _this5.sendGuideData(formData);
+
+              case 41:
+                response = _context7.sent;
+
+                if (response.state == 200) {
+                  alert(response.message);
+                  modal = document.getElementById("modalCreate");
+                  modal.click();
+                } else {
+                  alert('Ha ocurrido un error al crear la guia.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 43:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      })));
+    }
+  }, {
+    key: "sendGuideData",
+    value: function () {
+      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context8.next = 3;
+                return fetch("/guias/store", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context8.sent;
+                return _context8.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function sendGuideData(_x3) {
+        return _sendGuideData.apply(this, arguments);
+      }
+
+      return sendGuideData;
+    }()
+  }, {
+    key: "listGuides",
+    value: function () {
+      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        var _this6 = this;
+
+        var tbody, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                tbody = document.querySelector("#guidesTable tbody");
+
+                if (!(tbody == null)) {
+                  _context9.next = 3;
+                  break;
+                }
+
+                return _context9.abrupt("return");
+
+              case 3:
+                tbody.innerHTML = '';
+                _context9.next = 6;
+                return this.requestGuides();
+
+              case 6:
+                response = _context9.sent;
+                data = response.data;
+
+                if (data.length > 0) {
+                  [].forEach.call(data, function (key) {
+                    var row = tbody.insertRow();
+                    var idCell = row.insertCell(0);
+                    idCell.innerHTML = key.id;
+                    var contactCell = row.insertCell(1);
+                    contactCell.innerHTML = key.contact;
+                    var phoneCell = row.insertCell(2);
+                    phoneCell.innerHTML = key.phone_contact;
+                    var emailCell = row.insertCell(3);
+                    emailCell.innerHTML = key.email_contact;
+                    var dateCell = row.insertCell(4);
+                    var allDate = new Date(key.created_at.split(' ')[0]);
+                    var month = allDate.getMonth();
+                    dateCell.innerHTML = allDate.getDate() + "-" + _this6.months(month) + "-" + allDate.getFullYear();
+                    var rateCell = row.insertCell(5);
+                    rateCell.innerHTML = key.rate;
+                    var stateCell = row.insertCell(6);
+
+                    if (key.state == 1) {
+                      stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                                Activo\
+                                            </span>';
+                    } else {
+                      stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                Inactivo\
+                                            </span>';
+                    }
+
+                    var selectCell = row.insertCell(7); //CHECK
+
+                    var guideCheck = document.createElement("input");
+                    guideCheck.setAttribute('class', 'checkbox-inline mt-3');
+                    guideCheck.setAttribute('type', 'checkbox');
+                    guideCheck.setAttribute('name', 'guideCheck[]');
+                    guideCheck.setAttribute('value', key.id); //EDIT
+
+                    var guideEdit = document.createElement("button");
+                    guideEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                    guideEdit.setAttribute('data-toggle', 'modal');
+                    guideEdit.setAttribute('data-target', '#modalEdit');
+                    guideEdit.setAttribute('id', 'guide-' + key.id);
+                    guideEdit.setAttribute('type', 'button');
+                    guideEdit.innerHTML = '<i class="fas fa-edit"></i>'; //DELETE
+
+                    var guideDelete = document.createElement("button");
+
+                    guideDelete.onclick = function () {
+                      confirmDelete('/guias/' + key.id);
+                    };
+
+                    guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                    guideDelete.setAttribute('type', 'button');
+                    guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                    var buttonsDiv = document.createElement("div");
+                    buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                    buttonsDiv.appendChild(guideCheck);
+                    buttonsDiv.appendChild(guideEdit);
+                    buttonsDiv.appendChild(guideDelete);
+                    selectCell.appendChild(buttonsDiv);
+                    tbody.appendChild(row);
+                  });
+                }
+
+              case 9:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function listGuides() {
+        return _listGuides.apply(this, arguments);
+      }
+
+      return listGuides;
+    }()
+  }, {
+    key: "requestGuides",
+    value: function () {
+      var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context10.next = 3;
+                return fetch("/guias").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context10.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }));
+
+      function requestGuides() {
+        return _requestGuides.apply(this, arguments);
+      }
+
+      return requestGuides;
+    }()
+  }, {
+    key: "months",
+    value: function months(month) {
+      var months = {
+        0: 'Enero',
+        1: 'Febrero',
+        2: 'Marzo',
+        3: 'Abril',
+        4: 'Mayo',
+        5: 'Junio',
+        6: 'Julio',
+        7: 'Agosto',
+        8: 'Septiembre',
+        9: 'Octubre',
+        10: 'Noviembre',
+        11: 'Diciembre'
+      };
+      return months[month];
+    }
   }]);
 
   return Orders;

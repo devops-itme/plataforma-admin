@@ -1,5 +1,5 @@
 <!--begin: Datatable-->
-<table class="table table-sm">
+<table class="table table-sm" id="guidesTable">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -80,33 +80,32 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Despacho: <span class="text-danger">*</span></label>
-                        <input name="office" type="number" class="form-control form-control-solid" placeholder="" />
+                        <input name="office" type="number" class="form-control form-control-solid" placeholder="" id="dispatched"/>
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="address">Dirección <span class="text-danger">*</span></label>
-                        <select name="address" class="form-control form-control-solid" id="address">
+                        <input name="address" id="address" type="text" class="form-control form-control-solid" placeholder=""/>
+                        {{-- <select name="address" class="form-control form-control-solid" id="address">
                             <option selected disabled>Seleccione dirección</option>
                             <option>Dirección 1</option>
                             <option>Dirección 2</option>
-                        </select>
+                        </select> --}}
                     </div>
+                    <input name="lat" id="lat" type="hidden" class="form-control form-control-solid" placeholder=""/>
+                    <input name="lng" id="lng" type="hidden" class="form-control form-control-solid" placeholder=""/>
                     <div class="form-group col-md-3">
                         <label for="district">Barrio <span class="text-danger">*</span></label>
-                        <select name="district" class="form-control form-control-solid" id="district">
-                            <option selected disabled>Seleccione Barrio</option>
-                            <option>Barrio 1</option>
-                            <option>Barrio 2</option>
-                        </select>
+                        <textarea name="address_description" id="address_description" class="form-control form-control-solid"></textarea>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Concepto: <span class="text-danger">*</span></label>
-                        <input name="concept" type="text" class="form-control form-control-solid" placeholder="" />
+                        <input name="concept" id="concept" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="district">Tarifa <span class="text-danger">*</span></label>
-                        <select name="district" class="form-control form-control-solid" id="district">
+                        <select name="rate" class="form-control form-control-solid" id="rate">
                             <option selected disabled>Seleccione Tarifa</option>
                             <option>Adicional</option>
                             <option>Plena</option>
@@ -117,17 +116,17 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor: <span class="text-danger">*</span></label>
-                        <input name="value" type="number" class="form-control form-control-solid" placeholder="" />
+                        <input name="value" id="value" type="number" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor Corp: <span class="text-danger">*</span></label>
-                        <input name="corp_value" type="number" class="form-control form-control-solid" placeholder="" />
+                        <input name="corp_value" id="corp_value" type="number" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="doc_type">Cliente tipo documento <span class="text-danger">*</span></label>
-                        <select name="doc_type" class="form-control form-control-solid" id="doc_type">
+                        <select name="doc_type" class="form-control form-control-solid" id="document_type_customes">
                             <option selected disabled>Seleccione tipo documento</option>
                             <option>CC</option>
                             <option>CE</option>
@@ -135,48 +134,48 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Contacto: <span class="text-danger">*</span></label>
-                        <input name="contact" type="text" class="form-control form-control-solid" placeholder="" />
+                        <input name="contact" id="contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
-                    <div class="form-group col-md-3">
+                    {{-- <div class="form-group col-md-3">
                         <label>Contacto telefono: <span class="text-danger">*</span></label>
-                        <select name="zip_code" class="form-control form-control-solid mr-2" id="zip_code">
+                        <select name="phone_contact" class="form-control form-control-solid mr-2" id="phone_contact">
                             <option selected disabled>Seleccione zip</option>
                             <option>507:panama</option>
                             <option>57:colombia</option>
                         </select>
                         <span class="form-text text-muted"></span>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-3 pt-2">
-                        <label> </label>
-                        <input name="contact" type="tel" class="form-control form-control-solid" placeholder="" />
+                        <label>Teléfono contacto </label>
+                        <input name="phone_contact" type="tel" id="phone_contact" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Contacto Email: <span class="text-danger">*</span></label>
-                        <input name="contact_email" type="email" class="form-control form-control-solid"
+                        <input name="email_contact" id="email_contact" type="email" class="form-control form-control-solid"
                             placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Contacto Factura: <span class="text-danger">*</span></label>
-                        <input name="contact_fac" type="text" class="form-control form-control-solid" placeholder="" />
+                        <input name="invoice_contact" id="invoice_contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2" />
+                                <input type="checkbox" name="same_day_delivery" id="same_day_delivery" />
                                 <span></span>
                                 Some Day Delivery
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2" />
+                                <input type="checkbox" name="sign" id="sign" />
                                 <span></span>
                                 Firmar
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="Checkboxes2" />
+                                <input type="checkbox" name="take_photo" id="take_photo" />
                                 <span></span>
                                 Tomar Foto
                             </label>
@@ -185,7 +184,7 @@
                     <div class="col-md-12">
                         <ul class="nav nav-tabs nav-bolder nav-tabs-line nav-tabs-line-3x" id="tabmodal" role="tablist">
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab" aria-controls="cajas" aria-selected="true">Cajas/Embalaje</a>
+                            <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab" aria-controls="cajas" aria-selected="true">Cajas/Embalaje</a>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="facil-tab" data-toggle="tab" href="#facil" role="tab"
@@ -396,10 +395,12 @@
 
                 </div>
             </div>
+
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold"
                     data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary font-weight-bold">Guardar</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="btnStoreGuide">Guardar</button>
             </div>
         </div>
     </div>

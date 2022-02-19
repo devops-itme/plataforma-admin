@@ -18,8 +18,11 @@ class GuideController extends Controller
      */
     public function index()
     {
-        $guides = Guide::get();
-        return json_encode($guides);
+        $guides = Guide::where('order_id', NULL)->get();
+        return json_encode([
+            'state' => 200,
+            'data' => $guides
+        ]);
     }
 
     /**
@@ -40,6 +43,13 @@ class GuideController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->same_day_delivery == 'on'){$request->merge(['same_day_delivery' => 1]);}
+        else{$request->merge(['same_day_delivery' => 0]);}
+        if($request->sign == 'on'){$request->merge(['sign' => 1]);}
+        else{$request->merge(['sign' => 0]);}
+        if($request->take_photo == 'on'){$request->merge(['take_photo' => 1]);}
+        else{$request->merge(['take_photo' => 0]);}
+        $request->merge(['state' => 1]);
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
             if(!is_null($request->guides_doc)){
@@ -54,7 +64,10 @@ class GuideController extends Controller
                 'message' => 'Guia guardada exitosamente'
             ]);
         } else {
-            return json_encode($response['error']);
+            return json_encode([
+                'state' => 500,
+                'error' => $response['error']
+            ]);
         }
     }
 
