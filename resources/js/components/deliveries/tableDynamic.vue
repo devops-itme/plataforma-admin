@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="table-responsive col-md-12 px-0 border rounded h-400px">
-            <table class="table table-sm" :style="{'width': widthTable+'px', 'table-layout': 'auto'}">
+            <table class="table table-sm table-bordered" :style="{'width': widthTable+'px', 'table-layout': 'auto'}">
                 <thead class="thead-light">
                     <tr class="text-center">
                         <th scope="col" v-for="item of columnsNames" :key="item">{{item}}</th>

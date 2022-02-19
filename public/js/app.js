@@ -2148,10 +2148,10 @@ __webpack_require__.r(__webpack_exports__);
         inEdit: ["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
       }
     };
-  },
-  mounted: function mounted() {
-    console.log(this.columns.inProcess.length);
-  }
+  } // mounted(){
+  //     console.log(this.columns.inProcess.length);
+  // },
+
 });
 
 /***/ }),
@@ -2326,8 +2326,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable-multi */ "./node_modules/vuedraggable-multi/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable-multi */ "./node_modules/vuedraggable-multi/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1__);
+//
 //
 //
 //
@@ -2506,7 +2507,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0___default.a
+    draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   props: {
     selected: Number
@@ -2570,10 +2571,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // Called when an item is selected
-    onSelect: function onSelect(evt) {
-      console.log(evt.item); // The selected item
-    },
     handleChange: function handleChange(evt) {
       console.log(evt.item);
     }
@@ -7372,7 +7369,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -7391,7 +7388,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n  background-color: #caf0f8;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -40179,7 +40176,12 @@ var render = function () {
                     "aria-labelledby": "porRecoger-tab",
                   },
                 },
-                [_c("draggables", { attrs: { selected: _vm.selected } })],
+                [
+                  _c("draggables", {
+                    ref: "childcomponent",
+                    attrs: { selected: _vm.selected },
+                  }),
+                ],
                 1
               ),
               _vm._v(" "),
@@ -40602,7 +40604,7 @@ var render = function () {
                   _c(
                     "table",
                     {
-                      staticClass: "table table-sm",
+                      staticClass: "table table-sm table-bordered",
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
@@ -40706,7 +40708,7 @@ var render = function () {
                   _c(
                     "table",
                     {
-                      staticClass: "table table-sm",
+                      staticClass: "table table-sm table-bordered",
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
@@ -40959,7 +40961,7 @@ var render = function () {
         _c(
           "table",
           {
-            staticClass: "table table-sm",
+            staticClass: "table table-sm table-bordered",
             style: { width: _vm.widthTable + "px", "table-layout": "auto" },
           },
           [
@@ -58574,11 +58576,20 @@ var Customers = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 tbody = document.querySelector("#branch_offices_table tbody");
+
+                if (!(tbody == null)) {
+                  _context3.next = 3;
+                  break;
+                }
+
+                return _context3.abrupt("return");
+
+              case 3:
                 tbody.innerHTML = '';
-                _context3.next = 4;
+                _context3.next = 6;
                 return this.requestBranchOffices();
 
-              case 4:
+              case 6:
                 assignedBranchOffices = _context3.sent;
 
                 if (assignedBranchOffices['state'] == 200) {
@@ -58657,7 +58668,7 @@ var Customers = /*#__PURE__*/function () {
 
                 this.editBranches();
 
-              case 7:
+              case 9:
               case "end":
                 return _context3.stop();
             }
@@ -59155,7 +59166,8 @@ var Orders = /*#__PURE__*/function () {
       this.instantiateBoxes();
       this.addbox();
       this.removeBox();
-      this.searchCustomerData();
+      this.loadCustomerModal();
+      this.loadOrderNumber();
     }
   }, {
     key: "setInput",
@@ -59281,6 +59293,21 @@ var Orders = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "loadCustomerModal",
+    value: function loadCustomerModal() {
+      var _this2 = this;
+
+      var btnDetailCustomer = document.getElementById("btnDetailCustomer");
+
+      if (btnDetailCustomer == null) {
+        return;
+      }
+
+      btnDetailCustomer.addEventListener('click', function () {
+        _this2.searchCustomerData();
+      });
+    }
+  }, {
     key: "requestSearchCustomer",
     value: function () {
       var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(query) {
@@ -59321,7 +59348,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "searchCustomerData",
     value: function searchCustomerData() {
-      var _this2 = this;
+      var _this3 = this;
 
       var btnSearch = document.getElementById("btnSearch");
 
@@ -59330,7 +59357,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var tbody, inputValue, response, data, row, cell, i, _row, idCell, phoneCell, tradenameCell, selectCell, userCheck;
+        var tbody, inputValue, response, data, type, row, cell, i, _row, idCell, phoneCell, tradenameCell, selectCell, userCheck;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -59341,11 +59368,12 @@ var Orders = /*#__PURE__*/function () {
                 inputValue = document.getElementById("search_customer").value;
                 tbody.innerHTML = '';
                 _context2.next = 6;
-                return _this2.requestSearchCustomer(inputValue);
+                return _this3.requestSearchCustomer(inputValue);
 
               case 6:
                 response = _context2.sent;
                 data = response.data;
+                type = response.type;
 
                 if (response.state != 200 || data.length == 0) {
                   row = tbody.insertRow(0);
@@ -59359,26 +59387,32 @@ var Orders = /*#__PURE__*/function () {
                   for (i = 0; i < data.length; i++) {
                     _row = tbody.insertRow(i);
                     idCell = _row.insertCell(0);
-                    idCell.innerHTML = data[i].name ? data[i].id : data[i].get_user.id;
+                    idCell.innerHTML = type == 1 ? data[i].id : data[i].get_user.id;
                     phoneCell = _row.insertCell(1);
-                    phoneCell.innerHTML = data[i].name ? data[i].phone : data[i].get_user.phone;
+                    phoneCell.innerHTML = type == 1 ? data[i].phone : data[i].get_user.phone;
                     tradenameCell = _row.insertCell(2);
-                    tradenameCell.innerHTML = data[i].name ? data[i].name + " " + data[i].last_name : data[i].tradename;
+
+                    if (type == 1) {
+                      tradenameCell.innerHTML = data[i].name != null ? data[i].name + " " + data[i].last_name : data[i].get_customer.tradename;
+                    } else {
+                      tradenameCell.innerHTML = data[i].name != null ? data[i].name + " " + data[i].last_name : data[i].tradename;
+                    }
+
                     selectCell = _row.insertCell(3);
                     userCheck = document.createElement("input");
                     userCheck.setAttribute('class', 'btn btn-success customerCheck');
                     userCheck.setAttribute('type', 'radio');
                     userCheck.setAttribute('name', 'customerCheck');
                     userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', data[i].name ? data[i].id : data[i].get_user.id);
+                    userCheck.setAttribute('value', type == 1 ? data[i].id : data[i].get_user.id);
                     selectCell.appendChild(userCheck);
                     tbody.appendChild(_row);
                   }
                 }
 
-                _this2.selectCustomer();
+                _this3.selectCustomer();
 
-              case 11:
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -59427,7 +59461,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "selectCustomer",
     value: function selectCustomer() {
-      var _this3 = this;
+      var _this4 = this;
 
       var allCustomerChecks = document.getElementsByClassName("customerCheck");
 
@@ -59439,7 +59473,7 @@ var Orders = /*#__PURE__*/function () {
               switch (_context4.prev = _context4.next) {
                 case 0:
                   _context4.next = 2;
-                  return _this3.requestSelectedCustomerData(allCustomerChecks[i].value);
+                  return _this4.requestSelectedCustomerData(allCustomerChecks[i].value);
 
                 case 2:
                   response = _context4.sent;
@@ -59450,10 +59484,11 @@ var Orders = /*#__PURE__*/function () {
                   document.getElementById("user_department").value = data[2] != null ? data[2]['name'] : '';
                   document.getElementById("user_branch_office").value = data[1] != null ? data[1]['name'] : '';
                   document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
+                  document.getElementById("id_branch_office").value = data[1] != null ? data[1].id : null;
                   modal = document.getElementById("detailCustomer");
                   modal.click();
 
-                case 12:
+                case 13:
                 case "end":
                   return _context4.stop();
               }
@@ -59466,6 +59501,84 @@ var Orders = /*#__PURE__*/function () {
         _loop(i);
       }
     }
+  }, {
+    key: "requestOrderNumber",
+    value: function () {
+      var _requestOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context5.next = 3;
+                return fetch("/order_number").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context5.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function requestOrderNumber() {
+        return _requestOrderNumber.apply(this, arguments);
+      }
+
+      return requestOrderNumber;
+    }()
+  }, {
+    key: "loadOrderNumber",
+    value: function () {
+      var _loadOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var orderNumber, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                orderNumber = document.getElementById("order_number");
+
+                if (!(orderNumber == null)) {
+                  _context6.next = 3;
+                  break;
+                }
+
+                return _context6.abrupt("return");
+
+              case 3:
+                _context6.next = 5;
+                return this.requestOrderNumber();
+
+              case 5:
+                response = _context6.sent;
+                orderNumber.setAttribute('value', response.data);
+
+              case 7:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function loadOrderNumber() {
+        return _loadOrderNumber.apply(this, arguments);
+      }
+
+      return loadOrderNumber;
+    }()
   }]);
 
   return Orders;
@@ -59562,37 +59675,73 @@ var Permissions = /*#__PURE__*/function () {
       console.log(configurationBtn);
       [].forEach.call(configurationBtn, function (btn) {
         btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var row, role_id, url, response, data, modules;
+          var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   row = btn.parentNode.parentNode;
                   role_id = row.id;
+                  form = document.getElementById("permits-form");
+                  form.setAttribute("action", "/permisos/".concat(role_id));
                   url = '/permisos/getPermissions/' + role_id;
-                  _context2.next = 5;
+                  _context2.next = 7;
                   return requestPermissions(url);
 
-                case 5:
+                case 7:
                   response = _context2.sent;
                   console.log(response);
 
                   if (!(response.state != 200)) {
-                    _context2.next = 9;
+                    _context2.next = 11;
                     break;
                   }
 
                   return _context2.abrupt("return");
 
-                case 9:
+                case 11:
                   data = response.data;
                   console.log(data);
                   modules = data.modules;
+                  actions = data.actions;
+                  permissions = data.permissions;
+                  cardBody = document.getElementById("card-body");
+                  cardBody.innerHTML = "";
                   [].forEach.call(modules, function (module) {
-                    console.log(module);
+                    var _module$actions$split, _module$actions, _module_permissions$a, _module_permissions$a2;
+
+                    var module_actions = (_module$actions$split = module === null || module === void 0 ? void 0 : (_module$actions = module.actions) === null || _module$actions === void 0 ? void 0 : _module$actions.split(',')) !== null && _module$actions$split !== void 0 ? _module$actions$split : [];
+                    var module_permissions = permissions.find(function (element) {
+                      return element.module_id == module.id;
+                    });
+                    var allowed_actions = (_module_permissions$a = module_permissions === null || module_permissions === void 0 ? void 0 : (_module_permissions$a2 = module_permissions.actions) === null || _module_permissions$a2 === void 0 ? void 0 : _module_permissions$a2.split(',')) !== null && _module_permissions$a !== void 0 ? _module_permissions$a : [];
+                    var mainContainer = document.createElement('div');
+                    mainContainer.className = "row";
+                    var nameContainer = document.createElement("div");
+                    nameContainer.className = "col-3 align-self-center";
+                    nameContainer.innerHTML = "<h6 class=\"mb-0 text-muted font-weight-bold\">".concat(module.name, "</h6>");
+                    mainContainer.appendChild(nameContainer);
+                    var checkContainer = document.createElement("div");
+                    checkContainer.className = "col-9 align-self-center";
+                    checkContainer.innerHTML = "<div class=\"form-check\"></div>";
+                    [].forEach.call(actions, function (action) {
+                      var action_found = module_actions.find(function (element) {
+                        return element == action.id;
+                      });
+                      var permission_found = allowed_actions.find(function (element) {
+                        return element == action.id;
+                      });
+                      var label = document.createElement("label");
+                      label.className = "form-check-label text-uppercase font-weight-bold mx-4";
+                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\"\n                         name=\"".concat(module.reference, "-").concat(action.name, "\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        "); // label.innerText = action.name;
+
+                      checkContainer.childNodes[0].appendChild(label);
+                    });
+                    mainContainer.appendChild(checkContainer);
+                    cardBody.appendChild(mainContainer);
                   });
 
-                case 13:
+                case 19:
                 case "end":
                   return _context2.stop();
               }
@@ -60237,8 +60386,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

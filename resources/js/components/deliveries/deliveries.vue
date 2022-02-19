@@ -100,7 +100,7 @@
                     id="porRecoger"
                     role="tabpanel"
                     aria-labelledby="porRecoger-tab">
-                        <draggables :selected=selected></draggables>
+                        <draggables :selected=selected ref="childcomponent"></draggables>
 
                 </div>
                 <div
@@ -223,8 +223,8 @@ export default {
             }
         };
     },
-    mounted(){
-        console.log(this.columns.inProcess.length);
-    },
+    // mounted(){
+    //     console.log(this.columns.inProcess.length);
+    // },
 };
 </script>
