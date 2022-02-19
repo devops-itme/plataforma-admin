@@ -59169,6 +59169,7 @@ var Orders = /*#__PURE__*/function () {
       this.loadCustomerModal();
       this.loadOrderNumber();
       this.saveGuides();
+      this.listGuides();
     }
   }, {
     key: "setInput",
@@ -59698,6 +59699,171 @@ var Orders = /*#__PURE__*/function () {
 
       return sendGuideData;
     }()
+  }, {
+    key: "listGuides",
+    value: function () {
+      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        var _this6 = this;
+
+        var tbody, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                tbody = document.querySelector("#guidesTable tbody");
+
+                if (!(tbody == null)) {
+                  _context9.next = 3;
+                  break;
+                }
+
+                return _context9.abrupt("return");
+
+              case 3:
+                tbody.innerHTML = '';
+                _context9.next = 6;
+                return this.requestGuides();
+
+              case 6:
+                response = _context9.sent;
+                data = response.data;
+
+                if (data.length > 0) {
+                  [].forEach.call(data, function (key) {
+                    var row = tbody.insertRow();
+                    var idCell = row.insertCell(0);
+                    idCell.innerHTML = key.id;
+                    var contactCell = row.insertCell(1);
+                    contactCell.innerHTML = key.contact;
+                    var phoneCell = row.insertCell(2);
+                    phoneCell.innerHTML = key.phone_contact;
+                    var emailCell = row.insertCell(3);
+                    emailCell.innerHTML = key.email_contact;
+                    var dateCell = row.insertCell(4);
+                    var allDate = new Date(key.created_at.split(' ')[0]);
+                    var month = allDate.getMonth();
+                    dateCell.innerHTML = allDate.getDate() + "-" + _this6.months(month) + "-" + allDate.getFullYear();
+                    var rateCell = row.insertCell(5);
+                    rateCell.innerHTML = key.rate;
+                    var stateCell = row.insertCell(6);
+
+                    if (key.state == 1) {
+                      stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                                Activo\
+                                            </span>';
+                    } else {
+                      stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                Inactivo\
+                                            </span>';
+                    }
+
+                    var selectCell = row.insertCell(7); //CHECK
+
+                    var guideCheck = document.createElement("input");
+                    guideCheck.setAttribute('class', 'checkbox-inline mt-3');
+                    guideCheck.setAttribute('type', 'checkbox');
+                    guideCheck.setAttribute('name', 'guideCheck[]');
+                    guideCheck.setAttribute('value', key.id); //EDIT
+
+                    var guideEdit = document.createElement("button");
+                    guideEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                    guideEdit.setAttribute('data-toggle', 'modal');
+                    guideEdit.setAttribute('data-target', '#modalEdit');
+                    guideEdit.setAttribute('id', 'guide-' + key.id);
+                    guideEdit.setAttribute('type', 'button');
+                    guideEdit.innerHTML = '<i class="fas fa-edit"></i>'; //DELETE
+
+                    var guideDelete = document.createElement("button");
+
+                    guideDelete.onclick = function () {
+                      confirmDelete('/guias/' + key.id);
+                    };
+
+                    guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                    guideDelete.setAttribute('type', 'button');
+                    guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                    var buttonsDiv = document.createElement("div");
+                    buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                    buttonsDiv.appendChild(guideCheck);
+                    buttonsDiv.appendChild(guideEdit);
+                    buttonsDiv.appendChild(guideDelete);
+                    selectCell.appendChild(buttonsDiv);
+                    tbody.appendChild(row);
+                  });
+                }
+
+              case 9:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function listGuides() {
+        return _listGuides.apply(this, arguments);
+      }
+
+      return listGuides;
+    }()
+  }, {
+    key: "requestGuides",
+    value: function () {
+      var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context10.next = 3;
+                return fetch("/guias").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context10.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }));
+
+      function requestGuides() {
+        return _requestGuides.apply(this, arguments);
+      }
+
+      return requestGuides;
+    }()
+  }, {
+    key: "months",
+    value: function months(month) {
+      var months = {
+        0: 'Enero',
+        1: 'Febrero',
+        2: 'Marzo',
+        3: 'Abril',
+        4: 'Mayo',
+        5: 'Junio',
+        6: 'Julio',
+        7: 'Agosto',
+        8: 'Septiembre',
+        9: 'Octubre',
+        10: 'Noviembre',
+        11: 'Diciembre'
+      };
+      return months[month];
+    }
   }]);
 
   return Orders;

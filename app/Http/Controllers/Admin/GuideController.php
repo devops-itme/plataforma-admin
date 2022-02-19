@@ -19,7 +19,10 @@ class GuideController extends Controller
     public function index()
     {
         $guides = Guide::get();
-        return json_encode($guides);
+        return json_encode([
+            'state' => 200,
+            'data' => $guides
+        ]);
     }
 
     /**
@@ -46,6 +49,7 @@ class GuideController extends Controller
         else{$request->merge(['sign' => 0]);}
         if($request->take_photo == 'on'){$request->merge(['take_photo' => 1]);}
         else{$request->merge(['take_photo' => 0]);}
+        $request->merge(['state' => 1]);
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
             if(!is_null($request->guides_doc)){

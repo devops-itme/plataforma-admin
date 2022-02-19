@@ -18,6 +18,7 @@ export default class Orders {
         this.loadCustomerModal();
         this.loadOrderNumber();
         this.saveGuides();
+        this.listGuides();
     }
 
     setInput() {
@@ -360,5 +361,111 @@ export default class Orders {
             body: formData
         })
         return response.json();
+    }
+
+    async listGuides(){
+        let tbody = document.querySelector("#guidesTable tbody");
+        if(tbody == null){
+            return;
+        }
+        tbody.innerHTML = '';
+        let response = await this.requestGuides();
+        let data = response.data;
+        if(data.length > 0){
+            [].forEach.call(data, key => {
+                let row = tbody.insertRow();
+
+                let idCell = row.insertCell(0);
+                idCell.innerHTML = key.id;
+
+                let contactCell = row.insertCell(1);
+                contactCell.innerHTML = key.contact;
+
+                let phoneCell = row.insertCell(2);
+                phoneCell.innerHTML = key.phone_contact;
+
+                let emailCell = row.insertCell(3);
+                emailCell.innerHTML = key.email_contact;
+
+                let dateCell = row.insertCell(4);
+                let allDate = new Date((key.created_at).split(' ')[0]);
+                let month = allDate.getMonth();
+                dateCell.innerHTML = allDate.getDate()+"-"+this.months(month)+"-"+allDate.getFullYear();
+
+                let rateCell = row.insertCell(5);
+                rateCell.innerHTML = key.rate;
+
+                let stateCell = row.insertCell(6);
+                if(key.state == 1){
+                    stateCell.innerHTML =   '<span class="label label-inline label-light-success font-weight-bold">\
+                                                Activo\
+                                            </span>';
+                } else {
+                    stateCell.innerHTML =   '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                Inactivo\
+                                            </span>';
+                }
+                let selectCell = row.insertCell(7);
+                //CHECK
+                const guideCheck = document.createElement("input");
+                guideCheck.setAttribute('class', 'checkbox-inline mt-3')
+                guideCheck.setAttribute('type', 'checkbox');
+                guideCheck.setAttribute('name', 'guideCheck[]');
+                guideCheck.setAttribute('value', key.id);
+                //EDIT
+                const guideEdit = document.createElement("button");
+                guideEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                guideEdit.setAttribute('data-toggle', 'modal');
+                guideEdit.setAttribute('data-target', '#modalEdit');
+                guideEdit.setAttribute('id', 'guide-'+key.id);
+                guideEdit.setAttribute('type', 'button');
+                guideEdit.innerHTML = '<i class="fas fa-edit"></i>';
+                //DELETE
+                const guideDelete = document.createElement("button");
+                guideDelete.onclick = function(){confirmDelete('/guias/'+key.id)};
+                guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                guideDelete.setAttribute('type', 'button');
+                guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                //Div
+                const buttonsDiv = document.createElement("div");
+                buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                buttonsDiv.appendChild(guideCheck);
+                buttonsDiv.appendChild(guideEdit);
+                buttonsDiv.appendChild(guideDelete);
+                selectCell.appendChild(buttonsDiv);
+                tbody.appendChild(row);
+            });
+        }
+    }
+
+    async requestGuides(){
+        let response = {
+            'state': 500
+        };
+        await fetch("/guias")
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    months(month){
+        const months = {
+            0: 'Enero',
+            1: 'Febrero',
+            2: 'Marzo',
+            3: 'Abril',
+            4: 'Mayo',
+            5: 'Junio',
+            6: 'Julio',
+            7: 'Agosto',
+            8: 'Septiembre',
+            9: 'Octubre',
+            10: 'Noviembre',
+            11: 'Diciembre'
+        }
+        return months[month];
     }
 }

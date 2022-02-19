@@ -1,5 +1,5 @@
 <!--begin: Datatable-->
-<table class="table table-sm">
+<table class="table table-sm" id="guidesTable">
     <thead>
         <tr>
             <th scope="col">#</th>
