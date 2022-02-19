@@ -2326,8 +2326,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable-multi */ "./node_modules/vuedraggable-multi/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable-multi */ "./node_modules/vuedraggable-multi/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2507,7 +2507,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default.a
+    draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   props: {
     selected: Number
@@ -60505,8 +60505,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
