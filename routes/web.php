@@ -66,7 +66,6 @@ Route::group(['middleware' => 'auth'], function () {
         //BANK DEPARTMENTS
         Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
 
-
         //ORDENES
         Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
         // Route::get('orden', function () {
@@ -84,8 +83,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         //RUTAS
         Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
-
-
     });
     //Orders delivery
     Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');
