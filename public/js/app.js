@@ -58483,6 +58483,7 @@ var Orders = /*#__PURE__*/function () {
       this.removeBox();
       this.loadCustomerModal();
       this.loadOrderNumber();
+      this.saveGuides();
     }
   }, {
     key: "setInput",
@@ -58893,6 +58894,124 @@ var Orders = /*#__PURE__*/function () {
       }
 
       return loadOrderNumber;
+    }()
+  }, {
+    key: "saveGuides",
+    value: function saveGuides() {
+      var _this5 = this;
+
+      var btnStoreGuide = document.getElementById("btnStoreGuide");
+
+      if (btnStoreGuide == null) {
+        return;
+      }
+
+      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var branch_office, transport_type, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                branch_office = document.getElementById("id_branch_office").value;
+                transport_type = document.getElementById("trans_type").value;
+                dispatched = document.getElementById("dispatched").value;
+                address_name = document.getElementById("address").value;
+                address_lat = document.getElementById("lat").value;
+                address_lng = document.getElementById("lng").value;
+                address_description = document.getElementById("address_description").value;
+                concept = document.getElementById("concept").value;
+                rate = document.getElementById("rate").value;
+                value = document.getElementById("value").value;
+                corp_value = document.getElementById("corp_value").value;
+                document_type_customes = document.getElementById("document_type_customes").value;
+                contact = document.getElementById("contact").value;
+                phone_contact = document.getElementById("phone_contact").value;
+                email_contact = document.getElementById("email_contact").value;
+                invoice_contact = document.getElementById("invoice_contact").value;
+                same_day_delivery = document.getElementById("same_day_delivery").value;
+                sign = document.getElementById("sign").value;
+                take_photo = document.getElementById("take_photo").value;
+                formData = new FormData();
+                formData.append('branch_office', branch_office);
+                formData.append('transport_type', transport_type);
+                formData.append('dispatched', dispatched);
+                formData.append('address_name', address_name);
+                formData.append('address_lat', address_lat);
+                formData.append('address_lng', address_lng);
+                formData.append('address_description', address_description);
+                formData.append('concept', concept);
+                formData.append('rate', rate);
+                formData.append('value', value);
+                formData.append('corp_value', corp_value);
+                formData.append('document_type_customes', document_type_customes);
+                formData.append('contact', contact);
+                formData.append('phone_contact', phone_contact);
+                formData.append('email_contact', email_contact);
+                formData.append('invoice_contact', invoice_contact);
+                formData.append('same_day_delivery', same_day_delivery);
+                formData.append('sign', sign);
+                formData.append('take_photo', take_photo);
+                _context7.next = 41;
+                return _this5.sendGuideData(formData);
+
+              case 41:
+                response = _context7.sent;
+
+                if (response.state == 200) {
+                  alert(response.message);
+                  modal = document.getElementById("modalCreate");
+                  modal.click();
+                } else {
+                  alert('Ha ocurrido un error al crear la guia.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 43:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      })));
+    }
+  }, {
+    key: "sendGuideData",
+    value: function () {
+      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context8.next = 3;
+                return fetch("/guias/store", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context8.sent;
+                return _context8.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function sendGuideData(_x3) {
+        return _sendGuideData.apply(this, arguments);
+      }
+
+      return sendGuideData;
     }()
   }]);
 

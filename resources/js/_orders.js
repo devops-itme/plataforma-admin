@@ -17,6 +17,7 @@ export default class Orders {
         this.removeBox();
         this.loadCustomerModal();
         this.loadOrderNumber();
+        this.saveGuides();
     }
 
     setInput() {
@@ -285,5 +286,79 @@ export default class Orders {
         }
         let response = await this.requestOrderNumber();
         orderNumber.setAttribute('value', response.data);
+    }
+
+    saveGuides(){
+        let btnStoreGuide = document.getElementById("btnStoreGuide");
+        if(btnStoreGuide == null){
+            return;
+        }
+        btnStoreGuide.addEventListener('click', async () => {
+            let branch_office = document.getElementById("id_branch_office").value;
+            let transport_type = document.getElementById("trans_type").value;
+            let dispatched = document.getElementById("dispatched").value;
+            let address_name = document.getElementById("address").value;
+            let address_lat = document.getElementById("lat").value;
+            let address_lng = document.getElementById("lng").value;
+            let address_description = document.getElementById("address_description").value;
+            let concept = document.getElementById("concept").value;
+            let rate = document.getElementById("rate").value;
+            let value = document.getElementById("value").value;
+            let corp_value = document.getElementById("corp_value").value;
+            let document_type_customes = document.getElementById("document_type_customes").value;
+            let contact = document.getElementById("contact").value;
+            let phone_contact = document.getElementById("phone_contact").value;
+            let email_contact = document.getElementById("email_contact").value;
+            let invoice_contact = document.getElementById("invoice_contact").value;
+            let same_day_delivery = document.getElementById("same_day_delivery").value;
+            let sign = document.getElementById("sign").value;
+            let take_photo = document.getElementById("take_photo").value;
+
+            let formData = new FormData();
+            formData.append('branch_office', branch_office);
+            formData.append('transport_type',transport_type);
+            formData.append('dispatched',dispatched);
+            formData.append('address_name',address_name);
+            formData.append('address_lat',address_lat);
+            formData.append('address_lng',address_lng);
+            formData.append('address_description',address_description);
+            formData.append('concept',concept);
+            formData.append('rate',rate);
+            formData.append('value',value);
+            formData.append('corp_value',corp_value);
+            formData.append('document_type_customes',document_type_customes);
+            formData.append('contact',contact);
+            formData.append('phone_contact',phone_contact);
+            formData.append('email_contact',email_contact);
+            formData.append('invoice_contact',invoice_contact);
+            formData.append('same_day_delivery',same_day_delivery);
+            formData.append('sign',sign);
+            formData.append('take_photo',take_photo);
+
+            let response = await this.sendGuideData(formData);
+            if(response.state == 200){
+                alert(response.message);
+                let modal = document.getElementById("modalCreate");
+                modal.click();
+            } else {
+                alert('Ha ocurrido un error al crear la guia.');
+                console.log('Error: '+response.error);
+            }
+        })
+    }
+
+    async sendGuideData(formData){
+        let response = {
+            'state': 500
+        };
+
+        response = await fetch("/guias/store", {
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            body: formData
+        })
+        return response.json();
     }
 }

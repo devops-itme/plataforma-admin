@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/search_customers', 'Admin\CustomerController@search_customer');
     Route::get('/unassigned_branch_offices', 'Admin\BranchOfficeController@unassigned_branch_offices');
     Route::get('/order_number', 'Admin\OrderController@orderNumber');
+
+    Route::post('/guias/store', 'Admin\GuideController@store');
     Route::group(['middleware' => 'role'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');
@@ -75,7 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
         // })->name('orders.create');
 
         //GUIAS
-        Route::resource('/guias', 'Admin\GuideController')->names('guias');
+        Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
 
         //DOCUMENTOS DE GUIAS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
