@@ -18,7 +18,7 @@ class GuideController extends Controller
      */
     public function index()
     {
-        $guides = Guide::get();
+        $guides = Guide::where('order_id', NULL)->get();
         return json_encode([
             'state' => 200,
             'data' => $guides
