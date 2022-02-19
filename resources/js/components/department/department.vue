@@ -221,16 +221,18 @@ export default {
                 .then((response) => response.json())
                 .then(function (data) {
                     let department = data.data;
-                    _this.data.push({...department,state:1})
+                    _this.data.push({...department,state:1});
 
                 })
                 .catch((err) => console.warn(err));
         },
          async removeDepartment(id) {
-           let remove = await confirmDelete(`/departamentos/${id}}`)
-           if(remove){
+            let remove = await  deleteResource(`/departamentos/${id}}`);
+            if(remove){
+                let index =this.data.findIndex(item=>item.id==id);
+                this.data.splice(index,1);
+            }
 
-           }
         }
     },
     mounted() {
