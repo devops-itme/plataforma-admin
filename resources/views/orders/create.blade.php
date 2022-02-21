@@ -61,7 +61,6 @@
                         <label for="customers">Sucursal<span class="text-danger">*</span></label>
                         <input type="text" id="user_branch_office" class="form-control form-control-solid" readonly value="">
                     </div>
-                    <input type="hidden" name="branch_office" id="id_branch_office">
                     <div class="form-group col-md-6">
                         <label for="customers">Tipo de documento<span class="text-danger">*</span></label>
                         <input type="text" id="user_document_type" class="form-control form-control-solid" readonly value="">

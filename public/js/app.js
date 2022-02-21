@@ -59163,6 +59163,8 @@ var boxes = [{
 var Orders = /*#__PURE__*/function () {
   function Orders() {
     _classCallCheck(this, Orders);
+
+    this.guideId = '';
   }
 
   _createClass(Orders, [{
@@ -59175,6 +59177,7 @@ var Orders = /*#__PURE__*/function () {
       this.loadOrderNumber();
       this.saveGuides();
       this.listGuides();
+      this.loadBranches();
     }
   }, {
     key: "setInput",
@@ -59491,11 +59494,10 @@ var Orders = /*#__PURE__*/function () {
                   document.getElementById("user_department").value = data[2] != null ? data[2]['name'] : '';
                   document.getElementById("user_branch_office").value = data[1] != null ? data[1]['name'] : '';
                   document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
-                  document.getElementById("id_branch_office").value = data[1] != null ? data[1].id : null;
                   modal = document.getElementById("detailCustomer");
                   modal.click();
 
-                case 13:
+                case 12:
                 case "end":
                   return _context4.stop();
               }
@@ -59603,7 +59605,7 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                branch_office = document.getElementById("id_branch_office").value;
+                branch_office = document.getElementById("branch_off").value;
                 transport_type = document.getElementById("trans_type").value;
                 dispatched = document.getElementById("dispatched").value;
                 address_name = document.getElementById("address").value;
@@ -59652,6 +59654,8 @@ var Orders = /*#__PURE__*/function () {
                   alert(response.message);
                   modal = document.getElementById("modalCreate");
                   modal.click();
+
+                  _this5.listGuides();
                 } else {
                   alert('Ha ocurrido un error al crear la guia.');
                   console.log('Error: ' + response.error);
@@ -59771,7 +59775,7 @@ var Orders = /*#__PURE__*/function () {
                     guideCheck.setAttribute('value', key.id); //EDIT
 
                     var guideEdit = document.createElement("button");
-                    guideEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                    guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
                     guideEdit.setAttribute('data-toggle', 'modal');
                     guideEdit.setAttribute('data-target', '#modalEdit');
                     guideEdit.setAttribute('id', 'guide-' + key.id);
@@ -59798,7 +59802,9 @@ var Orders = /*#__PURE__*/function () {
                   });
                 }
 
-              case 9:
+                this.editGuide();
+
+              case 10:
               case "end":
                 return _context9.stop();
             }
@@ -59849,6 +59855,319 @@ var Orders = /*#__PURE__*/function () {
       }
 
       return requestGuides;
+    }()
+  }, {
+    key: "editGuide",
+    value: function editGuide() {
+      var _this7 = this;
+
+      var guides = document.getElementsByClassName("btnEditGuide");
+
+      if (guides == null) {
+        return;
+      }
+
+      [].forEach.call(guides, function (guide) {
+        guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+          var response, data, branch_office, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+            while (1) {
+              switch (_context11.prev = _context11.next) {
+                case 0:
+                  _this7.guideId = guide['id'].split('-')[1];
+                  _context11.next = 3;
+                  return _this7.requestGuide(_this7.guideId);
+
+                case 3:
+                  response = _context11.sent;
+                  data = response.data;
+                  branch_office = document.getElementById("branch_off_edit").value = data.branch_office;
+                  dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                  address_name = document.getElementById("address_edit").value = data.address_name;
+                  address_lat = document.getElementById("lat_edit").value = data.address_lat;
+                  address_lng = document.getElementById("lng_edit").value = data.address_lng;
+                  address_description = document.getElementById("address_description_edit").value = data.address_description;
+                  concept = document.getElementById("concept_edit").value = data.concept;
+                  rate = document.getElementById("rate_edit").value = data.rate;
+                  value = document.getElementById("value_edit").value = data.value;
+                  corp_value = document.getElementById("corp_value_edit").value = data.corp_value;
+                  document_type_customes = document.getElementById("document_type_customes_edit").value = data.document_type_customes;
+                  contact = document.getElementById("contact_edit").value = data.contact;
+                  phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
+                  email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
+                  invoice_contact = document.getElementById("invoice_contact_edit").value = data.invoice_contact;
+                  same_day_delivery = document.getElementById("same_day_delivery_edit");
+                  data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
+                  sign = document.getElementById("sign_edit");
+                  data.sign == 1 ? sign.checked = true : '';
+                  take_photo = document.getElementById("take_photo_edit");
+                  data.take_photo == 1 ? take_photo.checked = true : '';
+
+                  _this7.updateGuide();
+
+                case 27:
+                case "end":
+                  return _context11.stop();
+              }
+            }
+          }, _callee11);
+        })));
+      });
+    }
+  }, {
+    key: "requestGuide",
+    value: function () {
+      var _requestGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context12.next = 3;
+                return fetch("/guias/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context12.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }));
+
+      function requestGuide(_x4) {
+        return _requestGuide.apply(this, arguments);
+      }
+
+      return requestGuide;
+    }()
+  }, {
+    key: "updateGuide",
+    value: function updateGuide() {
+      var _this8 = this;
+
+      var btnUpdateGuide = document.getElementById("btnUpdateGuide");
+
+      if (btnUpdateGuide == null) {
+        return;
+      }
+
+      btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        var branch_off_edit, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, token, myHeaders, requestOptions, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                branch_off_edit = document.getElementById("branch_off_edit").value;
+                dispatched = document.getElementById("dispatched_edit").value;
+                address_name = document.getElementById("address_edit").value;
+                address_lat = document.getElementById("lat_edit").value;
+                address_lng = document.getElementById("lng_edit").value;
+                address_description = document.getElementById("address_description_edit").value;
+                concept = document.getElementById("concept_edit").value;
+                rate = document.getElementById("rate_edit").value;
+                value = document.getElementById("value_edit").value;
+                corp_value = document.getElementById("corp_value_edit").value;
+                document_type_customes = document.getElementById("document_type_customes_edit").value;
+                contact = document.getElementById("contact_edit").value;
+                phone_contact = document.getElementById("phone_contact_edit").value;
+                email_contact = document.getElementById("email_contact_edit").value;
+                invoice_contact = document.getElementById("invoice_contact_edit").value;
+                same_day_delivery = document.getElementById("same_day_delivery_edit");
+                same_day_delivery.checked == true ? same_day_delivery = 1 : same_day_delivery = 0;
+                sign = document.getElementById("sign_edit");
+                sign.checked == true ? sign = 1 : sign = 0;
+                take_photo = document.getElementById("take_photo_edit");
+                take_photo.checked == true ? take_photo = 1 : take_photo = 0;
+                formData = new FormData();
+                formData.append("branch_office", branch_off_edit);
+                formData.append("dispatched", dispatched);
+                formData.append("address_name", address_name);
+                formData.append("address_lat", address_lat);
+                formData.append("address_lng", address_lng);
+                formData.append("address_description", address_description);
+                formData.append("concept", concept);
+                formData.append("rate", rate);
+                formData.append("value", value);
+                formData.append("corp_value", corp_value);
+                formData.append("document_type_customes", document_type_customes);
+                formData.append("contact", contact);
+                formData.append("phone_contact", phone_contact);
+                formData.append("email_contact", email_contact);
+                formData.append("same_day_delivery", same_day_delivery);
+                formData.append("sign", sign);
+                formData.append("take_photo", take_photo);
+                formData.append("invoice_contact", invoice_contact);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context13.next = 51;
+                return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
+
+              case 51:
+                response = _context13.sent;
+
+                if (response.state == 200) {
+                  alert(response.message);
+                  modal = document.getElementById("modalEdit");
+                  modal.click();
+
+                  _this8.listGuides();
+                } else {
+                  alert('Ha ocurrido un error al actualizar la guia.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 53:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      })));
+    }
+  }, {
+    key: "sendDataToUpdate",
+    value: function () {
+      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context14.next = 3;
+                return fetch("/guias/" + id, requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context14.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14);
+      }));
+
+      function sendDataToUpdate(_x5, _x6) {
+        return _sendDataToUpdate.apply(this, arguments);
+      }
+
+      return sendDataToUpdate;
+    }()
+  }, {
+    key: "loadBranches",
+    value: function loadBranches() {
+      var _this9 = this;
+
+      var branchesSlc = document.getElementsByName("branch_office");
+
+      if (branchesSlc == null) {
+        return;
+      }
+
+      [].forEach.call(branchesSlc, /*#__PURE__*/function () {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(branch) {
+          var response, data, i, element, branchOffice;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+            while (1) {
+              switch (_context15.prev = _context15.next) {
+                case 0:
+                  branch.selectedIndex = 0;
+                  removeOptions(branch);
+                  _context15.next = 4;
+                  return _this9.requestBranches();
+
+                case 4:
+                  response = _context15.sent;
+                  data = response.data;
+
+                  for (i = 0; i < data.length; i++) {
+                    element = data[i];
+                    branchOffice = '<option value="' + element.name + '"> ' + element.name + ' </option>';
+                    branch.insertAdjacentHTML('beforeend', branchOffice);
+                  }
+
+                case 7:
+                case "end":
+                  return _context15.stop();
+              }
+            }
+          }, _callee15);
+        }));
+
+        return function (_x7) {
+          return _ref6.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
+    key: "requestBranches",
+    value: function () {
+      var _requestBranches = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context16.next = 3;
+                return fetch("/allBranches").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context16.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16);
+      }));
+
+      function requestBranches() {
+        return _requestBranches.apply(this, arguments);
+      }
+
+      return requestBranches;
     }()
   }, {
     key: "months",
@@ -59962,7 +60281,6 @@ var Permissions = /*#__PURE__*/function () {
         return;
       }
 
-      console.log(configurationBtn);
       [].forEach.call(configurationBtn, function (btn) {
         btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
@@ -60676,8 +60994,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
