@@ -2297,7 +2297,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     rowTotal: function rowTotal(item) {
       var sum = 0;
       item.map(function (e) {
-        return sum += parseInt(e.shipping_cost);
+        return sum += parseInt(e.value);
       });
       sum = new Intl.NumberFormat().format(sum);
       return sum;

@@ -60,7 +60,7 @@
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Nro Orden:</div>
                                 <div class="line-height-xl" v-show="showData.id"
-                                    v-text="`${showData.user_id}-${ showData.number }`"></div>
+                                    v-text="`${showData.user_id}-${ showData.order_number }`"></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Referencia de cliente:</div>

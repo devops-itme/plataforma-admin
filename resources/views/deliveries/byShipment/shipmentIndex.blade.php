@@ -12,7 +12,7 @@
         <tbody class="text-center max-h-300px" style="overflow-y: scroll">
             <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}]"
                 @click="rowClick(order,index)">
-                <td v-text="`${order.user_id}-${ order.number }`"></td>
+                <td v-text="`${order.user_id}-${ order.order_number }`"></td>
                 <td v-text=order.get_user.name></td>
                 <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
                 <td v-text="`$${rowTotal(order.get_guides)}`"></td>
