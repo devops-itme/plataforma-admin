@@ -108,6 +108,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('zonas', function () {
         return view('zones.index');
     })->name('zone.index');
+
+    Route::get('planes', function () {
+        return view('plans.index');
+    })->name('plans.index');
+
 });
 //Orders delivery
 Route::get('orders_delivery/{type}', 'Admin\DeliveryController@orders');

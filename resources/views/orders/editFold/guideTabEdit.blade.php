@@ -216,7 +216,7 @@
                                     <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="14"></div>
                                     <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="5"></div>
                                     <div class="col-2 py-4 border-right"><input type="number" class="form-control" min="0" value="50"></div>
-                                    <div class="col-3 py-4 border-right"><input type="text" class="form-control" placeholder="comertarios"></div>
+                                    <div class="col-3 py-4 border-right"><input type="text" class="form-control" placeholder="COMENTARIO"></div>
                                     <div class="col-2 py-4">
                                         <div class="d-flex flex-row flex-wrap justify-content-center">
                                             <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Borrar">
@@ -484,7 +484,7 @@
                                     <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="14"></div>
                                     <div class="col-1 py-4 border-right"><input type="number" class="form-control" min="0" value="5"></div>
                                     <div class="col-2 py-4 border-right"><input type="number" class="form-control" min="0" value="50"></div>
-                                    <div class="col-3 py-4 border-right"><input type="text" class="form-control" placeholder="comertarios"></div>
+                                    <div class="col-3 py-4 border-right"><input type="text" class="form-control" placeholder="COMENTARIO"></div>
                                     <div class="col-2 py-4">
                                         <div class="d-flex flex-row flex-wrap justify-content-center">
                                             <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Borrar">
