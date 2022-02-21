@@ -15,7 +15,7 @@ class CreateGuidesTable extends Migration
     {
         Schema::create('guides', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('order_id')->nullable();
             // $table->foreign('order_id')->references('id')->on('orders');
             $table->string('branch_office')->nullable();
             $table->string('transport_type')->nullable();

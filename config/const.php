@@ -22,6 +22,7 @@ return [
     'modules' => [
         'dashboard' => [
             'name' => 'Dashboard', 'reference' => 'dashboard', 'icon' => '', 'position' => '1',
+            'actions' => '6',
             'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6'],
@@ -32,6 +33,7 @@ return [
         ],
         'orders' => [
             'name' => 'Ordenes', 'reference' => 'orders', 'icon' => '', 'position' => '2',
+            'actions' => '6,7,8,9,10,11,12,13',
             'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -42,9 +44,11 @@ return [
         ],
         'customers' => [
             'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3',
+            'actions' => '6,7,8,9,10,11,12,13',
             'children' => [
                 'bankUsers' => [
                     'name' => 'Usuario banco', 'reference' => 'bankUsers', 'icon' => '', 'position' => '1',
+                    'actions' => '6,7,8,9,10,11,12,13',
                     'children' => [],
                     'permission' => [
                         'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -55,9 +59,11 @@ return [
                 ],
                 'branchOffices' => [
                     'name' => 'Sucursales', 'reference' => 'branchOffices', 'icon' => '', 'position' => '1',
+                    'actions' => '6,7,8,9,10,11,12,13',
                     'children' => [
                         'departments' => [
                             'name' => 'Departamentos', 'reference' => 'departments', 'icon' => '', 'position' => '1',
+                            'actions' => '6,7,8,9,10,11,12,13',
                             'children' => [],
                             'permission' => [
                                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -85,6 +91,7 @@ return [
         ],
         'messengers' => [
             'name' => 'Mensajeros', 'reference' => 'messengers', 'icon' => '', 'position' => '4',
+            'actions' => '6,7,8,9,10,11,12,13',
             'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -95,6 +102,7 @@ return [
         ],
         'users' => [
             'name' => 'Usuarios', 'reference' => 'users', 'icon' => '', 'position' => '5',
+            'actions' => '6,7,8,9,10,11,12,13',
             'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -105,6 +113,7 @@ return [
         ],
         'parameters' => [
             'name' => 'Parametros', 'reference' => 'parameters', 'icon' => '', 'position' => '6',
+            'actions' => '6,7,8,9,10,11,12,13',
             'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -115,6 +124,7 @@ return [
         ],
         'rates' => [
             'name' => 'Tarifas', 'reference' => 'rates', 'icon' => '', 'position' => '7',
+            'actions' => '6,7,8,9,10,11,12,13',
             'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -125,6 +135,7 @@ return [
         ],
         'zones' => [
             'name' => 'Zonas', 'reference' => 'zones', 'icon' => '', 'position' => '8',
+            'actions' => '6,7,8,9,10,11,12,13',
             'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -135,6 +146,7 @@ return [
         ],
         'reports' => [
             'name' => 'Informes', 'reference' => 'reports', 'icon' => '', 'position' => '9',
+            'actions' => '6,7,8,9,10,11,12,13',
             'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],

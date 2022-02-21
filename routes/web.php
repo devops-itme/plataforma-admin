@@ -29,6 +29,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/search_customers', 'Admin\CustomerController@search_customer');
     Route::get('/unassigned_branch_offices', 'Admin\BranchOfficeController@unassigned_branch_offices');
     Route::get('/order_number', 'Admin\OrderController@orderNumber');
+
+    //GUIAS
+    Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
+    Route::post('/guias/store', 'Admin\GuideController@store');
+
     Route::group(['middleware' => 'role'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');
@@ -64,7 +69,6 @@ Route::group(['middleware' => 'auth'], function () {
         //BANK DEPARTMENTS
         Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
 
-
         //ORDENES
         Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
         // Route::get('orden', function () {
@@ -74,16 +78,11 @@ Route::group(['middleware' => 'auth'], function () {
         //     return view('orders.create');
         // })->name('orders.create');
 
-        //GUIAS
-        Route::resource('/guias', 'Admin\GuideController')->names('guias');
-
         //DOCUMENTOS DE GUIAS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
 
         //RUTAS
         Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
-
-
     });
     //Orders delivery
     Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');

@@ -17,7 +17,7 @@ class ModuleSeeder extends Seeder
         $modules = Config::get('const.modules');
         foreach ($modules as $key => $data) {
             $module = Module::create([
-                'name' => $data['name'], 'reference' => $data['reference'], 'icon' => '', 'position' => $data['position']
+                'name' => $data['name'], 'reference' => $data['reference'], 'icon' => '', 'position' => $data['position'], 'actions' => $data['actions']
             ]);
             if (count($data['children'])) {
                 $this->createChildren($module->id, $data['children']);
