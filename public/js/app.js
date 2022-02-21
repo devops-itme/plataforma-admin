@@ -59815,6 +59815,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var count = 0;
 var boxes = [{
+  number: 0,
   weight: 0,
   "long": 0,
   broad: 0,
@@ -59845,7 +59846,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "setInput",
     value: function setInput() {
-      var inputs = ['weight[]', 'long[]', 'broad[]', 'high[]', 'vol_weight[]', 'description[]'];
+      var inputs = ['number[]', 'weight[]', 'long[]', 'broad[]', 'high[]', 'vol_weight[]', 'description[]'];
       [].forEach.call(inputs, function (input) {
         var elements = document.getElementsByName(input);
 
@@ -59881,7 +59882,11 @@ var Orders = /*#__PURE__*/function () {
       boxContainer.innerHTML = "";
       [].forEach.call(boxes, function (box) {
         var row = document.createElement("tr");
-        row.className = "row border mt-0 text-center box-register";
+        row.className = "row border mt-0 text-center box-register col-md-13 \"";
+        var numberCell = document.createElement("td");
+        numberCell.className = "col-1 py-4 border-right";
+        numberCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.number, "\">");
+        row.appendChild(numberCell);
         var weightCell = document.createElement("td");
         weightCell.className = "col-1 py-4 border-right";
         weightCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.weight, "\">");
@@ -59903,11 +59908,11 @@ var Orders = /*#__PURE__*/function () {
         volWeightCell.innerHTML = "<input type=\"number\" name=\"vol_weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.vol_weight, "\">");
         row.appendChild(volWeightCell);
         var descriptionCell = document.createElement("td");
-        descriptionCell.className = "col-3 py-4 border-right";
-        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comertarios\" value=\"".concat(box.description, "\">");
+        descriptionCell.className = "col-2 py-4 border-right";
+        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comentarios\" value=\"".concat(box.description, "\">");
         row.appendChild(descriptionCell);
         var btnCell = document.createElement("td");
-        btnCell.className = "col-3 py-4 border-right";
+        btnCell.className = "col-1 py-4";
         btnCell.innerHTML = " <div class=\"d-flex flex-row flex-wrap justify-content-center\"></div>";
         var removeBoxBtn = document.createElement("a");
         removeBoxBtn.className = 'btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn';
@@ -59935,6 +59940,7 @@ var Orders = /*#__PURE__*/function () {
 
       addBoxBtn.addEventListener('click', function () {
         boxes.push({
+          number: 0,
           weight: 0,
           "long": 0,
           broad: 0,
