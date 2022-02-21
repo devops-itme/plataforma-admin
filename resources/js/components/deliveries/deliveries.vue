@@ -1,3 +1,4 @@
+<!-- This is source file -->
 <template>
     <div class="card card-custom gutter-b">
         <div class="card-header">
@@ -10,7 +11,7 @@
                 class="d-flex align-items-center justify-content-between flex-row flex-wrap mb-3"
             >
                 <div class="form-group col-md-2 mb-0">
-                    <select class="form-control" v-model="selected">
+                    <select class="form-control" v-model="selected" @change="loadingEvt">
                         <option
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
@@ -100,7 +101,8 @@
                     id="porRecoger"
                     role="tabpanel"
                     aria-labelledby="porRecoger-tab">
-                        <draggables :selected=selected></draggables>
+                    <!-- Draggable component -->
+                        <draggables :selected=selected ref="childcomponent"></draggables>
 
                 </div>
                 <div
@@ -109,6 +111,7 @@
                     role="tabpanel"
                     aria-labelledby="enproceso-tab"
                 >
+                    <!-- In process table -->
                     <tabledy :rows=columns.inProcess.length :columnsNames=columns.inProcess :widthTable=1100></tabledy>
                 </div>
                 <div
@@ -117,6 +120,7 @@
                     role="tabpanel"
                     aria-labelledby="consultas-tab"
                 >
+                    <!-- Queries and Edit table -->
                     <tabledy :rows=columns.inEdit.length :columnsNames=columns.inEdit :widthTable=1600></tabledy>
                 </div>
             </div>
@@ -124,7 +128,7 @@
             <div class="col-md-3 py-4">
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
                     <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
-                    <a href="#" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</a>
+                    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
@@ -200,15 +204,18 @@
             </div>
            </div>
         </div>
+        <modalEdit></modalEdit>
     </div>
 </template>
 <script>
 import draggables from "./draggable.vue";
 import tabledy from "./tableDynamic.vue";
+import modalEdit from "./modalEditComponent.vue";
 export default {
     components: {
         draggables,
         tabledy,
+        modalEdit
     },
     data() {
         return {
@@ -217,14 +224,18 @@ export default {
                 { value: 1, text: "Entregas" },
                 { value: 2, text: "Recogidas" },
             ],
+            showModal: false,
             columns:{
                 inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
                 inEdit:["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
             }
         };
     },
-    mounted(){
-        console.log(this.columns.inProcess.length);
+    methods: {
+       loadingEvt (){
+           return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>'
+       }
     },
+
 };
 </script>

@@ -12,7 +12,7 @@ class Route extends Model
     protected $table = 'routes';
     protected $fillable = [
         'guide_id',
-        'messenger_id',
+        'messenger_user_id',
         'date'
     ];
 
@@ -23,6 +23,6 @@ class Route extends Model
 
     public function getMessenger()
     {
-        return $this->belongsTo(Guide::class, 'messenger_id');
+        return $this->belongsTo(Guide::class, 'messenger_user_id');
     }
 }

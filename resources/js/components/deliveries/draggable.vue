@@ -31,7 +31,7 @@
                     <div class="max-h-500px h-500px col-md-12 border rounded px-0 mt-3">
                         <div class="table-responsive h-500px">
                             <table
-                                class="table table-sm"
+                                class="table table-sm table-bordered"
                                 style="table-layout: auto; width: 1100px"
                             >
                                 <thead class="thead-light">
@@ -94,7 +94,7 @@
                     <div class="max-h-425px h-425px col-md-12 border rounded px-0">
                         <div class="table-responsive h-425px">
                             <table
-                                class="table table-sm"
+                                class="table table-sm table-bordered"
                                 style="table-layout: auto; width: 1100px"
                             >
                                 <thead class="thead-light">
@@ -168,8 +168,9 @@
 </template>
 <style>
     .sortableSelected {
-  background-color: #caf0f8;
-}
+        background-color: #023E8A;
+        color: #fff;
+    }
 </style>
 <script>
 // import { Sortable, MultiDrag } from 'sortablejs';
@@ -246,13 +247,9 @@ export default {
         };
     },
     methods: {
-        // Called when an item is selected
-	onSelect: function(evt) {
-		console.log(evt.item); // The selected item
-	},
-    handleChange(evt) {
-      console.log(evt.item);
-    },
+        handleChange(evt) {
+            console.log(evt.items);
+        },
     }
 };
 </script>

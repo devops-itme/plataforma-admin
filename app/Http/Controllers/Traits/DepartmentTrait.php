@@ -7,8 +7,11 @@ use App\Http\Controllers\RestActions;
 use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
 use App\ParameterValue;
 use App\User;
+use App\UserDeparment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
+use function PHPSTORM_META\map;
 
 trait DepartmentTrait
 {
@@ -27,26 +30,16 @@ trait DepartmentTrait
     public function getDepartments()
     {
         try {
-            if (!is_null(Request()->user_id)) {
-                $user_id  = Request()->user_id;
-                $departments = Department::with('getBranchOffice.getUser')->whereHas('getBranchOffice.getUser', function ($query) use ($user_id) {
-                    $query->where('id', $user_id);
-                })->name(request()->name)
-                    ->description(request()->description)
-                    ->nameOffice(request()->branch_office_name)
-                    ->state(request()->state)
-                    ->paginate(10);
-            } else {
-                $branch_id = Request()->branch_office_id;
-                $departments = Department::where('branch_office_id', $branch_id)
-                    ->with('getBranchOffice.getUser')
-                    ->name(request()->name)
-                    ->description(request()->description)
-                    ->nameOffice(request()->branch_office_name)
-                    ->state(request()->state)
-                    ->paginate(10);
-            }
 
+
+            $departments = Department::get();
+            $allAssignedDepartments = UserDeparment::get('department_id');
+
+            $departments_id = $allAssignedDepartments->map(function ($item, $key) {
+                return $item->department_id;
+            });
+
+            $departments = Department::whereNotIn('id', $departments_id)->get();
 
             return $this->respond(200, $departments);
         } catch (\Throwable $e) {
@@ -65,17 +58,11 @@ trait DepartmentTrait
     public function saveDepartment($request)
     {
         $validator = $this->departmentValidate($request);
-
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
         }
         try {
-            $department = Department::create([
-                'branch_office_id' => $request->branch_office_id,
-                'name' => $request->name,
-                'state' => $request->state ?? 1,
-                'description' => $request->description,
-            ]);
+            $department = Department::create($request->all());
             return $this->respond(200, $department, null, 'Departamento creado exitosamente');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al crear departamento');

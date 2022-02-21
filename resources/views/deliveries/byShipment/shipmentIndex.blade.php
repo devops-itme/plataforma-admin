@@ -12,7 +12,7 @@
         <tbody class="text-center max-h-300px" style="overflow-y: scroll">
             <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}]"
                 @click="rowClick(order,index)">
-                <td v-text="`${order.user_id}-${ order.number }`"></td>
+                <td v-text="`${order.user_id}-${ order.order_number }`"></td>
                 <td v-text=order.get_user.name></td>
                 <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
                 <td v-text="`$${rowTotal(order.get_guides)}`"></td>
@@ -32,14 +32,15 @@
                 <div class="col-md-5">
                     <p class="mb-2">
                         <span class="font-weight-bolder mb-3">Orden seleccionada: </span>
-                        <span class="line-height-xl">104-00333333</span>
+                        <span class="line-height-xl" v-show="showData.id"
+                        v-text="`${showData.user_id}-${ showData.order_number }`"></span>
                     </p>
                     <div class="mb-2 d-flex flex-row flex-wrap align-items-center justify-content-between">
                         <span class="font-weight-bolder mb-0">Nro Mensajero: </span>
-                        <input type="number" class="form-control col-7" value="9013">
+                        <input type="number" class="form-control col-7"  v-model="searchMessenger" >
                     </div>
                     <div class="mb-0">
-                        <input type="text" class="form-control col-12" value="Frank De Jesus Navarro Reyes">
+                        <input type="text" class="form-control col-12" disabled v-if="setMessenger" v-model="messengerName">
                     </div>
                 </div>
                 <div class="col-md-7">
@@ -67,7 +68,7 @@
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="col-md-3">
-                            <a href="#" class="btn btn-light-success font-weight-bold mr-2">Despachar</a>
+                            <a @click="assignateDelivery()" class="btn btn-light-success font-weight-bold mr-2">Despachar</a>
                         </div>
                     </div>
                 </div>

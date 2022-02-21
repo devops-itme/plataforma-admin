@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MessengerTrait;
 use App\Http\Requests\MessengerRequest;
+use App\Messenger;
 use App\ParameterValue;
 use Illuminate\Http\Request;
 
@@ -122,6 +123,16 @@ class MessengerController extends Controller
             return redirect()->route('messengers.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
+        }
+    }
+
+    public function messengersForDelivery()
+    {
+        try {
+            $messengers = Messenger::with(['user'])->get();
+            return $this->respond(200, $messengers);
+        } catch (\Throwable $e) {
+            return $this->respond(500, [], $e->getMessage());
         }
     }
 }

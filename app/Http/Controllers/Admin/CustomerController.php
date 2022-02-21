@@ -14,6 +14,7 @@ use App\Http\Controllers\Traits\BranchOfficeTrait;
 use App\Http\Controllers\Traits\RestActions;
 use App\Parameter;
 use App\User;
+use App\UserBranch;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
@@ -81,6 +82,12 @@ class CustomerController extends Controller
                 return redirect()->back()->with('danger', $assignBranches['error']);
             }
         }
+        if(!is_null($request->departments)){
+            $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
+            if($assignDepartment['state'] != 200){
+                return redirect()->back()->with('danger', $assignDepartment['error']);
+            }
+        }
         // if(!is_null($request->branch_office_name)){
         //     $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));
         //     if($saveBranchOfficeData['state'] != 200){
@@ -109,11 +116,17 @@ class CustomerController extends Controller
 
     public function customerData($id)
     {
-        $customer = User::with(['getCustomer', 'getDocumentType'])->find($id);
-        $branchOffice = BranchOffice::where('user_id', $customer->user_id)->where('default', 1)->first();
+        $branchOffice = null;
         $department = null;
-        if($branchOffice){
-            $department = Department::where('branch_office_id', $branchOffice->id)->first();
+        $customer = User::with(['getCustomer', 'getDocumentType'])->find($id);
+        $customer_branches = UserBranch::where('user_id', $customer->id)->get();
+        foreach ($customer_branches as $key) {
+            $branch = BranchOffice::find($key->branch_office_id);
+            if($branch){
+                if($branch->default == 1){
+                    $branchOffice = $branch;
+                }
+            }
         }
         return json_encode([
             'state' => 200,
@@ -124,19 +137,23 @@ class CustomerController extends Controller
     public function search_customer(Request $request)
     {
         $data = [];
+        $type = 1;
         if(!is_null($request->value)){
             if(is_numeric($request->value)){
                 $data = User::where('document_number', 'like', '%'.$request->value.'%')->with('getCustomer')->get();
+                if(count($data) > 0){$type = 1;}
             } else {
                 $data = Customer::where('tradename', 'like', '%'.$request->value.'%')->with('getUser')->get();
                 if(count($data) == 0){
                     $data = User::where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$request->value.'%')->with('getCustomer')->get();
-                }
+                    if(count($data) > 0){$type = 1;}
+                } else {$type = 2;}
             }
         }
         return json_encode([
             'state' => 200,
-            'data' => $data
+            'data' => $data,
+            'type' => $type
         ]);
     }
 

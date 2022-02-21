@@ -20,12 +20,12 @@
                     <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
                     <div class="form-group col-md-6">
                         <label>Numero de orden: <span class="text-danger">*</span></label>
-                        <input name="number" type="number" class="form-control form-control-solid" placeholder="333" />
+                        <input name="order_number" type="text" class="form-control form-control-solid" placeholder="Orden_#" id="order_number" readonly />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
-                        <select name="service_type_id" class="form-control form-control-solid" id="order_type">
+                        <select name="order_type" class="form-control form-control-solid" id="order_type">
                             <option selected disabled>Seleccione tipo de orden</option>
                             <option value="1">Ondeman</option>
                             <option value="2">Multiple</option>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="customers">Cliente <span class="text-danger">*</span></label>
-                        <button type="button" class="btn btn-primary btn-block bg-white text-dark" data-toggle="modal" data-target="#detailCustomer"> Buscar cliente </button>
+                        <button type="button" class="btn btn-primary btn-block bg-white text-dark" data-toggle="modal" data-target="#detailCustomer" id="btnDetailCustomer"> Buscar cliente </button>
                         {{-- <select name="user_id" class="form-control" id="slc-Customers">
                             <option selected disabled>Seleccione Cliente</option>
                             @foreach ($customers as $customer)
@@ -100,27 +100,27 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>FF, COD, Com.Gastos, Seguro:</label>
-                            <input name="sec_value" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <input name="expenses" type="number" class="form-control form-control-solid" placeholder="0.00" />
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Recibir por COD: </label>
-                            <input name="cod_value" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <input name="receive_by_COD" type="number" class="form-control form-control-solid" placeholder="0.00" />
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Gastos diligencia: </label>
-                            <input name="cost_diligence" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <input name="diligence_expenses" type="number" class="form-control form-control-solid" placeholder="0.00" />
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Producto interno: </label>
-                            <input name="inner_prod" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <input name="internal_product" type="number" class="form-control form-control-solid" placeholder="0.00" />
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Total Tax: </label>
-                            <input name="total_tax" type="number" class="form-control form-control-solid" placeholder="0.00" />
+                            <input name="tax_total" type="number" class="form-control form-control-solid" placeholder="0.00" />
                             <span class="form-text text-muted"></span>
                         </div>
                     </div>
