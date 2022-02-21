@@ -117,6 +117,15 @@ class BranchOfficeController extends Controller
         return view('branchOffices.edit', compact('office', 'documents', 'branch_office_type', 'payment_method'));
     }
 
+    public function allBranches()
+    {
+        $branches = BranchOffice::get();
+        return json_encode([
+            'state' => 200,
+            'data' => $branches
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      *

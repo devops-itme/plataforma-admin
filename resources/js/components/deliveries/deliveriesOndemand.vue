@@ -6,11 +6,11 @@ export default {
             activeIndex: null,
             shipmented: [],
             completed: [],
-            showData: [],
+            showData: "",
             tabs: [
-                { id: 1, name: "Por despachar", href: "pordespachar" },
-                { id: 2, name: "Despachados", href: "despachados" },
-                { id: 3, name: "Completados", href: "completados" },
+                { id: 1, name: "Por despachar", href: "pordespachar", data: [] },
+                { id: 2, name: "Despachados", href: "despachados", data: [] },
+                { id: 3, name: "Completados", href: "completados", data: []  },
             ],
             currentTab: 1,
 
@@ -18,7 +18,6 @@ export default {
             searchMessenger: null,
             messenger: null,
             messengerName: null,
-
         };
     },
     computed: {
@@ -29,38 +28,51 @@ export default {
                         .toString()
                         .toLowerCase()
                         .split(" ")
-                        .every((v) => item.user.document_number.toLowerCase().includes(v));
+                        .every((v) =>
+                            item.user.document_number.toLowerCase().includes(v)
+                        );
                 });
             }
         },
 
-        setMessenger(){
+        setMessenger() {
             if (this.searchMessenger) {
-                this.messengerName = this.filterMessengers[0]?.user.name+' '+this.filterMessengers[0]?.user.last_name;
-                return this.messenger = this.filterMessengers[0];
+                this.messengerName =
+                    this.filterMessengers[0]?.user.name +
+                    " " +
+                    this.filterMessengers[0]?.user.last_name;
+                return (this.messenger = this.filterMessengers[0]);
             }
         },
     },
-    watch: {},
+    watch: {
+    },
 
     methods: {
-        async getOrders(type_id) {
-            let _this = this;
+        async getOrders(type_id){
+            this.currentTab = type_id;
+            let response =  await this.requestOrders();
+            this.data = response.data
+        },
+
+        async requestOrders() {
+            let response = {state:500};
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
             let requestOptions = {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/orders_delivery/${type_id}`, requestOptions)
+            await fetch(`/orders_delivery/${this.currentTab}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
-                    _this.data = data.data;
+                    response = data;
                 })
                 .catch((err) => console.warn(err));
+            return response;
         },
 
-         async getMessengers() {
+        async getMessengers() {
             let _this = this;
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -78,7 +90,7 @@ export default {
 
         rowTotal(item) {
             let sum = 0;
-            item.map((e) => (sum += parseInt(e.shipping_cost)));
+            item.map((e) => (sum += parseInt(e.value)));
             sum = new Intl.NumberFormat().format(sum);
             return sum;
         },
@@ -92,11 +104,49 @@ export default {
             this.activeIndex = index;
         },
 
-
+        async assignateDelivery() {
+            console.log(this.setMessenger);
+            if (!this.showData) {
+                return await error("Debe seleccionar una orden");
+            }
+            if (!this.setMessenger) {
+                return await error("Debe seleccionar un mensajero");
+            }
+            let _this = this;
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: JSON.stringify({
+                    messenger_user_id: this.setMessenger.user_id,
+                    order_id: this.showData.id,
+                }),
+            };
+            await fetch(`/guias/asignacion`, requestOptions)
+                .then((response) => response.json())
+                .then(function (data) {
+                    console.log(data);
+                    if (data.state == 500) {
+                        return error(data.message);
+                    }
+                    if (data.state == 200) {
+                        return correct(data.message);
+                    }
+                })
+                .catch((err) => console.warn(err));
+        },
     },
 
-    mounted() {
-        this.getOrders(this.currentTab);
+    async mounted() {
+
+       this.getOrders(this.currentTab);
+
         this.getMessengers();
     },
 };

@@ -30,7 +30,7 @@ export default class Permissions {
         if (configurationBtn == null) {
             return
         }
-     
+
         [].forEach.call(configurationBtn, function (btn) {
             btn.addEventListener('click', async () => {
                 let row = btn.parentNode.parentNode;

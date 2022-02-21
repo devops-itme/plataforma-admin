@@ -15,9 +15,9 @@ class Guide extends Model
         'branch_office',
         'transport_type',
         'dispatched',
-        'addres_name',
-        'addres_lat',
-        'addres_lng',
+        'address_name',
+        'address_lat',
+        'address_lng',
         'address_description',
         'zone',
         'concept',
@@ -36,7 +36,7 @@ class Guide extends Model
         'state'
     ];
 
-    public function FunctionName()
+    public function getOrder()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }

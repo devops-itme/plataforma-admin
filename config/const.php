@@ -5,12 +5,12 @@ use App\Permission;
 return [
     'states' => [
         1 => [
-           'name' => 'Activo',
-           'color' => 'success'
+            'name' => 'Activo',
+            'color' => 'success'
         ],
         0 => [
-           'name' => 'Inactivo',
-           'color' => 'warning'
+            'name' => 'Inactivo',
+            'color' => 'warning'
         ],
     ],
     'roles' => [
@@ -71,7 +71,8 @@ return [
                                 'Mensajero' => ['role_id' => 3, 'actions' => '6'],
                                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
                             ]
-                        ]
+                        ],
+
                     ],
                     'permission' => [
                         'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
@@ -82,6 +83,17 @@ return [
                 ],
 
             ],
+            'permission' => [
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
+            ]
+        ],
+        'addresses' => [
+            'name' => 'Direcciones', 'reference' => 'addresses', 'icon' => '', 'position' => '2',
+            'actions' => '6,7,8,9,10,11,12,13',
+            'children' => [],
             'permission' => [
                 'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
                 'Operador' => ['role_id' => 2, 'actions' => '6'],
@@ -214,7 +226,7 @@ return [
             'Interna',
             'Externa'
         ],
-        'contract_type'=>[
+        'contract_type' => [
             'contrato indefinido',
             'contrato prestación de servicio'
         ],

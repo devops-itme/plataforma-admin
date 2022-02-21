@@ -49,6 +49,14 @@ class GuideController extends Controller
         else{$request->merge(['sign' => 0]);}
         if($request->take_photo == 'on'){$request->merge(['take_photo' => 1]);}
         else{$request->merge(['take_photo' => 0]);}
+
+        if($request->address){
+            $request->merge([
+                'address_name' => $request->addres,
+                'address_lat' => $request->lat,
+                'address_lng' => $request->lng
+            ]);
+        }
         $request->merge(['state' => 1]);
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
@@ -92,7 +100,10 @@ class GuideController extends Controller
     public function edit($id)
     {
         $guide = Guide::find($id);
-        return json_encode($guide);
+        return json_encode([
+            'state' => 200,
+            'data' => $guide
+        ]);
     }
 
     /**
@@ -104,15 +115,21 @@ class GuideController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!($request->state)){
+            $request->merge(['state' => 1]);
+        }
         $response = $this->updateGuide($request->merge(['guide_id' => $id]));
         if($response['state'] == 200){
             return json_encode([
                 'data' => $response['data'],
                 'state' => $response['state'],
-                'message' => 'Guia guardada exitosamente'
+                'message' => $response['message']
             ]);
         } else {
-            return json_encode($response['message']);
+            return json_encode([
+                'state' => 500,
+                'message' => $response['message']
+            ]);
         }
     }
 

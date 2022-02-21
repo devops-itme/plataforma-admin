@@ -6,38 +6,24 @@ use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
 use App\Messenger;
 use App\Order;
 use App\ParameterValue;
+use App\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 trait DeliveryTrait
 {
-    use TraitsRestActions;
+    // use TraitsRestActions;
 
 
-    // public function getOrders($type)
+    // public function guideAssignment($request)
     // {
     //     try {
-    //         $orders = Order::where('service_type_id', $type)->with(['getUser','getGuides'])->get();
-    //         return $this->respond(200, $orders);
+    //         $route = Route::create([
+    //             'guide_id' => $request->guide_id,
+    //             'messenger_user_id' => $request->user_id
+    //         ]);
     //     } catch (\Throwable $e) {
     //         return $this->respond(500, [], $e->getMessage());
     //     }
     // }
-
-    // public function getMessengers()
-    // {
-    //     try {
-    //         $messengers = Messenger::with(['user'])->get();
-    //         return $this->respond(200, $messengers);
-    //     } catch (\Throwable $e) {
-    //         return $this->respond(500, [], $e->getMessage());
-    //     }
-    // }
-
-
-
-
-
-
-
 }

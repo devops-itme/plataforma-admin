@@ -82,6 +82,12 @@ class CustomerController extends Controller
                 return redirect()->back()->with('danger', $assignBranches['error']);
             }
         }
+        if(!is_null($request->departments)){
+            $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
+            if($assignDepartment['state'] != 200){
+                return redirect()->back()->with('danger', $assignDepartment['error']);
+            }
+        }
         // if(!is_null($request->branch_office_name)){
         //     $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));
         //     if($saveBranchOfficeData['state'] != 200){
