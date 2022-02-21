@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\Validator;
 
 trait DeliveryTrait
 {
-    use TraitsRestActions;
+    // use TraitsRestActions;
 
 
-    public function guideAssignment($request)
-    {
-        try {
-            $route = Route::create([
-                'guide_id' => $request->guide_id,
-                'messenger_user_id' => $request->user_id
-            ]);
-        } catch (\Throwable $e) {
-            return $this->respond(500, [], $e->getMessage());
-        }
-    }
+    // public function guideAssignment($request)
+    // {
+    //     try {
+    //         $route = Route::create([
+    //             'guide_id' => $request->guide_id,
+    //             'messenger_user_id' => $request->user_id
+    //         ]);
+    //     } catch (\Throwable $e) {
+    //         return $this->respond(500, [], $e->getMessage());
+    //     }
+    // }
 }
