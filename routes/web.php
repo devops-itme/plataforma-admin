@@ -105,8 +105,8 @@ Route::group(['middleware' => 'auth'], function () {
         return view('profile.index');
     })->name('profile');
 
-    Route::resource('permisos', 'PermissionController')->names('permits');
-    Route::get('permisos/getPermissions/{role_id}', 'PermissionController@getPermissions')->name('permits.getPermissions');
+    Route::resource('permisos', 'Admin\PermissionController')->names('permits');
+    Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
     Route::get('despachos', function () {
         return view('deliveries.index');
     })->name('delivery.index');

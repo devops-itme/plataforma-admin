@@ -2326,8 +2326,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable-multi */ "./node_modules/vuedraggable-multi/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable-multi */ "./node_modules/vuedraggable-multi/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2507,7 +2507,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default.a
+    draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   props: {
     selected: Number
@@ -58984,12 +58984,12 @@ var Permissions = /*#__PURE__*/function () {
     key: "loadPermissions",
     value: function loadPermissions() {
       var configurationBtn = document.getElementsByClassName("configuration-btn");
+      var permitsLbl = document.getElementById("permits-label");
 
       if (configurationBtn == null) {
         return;
       }
 
-      console.log(configurationBtn);
       [].forEach.call(configurationBtn, function (btn) {
         btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
@@ -58998,27 +58998,27 @@ var Permissions = /*#__PURE__*/function () {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   row = btn.parentNode.parentNode;
+                  console.log(row);
                   role_id = row.id;
+                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("name"));
                   form = document.getElementById("permits-form");
                   form.setAttribute("action", "/permisos/".concat(role_id));
                   url = '/permisos/getPermissions/' + role_id;
-                  _context2.next = 7;
+                  _context2.next = 9;
                   return requestPermissions(url);
 
-                case 7:
+                case 9:
                   response = _context2.sent;
-                  console.log(response);
 
                   if (!(response.state != 200)) {
-                    _context2.next = 11;
+                    _context2.next = 12;
                     break;
                   }
 
                   return _context2.abrupt("return");
 
-                case 11:
+                case 12:
                   data = response.data;
-                  console.log(data);
                   modules = data.modules;
                   actions = data.actions;
                   permissions = data.permissions;
@@ -59050,12 +59050,13 @@ var Permissions = /*#__PURE__*/function () {
                       });
                       var label = document.createElement("label");
                       label.className = "form-check-label text-uppercase font-weight-bold mx-4";
-                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\"\n                         name=\"".concat(module.reference, "-").concat(action.name, "\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        "); // label.innerText = action.name;
-
+                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);
                     cardBody.appendChild(mainContainer);
+                    var submitBtn = document.getElementById("submit-btn");
+                    submitBtn.className = "btn btn-primary btn-sm d-block";
                   });
 
                 case 19:

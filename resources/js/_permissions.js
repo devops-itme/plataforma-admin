@@ -26,27 +26,27 @@ export default class Permissions {
 
     loadPermissions() {
         let configurationBtn = document.getElementsByClassName("configuration-btn");
-
+        let permitsLbl = document.getElementById("permits-label");
         if (configurationBtn == null) {
             return
         }
-        console.log(configurationBtn);
+     
         [].forEach.call(configurationBtn, function (btn) {
             btn.addEventListener('click', async () => {
                 let row = btn.parentNode.parentNode;
+                console.log(row)
                 let role_id = row.id;
+                permitsLbl.innerText = `Permisos - ${row.getAttribute("name")}`;
 
                 let form = document.getElementById("permits-form");
                 form.setAttribute("action", `/permisos/${role_id}`)
 
                 let url = '/permisos/getPermissions/' + role_id;
                 let response = await requestPermissions(url);
-                console.log(response)
                 if (response.state != 200) {
                     return;
                 }
                 let data = response.data;
-                console.log(data)
                 let modules = data.modules;
                 let actions = data.actions;
                 let permissions = data.permissions;
@@ -78,18 +78,20 @@ export default class Permissions {
                         label.className = "form-check-label text-uppercase font-weight-bold mx-4";
 
                         label.innerHTML = `
-                        <input class="form-check-input" type="checkbox"
-                         name="${module.reference}-${action.name}" ${!action_found && 'disabled'}
+                        <input class="form-check-input" type="checkbox" value="${action.id}"
+                         name="${module.reference}[]" ${!action_found && 'disabled'}
                          ${permission_found && 'checked'}
                         > ${action.name}
                         `;
-                        // label.innerText = action.name;
                         checkContainer.childNodes[0].appendChild(label);
                     });
 
                     mainContainer.appendChild(checkContainer);
 
                     cardBody.appendChild(mainContainer);
+
+                    let submitBtn = document.getElementById("submit-btn");
+                    submitBtn.className = `btn btn-primary btn-sm d-block`
                 });
 
 
