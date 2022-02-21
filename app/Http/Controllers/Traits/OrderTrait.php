@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Traits;
 
+use App\Guide;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Order;
@@ -116,6 +117,20 @@ trait OrderTrait
             return $this->respond(200, $order, null, 'Orden eliminada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al eliminar usuario');
+        }
+    }
+
+    public function assignGuide($request, $id)
+    {
+        try {
+            foreach($request->guideCheck as $key){
+                Guide::find($key)->update([
+                    'order_id' => $id
+                ]);
+            }
+            return $this->respond(200, [], null, 'Guias asignadas de forma correcta');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al asignar la guia');
         }
     }
 }

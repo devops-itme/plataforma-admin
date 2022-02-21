@@ -21,7 +21,7 @@ class DepartmentController extends Controller
         $departments = $this->getDepartments();
         $departments = $departments['data'];
 
-        return view('departments.index', compact('departments'));
+        return $this->respond(200, $departments, null, 'Lista de departamentos');
     }
 
     /**
@@ -31,15 +31,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        $branch_offices = null;
-        $user_id = Request()->user_id;
 
-        if (!is_null($user_id)) {
-            $branch_offices = BranchOffice::where('user_id', $user_id)->get();
-        }
-        $branch_office_id = Request()->branch_office_id;
-
-        return view('departments.create', compact('branch_offices', 'branch_office_id', 'user_id'));
     }
 
     /**
@@ -52,13 +44,10 @@ class DepartmentController extends Controller
     {
         $response = $this->saveDepartment($request);
         if ($response['state'] == 200) {
-            $exist_user_id = !is_null($request->user_id);
-            $requestName = $exist_user_id ? 'user_id' : 'branch_office_id';
-            $requestData = [$requestName =>  $exist_user_id ? $request->user_id : $request->branch_office_id];
-
-            return redirect()->route('departments.index', $requestData)->with('success', $response['message']);
+            return $this->respond($response['state'], $response['data'], $response['error'],  $response['message']);
         } else {
-            return redirect()->back()->withInput()->with('danger', $response['error']);
+            return $this->respond($response['state'], $response['data'], $response['error'],  $response['message']);
+
         }
     }
 
@@ -71,8 +60,8 @@ class DepartmentController extends Controller
     public function show($id)
     {
         $department = $this->showDepartment($id);
-        $department = $department['data'];
-        return view('departments.show', compact('department'));
+        // $department = $department['data'];
+        return $this->respond($department['state'], $department['data'], $department['error'],  $department['message']);
     }
 
     /**
@@ -83,15 +72,7 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        $department = $this->showDepartment($id);
-        $department = $department['data'];
-        $user_id = Request()->user_id;
-        $branch_offices = null;
-        if (!is_null($user_id)) {
-            $branch_offices = BranchOffice::where('user_id', $user_id)->get();
-        }
-        $branch_office_id = Request()->branch_office_id;
-        return view('departments.edit', compact('department','branch_offices', 'branch_office_id', 'user_id'));
+
     }
 
     /**
@@ -106,12 +87,9 @@ class DepartmentController extends Controller
         $response = $this->updateDepartment($request, $id);
 
         if ($response['state'] == 200) {
-            $exist_user_id = !is_null($request->user_id);
-            $requestName = $exist_user_id ? 'user_id' : 'branch_office_id';
-            $requestData = [$requestName =>  $exist_user_id ? $request->user_id : $request->branch_office_id];
-            return redirect()->route('departments.index', $requestData)->with('success',  $response['message']);
+            return $this->respond($response['state'], $response['data'], $response['error'],  $response['message']);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return $this->respond($response['state'], $response['data'], $response['error'],  $response['message']);
         }
     }
 
@@ -125,9 +103,9 @@ class DepartmentController extends Controller
     {
         $response = $this->deleteDepartment($id);
         if ($response['state'] == 200) {
-            return redirect()->route('departments.index')->with('success', $response['message']);
+            return $this->respond($response['state'], $response['data'], $response['error'],  $response['message']);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return $this->respond($response['state'], $response['data'], $response['error'],  $response['message']);
         }
     }
 }

@@ -57,6 +57,12 @@ class OrderController extends Controller
         $request->merge(['state' => 1]);
         $response = $this->storeOrder($request);
         if($response['state'] == 200){
+            if($request->guideCheck){
+                $assignGuide = $this->assignGuide($request, $response['data']->id);
+                if($assignGuide['state'] != 200){
+                    return redirect()->back()->with('danger', $assignGuide['error']);
+                }
+            }
             return redirect()->route('orders.index')->with('success', 'Orden creada exitosamente.');
         } else {
             return redirect()->back()->with('danger', $response['error']);

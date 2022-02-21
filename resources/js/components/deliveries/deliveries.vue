@@ -10,7 +10,7 @@
                 class="d-flex align-items-center justify-content-between flex-row flex-wrap mb-3"
             >
                 <div class="form-group col-md-2 mb-0">
-                    <select class="form-control" v-model="selected">
+                    <select class="form-control" v-model="selected" @change="loadingEvt">
                         <option
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
@@ -223,8 +223,11 @@ export default {
             }
         };
     },
-    // mounted(){
-    //     console.log(this.columns.inProcess.length);
-    // },
+    methods: {
+       loadingEvt (){
+           return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>'
+       }
+    },
+
 };
 </script>
