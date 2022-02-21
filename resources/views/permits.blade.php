@@ -30,7 +30,7 @@
           </thead>
           <tbody>
             @foreach ($roles as $role)
-              <tr id="{{$role->id}}" name="{{$role->name}}">
+              <tr id="{{$role->id}}" class="{{$role->name}}">
                 <td class="text-uppercase">{{$role->name}}</td>
                 <td>
                   <span class="badge badge-{{Config::get('const.states')[$role->state]['color']}} text-uppercase">{{Config::get('const.states')[$role->state]['name']}}</span>

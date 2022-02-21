@@ -58998,26 +58998,25 @@ var Permissions = /*#__PURE__*/function () {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   row = btn.parentNode.parentNode;
-                  console.log(row);
                   role_id = row.id;
                   permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("name"));
                   form = document.getElementById("permits-form");
                   form.setAttribute("action", "/permisos/".concat(role_id));
                   url = '/permisos/getPermissions/' + role_id;
-                  _context2.next = 9;
+                  _context2.next = 8;
                   return requestPermissions(url);
 
-                case 9:
+                case 8:
                   response = _context2.sent;
 
                   if (!(response.state != 200)) {
-                    _context2.next = 12;
+                    _context2.next = 11;
                     break;
                   }
 
                   return _context2.abrupt("return");
 
-                case 12:
+                case 11:
                   data = response.data;
                   modules = data.modules;
                   actions = data.actions;
@@ -59059,7 +59058,7 @@ var Permissions = /*#__PURE__*/function () {
                     submitBtn.className = "btn btn-primary btn-sm d-block";
                   });
 
-                case 19:
+                case 18:
                 case "end":
                   return _context2.stop();
               }
