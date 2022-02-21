@@ -16,7 +16,7 @@ class CreateRoutesTable extends Migration
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('guide_id')->references('id')->on('guides')->comment('References guides table');
-            $table->foreignId('messenger_id')->references('id')->on('messengers')->comment('References messengers table');
+            $table->foreignId('user_messenger_id')->references('id')->on('messengers')->comment('References messengers table');
             $table->date('date')->nullable();
             $table->softDeletes();
             $table->timestamps();
