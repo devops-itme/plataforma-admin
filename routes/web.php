@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'Admin\GuideController@store');
+    Route::post('/guias/asignacion', 'Admin\DeliveryController@assignate')->name('guides.assignate');
 
     Route::group(['middleware' => 'role'], function () {
         //USER
@@ -81,8 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
         //DOCUMENTOS DE GUIAS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
 
-        //RUTAS
-        Route::resource('/rutas', 'Admin\RouteController')->names('rutas');
+
     });
     //Orders delivery
     Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');
@@ -116,7 +116,8 @@ Route::group(['middleware' => 'auth'], function () {
         return view('zones.index');
     })->name('zone.index');
 });
-
+   //RUTAS
+   Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
 //REPORTS
