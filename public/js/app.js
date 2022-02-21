@@ -2306,7 +2306,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     rowTotal: function rowTotal(item) {
       var sum = 0;
       item.map(function (e) {
-        return sum += parseInt(e.shipping_cost);
+        return sum += parseInt(e.value);
       });
       sum = new Intl.NumberFormat().format(sum);
       return sum;
@@ -3063,19 +3063,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     removeDepartment: function removeDepartment(id) {
+      var _this4 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var remove;
+        var remove, index;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return confirmDelete("/departamentos/".concat(id, "}"));
+                return deleteResource("/departamentos/".concat(id, "}"));
 
               case 2:
                 remove = _context3.sent;
 
-                if (remove) {}
+                if (remove) {
+                  index = _this4.data.findIndex(function (item) {
+                    return item.id == id;
+                  });
+
+                  _this4.data.splice(index, 1);
+                }
 
               case 4:
               case "end":
@@ -7505,7 +7513,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -41643,7 +41651,8 @@ var render = function () {
                       [
                         _c("input", {
                           staticClass: "checkbox mt-3",
-                          attrs: { type: "checkbox" },
+                          attrs: { type: "checkbox", name: "departments[]" },
+                          domProps: { value: department.id },
                         }),
                         _vm._v(" "),
                         _vm._m(1, true),
@@ -60482,12 +60491,12 @@ var Permissions = /*#__PURE__*/function () {
     key: "loadPermissions",
     value: function loadPermissions() {
       var configurationBtn = document.getElementsByClassName("configuration-btn");
+      var permitsLbl = document.getElementById("permits-label");
 
       if (configurationBtn == null) {
         return;
       }
 
-      console.log(configurationBtn);
       [].forEach.call(configurationBtn, function (btn) {
         btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
@@ -60497,15 +60506,15 @@ var Permissions = /*#__PURE__*/function () {
                 case 0:
                   row = btn.parentNode.parentNode;
                   role_id = row.id;
+                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("name"));
                   form = document.getElementById("permits-form");
                   form.setAttribute("action", "/permisos/".concat(role_id));
                   url = '/permisos/getPermissions/' + role_id;
-                  _context2.next = 7;
+                  _context2.next = 8;
                   return requestPermissions(url);
 
-                case 7:
+                case 8:
                   response = _context2.sent;
-                  console.log(response);
 
                   if (!(response.state != 200)) {
                     _context2.next = 11;
@@ -60516,7 +60525,6 @@ var Permissions = /*#__PURE__*/function () {
 
                 case 11:
                   data = response.data;
-                  console.log(data);
                   modules = data.modules;
                   actions = data.actions;
                   permissions = data.permissions;
@@ -60548,15 +60556,16 @@ var Permissions = /*#__PURE__*/function () {
                       });
                       var label = document.createElement("label");
                       label.className = "form-check-label text-uppercase font-weight-bold mx-4";
-                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\"\n                         name=\"".concat(module.reference, "-").concat(action.name, "\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        "); // label.innerText = action.name;
-
+                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);
                     cardBody.appendChild(mainContainer);
+                    var submitBtn = document.getElementById("submit-btn");
+                    submitBtn.className = "btn btn-primary btn-sm d-block";
                   });
 
-                case 19:
+                case 18:
                 case "end":
                   return _context2.stop();
               }
@@ -61270,8 +61279,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

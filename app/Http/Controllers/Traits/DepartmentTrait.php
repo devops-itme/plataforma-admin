@@ -7,8 +7,11 @@ use App\Http\Controllers\RestActions;
 use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
 use App\ParameterValue;
 use App\User;
+use App\UserDeparment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
+use function PHPSTORM_META\map;
 
 trait DepartmentTrait
 {
@@ -28,7 +31,15 @@ trait DepartmentTrait
     {
         try {
 
+
             $departments = Department::get();
+            $allAssignedDepartments = UserDeparment::get('department_id');
+
+            $departments_id = $allAssignedDepartments->map(function ($item, $key) {
+                return $item->department_id;
+            });
+
+            $departments = Department::whereNotIn('id', $departments_id)->get();
 
             return $this->respond(200, $departments);
         } catch (\Throwable $e) {

@@ -10,20 +10,12 @@ class DeliveryController extends Controller
 {
     use DeliveryTrait;
 
-    // public function orders($type)
-    // {
-    //     $orders = $this->getOrders($type);
-    //     $orders = $orders['data'];
-    //     // return $orders;
-    //     return $this->respond(200, $orders, null, 'Lista de ordenes');
-    // }
-
-    // public function messengers()
-    // {
-    //     $messengers = $this->getMessengers();
-    //     $messengers = $messengers['data'];
-    //     // return $messengers;
-    //     return $this->respond(200, $messengers, null, 'Lista de mensajeros');
-    // }
+    public function assignate(Request $request)
+    {
+        $response = $this->guideAssignment($request);
+        $response = $response['data'];
+        // return $messengers;
+        return $this->respond(200, $response, null, 'Guia asignada');
+    }
 
 }
