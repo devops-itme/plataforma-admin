@@ -294,7 +294,7 @@
                             </div>
                         </div>
                     </div>
-
+                    {{-- DEPARTMENT MODULE --}}
                     <div class="tab-pane fade" id="departament" role="tabpanel" aria-labelledby="departament-tab">
                        <department-tab>
 

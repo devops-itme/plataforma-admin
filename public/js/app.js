@@ -41121,7 +41121,8 @@ var render = function () {
                       [
                         _c("input", {
                           staticClass: "checkbox mt-3",
-                          attrs: { type: "checkbox" },
+                          attrs: { type: "checkbox", name: "departments[]" },
+                          domProps: { value: department.id },
                         }),
                         _vm._v(" "),
                         _vm._m(1, true),

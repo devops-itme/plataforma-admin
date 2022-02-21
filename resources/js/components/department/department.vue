@@ -55,7 +55,7 @@
                                 <div
                                     class="d-flex justify-content-around aling-items-center flex-wrap flex-row"
                                 >
-                                 <input type="checkbox" class="checkbox mt-3">
+                                 <input type="checkbox" class="checkbox mt-3"   name="departments[]"  :value="department.id">
                                   <a
                                         href="#"
                                         class="btn btn-icon btn-light-success btn-sm mr-2"
@@ -233,7 +233,8 @@ export default {
                 this.data.splice(index,1);
             }
 
-        }
+        },
+
     },
     mounted() {
         this.getDepartment();

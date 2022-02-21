@@ -41,12 +41,10 @@ async function deleteResource(url) {
         if (req.ok) {
             correct("Eliminado!");
             return true;
-
         } else {
             error("Error al eliminar");
             return false;
         }
-
     }
 }
 
