@@ -30,9 +30,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/unassigned_branch_offices', 'Admin\BranchOfficeController@unassigned_branch_offices');
     Route::get('/order_number', 'Admin\OrderController@orderNumber');
 
+    Route::get('/allBranches', 'Admin\BranchOfficeController@allBranches');
+
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
-    Route::post('/guias/store', 'Admin\GuideController@store');
+    Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');
     Route::post('/guias/asignacion', 'Admin\DeliveryController@assignate')->name('guides.assignate');
 
     Route::group(['middleware' => 'role'], function () {

@@ -23,9 +23,9 @@ trait GuideTrait
                 'branch_office' => 'nullable',
                 'transport_type' => 'nullable',
                 'dispatched' => 'nullable',
-                'addres_name' => 'nullable',
-                'addres_lat' => 'nullable',
-                'addres_lng' => 'nullable',
+                'address_name' => 'nullable',
+                'address_lat' => 'nullable',
+                'address_lng' => 'nullable',
                 'address_description' => 'nullable',
                 'zone' => 'nullable',
                 'concept' => 'nullable',
@@ -57,9 +57,9 @@ trait GuideTrait
                 'branch_office' => $request->branch_office,
                 'transport_type' => $request->transport_type,
                 'dispatched' => $request->dispatched,
-                'addres_name' => $request->addres_name,
-                'addres_lat' => $request->addres_lat,
-                'addres_lng' => $request->addres_lng,
+                'address_name' => $request->address_name,
+                'address_lat' => $request->address_lat,
+                'address_lng' => $request->address_lng,
                 'address_description' => $request->address_description,
                 'zone' => $request->zone,
                 'concept' => $request->concept,
@@ -95,9 +95,26 @@ trait GuideTrait
                 return $this->respond(500, [], 'user not found', 'No se encontro la guia');
             }
             $guide->update([
-                'address_id' => $request->address_id,
-                'delivery_date' => $request->delivery_date,
-                'shipping_cost' => $request->shipping_cost
+                'dispatched' => $request->dispatched,
+                'address_name' => $request->address_name,
+                'address_lat' => $request->address_lat,
+                'address_lng' => $request->address_lng,
+                'address_description' => $request->address_description,
+                'zone' => $request->zone,
+                'concept' => $request->concept,
+                'rate' => $request->rate,
+                'value' => $request->value,
+                'corp_value' => $request->corp_value,
+                'document_type_customes' => $request->document_type_customes,
+                'contact' => $request->contact,
+                'phone_contact' => $request->phone_contact,
+                'email_contact' => $request->email_contact,
+                'invoice_contact' => $request->invoice_contact,
+                'same_day_delivery' => $request->same_day_delivery,
+                'sign' => $request->sign,
+                'take_photo' => $request->take_photo,
+                'packaging' => $request->packaging,
+                'state' => $request->state
             ]);
             return $this->respond(200, $guide, null, 'Guia actualizada exitosamente');
         } catch (\Exception $e) {
