@@ -155,6 +155,7 @@
         <!--end::Form-->
     </div>
     @include('orders.detailCustomer')
+    @include('orders.modals.importGuidesModal')
 
 @endsection
 
