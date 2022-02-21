@@ -2148,10 +2148,12 @@ __webpack_require__.r(__webpack_exports__);
         inEdit: ["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
       }
     };
-  } // mounted(){
-  //     console.log(this.columns.inProcess.length);
-  // },
-
+  },
+  methods: {
+    loadingEvt: function loadingEvt() {
+      return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>';
+    }
+  }
 });
 
 /***/ }),
@@ -2572,7 +2574,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleChange: function handleChange(evt) {
-      console.log(evt.item);
+      console.log(evt.items);
     }
   }
 });
@@ -40068,19 +40070,22 @@ var render = function () {
                 ],
                 staticClass: "form-control",
                 on: {
-                  change: function ($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function (o) {
-                        return o.selected
-                      })
-                      .map(function (o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.selected = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
+                  change: [
+                    function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selected = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.loadingEvt,
+                  ],
                 },
               },
               _vm._l(_vm.delivery_types, function (item) {
@@ -59961,12 +59966,12 @@ var Permissions = /*#__PURE__*/function () {
     key: "loadPermissions",
     value: function loadPermissions() {
       var configurationBtn = document.getElementsByClassName("configuration-btn");
+      var permitsLbl = document.getElementById("permits-label");
 
       if (configurationBtn == null) {
         return;
       }
 
-      console.log(configurationBtn);
       [].forEach.call(configurationBtn, function (btn) {
         btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
@@ -59976,15 +59981,15 @@ var Permissions = /*#__PURE__*/function () {
                 case 0:
                   row = btn.parentNode.parentNode;
                   role_id = row.id;
+                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("name"));
                   form = document.getElementById("permits-form");
                   form.setAttribute("action", "/permisos/".concat(role_id));
                   url = '/permisos/getPermissions/' + role_id;
-                  _context2.next = 7;
+                  _context2.next = 8;
                   return requestPermissions(url);
 
-                case 7:
+                case 8:
                   response = _context2.sent;
-                  console.log(response);
 
                   if (!(response.state != 200)) {
                     _context2.next = 11;
@@ -59995,7 +60000,6 @@ var Permissions = /*#__PURE__*/function () {
 
                 case 11:
                   data = response.data;
-                  console.log(data);
                   modules = data.modules;
                   actions = data.actions;
                   permissions = data.permissions;
@@ -60027,15 +60031,16 @@ var Permissions = /*#__PURE__*/function () {
                       });
                       var label = document.createElement("label");
                       label.className = "form-check-label text-uppercase font-weight-bold mx-4";
-                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\"\n                         name=\"".concat(module.reference, "-").concat(action.name, "\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        "); // label.innerText = action.name;
-
+                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);
                     cardBody.appendChild(mainContainer);
+                    var submitBtn = document.getElementById("submit-btn");
+                    submitBtn.className = "btn btn-primary btn-sm d-block";
                   });
 
-                case 19:
+                case 18:
                 case "end":
                   return _context2.stop();
               }
