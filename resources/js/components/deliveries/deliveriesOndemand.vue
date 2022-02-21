@@ -78,7 +78,7 @@ export default {
 
         rowTotal(item) {
             let sum = 0;
-            item.map((e) => (sum += parseInt(e.shipping_cost)));
+            item.map((e) => (sum += parseInt(e.value)));
             sum = new Intl.NumberFormat().format(sum);
             return sum;
         },

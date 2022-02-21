@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
 use App\Module;
 use App\Parameter;
@@ -9,6 +10,7 @@ use App\ParameterValue;
 use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class PermissionController extends Controller
@@ -30,26 +32,32 @@ class PermissionController extends Controller
 
         $action = Parameter::where('name', 'action')->first();
         $actions = ParameterValue::where('parameter_id', $action->id)->get(['id', 'name']);
-        // dd($permissions);
+
         return $this->respond(200, ['modules' => $modules, 'permissions' =>  $permissions, 'actions' =>  $actions], null, 'Roles yPermisos');
     }
 
     public function update(Request $request, $role_id)
     {
-        dd($role_id, $request->all());
-          $validation = Validator::make($request->all(), [
-             'role_id' => 'required',
-             'permits' => 'array|nullable'
-          ], [
-             'role_id.required' => 'Formato incorrecto',
-             'permits.array' => 'Formato incorrecto'
-          ]);
+        // dd($role_id, $request->all());
+        try {
+            foreach ($request->all() as $key => $item) {
+                if ($key == '_token' || $key == '_method' || $key == 'dashboard') {
+                    continue;
+                }
+                $module = Module::where('reference', $key)->first();
+                $permission = Permission::where('role_id', $role_id)
+                    ->where('module_id', $module->id)
+                    ->first();
 
-        //   if ($validation->fails()) {
-        //      Session::flash('warning', $validation->errors()->first());
-        //      return back()->withInput();
-        //   }
-
+                $actions = implode(',', $item);
+                $permission->update([
+                    'actions' => $actions
+                ]);
+                return redirect()->back()->with('success', 'Permisos actualizados exitosamente');
+            }
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('danger', 'Error al actualizar permisos');
+        }
         //   $permission = $this->permissionStore($request);
         //   if ($permission['status']==200) {
         //      Session::flash('success', 'Permiso actualizado correctamente');

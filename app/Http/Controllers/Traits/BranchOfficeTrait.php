@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\BranchOffice;
 use App\UserBranch;
+use App\UserDeparment;
 
 trait BranchOfficeTrait
 {
@@ -137,6 +138,21 @@ trait BranchOfficeTrait
                 ]);
             }
             return $this->respond(200, [], null, 'Sucursales asignadas de forma correcta');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al asignar la sucursal');
+        }
+    }
+
+    public function storeUserDepartment($user_id, $departments)
+    {
+        try {
+            foreach ($departments as $key) {
+                UserDeparment::create([
+                    'user_id' => $user_id,
+                    'department_id' => $key
+                ]);
+            }
+            return $this->respond(200, [], null, 'Departamentos asignadas de forma correcta');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al asignar la sucursal');
         }

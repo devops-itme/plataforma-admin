@@ -19,7 +19,7 @@ trait RouteTrait
                 'guide_id' => [$action == 'create' ? 'confirmed' : 'nullable',
                     Rule::requiredIf($action == 'create'), 'exists:guides,id'
                 ],
-                'messenger_id' => 'required|exists:messengers,id',
+                'messenger_user_id' => 'required|exists:messengers,id',
                 'date' => 'nullable|date'
             ]
         );
@@ -34,7 +34,7 @@ trait RouteTrait
         try {
             $route = Route::create([
                 'guide_id' => $request->guide_id,
-                'messenger_id' => $request->messenger_id,
+                'messenger_user_id' => $request->messenger_user_id,
                 'date' => $request->date
             ]);
             return $this->respond(200, $route, null, 'Ruta creada exitosamente');
@@ -56,7 +56,7 @@ trait RouteTrait
             }
             $route->update([
                 'guide_id' => $request->guide_id,
-                'messenger_id' => $request->messenger_id,
+                'messenger_user_id' => $request->messenger_user_id,
                 'date' => $request->date
             ]);
             return $this->respond(200, $route, null, 'Ruta actualizada exitosamente');

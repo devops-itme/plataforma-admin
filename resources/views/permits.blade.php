@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-
+@include('layouts.alerts')
 <div class="row">
   <div class="col-md-5">
     <div class="card">
@@ -30,7 +30,7 @@
           </thead>
           <tbody>
             @foreach ($roles as $role)
-              <tr id="{{$role->id}}">
+              <tr id="{{$role->id}}" class="{{$role->name}}">
                 <td class="text-uppercase">{{$role->name}}</td>
                 <td>
                   <span class="badge badge-{{Config::get('const.states')[$role->state]['color']}} text-uppercase">{{Config::get('const.states')[$role->state]['name']}}</span>
@@ -55,35 +55,33 @@
   </div>
   <div class="col-md-7">
     <div class="card formclass">
-      <div class="card-header">
-        <div class="row">
-          <div class="col">
-            <h4 class="card-title">Permisos</h4>
-          </div>
-          <div class="col text-right">
-            <button type="submit" class="btn btn-primary btn-sm d-none"><i class="fas fa-save"></i> Guardar
-              permisos</button>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-12">
-            <form id="permits-form" method="POST">
-              @csrf @method('PUT')
-              <div class="card my-2">               
-                  
-                  <div class="card-body" id="card-body">
-                            
-                  </div>
-                
-              </div>
-              <input type="submit" class="btn" value="Guardar Cambios">
-            </form>
+      <form id="permits-form" method="POST">
+        @csrf @method('PUT')
+
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <h4 id="permits-label" class="card-title">Permisos</h4>
+            </div>
+            <div class="col text-right">
+              <button type="submit" class="btn btn-primary btn-sm d-none" id="submit-btn"><i class="fas fa-save"></i> Guardar
+                permisos</button>
+            </div>
           </div>
         </div>
-      </div>
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-12">            
+                <div class="card my-2">                                   
+                    <div class="card-body" id="card-body">                              
+                    </div>                  
+                </div>              
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
+    
   </div>
 </div>
 @endsection
