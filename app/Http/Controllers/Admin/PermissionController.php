@@ -38,7 +38,6 @@ class PermissionController extends Controller
 
     public function update(Request $request, $role_id)
     {
-        // dd($role_id, $request->all());
         try {
             foreach ($request->all() as $key => $item) {
                 if ($key == '_token' || $key == '_method' || $key == 'dashboard') {
@@ -58,16 +57,5 @@ class PermissionController extends Controller
         } catch (\Throwable $e) {
             return redirect()->back()->with('danger', 'Error al actualizar permisos');
         }
-        //   $permission = $this->permissionStore($request);
-        //   if ($permission['status']==200) {
-        //      Session::flash('success', 'Permiso actualizado correctamente');
-        //      return back();
-        //   }else{
-        //      if ($permission['status']!=0) {$message = $permission['message'];
-        //      }else{$message = "Estamos presentando inconvenientes en este momento";}
-
-        //      Session::flash('warning', $message);
-        //      return back()->withInput();
-        //   }
     }
 }
