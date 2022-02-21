@@ -68,7 +68,7 @@
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="col-md-3">
-                            <a href="#" class="btn btn-light-success font-weight-bold mr-2">Despachar</a>
+                            <a @click="assignateDelivery()" class="btn btn-light-success font-weight-bold mr-2">Despachar</a>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 let count = 0;
 let boxes = [
     {
+        number: 0,
         weight: 0,
         long: 0,
         broad: 0,
@@ -27,6 +28,7 @@ export default class Orders {
 
     setInput() {
         const inputs = [
+            'number[]',
             'weight[]',
             'long[]',
             'broad[]',
@@ -70,7 +72,12 @@ export default class Orders {
         boxContainer.innerHTML = ``;
         [].forEach.call(boxes, box => {
             let row = document.createElement("tr");
-            row.className = `row border mt-0 text-center box-register`;
+            row.className = `row border mt-0 text-center box-register col-md-13 "`;
+
+            let numberCell = document.createElement("td");
+            numberCell.className = `col-1 py-4 border-right`;
+            numberCell.innerHTML = `<input type="number" name="weight[]" class="form-control" min="0" value="${box.number}">`;
+            row.appendChild(numberCell);
 
             let weightCell = document.createElement("td");
             weightCell.className = `col-1 py-4 border-right`;
@@ -97,13 +104,15 @@ export default class Orders {
             volWeightCell.innerHTML = `<input type="number" name="vol_weight[]" class="form-control" min="0" value="${box.vol_weight}">`;
             row.appendChild(volWeightCell);
 
+
+
             let descriptionCell = document.createElement("td");
-            descriptionCell.className = `col-3 py-4 border-right`;
-            descriptionCell.innerHTML = `<input type="text" name="description[]" class="form-control" placeholder="comertarios" value="${box.description}">`;
+            descriptionCell.className = `col-2 py-4 border-right`;
+            descriptionCell.innerHTML = `<input type="text" name="description[]" class="form-control" placeholder="comentarios" value="${box.description}">`;
             row.appendChild(descriptionCell);
 
             let btnCell = document.createElement("td");
-            btnCell.className = `col-3 py-4 border-right`;
+            btnCell.className = `col-1 py-4`;
             btnCell.innerHTML = ` <div class="d-flex flex-row flex-wrap justify-content-center"></div>`;
 
             let removeBoxBtn = document.createElement("a");
@@ -131,6 +140,7 @@ export default class Orders {
 
         addBoxBtn.addEventListener('click', () => {
             boxes.push({
+                number: 0,
                 weight: 0,
                 long: 0,
                 broad: 0,

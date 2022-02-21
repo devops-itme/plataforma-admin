@@ -2191,19 +2191,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       activeIndex: null,
       shipmented: [],
       completed: [],
-      showData: [],
+      showData: "",
       tabs: [{
         id: 1,
         name: "Por despachar",
-        href: "pordespachar"
+        href: "pordespachar",
+        data: []
       }, {
         id: 2,
         name: "Despachados",
-        href: "despachados"
+        href: "despachados",
+        data: []
       }, {
         id: 3,
         name: "Completados",
-        href: "completados"
+        href: "completados",
+        data: []
       }],
       currentTab: 1,
       messengers: [],
@@ -2228,7 +2231,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.searchMessenger) {
         var _this$filterMessenger, _this$filterMessenger2;
 
-        this.messengerName = ((_this$filterMessenger = this.filterMessengers[0]) === null || _this$filterMessenger === void 0 ? void 0 : _this$filterMessenger.user.name) + ' ' + ((_this$filterMessenger2 = this.filterMessengers[0]) === null || _this$filterMessenger2 === void 0 ? void 0 : _this$filterMessenger2.user.last_name);
+        this.messengerName = ((_this$filterMessenger = this.filterMessengers[0]) === null || _this$filterMessenger === void 0 ? void 0 : _this$filterMessenger.user.name) + " " + ((_this$filterMessenger2 = this.filterMessengers[0]) === null || _this$filterMessenger2 === void 0 ? void 0 : _this$filterMessenger2.user.last_name);
         return this.messenger = this.filterMessengers[0];
       }
     }
@@ -2239,29 +2242,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this, myHeaders, requestOptions;
-
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this = _this3;
-                myHeaders = new Headers();
-                myHeaders.append("accept", "application/json");
-                requestOptions = {
-                  method: "GET",
-                  headers: myHeaders
-                };
-                _context.next = 6;
-                return fetch("/orders_delivery/".concat(type_id), requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  _this.data = data.data;
-                })["catch"](function (err) {
-                  return console.warn(err);
-                });
+                _this3.currentTab = type_id;
+                _context.next = 3;
+                return _this3.requestOrders();
 
-              case 6:
+              case 3:
+                response = _context.sent;
+                _this3.data = response.data;
+
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -2269,17 +2263,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    getMessengers: function getMessengers() {
+    requestOrders: function requestOrders() {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this, myHeaders, requestOptions;
-
+        var response, myHeaders, requestOptions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this = _this4;
+                response = {
+                  state: 500
+                };
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
@@ -2287,6 +2282,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: myHeaders
                 };
                 _context2.next = 6;
+                return fetch("/orders_delivery/".concat(_this4.currentTab), requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 6:
+                return _context2.abrupt("return", response);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    getMessengers: function getMessengers() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _this, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this = _this5;
+                myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                requestOptions = {
+                  method: "GET",
+                  headers: myHeaders
+                };
+                _context3.next = 6;
                 return fetch("/messengers_delivery", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2297,10 +2329,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     rowTotal: function rowTotal(item) {
@@ -2318,11 +2350,102 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // console.log(this.messenger);
       this.showData = data;
       this.activeIndex = index;
+    },
+    assignateDelivery: function assignateDelivery() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var _this, token, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                console.log(_this6.setMessenger);
+
+                if (_this6.showData) {
+                  _context4.next = 5;
+                  break;
+                }
+
+                _context4.next = 4;
+                return error("Debe seleccionar una orden");
+
+              case 4:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 5:
+                if (_this6.setMessenger) {
+                  _context4.next = 9;
+                  break;
+                }
+
+                _context4.next = 8;
+                return error("Debe seleccionar un mensajero");
+
+              case 8:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 9:
+                _this = _this6;
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: JSON.stringify({
+                    messenger_user_id: _this6.setMessenger.user_id,
+                    order_id: _this6.showData.id
+                  })
+                };
+                _context4.next = 18;
+                return fetch("/guias/asignacion", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  console.log(data);
+
+                  if (data.state == 500) {
+                    return error(data.message);
+                  }
+
+                  if (data.state == 200) {
+                    return correct(data.message);
+                  }
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 18:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   },
   mounted: function mounted() {
-    this.getOrders(this.currentTab);
-    this.getMessengers();
+    var _this7 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _this7.getOrders(_this7.currentTab);
+
+              _this7.getMessengers();
+
+            case 2:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
   }
 });
 
@@ -59686,6 +59809,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var count = 0;
 var boxes = [{
+  number: 0,
   weight: 0,
   "long": 0,
   broad: 0,
@@ -59716,7 +59840,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "setInput",
     value: function setInput() {
-      var inputs = ['weight[]', 'long[]', 'broad[]', 'high[]', 'vol_weight[]', 'description[]'];
+      var inputs = ['number[]', 'weight[]', 'long[]', 'broad[]', 'high[]', 'vol_weight[]', 'description[]'];
       [].forEach.call(inputs, function (input) {
         var elements = document.getElementsByName(input);
 
@@ -59752,7 +59876,11 @@ var Orders = /*#__PURE__*/function () {
       boxContainer.innerHTML = "";
       [].forEach.call(boxes, function (box) {
         var row = document.createElement("tr");
-        row.className = "row border mt-0 text-center box-register";
+        row.className = "row border mt-0 text-center box-register col-md-13 \"";
+        var numberCell = document.createElement("td");
+        numberCell.className = "col-1 py-4 border-right";
+        numberCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.number, "\">");
+        row.appendChild(numberCell);
         var weightCell = document.createElement("td");
         weightCell.className = "col-1 py-4 border-right";
         weightCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.weight, "\">");
@@ -59774,11 +59902,11 @@ var Orders = /*#__PURE__*/function () {
         volWeightCell.innerHTML = "<input type=\"number\" name=\"vol_weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.vol_weight, "\">");
         row.appendChild(volWeightCell);
         var descriptionCell = document.createElement("td");
-        descriptionCell.className = "col-3 py-4 border-right";
-        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comertarios\" value=\"".concat(box.description, "\">");
+        descriptionCell.className = "col-2 py-4 border-right";
+        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comentarios\" value=\"".concat(box.description, "\">");
         row.appendChild(descriptionCell);
         var btnCell = document.createElement("td");
-        btnCell.className = "col-3 py-4 border-right";
+        btnCell.className = "col-1 py-4";
         btnCell.innerHTML = " <div class=\"d-flex flex-row flex-wrap justify-content-center\"></div>";
         var removeBoxBtn = document.createElement("a");
         removeBoxBtn.className = 'btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn';
@@ -59806,6 +59934,7 @@ var Orders = /*#__PURE__*/function () {
 
       addBoxBtn.addEventListener('click', function () {
         boxes.push({
+          number: 0,
           weight: 0,
           "long": 0,
           broad: 0,
@@ -61598,8 +61727,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -117,9 +117,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('zonas', function () {
         return view('zones.index');
     })->name('zone.index');
+
+    Route::get('planes', function () {
+        return view('plans.index');
+    })->name('plans.index');
+
 });
-   //RUTAS
-   Route::resource('/rutas', 'Admin\RouteController')->names('routes');
+//RUTAS
+Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
 //REPORTS

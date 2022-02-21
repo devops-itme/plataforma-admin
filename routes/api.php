@@ -24,4 +24,6 @@ Route::post('resendCode', 'Api\AuthController@forward');
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('messenger/show', 'Api\MessengerController@show')->name('messenger.show');
     Route::put('messenger/update', 'Api\MessengerController@update')->name('messenger.update');
+
+    Route::resource('orders', 'Api\OrderController')->names('order');
 });

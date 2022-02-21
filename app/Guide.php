@@ -36,7 +36,7 @@ class Guide extends Model
         'state'
     ];
 
-    public function FunctionName()
+    public function getOrder()
     {
         return $this->belongsTo(Order::class, 'order_id');
     }

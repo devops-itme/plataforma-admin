@@ -142,7 +142,7 @@ class OrderController extends Controller
     public function ordersForDelivery($type)
     {
         try {
-            $orders = Order::where('order_type', $type)->with(['getUser','getGuides'])->get();
+            $orders = Order::where('order_type', 1)->where('state', $type)->with(['getUser','getGuides'])->get();
             return $this->respond(200, $orders, null, 'Lista de ordenes');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
