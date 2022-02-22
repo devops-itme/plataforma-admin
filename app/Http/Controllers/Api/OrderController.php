@@ -16,7 +16,7 @@ class OrderController extends Controller
     {
         $messenger_user_id = $request->messenger_user_id ?? Auth::user()->id;
         try {
-            $routes = Route::where('messenger_user_id',$messenger_user_id)->with('getGuide')->get();
+            $routes = Route::where('messenger_user_id',$messenger_user_id)->with(['getGuide', 'getOrder'])->get();
             return $this->respond(200, $routes, null, 'Ordenes asignadas');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
