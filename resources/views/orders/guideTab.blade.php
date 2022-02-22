@@ -10,12 +10,17 @@
             <th scope="col">Tarifa</th>
             <th scope="col">Estado</th>
             <th scope="col">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                     <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal"
                         data-target="#modalCreate">
                         <span class="svg-icon svg-icon-md">
                             <i class="fas fa-plus"></i>
                         </span>Crear
+                    </a>
+                    <a href="#" class="btn btn-success btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalImport">
+                        <span class="svg-icon svg-icon-md">
+                            <i class="fad fa-upload"></i>
+                        </span>Importar
                     </a>
                 </div>
             </th>

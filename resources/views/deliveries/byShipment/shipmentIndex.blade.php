@@ -55,12 +55,12 @@
                             <label>Pago por:</label>
                             <div class="radio-inline">
                                 <label class="radio radio-rounded">
-                                    <input type="radio" checked="checked" name="pay_comision" value="1" />
+                                    <input type="radio" checked="checked" name="pay_comision" value="0" />
                                     <span></span>
                                     Comisón
                                 </label>
                                 <label class="radio radio-rounded">
-                                    <input type="radio" name="pay_comision" value="0" />
+                                    <input type="radio" name="pay_comision" value="1" />
                                     <span></span>
                                     Exclusividad
                                 </label>

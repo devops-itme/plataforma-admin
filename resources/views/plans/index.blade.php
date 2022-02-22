@@ -41,10 +41,10 @@
                         <div class="tab-pane fade show active" id="listaPlanes" role="tabpanel" aria-labelledby="general-tab">
                             @include('plans.listaPlanesTab')
                         </div>
-                        <div class="tab-pane fade" id="paquetesPlan" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade" id="paquetesPlan" role="tabpanel" aria-labelledby="paquetesPlan-tab">
                             @include('plans.paquetesPlanTab')
                         </div>
-                        <div class="tab-pane fade" id="zonasPerm" role="tabpanel" aria-labelledby="ZonasPerm-tab">
+                        <div class="tab-pane fade" id="zonasPerm" role="tabpanel" aria-labelledby="zonasPerm-tab">
                             @include('plans.zonasPermTab')
                         </div>
                     </div>
