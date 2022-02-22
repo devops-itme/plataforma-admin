@@ -96,10 +96,6 @@ export default {
         },
 
         rowClick(data, index) {
-            // console.log(data);
-            // console.log(this.tabs);
-            // console.log(this.currentTab)
-            // console.log(this.messenger);
             this.showData = data;
             this.activeIndex = index;
         },
