@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Resources\OrderResource;
 use App\Order;
 use App\Route;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,7 +24,8 @@ class OrderController extends Controller
                 $query->whereHas('getRoute', function (Builder $query) use ($messenger_user_id) {
                     $query->where('messenger_user_id', $messenger_user_id);
                 });
-            })->get();
+            })->with(['getUser', 'getUser.getDocumentType', 'getOrderType', 'getDocumentType', 'getPaymentMethod', 'getState', 'getDepartment', 'getBranchOffice'])->get();
+            $orders = OrderResource::collection($orders);
             return $this->respond(200, $orders, null, 'Ordenes asignadas');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
