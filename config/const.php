@@ -220,8 +220,7 @@ return [
             'import',
             'export'
         ],
-
-        'Permissions' => [],
+        'permissions' => [],
         'branch_office_types' => [
             'Interna',
             'Externa'
@@ -245,6 +244,11 @@ return [
             'Contado',
             'Cantidad',
             'Saldo a favor'
+        ],
+        'order_states' => [
+            'Por despachar',
+            'Despachados',
+            'Completados'
         ]
     ]
 
