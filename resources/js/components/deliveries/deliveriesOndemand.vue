@@ -136,6 +136,8 @@ export default {
                         return error(data.message);
                     }
                     if (data.state == 200) {
+                        let index =_this.data.findIndex(item=>item.id==_this.showData.id);
+                        _this.data.splice(index,1);
                         return correct(data.message);
                     }
                 })
@@ -144,9 +146,7 @@ export default {
     },
 
     async mounted() {
-
        this.getOrders(this.currentTab);
-
         this.getMessengers();
     },
 };
