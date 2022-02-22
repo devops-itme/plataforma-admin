@@ -3087,6 +3087,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3096,7 +3101,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       data: [],
       department: {},
-      showModal: false
+      showModal: false,
+      methodValue: 'POST'
     };
   },
   computed: {},
@@ -3188,30 +3194,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    removeDepartment: function removeDepartment(id) {
+    editDepartment: function editDepartment(departament) {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var remove, index;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
-                return deleteResource("/departamentos/".concat(id, "}"));
+                _this4.methodValue = 'PUT';
+                _this4.department.name = departament.name;
+                _this4.department.description = departament.description;
+                _this4.department.state = departament.state;
+                _this4.department.id = departament.id;
+                _this4.showModal = true;
 
-              case 2:
-                remove = _context3.sent;
-
-                if (remove) {
-                  index = _this4.data.findIndex(function (item) {
-                    return item.id == id;
-                  });
-
-                  _this4.data.splice(index, 1);
-                }
-
-              case 4:
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -3219,8 +3217,100 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
+    updateDepartment: function updateDepartment() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var _this, token, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _this = _this5;
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(_this5.department)
+                };
+                console.log(_this5.department);
+                _context4.next = 10;
+                return fetch("/departamentos/".concat(_this5.department.id), requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  var department = data.data;
+
+                  if (data.state == 200) {
+                    // _this.data.push({ ...department, state: 1 });
+                    var id = _this.data.findIndex(function (item) {
+                      return item.id == _this.department.id;
+                    });
+
+                    console.log(_this.data[id].name = department.name);
+                    _this.data[id].name = department.name;
+                    _this.data[id].description = department.description;
+                    _this.data[id].state = department.state;
+                    correct(data.message);
+
+                    _this.clearValue();
+                  } else {
+                    error(data.error);
+                  }
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    removeDepartment: function removeDepartment(id) {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var remove, index;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return deleteResource("/departamentos/".concat(id, "}"));
+
+              case 2:
+                remove = _context5.sent;
+
+                if (remove) {
+                  index = _this6.data.findIndex(function (item) {
+                    return item.id == id;
+                  });
+
+                  _this6.data.splice(index, 1);
+                }
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
     clearValue: function clearValue() {
       this.department = {};
+      this.showModal = false;
+    },
+    crateDepartment: function crateDepartment() {
+      this.methodValue = 'POST';
+      this.showModal = true;
     }
   },
   mounted: function mounted() {
@@ -3362,9 +3452,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log("Component mounted.");
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -7748,7 +7836,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -41906,7 +41994,7 @@ var render = function () {
                           attrs: { href: "#", "data-toggle": "modal" },
                           on: {
                             click: function ($event) {
-                              _vm.showModal = true
+                              return _vm.crateDepartment()
                             },
                           },
                         },
@@ -41944,7 +42032,7 @@ var render = function () {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      department.state == 2
+                      department.state == 0
                         ? _c(
                             "span",
                             {
@@ -41974,7 +42062,21 @@ var render = function () {
                             domProps: { value: department.id },
                           }),
                           _vm._v(" "),
-                          _vm._m(1, true),
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn btn-icon btn-light-success btn-sm mr-2",
+                              attrs: { href: "#", "data-toggle": "modal" },
+                              on: {
+                                click: function ($event) {
+                                  $event.preventDefault()
+                                  return _vm.editDepartment(department)
+                                },
+                              },
+                            },
+                            [_c("i", { staticClass: "fas fa-edit" })]
+                          ),
                           _vm._v(" "),
                           _c(
                             "a",
@@ -42022,9 +42124,17 @@ var render = function () {
                   slot: "header",
                 },
                 [
-                  _c("h4", { staticClass: "card-title" }, [
-                    _vm._v("Crear departamento"),
-                  ]),
+                  _vm.methodValue == "POST"
+                    ? _c("h4", { staticClass: "card-title" }, [
+                        _vm._v("Crear departamento"),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.methodValue == "PUT"
+                    ? _c("h4", { staticClass: "card-title" }, [
+                        _vm._v("Editar departamento"),
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "button",
@@ -42037,7 +42147,7 @@ var render = function () {
                       },
                       on: {
                         click: function ($event) {
-                          _vm.showModal = false
+                          return _vm.clearValue()
                         },
                       },
                     },
@@ -42054,141 +42164,153 @@ var render = function () {
                 "div",
                 { staticClass: "row", attrs: { slot: "body" }, slot: "body" },
                 [
-                  _c(
-                    "form",
-                    {
-                      attrs: { action: "", id: "formDepartment" },
-                      on: {
-                        submit: function ($event) {
-                          $event.preventDefault()
-                          return _vm.addDepartment()
-                        },
-                      },
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "card d-flex flex-row flex-wrap" },
-                        [
-                          _c("div", { staticClass: "form-group col-md-12" }, [
-                            _c("label", [
-                              _vm._v("Nombres:\n                            "),
-                              _c("span", { staticClass: "text-danger" }, [
-                                _vm._v("*"),
-                              ]),
+                  _c("form", { attrs: { action: "", id: "formDepartment" } }, [
+                    _c(
+                      "div",
+                      { staticClass: "card d-flex flex-row flex-wrap" },
+                      [
+                        _c("div", { staticClass: "form-group col-md-12" }, [
+                          _c("label", [
+                            _vm._v("Nombres:\n                            "),
+                            _c("span", { staticClass: "text-danger" }, [
+                              _vm._v("*"),
                             ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.department.name,
-                                  expression: "department.name",
-                                },
-                              ],
-                              staticClass: "form-control form-control-solid",
-                              attrs: {
-                                name: "name",
-                                type: "text",
-                                placeholder: "Nombre",
-                              },
-                              domProps: { value: _vm.department.name },
-                              on: {
-                                input: function ($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.department,
-                                    "name",
-                                    $event.target.value
-                                  )
-                                },
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "form-text text-muted" }),
                           ]),
                           _vm._v(" "),
-                          1 < 0
-                            ? _c(
-                                "div",
-                                { staticClass: "form-group col-md-12" },
-                                [
-                                  _c("label", [_vm._v("Estado")]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "select",
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.department.name,
+                                expression: "department.name",
+                              },
+                            ],
+                            staticClass: "form-control form-control-solid",
+                            attrs: {
+                              name: "name",
+                              type: "text",
+                              placeholder: "Nombre",
+                            },
+                            domProps: { value: _vm.department.name },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.department,
+                                  "name",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "form-text text-muted" }),
+                        ]),
+                        _vm._v(" "),
+                        _vm.methodValue == "PUT"
+                          ? _c("div", { staticClass: "form-group col-md-12" }, [
+                              _c("label", [_vm._v("Estado")]),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
                                     {
-                                      staticClass:
-                                        "form-control form-control-solid",
-                                      attrs: {
-                                        id: "document_type",
-                                        name: "state",
-                                      },
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.department.state,
+                                      expression: "department.state",
                                     },
-                                    [
-                                      _c(
-                                        "option",
-                                        { attrs: { disabled: "" } },
-                                        [_vm._v("Seleccione")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "1" } }, [
-                                        _vm._v("Activo"),
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "0" } }, [
-                                        _vm._v("Inactivo"),
-                                      ]),
-                                    ]
+                                  ],
+                                  staticClass:
+                                    "form-control form-control-solid",
+                                  attrs: { id: "document_type", name: "state" },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call(
+                                          $event.target.options,
+                                          function (o) {
+                                            return o.selected
+                                          }
+                                        )
+                                        .map(function (o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.department,
+                                        "state",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    },
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { disabled: "", selected: "" } },
+                                    [_vm._v("Seleccione")]
                                   ),
                                   _vm._v(" "),
-                                  _c("span", {
-                                    staticClass: "form-text text-muted",
-                                  }),
+                                  _c("option", { attrs: { value: "1" } }, [
+                                    _vm._v("Activo"),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "0" } }, [
+                                    _vm._v("Inactivo"),
+                                  ]),
                                 ]
-                              )
-                            : _vm._e(),
+                              ),
+                              _vm._v(" "),
+                              _c("span", {
+                                staticClass: "form-text text-muted",
+                              }),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group col-md-12" }, [
+                          _c("label", [_vm._v("Descripción")]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "form-group col-md-12" }, [
-                            _c("label", [_vm._v("Descripción")]),
-                            _vm._v(" "),
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.department.description,
-                                  expression: "department.description",
-                                },
-                              ],
-                              staticClass: "form-control form-control-solid",
-                              attrs: {
-                                name: "description",
-                                cols: "30",
-                                rows: "10",
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.department.description,
+                                expression: "department.description",
                               },
-                              domProps: { value: _vm.department.description },
-                              on: {
-                                input: function ($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.department,
-                                    "description",
-                                    $event.target.value
-                                  )
-                                },
+                            ],
+                            staticClass: "form-control form-control-solid",
+                            attrs: {
+                              name: "description",
+                              cols: "30",
+                              rows: "10",
+                            },
+                            domProps: { value: _vm.department.description },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.department,
+                                  "description",
+                                  $event.target.value
+                                )
                               },
-                            }),
-                          ]),
-                        ]
-                      ),
-                    ]
-                  ),
+                            },
+                          }),
+                        ]),
+                      ]
+                    ),
+                  ]),
                 ]
               ),
               _vm._v(" "),
@@ -42200,21 +42322,46 @@ var render = function () {
                     attrs: { type: "button" },
                     on: {
                       click: function ($event) {
-                        _vm.showModal = false
+                        return _vm.clearValue()
                       },
                     },
                   },
                   [_vm._v("\n                Cerrar\n            ")]
                 ),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary font-weight-bold",
-                    attrs: { type: "submit", form: "formDepartment" },
-                  },
-                  [_vm._v("\n                Guardar\n            ")]
-                ),
+                _vm.methodValue == "POST"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary font-weight-bold",
+                        attrs: { type: "submit", form: "formDepartment" },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.addDepartment()
+                          },
+                        },
+                      },
+                      [_vm._v("\n                Guardar\n            ")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.methodValue == "PUT"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary font-weight-bold",
+                        attrs: { type: "submit", form: "formDepartment" },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.updateDepartment()
+                          },
+                        },
+                      },
+                      [_vm._v("\n                Editar\n            ")]
+                    )
+                  : _vm._e(),
               ]),
             ]
           )
@@ -42231,23 +42378,6 @@ var staticRenderFns = [
     return _c("span", { staticClass: "svg-icon svg-icon-md" }, [
       _c("i", { staticClass: "fas fa-plus" }),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-icon btn-light-success btn-sm mr-2",
-        attrs: {
-          href: "#",
-          "data-toggle": "modal",
-          "data-target": "#modalEditDep",
-        },
-      },
-      [_c("i", { staticClass: "fas fa-edit" })]
-    )
   },
 ]
 render._withStripped = true
@@ -62085,8 +62215,13 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+=======
 __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+>>>>>>> df11eda23e40dd8ea347b69a90c91b49c683297d
 
 
 /***/ })
