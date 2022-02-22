@@ -64,7 +64,7 @@ trait RouteTrait
                 'state'=>2
             ]);
 
-            return $this->respond(200, $route, null, 'Ruta creada exitosamente');
+            return $this->respond(200, $order, null, 'Orden asignada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage() , 'Error al crear la ruta');
         }
