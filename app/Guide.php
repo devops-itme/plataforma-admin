@@ -40,4 +40,9 @@ class Guide extends Model
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
+
+    public function getRoute()
+    {
+        return $this->hasOne(Route::class, 'guide_id');
+    }
 }

@@ -88,17 +88,23 @@ trait OrderTrait
             }
             $order->update([
                 'user_id' => $request->user_id,
-                'service_type_id' => $request->service_type_id,
-                'vehicle_type_id' => $request->vehicle_type_id,
-                'payment_method_id' => $request->payment_method_id,
+                'order_type' => $request->order_type,
+                'order_value' => $request->order_value,
+                'receive_by_COD' => $request->receive_by_COD,
+                'internal_product' => $request->internal_product,
+                'expenses' => $request->expenses,
+                'diligence_expenses' => $request->diligence_expenses,
+                'tax_total' => $request->tax_total,
+                'payment_method' => $request->payment_method,
+                'urgent_dispatch' => $request->urgent_dispatch,
+                'return_last_destination' => $request->return_last_destination,
                 'schedule_date' => $request->schedule_date,
                 'schedule_time' => $request->schedule_time,
-                'express_delivery' => $request->express_delivery,
-                'last_destination_return' => $request->last_destination_return,
                 'insured_value' => $request->insured_value,
-                'percentage_receivable' => $request->percentage_receivable,
-                'value_receivable' => $request->value_receivable,
-                'state' => $request->state
+                'money_to_collect' => $request->money_to_collect,
+                'percentage_to_collect' => $request->percentage_to_collect,
+                'customer_user_id' => $request->user_id,
+                'branch_office' => $request->branch_office
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {
@@ -123,6 +129,11 @@ trait OrderTrait
     public function assignGuide($request, $id)
     {
         try {
+            $orderGuides = Guide::where('order_id', $id)->get();
+            foreach ($orderGuides as $key) {
+                $key->order_id = NULL;
+                $key->save();
+            }
             foreach($request->guideCheck as $key){
                 Guide::find($key)->update([
                     'order_id' => $id

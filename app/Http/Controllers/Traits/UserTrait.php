@@ -12,7 +12,7 @@ trait UserTrait
 {
     use RestActions;
 
-    public function valide($request, $action = null, $id = null)
+    public function valide($request, $action = null)
     {
         return Validator::make(
             $request->all(),
@@ -23,15 +23,15 @@ trait UserTrait
                 'document_type' => 'nullable|exists:parameter_values,id',
                 'document_number' => [
                     'nullable', 'string',
-                    Rule::unique('users', 'document_number')->whereNull('deleted_at')->where('id', '<>', $id)
+                    Rule::unique('users', 'document_number')->whereNull('deleted_at')
                 ],
                 'email' => [
                     'required', 'email',
-                    Rule::unique('users', 'email')->whereNull('deleted_at')->where('id', '<>', $id)
+                    Rule::unique('users', 'email')->whereNull('deleted_at')
                 ],
                 'phone' => [
                     'nullable', 'string',
-                    Rule::unique('users', 'phone')->whereNull('deleted_at')->where('id', '<>', $id)
+                    Rule::unique('users', 'phone')->whereNull('deleted_at')
                 ],
                 'password' => [
                     'string',

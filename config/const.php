@@ -1,7 +1,5 @@
 <?php
 
-use App\Permission;
-
 return [
     'states' => [
         1 => [
@@ -124,7 +122,7 @@ return [
             ]
         ],
         'parameters' => [
-            'name' => 'Parametros', 'reference' => 'parameters', 'icon' => '', 'position' => '6',
+            'name' => 'Parámetros', 'reference' => 'parameters', 'icon' => '', 'position' => '6',
             'actions' => '6,7,8,9,10,11,12,13',
             'children' => [],
             'permission' => [
@@ -194,10 +192,10 @@ return [
         0 => 'Domingo',
         1 => 'Lunes',
         2 => 'Martes',
-        3 => 'Miercoles',
+        3 => 'Miércoles',
         4 => 'Jueves',
         5 => 'Viernes',
-        6 => 'Sabado',
+        6 => 'Sábado',
     ],
     'parameters' => [
         'document_type' => [
@@ -216,12 +214,11 @@ return [
             'delete',
             'update',
             'edit',
-            'assignate',
+            'assignat',
             'import',
             'export'
         ],
-
-        'Permissions' => [],
+        'permissions' => [],
         'branch_office_types' => [
             'Interna',
             'Externa'
@@ -236,15 +233,20 @@ return [
             'Mensual'
         ],
         'payment_method' => [
-            'Credito',
+            'Crédito',
             'Plan'
         ],
         'use_mode' => [
             'Saldo',
-            'Credito',
+            'Crédito',
             'Contado',
             'Cantidad',
             'Saldo a favor'
+        ],
+        'order_states' => [
+            'Por despachar',
+            'Despachados',
+            'Completados'
         ]
     ]
 
