@@ -247,7 +247,11 @@ return [
             'Por despachar',
             'Despachados',
             'Completados'
-        ]
+        ],
+        'order_types' => [
+            'Ondemand',
+            'Multiple'
+        ],
     ]
 
 ];
