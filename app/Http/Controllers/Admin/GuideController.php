@@ -6,6 +6,7 @@ use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuidanceDocsTrait;
 use App\Http\Controllers\Traits\GuideTrait;
+use App\Order;
 use Illuminate\Http\Request;
 
 class GuideController extends Controller
@@ -18,7 +19,14 @@ class GuideController extends Controller
      */
     public function index()
     {
-        $guides = Guide::where('order_id', NULL)->get();
+        if(request()->order != null){
+            $order = Order::where('order_number', request()->order)->first();
+            if($order){
+                $guides = Guide::where('order_id', $order->id)->orWhere('order_id', NULL)->get();
+            }
+        } else {
+            $guides = Guide::where('order_id', NULL)->get();
+        }
         return json_encode([
             'state' => 200,
             'data' => $guides
