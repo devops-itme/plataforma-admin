@@ -118,9 +118,14 @@ class OrderController extends Controller
         if($request->return_last_destination == 'on'){$request->merge(['return_last_destination' => 1]);}
         else{$request->merge(['return_last_destination' => 0]);}
         $request->merge(['state' => 1]);
-
         $response = $this->updateOrder($request->merge(['order_id' => $id]));
         if($response['state'] == 200){
+            if($request->guideCheck){
+                $assignGuide = $this->assignGuide($request, $response['data']->id);
+                if($assignGuide['state'] != 200){
+                    return redirect()->back()->with('danger', $assignGuide['error']);
+                }
+            }
             return redirect()->route('orders.index')->with('success', 'Orden actualizada exitosamente.');
         } else {
             return redirect()->back()->with('danger', $response['message']);

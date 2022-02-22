@@ -87,7 +87,6 @@ trait OrderTrait
                 return $this->respond(500, [], 'user not found', 'No se encontro la orden');
             }
             $order->update([
-                'order_number' => $request->order_number,
                 'user_id' => $request->user_id,
                 'order_type' => $request->order_type,
                 'order_value' => $request->order_value,
