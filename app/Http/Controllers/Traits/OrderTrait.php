@@ -129,6 +129,11 @@ trait OrderTrait
     public function assignGuide($request, $id)
     {
         try {
+            $orderGuides = Guide::where('order_id', $id)->get();
+            foreach ($orderGuides as $key) {
+                $key->order_id = NULL;
+                $key->save();
+            }
             foreach($request->guideCheck as $key){
                 Guide::find($key)->update([
                     'order_id' => $id

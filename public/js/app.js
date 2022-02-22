@@ -60498,7 +60498,7 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                orderNumber = document.getElementById("order_number").value;
+                orderNumber = document.getElementsByName("order_number")[0].value;
                 response = {
                   'state': 500
                 };
@@ -61736,8 +61736,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

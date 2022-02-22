@@ -456,7 +456,7 @@ export default class Orders {
     }
 
     async requestGuides(){
-        let orderNumber = document.getElementById("order_number").value;
+        let orderNumber = document.getElementsByName("order_number")[0].value;
         let response = {
             'state': 500
         };
