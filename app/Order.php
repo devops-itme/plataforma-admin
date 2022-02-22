@@ -47,6 +47,11 @@ class Order extends Model
     {
         return $this->hasMany(Guide::class, 'order_id');
     }
+
+    public function getOrderType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'order_type');
+    }
     //SCOPES
 
     public function scopeNumber($query, $value)
