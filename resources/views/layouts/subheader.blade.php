@@ -126,7 +126,7 @@
                                 </li>
                                 <li><a class="dropdown-item" href="{{ route('messengers.index') }}">Mensajeros</a>
                                 </li>
-                                <li><a class="dropdown-item" href="planes">Planes</a></li>
+                                <li><a class="dropdown-item" href="{{route('plans.index')}}">Planes</a></li>
                             </ul>
                         </li>
 
