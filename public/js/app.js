@@ -60404,6 +60404,7 @@ var Orders = /*#__PURE__*/function () {
 
               case 6:
                 response = _context9.sent;
+                console.log(response);
                 data = response.data;
 
                 if (data.length > 0) {
@@ -60441,7 +60442,8 @@ var Orders = /*#__PURE__*/function () {
                     guideCheck.setAttribute('class', 'checkbox-inline mt-3');
                     guideCheck.setAttribute('type', 'checkbox');
                     guideCheck.setAttribute('name', 'guideCheck[]');
-                    guideCheck.setAttribute('value', key.id); //EDIT
+                    guideCheck.setAttribute('value', key.id);
+                    key.order_id != null ? guideCheck.checked = true : ''; //EDIT
 
                     var guideEdit = document.createElement("button");
                     guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
@@ -60473,7 +60475,7 @@ var Orders = /*#__PURE__*/function () {
 
                 this.editGuide();
 
-              case 10:
+              case 11:
               case "end":
                 return _context9.stop();
             }
@@ -60491,16 +60493,17 @@ var Orders = /*#__PURE__*/function () {
     key: "requestGuides",
     value: function () {
       var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var response;
+        var orderNumber, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
+                orderNumber = document.getElementById("order_number").value;
                 response = {
                   'state': 500
                 };
-                _context10.next = 3;
-                return fetch("/guias").then(function (response) {
+                _context10.next = 4;
+                return fetch("/guias?order=" + orderNumber).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -60508,10 +60511,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 3:
+              case 4:
                 return _context10.abrupt("return", response);
 
-              case 4:
+              case 5:
               case "end":
                 return _context10.stop();
             }

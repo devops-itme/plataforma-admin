@@ -384,6 +384,7 @@ export default class Orders {
         }
         tbody.innerHTML = '';
         let response = await this.requestGuides();
+        console.log(response);
         let data = response.data;
         if(data.length > 0){
             [].forEach.call(data, key => {
@@ -426,6 +427,7 @@ export default class Orders {
                 guideCheck.setAttribute('type', 'checkbox');
                 guideCheck.setAttribute('name', 'guideCheck[]');
                 guideCheck.setAttribute('value', key.id);
+                key.order_id != null ? guideCheck.checked = true : '';
                 //EDIT
                 const guideEdit = document.createElement("button");
                 guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
@@ -454,10 +456,11 @@ export default class Orders {
     }
 
     async requestGuides(){
+        let orderNumber = document.getElementById("order_number").value;
         let response = {
             'state': 500
         };
-        await fetch("/guias")
+        await fetch("/guias?order="+orderNumber)
             .then(response => response.json())
             .then(data => {
                 response = data

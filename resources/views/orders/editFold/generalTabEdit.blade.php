@@ -11,10 +11,10 @@
         </div>
         <div class="form-group col-md-6">
             <label for="pay_method">Metodo de pago <span class="text-danger">*</span></label>
-            <select name="payment_method_id" class="form-control form-control-solid" id="pay_method">
+            <select name="payment_method" class="form-control form-control-solid" id="pay_method">
                 <option selected disabled>Seleccione Metodo de pago</option>
-                <option value="1" {{$order->payment_method_id == 1 ? 'selected':''}}>Efectivo</option>
-                <option value="2" {{$order->payment_method_id == 2 ? 'selected':''}}>Cheque</option>
+                <option value="1" {{$order->payment_method == 1 ? 'selected':''}}>Efectivo</option>
+                <option value="2" {{$order->payment_method == 2 ? 'selected':''}}>Cheque</option>
             </select>
         </div>
         <div class="form-group col-md-6">
@@ -30,12 +30,12 @@
         <div class="form-group col-md-12 m-0 d-flex align-items-center">
             <div class="checkbox-inline">
                 <label class="checkbox">
-                    <input type="checkbox" name="express_delivery" {{$order->express_delivery == 1 ? 'checked' : ''}} />
+                    <input type="checkbox" name="urgent_dispatch" {{$order->urgent_dispatch == 1 ? 'checked' : ''}} />
                     <span></span>
                     Marcar Urgente Despacho
                 </label>
                 <label class="checkbox">
-                    <input type="checkbox" name="last_destination_return" {{$order->last_destination_return == 1 ? 'checked' : ''}} />
+                    <input type="checkbox" name="return_last_destination" {{$order->return_last_destination == 1 ? 'checked' : ''}} />
                     <span></span>
                     Retorno Ultimo Destino
                 </label>
@@ -51,12 +51,12 @@
         </div>
         <div class="form-group col-md-6">
             <label>A cobrar %: <span class="text-danger">*</span></label>
-            <input name="percentage_receivable" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->percentage_receivable}}" />
+            <input name="percentage_to_collect" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->percentage_to_collect}}" />
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
             <label>A cobrar $: <span class="text-danger">*</span></label>
-            <input name="value_receivable" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->value_receivable}}" />
+            <input name="money_to_collect" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->money_to_collect}}" />
             <span class="form-text text-muted"></span>
         </div>
     </div>
