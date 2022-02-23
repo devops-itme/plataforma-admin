@@ -123,7 +123,7 @@
                         <a class="nav-link" href="{{route('branchOffices.index', $customer->user_id)}}">Sucursales</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="{{route('departments.index', ['user_id' => $customer->getUser->id])}}">Departamentos</a>
+                        <a class="nav-link" id="departament-tab" data-toggle="tab" href="#departament" role="tab" aria-controls="departament" aria-selected="false">Departamentos</a>
                     </li>
                     @if($customer->getUser->role == 4)
                         <li class="nav-item" role="presentation">
@@ -226,6 +226,12 @@
                             </div>
                         </div>
                     </div>
+                     {{-- DEPARTMENT MODULE --}}
+                     <div class="tab-pane fade" id="departament" role="tabpanel" aria-labelledby="departament-tab">
+                        <department-tab>
+
+                        </department-tab>
+                     </div>
                 </div>
             </div>
         </div>
