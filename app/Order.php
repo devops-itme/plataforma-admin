@@ -47,6 +47,38 @@ class Order extends Model
     {
         return $this->hasMany(Guide::class, 'order_id');
     }
+
+    public function getOrderType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'order_type');
+    }
+
+    public function getDocumentType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'document_type');
+    }
+
+    public function getPaymentMethod()
+    {
+        return $this->belongsTo(ParameterValue::class, 'payment_method');
+    }
+
+    public function getState()
+    {
+        return $this->belongsTo(ParameterValue::class, 'state');
+    }
+
+    public function getDepartment()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function getBranchOffice()
+    {
+        return $this->belongsTo(BranchOffice::class, 'branch_office');
+    }
+
+
     //SCOPES
 
     public function scopeNumber($query, $value)

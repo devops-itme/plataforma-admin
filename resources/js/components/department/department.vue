@@ -20,7 +20,7 @@
                                         href="#"
                                         class="btn btn-primary btn-sm font-weight-bolder"
                                         data-toggle="modal"
-                                        @click="showModal = true"
+                                        @click="crateDepartment()"
                                     >
                                         <span class="svg-icon svg-icon-md">
                                             <i class="fas fa-plus"></i> </span
@@ -45,7 +45,7 @@
                                     Activo
                                 </span>
                                 <span
-                                    v-if="department.state == 2"
+                                    v-if="department.state == 0"
                                     class="label label-inline label-light-danger font-weight-bold"
                                 >
                                     Inactivo
@@ -65,7 +65,8 @@
                                         href="#"
                                         class="btn btn-icon btn-light-success btn-sm mr-2"
                                         data-toggle="modal"
-                                        data-target="#modalEditDep"
+                                        @click.prevent="editDepartment(department)"
+
                                     >
                                         <i class="fas fa-edit"></i>
                                     </a>
@@ -73,9 +74,7 @@
                                         href="#"
                                         role="button"
                                         class="btn btn-icon btn-light-danger btn-sm mr-2"
-                                        @click.prevent="
-                                            removeDepartment(department.id)
-                                        "
+                                        @click.prevent="removeDepartment(department.id)"
                                     >
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
@@ -89,10 +88,12 @@
         <!-- Modal departament -->
         <modal v-if="showModal" @close="showModal = false">
             <div slot="header" class="d-flex justify-content-between w-100">
-                <h4 class="card-title">Crear departamento</h4>
+
+                <h4 v-if="methodValue=='POST'" class="card-title">Crear departamento</h4>
+                <h4 v-if="methodValue=='PUT'" class="card-title">Editar departamento</h4>
                 <button
                     type="button"
-                    @click="showModal = false"
+                    @click="clearValue()"
                     class="close"
                     data-dismiss="alert"
                     aria-label="Close"
@@ -101,7 +102,7 @@
                 </button>
             </div>
             <div class="row" slot="body">
-                <form action="" v-on:submit.prevent="addDepartment()" id="formDepartment">
+                <form action="" id="formDepartment">
                     <div class="card d-flex flex-row flex-wrap">
                         <div class="form-group col-md-12">
                             <label
@@ -117,15 +118,16 @@
                             />
                             <span class="form-text text-muted"></span>
                         </div>
-                        <div v-if="1 < 0" class="form-group col-md-12">
+                        <div v-if="methodValue=='PUT'" class="form-group col-md-12">
                             <label>Estado</label>
                             <select
                                 class="form-control form-control-solid"
                                 id="document_type"
                                 name="state"
+                                v-model="department.state"
                             >
-                                <option disabled>Seleccione</option>
-                                <option value="1">Activo</option>
+                                <option disabled selected>Seleccione</option>
+                                <option value="1" >Activo</option>
                                 <option value="0">Inactivo</option>
                             </select>
                             <span class="form-text text-muted"></span>
@@ -148,12 +150,15 @@
                 <button
                     type="button"
                     class="btn btn-light-primary font-weight-bold"
-                    @click="showModal = false"
+                    @click="clearValue()"
                 >
                     Cerrar
                 </button>
-                <button type="submit"  form="formDepartment" class="btn btn-primary font-weight-bold">
+                <button type="submit" v-if="methodValue=='POST'"  @click.prevent="addDepartment()"  form="formDepartment" class="btn btn-primary font-weight-bold">
                     Guardar
+                </button>
+                <button type="submit" v-if="methodValue=='PUT'"  @click.prevent="updateDepartment()"  form="formDepartment" class="btn btn-primary font-weight-bold">
+                    Editar
                 </button>
             </div>
         </modal>
@@ -168,6 +173,7 @@ export default {
             data: [],
             department: {},
             showModal: false,
+            methodValue: 'POST'
         };
     },
     computed: {},
@@ -219,6 +225,50 @@ export default {
                 })
                 .catch((err) => console.warn(err));
         },
+        async editDepartment(departament) {
+            this.methodValue='PUT';
+            this.department.name = departament.name
+            this.department.description =departament.description
+            this.department.state =departament.state
+            this.department.id =departament.id
+            this.showModal = true;
+        },
+
+        async  updateDepartment(){
+            let _this = this;
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify(this.department),
+
+            };
+            await fetch(`/departamentos/${this.department.id}`, requestOptions)
+                .then((response) => response.json())
+                .then(function (data) {
+                    let department = data.data;
+                    if(data.state == 200){
+                        // _this.data.push({ ...department, state: 1 });
+                          let id = _this.data.findIndex((item) => item.id == _this.department.id);
+                            _this.data[id].name=department.name
+                            _this.data[id].description=department.description
+                            _this.data[id].state=department.state
+
+                        correct(data.message);
+                        _this.clearValue();
+                    }else{
+                        error(data.error);
+                    }
+                })
+                .catch((err) => console.warn(err));
+        },
+
         async removeDepartment(id) {
             let remove = await deleteResource(`/departamentos/${id}}`);
             if (remove) {
@@ -228,7 +278,12 @@ export default {
         },
         clearValue() {
             this.department = {};
+            this.showModal = false;
         },
+        crateDepartment(){
+            this.methodValue = 'POST';
+            this.showModal = true;
+        }
     },
     mounted() {
         this.getDepartment();
