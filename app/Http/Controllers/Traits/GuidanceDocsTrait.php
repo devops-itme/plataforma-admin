@@ -8,7 +8,7 @@ use App\GuidanceDocument;
 
 trait GuidanceDocsTrait
 {
-    use RestActions;
+    use GuideTrait;
 
     public function GuidanceDocsValidate($request)
     {
