@@ -31,7 +31,7 @@ class OrderController extends Controller
                     $query->where('messenger_user_id', $messenger_user_id);
                 });
             })
-                ->where('state', $state->id)
+                // ->where('state', $state->id)
                 ->with($relationships)->get();
             $orders = OrderResource::collection($orders);
             return $this->respond(200, $orders, null, 'Ordenes asignadas');
