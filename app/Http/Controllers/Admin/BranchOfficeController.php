@@ -10,6 +10,7 @@ use App\Parameter;
 use App\ParameterValue;
 use App\User;
 use App\UserBranch;
+use App\UserDeparment;
 
 class BranchOfficeController extends Controller
 {
@@ -67,12 +68,26 @@ class BranchOfficeController extends Controller
         }
         $response = $this->saveBranchOffice($request);
         if($response['state'] == 200){
-            $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
-            if($saveBranchDept['state'] != 200){
-                return json_encode([
-                    'state' => 500,
-                    'error' => $saveBranchDept['message']
-                ]);
+            if($request->branch_office_department != 'Seleccione'){
+                $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
+                if($saveBranchDept){
+                    $userDept = UserDeparment::where('department_id', $saveBranchDept['data']->department_id)->first();
+                    if($userDept){
+                        $saveUserBranch = $this->storeUserBranch($userDept->user_id, $response['data']->id);
+                        if($saveUserBranch['state'] != 200){
+                            return json_encode([
+                                'state' => 500,
+                                'error' => $saveUserBranch['error']
+                            ]);
+                        }
+                    }
+                }
+                if($saveBranchDept['state'] != 200){
+                    return json_encode([
+                        'state' => 500,
+                        'error' => $saveBranchDept['error']
+                    ]);
+                }
             }
             // return redirect()->route('branchOffices.index', $user_id)->with('success', $response['message']);
             return json_encode([
@@ -143,12 +158,26 @@ class BranchOfficeController extends Controller
     {
         $response = $this->updateBranchOffice($request->merge(['office_id' => $id]));
         if($response['state'] == 200){
-            $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
-            if($saveBranchDept['state'] != 200){
-                return json_encode([
-                    'state' => 500,
-                    'error' => $saveBranchDept['message']
-                ]);
+            if($request->branch_office_department != 'Seleccione'){
+                $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
+                if($saveBranchDept){
+                    $userDept = UserDeparment::where('department_id', $saveBranchDept['data']->department_id)->first();
+                    if($userDept){
+                        $saveUserBranch = $this->storeUserBranch($userDept->user_id, $response['data']->id);
+                        if($saveUserBranch['state'] != 200){
+                            return json_encode([
+                                'state' => 500,
+                                'error' => $saveUserBranch['error']
+                            ]);
+                        }
+                    }
+                }
+                if($saveBranchDept['state'] != 200){
+                    return json_encode([
+                        'state' => 500,
+                        'error' => $saveBranchDept['message']
+                    ]);
+                }
             }
             return json_encode([
                     'state' => 200,

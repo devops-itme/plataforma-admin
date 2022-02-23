@@ -59564,20 +59564,19 @@ var Customers = /*#__PURE__*/function () {
 
               case 19:
                 response = _context.sent;
-                console.log(response);
 
                 if (response['state'] == 200) {
-                  alert('Sucursal creada exitosamente.');
+                  correct('Sucursal creada de manera exitosa');
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
                   _this.listBranchOffices();
                 } else {
-                  alert('Ocurrió un error al crear la sucursal.');
+                  error("Error al crear sucursal");
                   console.log('Error ocurrido: ' + response['error']);
                 }
 
-              case 22:
+              case 21:
               case "end":
                 return _context.stop();
             }
@@ -59665,9 +59664,7 @@ var Customers = /*#__PURE__*/function () {
                         zoneCell.innerHTML = data[i].get_zone.name;
                         var contactCell = row.insertCell(3);
                         contactCell.innerHTML = data[i].contact;
-                        var deptCell = row.insertCell(4);
-                        deptCell.innerHTML = '<span class="label label-inline label-light-info font-weight-bold">' + data[i].get_department.get_department.name + '</span>';
-                        var stateCell = row.insertCell(5);
+                        var stateCell = row.insertCell(4);
 
                         if (data[i].state == 1) {
                           stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
@@ -59679,7 +59676,7 @@ var Customers = /*#__PURE__*/function () {
                                                 </span>';
                         }
 
-                        var selectCell = row.insertCell(6);
+                        var selectCell = row.insertCell(5);
                         var branchCheck = document.createElement("input");
                         branchCheck.setAttribute('class', 'checkbox-inline mt-3');
                         branchCheck.setAttribute('type', 'checkbox');
