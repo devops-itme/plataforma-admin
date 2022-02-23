@@ -59645,11 +59645,10 @@ var Customers = /*#__PURE__*/function () {
 
               case 3:
                 tbody.innerHTML = '';
-                this.listDepartments();
-                _context3.next = 7;
+                _context3.next = 6;
                 return this.requestBranchOffices();
 
-              case 7:
+              case 6:
                 assignedBranchOffices = _context3.sent;
 
                 if (assignedBranchOffices['state'] == 200) {
@@ -59730,6 +59729,7 @@ var Customers = /*#__PURE__*/function () {
                 }
 
                 this.editBranches();
+                this.listDepartments();
 
               case 10:
               case "end":

@@ -96,7 +96,6 @@ export default class Customers {
             return;
         }
         tbody.innerHTML = '';
-        this.listDepartments();
         let assignedBranchOffices = await this.requestBranchOffices();
         if(assignedBranchOffices['state'] == 200){
             let data = assignedBranchOffices['data'];
@@ -170,6 +169,7 @@ export default class Customers {
             }
         }
         this.editBranches();
+        this.listDepartments();
     }
 
     async requestBranchOffices(){
