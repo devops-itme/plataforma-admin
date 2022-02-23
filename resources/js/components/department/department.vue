@@ -12,8 +12,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">State</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">
                                 <div class="d-flex justify-content-end">
                                     <a
