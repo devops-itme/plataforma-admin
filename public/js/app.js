@@ -59565,20 +59565,19 @@ var Customers = /*#__PURE__*/function () {
 
               case 19:
                 response = _context.sent;
-                console.log(response);
 
                 if (response['state'] == 200) {
-                  alert('Sucursal creada exitosamente.');
+                  correct('Sucursal creada de manera exitosa');
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
                   _this.listBranchOffices();
                 } else {
-                  alert('Ocurrió un error al crear la sucursal.');
-                  console.log('Error ocurrido: ' + response['error']);
+                  error("Error al crear sucursal"); // alert('Ocurrió un error al crear la sucursal.');
+                  // console.log('Error ocurrido: '+response['error']);
                 }
 
-              case 22:
+              case 21:
               case "end":
                 return _context.stop();
             }

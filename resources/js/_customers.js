@@ -62,15 +62,15 @@ export default class Customers {
             formData.append('branch_office_default', document.getElementById("branch_office_default").value);
             formData.append('branch_office_department', document.getElementById("branch_office_department").value);
             let response = await this.sendBranchOfficeData(formData);
-            console.log(response);
             if(response['state'] == 200){
-                alert('Sucursal creada exitosamente.');
+                correct('Sucursal creada de manera exitosa');
                 let modal = document.getElementById("modalCreate");
                 modal.click();
                 this.listBranchOffices();
             } else {
-                alert('Ocurrió un error al crear la sucursal.');
-                console.log('Error ocurrido: '+response['error']);
+                error("Error al crear sucursal");
+                // alert('Ocurrió un error al crear la sucursal.');
+                // console.log('Error ocurrido: '+response['error']);
             }
         });
     }
