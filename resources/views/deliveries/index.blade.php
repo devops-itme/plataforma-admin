@@ -18,7 +18,7 @@
                     <h6 class=" card-text">Ver todo</h6>
                 </div>
                 <div class="card-toolbar">
-                    <ul class="nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-3x">
+                    <ul class="nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-3x" id="myTab">
                         <li  class="nav-item"  v-for="(tab, index) in tabs" :key="tab.id" >
                             <a class="nav-link" @click="getOrders(tab.id)"
                             :class="{'active': currentTab === tab.id}" data-toggle="tab" :href="`#${tab.href}`" v-text=tab.name></a>

@@ -8,9 +8,9 @@ export default {
             completed: [],
             showData: "",
             tabs: [
-                { id: 1, name: "Por despachar", href: "pordespachar", data: [] },
-                { id: 2, name: "Despachados", href: "despachados", data: [] },
-                { id: 3, name: "Completados", href: "completados", data: []  },
+                { id: 1, name: "Por despachar", href: "pordespachar" },
+                { id: 2, name: "Despachados", href: "despachados" },
+                { id: 3, name: "Completados", href: "completados" },
             ],
             currentTab: 1,
 
@@ -50,6 +50,12 @@ export default {
 
     methods: {
         async getOrders(type_id){
+            // let tabEl = document.querySelector('button[data-toggle="tab"]')
+            //     // tabEl.addEventListener('shown.bs.tab', function (event) {
+            //     //     event.target // newly activated tab
+            //     //     event.relatedTarget // previous active tab
+            //     // })
+            //     console.log(tabEl)
             this.currentTab = type_id;
             let response =  await this.requestOrders();
             this.data = response.data
@@ -101,7 +107,6 @@ export default {
         },
 
         async assignateDelivery() {
-            console.log(this.setMessenger);
             if (!this.showData) {
                 return await error("Debe seleccionar una orden");
             }
@@ -127,7 +132,6 @@ export default {
             await fetch(`/guias/asignacion`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
-                    console.log(data);
                     if (data.state == 500) {
                         return error(data.message);
                     }
