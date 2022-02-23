@@ -27,8 +27,9 @@
                         <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
                         <select name="order_type" class="form-control form-control-solid" id="order_type">
                             <option selected disabled>Seleccione tipo de orden</option>
-                            <option value="1">Ondeman</option>
-                            <option value="2">Multiple</option>
+                            @foreach($order_type as $order)
+                                <option {{old('order_type')==$order->id?'selected ':''}}  value="{{$order->id}}">{{$order->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-3">
