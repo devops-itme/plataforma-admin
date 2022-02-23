@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\BranchOffice;
+use App\DepartmentBranch;
 use App\UserBranch;
 use App\UserDeparment;
 
@@ -85,12 +86,12 @@ trait BranchOfficeTrait
             if (is_null($branchOffice)) {
                 return $this->respond(500, [], 'user not found', 'No se encontro la oficina');
             }
-            if($request->branch_office_default == 1){
-                $defaultOffice = BranchOffice::where('default', 1)->first();
-                if(!is_null($defaultOffice)){
-                    $defaultOffice->update(['default' => 0]);
-                }
-            }
+            // if($request->branch_office_default == 1){
+            //     $defaultOffice = BranchOffice::where('default', 1)->first();
+            //     if(!is_null($defaultOffice)){
+            //         $defaultOffice->update(['default' => 0]);
+            //     }
+            // }
             $branchOffice->update([
                 'name' => $request->branch_office_name,
                 'description' => $request->branch_office_description,
@@ -155,6 +156,19 @@ trait BranchOfficeTrait
             return $this->respond(200, [], null, 'Departamentos asignadas de forma correcta');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al asignar la sucursal');
+        }
+    }
+
+    public function storeBranchDepartment($branch, $department)
+    {
+        try {
+            DepartmentBranch::create([
+                'branch_office_id' => $branch,
+                'department_id' => $department
+            ]);
+            return $this->respond(200, [], null, 'Departamentos asignado de forma correcta');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al asignar el departamento');
         }
     }
 }

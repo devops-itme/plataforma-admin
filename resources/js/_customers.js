@@ -7,6 +7,7 @@ export default class Customers {
         this.saveBranchOffices();
         this.listBranchOffices();
         this.updateBranchOffice();
+        this.listDepartments();
     }
 
     customerFeatures() {
@@ -60,7 +61,9 @@ export default class Customers {
             formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
             formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
             formData.append('branch_office_default', document.getElementById("branch_office_default").value);
+            formData.append('branch_office_department', document.getElementById("branch_office_department").value);
             let response = await this.sendBranchOfficeData(formData);
+            console.log(response);
             if(response['state'] == 200){
                 alert('Sucursal creada exitosamente.');
                 let modal = document.getElementById("modalCreate");
@@ -113,7 +116,12 @@ export default class Customers {
                     let contactCell = row.insertCell(3);
                     contactCell.innerHTML = data[i].contact;
 
-                    let stateCell = row.insertCell(4);
+                    let deptCell = row.insertCell(4);
+                    deptCell.innerHTML = '<span class="label label-inline label-light-info font-weight-bold">'+
+                                            data[i].get_department.get_department.name+
+                                        '</span>';
+
+                    let stateCell = row.insertCell(5);
                     if(data[i].state == 1){
                         stateCell.innerHTML =   '<span class="label label-inline label-light-success font-weight-bold">\
                                                     Activo\
@@ -123,12 +131,13 @@ export default class Customers {
                                                     Inactivo\
                                                 </span>';
                     }
-                    let selectCell = row.insertCell(5);
+                    let selectCell = row.insertCell(6);
                     const branchCheck = document.createElement("input");
                     branchCheck.setAttribute('class', 'checkbox-inline mt-3')
                     branchCheck.setAttribute('type', 'checkbox');
                     branchCheck.setAttribute('name', 'branchCheck[]');
                     branchCheck.setAttribute('value', data[i].id);
+                    branchCheck.checked = true;
                     // //Show button
                     // const showBranch = document.createElement("button");
                     // showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
@@ -232,6 +241,16 @@ export default class Customers {
                         key.setAttribute('checked', 'checked');
                     }
                 });
+                let dpts = document.getElementById("branch_office_department_edit");
+                [].forEach.call(dpts, dpt => {
+                    if(data.get_department != null){
+                        if(dpt.value == data.get_department.department_id){
+                            dpt.selected = true;
+                        }
+                    } else {
+                        dpt.value == 'Seleccione' ? dpt.selected = true : ''
+                    }
+                })
             })
         });
     }
@@ -296,6 +315,39 @@ export default class Customers {
         };
         await fetch("/sucursales/"+null+"/"+id+"/update", requestOptions)
             .then((response) => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    async listDepartments(){
+        let slcDepartments = document.getElementsByName("branch_office_department");
+        if(slcDepartments == null) {
+            return;
+        }
+        let departments = await this.requestDepartments();
+        let data = departments.data;
+
+        [].forEach.call(slcDepartments, slcDept => {
+            slcDept.selectedIndex = "0";
+            removeOptions(slcDept);
+
+            for (var i = 0; i < data.length; i++) {
+                let element = data[i];
+                let department = '<option value="'+element.id+'"> '+element.name+' </option>';
+                slcDept.insertAdjacentHTML('beforeend', department);
+            }
+        });
+    }
+
+    async requestDepartments(){
+        let response = {
+            'state': 500
+        };
+        await fetch("/unassigned_depts")
+            .then(response => response.json())
             .then(data => {
                 response = data
             })

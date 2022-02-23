@@ -31,9 +31,9 @@ class BranchOffice extends Model
 
 
     //Bank departments
-    public function getDepartments()
+    public function getDepartment()
     {
-        return $this->hasMany(Department::class, 'branch_office_id');
+        return $this->hasOne(DepartmentBranch::class, 'branch_office_id');
     }
 
     public function getUser()
