@@ -59573,8 +59573,8 @@ var Customers = /*#__PURE__*/function () {
 
                   _this.listBranchOffices();
                 } else {
-                  error("Error al crear sucursal"); // alert('Ocurrió un error al crear la sucursal.');
-                  // console.log('Error ocurrido: '+response['error']);
+                  error("Error al crear sucursal");
+                  console.log('Error ocurrido: ' + response['error']);
                 }
 
               case 21:

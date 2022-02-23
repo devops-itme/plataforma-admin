@@ -69,8 +69,7 @@ export default class Customers {
                 this.listBranchOffices();
             } else {
                 error("Error al crear sucursal");
-                // alert('Ocurrió un error al crear la sucursal.');
-                // console.log('Error ocurrido: '+response['error']);
+                console.log('Error ocurrido: '+response['error']);
             }
         });
     }
