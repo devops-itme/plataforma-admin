@@ -98,7 +98,7 @@ class CustomerController extends Controller
         if($response['state'] == 200){
             return redirect()->route('customers.index')->with('success', 'Cliente registrado exitosamente.');
         } else {
-            return redirect()->back()->withInput()->with('danger', $response['message']);
+            return redirect()->back()->withInput()->with('danger', $response['error']);
         }
     }
 
