@@ -3238,8 +3238,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: myHeaders,
                   body: JSON.stringify(_this5.department)
                 };
-                console.log(_this5.department);
-                _context4.next = 10;
+                _context4.next = 9;
                 return fetch("/departamentos/".concat(_this5.department.id), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3251,7 +3250,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       return item.id == _this.department.id;
                     });
 
-                    console.log(_this.data[id].name = department.name);
                     _this.data[id].name = department.name;
                     _this.data[id].description = department.description;
                     _this.data[id].state = department.state;
@@ -3265,7 +3263,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return console.warn(err);
                 });
 
-              case 10:
+              case 9:
               case "end":
                 return _context4.stop();
             }
@@ -59495,6 +59493,7 @@ var Customers = /*#__PURE__*/function () {
       this.saveBranchOffices();
       this.listBranchOffices();
       this.updateBranchOffice();
+      this.listDepartments();
     }
   }, {
     key: "customerFeatures",
@@ -59561,11 +59560,13 @@ var Customers = /*#__PURE__*/function () {
                 formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
                 formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
                 formData.append('branch_office_default', document.getElementById("branch_office_default").value);
-                _context.next = 18;
+                formData.append('branch_office_department', document.getElementById("branch_office_department").value);
+                _context.next = 19;
                 return _this.sendBranchOfficeData(formData);
 
-              case 18:
+              case 19:
                 response = _context.sent;
+                console.log(response);
 
                 if (response['state'] == 200) {
                   alert('Sucursal creada exitosamente.');
@@ -59578,7 +59579,7 @@ var Customers = /*#__PURE__*/function () {
                   console.log('Error ocurrido: ' + response['error']);
                 }
 
-              case 20:
+              case 22:
               case "end":
                 return _context.stop();
             }
@@ -59666,7 +59667,9 @@ var Customers = /*#__PURE__*/function () {
                         zoneCell.innerHTML = data[i].get_zone.name;
                         var contactCell = row.insertCell(3);
                         contactCell.innerHTML = data[i].contact;
-                        var stateCell = row.insertCell(4);
+                        var deptCell = row.insertCell(4);
+                        deptCell.innerHTML = '<span class="label label-inline label-light-info font-weight-bold">' + data[i].get_department.get_department.name + '</span>';
+                        var stateCell = row.insertCell(5);
 
                         if (data[i].state == 1) {
                           stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
@@ -59678,12 +59681,13 @@ var Customers = /*#__PURE__*/function () {
                                                 </span>';
                         }
 
-                        var selectCell = row.insertCell(5);
+                        var selectCell = row.insertCell(6);
                         var branchCheck = document.createElement("input");
                         branchCheck.setAttribute('class', 'checkbox-inline mt-3');
                         branchCheck.setAttribute('type', 'checkbox');
                         branchCheck.setAttribute('name', 'branchCheck[]');
-                        branchCheck.setAttribute('value', data[i].id); // //Show button
+                        branchCheck.setAttribute('value', data[i].id);
+                        branchCheck.checked = true; // //Show button
                         // const showBranch = document.createElement("button");
                         // showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
                         // showBranch.setAttribute('type', 'button');
@@ -59792,7 +59796,7 @@ var Customers = /*#__PURE__*/function () {
 
       [].forEach.call(branches, function (branch) {
         branch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-          var response, data, slcBranchType, slcZone, slcDocumentType, slcPaymentMethod, inpDefault;
+          var response, data, slcBranchType, slcZone, slcDocumentType, slcPaymentMethod, inpDefault, dpts;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
             while (1) {
               switch (_context5.prev = _context5.next) {
@@ -59851,8 +59855,18 @@ var Customers = /*#__PURE__*/function () {
                       key.setAttribute('checked', 'checked');
                     }
                   });
+                  dpts = document.getElementById("branch_office_department_edit");
+                  [].forEach.call(dpts, function (dpt) {
+                    if (data.get_department != null) {
+                      if (dpt.value == data.get_department.department_id) {
+                        dpt.selected = true;
+                      }
+                    } else {
+                      dpt.value == 'Seleccione' ? dpt.selected = true : '';
+                    }
+                  });
 
-                case 24:
+                case 26:
                 case "end":
                   return _context5.stop();
               }
@@ -60004,6 +60018,94 @@ var Customers = /*#__PURE__*/function () {
       }
 
       return sendDataToUpdate;
+    }()
+  }, {
+    key: "listDepartments",
+    value: function () {
+      var _listDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        var slcDepartments, departments, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                slcDepartments = document.getElementsByName("branch_office_department");
+
+                if (!(slcDepartments == null)) {
+                  _context9.next = 3;
+                  break;
+                }
+
+                return _context9.abrupt("return");
+
+              case 3:
+                _context9.next = 5;
+                return this.requestDepartments();
+
+              case 5:
+                departments = _context9.sent;
+                data = departments.data;
+                [].forEach.call(slcDepartments, function (slcDept) {
+                  slcDept.selectedIndex = "0";
+                  removeOptions(slcDept);
+
+                  for (var i = 0; i < data.length; i++) {
+                    var element = data[i];
+                    var department = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    slcDept.insertAdjacentHTML('beforeend', department);
+                  }
+                });
+
+              case 8:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function listDepartments() {
+        return _listDepartments.apply(this, arguments);
+      }
+
+      return listDepartments;
+    }()
+  }, {
+    key: "requestDepartments",
+    value: function () {
+      var _requestDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context10.next = 3;
+                return fetch("/unassigned_depts").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context10.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }));
+
+      function requestDepartments() {
+        return _requestDepartments.apply(this, arguments);
+      }
+
+      return requestDepartments;
     }()
   }]);
 

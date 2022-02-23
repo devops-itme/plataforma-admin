@@ -32,6 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/allBranches', 'Admin\BranchOfficeController@allBranches');
 
+    Route::get('unassigned_depts', 'Admin\DepartmentController@UnassignedDepts');
+
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');

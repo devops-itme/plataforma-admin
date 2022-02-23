@@ -6,6 +6,7 @@ use App\BranchOffice;
 use App\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\DepartmentTrait;
+use App\UserDeparment;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -107,5 +108,19 @@ class DepartmentController extends Controller
         } else {
             return $this->respond($response['state'], $response['data'], $response['error'],  $response['message']);
         }
+    }
+
+    public function UnassignedDepts()
+    {
+        $assignedDepts = UserDeparment::get('department_id');
+        $ids = [];
+        foreach ($assignedDepts as $key) {
+            array_push($ids, $key->department_id);
+        }
+        $unassignedDepts = Department::whereIn('id', $ids)->get();
+        return json_encode([
+            'state' => 200,
+            'data' => $unassignedDepts
+        ]);
     }
 }

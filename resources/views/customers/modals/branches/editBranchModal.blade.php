@@ -17,7 +17,7 @@
                             <input type="text" class="form-control form-control-solid" placeholder="Nombre sucursal" id="branch_office_name_edit" name="branch_office_name" value="{{ old('branch_office_name') }}" />
                             <span class="form-text text-muted"></span>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label>Tipo de sucursal</label>
                             <select class="form-control form-control-solid" id="branch_office_type_edit" name="branch_office_type">
                                 <option disabled>Seleccione</option>
@@ -29,7 +29,7 @@
                             </select>
                             <span class="form-text text-muted"></span>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Descripción de sucursal:</label>
                             <textarea class="form-control form-control-solid" id="branch_office_description_edit" rows="1" name="branch_office_description">{{ old('branch_office_description') }}</textarea>
                             <span class="form-text text-muted"></span>
@@ -46,19 +46,19 @@
                             </select>
                             <span class="form-text text-muted"></span>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Dirección de sucursal: </label>
                             <input type="text" class="form-control form-control-solid" placeholder="Dirección" name="branch_office_address" value="{{ old('branch_office_address') }}" id="branch_office_address_edit" />
                             <span class="form-text text-muted"></span>
                         </div>
                         <input type="hidden" name="branch_office_lat" id="branch_office_lat_edit">
                         <input type="hidden" name="branch_office_lng" id="branch_office_lng_edit">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Email de sucursal: </label>
                             <input type="text" class="form-control form-control-solid" id="branch_office_email_edit" placeholder="Email" name="branch_office_email" value="{{ old('branch_office_email') }}" />
                             <span class="form-text text-muted"></span>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Contacto de sucursal: </label>
                             <input type="text" class="form-control form-control-solid" placeholder="Contacto" id="branch_office_contact_edit" name="branch_office_contact" value="{{ old('branch_office_email') }}" />
                             <span class="form-text text-muted"></span>
@@ -75,12 +75,19 @@
                             </select>
                             <span class="form-text text-muted"></span>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>Documento de sucursal: </label>
                             <input type="text" class="form-control form-control-solid" id="branch_office_document_number_edit" placeholder="Numero de documento" name="branch_office_document_number" value="{{ old('branch_office_document_number') }}" />
                             <span class="form-text text-muted"></span>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
+                            <label>Departamento de sucursal:</label>
+                            <select class="form-control form-control-solid" id="branch_office_department_edit" name="branch_office_department">
+                                <option selected disabled>Seleccione</option>
+                            </select>
+                            <span class="form-text text-muted"></span>
+                        </div>
+                        <div class="form-group col-md-3">
                             <label>Metodo de pago:</label>
                             <select class="form-control form-control-solid" id="branch_office_payment_method_edit" name="branch_office_payment_method">
                                 <option disabled>Seleccione</option>
@@ -121,7 +128,7 @@
                             </select>
                             <span class="form-text text-muted"></span>
                         </div>
-                        <div class="form-group col-md-2 mb-0 py-4">
+                        <div class="form-group col-md-3 mb-0 py-4">
                             <label>¿Sucursal predeterminada?</label>
                             <div class="radio-inline">
                                 <label class="radio radio-rounded">

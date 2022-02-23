@@ -249,7 +249,6 @@ export default {
                 body: JSON.stringify(this.department),
 
             };
-            console.log(this.department)
             await fetch(`/departamentos/${this.department.id}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
@@ -257,7 +256,6 @@ export default {
                     if(data.state == 200){
                         // _this.data.push({ ...department, state: 1 });
                           let id = _this.data.findIndex((item) => item.id == _this.department.id);
-                            console.log(_this.data[id].name=department.name)
                             _this.data[id].name=department.name
                             _this.data[id].description=department.description
                             _this.data[id].state=department.state
