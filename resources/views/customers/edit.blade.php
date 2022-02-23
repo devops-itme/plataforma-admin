@@ -4,6 +4,7 @@
 {{-- Content --}}
 @section('content')
 @include('layouts.breadCrumbs')
+
 <div class="card card-custom">
     <div class="card-header">
         <h3 class="card-title">
@@ -120,7 +121,7 @@
                             aria-controls="home" aria-selected="true">General</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="{{route('branchOffices.index', $customer->user_id)}}">Sucursales</a>
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Sucursales</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="departament-tab" data-toggle="tab" href="#departament" role="tab" aria-controls="departament" aria-selected="false">Departamentos</a>
@@ -223,6 +224,102 @@
                                     </label>
                                 </div>
                                 <span class="form-text text-muted"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="col-md-12">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general-tab">
+                                    <div class="d-flex flex-row flex-wrap">
+                                        <div class="col-md-6 d-flex flex-row flex-wrap border-right">
+                                            <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de orden</h5>
+                                            <div class="form-group col-md-6">
+                                                <label for="trans_type">Tipo de transporte <span class="text-danger">*</span></label>
+                                                <select name="vehicle_type_id" class="form-control form-control-solid" id="trans_type">
+                                                    <option selected="" disabled="">Seleccione tipo de transporte</option>
+                                                    <option value="1">Moto</option>
+                                                    <option value="2">Auto</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="pay_method">Metodo de pago <span class="text-danger">*</span></label>
+                                                <select name="payment_method_id" class="form-control form-control-solid" id="pay_method">
+                                                    <option selected="" disabled="">Seleccione Metodo de pago</option>
+                                                    <option value="1">Efectivo</option>
+                                                    <option value="2">Cheque</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Fecha de programación: <span class="text-danger">*</span></label>
+                                                <input name="schedule_date" type="date" class="form-control form-control-solid" placeholder="">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Hora de programación: <span class="text-danger">*</span></label>
+                                                <input name="schedule_time" type="time" class="form-control form-control-solid" placeholder="">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="form-group col-md-12 m-0 d-flex align-items-center">
+                                                <div class="checkbox-inline">
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" name="express_delivery">
+                                                        <span></span>
+                                                        Marcar Urgente Despacho
+                                                    </label>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" name="last_destination_return">
+                                                        <span></span>
+                                                        Retorno Ultimo Destino
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 d-flex flex-row flex-wrap">
+                                            <h5 class="my-4 font-weight-bold text-dark col-md-12">Seguro de mercancia</h5>
+                                            <div class="form-group col-md-6">
+                                                <label>Valor asegurado: <span class="text-danger">*</span></label>
+                                                <input name="insured_value" type="number" class="form-control form-control-solid" placeholder="">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>A cobrar %: <span class="text-danger">*</span></label>
+                                                <input name="percentage_receivable" type="number" class="form-control form-control-solid" placeholder="">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>A cobrar $: <span class="text-danger">*</span></label>
+                                                <input name="value_receivable" type="number" class="form-control form-control-solid" placeholder="">
+                                                <span class="form-text text-muted"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <!--tabla de datos-->
+                                    <table class="table table-sm" id="branch_offices_table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Nombre de Sucursal</th>
+                                                <th scope="col">Tipo de Sucursal</th>
+                                                <th scope="col">Zona de Sucursal</th>
+                                                <th scope="col">Contacto de Sucursal</th>
+                                                <th scope="col">Estado</th>
+                                                <th scope="col">
+                                                    <div class="d-flex justify-content-end">
+                                                        <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalCreate">
+                                                            <span class="svg-icon svg-icon-md">
+                                                                <i class="fas fa-plus"></i>
+                                                            </span>Crear
+                                                        </a>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                </div>
                             </div>
                         </div>
                     </div>
