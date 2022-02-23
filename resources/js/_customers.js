@@ -115,12 +115,7 @@ export default class Customers {
                     let contactCell = row.insertCell(3);
                     contactCell.innerHTML = data[i].contact;
 
-                    let deptCell = row.insertCell(4);
-                    deptCell.innerHTML = '<span class="label label-inline label-light-info font-weight-bold">'+
-                                            data[i].get_department.get_department.name+
-                                        '</span>';
-
-                    let stateCell = row.insertCell(5);
+                    let stateCell = row.insertCell(4);
                     if(data[i].state == 1){
                         stateCell.innerHTML =   '<span class="label label-inline label-light-success font-weight-bold">\
                                                     Activo\
@@ -130,7 +125,7 @@ export default class Customers {
                                                     Inactivo\
                                                 </span>';
                     }
-                    let selectCell = row.insertCell(6);
+                    let selectCell = row.insertCell(5);
                     const branchCheck = document.createElement("input");
                     branchCheck.setAttribute('class', 'checkbox-inline mt-3')
                     branchCheck.setAttribute('type', 'checkbox');

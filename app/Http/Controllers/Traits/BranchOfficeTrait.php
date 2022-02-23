@@ -132,10 +132,17 @@ trait BranchOfficeTrait
     public function storeUserBranch($user_id, $offices)
     {
         try {
-            foreach ($offices as $key) {
+            if(is_array($offices)){
+                foreach ($offices as $key) {
+                    UserBranch::create([
+                        'user_id' => $user_id,
+                        'branch_office_id' => $key
+                    ]);
+                }
+            } else {
                 UserBranch::create([
                     'user_id' => $user_id,
-                    'branch_office_id' => $key
+                    'branch_office_id' => $offices
                 ]);
             }
             return $this->respond(200, [], null, 'Sucursales asignadas de forma correcta');
@@ -158,15 +165,14 @@ trait BranchOfficeTrait
             return $this->respond(500, [], $e->getMessage(), 'Error al asignar la sucursal');
         }
     }
-
     public function storeBranchDepartment($branch, $department)
     {
         try {
-            DepartmentBranch::create([
+            $data = DepartmentBranch::create([
                 'branch_office_id' => $branch,
                 'department_id' => $department
             ]);
-            return $this->respond(200, [], null, 'Departamentos asignado de forma correcta');
+            return $this->respond(200, $data, null, 'Departamentos asignado de forma correcta');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al asignar el departamento');
         }
