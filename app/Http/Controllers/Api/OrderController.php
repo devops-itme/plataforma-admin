@@ -25,7 +25,7 @@ class OrderController extends Controller
             'getState', 'getDepartment', 'getBranchOffice'
         ];
         try {
-            $state = ParameterValue::where('name', 'Despachados')->first();
+            // $state = ParameterValue::where('name', 'Despachados')->first();
             $orders = Order::whereHas('getGuides', function (Builder $query) use ($messenger_user_id) {
                 $query->whereHas('getRoute', function (Builder $query) use ($messenger_user_id) {
                     $query->where('messenger_user_id', $messenger_user_id);
