@@ -59493,7 +59493,6 @@ var Customers = /*#__PURE__*/function () {
       this.saveBranchOffices();
       this.listBranchOffices();
       this.updateBranchOffice();
-      this.listDepartments();
     }
   }, {
     key: "customerFeatures",
@@ -59646,10 +59645,11 @@ var Customers = /*#__PURE__*/function () {
 
               case 3:
                 tbody.innerHTML = '';
-                _context3.next = 6;
+                this.listDepartments();
+                _context3.next = 7;
                 return this.requestBranchOffices();
 
-              case 6:
+              case 7:
                 assignedBranchOffices = _context3.sent;
 
                 if (assignedBranchOffices['state'] == 200) {
@@ -59731,7 +59731,7 @@ var Customers = /*#__PURE__*/function () {
 
                 this.editBranches();
 
-              case 9:
+              case 10:
               case "end":
                 return _context3.stop();
             }
@@ -62317,8 +62317,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

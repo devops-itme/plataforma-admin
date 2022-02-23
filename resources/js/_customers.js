@@ -7,7 +7,6 @@ export default class Customers {
         this.saveBranchOffices();
         this.listBranchOffices();
         this.updateBranchOffice();
-        this.listDepartments();
     }
 
     customerFeatures() {
@@ -97,6 +96,7 @@ export default class Customers {
             return;
         }
         tbody.innerHTML = '';
+        this.listDepartments();
         let assignedBranchOffices = await this.requestBranchOffices();
         if(assignedBranchOffices['state'] == 200){
             let data = assignedBranchOffices['data'];
