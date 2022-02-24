@@ -73,7 +73,7 @@ trait CustomerTrait
         try {
             $customer = Customer::find($id);
             if (is_null($customer)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro el usuario');
+                return $this->respond(500, [], 'user not found', 'No se encontró el usuario');
             }
             //Actualizar tabla usuario
             $updateUser = $this->updateUser($request->merge(['user_id' => $customer->user_id]));
@@ -106,7 +106,7 @@ trait CustomerTrait
         try {
             $customer = Customer::find($id);
             if(is_null($customer)){
-                return $this->respond(500, [], 'user not found', 'No se encontro el usuario');
+                return $this->respond(500, [], 'user not found', 'No se encontró el usuario');
             }
             $deleteUser = $this->deleteUser($customer->user_id);
             if($deleteUser['state'] == 500){

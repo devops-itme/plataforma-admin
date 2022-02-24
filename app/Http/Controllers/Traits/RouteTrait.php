@@ -80,7 +80,7 @@ trait RouteTrait
         try {
             $route = Route::find($request->route_id);
             if (is_null($route)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la ruta');
+                return $this->respond(500, [], 'user not found', 'No se encontró la ruta');
             }
             $route->update([
                 'guide_id' => $request->guide_id,
@@ -98,7 +98,7 @@ trait RouteTrait
         try {
             $route = Route::find($id);
             if (is_null($route)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la ruta');
+                return $this->respond(500, [], 'user not found', 'No se encontró la ruta');
             }
             $route->delete();
             return $this->respond(200, $route, null, 'Ruta eliminada exitosamente');
