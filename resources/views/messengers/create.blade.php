@@ -45,7 +45,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label>Numero de identificación: <span class="text-danger">*</span></label>
+                <label>Número de identificación: <span class="text-danger">*</span></label>
                 <input name="document_number" type="text" class="form-control form-control-solid" placeholder="N° de identificación" value="{{old('document_number')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
