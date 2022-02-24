@@ -60896,7 +60896,6 @@ var Orders = /*#__PURE__*/function () {
 
               case 6:
                 response = _context9.sent;
-                console.log(response);
                 data = response.data;
 
                 if (data.length > 0) {
@@ -60967,7 +60966,7 @@ var Orders = /*#__PURE__*/function () {
 
                 this.editGuide();
 
-              case 11:
+              case 10:
               case "end":
                 return _context9.stop();
             }
@@ -60985,17 +60984,32 @@ var Orders = /*#__PURE__*/function () {
     key: "requestGuides",
     value: function () {
       var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var orderNumber, response;
+        var orderNumber, edit, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                orderNumber = document.getElementsByName("order_number")[0].value;
+                orderNumber = document.getElementsByName("order_number")[0];
+
+                if (orderNumber == null) {
+                  orderNumber = null;
+                } else {
+                  orderNumber = orderNumber.value;
+                }
+
+                edit = document.getElementById("edit");
+
+                if (edit == null) {
+                  edit = 0;
+                } else {
+                  edit = 1;
+                }
+
                 response = {
                   'state': 500
                 };
-                _context10.next = 4;
-                return fetch("/guias?order=" + orderNumber).then(function (response) {
+                _context10.next = 7;
+                return fetch("/guias?order=" + orderNumber + "&edit=" + edit).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -61003,10 +61017,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 4:
+              case 7:
                 return _context10.abrupt("return", response);
 
-              case 5:
+              case 8:
               case "end":
                 return _context10.stop();
             }

@@ -19,6 +19,7 @@
     @include('layouts.alerts')
     <!--begin::Form-->
     <form>
+        <input type="hidden" id="edit">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap pt-2">
             <div class="col-md-6 border-right">
@@ -26,7 +27,7 @@
                 <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
                 <div class="form-group col-md-6">
                     <label>Numero de orden: <span class="text-danger">*</span></label>
-                    <input name="order_num" type="text" class="form-control form-control-solid" value="{{$order->order_number}}" disabled />
+                    <input name="order_number" type="text" class="form-control form-control-solid" value="{{$order->order_number}}" disabled />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-6">
@@ -152,8 +153,6 @@
         </div>
 
         <div class="card-footer d-flex justify-content-end">
-            <button type="submit" id="btn-create-messenger" class="btn btn-primary mr-2">Guardar</button>
-            <button type="reset" class="btn btn-secondary">Limpiar</button>
         </div>
     </form>
     <!--end::Form-->

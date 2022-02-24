@@ -384,7 +384,6 @@ export default class Orders {
         }
         tbody.innerHTML = '';
         let response = await this.requestGuides();
-        console.log(response);
         let data = response.data;
         if(data.length > 0){
             [].forEach.call(data, key => {
@@ -456,11 +455,23 @@ export default class Orders {
     }
 
     async requestGuides(){
-        let orderNumber = document.getElementsByName("order_number")[0].value;
+        let orderNumber = document.getElementsByName("order_number")[0]
+        if(orderNumber == null){
+            orderNumber = null;
+        } else {
+            orderNumber = orderNumber.value;
+
+        }
+        let edit = document.getElementById("edit");
+        if(edit == null){
+            edit = 0;
+        } else {
+            edit = 1;
+        }
         let response = {
             'state': 500
         };
-        await fetch("/guias?order="+orderNumber)
+        await fetch("/guias?order="+orderNumber+"&edit="+edit)
             .then(response => response.json())
             .then(data => {
                 response = data
