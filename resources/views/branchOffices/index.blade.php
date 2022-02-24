@@ -96,7 +96,7 @@
 
             <!--end::Button-->
         </div>--}}
-        
+
     </div>
     <div class="card-body">
         <!--begin: Search Form-->
@@ -126,9 +126,9 @@
                             <span class="form-text text-muted">Filtro correo</span>
                         </div>
                         <div class="form-group py-3 m-0 col-md-4">
-                            <label>Telefono sucursal:</label>
+                            <label>Teléfono sucursal:</label>
                             <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576" name="phone" value="{{ request()->phone }}" />
-                            <span class="form-text text-muted">Filtro telefono</span>
+                            <span class="form-text text-muted">Filtro teléfono</span>
                         </div>
                         <div class="form-group py-3 m-0 col-md-4">
                             <label for="exampleSelect1">Predeterminada: </label>
