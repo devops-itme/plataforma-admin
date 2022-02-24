@@ -19,17 +19,19 @@ class GuideController extends Controller
      */
     public function index()
     {
-        if(request()->order != null){
-            $order = Order::where('order_number', request()->order)->first();
-            if($order){
-                if(request()->edit == 0){
-                    $guides = Guide::where('order_id', $order->id)->orWhere('order_id', NULL)->get();
-                } else {
-                    $guides = Guide::where('order_id', $order->id)->get();
-                }
-            }
-        } else {
+        $guides = [];
+        if(str_contains(request()->path, 'create')){
             $guides = Guide::where('order_id', NULL)->get();
+        } else if(str_contains(request()->path, 'edit')){
+            $order_id = request()->order;
+            $guides = Guide::with('getOrder')->whereHas('getOrder', function ($query) use ($order_id) {
+                $query->where('order_number', $order_id);
+            })->orWhere('order_id', NULL)->get();
+        } else {
+            $order_id = request()->order;
+            $guides = Guide::with('getOrder')->whereHas('getOrder', function ($query) use ($order_id) {
+                $query->where('order_number', $order_id);
+            })->get();
         }
         return json_encode([
             'state' => 200,
