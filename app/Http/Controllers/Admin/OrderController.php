@@ -23,11 +23,15 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::number(request()->number)
-            ->service_type(request()->service_type)
-            ->customer(request()->customer)
+            ->order_type(request()->order_type)
+            ->customer(request()->name)
             ->date(request()->from, request()->to)
+            ->state(request()->state)
             ->get();
-        return view('orders.index', compact('orders'));
+        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'order_types');
+        })->get();
+        return view('orders.index', compact('orders', 'order_type'));
     }
 
     /**
