@@ -220,7 +220,7 @@ export default {
                         _this.clearValue();
                         _this.showModal = false;
                     }else{
-                        error(data.error);
+                        error(data.message);
                     }
                 })
                 .catch((err) => console.warn(err));
@@ -263,7 +263,7 @@ export default {
                         correct(data.message);
                         _this.clearValue();
                     }else{
-                        error(data.error);
+                        error(data.message);
                     }
                 })
                 .catch((err) => console.warn(err));
