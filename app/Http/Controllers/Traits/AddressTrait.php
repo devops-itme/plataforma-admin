@@ -49,7 +49,7 @@ trait AddressTrait
         $validator = $this->AddressesValidate($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
+            return $this->respond(500,[],  $validator->errors(),  $validator->errors()->first());
         }
         try {
             request()->merge([
@@ -66,7 +66,7 @@ trait AddressTrait
         try {
             $validator = $this->addressesValidate($request);
             if ($validator->fails()) {
-                return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
+                return $this->respond(500, null, $validator->errors(),  $validator->errors()->first());
             }
             request()->merge([
                 'name'=> $request->address
