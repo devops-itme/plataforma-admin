@@ -337,11 +337,11 @@
                             <option selected disabled> Seleccione </option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    {{-- <div class="form-group col-md-3">
                         <label>Despacho: <span class="text-danger">*</span></label>
                         <input name="office" type="number" class="form-control form-control-solid" placeholder="" id="dispatched_edit"/>
                         <span class="form-text text-muted"></span>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-3">
                         <label for="address">Dirección <span class="text-danger">*</span></label>
                         <input name="address" id="address_edit" type="text" class="form-control form-control-solid" placeholder=""/>

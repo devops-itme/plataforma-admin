@@ -31,9 +31,9 @@ class CreateOrdersTable extends Migration
             $table->integer('return_last_destination');
             $table->date('schedule_date');
             $table->time('schedule_time');
-            $table->double('insured_value');
-            $table->double('money_to_collect');
-            $table->double('percentage_to_collect')->comment('Porcentaje de seguro');
+            $table->double('insured_value')->nullable();
+            $table->double('money_to_collect')->nullable();
+            $table->double('percentage_to_collect')->nullable()->comment('Porcentaje de seguro');
             $table->integer('customer_user_id');
             $table->integer('creator_user_id')->nullable();
             $table->integer('zone')->nullable();

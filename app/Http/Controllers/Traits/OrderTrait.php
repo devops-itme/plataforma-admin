@@ -32,9 +32,9 @@ trait OrderTrait
                 'return_last_destination' => 'required',
                 'schedule_date' => 'required',
                 'schedule_time' => 'required',
-                'insured_value' => 'required',
-                'money_to_collect' => 'required',
-                'percentage_to_collect' => 'required',
+                'insured_value' => 'nullable',
+                'money_to_collect' => 'nullable',
+                'percentage_to_collect' => 'nullable',
                 'branch_office' => 'nullable',
                 'state' => 'nullable'
             ]

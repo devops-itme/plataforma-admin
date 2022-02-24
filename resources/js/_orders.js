@@ -310,7 +310,7 @@ export default class Orders {
         btnStoreGuide.addEventListener('click', async () => {
             let branch_office = document.getElementById("branch_off").value;
             let transport_type = document.getElementById("trans_type").value;
-            let dispatched = document.getElementById("dispatched").value;
+            // let dispatched = document.getElementById("dispatched").value;
             let address_name = document.getElementById("address").value;
             let address_lat = document.getElementById("lat").value;
             let address_lng = document.getElementById("lng").value;
@@ -331,7 +331,7 @@ export default class Orders {
             let formData = new FormData();
             formData.append('branch_office', branch_office);
             formData.append('transport_type',transport_type);
-            formData.append('dispatched',dispatched);
+            // formData.append('dispatched',dispatched);
             formData.append('address_name',address_name);
             formData.append('address_lat',address_lat);
             formData.append('address_lng',address_lng);
@@ -487,7 +487,7 @@ export default class Orders {
                 let data = response.data;
 
                 let branch_office = document.getElementById("branch_off_edit").value = data.branch_office;
-                let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
                 let address_name = document.getElementById("address_edit").value = data.address_name;
                 let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                 let address_lng = document.getElementById("lng_edit").value = data.address_lng;
@@ -532,7 +532,7 @@ export default class Orders {
         }
         btnUpdateGuide.addEventListener("click", async () => {
             let branch_off_edit = document.getElementById("branch_off_edit").value;
-            let dispatched = document.getElementById("dispatched_edit").value;
+            // let dispatched = document.getElementById("dispatched_edit").value;
             let address_name = document.getElementById("address_edit").value;
             let address_lat = document.getElementById("lat_edit").value;
             let address_lng = document.getElementById("lng_edit").value;
@@ -555,7 +555,7 @@ export default class Orders {
 
             let formData = new FormData();
             formData.append("branch_office", branch_off_edit);
-            formData.append("dispatched", dispatched);
+            // formData.append("dispatched", dispatched);
             formData.append("address_name", address_name);
             formData.append("address_lat", address_lat);
             formData.append("address_lng", address_lng);
