@@ -21,7 +21,7 @@
                     <ul class="nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-3x" id="myTab">
                         <li  class="nav-item"  v-for="(tab, index) in tabs" :key="tab.id" >
                             <a class="nav-link" @click="getOrders(tab.id)"
-                            :class="{'active': currentTab === tab.id}" data-toggle="tab" :href="`#${tab.href}`" v-text=tab.name></a>
+                            :class="{'active': currentTab === tab.id}" :id="tab.id" data-toggle="tab" :href="`#${tab.href}`" v-text=tab.name></a>
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#pordespachar">Por despachar</a>
@@ -76,7 +76,7 @@
                                     v-text="`${showData.get_user?.name} ${showData.get_user?.last_name}`"></div>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Telefono:</div>
+                                <div class="font-weight-bolder mb-1">Teléfono:</div>
                                 <div class="line-height-x1">3002220000</div>
                             </div>
                             <div class="col-md-6 mb-2">

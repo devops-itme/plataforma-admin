@@ -161,7 +161,7 @@ return [
         'city' => 'ciudad',
         'address' => 'dirección',
         'document_type' => 'tipo de documento',
-        'document_number' => 'numero de documento',
+        'document_number' => 'número de documento',
         'client_type' => 'tipo de cliente',
         'start_date' => 'fecha inicial',
         'end_date' => 'fecha final',
@@ -196,7 +196,13 @@ return [
         'password_confirmation'=> 'confirmación de contraseña',
         'code'=>'código',
         'terms_and_conditions' => 'terminos y condiciones',
-        'today' => 'hoy'
+        'today' => 'hoy',
+        'vehicle_plate'=> 'placa del vehiculo',
+        'admission_date'=> 'fecha de ingreso',
+        'production_percentage' => 'porcentaje de producción',
+        'exclusive' => 'exclusivo',
+        'contract_type_id'=>'tipo de contrato',
+
     ],
 
 ];

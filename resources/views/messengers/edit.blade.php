@@ -33,8 +33,8 @@
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Telefono: <span class="text-danger">*</span></label>
-                    <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Telefono"
+                    <label>Teléfono: <span class="text-danger">*</span></label>
+                    <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Teléfono"
                         value="{{ $messenger->user->phone }}" />
                     <span class="form-text text-muted"></span>
                 </div>
@@ -51,13 +51,13 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label>Numero de identificación: <span class="text-danger">*</span></label>
+                    <label>Número de identificación: <span class="text-danger">*</span></label>
                     <input name="document_number" type="text" class="form-control form-control-solid"
                         placeholder="N° de identificación" value="{{ $messenger->user->document_number }}" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Placa de vehiculo: <span class="text-danger">*</span></label>
+                    <label>Placa de vehículo: <span class="text-danger">*</span></label>
                     <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder=""
                         value="{{ $messenger->vehicle_plate }}" />
                     <span class="form-text text-muted"></span>

@@ -154,7 +154,7 @@
                         <th scope="col">Nombre empresa</th>
                         <th scope="col">Nombre comercial</th>
                         <th scope="col">Correo</th>
-                        <th scope="col">Telefono</th>
+                        <th scope="col">Teléfono</th>
                         <th scope="col">Zona</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>

@@ -75,7 +75,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Documento de sucursal: </label>
-                        <input type="text" class="form-control form-control-solid" id="branch_office_document_number" placeholder="Numero de documento" name="branch_office_document_number" value="{{ old('branch_office_document_number') }}" />
+                        <input type="text" class="form-control form-control-solid" id="branch_office_document_number" placeholder="Número de documento" name="branch_office_document_number" value="{{ old('branch_office_document_number') }}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
@@ -98,8 +98,8 @@
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Telefono de sucursal: </label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Telefono" name="branch_office_phone" value="{{ old('branch_office_phone') }}" id="branch_office_phone" />
+                        <label>Teléfono de sucursal: </label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Teléfono" name="branch_office_phone" value="{{ old('branch_office_phone') }}" id="branch_office_phone" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="d-none" id="slcPlan">

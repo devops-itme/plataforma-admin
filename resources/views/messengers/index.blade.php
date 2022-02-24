@@ -115,8 +115,8 @@
                                 <span class="form-text text-muted">Filtro nombre</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
-                                <label>Numero de documento:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Numero de documento"
+                                <label>Número de documento:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Número de documento"
                                     name="document" value="{{ request()->document }}" />
                                 <span class="form-text text-muted">Filtro documento</span>
                             </div>
@@ -127,14 +127,14 @@
                                 <span class="form-text text-muted">Filtro correo</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
-                                <label>Telefono :</label>
+                                <label>Teléfono :</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576"
                                     name="phone" value="{{ request()->phone }}" />
-                                <span class="form-text text-muted">Filtro telefono</span>
+                                <span class="form-text text-muted">Filtro teléfono</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
                                 <label>Place:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Placa de vehiculo"
+                                <input type="text" class="form-control form-control-solid" placeholder="Placa de vehículo"
                                     name="vehicle_plate" value="{{ request()->vehicle_plate }}" />
                                 <span class="form-text text-muted">Filtro placa</span>
                             </div>
@@ -170,68 +170,72 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombres</th>
-                        <th scope="col">Numero de documento</th>
+                        <th scope="col">Número de documento</th>
                         <th scope="col">Placa</th>
                         <th scope="col">Correo</th>
-                        <th scope="col">Telefono</th>
+                        <th scope="col">Teléfono</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($messengers as $item)
-                        <tr>
-                            <th scope="row">{{ $item->user->name . ' ' . $item->user->last_name }}</th>
-                            <td>{{ $item->user->document_number }}</td>
-                            <td>{{ $item->vehicle_plate }}</td>
-                            <td>{{ $item->user->email }}</td>
-                            <td>{{ $item->user->phone }}</td>
-                            <td>
-                                @if ($item->user->state == 1)
-                                    <span class="label label-inline label-light-success font-weight-bold">
-                                        Activo
-                                    </span>
-                                @else
-                                    <span class="label label-inline label-light-danger font-weight-bold">
-                                        Inactivo
-                                    </span>
-                                @endif
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <div class="dropdown dropdown-inline">
-                                        <button type="button" class="btn btn-light-primary btn-icon btn-sm"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fad fa-ellipsis-v-alt"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a href="{{ route('messengers.show', $item->id) }}"
-                                                class="dropdown-item align-items-center">
-                                                <div class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                                    <i class="fad fa-folder-open"></i>
-                                                </div> Detalle
-                                            </a>
-                                            <a href="{{ route('messengers.edit', $item->id) }}"
-                                                class="dropdown-item align-items-center">
-                                                <div class="btn btn-icon btn-light-success btn-sm mr-2">
-                                                    <i class="fad fa-edit"></i>
-                                                </div> Editar
-                                            </a>
-                                            <a type="button" onclick="confirmDelete('/mensajeros/'+{{ $item->id }})"
-                                                role="button" id="deleteMessenger" class="dropdown-item align-items-center">
-                                                {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
-                                                    @csrf @method('DELETE') --}}
-                                                <div class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                    <i class="fad fa-trash-alt"></i>
-                                                </div> Eliminar
-                                                {{-- </form> --}}
-                                            </a>
+                    @if (count($messengers)>0)
+                        @foreach ($messengers as $item)
+                            <tr>
+                                <th scope="row">{{ $item->user->name . ' ' . $item->user->last_name }}</th>
+                                <td>{{ $item->user->document_number }}</td>
+                                <td>{{ $item->vehicle_plate }}</td>
+                                <td>{{ $item->user->email }}</td>
+                                <td>{{ $item->user->phone }}</td>
+                                <td>
+                                    @if ($item->user->state == 1)
+                                        <span class="label label-inline label-light-success font-weight-bold">
+                                            Activo
+                                        </span>
+                                    @else
+                                        <span class="label label-inline label-light-danger font-weight-bold">
+                                            Inactivo
+                                        </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                                        <div class="dropdown dropdown-inline">
+                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fad fa-ellipsis-v-alt"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a href="{{ route('messengers.show', $item->id) }}"
+                                                    class="dropdown-item align-items-center">
+                                                    <div class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                                        <i class="fad fa-folder-open"></i>
+                                                    </div> Detalle
+                                                </a>
+                                                <a href="{{ route('messengers.edit', $item->id) }}"
+                                                    class="dropdown-item align-items-center">
+                                                    <div class="btn btn-icon btn-light-success btn-sm mr-2">
+                                                        <i class="fad fa-edit"></i>
+                                                    </div> Editar
+                                                </a>
+                                                <a type="button" onclick="confirmDelete('/mensajeros/'+{{ $item->id }})"
+                                                    role="button" id="deleteMessenger" class="dropdown-item align-items-center">
+                                                    {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
+                                                        @csrf @method('DELETE') --}}
+                                                    <div class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                                        <i class="fad fa-trash-alt"></i>
+                                                    </div> Eliminar
+                                                    {{-- </form> --}}
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <th colspan="8" class="text-center">¡No se encontraron resultados!</td>
+                    @endif
                 </tbody>
             </table>
             <!--end: Datatable-->

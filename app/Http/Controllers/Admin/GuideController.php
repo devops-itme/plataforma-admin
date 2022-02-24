@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class GuideController extends Controller
 {
-    use GuideTrait, GuidanceDocsTrait;
+    use GuidanceDocsTrait;
     /**
      * Display a listing of the resource.
      *

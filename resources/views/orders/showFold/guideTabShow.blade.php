@@ -4,7 +4,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Contacto</th>
-            <th scope="col">Telefono</th>
+            <th scope="col">Teléfono</th>
             <th scope="col">Correo</th>
             <th scope="col">Fecha programada</th>
             <th scope="col">Tarifa</th>
