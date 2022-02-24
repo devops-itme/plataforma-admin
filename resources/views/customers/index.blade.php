@@ -214,7 +214,7 @@
                                     <i class="fad fa-edit"></i>
                                 </div> Editar
                             </a>
-                            <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
+                            <button type="button" onclick="deleteResource('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
                                 <div class="btn btn-icon btn-light-danger btn-sm mr-2">
                                     <i class="fad fa-trash-alt"></i>
                                 </div> Eliminar

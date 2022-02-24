@@ -437,7 +437,7 @@ export default class Orders {
                 guideEdit.innerHTML = '<i class="fas fa-edit"></i>';
                 //DELETE
                 const guideDelete = document.createElement("button");
-                guideDelete.onclick = function(){confirmDelete('/guias/'+key.id)};
+                guideDelete.onclick = function(){deleteResource('/guias/'+key.id)};
                 guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                 guideDelete.setAttribute('type', 'button');
                 guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';

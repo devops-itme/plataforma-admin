@@ -59726,7 +59726,7 @@ var Customers = /*#__PURE__*/function () {
                         var branchDelete = document.createElement("button");
 
                         branchDelete.onclick = function () {
-                          confirmDelete('/sucursales/null/' + data[i].id);
+                          deleteResource('/sucursales/null/' + data[i].id);
                         };
 
                         branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
@@ -60970,7 +60970,7 @@ var Orders = /*#__PURE__*/function () {
                     var guideDelete = document.createElement("button");
 
                     guideDelete.onclick = function () {
-                      confirmDelete('/guias/' + key.id);
+                      deleteResource('/guias/' + key.id);
                     };
 
                     guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
