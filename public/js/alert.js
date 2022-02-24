@@ -61,9 +61,9 @@ function confirmation(
         text: text,
         icon: icon,
         buttons: {
-            cancel: true,
-            confirm: true,
-        },
+            cancel: 'Cancelar',
+            confirm: 'Confirmar'
+        }
     });
 }
 
