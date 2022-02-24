@@ -47,7 +47,7 @@ trait GuidanceDocsTrait
         try {
             $guidance_doc = GuidanceDocument::find($request->guidance_doc_id);
             if (is_null($guidance_doc)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro el documento');
+                return $this->respond(500, [], 'user not found', 'No se encontró el documento');
             }
             $guidance_doc->update([
                 'guides_id' => $request->guides_id,
@@ -64,7 +64,7 @@ trait GuidanceDocsTrait
         try {
             $guidance_doc = GuidanceDocument::find($id);
             if (is_null($guidance_doc)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro el documento');
+                return $this->respond(500, [], 'user not found', 'No se encontró el documento');
             }
             $guidance_doc->delete();
             return $this->respond(200, $guidance_doc, null, 'Documento eliminado exitosamente');

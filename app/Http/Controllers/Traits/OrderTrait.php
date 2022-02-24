@@ -84,7 +84,7 @@ trait OrderTrait
         try {
             $order = Order::find($request->order_id);
             if (is_null($order)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la orden');
+                return $this->respond(500, [], 'user not found', 'No se encontró la orden');
             }
             $order->update([
                 'user_id' => $request->user_id,
@@ -117,7 +117,7 @@ trait OrderTrait
         try {
             $order = Order::find($id);
             if (is_null($order)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la orden');
+                return $this->respond(500, [], 'user not found', 'No se encontró la orden');
             }
             $order->delete();
             return $this->respond(200, $order, null, 'Orden eliminada exitosamente');
@@ -139,9 +139,9 @@ trait OrderTrait
                     'order_id' => $id
                 ]);
             }
-            return $this->respond(200, [], null, 'Guias asignadas de forma correcta');
+            return $this->respond(200, [], null, 'Guiás asignadas de forma correcta');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al asignar la guia');
+            return $this->respond(500, [], $e->getMessage(), 'Error al asignar la guiá');
         }
     }
 }

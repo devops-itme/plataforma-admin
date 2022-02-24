@@ -84,7 +84,7 @@ trait BranchOfficeTrait
         try {
             $branchOffice = BranchOffice::find($request->office_id);
             if (is_null($branchOffice)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la oficina');
+                return $this->respond(500, [], 'user not found', 'No se encontró la oficina');
             }
             // if($request->branch_office_default == 1){
             //     $defaultOffice = BranchOffice::where('default', 1)->first();
@@ -120,7 +120,7 @@ trait BranchOfficeTrait
         try {
             $branchOffice = BranchOffice::find($id);
             if (is_null($branchOffice)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la oficina');
+                return $this->respond(500, [], 'user not found', 'No se encontró la oficina');
             }
             $branchOffice->delete();
             return $this->respond(200, $branchOffice, null, 'Oficina eliminada exitosamente');

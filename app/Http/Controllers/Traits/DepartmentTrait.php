@@ -11,7 +11,6 @@ use App\UserDeparment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use function PHPSTORM_META\map;
 
 trait DepartmentTrait
 {

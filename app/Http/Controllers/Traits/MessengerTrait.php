@@ -118,7 +118,7 @@ trait MessengerTrait
         try {
             $customer = Messenger::find($id);
             if (is_null($customer)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro el mensajero');
+                return $this->respond(500, [], 'user not found', 'No se encontró el mensajero');
             }
             $deleteUser = $this->deleteUser($customer->user_id);
             if ($deleteUser['state'] == 500) {

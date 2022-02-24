@@ -107,7 +107,7 @@ trait UserTrait
         try {
             $user = User::find($request->user_id);
             if (is_null($user)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro el usuario');
+                return $this->respond(500, [], 'user not found', 'No se encontró el usuario');
             }
             $user->update([
                 'parent_id' => $request->parent_id ?? $user->parent_id,
@@ -133,7 +133,7 @@ trait UserTrait
         try {
             $user = User::find($id);
             if (is_null($user)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro el usuario');
+                return $this->respond(500, [], 'user not found', 'No se encontró el usuario');
             }
             $user->delete();
             return $this->respond(200, $user, null, 'Usuario eliminado exitosamente');
