@@ -33,8 +33,8 @@
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Telefono: <span class="text-danger">*</span></label>
-                    <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Telefono"
+                    <label>Teléfono: <span class="text-danger">*</span></label>
+                    <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Teléfono"
                         value="{{ $messenger->user->phone }}" />
                     <span class="form-text text-muted"></span>
                 </div>

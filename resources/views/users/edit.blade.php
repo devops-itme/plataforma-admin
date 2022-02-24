@@ -39,8 +39,8 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
-                <label>Telefono: <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control form-control-solid" placeholder="Telefono" name="phone" value="{{$user->phone}}" />
+                <label>Teléfono: <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{$user->phone}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">

@@ -26,7 +26,7 @@
                         <div class="line-height-xl">{{$customer->getUser->email}}</div>
                     </div>
                     <div class="col-md-2">
-                        <div class="font-weight-bolder mb-3">Telefono:</div>
+                        <div class="font-weight-bolder mb-3">Teléfono:</div>
                         <div class="line-height-xl">{{$customer->getUser->phone}}</div>
                     </div>
                     <div class="col-md-3">

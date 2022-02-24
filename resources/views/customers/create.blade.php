@@ -54,8 +54,8 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-3">
-                <label>Telefono: <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control form-control-solid" placeholder="Telefono" name="phone" value="{{ old('phone') }}" />
+                <label>Teléfono: <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{ old('phone') }}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-3">

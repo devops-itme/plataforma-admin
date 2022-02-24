@@ -25,7 +25,7 @@
                         <div class="line-height-xl">{{$messenger->user->email}}</div>
                     </div>
                     <div class="col-md-3">
-                        <div class="font-weight-bolder mb-3">Telefono:</div>
+                        <div class="font-weight-bolder mb-3">Teléfono:</div>
                         <div class="line-height-xl">{{$messenger->user->phone}}</div>
                     </div>
                     <div class="col-md-3">

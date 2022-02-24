@@ -69,8 +69,8 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-3">
-                <label>Telefono: <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control form-control-solid" placeholder="Telefono" name="phone" value="{{ $customer->getUser->phone }}" />
+                <label>Teléfono: <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{ $customer->getUser->phone }}" />
                 <span class="form-text text-muted"></span>
             </div>
             {{-- <input type="hidden" value="{{$customer->business_name ? '2' : '1'}}" id="customer_type_edit"> --}}

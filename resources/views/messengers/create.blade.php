@@ -31,8 +31,8 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-2">
-                <label>Telefono: <span class="text-danger">*</span></label>
-                <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Telefono" value="{{old('phone')}}" />
+                <label>Teléfono: <span class="text-danger">*</span></label>
+                <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Teléfono" value="{{old('phone')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">

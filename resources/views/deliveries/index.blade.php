@@ -76,7 +76,7 @@
                                     v-text="`${showData.get_user?.name} ${showData.get_user?.last_name}`"></div>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Telefono:</div>
+                                <div class="font-weight-bolder mb-1">Teléfono:</div>
                                 <div class="line-height-x1">3002220000</div>
                             </div>
                             <div class="col-md-6 mb-2">
