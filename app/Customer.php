@@ -26,6 +26,9 @@ class Customer extends Model
         'COD_value',
         'business_name',
         'tradename',
+        'insured_value',
+        'money_to_collect',
+        'percentage_to_collect',
         'state'
     ];
 

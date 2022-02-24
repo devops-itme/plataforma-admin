@@ -110,7 +110,7 @@
                             aria-controls="home" aria-selected="true">General</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Sucursales</a>
+                        <a class="nav-link" id="branches-tab" data-toggle="tab" href="#branches" role="tab" aria-controls="branches" aria-selected="false">Sucursales</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="departament-tab" data-toggle="tab" href="#departament" role="tab" aria-controls="departament" aria-selected="false">Departamentos</a>
@@ -123,97 +123,117 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="d-flex flex-wrap mt-3">
-                            <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de cliente</h5>
-                            <div class="form-group col-md-3 py-3 m-0">
-                                <label for="exampleSelect1">Zona <span class="text-danger">*</span></label>
-                                <select class="form-control form-control-solid" id="zone" name="zone">
-                                    <option selected disabled> Seleccione </option>
-                                    <option value="1" {{ $customer->zone_id == 1 ? 'selected' : '' }}>Zona 1</option>
-                                    <option value="2" {{ $customer->zone_id == 2 ? 'selected' : '' }}>Zona 2</option>
-                                    <option value="3" {{ $customer->zone_id == 3 ? 'selected' : '' }}>Zona 3</option>
-                                    <option value="4" {{ $customer->zone_id == 4 ? 'selected' : '' }}>Zona 4</option>
-                                    <option value="5" {{ $customer->zone_id == 5 ? 'selected' : '' }}>Zona 5</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3 py-3 m-0">
-                                <label for="exampleTextarea">Contacto <span class="text-danger">*</span></label>
-                                <textarea class="form-control form-control-solid" id="exampleTextarea" rows="1" name="contact">{{ $customer->contact }}</textarea>
-                            </div>
-                            <div class="form-group col-md-2 my-3">
-                                <label for="payment_pediod">Periodo de pago <span class="text-danger">*</span></label>
-                                <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_period" name="payment_period">
-                                    <option value="" selected disabled> Seleccione </option>
-                                    @foreach ($payment_period as $item)
-                                    <option value="{{ $item->id }}" {{ $item->id == $customer->payment_period ? 'selected' : '' }}>
-                                        {{ $item->name }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2 mb-0 py-4">
-                                <label>Credito</label>
-                                <div class="radio-inline">
-                                    <label class="radio radio-rounded">
-                                        <input type="radio" name="credit" value="1" {{ $customer->credit == 1 ? 'checked="checked"' : '' }} />
-                                        <span></span>
-                                        SI
-                                    </label>
-                                    <label class="radio radio-rounded">
-                                        <input type="radio" name="credit" value="0" {{ $customer->credit == 0 ? 'checked="checked"' : '' }} />
-                                        <span></span>
-                                        NO
-                                    </label>
+                        <div class="d-flex flex-row flex-wrap mt-3">
+                            <div class="col-md-8 d-flex flex-row flex-wrap border-right">
+                                <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de cliente</h5>
+                                <div class="form-group col-md-4 py-3 m-0">
+                                    <label for="exampleSelect1">Zona <span class="text-danger">*</span></label>
+                                    <select class="form-control form-control-solid" id="zone" name="zone">
+                                        <option selected disabled> Seleccione </option>
+                                        <option value="1" {{ $customer->zone_id == 1 ? 'selected' : '' }}>Zona 1</option>
+                                        <option value="2" {{ $customer->zone_id == 2 ? 'selected' : '' }}>Zona 2</option>
+                                        <option value="3" {{ $customer->zone_id == 3 ? 'selected' : '' }}>Zona 3</option>
+                                        <option value="4" {{ $customer->zone_id == 4 ? 'selected' : '' }}>Zona 4</option>
+                                        <option value="5" {{ $customer->zone_id == 5 ? 'selected' : '' }}>Zona 5</option>
+                                    </select>
                                 </div>
-                                <span class="form-text text-muted"></span>
-                            </div>
-                            <div class="form-group col-md-2 mb-0 py-4">
-                                <label>Enviar saldo por Email</label>
-                                <div class="radio-inline">
-                                    <label class="radio radio-rounded">
-                                        <input type="radio" checked="checked" name="receive_emails" value="1" {{ $customer->receive_emails == 1 ? 'checked="checked"' : '' }} />
-                                        <span></span>
-                                        SI
-                                    </label>
-                                    <label class="radio radio-rounded">
-                                        <input type="radio" name="receive_emails" value="0" {{ $customer->receive_emails == 0 ? 'checked="checked"' : '' }} />
-                                        <span></span>
-                                        NO
-                                    </label>
+                                <div class="form-group col-md-4 py-3 m-0">
+                                    <label for="exampleTextarea">Contacto <span class="text-danger">*</span></label>
+                                    <textarea class="form-control form-control-solid" id="exampleTextarea" rows="1" name="contact">{{ $customer->contact }}</textarea>
                                 </div>
-                                <span class="form-text text-muted"></span>
-                            </div>
-                            <div class="form-group py-3 m-0 col-md-2">
-                                <label>Valor FullFill <span class="text-danger">*</span></label>
-                                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="fullfill" value="{{ $customer->fullfill }}" />
-                            </div>
-                            <div class="form-group py-3 m-0 col-md-2">
-                                <label>Valor Handling <span class="text-danger">*</span></label>
-                                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="handling" value="{{ $customer->handling }}" />
-                            </div>
-                            <div class="form-group py-3 m-0 col-md-2">
-                                <label>Valor COD <span class="text-danger">*</span></label>
-                                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="COD_value" value="{{ $customer->COD_value }}" />
-                            </div>
-                            <div class="form-group col-md-4 mb-0 py-4">
-                                <label>Impuesto <span class="text-danger">*</span></label>
-                                <div class="radio-inline">
-                                    <label class="radio radio-rounded">
-                                        <input type="radio" name="taxes" value="1" {{ $customer->taxes == 1 ? 'checked="checked"' : '' }} />
-                                        <span></span>
-                                        SI
-                                    </label>
-                                    <label class="radio radio-rounded">
-                                        <input type="radio" name="taxes" value="0" {{ $customer->taxes == 0 ? 'checked="checked"' : '' }} />
-                                        <span></span>
-                                        NO
-                                    </label>
+                                <div class="form-group col-md-4 my-3">
+                                    <label for="payment_pediod">Periodo de pago <span class="text-danger">*</span></label>
+                                    <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_period" name="payment_period">
+                                        <option value="" selected disabled> Seleccione </option>
+                                        @foreach ($payment_period as $item)
+                                        <option value="{{ $item->id }}" {{ $item->id == $customer->payment_period ? 'selected' : '' }}>
+                                            {{ $item->name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <span class="form-text text-muted"></span>
+                                <div class="form-group col-md-4 mb-0 py-4">
+                                    <label>Credito</label>
+                                    <div class="radio-inline">
+                                        <label class="radio radio-rounded">
+                                            <input type="radio" name="credit" value="1" {{ $customer->credit == 1 ? 'checked="checked"' : '' }} />
+                                            <span></span>
+                                            SI
+                                        </label>
+                                        <label class="radio radio-rounded">
+                                            <input type="radio" name="credit" value="0" {{ $customer->credit == 0 ? 'checked="checked"' : '' }} />
+                                            <span></span>
+                                            NO
+                                        </label>
+                                    </div>
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                                <div class="form-group col-md-4 mb-0 py-4">
+                                    <label>Enviar saldo por Email</label>
+                                    <div class="radio-inline">
+                                        <label class="radio radio-rounded">
+                                            <input type="radio" checked="checked" name="receive_emails" value="1" {{ $customer->receive_emails == 1 ? 'checked="checked"' : '' }} />
+                                            <span></span>
+                                            SI
+                                        </label>
+                                        <label class="radio radio-rounded">
+                                            <input type="radio" name="receive_emails" value="0" {{ $customer->receive_emails == 0 ? 'checked="checked"' : '' }} />
+                                            <span></span>
+                                            NO
+                                        </label>
+                                    </div>
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                                <div class="form-group py-3 m-0 col-md-4">
+                                    <label>Valor FullFill <span class="text-danger">*</span></label>
+                                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="fullfill" value="{{ $customer->fullfill }}" />
+                                </div>
+                                <div class="form-group py-3 m-0 col-md-4">
+                                    <label>Valor Handling <span class="text-danger">*</span></label>
+                                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="handling" value="{{ $customer->handling }}" />
+                                </div>
+                                <div class="form-group py-3 m-0 col-md-4">
+                                    <label>Valor COD <span class="text-danger">*</span></label>
+                                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="COD_value" value="{{ $customer->COD_value }}" />
+                                </div>
+                                <div class="form-group col-md-4 mb-0 py-4">
+                                    <label>Impuesto <span class="text-danger">*</span></label>
+                                    <div class="radio-inline">
+                                        <label class="radio radio-rounded">
+                                            <input type="radio" name="taxes" value="1" {{ $customer->taxes == 1 ? 'checked="checked"' : '' }} />
+                                            <span></span>
+                                            SI
+                                        </label>
+                                        <label class="radio radio-rounded">
+                                            <input type="radio" name="taxes" value="0" {{ $customer->taxes == 0 ? 'checked="checked"' : '' }} />
+                                            <span></span>
+                                            NO
+                                        </label>
+                                    </div>
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex flex-row flex-wrap">
+                                <h5 class="my-4 font-weight-bold text-dark col-md-12">Seguro de mercancia</h5>
+                                <div class="form-group col-md-6">
+                                    <label>Valor asegurado: <span class="text-danger">*</span></label>
+                                    <input name="insured_value" type="number" class="form-control form-control-solid" placeholder="" value="{{$customer->insured_value}}" />
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>A cobrar %: <span class="text-danger">*</span></label>
+                                    <input name="percentage_to_collect" type="number" class="form-control form-control-solid" placeholder="" value="{{$customer->percentage_to_collect}}" />
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>A cobrar $: <span class="text-danger">*</span></label>
+                                    <input name="money_to_collect" type="number" class="form-control form-control-solid" placeholder="" value="{{$customer->money_to_collect}}" />
+                                    <span class="form-text text-muted"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade" id="branches" role="tabpanel" aria-labelledby="branches-tab">
                         <div class="col-md-12">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general-tab">
@@ -261,7 +281,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 d-flex flex-row flex-wrap">
+                                        {{-- <div class="col-md-6 d-flex flex-row flex-wrap">
                                             <h5 class="my-4 font-weight-bold text-dark col-md-12">Seguro de mercancia</h5>
                                             <div class="form-group col-md-6">
                                                 <label>Valor asegurado: <span class="text-danger">*</span></label>
@@ -278,7 +298,7 @@
                                                 <input name="value_receivable" type="number" class="form-control form-control-solid" placeholder="">
                                                 <span class="form-text text-muted"></span>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
