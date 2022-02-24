@@ -61,7 +61,7 @@
             </div>
             <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de mensajero</h5>
             <div class="form-group col-md-3">
-                <label>Placa de vehiculo: <span class="text-danger">*</span></label>
+                <label>Placa de vehículo: <span class="text-danger">*</span></label>
                 <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder="" value="{{old('vehicle_plate')}}"/>
                 <span class="form-text text-muted"></span>
             </div>

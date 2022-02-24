@@ -57,7 +57,7 @@
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Placa de vehiculo: <span class="text-danger">*</span></label>
+                    <label>Placa de vehículo: <span class="text-danger">*</span></label>
                     <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder=""
                         value="{{ $messenger->vehicle_plate }}" />
                     <span class="form-text text-muted"></span>

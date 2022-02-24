@@ -134,7 +134,7 @@
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
                                 <label>Place:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Placa de vehiculo"
+                                <input type="text" class="form-control form-control-solid" placeholder="Placa de vehículo"
                                     name="vehicle_plate" value="{{ request()->vehicle_plate }}" />
                                 <span class="form-text text-muted">Filtro placa</span>
                             </div>
