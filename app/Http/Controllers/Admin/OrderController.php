@@ -89,7 +89,10 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('getUser')->find($id);
-        return view('orders.showFold.show', compact('order'));
+        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'order_types');
+        })->get();
+        return view('orders.showFold.show', compact('order', 'order_type'));
     }
 
     /**
