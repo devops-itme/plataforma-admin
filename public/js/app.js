@@ -60984,7 +60984,7 @@ var Orders = /*#__PURE__*/function () {
     key: "requestGuides",
     value: function () {
       var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var orderNumber, edit, response;
+        var orderNumber, path, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
@@ -60997,19 +60997,12 @@ var Orders = /*#__PURE__*/function () {
                   orderNumber = orderNumber.value;
                 }
 
-                edit = document.getElementById("edit");
-
-                if (edit == null) {
-                  edit = 0;
-                } else {
-                  edit = 1;
-                }
-
+                path = window.location.pathname.split('/');
                 response = {
                   'state': 500
                 };
-                _context10.next = 7;
-                return fetch("/guias?order=" + orderNumber + "&edit=" + edit).then(function (response) {
+                _context10.next = 6;
+                return fetch("/guias?order=" + orderNumber + "&path=" + path).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -61017,10 +61010,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 7:
+              case 6:
                 return _context10.abrupt("return", response);
 
-              case 8:
+              case 7:
               case "end":
                 return _context10.stop();
             }

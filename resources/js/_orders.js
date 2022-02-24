@@ -462,16 +462,11 @@ export default class Orders {
             orderNumber = orderNumber.value;
 
         }
-        let edit = document.getElementById("edit");
-        if(edit == null){
-            edit = 0;
-        } else {
-            edit = 1;
-        }
+        let path = window.location.pathname.split('/');
         let response = {
             'state': 500
         };
-        await fetch("/guias?order="+orderNumber+"&edit="+edit)
+        await fetch("/guias?order="+orderNumber+"&path="+path)
             .then(response => response.json())
             .then(data => {
                 response = data
