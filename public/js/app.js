@@ -2235,6 +2235,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {},
   methods: {
+    tab: function tab() {
+      var tabs = document.querySelectorAll('a[data-toggle="tab"]');
+      tabs.forEach(function (tab) {
+        console.log(tab);
+        tab.addEventListener('shown.bs.tab', function (event) {
+          console.log(event);
+        });
+      });
+    },
     getOrders: function getOrders(type_id) {
       var _this3 = this;
 
@@ -2244,12 +2253,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                // let tabEl = document.querySelector('button[data-toggle="tab"]')
-                //     // tabEl.addEventListener('shown.bs.tab', function (event) {
-                //     //     event.target // newly activated tab
-                //     //     event.relatedTarget // previous active tab
-                //     // })
-                //     console.log(tabEl)
                 _this3.currentTab = type_id;
                 _context.next = 3;
                 return _this3.requestOrders();
@@ -41976,10 +41979,10 @@ var render = function () {
                   _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
                   _vm._v(" "),
                   _c("th", { attrs: { scope: "col" } }, [
-                    _vm._v("Description"),
+                    _vm._v("Descripción"),
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("State")]),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
                   _vm._v(" "),
                   _c("th", { attrs: { scope: "col" } }, [
                     _c("div", { staticClass: "d-flex justify-content-end" }, [

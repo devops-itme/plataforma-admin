@@ -49,13 +49,18 @@ export default {
     },
 
     methods: {
+        tab(){
+            let tabs = document.querySelectorAll('a[data-toggle="tab"]')
+
+                tabs.forEach(tab => {
+                    console.log(tab)
+                    tab.addEventListener('shown.bs.tab', function (event) {
+                        console.log(event)
+                });
+            })
+
+        },
         async getOrders(type_id){
-            // let tabEl = document.querySelector('button[data-toggle="tab"]')
-            //     // tabEl.addEventListener('shown.bs.tab', function (event) {
-            //     //     event.target // newly activated tab
-            //     //     event.relatedTarget // previous active tab
-            //     // })
-            //     console.log(tabEl)
             this.currentTab = type_id;
             let response =  await this.requestOrders();
             this.data = response.data
