@@ -5,8 +5,8 @@
             <label for="trans_type">Tipo de transporte <span class="text-danger">*</span></label>
             <select name="trans_type" class="form-control form-control-solid" id="trans_type" disabled>
                 <option>Seleccione tipo de transporte</option>
-                <option {{$order->vehicle_type_id == 1 ? 'selected' : ''}}>Moto</option>
-                <option {{$order->vehicle_type_id == 2 ? 'selected' : ''}}>Auto</option>
+                <option {{($order->getGuides[0] != null ) ? ($order->getGuides[0]->transport_type == 1 ? 'selected' : '') : ''}}>Moto</option>
+                <option {{($order->getGuides[0] != null ) ? ($order->getGuides[0]->transport_type == 2 ? 'selected' : '') : ''}}>Auto</option>
             </select>
         </div>
         <div class="form-group col-md-6">
@@ -19,7 +19,7 @@
         </div>
         <div class="form-group col-md-6">
             <label>Fecha de programación: <span class="text-danger">*</span></label>
-            <input name="order_num" type="date" class="form-control form-control-solid" placeholder="" value="{{$order->schedule_date}}"" disabled/>
+            <input name="order_num" type="date" class="form-control form-control-solid" placeholder="" value="{{$order->schedule_date}}" disabled/>
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
@@ -30,12 +30,12 @@
         <div class="form-group col-md-12 m-0 d-flex align-items-center">
             <div class="checkbox-inline">
                 <label class="checkbox">
-                    <input type="checkbox" name="CheckState" {{$order->express_delivery == 1 ? 'checked' : ''}} disabled/>
+                    <input type="checkbox" name="CheckState" {{$order->urgent_dispatch == 1 ? 'checked' : ''}} disabled/>
                     <span></span>
                     Marcar Urgente Despacho
                 </label>
                 <label class="checkbox">
-                    <input type="checkbox" name="CheckState" {{$order->last_destination_return == 1 ? 'checked' : ''}} disabled/>
+                    <input type="checkbox" name="CheckState" {{$order->return_last_destination == 1 ? 'checked' : ''}} disabled/>
                     <span></span>
                     Retorno Ultimo Destino
                 </label>
@@ -51,12 +51,12 @@
         </div>
         <div class="form-group col-md-6">
             <label>A cobrar %: <span class="text-danger">*</span></label>
-            <input name="collet_porcent" type="number" class="form-control form-control-solid" value="{{$order->percentage_receivable}}" disabled/>
+            <input name="collet_porcent" type="number" class="form-control form-control-solid" value="{{$order->percentage_to_collect}}" disabled/>
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
             <label>A cobrar $: <span class="text-danger">*</span></label>
-            <input name="collet_cash" type="number" class="form-control form-control-solid" value="{{$order->value_receivable}}" disabled/>
+            <input name="collet_cash" type="number" class="form-control form-control-solid" value="{{$order->money_to_collect}}" disabled/>
             <span class="form-text text-muted"></span>
         </div>
     </div>
