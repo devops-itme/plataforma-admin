@@ -100,14 +100,17 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order = Order::with('getUser', 'getUser.getCustomer')->find($id);
+        $order = Order::with('getUser', 'getUser.getCustomer', 'getGuides')->find($id);
         $allBranches = UserBranch::where('user_id', $order->user_id)->get('id');
         $ids = [];
         foreach ($allBranches as $value) {
             array_push($ids, $value->id);
         }
         $branch = BranchOffice::where('default', 1)->whereIn('id', $ids)->first();
-        return view('orders.editFold.edit', compact('order', 'branch'));
+        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'order_types');
+        })->get();
+        return view('orders.editFold.edit', compact('order', 'branch', 'order_type'));
     }
 
     /**

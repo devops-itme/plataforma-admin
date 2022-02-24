@@ -215,7 +215,7 @@
                                         <a href="{{route('orders.edit', $order->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
                                             <i class="fad fa-edit"></i>
                                         </a>
-                                        <button type="button" onclick="confirmDelete('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        <button type="button" onclick="deleteResource('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
                                     </div>
