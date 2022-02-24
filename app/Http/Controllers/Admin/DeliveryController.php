@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\DeliveryTrait;
 use App\Http\Controllers\Traits\RouteTrait;
+use App\ParameterValue;
 use Illuminate\Http\Request;
 
 class DeliveryController extends Controller
@@ -20,6 +21,14 @@ class DeliveryController extends Controller
         } else {
             return $this->respond(500, null, $response['error'], $response['message']);
         }
+    }
+
+    public function orderStates()
+    {
+        $order_states = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'order_states');
+        })->get();
+        return $this->respond(200, $order_states, null, 'Estado de las ordenes');
     }
 
 }

@@ -64,11 +64,11 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Referencia de cliente:</div>
-                                <div class="line-height-xl">---</div>
+                                <div class="line-height-xl" v-show="showData.id">---</div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Tipo de orden:</div>
-                                <div class="line-height-xl">Normal</div>
+                                <div class="line-height-xl" v-show="showData.id">Normal</div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Cliente:</div>
@@ -77,11 +77,11 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Teléfono:</div>
-                                <div class="line-height-x1">3002220000</div>
+                                <div class="line-height-x1" v-show="showData.id" v-text="`${showData.get_user?.phone}`"></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Contacto:</div>
-                                <div class="line-height-xl">Martha Payega</div>
+                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_user?.get_customer.contact}`"></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Transporte:</div>

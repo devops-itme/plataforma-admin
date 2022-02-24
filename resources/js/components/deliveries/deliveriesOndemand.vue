@@ -7,17 +7,14 @@ export default {
             shipmented: [],
             completed: [],
             showData: "",
-            tabs: [
-                { id: 1, name: "Por despachar", href: "pordespachar" },
-                { id: 2, name: "Despachados", href: "despachados" },
-                { id: 3, name: "Completados", href: "completados" },
-            ],
-            currentTab: 1,
+            tabs: [],
+            currentTab: 31,
 
             messengers: [],
             searchMessenger: null,
             messenger: null,
             messengerName: null,
+            // orderTypes: null,
         };
     },
     computed: {
@@ -46,6 +43,7 @@ export default {
         },
     },
     watch: {
+
     },
 
     methods: {
@@ -148,10 +146,22 @@ export default {
                 })
                 .catch((err) => console.warn(err));
         },
+
+         async orderState() {
+            let req = await fetch('/order_states');
+            let res = await req.json();
+            this.tabs = res.data;
+            this.currentTab = this.tabs[0].id
+            // this.tabs[0].href = 'pordespachar';
+            // this.tabs[1].href = 'despachados';
+            // this.tabs[2].href = 'completados';
+        },
+
     },
 
     async mounted() {
-       this.getOrders(this.currentTab);
+        this.orderState();
+        this.getOrders(this.currentTab);
         this.getMessengers();
     },
 };
