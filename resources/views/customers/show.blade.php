@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" onclick="confirmDelete('{{route('addresses.destroy', $item->id)}}')" class="delete btn btn-icon btn-light-danger">
+                        <button type="button" onclick="deleteResource('{{route('addresses.destroy', $item->id)}}', true)" class="delete btn btn-icon btn-light-danger">
                             <i class="fas fa-eraser"></i>
                         </button>
                     </td>
