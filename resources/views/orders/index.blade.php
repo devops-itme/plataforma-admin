@@ -110,16 +110,17 @@
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Numero de orden:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="3231123" name="number"
+                                <input type="text" class="form-control form-control-solid" placeholder="Orden_1" name="number"
                                     value="{{ request()->number }}" />
                                 <span class="form-text text-muted">Filtro numero</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label for="exampleSelect1">Tipo de orden:</label>
-                                        <select class="form-control form-control-solid" name="service_type">
+                                        <select class="form-control form-control-solid" name="order_type">
                                             <option selected disabled> Seleccione </option>
-                                            <option value="1" {{ request()->service_type == 1 ? 'selected' : '' }}>Ondeman|</option>
-                                            <option value="2" {{ request()->service_type == 2 ? 'selected' : '' }}>Multiple</option>
+                                            @foreach ($order_type as $key)
+                                                <option value="{{$key->id}}" {{ $key->id == request()->order_type ? 'selected' : ''}}>{{$key->name}}</option>
+                                            @endforeach
                                         </select>
                                 <span class="form-text text-muted">Filtro tipo de orden</span>
                             </div>
@@ -155,7 +156,7 @@
                                     <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{route('customers.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                    <a href="{{route('orders.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
                         </div>
@@ -184,9 +185,9 @@
                             <tr>
                                 <th scope="row">{{$order->order_number}}</th>
                                 <td>
-                                    @if ($order->service_type_id == 1)
+                                    @if ($order->getOrderType->name == 'Ondemand')
                                         <span class="label label-inline label-light-warning font-weight-blog">
-                                            Ondeman
+                                            Ondemand
                                         </span>
                                     @else
                                         <span class="label label-inline label-light-success font-weight-blog">
