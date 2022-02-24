@@ -2192,24 +2192,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       shipmented: [],
       completed: [],
       showData: "",
-      tabs: [{
-        id: 1,
-        name: "Por despachar",
-        href: "pordespachar"
-      }, {
-        id: 2,
-        name: "Despachados",
-        href: "despachados"
-      }, {
-        id: 3,
-        name: "Completados",
-        href: "completados"
-      }],
-      currentTab: 1,
+      tabs: [],
+      currentTab: 31,
       messengers: [],
       searchMessenger: null,
       messenger: null,
-      messengerName: null
+      messengerName: null // orderTypes: null,
+
     };
   },
   computed: {
@@ -2429,26 +2418,60 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee4);
       }))();
+    },
+    orderState: function orderState() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return fetch('/order_states');
+
+              case 2:
+                req = _context5.sent;
+                _context5.next = 5;
+                return req.json();
+
+              case 5:
+                res = _context5.sent;
+                _this7.tabs = res.data;
+                _this7.currentTab = _this7.tabs[0].id; // this.tabs[0].href = 'pordespachar';
+                // this.tabs[1].href = 'despachados';
+                // this.tabs[2].href = 'completados';
+
+              case 8:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this7 = this;
+    var _this8 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
-              _this7.getOrders(_this7.currentTab);
+              _this8.orderState();
 
-              _this7.getMessengers();
+              _this8.getOrders(_this8.currentTab);
 
-            case 2:
+              _this8.getMessengers();
+
+            case 3:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
         }
-      }, _callee5);
+      }, _callee6);
     }))();
   }
 });

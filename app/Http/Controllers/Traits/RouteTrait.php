@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Order;
+use App\ParameterValue;
 use App\Route;
 use Illuminate\Validation\Rule;
 
@@ -60,8 +61,12 @@ trait RouteTrait
                     'date' => $request->date
                 ]);
             }
+            $order_states = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+                $query->where('name', 'order_states');
+            })->where('name', 'Despachados')->first();
+
             $order->update([
-                'state'=>2
+                'state'=>$order_states->id
             ]);
 
             return $this->respond(200, $order, null, 'Orden asignada exitosamente');

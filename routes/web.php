@@ -89,6 +89,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
     //Orders delivery
+    Route::get('order_states', 'Admin\DeliveryController@orderStates');
+    //Orders delivery
     Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');
     //Messengers delivery
     Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
