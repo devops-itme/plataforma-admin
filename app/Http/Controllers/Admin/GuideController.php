@@ -22,7 +22,11 @@ class GuideController extends Controller
         if(request()->order != null){
             $order = Order::where('order_number', request()->order)->first();
             if($order){
-                $guides = Guide::where('order_id', $order->id)->orWhere('order_id', NULL)->get();
+                if(request()->edit == 0){
+                    $guides = Guide::where('order_id', $order->id)->orWhere('order_id', NULL)->get();
+                } else {
+                    $guides = Guide::where('order_id', $order->id)->get();
+                }
             }
         } else {
             $guides = Guide::where('order_id', NULL)->get();
