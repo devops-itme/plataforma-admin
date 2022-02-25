@@ -23,6 +23,6 @@ class Route extends Model
 
     public function getMessenger()
     {
-        return $this->belongsTo(Guide::class, 'messenger_user_id');
+        return $this->belongsTo(User::class, 'messenger_user_id');
     }
 }

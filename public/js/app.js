@@ -2193,7 +2193,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       completed: [],
       showData: "",
       tabs: [],
-      currentTab: null,
+      currentTab: 31,
+      showMessengerData: [],
       messengers: [],
       searchMessenger: null,
       messenger: null,
@@ -2241,8 +2242,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 4:
                 response = _context.sent;
                 _this3.data = response.data;
+                _this3.activeIndex = null;
+                _this3.showData = [];
+                _this3.showMessengerData = [];
 
-              case 6:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -2331,7 +2335,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sum;
     },
     rowClick: function rowClick(data, index) {
+      var _data$get_guides$, _data$get_guides$$get;
+
       this.showData = data;
+      this.showMessengerData = (_data$get_guides$ = data.get_guides[0]) === null || _data$get_guides$ === void 0 ? void 0 : (_data$get_guides$$get = _data$get_guides$.get_route) === null || _data$get_guides$$get === void 0 ? void 0 : _data$get_guides$$get.get_messenger;
       this.activeIndex = index;
     },
     assignateDelivery: function assignateDelivery() {
@@ -60351,6 +60358,7 @@ var Orders = /*#__PURE__*/function () {
       this.listGuides();
       this.loadBranches();
       this.customerAddresses();
+      this.createAddress();
     }
   }, {
     key: "setInput",
@@ -61485,6 +61493,101 @@ var Orders = /*#__PURE__*/function () {
       }
 
       return requestCustomerAddresses;
+    }()
+  }, {
+    key: "createAddress",
+    value: function createAddress() {
+      var _this10 = this;
+
+      var btnSaveAddress = document.getElementById("saveAddress");
+
+      if (btnSaveAddress == null) {
+        return;
+      }
+
+      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+        var formData, description, address, lat, lng, user_id, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                formData = new FormData();
+                description = document.getElementById("add_description").value;
+                address = document.getElementById("add_name").value;
+                lat = document.getElementById("add_lat").value;
+                lng = document.getElementById("add_lng").value;
+                user_id = document.getElementById("user_code").value;
+                formData.append('user_id', user_id);
+                formData.append('address', address);
+                formData.append('lat', lat);
+                formData.append('lng', lng);
+                formData.append('description', description);
+                formData.append('requestByJs', 1);
+                _context19.next = 14;
+                return _this10.sendAddressData(formData);
+
+              case 14:
+                response = _context19.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalCreateAddress");
+                  modal.click();
+
+                  _this10.listGuides();
+
+                  _this10.customerAddresses(document.getElementById("user_code").value);
+                } else {
+                  error('Error al crear la guía.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 16:
+              case "end":
+                return _context19.stop();
+            }
+          }
+        }, _callee19);
+      })));
+    }
+  }, {
+    key: "sendAddressData",
+    value: function () {
+      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+          while (1) {
+            switch (_context20.prev = _context20.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context20.next = 3;
+                return fetch("/direcciones", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context20.sent;
+                return _context20.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context20.stop();
+            }
+          }
+        }, _callee20);
+      }));
+
+      function sendAddressData(_x8) {
+        return _sendAddressData.apply(this, arguments);
+      }
+
+      return sendAddressData;
     }()
   }, {
     key: "months",

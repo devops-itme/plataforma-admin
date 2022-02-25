@@ -44,8 +44,14 @@ class OrderController extends Controller
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
+        $transport_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'transport_type');
+        })->get();
+        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_method');
+        })->get();
         $customers = Customer::with('getUser')->get();
-        return view('orders.create', compact('customers', 'order_type'));
+        return view('orders.create', compact('customers','order_type','transport_type','payment_method'));
     }
 
     /**
@@ -182,7 +188,7 @@ class OrderController extends Controller
             $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query)  {
                 $query->where('name', 'Ondemand');
             })->where('state', $type)
-            ->with(['getUser.getCustomer', 'getGuides'])
+            ->with(['getUser.getCustomer', 'getGuides.getRoute.getMessenger'])
             ->get();
 
             // $orders = Order::where('order_type', 1)->wh  ere('state', $type)->with(['getUser','getGuides'])->get();

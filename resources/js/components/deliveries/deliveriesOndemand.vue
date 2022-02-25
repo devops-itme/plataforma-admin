@@ -8,8 +8,8 @@ export default {
             completed: [],
             showData: "",
             tabs: [],
-            currentTab: null,
-
+            currentTab: 31,
+            showMessengerData:[],
             messengers: [],
             searchMessenger: null,
             messenger: null,
@@ -52,6 +52,9 @@ export default {
             this.currentTab = type_id;
             let response = await this.requestOrders();
             this.data = response.data;
+            this.activeIndex = null;
+            this.showData = [];
+            this.showMessengerData = [];
         },
 
         async requestOrders() {
@@ -96,6 +99,7 @@ export default {
 
         rowClick(data, index) {
             this.showData = data;
+            this.showMessengerData = data.get_guides[0]?.get_route?.get_messenger
             this.activeIndex = index;
         },
 
