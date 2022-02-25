@@ -8,7 +8,7 @@ export default {
             completed: [],
             showData: "",
             tabs: [],
-            currentTab: 31,
+            currentTab: null,
 
             messengers: [],
             searchMessenger: null,
@@ -42,30 +42,20 @@ export default {
             }
         },
     },
-    watch: {
-
-    },
+    watch: {},
 
     methods: {
-        tab(){
-            let tabs = document.querySelectorAll('a[data-toggle="tab"]')
+        async getOrders(type_id, index) {
+            index != undefined &&
+                $(`#myTab li:nth-child(${index + 1}) a`).tab("show");
 
-                tabs.forEach(tab => {
-                    console.log(tab)
-                    tab.addEventListener('shown.bs.tab', function (event) {
-                        console.log(event)
-                });
-            })
-
-        },
-        async getOrders(type_id){
             this.currentTab = type_id;
-            let response =  await this.requestOrders();
-            this.data = response.data
+            let response = await this.requestOrders();
+            this.data = response.data;
         },
 
         async requestOrders() {
-            let response = {state:500};
+            let response = { state: 500 };
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
             let requestOptions = {
@@ -139,24 +129,25 @@ export default {
                         return error(data.message);
                     }
                     if (data.state == 200) {
-                        let index =_this.data.findIndex(item=>item.id==_this.showData.id);
-                        _this.data.splice(index,1);
+                        let index = _this.data.findIndex(
+                            (item) => item.id == _this.showData.id
+                        );
+                        _this.data.splice(index, 1);
                         return correct(data.message);
                     }
                 })
                 .catch((err) => console.warn(err));
         },
 
-         async orderState() {
-            let req = await fetch('/order_states');
+        async orderState() {
+            let req = await fetch("/order_states");
             let res = await req.json();
             this.tabs = res.data;
-            this.currentTab = this.tabs[0].id
-            // this.tabs[0].href = 'pordespachar';
-            // this.tabs[1].href = 'despachados';
-            // this.tabs[2].href = 'completados';
+            this.currentTab = this.tabs[0].id;
+            this.tabs[0].href = "pordespachar";
+            this.tabs[1].href = "despachados";
+            this.tabs[2].href = "completados";
         },
-
     },
 
     async mounted() {
