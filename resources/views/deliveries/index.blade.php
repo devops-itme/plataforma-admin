@@ -85,7 +85,7 @@
                             </div>
                             <div class="col-md-6 mb-2"  v-show="showMessengerData?.id">
                                 <div class="font-weight-bolder mb-1">Transporte:</div>
-                                <div class="line-height-xl" v-text="">Moto</div>
+                                <div class="line-height-xl" >Moto</div>
                             </div>
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-6 mb-2">

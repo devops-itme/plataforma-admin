@@ -252,6 +252,14 @@ return [
             'Ondemand',
             'Multiple'
         ],
+        'transport_type' => [
+            'Moto',
+            'Auto'
+        ],
+        'payment_method' => [
+            'Cheque',
+            'Efectivo'
+        ],
     ]
 
 ];
