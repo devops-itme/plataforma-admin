@@ -60,14 +60,15 @@ export default class Customers {
             formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
             formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
             formData.append('branch_office_default', document.getElementById("branch_office_default").value);
+            formData.append('branch_office_department', document.getElementById("branch_office_department").value);
             let response = await this.sendBranchOfficeData(formData);
             if(response['state'] == 200){
-                alert('Sucursal creada exitosamente.');
+                correct('Sucursal creada de manera exitosa');
                 let modal = document.getElementById("modalCreate");
                 modal.click();
                 this.listBranchOffices();
             } else {
-                alert('Ocurrió un error al crear la sucursal.');
+                error("Error al crear sucursal");
                 console.log('Error ocurrido: '+response['error']);
             }
         });
@@ -129,6 +130,7 @@ export default class Customers {
                     branchCheck.setAttribute('type', 'checkbox');
                     branchCheck.setAttribute('name', 'branchCheck[]');
                     branchCheck.setAttribute('value', data[i].id);
+                    branchCheck.checked = true;
                     // //Show button
                     // const showBranch = document.createElement("button");
                     // showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
@@ -144,7 +146,7 @@ export default class Customers {
                     branchEdit.innerHTML = '<i class="fas fa-edit"></i>';
                     //Delete button
                     const branchDelete = document.createElement("button");
-                    branchDelete.onclick = function(){confirmDelete('/sucursales/null/'+data[i].id)};
+                    branchDelete.onclick = function(){deleteResource('/sucursales/null/'+data[i].id)};
                     branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                     branchDelete.setAttribute('type', 'button');
                     branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -161,6 +163,7 @@ export default class Customers {
             }
         }
         this.editBranches();
+        this.listDepartments();
     }
 
     async requestBranchOffices(){
@@ -232,6 +235,16 @@ export default class Customers {
                         key.setAttribute('checked', 'checked');
                     }
                 });
+                let dpts = document.getElementById("branch_office_department_edit");
+                [].forEach.call(dpts, dpt => {
+                    if(data.get_department != null){
+                        if(dpt.value == data.get_department.department_id){
+                            dpt.selected = true;
+                        }
+                    } else {
+                        dpt.value == 'Seleccione' ? dpt.selected = true : ''
+                    }
+                })
             })
         });
     }
@@ -296,6 +309,39 @@ export default class Customers {
         };
         await fetch("/sucursales/"+null+"/"+id+"/update", requestOptions)
             .then((response) => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    async listDepartments(){
+        let slcDepartments = document.getElementsByName("branch_office_department");
+        if(slcDepartments == null) {
+            return;
+        }
+        let departments = await this.requestDepartments();
+        let data = departments.data;
+
+        [].forEach.call(slcDepartments, slcDept => {
+            slcDept.selectedIndex = "0";
+            removeOptions(slcDept);
+
+            for (var i = 0; i < data.length; i++) {
+                let element = data[i];
+                let department = '<option value="'+element.id+'"> '+element.name+' </option>';
+                slcDept.insertAdjacentHTML('beforeend', department);
+            }
+        });
+    }
+
+    async requestDepartments(){
+        let response = {
+            'state': 500
+        };
+        await fetch("/unassigned_depts")
+            .then(response => response.json())
             .then(data => {
                 response = data
             })

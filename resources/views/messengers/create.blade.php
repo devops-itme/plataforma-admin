@@ -31,8 +31,8 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-2">
-                <label>Telefono: <span class="text-danger">*</span></label>
-                <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Telefono" value="{{old('phone')}}" />
+                <label>Teléfono: <span class="text-danger">*</span></label>
+                <input name="phone" type="tel" class="form-control form-control-solid" placeholder="Teléfono" value="{{old('phone')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
@@ -45,7 +45,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label>Numero de identificación: <span class="text-danger">*</span></label>
+                <label>Número de identificación: <span class="text-danger">*</span></label>
                 <input name="document_number" type="text" class="form-control form-control-solid" placeholder="N° de identificación" value="{{old('document_number')}}"/>
                 <span class="form-text text-muted"></span>
             </div>
@@ -61,7 +61,7 @@
             </div>
             <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de mensajero</h5>
             <div class="form-group col-md-3">
-                <label>Placa de vehiculo: <span class="text-danger">*</span></label>
+                <label>Placa de vehículo: <span class="text-danger">*</span></label>
                 <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder="" value="{{old('vehicle_plate')}}"/>
                 <span class="form-text text-muted"></span>
             </div>

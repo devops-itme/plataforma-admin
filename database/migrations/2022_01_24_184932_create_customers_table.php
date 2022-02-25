@@ -30,6 +30,9 @@ class CreateCustomersTable extends Migration
             $table->integer('COD_value')->nullable();
             $table->string('business_name')->nullable();
             $table->string('tradename')->nullable();
+            $table->double('insured_value')->nullable();
+            $table->double('money_to_collect')->nullable()->comment('Valor de seguro');;
+            $table->double('percentage_to_collect')->nullable()->comment('Porcentaje de seguro');
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}");
             $table->timestamps();
             $table->softDeletes();

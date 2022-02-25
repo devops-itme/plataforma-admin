@@ -5,8 +5,8 @@
             <label for="trans_type">Tipo de transporte <span class="text-danger">*</span></label>
             <select name="vehicle_type_id" class="form-control form-control-solid" id="trans_type">
                 <option selected disabled>Seleccione tipo de transporte</option>
-                <option value="1"  {{$order->vehicle_type_id == 1 ? 'selected' : ''}}>Moto</option>
-                <option value="2" {{$order->vehicle_type_id == 2 ? 'selected' : ''}}>Auto</option>
+                <option value="1" {{ ($order->getGuides[0] != null ) ? ($order->getGuides[0]->transport_type == 1 ? 'selected' : '') : ''}}>Moto</option>
+                <option value="2" {{ ($order->getGuides[0] != null ) ? ($order->getGuides[0]->transport_type == 2 ? 'selected' : '') : ''}}>Auto</option>
             </select>
         </div>
         <div class="form-group col-md-6">

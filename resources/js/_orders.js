@@ -24,6 +24,7 @@ export default class Orders {
         this.saveGuides();
         this.listGuides();
         this.loadBranches();
+        this.customerAddresses();
     }
 
     setInput() {
@@ -276,6 +277,10 @@ export default class Orders {
 
                 let modal = document.getElementById("detailCustomer");
                 modal.click();
+                if(document.getElementById("user_code").value != null){
+                    this.customerAddresses(document.getElementById("user_code").value);
+                }
+
             })
         }
     }
@@ -310,7 +315,7 @@ export default class Orders {
         btnStoreGuide.addEventListener('click', async () => {
             let branch_office = document.getElementById("branch_off").value;
             let transport_type = document.getElementById("trans_type").value;
-            let dispatched = document.getElementById("dispatched").value;
+            // let dispatched = document.getElementById("dispatched").value;
             let address_name = document.getElementById("address").value;
             let address_lat = document.getElementById("lat").value;
             let address_lng = document.getElementById("lng").value;
@@ -327,11 +332,12 @@ export default class Orders {
             let same_day_delivery = document.getElementById("same_day_delivery").value;
             let sign = document.getElementById("sign").value;
             let take_photo = document.getElementById("take_photo").value;
+            let customer_address = document.getElementById("customer_address").value;
 
             let formData = new FormData();
             formData.append('branch_office', branch_office);
             formData.append('transport_type',transport_type);
-            formData.append('dispatched',dispatched);
+            // formData.append('dispatched',dispatched);
             formData.append('address_name',address_name);
             formData.append('address_lat',address_lat);
             formData.append('address_lng',address_lng);
@@ -348,15 +354,16 @@ export default class Orders {
             formData.append('same_day_delivery',same_day_delivery);
             formData.append('sign',sign);
             formData.append('take_photo',take_photo);
+            formData.append('customer_address',customer_address);
 
             let response = await this.sendGuideData(formData);
             if(response.state == 200){
-                alert(response.message);
+                correct(response.message);
                 let modal = document.getElementById("modalCreate");
                 modal.click();
                 this.listGuides();
             } else {
-                alert('Ha ocurrido un error al crear la guia.');
+                error('Error al crear la guía.')
                 console.log('Error: '+response.error);
             }
         })
@@ -426,6 +433,7 @@ export default class Orders {
                 guideCheck.setAttribute('type', 'checkbox');
                 guideCheck.setAttribute('name', 'guideCheck[]');
                 guideCheck.setAttribute('value', key.id);
+                key.order_id != null ? guideCheck.checked = true : '';
                 //EDIT
                 const guideEdit = document.createElement("button");
                 guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
@@ -436,7 +444,7 @@ export default class Orders {
                 guideEdit.innerHTML = '<i class="fas fa-edit"></i>';
                 //DELETE
                 const guideDelete = document.createElement("button");
-                guideDelete.onclick = function(){confirmDelete('/guias/'+key.id)};
+                guideDelete.onclick = function(){deleteResource('/guias/'+key.id)};
                 guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                 guideDelete.setAttribute('type', 'button');
                 guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -454,10 +462,18 @@ export default class Orders {
     }
 
     async requestGuides(){
+        let orderNumber = document.getElementsByName("order_number")[0]
+        if(orderNumber == null){
+            orderNumber = null;
+        } else {
+            orderNumber = orderNumber.value;
+
+        }
+        let path = window.location.pathname.split('/');
         let response = {
             'state': 500
         };
-        await fetch("/guias")
+        await fetch("/guias?order="+orderNumber+"&path="+path)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -478,7 +494,7 @@ export default class Orders {
                 let data = response.data;
 
                 let branch_office = document.getElementById("branch_off_edit").value = data.branch_office;
-                let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
                 let address_name = document.getElementById("address_edit").value = data.address_name;
                 let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                 let address_lng = document.getElementById("lng_edit").value = data.address_lng;
@@ -498,6 +514,17 @@ export default class Orders {
                 data.sign == 1 ? sign.checked = true : '';
                 let take_photo = document.getElementById("take_photo_edit");
                 data.take_photo == 1 ? take_photo.checked = true : '';
+                if(data.order_id == null){
+                    this.customerAddresses(document.getElementById("user_code").value);
+                } else {
+                    this.customerAddresses(data.get_order.user_id);
+                }
+                let customer_address = document.getElementById("customer_address_edit");
+                for (let i = 0; i < customer_address.length; i++) {
+                    if(customer_address[i].value == data.customer_address){
+                        customer_address[i].setAttribute('selected', 'selected');
+                    }
+                }
                 this.updateGuide();
             });
         })
@@ -523,7 +550,7 @@ export default class Orders {
         }
         btnUpdateGuide.addEventListener("click", async () => {
             let branch_off_edit = document.getElementById("branch_off_edit").value;
-            let dispatched = document.getElementById("dispatched_edit").value;
+            // let dispatched = document.getElementById("dispatched_edit").value;
             let address_name = document.getElementById("address_edit").value;
             let address_lat = document.getElementById("lat_edit").value;
             let address_lng = document.getElementById("lng_edit").value;
@@ -543,10 +570,11 @@ export default class Orders {
             sign.checked == true ? sign = 1 : sign = 0;
             let take_photo = document.getElementById("take_photo_edit");
             take_photo.checked == true ? take_photo = 1 : take_photo = 0;
+            let customer_address = document.getElementById("customer_address_edit").value;
 
             let formData = new FormData();
             formData.append("branch_office", branch_off_edit);
-            formData.append("dispatched", dispatched);
+            // formData.append("dispatched", dispatched);
             formData.append("address_name", address_name);
             formData.append("address_lat", address_lat);
             formData.append("address_lng", address_lng);
@@ -563,6 +591,7 @@ export default class Orders {
             formData.append("sign", sign);
             formData.append("take_photo", take_photo);
             formData.append("invoice_contact", invoice_contact);
+            formData.append("customer_address", customer_address);
 
             let token = document
                 .querySelector('meta[name="csrf-token"]')
@@ -582,12 +611,12 @@ export default class Orders {
 
             let response = await this.sendDataToUpdate(this.guideId, requestOptions);
             if(response.state == 200){
-                alert(response.message);
+                correct(response.message);
                 let modal = document.getElementById("modalEdit");
                 modal.click();
                 this.listGuides();
             } else {
-                alert('Ha ocurrido un error al actualizar la guia.');
+                error('Error al crear la guía.')
                 console.log('Error: '+response.error);
             }
         });
@@ -631,6 +660,44 @@ export default class Orders {
             'state': 500
         };
         await fetch("/allBranches")
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    async customerAddresses(customerId = null){
+        let slcAddresses = document.getElementsByName("customer_address");
+        if(customerId == ''){
+            return;
+        }
+        if(slcAddresses == null){
+            return;
+        }
+        let response = await this.requestCustomerAddresses(customerId);
+        let data = response.data;
+
+        [].forEach.call(slcAddresses, slcAddress => {
+            slcAddress.selectedIndex = 0;
+            removeOptions(slcAddress);
+
+            for (var i = 0; i < data.length; i++) {
+                let element = data[i];
+                let optAddress = '<option value="'+element.id+'"> '+element.name+' </option>';
+                slcAddress.insertAdjacentHTML('beforeend', optAddress);
+            }
+        });
+    }
+
+    async requestCustomerAddresses(id = null){
+        let route = window.location.pathname.split('/');
+        route.includes('edit') ? id = document.getElementById("user_code").value : '';
+        let response = {
+            'state': 500
+        };
+        await fetch("/customer_addresses/"+id)
             .then(response => response.json())
             .then(data => {
                 response = data

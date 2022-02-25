@@ -109,8 +109,8 @@
                             <span class="form-text text-muted">Filtro nombre</span>
                         </div>
                         <div class="form-group py-3 m-0 col-md-3">
-                            <label>Numero de documento del cliente:</label>
-                            <input type="text" class="form-control form-control-solid" placeholder="Numero de documento" name="document" value="{{ request()->document }}" />
+                            <label>Número de documento del cliente:</label>
+                            <input type="text" class="form-control form-control-solid" placeholder="Número de documento" name="document" value="{{ request()->document }}" />
                             <span class="form-text text-muted">Filtro documento</span>
                         </div>
                         <div class="form-group py-3 m-0 col-md-3">
@@ -119,9 +119,9 @@
                             <span class="form-text text-muted">Filtro correo</span>
                         </div>
                         <div class="form-group py-3 m-0 col-md-3">
-                            <label>Telefono del cliente:</label>
+                            <label>Teléfono del cliente:</label>
                             <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576" name="phone" value="{{ request()->phone }}" />
-                            <span class="form-text text-muted">Filtro telefono</span>
+                            <span class="form-text text-muted">Filtro teléfono</span>
                         </div>
                         <div class="form-group py-3 m-0 col-md-3">
                             <label for="exampleSelect1">Zona:</label>
@@ -166,9 +166,9 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombres</th>
-                    <th scope="col">Numero de documento</th>
+                    <th scope="col">Número de documento</th>
                     <th scope="col">Correo</th>
-                    <th scope="col">Telefono</th>
+                    <th scope="col">Teléfono</th>
                     <th scope="col">Zona</th>
                     <th scope="col">Estado</th>
                     <th scope="col"></th>
@@ -214,7 +214,7 @@
                                     <i class="fad fa-edit"></i>
                                 </div> Editar
                             </a>
-                            <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
+                            <button type="button" onclick="deleteResource('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
                                 <div class="btn btn-icon btn-light-danger btn-sm mr-2">
                                     <i class="fad fa-trash-alt"></i>
                                 </div> Eliminar
@@ -227,7 +227,7 @@
     <a href="{{route('customers.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
         <i class="fad fa-edit"></i>
     </a>
-    <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
+    <button type="button" onclick="deleteResource('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
         <i class="fad fa-trash-alt"></i>
     </button>
     {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">

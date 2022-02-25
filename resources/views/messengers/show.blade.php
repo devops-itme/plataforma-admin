@@ -25,7 +25,7 @@
                         <div class="line-height-xl">{{$messenger->user->email}}</div>
                     </div>
                     <div class="col-md-3">
-                        <div class="font-weight-bolder mb-3">Telefono:</div>
+                        <div class="font-weight-bolder mb-3">Teléfono:</div>
                         <div class="line-height-xl">{{$messenger->user->phone}}</div>
                     </div>
                     <div class="col-md-3">
@@ -42,7 +42,7 @@
             <div class="mb-5 pb-5">
                 <div class="row mb-5 pb-5 border-bottom">
                     <div class="col-md-3">
-                        <div class="font-weight-bolder mb-3">Placa de vehiculo:</div>
+                        <div class="font-weight-bolder mb-3">Placa de vehículo:</div>
                         <div class="line-height-xl">{{$messenger->vehicle_plate}}</div>
                     </div>
                     <div class="col-md-3">

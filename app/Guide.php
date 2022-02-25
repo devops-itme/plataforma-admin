@@ -33,11 +33,22 @@ class Guide extends Model
         'sign',
         'take_photo',
         'packaging',
+        'customer_address',
         'state'
     ];
 
     public function getOrder()
     {
         return $this->belongsTo(Order::class, 'order_id');
+    }
+
+    public function getRoute()
+    {
+        return $this->hasOne(Route::class, 'guide_id');
+    }
+
+    public function getAddress()
+    {
+        return $this->belongsTo(Address::class, 'customer_address');
     }
 }

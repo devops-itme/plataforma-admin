@@ -32,6 +32,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/allBranches', 'Admin\BranchOfficeController@allBranches');
 
+    Route::get('unassigned_depts', 'Admin\DepartmentController@UnassignedDepts');
+
+    Route::get('/customer_addresses/{id}', 'Admin\AddressController@customerAddresses');
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');
@@ -86,6 +89,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     });
+    //Orders delivery
+    Route::get('order_states', 'Admin\DeliveryController@orderStates');
     //Orders delivery
     Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');
     //Messengers delivery

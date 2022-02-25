@@ -32,9 +32,9 @@ trait OrderTrait
                 'return_last_destination' => 'required',
                 'schedule_date' => 'required',
                 'schedule_time' => 'required',
-                'insured_value' => 'required',
-                'money_to_collect' => 'required',
-                'percentage_to_collect' => 'required',
+                'insured_value' => 'nullable',
+                'money_to_collect' => 'nullable',
+                'percentage_to_collect' => 'nullable',
                 'branch_office' => 'nullable',
                 'state' => 'nullable'
             ]
@@ -84,10 +84,9 @@ trait OrderTrait
         try {
             $order = Order::find($request->order_id);
             if (is_null($order)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la orden');
+                return $this->respond(500, [], 'user not found', 'No se encontró la orden');
             }
             $order->update([
-                'order_number' => $request->order_number,
                 'user_id' => $request->user_id,
                 'order_type' => $request->order_type,
                 'order_value' => $request->order_value,
@@ -118,7 +117,7 @@ trait OrderTrait
         try {
             $order = Order::find($id);
             if (is_null($order)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la orden');
+                return $this->respond(500, [], 'user not found', 'No se encontró la orden');
             }
             $order->delete();
             return $this->respond(200, $order, null, 'Orden eliminada exitosamente');
@@ -130,14 +129,19 @@ trait OrderTrait
     public function assignGuide($request, $id)
     {
         try {
+            $orderGuides = Guide::where('order_id', $id)->get();
+            foreach ($orderGuides as $key) {
+                $key->order_id = NULL;
+                $key->save();
+            }
             foreach($request->guideCheck as $key){
                 Guide::find($key)->update([
                     'order_id' => $id
                 ]);
             }
-            return $this->respond(200, [], null, 'Guias asignadas de forma correcta');
+            return $this->respond(200, [], null, 'Guiás asignadas de forma correcta');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al asignar la guia');
+            return $this->respond(500, [], $e->getMessage(), 'Error al asignar la guiá');
         }
     }
 }

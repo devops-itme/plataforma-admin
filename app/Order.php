@@ -47,17 +47,55 @@ class Order extends Model
     {
         return $this->hasMany(Guide::class, 'order_id');
     }
+
+    public function getOrderType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'order_type');
+    }
+
+    public function getOrderState()
+    {
+        return $this->belongsTo(ParameterValue::class, 'order_states');
+    }
+
+
+    public function getDocumentType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'document_type');
+    }
+
+    public function getPaymentMethod()
+    {
+        return $this->belongsTo(ParameterValue::class, 'payment_method');
+    }
+
+    public function getState()
+    {
+        return $this->belongsTo(ParameterValue::class, 'state');
+    }
+
+    public function getDepartment()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function getBranchOffice()
+    {
+        return $this->belongsTo(BranchOffice::class, 'branch_office');
+    }
+
+
     //SCOPES
 
     public function scopeNumber($query, $value)
     {
         if (!is_null($value))
-            return $query->where('number', 'like', '%'.$value.'%');
+            return $query->where('order_number', 'like', '%'.$value.'%');
     }
-    public function scopeService_type($query, $value)
+    public function scopeOrder_type($query, $value)
     {
         if (!is_null($value))
-            return $query->where('service_type_id', $value);
+            return $query->where('order_type', $value);
     }
     public function scopeCustomer($query, $value)
     {
@@ -71,6 +109,12 @@ class Order extends Model
     {
         if (!is_null($from) && !is_null($to)) {
             return $query->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to);
+        }
+    }
+    public function scopeState($query, $value)
+    {
+        if(!is_null($value)){
+            return $query->where('state', $value);
         }
     }
 }

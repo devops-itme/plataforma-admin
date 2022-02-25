@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             ZonesSeeder::class,
-            ModuleSeeder::class
+            ModuleSeeder::class,
+            MessengerSeeder::class,
         ]);
 
     }

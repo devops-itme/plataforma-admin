@@ -60,7 +60,7 @@
                         <thead>
                             <tr>
                                 <th scope="col text-center">#</th>
-                                <th scope="col text-center">Telefono</th>
+                                <th scope="col text-center">Teléfono</th>
                                 <th scope="col text-center">Nombre comercial</th>
                                 <th scope="col"></th>
                             </tr>

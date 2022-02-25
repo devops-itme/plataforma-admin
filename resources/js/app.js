@@ -16,6 +16,7 @@ Vue.component('deliveries-ondemand', require('./components/deliveries/deliveries
 Vue.component('example-component', require('./components/exampleComponent.vue').default);
 Vue.component('department-tab', require('./components/department/department.vue').default);
 Vue.component('deliveries', require('./components/deliveries/deliveries.vue').default);
+Vue.component('modal', require('./components/modal.vue').default);
 
 let messengers = new Messengers();
 let addresses = new Addresses();

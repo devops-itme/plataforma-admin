@@ -4,7 +4,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Contacto</th>
-            <th scope="col">Telefono</th>
+            <th scope="col">Teléfono</th>
             <th scope="col">Correo</th>
             <th scope="col">Fecha programada</th>
             <th scope="col">Tarifa</th>
@@ -81,11 +81,11 @@
                             <option selected disabled>Seleccione sucursal</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    {{-- <div class="form-group col-md-3">
                         <label>Despacho: <span class="text-danger">*</span></label>
                         <input name="office" type="number" class="form-control form-control-solid" placeholder="" id="dispatched"/>
                         <span class="form-text text-muted"></span>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-3">
                         <label for="address">Dirección <span class="text-danger">*</span></label>
                         <input name="address" id="address" type="text" class="form-control form-control-solid" placeholder=""/>
@@ -164,6 +164,12 @@
                         <label>Contacto Factura: <span class="text-danger">*</span></label>
                         <input name="invoice_contact" id="invoice_contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
+                        <select name="customer_address" class="form-control form-control-solid" id="customer_address">
+                            <option selected disabled>Seleccione </option>
+                        </select>
                     </div>
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">
@@ -380,11 +386,11 @@
                             <option selected disabled> Seleccione </option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    {{-- <div class="form-group col-md-3">
                         <label>Despacho: <span class="text-danger">*</span></label>
                         <input name="office" type="number" class="form-control form-control-solid" placeholder="" id="dispatched_edit"/>
                         <span class="form-text text-muted"></span>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-3">
                         <label for="address">Dirección <span class="text-danger">*</span></label>
                         <input name="address" id="address_edit" type="text" class="form-control form-control-solid" placeholder=""/>
@@ -463,6 +469,12 @@
                         <label>Contacto Factura: <span class="text-danger">*</span></label>
                         <input name="invoice_contact" id="invoice_contact_edit" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
+                        <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
+                            <option disabled>Seleccione </option>
+                        </select>
                     </div>
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">

@@ -121,10 +121,10 @@
                                 <span class="form-text text-muted">Filtro correo</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
-                                <label>Telefono del cliente:</label>
+                                <label>Teléfono del cliente:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576" name="phone"
                                     value="{{ request()->phone }}" />
-                                <span class="form-text text-muted">Filtro telefono</span>
+                                <span class="form-text text-muted">Filtro teléfono</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
                                 <label for="exampleSelect1">Estado: </label>
@@ -159,7 +159,7 @@
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellidos</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Telefono</th>
+                        <th scope="col">Teléfono</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                     </tr>
@@ -197,7 +197,7 @@
                                         </a>
                                         {{-- <form action="{{route('customers.destroy', $bank->id)}}" method="{{'post'}}">
                                             @csrf @method('DELETE') --}}
-                                            <button type="button" onclick="confirmDelete('/usuario-banco/'+{{$user->parent_id}}+'/'+{{$user->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                            <button type="button" onclick="deleteResource('/usuario-banco/'+{{$user->parent_id}}+'/'+{{$user->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                                 <i class="fad fa-trash-alt"></i>
                                             </button>
                                         {{-- </form> --}}

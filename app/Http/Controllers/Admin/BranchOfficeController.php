@@ -10,6 +10,7 @@ use App\Parameter;
 use App\ParameterValue;
 use App\User;
 use App\UserBranch;
+use App\UserDeparment;
 
 class BranchOfficeController extends Controller
 {
@@ -67,6 +68,27 @@ class BranchOfficeController extends Controller
         }
         $response = $this->saveBranchOffice($request);
         if($response['state'] == 200){
+            if($request->branch_office_department != 'Seleccione'){
+                $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
+                if($saveBranchDept){
+                    $userDept = UserDeparment::where('department_id', $saveBranchDept['data']->department_id)->first();
+                    if($userDept){
+                        $saveUserBranch = $this->storeUserBranch($userDept->user_id, $response['data']->id);
+                        if($saveUserBranch['state'] != 200){
+                            return json_encode([
+                                'state' => 500,
+                                'error' => $saveUserBranch['error']
+                            ]);
+                        }
+                    }
+                }
+                if($saveBranchDept['state'] != 200){
+                    return json_encode([
+                        'state' => 500,
+                        'error' => $saveBranchDept['error']
+                    ]);
+                }
+            }
             // return redirect()->route('branchOffices.index', $user_id)->with('success', $response['message']);
             return json_encode([
                 'state' => 200,
@@ -75,7 +97,6 @@ class BranchOfficeController extends Controller
         } else {
             return json_encode([
                 'state' => 500,
-                'data' => $response['data'],
                 'error' => $response['error']
             ]);
         }
@@ -89,7 +110,7 @@ class BranchOfficeController extends Controller
      */
     public function show($parent_id, $id)
     {
-        $office = BranchOffice::where('id', $id)->first();
+        $office = BranchOffice::where('id', $id)->with('getDepartment')->first();
         $documents = ParameterValue::where('parameter_id',1)->get();
         // return view('branchOffices.show', compact('office', 'documents'));
         return json_encode([
@@ -137,6 +158,27 @@ class BranchOfficeController extends Controller
     {
         $response = $this->updateBranchOffice($request->merge(['office_id' => $id]));
         if($response['state'] == 200){
+            if($request->branch_office_department != 'Seleccione'){
+                $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
+                if($saveBranchDept){
+                    $userDept = UserDeparment::where('department_id', $saveBranchDept['data']->department_id)->first();
+                    if($userDept){
+                        $saveUserBranch = $this->storeUserBranch($userDept->user_id, $response['data']->id);
+                        if($saveUserBranch['state'] != 200){
+                            return json_encode([
+                                'state' => 500,
+                                'error' => $saveUserBranch['error']
+                            ]);
+                        }
+                    }
+                }
+                if($saveBranchDept['state'] != 200){
+                    return json_encode([
+                        'state' => 500,
+                        'error' => $saveBranchDept['message']
+                    ]);
+                }
+            }
             return json_encode([
                     'state' => 200,
                     'data' => $response['data'],
@@ -176,7 +218,7 @@ class BranchOfficeController extends Controller
         foreach ($allAssignedBranches as $key) {
             array_push($branch_ids, $key->branch_office_id);
         }
-        $allUnassignedBranches = BranchOffice::whereNotIn('id', $branch_ids)->with(['getType', 'getZone'])->get();
+        $allUnassignedBranches = BranchOffice::whereNotIn('id', $branch_ids)->with(['getType', 'getZone', 'getDepartment.getDepartment'])->get();
         return json_encode([
             'state' => 200,
             'data' => $allUnassignedBranches

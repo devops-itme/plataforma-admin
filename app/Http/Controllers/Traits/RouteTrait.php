@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Order;
+use App\ParameterValue;
 use App\Route;
 use Illuminate\Validation\Rule;
 
@@ -60,8 +61,12 @@ trait RouteTrait
                     'date' => $request->date
                 ]);
             }
+            $order_states = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+                $query->where('name', 'order_states');
+            })->where('name', 'Despachados')->first();
+
             $order->update([
-                'state'=>2
+                'state'=>$order_states->id
             ]);
 
             return $this->respond(200, $order, null, 'Orden asignada exitosamente');
@@ -80,7 +85,7 @@ trait RouteTrait
         try {
             $route = Route::find($request->route_id);
             if (is_null($route)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la ruta');
+                return $this->respond(500, [], 'user not found', 'No se encontró la ruta');
             }
             $route->update([
                 'guide_id' => $request->guide_id,
@@ -98,7 +103,7 @@ trait RouteTrait
         try {
             $route = Route::find($id);
             if (is_null($route)) {
-                return $this->respond(500, [], 'user not found', 'No se encontro la ruta');
+                return $this->respond(500, [], 'user not found', 'No se encontró la ruta');
             }
             $route->delete();
             return $this->respond(200, $route, null, 'Ruta eliminada exitosamente');
