@@ -256,10 +256,10 @@ return [
             'Moto',
             'Auto'
         ],
-        'payment_method' => [
-            'Cheque',
-            'Efectivo'
-        ],
+        // 'payment_method' => [
+        //     'Cheque',
+        //     'Efectivo'
+        // ],
     ]
 
 ];

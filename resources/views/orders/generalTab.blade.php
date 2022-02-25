@@ -5,16 +5,18 @@
             <label for="trans_type">Tipo de transporte <span class="text-danger">*</span></label>
             <select name="vehicle_type_id" class="form-control form-control-solid" id="trans_type">
                 <option selected disabled>Seleccione tipo de transporte</option>
-                <option value="1">Moto</option>
-                <option value="2">Auto</option>
+                @foreach ($transport_type as $item)
+                    <option value="{{ $item->id }}" {{ $item->id == old('trans_type') ? 'selected' : '' }} >{{$item->name}}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group col-md-6">
             <label for="pay_method">Metodo de pago <span class="text-danger">*</span></label>
             <select name="payment_method" class="form-control form-control-solid" id="pay_method">
                 <option selected disabled>Seleccione Metodo de pago</option>
-                <option value="1">Efectivo</option>
-                <option value="2">Cheque</option>
+                @foreach ($payment_method as $item)
+                    <option value="{{ $item->id }}" {{ $item->id == old('pay_method') ? 'selected' : '' }} >{{$item->name}}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group col-md-6">
