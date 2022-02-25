@@ -20,8 +20,8 @@
                 <div class="card-toolbar">
                     <ul class="nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-3x" id="myTab">
                         <li  class="nav-item"  v-for="(tab, index) in tabs" :key="tab.id" >
-                            <a class="nav-link" @click="getOrders(tab.id)"
-                            :class="{'active': currentTab === tab.id}" :id="tab.id" data-toggle="tab" :href="`#${tab.href}`" v-text=tab.name></a>
+                            <a class="nav-link tablink" @click="getOrders(tab.id,index)"
+                            :class="{'active': currentTab === tab.id}" :id="tab.id"  data-toggle="tab" :href="`#${tab.href}`" v-text=tab.name></a>
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#pordespachar">Por despachar</a>
@@ -42,14 +42,14 @@
                 <div class="d-flex flex-row flex-wrap">
                     <div class="col-md-8 border-right">
                         <div class="tab-content h-500px">
-                            <div class="tab-pane fade show active" id="pordespachar" role="tabpanel"
+                            <div class="tab-pane fade show active tabcontent" id="pordespachar" role="tabpanel"
                                 aria-labelledby="kt_tab_pane_2">
                                 @include('deliveries.byShipment.shipmentIndex')
                             </div>
-                            <div class="tab-pane fade" id="despachados" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                            <div class="tab-pane fade tabcontent" id="despachados" role="tabpanel" aria-labelledby="kt_tab_pane_2">
                                 @include('deliveries.shipmented.shipmentedIndex')
                             </div>
-                            <div class="tab-pane fade" id="completados" role="tabpanel" aria-labelledby="kt_tab_pane_3">
+                            <div class="tab-pane fade tabcontent" id="completados" role="tabpanel" aria-labelledby="kt_tab_pane_3">
                                 @include('deliveries.finished.finishedIndex')
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Referencia de cliente:</div>
-                                <div class="line-height-xl" v-show="showData.id">---</div>
+                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.user_id}`"></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Tipo de orden:</div>
