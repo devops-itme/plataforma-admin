@@ -27,7 +27,10 @@ trait CustomerTrait
                 'handling' => 'required',
                 'COD_value' => 'required',
                 'business_name' => 'nullable|string',
-                'tradename' => 'nullable|string'
+                'tradename' => 'nullable|string',
+                'insured_value' => 'nullable',
+                'money_to_collect' => 'nullable',
+                'percentage_to_collect' => 'nullable'
             ]
         );
     }
@@ -54,6 +57,9 @@ trait CustomerTrait
                 'COD_value' => $request->COD_value,
                 'business_name' => $request->business_name,
                 'tradename' => $request->tradename,
+                'insured_value' => $request->insured_value,
+                'money_to_collect' => $request->money_to_collect,
+                'percentage_to_collect' => $request->percentage_to_collect,
                 'state' => 1
             ]);
             return $this->respond(200, $customer, null, 'Usuario creado exitosamente');
@@ -92,7 +98,10 @@ trait CustomerTrait
                 'handling' => $request->handling,
                 'COD_value' => $request->COD_value,
                 'business_name' => $request->business_name,
-                'tradename' => $request->tradename
+                'tradename' => $request->tradename,
+                'insured_value' => $request->insured_value,
+                'money_to_collect' => $request->money_to_collect,
+                'percentage_to_collect' => $request->percentage_to_collect
             ]);
 
             return $this->respond(200, $customer, null, 'Usuario actualizado exitosamente');

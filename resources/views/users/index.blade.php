@@ -198,7 +198,7 @@
                                         class="btn btn-icon btn-light-success btn-sm mr-2">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a onclick="confirmDelete('/usuarios/'+{{ $user->id }})" role="button"
+                                    <a onclick="deleteResource('/usuarios/'+{{ $user->id }})" role="button"
                                         id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>

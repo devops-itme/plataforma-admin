@@ -218,7 +218,7 @@
                                                         <i class="fad fa-edit"></i>
                                                     </div> Editar
                                                 </a>
-                                                <a type="button" onclick="confirmDelete('/mensajeros/'+{{ $item->id }})"
+                                                <a type="button" onclick="deleteResource('/mensajeros/'+{{ $item->id }})"
                                                     role="button" id="deleteMessenger" class="dropdown-item align-items-center">
                                                     {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
                                                         @csrf @method('DELETE') --}}

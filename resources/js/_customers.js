@@ -146,7 +146,7 @@ export default class Customers {
                     branchEdit.innerHTML = '<i class="fas fa-edit"></i>';
                     //Delete button
                     const branchDelete = document.createElement("button");
-                    branchDelete.onclick = function(){confirmDelete('/sucursales/null/'+data[i].id)};
+                    branchDelete.onclick = function(){deleteResource('/sucursales/null/'+data[i].id)};
                     branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                     branchDelete.setAttribute('type', 'button');
                     branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';

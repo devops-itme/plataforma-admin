@@ -59719,7 +59719,7 @@ var Customers = /*#__PURE__*/function () {
                         var branchDelete = document.createElement("button");
 
                         branchDelete.onclick = function () {
-                          confirmDelete('/sucursales/null/' + data[i].id);
+                          deleteResource('/sucursales/null/' + data[i].id);
                         };
 
                         branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
@@ -60777,14 +60777,14 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, response, modal;
+        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
                 branch_office = document.getElementById("branch_off").value;
-                transport_type = document.getElementById("trans_type").value;
-                dispatched = document.getElementById("dispatched").value;
+                transport_type = document.getElementById("trans_type").value; // let dispatched = document.getElementById("dispatched").value;
+
                 address_name = document.getElementById("address").value;
                 address_lat = document.getElementById("lat").value;
                 address_lng = document.getElementById("lng").value;
@@ -60803,8 +60803,8 @@ var Orders = /*#__PURE__*/function () {
                 take_photo = document.getElementById("take_photo").value;
                 formData = new FormData();
                 formData.append('branch_office', branch_office);
-                formData.append('transport_type', transport_type);
-                formData.append('dispatched', dispatched);
+                formData.append('transport_type', transport_type); // formData.append('dispatched',dispatched);
+
                 formData.append('address_name', address_name);
                 formData.append('address_lat', address_lat);
                 formData.append('address_lng', address_lng);
@@ -60821,10 +60821,10 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('same_day_delivery', same_day_delivery);
                 formData.append('sign', sign);
                 formData.append('take_photo', take_photo);
-                _context7.next = 41;
+                _context7.next = 39;
                 return _this5.sendGuideData(formData);
 
-              case 41:
+              case 39:
                 response = _context7.sent;
 
                 if (response.state == 200) {
@@ -60838,7 +60838,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 43:
+              case 41:
               case "end":
                 return _context7.stop();
             }
@@ -60963,7 +60963,7 @@ var Orders = /*#__PURE__*/function () {
                     var guideDelete = document.createElement("button");
 
                     guideDelete.onclick = function () {
-                      confirmDelete('/guias/' + key.id);
+                      deleteResource('/guias/' + key.id);
                     };
 
                     guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
@@ -61000,7 +61000,7 @@ var Orders = /*#__PURE__*/function () {
     key: "requestGuides",
     value: function () {
       var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var orderNumber, edit, response;
+        var orderNumber, path, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
@@ -61013,19 +61013,12 @@ var Orders = /*#__PURE__*/function () {
                   orderNumber = orderNumber.value;
                 }
 
-                edit = document.getElementById("edit");
-
-                if (edit == null) {
-                  edit = 0;
-                } else {
-                  edit = 1;
-                }
-
+                path = window.location.pathname.split('/');
                 response = {
                   'state': 500
                 };
-                _context10.next = 7;
-                return fetch("/guias?order=" + orderNumber + "&edit=" + edit).then(function (response) {
+                _context10.next = 6;
+                return fetch("/guias?order=" + orderNumber + "&path=" + path).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -61033,10 +61026,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 7:
+              case 6:
                 return _context10.abrupt("return", response);
 
-              case 8:
+              case 7:
               case "end":
                 return _context10.stop();
             }
@@ -61063,7 +61056,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
+          var response, data, branch_office, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -61075,8 +61068,8 @@ var Orders = /*#__PURE__*/function () {
                 case 3:
                   response = _context11.sent;
                   data = response.data;
-                  branch_office = document.getElementById("branch_off_edit").value = data.branch_office;
-                  dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                  branch_office = document.getElementById("branch_off_edit").value = data.branch_office; // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+
                   address_name = document.getElementById("address_edit").value = data.address_name;
                   address_lat = document.getElementById("lat_edit").value = data.address_lat;
                   address_lng = document.getElementById("lng_edit").value = data.address_lng;
@@ -61099,7 +61092,7 @@ var Orders = /*#__PURE__*/function () {
 
                   _this7.updateGuide();
 
-                case 27:
+                case 26:
                 case "end":
                   return _context11.stop();
               }
@@ -61158,13 +61151,13 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
               case 0:
-                branch_off_edit = document.getElementById("branch_off_edit").value;
-                dispatched = document.getElementById("dispatched_edit").value;
+                branch_off_edit = document.getElementById("branch_off_edit").value; // let dispatched = document.getElementById("dispatched_edit").value;
+
                 address_name = document.getElementById("address_edit").value;
                 address_lat = document.getElementById("lat_edit").value;
                 address_lng = document.getElementById("lng_edit").value;
@@ -61185,8 +61178,8 @@ var Orders = /*#__PURE__*/function () {
                 take_photo = document.getElementById("take_photo_edit");
                 take_photo.checked == true ? take_photo = 1 : take_photo = 0;
                 formData = new FormData();
-                formData.append("branch_office", branch_off_edit);
-                formData.append("dispatched", dispatched);
+                formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
+
                 formData.append("address_name", address_name);
                 formData.append("address_lat", address_lat);
                 formData.append("address_lng", address_lng);
@@ -61216,10 +61209,10 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context13.next = 51;
+                _context13.next = 49;
                 return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
 
-              case 51:
+              case 49:
                 response = _context13.sent;
 
                 if (response.state == 200) {
@@ -61233,7 +61226,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 53:
+              case 51:
               case "end":
                 return _context13.stop();
             }
