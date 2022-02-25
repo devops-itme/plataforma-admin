@@ -227,7 +227,7 @@
     <a href="{{route('customers.edit', $customer->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
         <i class="fad fa-edit"></i>
     </a>
-    <button type="button" onclick="deleteResource('/clientes/'+{{$customer->id}}, true)" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
+    <button type="button" onclick="confirmDelete('/clientes/'+{{$customer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
         <i class="fad fa-trash-alt"></i>
     </button>
     {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">
