@@ -71,6 +71,7 @@ class GuideController extends Controller
                 'address_lng' => $request->lng
             ]);
         }
+        if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
         $request->merge(['state' => 1]);
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
@@ -113,7 +114,7 @@ class GuideController extends Controller
      */
     public function edit($id)
     {
-        $guide = Guide::find($id);
+        $guide = Guide::with('getOrder')->find($id);
         return json_encode([
             'state' => 200,
             'data' => $guide
@@ -132,6 +133,7 @@ class GuideController extends Controller
         if(!($request->state)){
             $request->merge(['state' => 1]);
         }
+        if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
         $response = $this->updateGuide($request->merge(['guide_id' => $id]));
         if($response['state'] == 200){
             return json_encode([
@@ -142,7 +144,7 @@ class GuideController extends Controller
         } else {
             return json_encode([
                 'state' => 500,
-                'message' => $response['message']
+                'message' => $response['error']
             ]);
         }
     }

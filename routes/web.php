@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('unassigned_depts', 'Admin\DepartmentController@UnassignedDepts');
 
+    Route::get('/customer_addresses/{id}', 'Admin\AddressController@customerAddresses');
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');

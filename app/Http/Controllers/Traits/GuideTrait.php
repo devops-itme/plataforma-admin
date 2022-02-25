@@ -41,6 +41,7 @@ trait GuideTrait
                 'sign' => 'nullable',
                 'take_photo' => 'nullable',
                 'packaging' => 'nullable',
+                'customer_address' => 'nullable',
                 'state' => 'nullable'
             ]
         );
@@ -75,6 +76,7 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
+                'customer_address' => $request->customer_address,
                 'state' => $request->state
             ]);
             return $this->respond(200, $order, null, 'Guiá creada exitosamente');
@@ -92,10 +94,10 @@ trait GuideTrait
         try {
             $guide = Guide::find($request->guide_id);
             if (is_null($guide)) {
-                return $this->respond(500, [], 'user not found', 'No se encontró la guiá');
+                return $this->respond(500, [], 'user not found', 'No se encontró la guía');
             }
             $guide->update([
-                'dispatched' => $request->dispatched,
+                // 'dispatched' => $request->dispatched,
                 'address_name' => $request->address_name,
                 'address_lat' => $request->address_lat,
                 'address_lng' => $request->address_lng,
@@ -114,11 +116,12 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
+                'customer_address' => $request->customer_address,
                 'state' => $request->state
             ]);
-            return $this->respond(200, $guide, null, 'Guiá actualizada exitosamente');
+            return $this->respond(200, $guide, null, 'Guía actualizada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar guiá');
+            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar guía');
         }
     }
 

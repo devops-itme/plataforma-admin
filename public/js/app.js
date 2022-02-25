@@ -60357,6 +60357,7 @@ var Orders = /*#__PURE__*/function () {
       this.saveGuides();
       this.listGuides();
       this.loadBranches();
+      this.customerAddresses();
     }
   }, {
     key: "setInput",
@@ -60681,7 +60682,11 @@ var Orders = /*#__PURE__*/function () {
                   modal = document.getElementById("detailCustomer");
                   modal.click();
 
-                case 12:
+                  if (document.getElementById("user_code").value != null) {
+                    _this4.customerAddresses(document.getElementById("user_code").value);
+                  }
+
+                case 13:
                 case "end":
                   return _context4.stop();
               }
@@ -60784,7 +60789,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, response, modal;
+        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -60808,6 +60813,7 @@ var Orders = /*#__PURE__*/function () {
                 same_day_delivery = document.getElementById("same_day_delivery").value;
                 sign = document.getElementById("sign").value;
                 take_photo = document.getElementById("take_photo").value;
+                customer_address = document.getElementById("customer_address").value;
                 formData = new FormData();
                 formData.append('branch_office', branch_office);
                 formData.append('transport_type', transport_type); // formData.append('dispatched',dispatched);
@@ -60828,24 +60834,25 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('same_day_delivery', same_day_delivery);
                 formData.append('sign', sign);
                 formData.append('take_photo', take_photo);
-                _context7.next = 39;
+                formData.append('customer_address', customer_address);
+                _context7.next = 41;
                 return _this5.sendGuideData(formData);
 
-              case 39:
+              case 41:
                 response = _context7.sent;
 
                 if (response.state == 200) {
-                  alert(response.message);
+                  correct(response.message);
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
                   _this5.listGuides();
                 } else {
-                  alert('Ha ocurrido un error al crear la guia.');
+                  error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
                 }
 
-              case 41:
+              case 43:
               case "end":
                 return _context7.stop();
             }
@@ -61063,7 +61070,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
+          var response, data, branch_office, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, i;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -61097,9 +61104,23 @@ var Orders = /*#__PURE__*/function () {
                   take_photo = document.getElementById("take_photo_edit");
                   data.take_photo == 1 ? take_photo.checked = true : '';
 
+                  if (data.order_id == null) {
+                    _this7.customerAddresses(document.getElementById("user_code").value);
+                  } else {
+                    _this7.customerAddresses(data.get_order.user_id);
+                  }
+
+                  customer_address = document.getElementById("customer_address_edit");
+
+                  for (i = 0; i < customer_address.length; i++) {
+                    if (customer_address[i].value == data.customer_address) {
+                      customer_address[i].setAttribute('selected', 'selected');
+                    }
+                  }
+
                   _this7.updateGuide();
 
-                case 26:
+                case 29:
                 case "end":
                   return _context11.stop();
               }
@@ -61158,7 +61179,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -61184,6 +61205,7 @@ var Orders = /*#__PURE__*/function () {
                 sign.checked == true ? sign = 1 : sign = 0;
                 take_photo = document.getElementById("take_photo_edit");
                 take_photo.checked == true ? take_photo = 1 : take_photo = 0;
+                customer_address = document.getElementById("customer_address_edit").value;
                 formData = new FormData();
                 formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
 
@@ -61203,6 +61225,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("sign", sign);
                 formData.append("take_photo", take_photo);
                 formData.append("invoice_contact", invoice_contact);
+                formData.append("customer_address", customer_address);
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -61216,24 +61239,24 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context13.next = 49;
+                _context13.next = 51;
                 return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
 
-              case 49:
+              case 51:
                 response = _context13.sent;
 
                 if (response.state == 200) {
-                  alert(response.message);
+                  correct(response.message);
                   modal = document.getElementById("modalEdit");
                   modal.click();
 
                   _this8.listGuides();
                 } else {
-                  alert('Ha ocurrido un error al actualizar la guia.');
+                  error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
                 }
 
-              case 51:
+              case 53:
               case "end":
                 return _context13.stop();
             }
@@ -61362,6 +61385,113 @@ var Orders = /*#__PURE__*/function () {
       }
 
       return requestBranches;
+    }()
+  }, {
+    key: "customerAddresses",
+    value: function () {
+      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+        var customerId,
+            slcAddresses,
+            response,
+            data,
+            _args17 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+          while (1) {
+            switch (_context17.prev = _context17.next) {
+              case 0:
+                customerId = _args17.length > 0 && _args17[0] !== undefined ? _args17[0] : null;
+                slcAddresses = document.getElementsByName("customer_address");
+
+                if (!(customerId == '')) {
+                  _context17.next = 4;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 4:
+                if (!(slcAddresses == null)) {
+                  _context17.next = 6;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 6:
+                _context17.next = 8;
+                return this.requestCustomerAddresses(customerId);
+
+              case 8:
+                response = _context17.sent;
+                data = response.data;
+                [].forEach.call(slcAddresses, function (slcAddress) {
+                  slcAddress.selectedIndex = 0;
+                  removeOptions(slcAddress);
+
+                  for (var i = 0; i < data.length; i++) {
+                    var element = data[i];
+                    var optAddress = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                  }
+                });
+
+              case 11:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17, this);
+      }));
+
+      function customerAddresses() {
+        return _customerAddresses.apply(this, arguments);
+      }
+
+      return customerAddresses;
+    }()
+  }, {
+    key: "requestCustomerAddresses",
+    value: function () {
+      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
+        var id,
+            route,
+            response,
+            _args18 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                id = _args18.length > 0 && _args18[0] !== undefined ? _args18[0] : null;
+                route = window.location.pathname.split('/');
+                route.includes('edit') ? id = document.getElementById("user_code").value : '';
+                response = {
+                  'state': 500
+                };
+                _context18.next = 6;
+                return fetch("/customer_addresses/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 6:
+                return _context18.abrupt("return", response);
+
+              case 7:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18);
+      }));
+
+      function requestCustomerAddresses() {
+        return _requestCustomerAddresses.apply(this, arguments);
+      }
+
+      return requestCustomerAddresses;
     }()
   }, {
     key: "months",

@@ -38,7 +38,8 @@ class CreateGuidesTable extends Migration
             $table->integer('sign')->nullable();
             $table->integer('take_photo')->nullable();
             $table->integer('packaging')->nullable();
-            $table->integer('state')->nullable();
+            $table->integer('packaging')->nullable();
+            $table->unsignedBigInteger('customer_address')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -165,6 +165,12 @@
                         <input name="invoice_contact" id="invoice_contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
+                        <select name="customer_address" class="form-control form-control-solid" id="customer_address">
+                            <option selected disabled>Seleccione </option>
+                        </select>
+                    </div>
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">
@@ -463,6 +469,12 @@
                         <label>Contacto Factura: <span class="text-danger">*</span></label>
                         <input name="invoice_contact" id="invoice_contact_edit" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
+                        <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
+                            <option disabled>Seleccione </option>
+                        </select>
                     </div>
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">

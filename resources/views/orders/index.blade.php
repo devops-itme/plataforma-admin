@@ -190,7 +190,7 @@
                                             Ondemand
                                         </span>
                                     @else
-                                        <span class="label label-inline label-light-success font-weight-blog">
+                                        <span class="label label-inline label-light-info font-weight-blog">
                                             Multiple
                                         </span>
                                     @endif
