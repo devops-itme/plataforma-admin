@@ -116,33 +116,18 @@
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Numero de orden:</label>
-<<<<<<< HEAD
-                                <input type="text" class="form-control form-control-solid" placeholder="3231123"
-                                    name="number" value="{{ request()->number }}" />
-=======
                                 <input type="text" class="form-control form-control-solid" placeholder="Orden_1" name="number"
                                     value="{{ request()->number }}" />
->>>>>>> d9be46b021a175dfe0d48413efe5da9ca3ca3103
                                 <span class="form-text text-muted">Filtro numero</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label for="exampleSelect1">Tipo de orden:</label>
-<<<<<<< HEAD
-                                <select class="form-control form-control-solid" name="service_type">
-                                    <option selected disabled> Seleccione </option>
-                                    <option value="1" {{ request()->service_type == 1 ? 'selected' : '' }}>Ondeman|
-                                    </option>
-                                    <option value="2" {{ request()->service_type == 2 ? 'selected' : '' }}>Multiple
-                                    </option>
-                                </select>
-=======
                                         <select class="form-control form-control-solid" name="order_type">
                                             <option selected disabled> Seleccione </option>
                                             @foreach ($order_type as $key)
                                                 <option value="{{$key->id}}" {{ $key->id == request()->order_type ? 'selected' : ''}}>{{$key->name}}</option>
                                             @endforeach
                                         </select>
->>>>>>> d9be46b021a175dfe0d48413efe5da9ca3ca3103
                                 <span class="form-text text-muted">Filtro tipo de orden</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
@@ -180,12 +165,7 @@
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-<<<<<<< HEAD
-                                    <a href="{{ route('customers.index') }}"
-                                        class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
-=======
                                     <a href="{{route('orders.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
->>>>>>> d9be46b021a175dfe0d48413efe5da9ca3ca3103
                                 </div>
                             </div>
                         </div>
@@ -248,12 +228,7 @@
                                             class="btn btn-icon btn-light-success btn-sm mr-2">
                                             <i class="fad fa-edit"></i>
                                         </a>
-<<<<<<< HEAD
-                                        <button type="button" onclick="confirmDelete('/ordenes/'+{{ $order->id }})"
-                                            class="btn btn-icon btn-light-danger btn-sm mr-2">
-=======
                                         <button type="button" onclick="deleteResource('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
->>>>>>> d9be46b021a175dfe0d48413efe5da9ca3ca3103
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
                                     </div>
