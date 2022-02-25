@@ -152,5 +152,6 @@
 		refresh: function() {
 			_bindTooltips(true);
 		}
-	};
+    };
+    
 }));
