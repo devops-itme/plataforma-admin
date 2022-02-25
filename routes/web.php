@@ -127,6 +127,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('plans.index');
     })->name('plans.index');
 
+    Route::get('historial', function () {
+        return view('orders.historial');
+    })->name('historial.index');
+
 });
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
