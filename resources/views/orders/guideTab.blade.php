@@ -79,7 +79,7 @@
                     <div class="form-group col-md-3">
                         <label for="branch_off">Sucursal despacho <span class="text-danger">*</span></label>
                         <select name="branch_office" class="form-control form-control-solid" id="branch_off">
-                            <option selected disabled>Seleccione sucursal</option>
+                            <option selected>Seleccione sucursal</option>
                         </select>
                     </div>
                     {{-- <div class="form-group col-md-3">
@@ -151,7 +151,7 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3 pt-2">
-                        <label>Teléfono contacto </label>
+                        <label>Teléfono contacto <span class="text-danger">*</span> </label>
                         <input name="phone_contact" type="tel" id="phone_contact" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
@@ -461,7 +461,7 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3 pt-2">
-                        <label>Teléfono contacto </label>
+                        <label>Teléfono contacto<span class="text-danger">*</span> </label>
                         <input name="phone_contact" type="tel" id="phone_contact_edit" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
