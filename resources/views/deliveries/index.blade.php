@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Tipo de orden:</div>
-                                <div class="line-height-xl" v-show="showData.id">Normal</div>
+                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_order_type?.name}`" ></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Cliente:</div>
@@ -83,9 +83,9 @@
                                 <div class="font-weight-bolder mb-1">Contacto:</div>
                                 <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_user?.get_customer.contact}`"></div>
                             </div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6 mb-2"  v-show="showMessengerData?.id">
                                 <div class="font-weight-bolder mb-1">Transporte:</div>
-                                <div class="line-height-xl">Moto</div>
+                                <div class="line-height-xl" v-text="">Moto</div>
                             </div>
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-6 mb-2">

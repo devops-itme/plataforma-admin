@@ -182,7 +182,7 @@ class OrderController extends Controller
             $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query)  {
                 $query->where('name', 'Ondemand');
             })->where('state', $type)
-            ->with(['getUser.getCustomer', 'getGuides'])
+            ->with(['getUser.getCustomer', 'getGuides.getRoute.getMessenger'])
             ->get();
 
             // $orders = Order::where('order_type', 1)->wh  ere('state', $type)->with(['getUser','getGuides'])->get();
