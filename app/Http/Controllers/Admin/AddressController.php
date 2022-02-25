@@ -39,12 +39,23 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-
         $response = $this->saveAddress($request);
-
         if($response['state'] == 200){
+            if($request->requestByJs == 1){
+                return json_encode([
+                    'state' => 200,
+                    'data' => $response['data'],
+                    'message' => $response['message']
+                ]);
+            }
             return redirect()->back()->with('success', $response['message']);
         } else {
+            if($request->requestByJs == 1){
+                return json_encode([
+                    'state' => 500,
+                    'data' => $response['message'],
+                ]);
+            }
             return redirect()->back()->with('danger', $response['message']);
         }
     }

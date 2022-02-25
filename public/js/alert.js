@@ -6,7 +6,10 @@ function confirmDelete(param) {
         title: "¿Estás seguro?",
         text: "Recuerda que al eliminar un usuario borrarás todos sus registros",
         icon: "warning",
-        buttons: true,
+        buttons: {
+            cancel: 'Cancelar',
+            confirm: 'Confirmar'
+        },
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {

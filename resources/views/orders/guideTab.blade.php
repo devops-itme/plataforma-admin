@@ -1,3 +1,4 @@
+@include('orders.modals.createAddressModal')
 <!--begin: Datatable-->
 <table class="table table-sm" id="guidesTable">
     <thead>
@@ -171,7 +172,12 @@
                             <option selected disabled>Seleccione </option>
                         </select>
                     </div>
-                    <div class="form-group col-md-6 d-flex align-items-center">
+                    <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
+                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
+                            <i class="fad fa-plus-circle text-info"></i>
+                        </a>
+                    </div>
+                    <div class="form-group col-md-6 mb-0 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">
                                 <input type="checkbox" name="same_day_delivery" id="same_day_delivery" />
