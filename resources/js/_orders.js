@@ -25,6 +25,7 @@ export default class Orders {
         this.listGuides();
         this.loadBranches();
         this.customerAddresses();
+        this.createAddress();
     }
 
     setInput() {
@@ -704,6 +705,55 @@ export default class Orders {
             })
             .catch(e => console.log(e));
         return response;
+    }
+
+    createAddress(){
+        let btnSaveAddress = document.getElementById("saveAddress");
+        if(btnSaveAddress == null){
+            return;
+        }
+        btnSaveAddress.addEventListener('click', async () => {
+            let formData = new FormData();
+            let description = document.getElementById("add_description").value;
+            let address = document.getElementById("add_name").value;
+            let lat = document.getElementById("add_lat").value;
+            let lng = document.getElementById("add_lng").value;
+            let user_id = document.getElementById("user_code").value;
+
+            formData.append('user_id', user_id);
+            formData.append('address', address);
+            formData.append('lat', lat);
+            formData.append('lng', lng);
+            formData.append('description', description);
+            formData.append('requestByJs', 1);
+
+            let response = await this.sendAddressData(formData);
+            if(response.state == 200){
+                correct(response.message);
+                let modal = document.getElementById("modalCreateAddress");
+                modal.click();
+                this.listGuides();
+                this.customerAddresses(document.getElementById("user_code").value);
+            } else {
+                error('Error al crear la guía.')
+                console.log('Error: '+response.error);
+            }
+        });
+    }
+
+    async sendAddressData(formData){
+        let response = {
+            'state': 500
+        };
+
+        response = await fetch("/direcciones", {
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            body: formData
+        })
+        return response.json();
     }
 
     months(month){
