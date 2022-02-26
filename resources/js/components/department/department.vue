@@ -12,8 +12,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">State</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">
                                 <div class="d-flex justify-content-end">
                                     <a
@@ -220,7 +220,7 @@ export default {
                         _this.clearValue();
                         _this.showModal = false;
                     }else{
-                        error(data.error);
+                        error(data.message);
                     }
                 })
                 .catch((err) => console.warn(err));
@@ -263,7 +263,7 @@ export default {
                         correct(data.message);
                         _this.clearValue();
                     }else{
-                        error(data.error);
+                        error(data.message);
                     }
                 })
                 .catch((err) => console.warn(err));

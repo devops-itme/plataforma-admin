@@ -6,7 +6,10 @@ function confirmDelete(param) {
         title: "¿Estás seguro?",
         text: "Recuerda que al eliminar un usuario borrarás todos sus registros",
         icon: "warning",
-        buttons: true,
+        buttons: {
+            cancel: 'Cancelar',
+            confirm: 'Confirmar'
+        },
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
@@ -26,7 +29,7 @@ function confirmDelete(param) {
         }
     });
 }
-async function deleteResource(url) {
+async function deleteResource(url, reload = false) {
     let result = await confirmation();
     if (result == true) {
         let req = await fetch(url, {
@@ -40,6 +43,9 @@ async function deleteResource(url) {
         });
         if (req.ok) {
             correct("Eliminado!");
+            if (reload) {
+                window.location.reload();
+            }
             return true;
         } else {
             error("Error al eliminar");
@@ -58,9 +64,9 @@ function confirmation(
         text: text,
         icon: icon,
         buttons: {
-            cancel: true,
-            confirm: true,
-        },
+            cancel: 'Cancelar',
+            confirm: 'Confirmar'
+        }
     });
 }
 

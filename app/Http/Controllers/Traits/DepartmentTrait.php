@@ -11,7 +11,6 @@ use App\UserDeparment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use function PHPSTORM_META\map;
 
 trait DepartmentTrait
 {
@@ -59,7 +58,7 @@ trait DepartmentTrait
     {
         $validator = $this->departmentValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
+            return $this->respond(500, [] ,$validator->errors(),  $validator->errors()->first());
         }
         try {
             $department = Department::create($request->all());
@@ -73,7 +72,7 @@ trait DepartmentTrait
         try {
             $validator = $this->departmentValidate($request);
             if ($validator->fails()) {
-                return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
+                return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
             }
             $department = Department::find($id);
             $department->update($request->all());

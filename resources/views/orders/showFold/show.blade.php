@@ -19,6 +19,7 @@
     @include('layouts.alerts')
     <!--begin::Form-->
     <form>
+        <input type="hidden" id="edit">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap pt-2">
             <div class="col-md-6 border-right">
@@ -26,32 +27,58 @@
                 <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
                 <div class="form-group col-md-6">
                     <label>Numero de orden: <span class="text-danger">*</span></label>
-                    <input name="order_num" type="text" class="form-control form-control-solid" value="{{$order->number}}" disabled />
+                    <input name="order_number" type="text" class="form-control form-control-solid" value="{{$order->order_number}}" disabled />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
                     <select name="orden_type" class="form-control form-control-solid" id="order_type" disabled>
                         <option selected disabled>Seleccione tipo de orden</option>
-                        <option {{$order->service_type_id == 1 ? 'selected' : ''}}>Ondeman</option>
-                        <option {{$order->service_type_id == 2 ? 'selected' : ''}}>Multiple</option>
+                        @foreach($order_type as $key)
+                            <option {{$order->order_type ==$key->id?'selected ':''}}  value="{{$key->id}}">{{$key->name}}</option>
+                        @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-3">
                     <label for="customers">Cliente <span class="text-danger">*</span></label>
-                    <input name="order_num" type="text" class="form-control form-control-solid" value="{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}" disabled />
-                    <span class="form-text text-muted"></span>
+                    <button type="button" class="btn btn-primary btn-block bg-white text-dark" data-toggle="modal" disabled> Buscar cliente </button>
+                    {{-- <input name="order_num" type="text" class="form-control form-control-solid" value="{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}" disabled />
+                    <span class="form-text text-muted"></span> --}}
                 </div>
-                <input type="hidden" id="slc-Customers" value="{{$order->user_id}}">
-                <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
+                <div class="form-group col-md-3">
+                    <label for="customers">Codigo<span class="text-danger">*</span></label>
+                    <input type="text" id="user_code" class="form-control form-control-solid" readonly value="{{$order->getUser->id}}" name="user_id">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="customers">Marca / Nombre Comercial<span class="text-danger">*</span></label>
+                    <input type="text" id="user_name" class="form-control form-control-solid" readonly value="{{$order->getUser->name != NULL ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->tradename}}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="customers">Contacto<span class="text-danger">*</span></label>
+                    <input type="text" id="user_contact" class="form-control form-control-solid" readonly value="{{$order->getUser->getCustomer->contact}}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="customers">Departamento<span class="text-danger">*</span></label>
+                    <input type="text" id="user_department" class="form-control form-control-solid" readonly value="">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="customers">Sucursal<span class="text-danger">*</span></label>
+                    <input type="text" id="user_branch_office" class="form-control form-control-solid" readonly value="">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="customers">Tipo de documento<span class="text-danger">*</span></label>
+                    <input type="text" id="user_document_type" class="form-control form-control-solid" readonly value="{{$order->getUser->getDOcumentType->name}}">
+                </div>
+                {{-- <input type="hidden" id="slc-Customers" value="{{$order->user_id}}"> --}}
+                {{-- <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
                     <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" id="btn-customerData">
                         <i class="fad fa-eye"></i>
-                    </button>
+                    </button> --}}
 
                     {{-- <a href="{{ route('customers.create') }}" class="btn btn-icon btn-light-primary btn-sm mr-2">
                         <i class="fad fa-plus"></i>
                     </a> --}}
-                </div>
+                {{-- </div> --}}
                </div>
             </div>
             <div class="col-md-6">
@@ -73,32 +100,32 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Valor Orden OnDemand/Corp:</label>
-                        <input name="order_value" type="number" class="form-control form-control-solid" disabled value="" />
+                        <input name="order_value" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->order_value}}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>FF, COD, Com.Gastos, Seguro:</label>
-                        <input name="sec_value" type="number" class="form-control form-control-solid" disabled value="" />
+                        <input name="expenses" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->expenses}}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Recibir por COD: </label>
-                        <input name="cod_value" type="number" class="form-control form-control-solid" disabled value="" />
+                        <input name="receive_by_COD" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->receive_by_COD}}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Gastos diligencia: </label>
-                        <input name="cost_diligence" type="number" class="form-control form-control-solid" disabled value="" />
+                        <input name="diligence_expenses" type="number" class="form-control form-control-solid" placeholder="0.00"value="{{$order->diligence_expenses}}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Producto interno: </label>
-                        <input name="inner_prod" type="number" class="form-control form-control-solid" disabled value="" />
+                        <input name="internal_product" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->internal_product}}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Total Tax: </label>
-                        <input name="total_tax" type="number" class="form-control form-control-solid" disabled value="" />
+                        <input name="tax_total" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->tax_total}}" />
                         <span class="form-text text-muted"></span>
                     </div>
                 </div>
@@ -126,8 +153,6 @@
         </div>
 
         <div class="card-footer d-flex justify-content-end">
-            <button type="submit" id="btn-create-messenger" class="btn btn-primary mr-2">Guardar</button>
-            <button type="reset" class="btn btn-secondary">Limpiar</button>
         </div>
     </form>
     <!--end::Form-->

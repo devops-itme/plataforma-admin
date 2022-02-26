@@ -62,14 +62,13 @@ export default class Customers {
             formData.append('branch_office_default', document.getElementById("branch_office_default").value);
             formData.append('branch_office_department', document.getElementById("branch_office_department").value);
             let response = await this.sendBranchOfficeData(formData);
-            console.log(response);
             if(response['state'] == 200){
-                alert('Sucursal creada exitosamente.');
+                correct('Sucursal creada de manera exitosa');
                 let modal = document.getElementById("modalCreate");
                 modal.click();
                 this.listBranchOffices();
             } else {
-                alert('Ocurrió un error al crear la sucursal.');
+                error("Error al crear sucursal");
                 console.log('Error ocurrido: '+response['error']);
             }
         });
@@ -115,12 +114,7 @@ export default class Customers {
                     let contactCell = row.insertCell(3);
                     contactCell.innerHTML = data[i].contact;
 
-                    let deptCell = row.insertCell(4);
-                    deptCell.innerHTML = '<span class="label label-inline label-light-info font-weight-bold">'+
-                                            data[i].get_department.get_department.name+
-                                        '</span>';
-
-                    let stateCell = row.insertCell(5);
+                    let stateCell = row.insertCell(4);
                     if(data[i].state == 1){
                         stateCell.innerHTML =   '<span class="label label-inline label-light-success font-weight-bold">\
                                                     Activo\
@@ -130,7 +124,7 @@ export default class Customers {
                                                     Inactivo\
                                                 </span>';
                     }
-                    let selectCell = row.insertCell(6);
+                    let selectCell = row.insertCell(5);
                     const branchCheck = document.createElement("input");
                     branchCheck.setAttribute('class', 'checkbox-inline mt-3')
                     branchCheck.setAttribute('type', 'checkbox');
@@ -152,7 +146,7 @@ export default class Customers {
                     branchEdit.innerHTML = '<i class="fas fa-edit"></i>';
                     //Delete button
                     const branchDelete = document.createElement("button");
-                    branchDelete.onclick = function(){confirmDelete('/sucursales/null/'+data[i].id)};
+                    branchDelete.onclick = function(){deleteResource('/sucursales/null/'+data[i].id)};
                     branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                     branchDelete.setAttribute('type', 'button');
                     branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';

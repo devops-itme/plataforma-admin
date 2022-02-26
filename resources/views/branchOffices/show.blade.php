@@ -70,7 +70,7 @@
         </div>
         <div class="form-group col-md-4">
             <label>Documento de sucursal: </label>
-            <input type="text" class="form-control form-control-solid" placeholder="Numero de documento" name="branch_office_document_number" value="{{$office->document_number}}" disabled/>
+            <input type="text" class="form-control form-control-solid" placeholder="Número de documento" name="branch_office_document_number" value="{{$office->document_number}}" disabled/>
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-4">
@@ -84,8 +84,8 @@
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-4">
-            <label>Telefono de sucursal: </label>
-            <input type="text" class="form-control form-control-solid" placeholder="Telefono" name="branch_office_phone" value="{{$office->phone}}" disabled/>
+            <label>Teléfono de sucursal: </label>
+            <input type="text" class="form-control form-control-solid" placeholder="Teléfono" name="branch_office_phone" value="{{$office->phone}}" disabled/>
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-4">

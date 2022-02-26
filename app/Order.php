@@ -53,6 +53,11 @@ class Order extends Model
         return $this->belongsTo(ParameterValue::class, 'order_type');
     }
 
+    public function getOrderState()
+    {
+        return $this->belongsTo(ParameterValue::class, 'order_states');
+    }
+
     public function getDocumentType()
     {
         return $this->belongsTo(ParameterValue::class, 'document_type');
@@ -84,12 +89,12 @@ class Order extends Model
     public function scopeNumber($query, $value)
     {
         if (!is_null($value))
-            return $query->where('number', 'like', '%'.$value.'%');
+            return $query->where('order_number', 'like', '%'.$value.'%');
     }
-    public function scopeService_type($query, $value)
+    public function scopeOrder_type($query, $value)
     {
         if (!is_null($value))
-            return $query->where('service_type_id', $value);
+            return $query->where('order_type', $value);
     }
     public function scopeCustomer($query, $value)
     {
@@ -103,6 +108,12 @@ class Order extends Model
     {
         if (!is_null($from) && !is_null($to)) {
             return $query->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to);
+        }
+    }
+    public function scopeState($query, $value)
+    {
+        if(!is_null($value)){
+            return $query->where('state', $value);
         }
     }
 }

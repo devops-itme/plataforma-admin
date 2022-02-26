@@ -154,7 +154,7 @@
                         <th scope="col">Nombre empresa</th>
                         <th scope="col">Nombre comercial</th>
                         <th scope="col">Correo</th>
-                        <th scope="col">Telefono</th>
+                        <th scope="col">Teléfono</th>
                         <th scope="col">Zona</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
@@ -194,7 +194,7 @@
                                         </a>
                                         {{-- <form action="{{route('customers.destroy', $bank->id)}}" method="{{'post'}}">
                                             @csrf @method('DELETE') --}}
-                                            <button type="button" onclick="confirmDelete('/customers/'+{{$bank->getCustomer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                            <button type="button" onclick="deleteResource('/customers/'+{{$bank->getCustomer->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                                 <i class="fad fa-trash-alt"></i>
                                             </button>
                                         {{-- </form> --}}

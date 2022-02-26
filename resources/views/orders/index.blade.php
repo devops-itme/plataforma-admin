@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-@include('layouts.breadCrumbs')
+    @include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
@@ -13,8 +13,10 @@
             </div>
             @include('layouts.alerts')
             <div class="card-toolbar">
-                 <!--begin::Button filter-->
-                 <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+                <!--begin::Button filter-->
+
+                <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter" data-tooltip
+                    data-placement="left" title="FILTRO">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
@@ -94,7 +96,13 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{route('orders.create')}}" class="btn btn-primary font-weight-bolder">
+
+
+                <a href="historial" class="btn btn-light-primary font-weight-bolder mr-2">
+                    <i class="fas fa-history"></i>
+                    </span>Historial</a>
+
+                <a href="{{ route('orders.create') }}" class="btn btn-primary font-weight-bolder">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -110,23 +118,24 @@
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Numero de orden:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="3231123" name="number"
+                                <input type="text" class="form-control form-control-solid" placeholder="Orden_1" name="number"
                                     value="{{ request()->number }}" />
                                 <span class="form-text text-muted">Filtro numero</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label for="exampleSelect1">Tipo de orden:</label>
-                                        <select class="form-control form-control-solid" name="service_type">
+                                        <select class="form-control form-control-solid" name="order_type">
                                             <option selected disabled> Seleccione </option>
-                                            <option value="1" {{ request()->service_type == 1 ? 'selected' : '' }}>Ondeman|</option>
-                                            <option value="2" {{ request()->service_type == 2 ? 'selected' : '' }}>Multiple</option>
+                                            @foreach ($order_type as $key)
+                                                <option value="{{$key->id}}" {{ $key->id == request()->order_type ? 'selected' : ''}}>{{$key->name}}</option>
+                                            @endforeach
                                         </select>
                                 <span class="form-text text-muted">Filtro tipo de orden</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Nombre del cliente:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson" name="name"
-                                    value="{{ request()->name }}" />
+                                <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson"
+                                    name="name" value="{{ request()->name }}" />
                                 <span class="form-text text-muted">Filtro nombre</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
@@ -143,19 +152,22 @@
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label for="exampleSelect1">Estado: </label>
-                                        <select class="form-control form-control-solid" id="zone" name="state">
-                                            <option selected disabled> Seleccione </option>
-                                            <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                            <option value="0" {{ (request()->state != '' && request()->state == 0) ? 'selected' : '' }}>Inactivo</option>
-                                        </select>
+                                <select class="form-control form-control-solid" id="zone" name="state">
+                                    <option selected disabled> Seleccione </option>
+                                    <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
+                                    <option value="0"
+                                        {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
+                                    </option>
+                                </select>
                                 <span class="form-text text-muted">Filtro estado</span>
                             </div>
                             <div class=" row form-group py-6 m-0 col-md-12">
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
+                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block">
+                                        Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{route('customers.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                    <a href="{{route('orders.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
                         </div>
@@ -179,23 +191,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(count($orders) > 0)
+                    @if (count($orders) > 0)
                         @foreach ($orders as $order)
                             <tr>
-                                <th scope="row">{{$order->order_number}}</th>
+                                <th scope="row">{{ $order->order_number }}</th>
                                 <td>
-                                    @if ($order->service_type_id == 1)
+                                    @if ($order->getOrderType->name == 'Ondemand')
                                         <span class="label label-inline label-light-warning font-weight-blog">
-                                            Ondeman
+                                            Ondemand
                                         </span>
                                     @else
-                                        <span class="label label-inline label-light-success font-weight-blog">
+                                        <span class="label label-inline label-light-info font-weight-blog">
                                             Multiple
                                         </span>
                                     @endif
                                 </td>
-                                <td>{{$order->getUser->name ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->business_name}}</td>
-                                <td>{{format_date(date('Y-n-d', strtotime($order->created_at)))}}</td>
+                                <td>{{ $order->getUser->name? $order->getUser->name . ' ' . $order->getUser->last_name: $order->getUser->getCustomer->business_name }}
+                                </td>
+                                <td>{{ format_date(date('Y-n-d', strtotime($order->created_at))) }}</td>
                                 <td>
                                     @if ($order->state == 1)
                                         <span class="label label-inline label-light-success font-weight-bold">
@@ -209,13 +222,15 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                        <a href="{{route('orders.show',$order->id)}}" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                        <a href="{{ route('orders.show', $order->id) }}"
+                                            class="btn btn-icon btn-light-primary btn-sm mr-2">
                                             <i class="fad fa-folder-open"></i>
                                         </a>
-                                        <a href="{{route('orders.edit', $order->id)}}" class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        <a href="{{ route('orders.edit', $order->id) }}"
+                                            class="btn btn-icon btn-light-success btn-sm mr-2">
                                             <i class="fad fa-edit"></i>
                                         </a>
-                                        <button type="button" onclick="confirmDelete('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        <button type="button" onclick="deleteResource('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
                                     </div>
@@ -233,9 +248,8 @@
         </div>
     </div>
 
-@endsection
 
+@endsection
 {{-- Styles Section --}}
 @section('styles')
-
 @endsection

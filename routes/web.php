@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('unassigned_depts', 'Admin\DepartmentController@UnassignedDepts');
 
+    Route::get('/customer_addresses/{id}', 'Admin\AddressController@customerAddresses');
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');
@@ -89,6 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
     //Orders delivery
+    Route::get('order_states', 'Admin\DeliveryController@orderStates');
+    //Orders delivery
     Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');
     //Messengers delivery
     Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
@@ -123,6 +126,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('planes', function () {
         return view('plans.index');
     })->name('plans.index');
+
+    Route::get('historial', function () {
+        return view('orders.historial');
+    })->name('historial.index');
 
 });
 //RUTAS

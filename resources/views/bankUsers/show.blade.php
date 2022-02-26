@@ -38,8 +38,8 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
-                <label>Telefono: </label>
-                <input type="tel" class="form-control form-control-solid" placeholder="Telefono" name="phone" value="{{$user->phone}}" disabled />
+                <label>Teléfono: </label>
+                <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{$user->phone}}" disabled />
                 <span class="form-text text-muted"></span>
             </div>
         </div>

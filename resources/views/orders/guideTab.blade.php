@@ -1,10 +1,11 @@
+@include('orders.modals.createAddressModal')
 <!--begin: Datatable-->
 <table class="table table-sm" id="guidesTable">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Contacto</th>
-            <th scope="col">Telefono</th>
+            <th scope="col">Teléfono</th>
             <th scope="col">Correo</th>
             <th scope="col">Fecha programada</th>
             <th scope="col">Tarifa</th>
@@ -78,14 +79,14 @@
                     <div class="form-group col-md-3">
                         <label for="branch_off">Sucursal despacho <span class="text-danger">*</span></label>
                         <select name="branch_office" class="form-control form-control-solid" id="branch_off">
-                            <option selected disabled>Seleccione sucursal</option>
+                            <option selected>Seleccione sucursal</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    {{-- <div class="form-group col-md-3">
                         <label>Despacho: <span class="text-danger">*</span></label>
                         <input name="office" type="number" class="form-control form-control-solid" placeholder="" id="dispatched"/>
                         <span class="form-text text-muted"></span>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-3">
                         <label for="address">Dirección <span class="text-danger">*</span></label>
                         <input name="address" id="address" type="text" class="form-control form-control-solid" placeholder=""/>
@@ -150,7 +151,7 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3 pt-2">
-                        <label>Teléfono contacto </label>
+                        <label>Teléfono contacto <span class="text-danger">*</span> </label>
                         <input name="phone_contact" type="tel" id="phone_contact" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
@@ -165,7 +166,18 @@
                         <input name="invoice_contact" id="invoice_contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
-                    <div class="form-group col-md-6 d-flex align-items-center">
+                    <div class="form-group col-md-3">
+                        <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
+                        <select name="customer_address" class="form-control form-control-solid" id="customer_address">
+                            <option selected disabled>Seleccione </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
+                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
+                            <i class="fad fa-plus-circle text-info"></i>
+                        </a>
+                    </div>
+                    <div class="form-group col-md-6 mb-0 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">
                                 <input type="checkbox" name="same_day_delivery" id="same_day_delivery" />
@@ -380,11 +392,11 @@
                             <option selected disabled> Seleccione </option>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    {{-- <div class="form-group col-md-3">
                         <label>Despacho: <span class="text-danger">*</span></label>
                         <input name="office" type="number" class="form-control form-control-solid" placeholder="" id="dispatched_edit"/>
                         <span class="form-text text-muted"></span>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-3">
                         <label for="address">Dirección <span class="text-danger">*</span></label>
                         <input name="address" id="address_edit" type="text" class="form-control form-control-solid" placeholder=""/>
@@ -449,7 +461,7 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3 pt-2">
-                        <label>Teléfono contacto </label>
+                        <label>Teléfono contacto<span class="text-danger">*</span> </label>
                         <input name="phone_contact" type="tel" id="phone_contact_edit" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
@@ -463,6 +475,12 @@
                         <label>Contacto Factura: <span class="text-danger">*</span></label>
                         <input name="invoice_contact" id="invoice_contact_edit" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
+                        <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
+                            <option disabled>Seleccione </option>
+                        </select>
                     </div>
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">

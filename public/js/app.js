@@ -2192,27 +2192,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       shipmented: [],
       completed: [],
       showData: "",
-      tabs: [{
-        id: 1,
-        name: "Por despachar",
-        href: "pordespachar",
-        data: []
-      }, {
-        id: 2,
-        name: "Despachados",
-        href: "despachados",
-        data: []
-      }, {
-        id: 3,
-        name: "Completados",
-        href: "completados",
-        data: []
-      }],
-      currentTab: 1,
+      tabs: [],
+      currentTab: 31,
+      showMessengerData: [],
       messengers: [],
       searchMessenger: null,
       messenger: null,
-      messengerName: null
+      messengerName: null // orderTypes: null,
+
     };
   },
   computed: {
@@ -2238,7 +2225,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {},
   methods: {
-    getOrders: function getOrders(type_id) {
+    getOrders: function getOrders(type_id, index) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2247,15 +2234,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                index != undefined && $("#myTab li:nth-child(".concat(index + 1, ") a")).tab("show");
                 _this3.currentTab = type_id;
-                _context.next = 3;
+                _context.next = 4;
                 return _this3.requestOrders();
 
-              case 3:
+              case 4:
                 response = _context.sent;
                 _this3.data = response.data;
+                _this3.activeIndex = null;
+                _this3.showData = [];
+                _this3.showMessengerData = [];
 
-              case 5:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -2344,7 +2335,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return sum;
     },
     rowClick: function rowClick(data, index) {
+      var _data$get_guides$, _data$get_guides$$get;
+
       this.showData = data;
+      this.showMessengerData = (_data$get_guides$ = data.get_guides[0]) === null || _data$get_guides$ === void 0 ? void 0 : (_data$get_guides$$get = _data$get_guides$.get_route) === null || _data$get_guides$$get === void 0 ? void 0 : _data$get_guides$$get.get_messenger;
       this.activeIndex = index;
     },
     assignateDelivery: function assignateDelivery() {
@@ -2357,32 +2351,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log(_this6.setMessenger);
-
                 if (_this6.showData) {
-                  _context4.next = 5;
+                  _context4.next = 4;
                   break;
                 }
 
-                _context4.next = 4;
+                _context4.next = 3;
                 return error("Debe seleccionar una orden");
 
-              case 4:
+              case 3:
                 return _context4.abrupt("return", _context4.sent);
 
-              case 5:
+              case 4:
                 if (_this6.setMessenger) {
-                  _context4.next = 9;
+                  _context4.next = 8;
                   break;
                 }
 
-                _context4.next = 8;
+                _context4.next = 7;
                 return error("Debe seleccionar un mensajero");
 
-              case 8:
+              case 7:
                 return _context4.abrupt("return", _context4.sent);
 
-              case 9:
+              case 8:
                 _this = _this6;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
@@ -2397,12 +2389,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     order_id: _this6.showData.id
                   })
                 };
-                _context4.next = 18;
+                _context4.next = 17;
                 return fetch("/guias/asignacion", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  console.log(data);
-
                   if (data.state == 500) {
                     return error(data.message);
                   }
@@ -2420,33 +2410,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return console.warn(err);
                 });
 
-              case 18:
+              case 17:
               case "end":
                 return _context4.stop();
             }
           }
         }, _callee4);
       }))();
+    },
+    orderState: function orderState() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return fetch("/order_states");
+
+              case 2:
+                req = _context5.sent;
+                _context5.next = 5;
+                return req.json();
+
+              case 5:
+                res = _context5.sent;
+                _this7.tabs = res.data;
+                _this7.currentTab = _this7.tabs[0].id;
+                _this7.tabs[0].href = "pordespachar";
+                _this7.tabs[1].href = "despachados";
+                _this7.tabs[2].href = "completados";
+
+              case 11:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this7 = this;
+    var _this8 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
-              _this7.getOrders(_this7.currentTab);
+              _this8.orderState();
 
-              _this7.getMessengers();
+              _this8.getOrders(_this8.currentTab);
 
-            case 2:
+              _this8.getMessengers();
+
+            case 3:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
         }
-      }, _callee5);
+      }, _callee6);
     }))();
   }
 });
@@ -3180,7 +3205,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                     _this.showModal = false;
                   } else {
-                    error(data.error);
+                    error(data.message);
                   }
                 })["catch"](function (err) {
                   return console.warn(err);
@@ -3257,7 +3282,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                     _this.clearValue();
                   } else {
-                    error(data.error);
+                    error(data.message);
                   }
                 })["catch"](function (err) {
                   return console.warn(err);
@@ -41977,10 +42002,10 @@ var render = function () {
                   _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
                   _vm._v(" "),
                   _c("th", { attrs: { scope: "col" } }, [
-                    _vm._v("Description"),
+                    _vm._v("Descripción"),
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("State")]),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
                   _vm._v(" "),
                   _c("th", { attrs: { scope: "col" } }, [
                     _c("div", { staticClass: "d-flex justify-content-end" }, [
@@ -59565,20 +59590,19 @@ var Customers = /*#__PURE__*/function () {
 
               case 19:
                 response = _context.sent;
-                console.log(response);
 
                 if (response['state'] == 200) {
-                  alert('Sucursal creada exitosamente.');
+                  correct('Sucursal creada de manera exitosa');
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
                   _this.listBranchOffices();
                 } else {
-                  alert('Ocurrió un error al crear la sucursal.');
+                  error("Error al crear sucursal");
                   console.log('Error ocurrido: ' + response['error']);
                 }
 
-              case 22:
+              case 21:
               case "end":
                 return _context.stop();
             }
@@ -59666,9 +59690,7 @@ var Customers = /*#__PURE__*/function () {
                         zoneCell.innerHTML = data[i].get_zone.name;
                         var contactCell = row.insertCell(3);
                         contactCell.innerHTML = data[i].contact;
-                        var deptCell = row.insertCell(4);
-                        deptCell.innerHTML = '<span class="label label-inline label-light-info font-weight-bold">' + data[i].get_department.get_department.name + '</span>';
-                        var stateCell = row.insertCell(5);
+                        var stateCell = row.insertCell(4);
 
                         if (data[i].state == 1) {
                           stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
@@ -59680,7 +59702,7 @@ var Customers = /*#__PURE__*/function () {
                                                 </span>';
                         }
 
-                        var selectCell = row.insertCell(6);
+                        var selectCell = row.insertCell(5);
                         var branchCheck = document.createElement("input");
                         branchCheck.setAttribute('class', 'checkbox-inline mt-3');
                         branchCheck.setAttribute('type', 'checkbox');
@@ -59704,7 +59726,7 @@ var Customers = /*#__PURE__*/function () {
                         var branchDelete = document.createElement("button");
 
                         branchDelete.onclick = function () {
-                          confirmDelete('/sucursales/null/' + data[i].id);
+                          deleteResource('/sucursales/null/' + data[i].id);
                         };
 
                         branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
@@ -60335,6 +60357,8 @@ var Orders = /*#__PURE__*/function () {
       this.saveGuides();
       this.listGuides();
       this.loadBranches();
+      this.customerAddresses();
+      this.createAddress();
     }
   }, {
     key: "setInput",
@@ -60659,7 +60683,11 @@ var Orders = /*#__PURE__*/function () {
                   modal = document.getElementById("detailCustomer");
                   modal.click();
 
-                case 12:
+                  if (document.getElementById("user_code").value != null) {
+                    _this4.customerAddresses(document.getElementById("user_code").value);
+                  }
+
+                case 13:
                 case "end":
                   return _context4.stop();
               }
@@ -60762,14 +60790,14 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, response, modal;
+        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
                 branch_office = document.getElementById("branch_off").value;
-                transport_type = document.getElementById("trans_type").value;
-                dispatched = document.getElementById("dispatched").value;
+                transport_type = document.getElementById("trans_type").value; // let dispatched = document.getElementById("dispatched").value;
+
                 address_name = document.getElementById("address").value;
                 address_lat = document.getElementById("lat").value;
                 address_lng = document.getElementById("lng").value;
@@ -60786,10 +60814,11 @@ var Orders = /*#__PURE__*/function () {
                 same_day_delivery = document.getElementById("same_day_delivery").value;
                 sign = document.getElementById("sign").value;
                 take_photo = document.getElementById("take_photo").value;
+                customer_address = document.getElementById("customer_address").value;
                 formData = new FormData();
                 formData.append('branch_office', branch_office);
-                formData.append('transport_type', transport_type);
-                formData.append('dispatched', dispatched);
+                formData.append('transport_type', transport_type); // formData.append('dispatched',dispatched);
+
                 formData.append('address_name', address_name);
                 formData.append('address_lat', address_lat);
                 formData.append('address_lng', address_lng);
@@ -60806,6 +60835,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('same_day_delivery', same_day_delivery);
                 formData.append('sign', sign);
                 formData.append('take_photo', take_photo);
+                formData.append('customer_address', customer_address);
                 _context7.next = 41;
                 return _this5.sendGuideData(formData);
 
@@ -60813,13 +60843,13 @@ var Orders = /*#__PURE__*/function () {
                 response = _context7.sent;
 
                 if (response.state == 200) {
-                  alert(response.message);
+                  correct(response.message);
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
                   _this5.listGuides();
                 } else {
-                  alert('Ha ocurrido un error al crear la guia.');
+                  error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
                 }
 
@@ -60897,7 +60927,6 @@ var Orders = /*#__PURE__*/function () {
 
               case 6:
                 response = _context9.sent;
-                console.log(response);
                 data = response.data;
 
                 if (data.length > 0) {
@@ -60949,7 +60978,7 @@ var Orders = /*#__PURE__*/function () {
                     var guideDelete = document.createElement("button");
 
                     guideDelete.onclick = function () {
-                      confirmDelete('/guias/' + key.id);
+                      deleteResource('/guias/' + key.id);
                     };
 
                     guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
@@ -60968,7 +60997,7 @@ var Orders = /*#__PURE__*/function () {
 
                 this.editGuide();
 
-              case 11:
+              case 10:
               case "end":
                 return _context9.stop();
             }
@@ -60986,17 +61015,25 @@ var Orders = /*#__PURE__*/function () {
     key: "requestGuides",
     value: function () {
       var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var orderNumber, response;
+        var orderNumber, path, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                orderNumber = document.getElementsByName("order_number")[0].value;
+                orderNumber = document.getElementsByName("order_number")[0];
+
+                if (orderNumber == null) {
+                  orderNumber = null;
+                } else {
+                  orderNumber = orderNumber.value;
+                }
+
+                path = window.location.pathname.split('/');
                 response = {
                   'state': 500
                 };
-                _context10.next = 4;
-                return fetch("/guias?order=" + orderNumber).then(function (response) {
+                _context10.next = 6;
+                return fetch("/guias?order=" + orderNumber + "&path=" + path).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -61004,10 +61041,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 4:
+              case 6:
                 return _context10.abrupt("return", response);
 
-              case 5:
+              case 7:
               case "end":
                 return _context10.stop();
             }
@@ -61034,7 +61071,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
+          var response, data, branch_office, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, i;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -61046,8 +61083,8 @@ var Orders = /*#__PURE__*/function () {
                 case 3:
                   response = _context11.sent;
                   data = response.data;
-                  branch_office = document.getElementById("branch_off_edit").value = data.branch_office;
-                  dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                  branch_office = document.getElementById("branch_off_edit").value = data.branch_office; // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+
                   address_name = document.getElementById("address_edit").value = data.address_name;
                   address_lat = document.getElementById("lat_edit").value = data.address_lat;
                   address_lng = document.getElementById("lng_edit").value = data.address_lng;
@@ -61068,9 +61105,23 @@ var Orders = /*#__PURE__*/function () {
                   take_photo = document.getElementById("take_photo_edit");
                   data.take_photo == 1 ? take_photo.checked = true : '';
 
+                  if (data.order_id == null) {
+                    _this7.customerAddresses(document.getElementById("user_code").value);
+                  } else {
+                    _this7.customerAddresses(data.get_order.user_id);
+                  }
+
+                  customer_address = document.getElementById("customer_address_edit");
+
+                  for (i = 0; i < customer_address.length; i++) {
+                    if (customer_address[i].value == data.customer_address) {
+                      customer_address[i].setAttribute('selected', 'selected');
+                    }
+                  }
+
                   _this7.updateGuide();
 
-                case 27:
+                case 29:
                 case "end":
                   return _context11.stop();
               }
@@ -61129,13 +61180,13 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, dispatched, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
               case 0:
-                branch_off_edit = document.getElementById("branch_off_edit").value;
-                dispatched = document.getElementById("dispatched_edit").value;
+                branch_off_edit = document.getElementById("branch_off_edit").value; // let dispatched = document.getElementById("dispatched_edit").value;
+
                 address_name = document.getElementById("address_edit").value;
                 address_lat = document.getElementById("lat_edit").value;
                 address_lng = document.getElementById("lng_edit").value;
@@ -61155,9 +61206,10 @@ var Orders = /*#__PURE__*/function () {
                 sign.checked == true ? sign = 1 : sign = 0;
                 take_photo = document.getElementById("take_photo_edit");
                 take_photo.checked == true ? take_photo = 1 : take_photo = 0;
+                customer_address = document.getElementById("customer_address_edit").value;
                 formData = new FormData();
-                formData.append("branch_office", branch_off_edit);
-                formData.append("dispatched", dispatched);
+                formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
+
                 formData.append("address_name", address_name);
                 formData.append("address_lat", address_lat);
                 formData.append("address_lng", address_lng);
@@ -61174,6 +61226,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("sign", sign);
                 formData.append("take_photo", take_photo);
                 formData.append("invoice_contact", invoice_contact);
+                formData.append("customer_address", customer_address);
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -61194,13 +61247,13 @@ var Orders = /*#__PURE__*/function () {
                 response = _context13.sent;
 
                 if (response.state == 200) {
-                  alert(response.message);
+                  correct(response.message);
                   modal = document.getElementById("modalEdit");
                   modal.click();
 
                   _this8.listGuides();
                 } else {
-                  alert('Ha ocurrido un error al actualizar la guia.');
+                  error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
                 }
 
@@ -61333,6 +61386,208 @@ var Orders = /*#__PURE__*/function () {
       }
 
       return requestBranches;
+    }()
+  }, {
+    key: "customerAddresses",
+    value: function () {
+      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+        var customerId,
+            slcAddresses,
+            response,
+            data,
+            _args17 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+          while (1) {
+            switch (_context17.prev = _context17.next) {
+              case 0:
+                customerId = _args17.length > 0 && _args17[0] !== undefined ? _args17[0] : null;
+                slcAddresses = document.getElementsByName("customer_address");
+
+                if (!(customerId == '')) {
+                  _context17.next = 4;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 4:
+                if (!(slcAddresses == null)) {
+                  _context17.next = 6;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 6:
+                _context17.next = 8;
+                return this.requestCustomerAddresses(customerId);
+
+              case 8:
+                response = _context17.sent;
+                data = response.data;
+                [].forEach.call(slcAddresses, function (slcAddress) {
+                  slcAddress.selectedIndex = 0;
+                  removeOptions(slcAddress);
+
+                  for (var i = 0; i < data.length; i++) {
+                    var element = data[i];
+                    var optAddress = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                  }
+                });
+
+              case 11:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17, this);
+      }));
+
+      function customerAddresses() {
+        return _customerAddresses.apply(this, arguments);
+      }
+
+      return customerAddresses;
+    }()
+  }, {
+    key: "requestCustomerAddresses",
+    value: function () {
+      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
+        var id,
+            route,
+            response,
+            _args18 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                id = _args18.length > 0 && _args18[0] !== undefined ? _args18[0] : null;
+                route = window.location.pathname.split('/');
+                route.includes('edit') ? id = document.getElementById("user_code").value : '';
+                response = {
+                  'state': 500
+                };
+                _context18.next = 6;
+                return fetch("/customer_addresses/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 6:
+                return _context18.abrupt("return", response);
+
+              case 7:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18);
+      }));
+
+      function requestCustomerAddresses() {
+        return _requestCustomerAddresses.apply(this, arguments);
+      }
+
+      return requestCustomerAddresses;
+    }()
+  }, {
+    key: "createAddress",
+    value: function createAddress() {
+      var _this10 = this;
+
+      var btnSaveAddress = document.getElementById("saveAddress");
+
+      if (btnSaveAddress == null) {
+        return;
+      }
+
+      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+        var formData, description, address, lat, lng, user_id, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                formData = new FormData();
+                description = document.getElementById("add_description").value;
+                address = document.getElementById("add_name").value;
+                lat = document.getElementById("add_lat").value;
+                lng = document.getElementById("add_lng").value;
+                user_id = document.getElementById("user_code").value;
+                formData.append('user_id', user_id);
+                formData.append('address', address);
+                formData.append('lat', lat);
+                formData.append('lng', lng);
+                formData.append('description', description);
+                formData.append('requestByJs', 1);
+                _context19.next = 14;
+                return _this10.sendAddressData(formData);
+
+              case 14:
+                response = _context19.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalCreateAddress");
+                  modal.click();
+
+                  _this10.listGuides();
+
+                  _this10.customerAddresses(document.getElementById("user_code").value);
+                } else {
+                  error('Error al crear la guía.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 16:
+              case "end":
+                return _context19.stop();
+            }
+          }
+        }, _callee19);
+      })));
+    }
+  }, {
+    key: "sendAddressData",
+    value: function () {
+      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+          while (1) {
+            switch (_context20.prev = _context20.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context20.next = 3;
+                return fetch("/direcciones", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context20.sent;
+                return _context20.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context20.stop();
+            }
+          }
+        }, _callee20);
+      }));
+
+      function sendAddressData(_x8) {
+        return _sendAddressData.apply(this, arguments);
+      }
+
+      return sendAddressData;
     }()
   }, {
     key: "months",

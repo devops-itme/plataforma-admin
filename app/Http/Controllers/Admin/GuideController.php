@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class GuideController extends Controller
 {
-    use GuideTrait, GuidanceDocsTrait;
+    use GuidanceDocsTrait;
     /**
      * Display a listing of the resource.
      *
@@ -19,13 +19,19 @@ class GuideController extends Controller
      */
     public function index()
     {
-        if(request()->order != null){
-            $order = Order::where('order_number', request()->order)->first();
-            if($order){
-                $guides = Guide::where('order_id', $order->id)->orWhere('order_id', NULL)->get();
-            }
-        } else {
+        $guides = [];
+        if(str_contains(request()->path, 'create')){
             $guides = Guide::where('order_id', NULL)->get();
+        } else if(str_contains(request()->path, 'edit')){
+            $order_id = request()->order;
+            $guides = Guide::with('getOrder')->whereHas('getOrder', function ($query) use ($order_id) {
+                $query->where('order_number', $order_id);
+            })->orWhere('order_id', NULL)->get();
+        } else {
+            $order_id = request()->order;
+            $guides = Guide::with('getOrder')->whereHas('getOrder', function ($query) use ($order_id) {
+                $query->where('order_number', $order_id);
+            })->get();
         }
         return json_encode([
             'state' => 200,
@@ -65,7 +71,8 @@ class GuideController extends Controller
                 'address_lng' => $request->lng
             ]);
         }
-        $request->merge(['state' => 1]);
+        if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
+        $request->merge(['state' => 31]);
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
             if(!is_null($request->guides_doc)){
@@ -107,7 +114,7 @@ class GuideController extends Controller
      */
     public function edit($id)
     {
-        $guide = Guide::find($id);
+        $guide = Guide::with('getOrder')->find($id);
         return json_encode([
             'state' => 200,
             'data' => $guide
@@ -126,6 +133,7 @@ class GuideController extends Controller
         if(!($request->state)){
             $request->merge(['state' => 1]);
         }
+        if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
         $response = $this->updateGuide($request->merge(['guide_id' => $id]));
         if($response['state'] == 200){
             return json_encode([
@@ -136,7 +144,7 @@ class GuideController extends Controller
         } else {
             return json_encode([
                 'state' => 500,
-                'message' => $response['message']
+                'message' => $response['error']
             ]);
         }
     }

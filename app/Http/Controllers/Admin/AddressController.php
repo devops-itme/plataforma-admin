@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Address;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\AddressTrait;
 use Illuminate\Http\Request;
@@ -38,12 +39,23 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-
         $response = $this->saveAddress($request);
-
         if($response['state'] == 200){
+            if($request->requestByJs == 1){
+                return json_encode([
+                    'state' => 200,
+                    'data' => $response['data'],
+                    'message' => $response['message']
+                ]);
+            }
             return redirect()->back()->with('success', $response['message']);
         } else {
+            if($request->requestByJs == 1){
+                return json_encode([
+                    'state' => 500,
+                    'data' => $response['message'],
+                ]);
+            }
             return redirect()->back()->with('danger', $response['message']);
         }
     }
@@ -104,5 +116,14 @@ class AddressController extends Controller
         } else {
             return $this->respond(500, null, $response['error'], $response['message']);
         }
+    }
+
+    public function customerAddresses($id)
+    {
+        $addresses = Address::where('user_id', $id)->get();
+        return json_encode([
+            'state' => 200,
+            'data' => $addresses
+        ]);
     }
 }

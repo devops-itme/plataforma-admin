@@ -7,17 +7,14 @@ export default {
             shipmented: [],
             completed: [],
             showData: "",
-            tabs: [
-                { id: 1, name: "Por despachar", href: "pordespachar", data: [] },
-                { id: 2, name: "Despachados", href: "despachados", data: [] },
-                { id: 3, name: "Completados", href: "completados", data: []  },
-            ],
-            currentTab: 1,
-
+            tabs: [],
+            currentTab: 31,
+            showMessengerData:[],
             messengers: [],
             searchMessenger: null,
             messenger: null,
             messengerName: null,
+            // orderTypes: null,
         };
     },
     computed: {
@@ -45,18 +42,23 @@ export default {
             }
         },
     },
-    watch: {
-    },
+    watch: {},
 
     methods: {
-        async getOrders(type_id){
+        async getOrders(type_id, index) {
+            index != undefined &&
+                $(`#myTab li:nth-child(${index + 1}) a`).tab("show");
+
             this.currentTab = type_id;
-            let response =  await this.requestOrders();
-            this.data = response.data
+            let response = await this.requestOrders();
+            this.data = response.data;
+            this.activeIndex = null;
+            this.showData = [];
+            this.showMessengerData = [];
         },
 
         async requestOrders() {
-            let response = {state:500};
+            let response = { state: 500 };
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
             let requestOptions = {
@@ -97,11 +99,11 @@ export default {
 
         rowClick(data, index) {
             this.showData = data;
+            this.showMessengerData = data.get_guides[0]?.get_route?.get_messenger
             this.activeIndex = index;
         },
 
         async assignateDelivery() {
-            console.log(this.setMessenger);
             if (!this.showData) {
                 return await error("Debe seleccionar una orden");
             }
@@ -127,22 +129,34 @@ export default {
             await fetch(`/guias/asignacion`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
-                    console.log(data);
                     if (data.state == 500) {
                         return error(data.message);
                     }
                     if (data.state == 200) {
-                        let index =_this.data.findIndex(item=>item.id==_this.showData.id);
-                        _this.data.splice(index,1);
+                        let index = _this.data.findIndex(
+                            (item) => item.id == _this.showData.id
+                        );
+                        _this.data.splice(index, 1);
                         return correct(data.message);
                     }
                 })
                 .catch((err) => console.warn(err));
         },
+
+        async orderState() {
+            let req = await fetch("/order_states");
+            let res = await req.json();
+            this.tabs = res.data;
+            this.currentTab = this.tabs[0].id;
+            this.tabs[0].href = "pordespachar";
+            this.tabs[1].href = "despachados";
+            this.tabs[2].href = "completados";
+        },
     },
 
     async mounted() {
-       this.getOrders(this.currentTab);
+        this.orderState();
+        this.getOrders(this.currentTab);
         this.getMessengers();
     },
 };

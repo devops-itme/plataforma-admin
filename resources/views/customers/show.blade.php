@@ -26,7 +26,7 @@
                         <div class="line-height-xl">{{$customer->getUser->email}}</div>
                     </div>
                     <div class="col-md-2">
-                        <div class="font-weight-bolder mb-3">Telefono:</div>
+                        <div class="font-weight-bolder mb-3">Teléfono:</div>
                         <div class="line-height-xl">{{$customer->getUser->phone}}</div>
                     </div>
                     <div class="col-md-3">
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" onclick="confirmDelete('{{route('addresses.destroy', $item->id)}}')" class="delete btn btn-icon btn-light-danger">
+                        <button type="button" onclick="deleteResource('{{route('addresses.destroy', $item->id)}}', true)" class="delete btn btn-icon btn-light-danger">
                             <i class="fas fa-eraser"></i>
                         </button>
                     </td>
