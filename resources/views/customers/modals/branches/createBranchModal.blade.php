@@ -11,12 +11,12 @@
             <div class="modal-body">
                 <div class="d-flex flex-row flex-wrap">
                     <div class="form-group col-md-3">
-                        <label>Nombre de sucursal: </label>
+                        <label>Nombre de sucursal: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-solid" placeholder="Nombre sucursal" name="branch_office_name" id="branch_office_name" value="{{ old('branch_office_name') }}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Tipo de sucursal</label>
+                        <label>Tipo de sucursal<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_type" name="branch_office_type">
                             <option selected disabled>Seleccione</option>
                             @foreach ($branch_office_type as $item)
@@ -28,41 +28,46 @@
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Descripción de sucursal:</label>
+                        <label>Descripción de sucursal:<span class="text-danger">*</span></label>
                         <textarea class="form-control form-control-solid" id="branch_office_description" rows="1" name="branch_office_description">{{ old('branch_office_description') }}</textarea>
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Zona de sucursal:</label>
+                        <label>Zona de sucursal:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_zone" name="branch_office_zone">
                             <option selected disabled>Seleccione</option>
-                            @foreach ($documents as $document)
+                            <option value="1">Zona 1</option>
+                            <option value="2" >Zona 2</option>
+                            <option value="3" >Zona 3</option>
+                            <option value="4" >Zona 4</option>
+                            <option value="5" >Zona 5</option>
+                            {{-- @foreach ($documents as $document)
                             <option value="{{ $document->id }}" {{ $document->id == old('branch_office_zone') ? 'selected' : '' }}>
                                 {{ $document->name }}
                             </option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Dirección de sucursal: </label>
+                        <label>Dirección de sucursal: <span class="text-danger">*</span> </label>
                         <input type="text" class="form-control form-control-solid" placeholder="Dirección" name="branch_office_address" value="{{ old('branch_office_address') }}" id="branch_office_address" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <input type="hidden" name="branch_office_lat" id="branch_office_lat">
                     <input type="hidden" name="branch_office_lng" id="branch_office_lng">
                     <div class="form-group col-md-3">
-                        <label>Email de sucursal: </label>
+                        <label>Email de sucursal:<span class="text-danger">*</span> </label>
                         <input type="text" class="form-control form-control-solid" placeholder="Email" name="branch_office_email" id="branch_office_email" value="{{ old('branch_office_email') }}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Contacto de sucursal: </label>
+                        <label>Contacto de sucursal:<span class="text-danger">*</span> </label>
                         <input type="text" class="form-control form-control-solid" placeholder="Contacto" name="branch_office_contact" value="{{ old('branch_office_email') }}" id="branch_office_contact" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Tipo de documento sucursal:</label>
+                        <label>Tipo de documento sucursal:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_document_type" name="branch_office_document_type">
                             <option selected disabled>Seleccione</option>
                             @foreach ($documents as $document)
@@ -74,19 +79,19 @@
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Documento de sucursal: </label>
+                        <label>Documento de sucursal: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-solid" id="branch_office_document_number" placeholder="Número de documento" name="branch_office_document_number" value="{{ old('branch_office_document_number') }}" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Departamento de sucursal:</label>
+                        <label>Departamento de sucursal:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_department" name="branch_office_department">
                             <option selected disabled>Seleccione</option>
                         </select>
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Metodo de pago:</label>
+                        <label>Metodo de pago:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_payment_method" name="branch_office_payment_method">
                             <option selected disabled>Seleccione</option>
                             @foreach ($payment_method as $item)
@@ -98,12 +103,12 @@
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Teléfono de sucursal: </label>
+                        <label>Teléfono de sucursal: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-solid" placeholder="Teléfono" name="branch_office_phone" value="{{ old('branch_office_phone') }}" id="branch_office_phone" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="d-none" id="slcPlan">
-                        <label>Planes:</label>
+                        <label>Planes:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid">
                             <option selected disabled>Seleccione</option>
                             @foreach ($documents as $document)
@@ -115,7 +120,7 @@
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="d-none" id="useMode">
-                        <label>Modo de uso:</label>
+                        <label>Modo de uso:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_usage_mode" name="branch_office_usage_mode">
                             <option selected disabled>Seleccione</option>
                             @foreach ($use_mode as $item)
@@ -127,7 +132,7 @@
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3 mb-0 py-4">
-                        <label>¿Sucursal predeterminada?</label>
+                        <label>¿Sucursal predeterminada?<span class="text-danger">*</span></label>
                         <div class="radio-inline">
                             <label class="radio radio-rounded">
                                 <input type="radio" checked="checked" name="branch_office_default" value="1" {{ old('branch_office_default') == 1 ? 'checked="checked"' : '' }} id="branch_office_default" />

@@ -7859,7 +7859,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -7897,7 +7897,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
 
 // exports
 
@@ -59563,36 +59563,53 @@ var Customers = /*#__PURE__*/function () {
       }
 
       btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var formData, response, modal;
+        var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_usage_mode, branch_office_default, branch_office_department, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                branch_office_name = document.getElementById("branch_office_name"), branch_office_type = document.getElementById("branch_office_type"), branch_office_description = document.getElementById("branch_office_description"), branch_office_zone = document.getElementById("branch_office_zone"), branch_office_address = document.getElementById("branch_office_address"), branch_office_lat = document.getElementById("branch_office_lat"), branch_office_lng = document.getElementById("branch_office_lng"), branch_office_email = document.getElementById("branch_office_email"), branch_office_contact = document.getElementById("branch_office_contact"), branch_office_document_type = document.getElementById("branch_office_document_type"), branch_office_document_number = document.getElementById("branch_office_document_number"), branch_office_payment_method = document.getElementById("branch_office_payment_method"), branch_office_phone = document.getElementById("branch_office_phone"), branch_office_usage_mode = document.getElementById("branch_office_usage_mode"), branch_office_default = document.getElementById("branch_office_default"), branch_office_department = document.getElementById("branch_office_department");
                 formData = new FormData();
-                formData.append('branch_office_name', document.getElementById("branch_office_name").value);
-                formData.append('branch_office_type', document.getElementById("branch_office_type").value);
-                formData.append('branch_office_description', document.getElementById("branch_office_description").value);
-                formData.append('branch_office_zone', document.getElementById("branch_office_zone").value);
-                formData.append('branch_office_address', document.getElementById("branch_office_address").value);
-                formData.append('branch_office_lat', document.getElementById("branch_office_lat").value);
-                formData.append('branch_office_lng', document.getElementById("branch_office_lng").value);
-                formData.append('branch_office_email', document.getElementById("branch_office_email").value);
-                formData.append('branch_office_contact', document.getElementById("branch_office_contact").value);
-                formData.append('branch_office_document_type', document.getElementById("branch_office_document_type").value);
-                formData.append('branch_office_document_number', document.getElementById("branch_office_document_number").value);
-                formData.append('branch_office_payment_method', document.getElementById("branch_office_payment_method").value);
-                formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
-                formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
-                formData.append('branch_office_default', document.getElementById("branch_office_default").value);
-                formData.append('branch_office_department', document.getElementById("branch_office_department").value);
-                _context.next = 19;
+                formData.append('branch_office_name', branch_office_name.value);
+                formData.append('branch_office_type', branch_office_type.value);
+                formData.append('branch_office_description', branch_office_description.value);
+                formData.append('branch_office_zone', branch_office_zone.value);
+                formData.append('branch_office_address', branch_office_address.value);
+                formData.append('branch_office_lat', branch_office_lat.value);
+                formData.append('branch_office_lng', branch_office_lng.value);
+                formData.append('branch_office_email', branch_office_email.value);
+                formData.append('branch_office_contact', branch_office_contact.value);
+                formData.append('branch_office_document_type', branch_office_document_type.value);
+                formData.append('branch_office_document_number', branch_office_document_number.value);
+                formData.append('branch_office_payment_method', branch_office_payment_method.value);
+                formData.append('branch_office_phone', branch_office_phone.value);
+                formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
+                formData.append('branch_office_default', branch_office_default.value);
+                formData.append('branch_office_department', branch_office_department.value);
+                _context.next = 20;
                 return _this.sendBranchOfficeData(formData);
 
-              case 19:
+              case 20:
                 response = _context.sent;
 
                 if (response['state'] == 200) {
                   correct('Sucursal creada de manera exitosa');
+                  branch_office_name.value = '';
+                  branch_office_type.value = '';
+                  branch_office_description.value = '';
+                  branch_office_zone.selectedIndex = 0;
+                  branch_office_address.value = '';
+                  branch_office_lat.value = '';
+                  branch_office_lng.value = '';
+                  branch_office_email.value = '';
+                  branch_office_contact.value = '';
+                  branch_office_document_type.selectedIndex = 0;
+                  branch_office_document_number.value = '';
+                  branch_office_payment_method.value = '';
+                  branch_office_phone.value = '';
+                  branch_office_usage_mode.value = '';
+                  branch_office_default.checked = false;
+                  branch_office_department.selectedIndex = 0;
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
@@ -59602,7 +59619,7 @@ var Customers = /*#__PURE__*/function () {
                   console.log('Error ocurrido: ' + response['error']);
                 }
 
-              case 21:
+              case 22:
               case "end":
                 return _context.stop();
             }
@@ -59653,7 +59670,7 @@ var Customers = /*#__PURE__*/function () {
     key: "listBranchOffices",
     value: function () {
       var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var tbody, assignedBranchOffices;
+        var tbody, route, customer_id, assignedBranchOffices;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -59669,15 +59686,36 @@ var Customers = /*#__PURE__*/function () {
 
               case 3:
                 tbody.innerHTML = '';
-                _context3.next = 6;
-                return this.requestBranchOffices();
+                route = window.location.pathname.split('/');
+                customer_id = route.includes('edit') ? document.getElementById("customer_id").value : null;
 
-              case 6:
-                assignedBranchOffices = _context3.sent;
+                if (!route.includes('edit')) {
+                  _context3.next = 12;
+                  break;
+                }
 
-                if (assignedBranchOffices['state'] == 200) {
+                _context3.next = 9;
+                return this.requestBranchOffices(customer_id);
+
+              case 9:
+                _context3.t0 = _context3.sent;
+                _context3.next = 15;
+                break;
+
+              case 12:
+                _context3.next = 14;
+                return this.requestBranchOffices(customer_id);
+
+              case 14:
+                _context3.t0 = _context3.sent;
+
+              case 15:
+                assignedBranchOffices = _context3.t0;
+
+                if (assignedBranchOffices.state == 200) {
                   (function () {
-                    var data = assignedBranchOffices['data'];
+                    var data = assignedBranchOffices.data;
+                    console.log(data);
 
                     if (data.length > 0) {
                       var _loop = function _loop(i) {
@@ -59726,7 +59764,7 @@ var Customers = /*#__PURE__*/function () {
                         var branchDelete = document.createElement("button");
 
                         branchDelete.onclick = function () {
-                          deleteResource('/sucursales/null/' + data[i].id);
+                          confirmDelete('/sucursales/null/' + data[i].id);
                         };
 
                         branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
@@ -59753,7 +59791,7 @@ var Customers = /*#__PURE__*/function () {
                 this.editBranches();
                 this.listDepartments();
 
-              case 10:
+              case 19:
               case "end":
                 return _context3.stop();
             }
@@ -59771,16 +59809,19 @@ var Customers = /*#__PURE__*/function () {
     key: "requestBranchOffices",
     value: function () {
       var _requestBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var response;
+        var customer_id,
+            response,
+            _args4 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
+                customer_id = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : null;
                 response = {
                   'state': 500
                 };
-                _context4.next = 3;
-                return fetch("/unassigned_branch_offices").then(function (response) {
+                _context4.next = 4;
+                return fetch("/unassigned_branch_offices?customer=" + customer_id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -59788,10 +59829,10 @@ var Customers = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 3:
+              case 4:
                 return _context4.abrupt("return", response);
 
-              case 4:
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -60357,7 +60398,6 @@ var Orders = /*#__PURE__*/function () {
       this.saveGuides();
       this.listGuides();
       this.loadBranches();
-      this.customerAddresses();
       this.createAddress();
     }
   }, {
@@ -61424,6 +61464,15 @@ var Orders = /*#__PURE__*/function () {
 
               case 8:
                 response = _context17.sent;
+
+                if (!(response == null)) {
+                  _context17.next = 11;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 11:
                 data = response.data;
                 [].forEach.call(slcAddresses, function (slcAddress) {
                   slcAddress.selectedIndex = 0;
@@ -61436,7 +61485,7 @@ var Orders = /*#__PURE__*/function () {
                   }
                 });
 
-              case 11:
+              case 13:
               case "end":
                 return _context17.stop();
             }
@@ -61464,11 +61513,20 @@ var Orders = /*#__PURE__*/function () {
               case 0:
                 id = _args18.length > 0 && _args18[0] !== undefined ? _args18[0] : null;
                 route = window.location.pathname.split('/');
+
+                if (!(document.getElementById("user_code") == null)) {
+                  _context18.next = 4;
+                  break;
+                }
+
+                return _context18.abrupt("return");
+
+              case 4:
                 route.includes('edit') ? id = document.getElementById("user_code").value : '';
                 response = {
                   'state': 500
                 };
-                _context18.next = 6;
+                _context18.next = 8;
                 return fetch("/customer_addresses/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -61477,10 +61535,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 6:
+              case 8:
                 return _context18.abrupt("return", response);
 
-              case 7:
+              case 9:
               case "end":
                 return _context18.stop();
             }
@@ -62572,8 +62630,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

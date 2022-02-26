@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('addresses.store') }}" method="POST" id="formCreateAddress">
+                {{-- <form action="{{ route('addresses.store') }}" method="POST" id="formCreateAddress"> --}}
                     @csrf
                     {{-- <input type="text" hidden name="user_id" value="{{$customer->user_id}}"> --}}
                     <div class="row mb-3">
@@ -27,7 +27,7 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
                         <button type="button" class="btn btn-primary" id="saveAddress"><i class="fas fa-save"></i>GUARDAR</button>
                     </div>
-                </form>
+                {{-- </form> --}}
             </div>
         </div>
     </div>
