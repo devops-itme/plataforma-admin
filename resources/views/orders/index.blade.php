@@ -14,7 +14,9 @@
             @include('layouts.alerts')
             <div class="card-toolbar">
                 <!--begin::Button filter-->
-                <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+
+                <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter" data-tooltip
+                    data-placement="left" title="FILTRO">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
@@ -97,7 +99,7 @@
 
 
                 <a href="historial" class="btn btn-light-primary font-weight-bolder mr-2">
-                        <i class="fas fa-history"></i>
+                    <i class="fas fa-history"></i>
                     </span>Historial</a>
 
                 <a href="{{ route('orders.create') }}" class="btn btn-primary font-weight-bolder">
@@ -246,8 +248,8 @@
         </div>
     </div>
 
-@endsection
 
+@endsection
 {{-- Styles Section --}}
 @section('styles')
 @endsection

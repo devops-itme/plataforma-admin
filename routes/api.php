@@ -26,4 +26,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('messenger/update', 'Api\MessengerController@update')->name('messenger.update');
 
     Route::resource('orders', 'Api\OrderController')->names('order');
+    Route::resource('guides', 'Api\GuideController')->names('guides');
 });

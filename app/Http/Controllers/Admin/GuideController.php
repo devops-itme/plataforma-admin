@@ -72,7 +72,7 @@ class GuideController extends Controller
             ]);
         }
         if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
-        $request->merge(['state' => 1]);
+        $request->merge(['state' => 31]);
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
             if(!is_null($request->guides_doc)){
