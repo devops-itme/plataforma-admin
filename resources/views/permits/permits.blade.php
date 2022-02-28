@@ -4,6 +4,7 @@
 {{-- Content --}}
 @section('content')
 @include('layouts.alerts')
+@include('permits.createRol')
 <div class="row">
   <div class="col-md-5">
     <div class="card">
@@ -14,7 +15,7 @@
           </div>
           <hr>
           <div class="col text-right">
-            <button type="button" class="btn btn-primary btn-sm text-uppercase" data-toggle="modal" data-target="#idAddRole"><i class="fa fa-plus"></i>Agregar rol</button>
+            <button type="button" class="btn btn-primary btn-sm text-uppercase" data-toggle="modal" data-target="#createRolModal"><i class="fa fa-plus"></i>Agregar rol</button>
             <button class="btn btn-primary btn-sm btn-filter"><i class="fa fa-filter" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -71,17 +72,17 @@
         </div>
         <div class="card-body">
           <div class="row align-items-center">
-            <div class="col-12">            
-                <div class="card my-2">                                   
-                    <div class="card-body" id="card-body">                              
-                    </div>                  
-                </div>              
+            <div class="col-12">
+                <div class="card my-2">
+                    <div class="card-body" id="card-body">
+                    </div>
+                </div>
             </div>
           </div>
         </div>
       </form>
     </div>
-    
+
   </div>
 </div>
 @endsection
