@@ -110,6 +110,15 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $role = Role::find($id);
+            if(is_null($role)){
+                return redirect()->back()->withInput()->with('danger','No se encontró el rol');
+            }
+            $role->delete();
+            return redirect()->back()->with('success', 'Rol eliminado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('danger', $e->getMessage());
+        }
     }
 }
