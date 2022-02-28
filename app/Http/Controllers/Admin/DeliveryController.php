@@ -22,9 +22,20 @@ class DeliveryController extends Controller
         return view('deliveriesPacking.index');
     }
 
-    public function assignate(Request $request)
+    public function assignateOndemad(Request $request)
     {
         $response = $this->storeRouteOndemand($request);
+
+        if($response['state'] == 200){
+            return $this->respond(200, $response['data'], null, $response['message']);
+        } else {
+            return $this->respond(500, null, $response['error'], $response['message']);
+        }
+    }
+
+    public function assignatePacking(Request $request)
+    {
+        $response = $this->storeRoutePacking($request);
 
         if($response['state'] == 200){
             return $this->respond(200, $response['data'], null, $response['message']);

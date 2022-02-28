@@ -199,7 +199,7 @@ class OrderController extends Controller
         }
     }
 
-    public function ordersForDeliveryMultiples($type)
+    public function guidesForDeliveryPacking($type)
     {
 
         try {
