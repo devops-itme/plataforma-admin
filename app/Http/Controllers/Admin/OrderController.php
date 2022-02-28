@@ -201,10 +201,12 @@ class OrderController extends Controller
 
     public function ordersForDeliveryMultiples($type)
     {
+
         try {
             $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query) use ($type)  {
-                $query->where('state', $type)->where('order_type', 34);
-            })->with(['getRoute.getMessenger', 'getAddress', 'getTransportType'])
+                $query->where('state', $type)->where('order_type', 35);
+            })->where('state', $type)
+            ->with(['getRoute.getMessenger', 'getAddress', 'getTransportType'])
             ->get();
 
             // $guides = Guide::where('state', $type)
