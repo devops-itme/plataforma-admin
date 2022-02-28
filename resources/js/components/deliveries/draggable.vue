@@ -6,7 +6,7 @@
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center px-0">
                         <h5 class="font-weight-bold text-dark">
                             Destinos por
-                            {{ selected == 1 ? "Entregar" : "Recoger" }}
+                            {{ selected == 31 ? "Entregar" : "Recoger" }}
                         </h5>
                         <div class="col-md-2 px-0">
                             <button
@@ -88,7 +88,7 @@
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center py-2">
                         <h5 class="font-weight-bold text-dark">
                             Seleccionados por
-                            {{ selected == 1 ? "Entregar" : "Recoger" }}
+                            {{ selected == 31 ? "Entregar" : "Recoger" }}
                         </h5>
                     </div>
                     <div class="max-h-425px h-425px col-md-12 border rounded px-0">
@@ -139,7 +139,7 @@
                                         <td>{{ tblItem.zone }}</td>
                                         <td>{{ tblItem.address_name }}</td>
                                         <td>28/02/2022</td>
-                                        <td>{{ tblItem.created_at }}</td>
+                                        <td>{{ formatDate(tblItem.created_at) }}</td>
                                         <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
                                 </draggable>
@@ -151,11 +151,11 @@
                         <div
                             class="d-flex flex-row flex-wrap justify-content-around px-0"
                         >
-                            <input type="text" class="form-control col-md-3" />
-                            <input type="text" class="form-control col-md-5" />
+                            <input type="text" class="form-control col-md-3" v-model="searchMessenger" />
+                            <input type="text" class="form-control col-md-5" disabled v-if="setMessenger" v-model="messengerName" />
                             <a
                                 href="#"
-                                class="btn btn-light-primary font-weight-bold col-md-3"
+                                class="btn btn-light-primary font-weight-bold col-md-3" @click="assignateDelivery()"
                                 >Despachar</a
                             >
                         </div>
@@ -183,16 +183,44 @@ export default {
     },
     props: {
         selected: Number,
+        guides: Array,
+        guides2: Array,
+        messengers: Array,
     },
     data() {
         return {
             tabs: [],
-            guides: [],
-            guides2: [],
-            currentTab: 31,
-            data: [],
+            showMessengerData:[],
+            searchMessenger: null,
+            messenger: null,
+            messengerName: null,
 
         };
+    },
+    computed: {
+        filterMessengers() {
+            if (this.searchMessenger) {
+                return this.messengers.filter((item) => {
+                    return this.searchMessenger
+                        .toString()
+                        .toLowerCase()
+                        .split(" ")
+                        .every((v) =>
+                            item.user.document_number.toLowerCase().includes(v)
+                        );
+                });
+            }
+        },
+
+        setMessenger() {
+            if (this.searchMessenger) {
+                this.messengerName =
+                    this.filterMessengers[0]?.user.name +
+                    " " +
+                    this.filterMessengers[0]?.user.last_name;
+                return (this.messenger = this.filterMessengers[0]);
+            }
+        },
     },
     methods: {
         handleChange(evt) {
@@ -204,40 +232,49 @@ export default {
                 return moment(String(date)).format('MM/DD/YYYY');
             }
         },
+        async assignateDelivery() {
 
-        async getGuides(type_id, index) {
-            // index != undefined &&
-            //     $(`#myTab li:nth-child(${index + 1}) a`).tab("show");
-
-            this.currentTab = type_id;
-            let response = await this.requestGuides();
-            this.guides = response.data;
-            // this.activeIndex = null;
-            // this.showData = [];
-            // this.showMessengerData = [];
-        },
-        async requestGuides() {
-            let response = { state: 500 };
+            if (this.guides2.length === 0) {
+                return await error("Debe seleccionar una orden");
+            }
+            if (!this.setMessenger) {
+                return await error("Debe seleccionar un mensajero");
+            }
+            let _this = this;
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
             let myHeaders = new Headers();
-            myHeaders.append("accept", "application/json");
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("X-CSRF-TOKEN", token);
             let requestOptions = {
-                method: "GET",
+                method: "POST",
                 headers: myHeaders,
+                body: JSON.stringify({
+                    messenger_user_id: this.setMessenger.user_id,
+                    guides: this.guides2,
+                }),
             };
-            await fetch(`/orders_packing/${this.currentTab}`, requestOptions)
+            await fetch(`/quias/asignacion`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
-                    response = data;
+                    if (data.state == 500) {
+
+                        return error(data.message);
+                    }
+                    if (data.state == 200) {
+                        // let index = _this.data.findIndex(
+                        //     (item) => item.id == _this.showData.id
+                        // );
+                        // _this.data.splice(index, 1);
+                        return correct(data.message);
+                    }
                 })
                 .catch((err) => console.warn(err));
-            return response;
         },
 
-    },
-     async mounted() {
-        // this.orderState();
-        this.getGuides(this.currentTab);
-        // this.getMessengers();
+
     },
 
 };

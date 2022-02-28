@@ -1920,9 +1920,18 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _draggable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./draggable.vue */ "./resources/js/components/deliveries/draggable.vue");
-/* harmony import */ var _tableDynamic_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tableDynamic.vue */ "./resources/js/components/deliveries/tableDynamic.vue");
-/* harmony import */ var _modalEditComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modalEditComponent.vue */ "./resources/js/components/deliveries/modalEditComponent.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _draggable_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./draggable.vue */ "./resources/js/components/deliveries/draggable.vue");
+/* harmony import */ var _tableDynamic_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tableDynamic.vue */ "./resources/js/components/deliveries/tableDynamic.vue");
+/* harmony import */ var _modalEditComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modalEditComponent.vue */ "./resources/js/components/deliveries/modalEditComponent.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -2137,31 +2146,152 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    draggables: _draggable_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    tabledy: _tableDynamic_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    modalEdit: _modalEditComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    draggables: _draggable_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    tabledy: _tableDynamic_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    modalEdit: _modalEditComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
-      selected: 1,
+      selected: 31,
       delivery_types: [{
-        value: 1,
+        value: 31,
         text: "Entregas"
       }, {
-        value: 2,
+        value: 34,
         text: "Recogidas"
       }],
       showModal: false,
       columns: {
         inProcess: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
         inEdit: ["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
-      }
+      },
+      guides: [],
+      guides2: [],
+      messengers: []
     };
   },
   methods: {
     loadingEvt: function loadingEvt() {
       return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>';
+    },
+    getGuides: function getGuides() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log(_this2.selected);
+                _context.next = 3;
+                return _this2.requestGuides();
+
+              case 3:
+                response = _context.sent;
+                _this2.guides = response.data;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    requestGuides: function requestGuides() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response, myHeaders, requestOptions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  state: 500
+                };
+                myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                requestOptions = {
+                  method: "GET",
+                  headers: myHeaders
+                };
+                _context2.next = 6;
+                return fetch("/orders_packing/".concat(_this3.selected), requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 6:
+                return _context2.abrupt("return", response);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    getMessengers: function getMessengers() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _this, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this = _this4;
+                myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                requestOptions = {
+                  method: "GET",
+                  headers: myHeaders
+                };
+                _context3.next = 6;
+                return fetch("/messengers_delivery", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  _this.messengers = data.data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
+  },
+  mounted: function mounted() {
+    var _this5 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              // this.orderState();
+              _this5.getGuides(_this5.selected);
+
+              _this5.getMessengers();
+
+            case 2:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
   }
 });
 
@@ -2390,7 +2520,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   })
                 };
                 _context4.next = 17;
-                return fetch("/guias/asignacion", requestOptions).then(function (response) {
+                return fetch("/ordenes/asignacion", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   if (data.state == 500) {
@@ -2682,16 +2812,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   props: {
-    selected: Number
+    selected: Number,
+    guides: Array,
+    guides2: Array,
+    messengers: Array
   },
   data: function data() {
     return {
       tabs: [],
-      guides: [],
-      guides2: [],
-      currentTab: 31,
-      data: []
+      showMessengerData: [],
+      searchMessenger: null,
+      messenger: null,
+      messengerName: null
     };
+  },
+  computed: {
+    filterMessengers: function filterMessengers() {
+      var _this2 = this;
+
+      if (this.searchMessenger) {
+        return this.messengers.filter(function (item) {
+          return _this2.searchMessenger.toString().toLowerCase().split(" ").every(function (v) {
+            return item.user.document_number.toLowerCase().includes(v);
+          });
+        });
+      }
+    },
+    setMessenger: function setMessenger() {
+      if (this.searchMessenger) {
+        var _this$filterMessenger, _this$filterMessenger2;
+
+        this.messengerName = ((_this$filterMessenger = this.filterMessengers[0]) === null || _this$filterMessenger === void 0 ? void 0 : _this$filterMessenger.user.name) + " " + ((_this$filterMessenger2 = this.filterMessengers[0]) === null || _this$filterMessenger2 === void 0 ? void 0 : _this$filterMessenger2.user.last_name);
+        return this.messenger = this.filterMessengers[0];
+      }
+    }
   },
   methods: {
     handleChange: function handleChange(evt) {
@@ -2702,93 +2856,81 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return moment__WEBPACK_IMPORTED_MODULE_2___default()(String(date)).format('MM/DD/YYYY');
       }
     },
-    getGuides: function getGuides(type_id, index) {
-      var _this = this;
+    assignateDelivery: function assignateDelivery() {
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
+        var _this, token, myHeaders, requestOptions;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                // index != undefined &&
-                //     $(`#myTab li:nth-child(${index + 1}) a`).tab("show");
-                _this.currentTab = type_id;
+                if (!(_this3.guides2.length === 0)) {
+                  _context.next = 4;
+                  break;
+                }
+
                 _context.next = 3;
-                return _this.requestGuides();
+                return error("Debe seleccionar una orden");
 
               case 3:
-                response = _context.sent;
-                _this.guides = response.data; // this.activeIndex = null;
-                // this.showData = [];
-                // this.showMessengerData = [];
+                return _context.abrupt("return", _context.sent);
 
-              case 5:
+              case 4:
+                if (_this3.setMessenger) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _context.next = 7;
+                return error("Debe seleccionar un mensajero");
+
+              case 7:
+                return _context.abrupt("return", _context.sent);
+
+              case 8:
+                _this = _this3;
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: JSON.stringify({
+                    messenger_user_id: _this3.setMessenger.user_id,
+                    guides: _this3.guides2
+                  })
+                };
+                _context.next = 17;
+                return fetch("/quias/asignacion", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  if (data.state == 500) {
+                    return error(data.message);
+                  }
+
+                  if (data.state == 200) {
+                    // let index = _this.data.findIndex(
+                    //     (item) => item.id == _this.showData.id
+                    // );
+                    // _this.data.splice(index, 1);
+                    return correct(data.message);
+                  }
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }))();
-    },
-    requestGuides: function requestGuides() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response, myHeaders, requestOptions;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  state: 500
-                };
-                myHeaders = new Headers();
-                myHeaders.append("accept", "application/json");
-                requestOptions = {
-                  method: "GET",
-                  headers: myHeaders
-                };
-                _context2.next = 6;
-                return fetch("/orders_packing/".concat(_this2.currentTab), requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (err) {
-                  return console.warn(err);
-                });
-
-              case 6:
-                return _context2.abrupt("return", response);
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
     }
-  },
-  mounted: function mounted() {
-    var _this3 = this;
-
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              // this.orderState();
-              _this3.getGuides(_this3.currentTab); // this.getMessengers();
-
-
-            case 1:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }))();
   }
 });
 
@@ -62241,7 +62383,9 @@ var render = function () {
                           ? $$selectedVal
                           : $$selectedVal[0]
                       },
-                      _vm.loadingEvt,
+                      function ($event) {
+                        _vm.loadingEvt, _vm.getGuides()
+                      },
                     ],
                   },
                 },
@@ -62294,7 +62438,7 @@ var render = function () {
                   [
                     _vm._v(
                       "Por " +
-                        _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger")
+                        _vm._s(_vm.selected == 31 ? "Entregar" : "Recoger")
                     ),
                   ]
                 ),
@@ -62320,7 +62464,7 @@ var render = function () {
                   },
                   [
                     _vm._v(
-                      _vm._s(_vm.selected == 1 ? "Entregas" : "Recogidas") +
+                      _vm._s(_vm.selected == 31 ? "Entregas" : "Recogidas") +
                         " en\n                    proceso"
                     ),
                   ]
@@ -62351,7 +62495,12 @@ var render = function () {
                   [
                     _c("draggables", {
                       ref: "childcomponent",
-                      attrs: { selected: _vm.selected },
+                      attrs: {
+                        selected: _vm.selected,
+                        guides: _vm.guides,
+                        guides2: _vm.guides2,
+                        messengers: _vm.messengers,
+                      },
                     }),
                   ],
                   1
@@ -62762,7 +62911,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Destinos por\n                        " +
-                      _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 31 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -62880,7 +63029,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Seleccionados por\n                        " +
-                      _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 31 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -62954,7 +63103,11 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v("28/02/2022")]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.created_at))]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(_vm.formatDate(tblItem.created_at))
+                                ),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(_vm._s(tblItem.get_order.order_type)),
@@ -62971,7 +63124,81 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(4),
+            _c("div", { staticClass: "form-group col-md-12 mb-0 px-0" }, [
+              _c("label", { staticClass: "font-weight-bolder" }, [
+                _vm._v("Mensajero"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex flex-row flex-wrap justify-content-around px-0",
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchMessenger,
+                        expression: "searchMessenger",
+                      },
+                    ],
+                    staticClass: "form-control col-md-3",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.searchMessenger },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchMessenger = $event.target.value
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _vm.setMessenger
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.messengerName,
+                            expression: "messengerName",
+                          },
+                        ],
+                        staticClass: "form-control col-md-5",
+                        attrs: { type: "text", disabled: "" },
+                        domProps: { value: _vm.messengerName },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.messengerName = $event.target.value
+                          },
+                        },
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "btn btn-light-primary font-weight-bold col-md-3",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.assignateDelivery()
+                        },
+                      },
+                    },
+                    [_vm._v("Despachar")]
+                  ),
+                ]
+              ),
+            ]),
           ]
         ),
       ]),
@@ -63084,41 +63311,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo")]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-12 mb-0 px-0" }, [
-      _c("label", { staticClass: "font-weight-bolder" }, [_vm._v("Mensajero")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "d-flex flex-row flex-wrap justify-content-around px-0",
-        },
-        [
-          _c("input", {
-            staticClass: "form-control col-md-3",
-            attrs: { type: "text" },
-          }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control col-md-5",
-            attrs: { type: "text" },
-          }),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-light-primary font-weight-bold col-md-3",
-              attrs: { href: "#" },
-            },
-            [_vm._v("Despachar")]
-          ),
-        ]
-      ),
     ])
   },
 ]
