@@ -51,7 +51,7 @@
                                     </tr>
                                 </thead>
                                 <draggable
-                                    :list="myArray"
+                                    :list="guides"
                                     group="orders"
                                     tag="tbody"
                                     :multi-drag="true"
@@ -62,22 +62,22 @@
                                     @select="handleChange"
                                 >
                                     <tr
-                                        v-for="tblItem of myArray"
+                                        v-for="tblItem of guides"
                                         v-bind:key="tblItem.id"
                                         class="text-center"
                                     >
                                         <td>{{ tblItem.id }}</td>
-                                        <td>{{ tblItem.order }}</td>
-                                        <td>{{ tblItem.guide }}</td>
-                                        <td>{{ tblItem.extref }}</td>
-                                        <td>{{ tblItem.progDate }}</td>
-                                        <td>{{ tblItem.customer }}</td>
+                                        <td>{{ tblItem.get_order.order_number }}</td>
+                                        <td>{{ tblItem.id }}</td>
+                                        <td>777777</td>
+                                        <td>28/02/2022</td>
+                                        <td>{{ tblItem.get_order.get_user.name }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
-                                        <td>{{ tblItem.address }}</td>
-                                        <td>{{ tblItem.deliveryTime }}</td>
-                                        <td>{{ tblItem.createDate }}</td>
-                                        <td>{{ tblItem.type }}</td>
+                                        <td>{{ tblItem.address_name }}</td>
+                                        <td>28/02/2022</td>
+                                        <td>{{ formatDate(tblItem.created_at) }}</td>
+                                        <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
                                 </draggable>
                             </table>
@@ -114,7 +114,7 @@
                                     </tr>
                                 </thead>
                                 <draggable
-                                    :list="myArray2"
+                                    :list="guides2"
                                     group="orders"
                                     tag="tbody"
                                     :multi-drag="true"
@@ -125,22 +125,22 @@
                                     style="cursor: move"
                                 >
                                     <tr
-                                        v-for="tblItem of myArray2"
+                                        v-for="tblItem of guides2"
                                         v-bind:key="tblItem.id"
                                         class="text-center"
                                     >
                                         <td>{{ tblItem.id }}</td>
-                                        <td>{{ tblItem.order }}</td>
-                                        <td>{{ tblItem.guide }}</td>
-                                        <td>{{ tblItem.extref }}</td>
-                                        <td>{{ tblItem.progDate }}</td>
-                                        <td>{{ tblItem.customer }}</td>
+                                        <td>{{ tblItem.get_order.order_number }}</td>
+                                        <td>{{ tblItem.id }}</td>
+                                        <td>777777</td>
+                                        <td>28/02/2022</td>
+                                        <td>{{ tblItem.get_order.get_user.name }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
-                                        <td>{{ tblItem.address }}</td>
-                                        <td>{{ tblItem.deliveryTime }}</td>
-                                        <td>{{ tblItem.createDate }}</td>
-                                        <td>{{ tblItem.type }}</td>
+                                        <td>{{ tblItem.address_name }}</td>
+                                        <td>28/02/2022</td>
+                                        <td>{{ tblItem.created_at }}</td>
+                                        <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
                                 </draggable>
                             </table>
@@ -175,6 +175,7 @@
 <script>
 // import { Sortable, MultiDrag } from 'sortablejs';
 import draggable from "vuedraggable-multi";
+import moment from 'moment';
 //  Sortable.mount(new MultiDrag());
 export default {
     components: {
@@ -185,71 +186,59 @@ export default {
     },
     data() {
         return {
-            myArray: [
-                {
-                    id: 1,
-                    order: "123-1234556",
-                    guide: 7377845,
-                    extref: 888837,
-                    progDate: "12-12-2022",
-                    customer: "Juanito Perez",
-                    contact: "Carmenza Patiño",
-                    zone: "Avenida Siempreviva",
-                    address: "Calle 12 # 22 - 22",
-                    deliveryTime: "22h",
-                    createDate: "22-12-2022",
-                    type: "Normal",
-                },
-                {
-                    id: 2,
-                    order: "123-1234556",
-                    guide: 7377847,
-                    extref: 888835,
-                    progDate: "12-12-2022",
-                    customer: "Juanito Perez",
-                    contact: "Carmenza Patiño",
-                    zone: "Avenida Siempreviva",
-                    address: "Calle 12 # 22 - 22",
-                    deliveryTime: "22h",
-                    createDate: "22-12-2022",
-                    type: "Normal",
-                },
-                {
-                    id: 3,
-                    order: "123-1234556",
-                    guide: 7377847,
-                    extref: 888835,
-                    progDate: "12-12-2022",
-                    customer: "Patriicia",
-                    contact: "Carmenza Patiño",
-                    zone: "Avenida Siempreviva",
-                    address: "Calle 12 # 22 - 22",
-                    deliveryTime: "22h",
-                    createDate: "22-12-2022",
-                    type: "Normal",
-                },
-                {
-                    id: 4,
-                    order: "123-1234556",
-                    guide: 7377847,
-                    extref: 888835,
-                    progDate: "12-12-2022",
-                    customer: "Lucas cien",
-                    contact: "Carmenza Patiño",
-                    zone: "Avenida Siempreviva",
-                    address: "Calle 12 # 22 - 22",
-                    deliveryTime: "22h",
-                    createDate: "22-12-2022",
-                    type: "Normal",
-                },
-            ],
-            myArray2: [],
+            tabs: [],
+            guides: [],
+            guides2: [],
+            currentTab: 31,
+            data: [],
+
         };
     },
     methods: {
         handleChange(evt) {
             console.log(evt.items);
         },
-    }
+
+         formatDate(date) {
+             if (date) {
+                return moment(String(date)).format('MM/DD/YYYY');
+            }
+        },
+
+        async getGuides(type_id, index) {
+            // index != undefined &&
+            //     $(`#myTab li:nth-child(${index + 1}) a`).tab("show");
+
+            this.currentTab = type_id;
+            let response = await this.requestGuides();
+            this.guides = response.data;
+            // this.activeIndex = null;
+            // this.showData = [];
+            // this.showMessengerData = [];
+        },
+        async requestGuides() {
+            let response = { state: 500 };
+            let myHeaders = new Headers();
+            myHeaders.append("accept", "application/json");
+            let requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+            };
+            await fetch(`/orders_packing/${this.currentTab}`, requestOptions)
+                .then((response) => response.json())
+                .then(function (data) {
+                    response = data;
+                })
+                .catch((err) => console.warn(err));
+            return response;
+        },
+
+    },
+     async mounted() {
+        // this.orderState();
+        this.getGuides(this.currentTab);
+        // this.getMessengers();
+    },
+
 };
 </script>
