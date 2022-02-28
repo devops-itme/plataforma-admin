@@ -117,7 +117,26 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = Customer::with('getUser')->find($id);
-        return view('customers.show', compact('customer'));
+        $documents = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'document_type');
+        })->get();
+        //period
+        $payment_period = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_period');
+        })->get();
+        //method
+        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_method');
+        })->get();
+        //type
+        $branch_office_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'branch_office_types');
+        })->get();
+        //use_mode
+        $use_mode = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'use_mode');
+        })->get();
+        return view('customers.show', compact('customer', 'documents', 'payment_method', 'payment_period', 'branch_office_type', 'use_mode'));
     }
 
     public function customerData($id)
