@@ -126,7 +126,7 @@ export default {
                     order_id: this.showData.id,
                 }),
             };
-            await fetch(`/guias/asignacion`, requestOptions)
+            await fetch(`/ordenes/asignacion`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.state == 500) {
