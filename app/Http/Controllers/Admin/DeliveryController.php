@@ -12,6 +12,16 @@ class DeliveryController extends Controller
 {
     use RouteTrait;
 
+    public function indexOndemand()
+    {
+        return view('deliveries.index');
+    }
+
+    public function indexPacking()
+    {
+        return view('deliveriesPacking.index');
+    }
+
     public function assignate(Request $request)
     {
         $response = $this->storeRouteOndemand($request);
