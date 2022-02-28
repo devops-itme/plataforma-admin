@@ -61766,6 +61766,7 @@ var Permissions = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.loadPermissions();
+      this.roleData();
     }
   }, {
     key: "loadPermissions",
@@ -61854,6 +61855,94 @@ var Permissions = /*#__PURE__*/function () {
         })));
       });
     }
+  }, {
+    key: "roleData",
+    value: function roleData() {
+      var _this = this;
+
+      var editButtons = document.getElementsByName("btnEditRole");
+
+      if (editButtons == null) {
+        return;
+      }
+
+      [].forEach.call(editButtons, function (item) {
+        item.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          var role_id, response, data, name, form;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  role_id = item['id'].split('-')[1];
+                  _context3.next = 3;
+                  return _this.requestRoleData(role_id);
+
+                case 3:
+                  response = _context3.sent;
+
+                  if (!(response.state != 200)) {
+                    _context3.next = 8;
+                    break;
+                  }
+
+                  alert('Error inesperado.');
+                  console.log(response.error);
+                  return _context3.abrupt("return");
+
+                case 8:
+                  data = response.data;
+                  name = document.getElementById("name_edit");
+                  name.value = data.name;
+                  form = document.getElementById("formUpdateRole");
+                  form.setAttribute("action", 'roles/' + data.id);
+
+                case 13:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        })));
+      });
+    }
+  }, {
+    key: "requestRoleData",
+    value: function () {
+      var _requestRoleData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context4.next = 3;
+                return fetch("/roles/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context4.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function requestRoleData(_x2) {
+        return _requestRoleData.apply(this, arguments);
+      }
+
+      return requestRoleData;
+    }()
   }]);
 
   return Permissions;

@@ -4,7 +4,7 @@
 {{-- Content --}}
 @section('content')
 @include('layouts.alerts')
-@include('permits.createRol')
+@include('permits.roleModals')
 <div class="row">
   <div class="col-md-5">
     <div class="card">
@@ -37,7 +37,7 @@
                   <span class="badge badge-{{Config::get('const.states')[$role->state]['color']}} text-uppercase">{{Config::get('const.states')[$role->state]['name']}}</span>
                 </td>
                 <td class="text-center">
-                  <button class="btn btn-primary btn-sm btn-fab btn-icon">
+                  <button name="btnEditRole" id="btnRole-{{$role->id}}" class="btn btn-primary btn-sm btn-fab btn-icon" data-toggle="modal" data-target="#editRolModal">
                     <i class="fa fa-pencil"></i>
                   </button>
                   <button class="btn btn-danger btn-sm btn-fab btn-icon">

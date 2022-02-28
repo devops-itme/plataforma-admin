@@ -20,6 +20,7 @@ const requestPermissions = async (url) => {
 export default class Permissions {
     initialize() {
         this.loadPermissions();
+        this.roleData();
     }
 
 
@@ -97,5 +98,41 @@ export default class Permissions {
 
             });
         });
+    }
+
+    roleData(){
+        let editButtons = document.getElementsByName("btnEditRole");
+        if(editButtons == null){
+            return;
+        }
+        [].forEach.call(editButtons, item => {
+            item.addEventListener('click', async () => {
+                let role_id = item['id'].split('-')[1];
+                let response = await this.requestRoleData(role_id);
+                if(response.state != 200){
+                    alert('Error inesperado.');
+                    console.log(response.error);
+                    return;
+                }
+                let data = response.data;
+                let name = document.getElementById("name_edit");
+                name.value = data.name;
+                let form = document.getElementById("formUpdateRole");
+                form.setAttribute("action", 'roles/'+data.id);
+            });
+        });
+    }
+
+    async requestRoleData(id) {
+        let response = {
+            'state': 500
+        };
+        await fetch("/roles/"+id+"/edit")
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
     }
 }

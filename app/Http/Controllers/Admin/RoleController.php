@@ -58,7 +58,6 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -69,7 +68,12 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $role = Role::find($id);
+            return json_encode(['state' => 200,'data' =>$role]);
+        } catch (\Exception $e) {
+            return json_encode(['state' => 500,'error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -81,7 +85,21 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required | unique:roles,name,'.$id.''
+        ]);
+        try {
+            $role = Role::find($id);
+            if(is_null($role)){
+                return redirect()->back()->withInput()->with('danger','No se encontró el rol');
+            }
+            $role->update([
+                'name' => $request->name
+            ]);
+            return redirect()->back()->with('success', 'Rol actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('danger', $e->getMessage());
+        }
     }
 
     /**
