@@ -198,6 +198,21 @@ class OrderController extends Controller
         }
     }
 
+    public function ordersForDeliveryMultiples($type)
+    {
+        try {
+            $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query)  {
+                $query->where('name', 'Multiple');
+            })->where('state', $type)
+            ->with(['getUser.getCustomer', 'getGuides.getRoute.getMessenger'])
+            ->get();
+
+            return $this->respond(200, $orders, null, 'Lista de ordenes packing');
+        } catch (\Throwable $e) {
+            return $this->respond(500, [], $e->getMessage());
+        }
+    }
+
     public function orderNumber()
     {
         //Search Orders
