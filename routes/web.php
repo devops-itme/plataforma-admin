@@ -89,19 +89,18 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     });
-    //Orders delivery
+    //Orders states
     Route::get('order_states', 'Admin\DeliveryController@orderStates');
     //Orders delivery
-    Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');
+    Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
+    //Orders Delivery Packing
+    Route::get('orders_multiples/{type}', 'Admin\OrderController@ordersForDeliveryMultiples');
     //Messengers delivery
     Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
 
-    Route::get('despachos', function () {
-        return view('deliveries.index');
-    })->name('delivery.index');
-    Route::get('despachos-packing', function () {
-        return view('deliveriesPacking.index');
-    })->name('deliveryPacking.index');
+
+    Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
+    Route::get('despachos-packing', 'Admin\DeliveryController@indexPacking')->name('deliveryPacking.index');
 
     Route::get('zonas', function () {
         return view('zones.index');
