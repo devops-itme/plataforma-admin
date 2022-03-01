@@ -41,8 +41,7 @@ trait GuideTrait
                 'sign' => 'nullable',
                 'take_photo' => 'nullable',
                 'packaging' => 'nullable',
-                'customer_address' => 'nullable',
-                'state' => 'nullable'
+                'customer_address' => 'nullable'
             ]
         );
     }
@@ -76,8 +75,7 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
-                'customer_address' => $request->customer_address,
-                'state' => $request->state
+                'customer_address' => $request->customer_address
             ]);
             return $this->respond(200, $order, null, 'Guiá creada exitosamente');
         } catch (\Exception $e) {
@@ -116,8 +114,7 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
-                'customer_address' => $request->customer_address,
-                'state' => $request->state
+                'customer_address' => $request->customer_address
             ]);
             return $this->respond(200, $guide, null, 'Guía actualizada exitosamente');
         } catch (\Exception $e) {

@@ -45,19 +45,25 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $documents = ParameterValue::where('parameter_id', 1)->get();
+        $documents = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'document_type');
+        })->get();
         //period
-        $payment_period_id = Parameter::where('name', 'payment_period')->first();
-        $payment_period = ParameterValue::where('parameter_id', $payment_period_id->id)->get();
+        $payment_period = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_period');
+        })->get();
         //method
-        $payment_method_id = Parameter::where('name', 'payment_method')->first();
-        $payment_method = ParameterValue::where('parameter_id', $payment_method_id->id)->get();
+        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_method');
+        })->get();
         //type
-        $branch_office_type_id = Parameter::where('name', 'branch_office_types')->first();
-        $branch_office_type = ParameterValue::where('parameter_id', $branch_office_type_id->id)->get();
+        $branch_office_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'branch_office_types');
+        })->get();
         //use_mode
-        $use_mode_id = Parameter::where('name', 'use_mode')->first();
-        $use_mode = ParameterValue::where('parameter_id', $use_mode_id->id)->get();
+        $use_mode = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'use_mode');
+        })->get();
         return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode'));
     }
 
@@ -74,18 +80,18 @@ class CustomerController extends Controller
         }
         $saveUserData = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
         if($saveUserData['state'] != 200){
-            return redirect()->back()->with('danger', $saveUserData['error']);
+            return redirect()->back()->with('danger', $saveUserData['message']);
         }
         if(!is_null($request->branchCheck)){
             $assignBranches = $this->storeUserBranch($saveUserData['data']->id, $request->branchCheck);
             if($assignBranches['state'] != 200){
-                return redirect()->back()->with('danger', $assignBranches['error']);
+                return redirect()->back()->with('danger', $assignBranches['message']);
             }
         }
         if(!is_null($request->departments)){
             $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
             if($assignDepartment['state'] != 200){
-                return redirect()->back()->with('danger', $assignDepartment['error']);
+                return redirect()->back()->with('danger', $assignDepartment['message']);
             }
         }
         // if(!is_null($request->branch_office_name)){
@@ -98,7 +104,7 @@ class CustomerController extends Controller
         if($response['state'] == 200){
             return redirect()->route('customers.index')->with('success', 'Cliente registrado exitosamente.');
         } else {
-            return redirect()->back()->withInput()->with('danger', $response['error']);
+            return redirect()->back()->withInput()->with('danger', $response['message']);
         }
     }
 
@@ -111,7 +117,26 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = Customer::with('getUser')->find($id);
-        return view('customers.show', compact('customer'));
+        $documents = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'document_type');
+        })->get();
+        //period
+        $payment_period = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_period');
+        })->get();
+        //method
+        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_method');
+        })->get();
+        //type
+        $branch_office_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'branch_office_types');
+        })->get();
+        //use_mode
+        $use_mode = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'use_mode');
+        })->get();
+        return view('customers.show', compact('customer', 'documents', 'payment_method', 'payment_period', 'branch_office_type', 'use_mode'));
     }
 
     public function customerData($id)

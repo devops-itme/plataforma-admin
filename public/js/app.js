@@ -1920,9 +1920,18 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _draggable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./draggable.vue */ "./resources/js/components/deliveries/draggable.vue");
-/* harmony import */ var _tableDynamic_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tableDynamic.vue */ "./resources/js/components/deliveries/tableDynamic.vue");
-/* harmony import */ var _modalEditComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modalEditComponent.vue */ "./resources/js/components/deliveries/modalEditComponent.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _draggable_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./draggable.vue */ "./resources/js/components/deliveries/draggable.vue");
+/* harmony import */ var _tableDynamic_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tableDynamic.vue */ "./resources/js/components/deliveries/tableDynamic.vue");
+/* harmony import */ var _modalEditComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modalEditComponent.vue */ "./resources/js/components/deliveries/modalEditComponent.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -2137,31 +2146,152 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    draggables: _draggable_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    tabledy: _tableDynamic_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    modalEdit: _modalEditComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    draggables: _draggable_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    tabledy: _tableDynamic_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    modalEdit: _modalEditComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
-      selected: 1,
+      selected: 31,
       delivery_types: [{
-        value: 1,
+        value: 31,
         text: "Entregas"
       }, {
-        value: 2,
+        value: 34,
         text: "Recogidas"
       }],
       showModal: false,
       columns: {
         inProcess: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
         inEdit: ["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
-      }
+      },
+      guides: [],
+      guides2: [],
+      messengers: []
     };
   },
   methods: {
     loadingEvt: function loadingEvt() {
       return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>';
+    },
+    getGuides: function getGuides() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log(_this2.selected);
+                _context.next = 3;
+                return _this2.requestGuides();
+
+              case 3:
+                response = _context.sent;
+                _this2.guides = response.data;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    requestGuides: function requestGuides() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response, myHeaders, requestOptions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  state: 500
+                };
+                myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                requestOptions = {
+                  method: "GET",
+                  headers: myHeaders
+                };
+                _context2.next = 6;
+                return fetch("/orders_packing/".concat(_this3.selected), requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 6:
+                return _context2.abrupt("return", response);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    getMessengers: function getMessengers() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _this, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this = _this4;
+                myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                requestOptions = {
+                  method: "GET",
+                  headers: myHeaders
+                };
+                _context3.next = 6;
+                return fetch("/messengers_delivery", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  _this.messengers = data.data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
+  },
+  mounted: function mounted() {
+    var _this5 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              // this.orderState();
+              _this5.getGuides(_this5.selected);
+
+              _this5.getMessengers();
+
+            case 2:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
   }
 });
 
@@ -2273,7 +2403,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: myHeaders
                 };
                 _context2.next = 6;
-                return fetch("/orders_delivery/".concat(_this4.currentTab), requestOptions).then(function (response) {
+                return fetch("/orders_ondemand/".concat(_this4.currentTab), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2390,7 +2520,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   })
                 };
                 _context4.next = 17;
-                return fetch("/guias/asignacion", requestOptions).then(function (response) {
+                return fetch("/ordenes/asignacion", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   if (data.state == 500) {
@@ -2487,8 +2617,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable-multi */ "./node_modules/vuedraggable-multi/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable-multi */ "./node_modules/vuedraggable-multi/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1__);
+!(function webpackMissingModule() { var e = new Error("Cannot find module 'moment'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2664,76 +2803,132 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 // import { Sortable, MultiDrag } from 'sortablejs';
+
  //  Sortable.mount(new MultiDrag());
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_0___default.a
+    draggable: vuedraggable_multi__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   props: {
-    selected: Number
+    selected: Number,
+    guides: Array,
+    guides2: Array,
+    messengers: Array
   },
   data: function data() {
     return {
-      myArray: [{
-        id: 1,
-        order: "123-1234556",
-        guide: 7377845,
-        extref: 888837,
-        progDate: "12-12-2022",
-        customer: "Juanito Perez",
-        contact: "Carmenza Patiño",
-        zone: "Avenida Siempreviva",
-        address: "Calle 12 # 22 - 22",
-        deliveryTime: "22h",
-        createDate: "22-12-2022",
-        type: "Normal"
-      }, {
-        id: 2,
-        order: "123-1234556",
-        guide: 7377847,
-        extref: 888835,
-        progDate: "12-12-2022",
-        customer: "Juanito Perez",
-        contact: "Carmenza Patiño",
-        zone: "Avenida Siempreviva",
-        address: "Calle 12 # 22 - 22",
-        deliveryTime: "22h",
-        createDate: "22-12-2022",
-        type: "Normal"
-      }, {
-        id: 3,
-        order: "123-1234556",
-        guide: 7377847,
-        extref: 888835,
-        progDate: "12-12-2022",
-        customer: "Patriicia",
-        contact: "Carmenza Patiño",
-        zone: "Avenida Siempreviva",
-        address: "Calle 12 # 22 - 22",
-        deliveryTime: "22h",
-        createDate: "22-12-2022",
-        type: "Normal"
-      }, {
-        id: 4,
-        order: "123-1234556",
-        guide: 7377847,
-        extref: 888835,
-        progDate: "12-12-2022",
-        customer: "Lucas cien",
-        contact: "Carmenza Patiño",
-        zone: "Avenida Siempreviva",
-        address: "Calle 12 # 22 - 22",
-        deliveryTime: "22h",
-        createDate: "22-12-2022",
-        type: "Normal"
-      }],
-      myArray2: []
+      tabs: [],
+      showMessengerData: [],
+      searchMessenger: null,
+      messenger: null,
+      messengerName: null
     };
+  },
+  computed: {
+    filterMessengers: function filterMessengers() {
+      var _this2 = this;
+
+      if (this.searchMessenger) {
+        return this.messengers.filter(function (item) {
+          return _this2.searchMessenger.toString().toLowerCase().split(" ").every(function (v) {
+            return item.user.document_number.toLowerCase().includes(v);
+          });
+        });
+      }
+    },
+    setMessenger: function setMessenger() {
+      if (this.searchMessenger) {
+        var _this$filterMessenger, _this$filterMessenger2;
+
+        this.messengerName = ((_this$filterMessenger = this.filterMessengers[0]) === null || _this$filterMessenger === void 0 ? void 0 : _this$filterMessenger.user.name) + " " + ((_this$filterMessenger2 = this.filterMessengers[0]) === null || _this$filterMessenger2 === void 0 ? void 0 : _this$filterMessenger2.user.last_name);
+        return this.messenger = this.filterMessengers[0];
+      }
+    }
   },
   methods: {
     handleChange: function handleChange(evt) {
       console.log(evt.items);
+    },
+    formatDate: function formatDate(date) {
+      if (date) {
+        return !(function webpackMissingModule() { var e = new Error("Cannot find module 'moment'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(String(date)).format('MM/DD/YYYY');
+      }
+    },
+    assignateDelivery: function assignateDelivery() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _this, token, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(_this3.guides2.length === 0)) {
+                  _context.next = 4;
+                  break;
+                }
+
+                _context.next = 3;
+                return error("Debe seleccionar una orden");
+
+              case 3:
+                return _context.abrupt("return", _context.sent);
+
+              case 4:
+                if (_this3.setMessenger) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _context.next = 7;
+                return error("Debe seleccionar un mensajero");
+
+              case 7:
+                return _context.abrupt("return", _context.sent);
+
+              case 8:
+                _this = _this3;
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: JSON.stringify({
+                    messenger_user_id: _this3.setMessenger.user_id,
+                    guides: _this3.guides2
+                  })
+                };
+                _context.next = 17;
+                return fetch("/quias/asignacion", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  if (data.state == 500) {
+                    return error(data.message);
+                  }
+
+                  if (data.state == 200) {
+                    // let index = _this.data.findIndex(
+                    //     (item) => item.id == _this.showData.id
+                    // );
+                    // _this.data.splice(index, 1);
+                    return correct(data.message);
+                  }
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -40616,7 +40811,9 @@ var render = function () {
                           ? $$selectedVal
                           : $$selectedVal[0]
                       },
-                      _vm.loadingEvt,
+                      function ($event) {
+                        _vm.loadingEvt, _vm.getGuides()
+                      },
                     ],
                   },
                 },
@@ -40669,7 +40866,7 @@ var render = function () {
                   [
                     _vm._v(
                       "Por " +
-                        _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger")
+                        _vm._s(_vm.selected == 31 ? "Entregar" : "Recoger")
                     ),
                   ]
                 ),
@@ -40695,7 +40892,7 @@ var render = function () {
                   },
                   [
                     _vm._v(
-                      _vm._s(_vm.selected == 1 ? "Entregas" : "Recogidas") +
+                      _vm._s(_vm.selected == 31 ? "Entregas" : "Recogidas") +
                         " en\n                    proceso"
                     ),
                   ]
@@ -40726,7 +40923,12 @@ var render = function () {
                   [
                     _c("draggables", {
                       ref: "childcomponent",
-                      attrs: { selected: _vm.selected },
+                      attrs: {
+                        selected: _vm.selected,
+                        guides: _vm.guides,
+                        guides2: _vm.guides2,
+                        messengers: _vm.messengers,
+                      },
                     }),
                   ],
                   1
@@ -41137,7 +41339,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Destinos por\n                        " +
-                      _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 31 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -41170,7 +41372,7 @@ var render = function () {
                         {
                           staticStyle: { cursor: "move" },
                           attrs: {
-                            list: _vm.myArray,
+                            list: _vm.guides,
                             group: "orders",
                             tag: "tbody",
                             "multi-drag": true,
@@ -41186,34 +41388,44 @@ var render = function () {
                             select: _vm.handleChange,
                           },
                         },
-                        _vm._l(_vm.myArray, function (tblItem) {
+                        _vm._l(_vm.guides, function (tblItem) {
                           return _c(
                             "tr",
                             { key: tblItem.id, staticClass: "text-center" },
                             [
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.order))]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.order_number)),
+                              ]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.guide))]),
+                              _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.extref))]),
+                              _c("td", [_vm._v("777777")]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.progDate))]),
+                              _c("td", [_vm._v("28/02/2022")]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.customer))]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.get_user.name)),
+                              ]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.contact))]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.zone))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.address))]),
+                              _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.deliveryTime))]),
+                              _c("td", [_vm._v("28/02/2022")]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.createDate))]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(_vm.formatDate(tblItem.created_at))
+                                ),
+                              ]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.type))]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.order_type)),
+                              ]),
                             ]
                           )
                         }),
@@ -41245,7 +41457,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Seleccionados por\n                        " +
-                      _vm._s(_vm.selected == 1 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 31 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -41274,7 +41486,7 @@ var render = function () {
                         {
                           staticStyle: { cursor: "move" },
                           attrs: {
-                            list: _vm.myArray2,
+                            list: _vm.guides2,
                             group: "orders",
                             tag: "tbody",
                             "multi-drag": true,
@@ -41290,34 +41502,44 @@ var render = function () {
                             select: _vm.handleChange,
                           },
                         },
-                        _vm._l(_vm.myArray2, function (tblItem) {
+                        _vm._l(_vm.guides2, function (tblItem) {
                           return _c(
                             "tr",
                             { key: tblItem.id, staticClass: "text-center" },
                             [
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.order))]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.order_number)),
+                              ]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.guide))]),
+                              _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.extref))]),
+                              _c("td", [_vm._v("777777")]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.progDate))]),
+                              _c("td", [_vm._v("28/02/2022")]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.customer))]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.get_user.name)),
+                              ]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.contact))]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.zone))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.address))]),
+                              _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.deliveryTime))]),
+                              _c("td", [_vm._v("28/02/2022")]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.createDate))]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(_vm.formatDate(tblItem.created_at))
+                                ),
+                              ]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(tblItem.type))]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.order_type)),
+                              ]),
                             ]
                           )
                         }),
@@ -41330,7 +41552,81 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(4),
+            _c("div", { staticClass: "form-group col-md-12 mb-0 px-0" }, [
+              _c("label", { staticClass: "font-weight-bolder" }, [
+                _vm._v("Mensajero"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex flex-row flex-wrap justify-content-around px-0",
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchMessenger,
+                        expression: "searchMessenger",
+                      },
+                    ],
+                    staticClass: "form-control col-md-3",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.searchMessenger },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchMessenger = $event.target.value
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _vm.setMessenger
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.messengerName,
+                            expression: "messengerName",
+                          },
+                        ],
+                        staticClass: "form-control col-md-5",
+                        attrs: { type: "text", disabled: "" },
+                        domProps: { value: _vm.messengerName },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.messengerName = $event.target.value
+                          },
+                        },
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "btn btn-light-primary font-weight-bold col-md-3",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.assignateDelivery()
+                        },
+                      },
+                    },
+                    [_vm._v("Despachar")]
+                  ),
+                ]
+              ),
+            ]),
           ]
         ),
       ]),
@@ -41443,41 +41739,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo")]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-12 mb-0 px-0" }, [
-      _c("label", { staticClass: "font-weight-bolder" }, [_vm._v("Mensajero")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "d-flex flex-row flex-wrap justify-content-around px-0",
-        },
-        [
-          _c("input", {
-            staticClass: "form-control col-md-3",
-            attrs: { type: "text" },
-          }),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control col-md-5",
-            attrs: { type: "text" },
-          }),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-light-primary font-weight-bold col-md-3",
-              attrs: { href: "#" },
-            },
-            [_vm._v("Despachar")]
-          ),
-        ]
-      ),
     ])
   },
 ]
@@ -59563,36 +59824,53 @@ var Customers = /*#__PURE__*/function () {
       }
 
       btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var formData, response, modal;
+        var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_usage_mode, branch_office_default, branch_office_department, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                branch_office_name = document.getElementById("branch_office_name"), branch_office_type = document.getElementById("branch_office_type"), branch_office_description = document.getElementById("branch_office_description"), branch_office_zone = document.getElementById("branch_office_zone"), branch_office_address = document.getElementById("branch_office_address"), branch_office_lat = document.getElementById("branch_office_lat"), branch_office_lng = document.getElementById("branch_office_lng"), branch_office_email = document.getElementById("branch_office_email"), branch_office_contact = document.getElementById("branch_office_contact"), branch_office_document_type = document.getElementById("branch_office_document_type"), branch_office_document_number = document.getElementById("branch_office_document_number"), branch_office_payment_method = document.getElementById("branch_office_payment_method"), branch_office_phone = document.getElementById("branch_office_phone"), branch_office_usage_mode = document.getElementById("branch_office_usage_mode"), branch_office_default = document.getElementById("branch_office_default"), branch_office_department = document.getElementById("branch_office_department");
                 formData = new FormData();
-                formData.append('branch_office_name', document.getElementById("branch_office_name").value);
-                formData.append('branch_office_type', document.getElementById("branch_office_type").value);
-                formData.append('branch_office_description', document.getElementById("branch_office_description").value);
-                formData.append('branch_office_zone', document.getElementById("branch_office_zone").value);
-                formData.append('branch_office_address', document.getElementById("branch_office_address").value);
-                formData.append('branch_office_lat', document.getElementById("branch_office_lat").value);
-                formData.append('branch_office_lng', document.getElementById("branch_office_lng").value);
-                formData.append('branch_office_email', document.getElementById("branch_office_email").value);
-                formData.append('branch_office_contact', document.getElementById("branch_office_contact").value);
-                formData.append('branch_office_document_type', document.getElementById("branch_office_document_type").value);
-                formData.append('branch_office_document_number', document.getElementById("branch_office_document_number").value);
-                formData.append('branch_office_payment_method', document.getElementById("branch_office_payment_method").value);
-                formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
-                formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
-                formData.append('branch_office_default', document.getElementById("branch_office_default").value);
-                formData.append('branch_office_department', document.getElementById("branch_office_department").value);
-                _context.next = 19;
+                formData.append('branch_office_name', branch_office_name.value);
+                formData.append('branch_office_type', branch_office_type.value);
+                formData.append('branch_office_description', branch_office_description.value);
+                formData.append('branch_office_zone', branch_office_zone.value);
+                formData.append('branch_office_address', branch_office_address.value);
+                formData.append('branch_office_lat', branch_office_lat.value);
+                formData.append('branch_office_lng', branch_office_lng.value);
+                formData.append('branch_office_email', branch_office_email.value);
+                formData.append('branch_office_contact', branch_office_contact.value);
+                formData.append('branch_office_document_type', branch_office_document_type.value);
+                formData.append('branch_office_document_number', branch_office_document_number.value);
+                formData.append('branch_office_payment_method', branch_office_payment_method.value);
+                formData.append('branch_office_phone', branch_office_phone.value);
+                formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
+                formData.append('branch_office_default', branch_office_default.value);
+                formData.append('branch_office_department', branch_office_department.value);
+                _context.next = 20;
                 return _this.sendBranchOfficeData(formData);
 
-              case 19:
+              case 20:
                 response = _context.sent;
 
                 if (response['state'] == 200) {
                   correct('Sucursal creada de manera exitosa');
+                  branch_office_name.value = '';
+                  branch_office_type.value = '';
+                  branch_office_description.value = '';
+                  branch_office_zone.selectedIndex = 0;
+                  branch_office_address.value = '';
+                  branch_office_lat.value = '';
+                  branch_office_lng.value = '';
+                  branch_office_email.value = '';
+                  branch_office_contact.value = '';
+                  branch_office_document_type.selectedIndex = 0;
+                  branch_office_document_number.value = '';
+                  branch_office_payment_method.value = '';
+                  branch_office_phone.value = '';
+                  branch_office_usage_mode.value = '';
+                  branch_office_default.checked = false;
+                  branch_office_department.selectedIndex = 0;
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
@@ -59602,7 +59880,7 @@ var Customers = /*#__PURE__*/function () {
                   console.log('Error ocurrido: ' + response['error']);
                 }
 
-              case 21:
+              case 22:
               case "end":
                 return _context.stop();
             }
@@ -59653,7 +59931,7 @@ var Customers = /*#__PURE__*/function () {
     key: "listBranchOffices",
     value: function () {
       var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var tbody, assignedBranchOffices;
+        var tbody, route, customer_id, assignedBranchOffices;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -59669,15 +59947,53 @@ var Customers = /*#__PURE__*/function () {
 
               case 3:
                 tbody.innerHTML = '';
-                _context3.next = 6;
-                return this.requestBranchOffices();
+                route = window.location.pathname.split('/');
+                customer_id = route.includes('edit') || typeof parseInt(route[2]) == 'number' ? document.getElementById("customer_id").value : null;
 
-              case 6:
-                assignedBranchOffices = _context3.sent;
+                if (!route.includes('edit')) {
+                  _context3.next = 12;
+                  break;
+                }
 
-                if (assignedBranchOffices['state'] == 200) {
+                _context3.next = 9;
+                return this.requestBranchOffices(customer_id);
+
+              case 9:
+                _context3.t0 = _context3.sent;
+                _context3.next = 22;
+                break;
+
+              case 12:
+                if (!(typeof parseInt(route[2]) == 'number')) {
+                  _context3.next = 18;
+                  break;
+                }
+
+                _context3.next = 15;
+                return this.requestBranchOffices(customer_id);
+
+              case 15:
+                _context3.t1 = _context3.sent;
+                _context3.next = 21;
+                break;
+
+              case 18:
+                _context3.next = 20;
+                return this.requestBranchOffices(customer_id);
+
+              case 20:
+                _context3.t1 = _context3.sent;
+
+              case 21:
+                _context3.t0 = _context3.t1;
+
+              case 22:
+                assignedBranchOffices = _context3.t0;
+
+                if (assignedBranchOffices.state == 200) {
                   (function () {
-                    var data = assignedBranchOffices['data'];
+                    var data = assignedBranchOffices.data;
+                    console.log(data);
 
                     if (data.length > 0) {
                       var _loop = function _loop(i) {
@@ -59726,7 +60042,7 @@ var Customers = /*#__PURE__*/function () {
                         var branchDelete = document.createElement("button");
 
                         branchDelete.onclick = function () {
-                          deleteResource('/sucursales/null/' + data[i].id);
+                          confirmDelete('/sucursales/null/' + data[i].id);
                         };
 
                         branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
@@ -59753,7 +60069,7 @@ var Customers = /*#__PURE__*/function () {
                 this.editBranches();
                 this.listDepartments();
 
-              case 10:
+              case 26:
               case "end":
                 return _context3.stop();
             }
@@ -59771,16 +60087,19 @@ var Customers = /*#__PURE__*/function () {
     key: "requestBranchOffices",
     value: function () {
       var _requestBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var response;
+        var customer_id,
+            response,
+            _args4 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
+                customer_id = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : null;
                 response = {
                   'state': 500
                 };
-                _context4.next = 3;
-                return fetch("/unassigned_branch_offices").then(function (response) {
+                _context4.next = 4;
+                return fetch("/unassigned_branch_offices?customer=" + customer_id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -59788,10 +60107,10 @@ var Customers = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 3:
+              case 4:
                 return _context4.abrupt("return", response);
 
-              case 4:
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -60357,7 +60676,6 @@ var Orders = /*#__PURE__*/function () {
       this.saveGuides();
       this.listGuides();
       this.loadBranches();
-      this.customerAddresses();
       this.createAddress();
     }
   }, {
@@ -61424,6 +61742,15 @@ var Orders = /*#__PURE__*/function () {
 
               case 8:
                 response = _context17.sent;
+
+                if (!(response == null)) {
+                  _context17.next = 11;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 11:
                 data = response.data;
                 [].forEach.call(slcAddresses, function (slcAddress) {
                   slcAddress.selectedIndex = 0;
@@ -61436,7 +61763,7 @@ var Orders = /*#__PURE__*/function () {
                   }
                 });
 
-              case 11:
+              case 13:
               case "end":
                 return _context17.stop();
             }
@@ -61464,11 +61791,20 @@ var Orders = /*#__PURE__*/function () {
               case 0:
                 id = _args18.length > 0 && _args18[0] !== undefined ? _args18[0] : null;
                 route = window.location.pathname.split('/');
+
+                if (!(document.getElementById("user_code") == null)) {
+                  _context18.next = 4;
+                  break;
+                }
+
+                return _context18.abrupt("return");
+
+              case 4:
                 route.includes('edit') ? id = document.getElementById("user_code").value : '';
                 response = {
                   'state': 500
                 };
-                _context18.next = 6;
+                _context18.next = 8;
                 return fetch("/customer_addresses/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -61477,10 +61813,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 6:
+              case 8:
                 return _context18.abrupt("return", response);
 
-              case 7:
+              case 9:
               case "end":
                 return _context18.stop();
             }
@@ -61691,6 +62027,7 @@ var Permissions = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.loadPermissions();
+      this.roleData();
     }
   }, {
     key: "loadPermissions",
@@ -61779,6 +62116,98 @@ var Permissions = /*#__PURE__*/function () {
         })));
       });
     }
+  }, {
+    key: "roleData",
+    value: function roleData() {
+      var _this = this;
+
+      var editButtons = document.getElementsByName("btnEditRole");
+
+      if (editButtons == null) {
+        return;
+      }
+
+      [].forEach.call(editButtons, function (item) {
+        item.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          var role_id, response, data, name, state, form;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  role_id = item['id'].split('-')[1];
+                  _context3.next = 3;
+                  return _this.requestRoleData(role_id);
+
+                case 3:
+                  response = _context3.sent;
+
+                  if (!(response.state != 200)) {
+                    _context3.next = 8;
+                    break;
+                  }
+
+                  alert('Error inesperado.');
+                  console.log(response.error);
+                  return _context3.abrupt("return");
+
+                case 8:
+                  data = response.data;
+                  name = document.getElementById("name_edit");
+                  name.value = data.name;
+                  state = document.getElementById("state_edit");
+                  [].forEach.call(state, function (opt) {
+                    opt.value == data.state ? opt.selected = true : '';
+                  });
+                  form = document.getElementById("formUpdateRole");
+                  form.setAttribute("action", 'roles/' + data.id);
+
+                case 15:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        })));
+      });
+    }
+  }, {
+    key: "requestRoleData",
+    value: function () {
+      var _requestRoleData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context4.next = 3;
+                return fetch("/roles/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context4.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function requestRoleData(_x2) {
+        return _requestRoleData.apply(this, arguments);
+      }
+
+      return requestRoleData;
+    }()
   }]);
 
   return Permissions;
@@ -62572,8 +63001,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

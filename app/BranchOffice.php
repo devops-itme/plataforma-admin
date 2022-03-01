@@ -36,6 +36,11 @@ class BranchOffice extends Model
         return $this->hasOne(DepartmentBranch::class, 'branch_office_id');
     }
 
+    public function getBranchUser()
+    {
+        return $this->hasMany(UserBranch::class, 'branch_office_id');
+    }
+
     public function getUser()
     {
         return $this->belongsTo(User::class, 'user_id');

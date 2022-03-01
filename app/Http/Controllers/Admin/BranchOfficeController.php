@@ -85,7 +85,7 @@ class BranchOfficeController extends Controller
                 if($saveBranchDept['state'] != 200){
                     return json_encode([
                         'state' => 500,
-                        'error' => $saveBranchDept['error']
+                        'error' => $saveBranchDept['message']
                     ]);
                 }
             }
@@ -97,7 +97,7 @@ class BranchOfficeController extends Controller
         } else {
             return json_encode([
                 'state' => 500,
-                'error' => $response['error']
+                'error' => $response['message']
             ]);
         }
     }
@@ -213,15 +213,23 @@ class BranchOfficeController extends Controller
 
     public function unassigned_branch_offices()
     {
-        $allAssignedBranches = UserBranch::get('branch_office_id');
-        $branch_ids = [];
-        foreach ($allAssignedBranches as $key) {
-            array_push($branch_ids, $key->branch_office_id);
+        if(request()->customer != "null"){
+            $customer_id = request()->customer;
+
+            $branches = BranchOffice::with('getBranchUser')->whereHas('getBranchUser', function ($query) use ($customer_id) {
+                $query->where('user_id', $customer_id);
+            })->with('getType', 'getZone')->get();
+        } else {
+            $assignedBranches = UserBranch::get('branch_office_id');
+            $ids = [];
+            foreach ($assignedBranches as $key) {
+                array_push($ids, $key->branch_office_id);
+            }
+            $branches = BranchOffice::whereNotIn('id', $ids)->with('getType', 'getZone')->get();
         }
-        $allUnassignedBranches = BranchOffice::whereNotIn('id', $branch_ids)->with(['getType', 'getZone', 'getDepartment.getDepartment'])->get();
         return json_encode([
             'state' => 200,
-            'data' => $allUnassignedBranches
+            'data' => $branches
         ]);
     }
 }

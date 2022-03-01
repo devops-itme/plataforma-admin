@@ -6,7 +6,7 @@
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center px-0">
                         <h5 class="font-weight-bold text-dark">
                             Destinos por
-                            {{ selected == 1 ? "Entregar" : "Recoger" }}
+                            {{ selected == 31 ? "Entregar" : "Recoger" }}
                         </h5>
                         <div class="col-md-2 px-0">
                             <button
@@ -51,7 +51,7 @@
                                     </tr>
                                 </thead>
                                 <draggable
-                                    :list="myArray"
+                                    :list="guides"
                                     group="orders"
                                     tag="tbody"
                                     :multi-drag="true"
@@ -62,22 +62,22 @@
                                     @select="handleChange"
                                 >
                                     <tr
-                                        v-for="tblItem of myArray"
+                                        v-for="tblItem of guides"
                                         v-bind:key="tblItem.id"
                                         class="text-center"
                                     >
                                         <td>{{ tblItem.id }}</td>
-                                        <td>{{ tblItem.order }}</td>
-                                        <td>{{ tblItem.guide }}</td>
-                                        <td>{{ tblItem.extref }}</td>
-                                        <td>{{ tblItem.progDate }}</td>
-                                        <td>{{ tblItem.customer }}</td>
+                                        <td>{{ tblItem.get_order.order_number }}</td>
+                                        <td>{{ tblItem.id }}</td>
+                                        <td>777777</td>
+                                        <td>28/02/2022</td>
+                                        <td>{{ tblItem.get_order.get_user.name }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
-                                        <td>{{ tblItem.address }}</td>
-                                        <td>{{ tblItem.deliveryTime }}</td>
-                                        <td>{{ tblItem.createDate }}</td>
-                                        <td>{{ tblItem.type }}</td>
+                                        <td>{{ tblItem.address_name }}</td>
+                                        <td>28/02/2022</td>
+                                        <td>{{ formatDate(tblItem.created_at) }}</td>
+                                        <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
                                 </draggable>
                             </table>
@@ -88,7 +88,7 @@
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center py-2">
                         <h5 class="font-weight-bold text-dark">
                             Seleccionados por
-                            {{ selected == 1 ? "Entregar" : "Recoger" }}
+                            {{ selected == 31 ? "Entregar" : "Recoger" }}
                         </h5>
                     </div>
                     <div class="max-h-425px h-425px col-md-12 border rounded px-0">
@@ -114,7 +114,7 @@
                                     </tr>
                                 </thead>
                                 <draggable
-                                    :list="myArray2"
+                                    :list="guides2"
                                     group="orders"
                                     tag="tbody"
                                     :multi-drag="true"
@@ -125,22 +125,22 @@
                                     style="cursor: move"
                                 >
                                     <tr
-                                        v-for="tblItem of myArray2"
+                                        v-for="tblItem of guides2"
                                         v-bind:key="tblItem.id"
                                         class="text-center"
                                     >
                                         <td>{{ tblItem.id }}</td>
-                                        <td>{{ tblItem.order }}</td>
-                                        <td>{{ tblItem.guide }}</td>
-                                        <td>{{ tblItem.extref }}</td>
-                                        <td>{{ tblItem.progDate }}</td>
-                                        <td>{{ tblItem.customer }}</td>
+                                        <td>{{ tblItem.get_order.order_number }}</td>
+                                        <td>{{ tblItem.id }}</td>
+                                        <td>777777</td>
+                                        <td>28/02/2022</td>
+                                        <td>{{ tblItem.get_order.get_user.name }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
-                                        <td>{{ tblItem.address }}</td>
-                                        <td>{{ tblItem.deliveryTime }}</td>
-                                        <td>{{ tblItem.createDate }}</td>
-                                        <td>{{ tblItem.type }}</td>
+                                        <td>{{ tblItem.address_name }}</td>
+                                        <td>28/02/2022</td>
+                                        <td>{{ formatDate(tblItem.created_at) }}</td>
+                                        <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
                                 </draggable>
                             </table>
@@ -151,11 +151,11 @@
                         <div
                             class="d-flex flex-row flex-wrap justify-content-around px-0"
                         >
-                            <input type="text" class="form-control col-md-3" />
-                            <input type="text" class="form-control col-md-5" />
+                            <input type="text" class="form-control col-md-3" v-model="searchMessenger" />
+                            <input type="text" class="form-control col-md-5" disabled v-if="setMessenger" v-model="messengerName" />
                             <a
                                 href="#"
-                                class="btn btn-light-primary font-weight-bold col-md-3"
+                                class="btn btn-light-primary font-weight-bold col-md-3" @click="assignateDelivery()"
                                 >Despachar</a
                             >
                         </div>
@@ -175,6 +175,7 @@
 <script>
 // import { Sortable, MultiDrag } from 'sortablejs';
 import draggable from "vuedraggable-multi";
+import moment from 'moment';
 //  Sortable.mount(new MultiDrag());
 export default {
     components: {
@@ -182,74 +183,99 @@ export default {
     },
     props: {
         selected: Number,
+        guides: Array,
+        guides2: Array,
+        messengers: Array,
     },
     data() {
         return {
-            myArray: [
-                {
-                    id: 1,
-                    order: "123-1234556",
-                    guide: 7377845,
-                    extref: 888837,
-                    progDate: "12-12-2022",
-                    customer: "Juanito Perez",
-                    contact: "Carmenza Patiño",
-                    zone: "Avenida Siempreviva",
-                    address: "Calle 12 # 22 - 22",
-                    deliveryTime: "22h",
-                    createDate: "22-12-2022",
-                    type: "Normal",
-                },
-                {
-                    id: 2,
-                    order: "123-1234556",
-                    guide: 7377847,
-                    extref: 888835,
-                    progDate: "12-12-2022",
-                    customer: "Juanito Perez",
-                    contact: "Carmenza Patiño",
-                    zone: "Avenida Siempreviva",
-                    address: "Calle 12 # 22 - 22",
-                    deliveryTime: "22h",
-                    createDate: "22-12-2022",
-                    type: "Normal",
-                },
-                {
-                    id: 3,
-                    order: "123-1234556",
-                    guide: 7377847,
-                    extref: 888835,
-                    progDate: "12-12-2022",
-                    customer: "Patriicia",
-                    contact: "Carmenza Patiño",
-                    zone: "Avenida Siempreviva",
-                    address: "Calle 12 # 22 - 22",
-                    deliveryTime: "22h",
-                    createDate: "22-12-2022",
-                    type: "Normal",
-                },
-                {
-                    id: 4,
-                    order: "123-1234556",
-                    guide: 7377847,
-                    extref: 888835,
-                    progDate: "12-12-2022",
-                    customer: "Lucas cien",
-                    contact: "Carmenza Patiño",
-                    zone: "Avenida Siempreviva",
-                    address: "Calle 12 # 22 - 22",
-                    deliveryTime: "22h",
-                    createDate: "22-12-2022",
-                    type: "Normal",
-                },
-            ],
-            myArray2: [],
+            tabs: [],
+            showMessengerData:[],
+            searchMessenger: null,
+            messenger: null,
+            messengerName: null,
+
         };
+    },
+    computed: {
+        filterMessengers() {
+            if (this.searchMessenger) {
+                return this.messengers.filter((item) => {
+                    return this.searchMessenger
+                        .toString()
+                        .toLowerCase()
+                        .split(" ")
+                        .every((v) =>
+                            item.user.document_number.toLowerCase().includes(v)
+                        );
+                });
+            }
+        },
+
+        setMessenger() {
+            if (this.searchMessenger) {
+                this.messengerName =
+                    this.filterMessengers[0]?.user.name +
+                    " " +
+                    this.filterMessengers[0]?.user.last_name;
+                return (this.messenger = this.filterMessengers[0]);
+            }
+        },
     },
     methods: {
         handleChange(evt) {
             console.log(evt.items);
         },
-    }
+
+         formatDate(date) {
+             if (date) {
+                return moment(String(date)).format('MM/DD/YYYY');
+            }
+        },
+        async assignateDelivery() {
+
+            if (this.guides2.length === 0) {
+                return await error("Debe seleccionar una orden");
+            }
+            if (!this.setMessenger) {
+                return await error("Debe seleccionar un mensajero");
+            }
+            let _this = this;
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: JSON.stringify({
+                    messenger_user_id: this.setMessenger.user_id,
+                    guides: this.guides2,
+                }),
+            };
+            await fetch(`/quias/asignacion`, requestOptions)
+                .then((response) => response.json())
+                .then(function (data) {
+                    if (data.state == 500) {
+
+                        return error(data.message);
+                    }
+                    if (data.state == 200) {
+                        // let index = _this.data.findIndex(
+                        //     (item) => item.id == _this.showData.id
+                        // );
+                        // _this.data.splice(index, 1);
+                        return correct(data.message);
+                    }
+                })
+                .catch((err) => console.warn(err));
+        },
+
+
+    },
+
 };
 </script>

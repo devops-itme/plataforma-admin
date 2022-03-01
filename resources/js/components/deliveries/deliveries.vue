@@ -11,11 +11,12 @@
                 class="d-flex align-items-center justify-content-between flex-row flex-wrap mb-3"
             >
                 <div class="form-group col-md-2 mb-0">
-                    <select class="form-control" v-model="selected" @change="loadingEvt">
+                    <select class="form-control" v-model="selected" @change="loadingEvt,getGuides()">
                         <option
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
                             v-bind:value="item.value"
+
                         >
                             {{ item.text }}
                         </option>
@@ -65,7 +66,7 @@
                         role="tab"
                         aria-controls="porRecoger"
                         aria-selected="true"
-                        >Por {{ selected == 1 ? "Entregar" : "Recoger" }}</a
+                        >Por {{ selected == 31 ? "Entregar" : "Recoger" }}</a
                     >
                 </li>
                 <li class="nav-item" role="presentation">
@@ -77,7 +78,7 @@
                         role="tab"
                         aria-controls="enproceso"
                         aria-selected="false"
-                        >{{ selected == 1 ? "Entregas" : "Recogidas" }} en
+                        >{{ selected == 31 ? "Entregas" : "Recogidas" }} en
                         proceso</a
                     >
                 </li>
@@ -102,7 +103,7 @@
                     role="tabpanel"
                     aria-labelledby="porRecoger-tab">
                     <!-- Draggable component -->
-                        <draggables :selected=selected ref="childcomponent"></draggables>
+                        <draggables :selected=selected :guides=guides :guides2=guides2 :messengers=messengers ref="childcomponent"></draggables>
 
                 </div>
                 <div
@@ -219,22 +220,69 @@ export default {
     },
     data() {
         return {
-            selected: 1,
+            selected: 31,
             delivery_types: [
-                { value: 1, text: "Entregas" },
-                { value: 2, text: "Recogidas" },
+                { value: 31, text: "Entregas" },
+                { value: 34, text: "Recogidas" },
             ],
             showModal: false,
             columns:{
                 inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
                 inEdit:["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
-            }
+            },
+            guides: [],
+            guides2: [],
+            messengers: [],
+
         };
     },
+
     methods: {
        loadingEvt (){
            return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>'
-       }
+       },
+        async getGuides() {
+            console.log(this.selected)
+            let response = await this.requestGuides();
+            this.guides = response.data;
+        },
+        async requestGuides() {
+            let response = { state: 500 };
+            let myHeaders = new Headers();
+            myHeaders.append("accept", "application/json");
+            let requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+            };
+            await fetch(`/orders_packing/${this.selected}`, requestOptions)
+                .then((response) => response.json())
+                .then(function (data) {
+                    response = data;
+                })
+                .catch((err) => console.warn(err));
+            return response;
+        },
+           async getMessengers() {
+            let _this = this;
+            let myHeaders = new Headers();
+            myHeaders.append("accept", "application/json");
+            let requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+            };
+            await fetch(`/messengers_delivery`, requestOptions)
+                .then((response) => response.json())
+                .then(function (data) {
+                    _this.messengers = data.data;
+                })
+                .catch((err) => console.warn(err));
+        },
+    },
+
+     async mounted() {
+        // this.orderState();
+        this.getGuides(this.selected);
+        this.getMessengers();
     },
 
 };

@@ -164,7 +164,7 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    {{-- <th scope="col">#</th> --}}
                     <th scope="col">Nombres</th>
                     <th scope="col">Número de documento</th>
                     <th scope="col">Correo</th>
@@ -178,7 +178,7 @@
                 @if(count($customers) > 0)
                 @foreach($customers as $customer)
                 <tr>
-                    <th scope="row">{{$customer->id}}</th>
+                    {{-- <th scope="row">{{$customer->id}}</th> --}}
                     <td>{{!is_null($customer->getUser->name) ? $customer->getUser->name." ".$customer->getUser->last_name : $customer->business_name}}</td>
                     <td>{{$customer->getUser->document_number}}</td>
                     <td>{{$customer->getUser->email}}</td>

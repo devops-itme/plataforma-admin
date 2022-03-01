@@ -44,26 +44,59 @@ export default class Customers {
             return;
         }
         btnSendData.addEventListener('click', async () => {
+            let branch_office_name = document.getElementById("branch_office_name"),
+                branch_office_type = document.getElementById("branch_office_type"),
+                branch_office_description = document.getElementById("branch_office_description"),
+                branch_office_zone = document.getElementById("branch_office_zone"),
+                branch_office_address = document.getElementById("branch_office_address"),
+                branch_office_lat = document.getElementById("branch_office_lat"),
+                branch_office_lng = document.getElementById("branch_office_lng"),
+                branch_office_email = document.getElementById("branch_office_email"),
+                branch_office_contact = document.getElementById("branch_office_contact"),
+                branch_office_document_type = document.getElementById("branch_office_document_type"),
+                branch_office_document_number = document.getElementById("branch_office_document_number"),
+                branch_office_payment_method = document.getElementById("branch_office_payment_method"),
+                branch_office_phone = document.getElementById("branch_office_phone"),
+                branch_office_usage_mode = document.getElementById("branch_office_usage_mode"),
+                branch_office_default = document.getElementById("branch_office_default"),
+                branch_office_department = document.getElementById("branch_office_department");
+
             let formData = new FormData();
-            formData.append('branch_office_name', document.getElementById("branch_office_name").value);
-            formData.append('branch_office_type', document.getElementById("branch_office_type").value);
-            formData.append('branch_office_description', document.getElementById("branch_office_description").value);
-            formData.append('branch_office_zone', document.getElementById("branch_office_zone").value);
-            formData.append('branch_office_address', document.getElementById("branch_office_address").value);
-            formData.append('branch_office_lat', document.getElementById("branch_office_lat").value);
-            formData.append('branch_office_lng', document.getElementById("branch_office_lng").value);
-            formData.append('branch_office_email', document.getElementById("branch_office_email").value);
-            formData.append('branch_office_contact', document.getElementById("branch_office_contact").value);
-            formData.append('branch_office_document_type', document.getElementById("branch_office_document_type").value);
-            formData.append('branch_office_document_number', document.getElementById("branch_office_document_number").value);
-            formData.append('branch_office_payment_method', document.getElementById("branch_office_payment_method").value);
-            formData.append('branch_office_phone', document.getElementById("branch_office_phone").value);
-            formData.append('branch_office_usage_mode', document.getElementById("branch_office_usage_mode").value);
-            formData.append('branch_office_default', document.getElementById("branch_office_default").value);
-            formData.append('branch_office_department', document.getElementById("branch_office_department").value);
+            formData.append('branch_office_name', branch_office_name.value);
+            formData.append('branch_office_type', branch_office_type.value);
+            formData.append('branch_office_description', branch_office_description.value);
+            formData.append('branch_office_zone', branch_office_zone.value);
+            formData.append('branch_office_address', branch_office_address.value);
+            formData.append('branch_office_lat', branch_office_lat.value);
+            formData.append('branch_office_lng', branch_office_lng.value);
+            formData.append('branch_office_email', branch_office_email.value);
+            formData.append('branch_office_contact', branch_office_contact.value);
+            formData.append('branch_office_document_type', branch_office_document_type.value);
+            formData.append('branch_office_document_number', branch_office_document_number.value);
+            formData.append('branch_office_payment_method', branch_office_payment_method.value);
+            formData.append('branch_office_phone', branch_office_phone.value);
+            formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
+            formData.append('branch_office_default', branch_office_default.value);
+            formData.append('branch_office_department', branch_office_department.value);
             let response = await this.sendBranchOfficeData(formData);
             if(response['state'] == 200){
                 correct('Sucursal creada de manera exitosa');
+                branch_office_name.value = '';
+                branch_office_type.value = '';
+                branch_office_description.value = '';
+                branch_office_zone.selectedIndex = 0;
+                branch_office_address.value = '';
+                branch_office_lat.value = '';
+                branch_office_lng.value = '';
+                branch_office_email.value = '';
+                branch_office_contact.value = '';
+                branch_office_document_type.selectedIndex = 0;
+                branch_office_document_number.value = '';
+                branch_office_payment_method.value = '';
+                branch_office_phone.value = '';
+                branch_office_usage_mode.value = '';
+                branch_office_default.checked = false;
+                branch_office_department.selectedIndex = 0;
                 let modal = document.getElementById("modalCreate");
                 modal.click();
                 this.listBranchOffices();
@@ -95,9 +128,13 @@ export default class Customers {
             return;
         }
         tbody.innerHTML = '';
-        let assignedBranchOffices = await this.requestBranchOffices();
-        if(assignedBranchOffices['state'] == 200){
-            let data = assignedBranchOffices['data'];
+        let route = window.location.pathname.split('/');
+        let customer_id = (route.includes('edit') || typeof parseInt(route[2]) == 'number') ? document.getElementById("customer_id").value : null;
+        let assignedBranchOffices = route.includes('edit') ? await this.requestBranchOffices(customer_id) : (typeof parseInt(route[2]) == 'number') ? await this.requestBranchOffices(customer_id) : await this.requestBranchOffices(customer_id);
+
+        if(assignedBranchOffices.state == 200){
+            let data = assignedBranchOffices.data;
+            console.log(data);
             if(data.length > 0){
                 for (let i = 0; i < data.length; i++) {
                     let row = tbody.insertRow();
@@ -146,7 +183,7 @@ export default class Customers {
                     branchEdit.innerHTML = '<i class="fas fa-edit"></i>';
                     //Delete button
                     const branchDelete = document.createElement("button");
-                    branchDelete.onclick = function(){deleteResource('/sucursales/null/'+data[i].id)};
+                    branchDelete.onclick = function(){confirmDelete('/sucursales/null/'+data[i].id)};
                     branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                     branchDelete.setAttribute('type', 'button');
                     branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -166,11 +203,11 @@ export default class Customers {
         this.listDepartments();
     }
 
-    async requestBranchOffices(){
+    async requestBranchOffices(customer_id = null){
         let response = {
             'state': 500
         };
-        await fetch("/unassigned_branch_offices")
+        await fetch("/unassigned_branch_offices?customer="+customer_id)
             .then(response => response.json())
             .then(data => {
                 response = data

@@ -24,7 +24,6 @@ export default class Orders {
         this.saveGuides();
         this.listGuides();
         this.loadBranches();
-        this.customerAddresses();
         this.createAddress();
     }
 
@@ -678,6 +677,9 @@ export default class Orders {
             return;
         }
         let response = await this.requestCustomerAddresses(customerId);
+        if(response == null){
+            return;
+        }
         let data = response.data;
 
         [].forEach.call(slcAddresses, slcAddress => {
@@ -694,6 +696,9 @@ export default class Orders {
 
     async requestCustomerAddresses(id = null){
         let route = window.location.pathname.split('/');
+        if(document.getElementById("user_code") == null){
+            return;
+        }
         route.includes('edit') ? id = document.getElementById("user_code").value : '';
         let response = {
             'state': 500
