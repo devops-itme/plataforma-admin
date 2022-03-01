@@ -2141,6 +2141,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2167,14 +2170,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       guides: [],
       guides2: [],
-      messengers: []
+      messengers: [],
+      type_guide: 31
     };
   },
   methods: {
     loadingEvt: function loadingEvt() {
       return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>';
     },
-    getGuides: function getGuides() {
+    getGuides: function getGuides(type) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2183,15 +2187,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(_this2.selected);
-                _context.next = 3;
+                // let v = this.selected;
+                // this.selected = v + type;
+                _this2.type_guide = _this2.selected + type;
+                console.log(_this2.type_guide);
+                _context.next = 4;
                 return _this2.requestGuides();
 
-              case 3:
+              case 4:
                 response = _context.sent;
                 _this2.guides = response.data;
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -2218,7 +2225,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: myHeaders
                 };
                 _context2.next = 6;
-                return fetch("/orders_packing/".concat(_this3.selected), requestOptions).then(function (response) {
+                return fetch("/orders_packing/".concat(_this3.type_guide), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2281,7 +2288,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context4.prev = _context4.next) {
             case 0:
               // this.orderState();
-              _this5.getGuides(_this5.selected);
+              _this5.getGuides(null);
 
               _this5.getMessengers();
 
@@ -3113,11 +3120,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
     columnsNames: Array,
-    widthTable: Number
+    widthTable: Number,
+    guides: Array
   }
 });
 
@@ -62384,7 +62410,7 @@ var render = function () {
                           : $$selectedVal[0]
                       },
                       function ($event) {
-                        _vm.loadingEvt, _vm.getGuides()
+                        _vm.loadingEvt, _vm.getGuides(null)
                       },
                     ],
                   },
@@ -62434,6 +62460,11 @@ var render = function () {
                       "aria-controls": "porRecoger",
                       "aria-selected": "true",
                     },
+                    on: {
+                      click: function ($event) {
+                        return _vm.getGuides(0)
+                      },
+                    },
                   },
                   [
                     _vm._v(
@@ -62461,6 +62492,11 @@ var render = function () {
                       "aria-controls": "enproceso",
                       "aria-selected": "false",
                     },
+                    on: {
+                      click: function ($event) {
+                        return _vm.getGuides(1)
+                      },
+                    },
                   },
                   [
                     _vm._v(
@@ -62472,7 +62508,32 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(2),
+            _c(
+              "li",
+              { staticClass: "nav-item", attrs: { role: "presentation" } },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    attrs: {
+                      id: "consultas-tab",
+                      "data-toggle": "tab",
+                      href: "#consultas",
+                      role: "tab",
+                      "aria-controls": "consultas",
+                      "aria-selected": "false",
+                    },
+                    on: {
+                      click: function ($event) {
+                        return _vm.getGuides(2)
+                      },
+                    },
+                  },
+                  [_vm._v("Consultas y edición")]
+                ),
+              ]
+            ),
           ]
         ),
         _vm._v(" "),
@@ -62520,6 +62581,7 @@ var render = function () {
                     _c("tabledy", {
                       attrs: {
                         rows: _vm.columns.inProcess.length,
+                        guides: _vm.guides,
                         columnsNames: _vm.columns.inProcess,
                         widthTable: 1100,
                       },
@@ -62542,6 +62604,7 @@ var render = function () {
                     _c("tabledy", {
                       attrs: {
                         rows: _vm.columns.inEdit.length,
+                        guides: _vm.guides,
                         columnsNames: _vm.columns.inEdit,
                         widthTable: 1600,
                       },
@@ -62553,7 +62616,7 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _vm._m(3),
+          _vm._m(2),
         ]),
       ]),
       _vm._v(" "),
@@ -62622,32 +62685,6 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-1" }, [
           _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
         ]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "li",
-      { staticClass: "nav-item", attrs: { role: "presentation" } },
-      [
-        _c(
-          "a",
-          {
-            staticClass: "nav-link",
-            attrs: {
-              id: "consultas-tab",
-              "data-toggle": "tab",
-              href: "#consultas",
-              role: "tab",
-              "aria-controls": "consultas",
-              "aria-selected": "false",
-            },
-          },
-          [_vm._v("Consultas y edición")]
-        ),
       ]
     )
   },
@@ -63744,7 +63781,41 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c("tbody"),
+            _c(
+              "tbody",
+              _vm._l(_vm.guides, function (tblItem) {
+                return _c(
+                  "tr",
+                  { key: tblItem.id, staticClass: "text-center" },
+                  [
+                    _c("td", [_vm._v("Normal")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Recogido")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("18/02/2022")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("9988383")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("0084774")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("17/02/2022")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("9013")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Leido")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Marta ayega")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("5757848")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("City:Malambo")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Calle Siempreviva")]),
+                  ]
+                )
+              }),
+              0
+            ),
           ]
         ),
       ]

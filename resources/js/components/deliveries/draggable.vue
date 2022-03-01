@@ -227,7 +227,7 @@ export default {
             console.log(evt.items);
         },
 
-         formatDate(date) {
+        formatDate(date) {
              if (date) {
                 return moment(String(date)).format('MM/DD/YYYY');
             }

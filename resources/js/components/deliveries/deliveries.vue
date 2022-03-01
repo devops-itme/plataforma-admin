@@ -11,7 +11,7 @@
                 class="d-flex align-items-center justify-content-between flex-row flex-wrap mb-3"
             >
                 <div class="form-group col-md-2 mb-0">
-                    <select class="form-control" v-model="selected" @change="loadingEvt,getGuides()">
+                    <select class="form-control" v-model="selected" @change="loadingEvt,getGuides(null)">
                         <option
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
@@ -66,6 +66,7 @@
                         role="tab"
                         aria-controls="porRecoger"
                         aria-selected="true"
+                        @click="getGuides(0)"
                         >Por {{ selected == 31 ? "Entregar" : "Recoger" }}</a
                     >
                 </li>
@@ -78,6 +79,7 @@
                         role="tab"
                         aria-controls="enproceso"
                         aria-selected="false"
+                        @click="getGuides(1)"
                         >{{ selected == 31 ? "Entregas" : "Recogidas" }} en
                         proceso</a
                     >
@@ -91,6 +93,7 @@
                         role="tab"
                         aria-controls="consultas"
                         aria-selected="false"
+                        @click="getGuides(2)"
                         >Consultas y edición</a
                     >
                 </li>
@@ -113,7 +116,7 @@
                     aria-labelledby="enproceso-tab"
                 >
                     <!-- In process table -->
-                    <tabledy :rows=columns.inProcess.length :columnsNames=columns.inProcess :widthTable=1100></tabledy>
+                    <tabledy :rows=columns.inProcess.length :guides=guides :columnsNames=columns.inProcess :widthTable=1100></tabledy>
                 </div>
                 <div
                     class="tab-pane fade"
@@ -122,7 +125,7 @@
                     aria-labelledby="consultas-tab"
                 >
                     <!-- Queries and Edit table -->
-                    <tabledy :rows=columns.inEdit.length :columnsNames=columns.inEdit :widthTable=1600></tabledy>
+                    <tabledy :rows=columns.inEdit.length :guides=guides :columnsNames=columns.inEdit :widthTable=1600></tabledy>
                 </div>
             </div>
             </div>
@@ -233,6 +236,7 @@ export default {
             guides: [],
             guides2: [],
             messengers: [],
+            type_guide: 31,
 
         };
     },
@@ -241,8 +245,13 @@ export default {
        loadingEvt (){
            return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>'
        },
-        async getGuides() {
-            console.log(this.selected)
+        async getGuides(type) {
+
+                // let v = this.selected;
+                // this.selected = v + type;
+
+            this.type_guide = this.selected + type;
+            console.log(this.type_guide)
             let response = await this.requestGuides();
             this.guides = response.data;
         },
@@ -254,7 +263,7 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/orders_packing/${this.selected}`, requestOptions)
+            await fetch(`/orders_packing/${this.type_guide}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     response = data;
@@ -281,7 +290,7 @@ export default {
 
      async mounted() {
         // this.orderState();
-        this.getGuides(this.selected);
+        this.getGuides(null);
         this.getMessengers();
     },
 
