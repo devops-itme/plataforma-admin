@@ -37,12 +37,13 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required | unique:roles,name'
+            'name' => 'required | unique:roles,name',
+            'state' => 'required'
         ]);
         try {
             Role::create([
                 'name' => $request->name,
-                'state' => 1
+                'state' => $request->state
             ]);
             return redirect()->back()->with('success', 'Rol creado exitosamente.');
         } catch (\Exception $e) {
@@ -86,7 +87,8 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required | unique:roles,name,'.$id.''
+            'name' => 'required | unique:roles,name,'.$id.'',
+            'state' => 'required'
         ]);
         try {
             $role = Role::find($id);
@@ -94,7 +96,8 @@ class RoleController extends Controller
                 return redirect()->back()->withInput()->with('danger','No se encontró el rol');
             }
             $role->update([
-                'name' => $request->name
+                'name' => $request->name,
+                'state' =>$request->state
             ]);
             return redirect()->back()->with('success', 'Rol actualizado exitosamente.');
         } catch (\Exception $e) {
