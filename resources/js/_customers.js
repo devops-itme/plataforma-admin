@@ -128,8 +128,9 @@ export default class Customers {
             return;
         }
         tbody.innerHTML = '';
+        let get_customer_id = document.getElementById("customer_id")?.value;
         let route = window.location.pathname.split('/');
-        let customer_id = (route.includes('edit') || typeof parseInt(route[2]) == 'number') ? document.getElementById("customer_id").value : null;
+        let customer_id = (route.includes('edit') || typeof parseInt(route[2]) == 'number') ? get_customer_id : null;
         let assignedBranchOffices = route.includes('edit') ? await this.requestBranchOffices(customer_id) : (typeof parseInt(route[2]) == 'number') ? await this.requestBranchOffices(customer_id) : await this.requestBranchOffices(customer_id);
 
         if(assignedBranchOffices.state == 200){

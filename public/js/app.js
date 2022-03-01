@@ -81615,7 +81615,9 @@ var Customers = /*#__PURE__*/function () {
     key: "listBranchOffices",
     value: function () {
       var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var tbody, route, customer_id, assignedBranchOffices;
+        var _document$getElementB;
+
+        var tbody, get_customer_id, route, customer_id, assignedBranchOffices;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -81631,47 +81633,48 @@ var Customers = /*#__PURE__*/function () {
 
               case 3:
                 tbody.innerHTML = '';
+                get_customer_id = (_document$getElementB = document.getElementById("customer_id")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.value;
                 route = window.location.pathname.split('/');
-                customer_id = route.includes('edit') || typeof parseInt(route[2]) == 'number' ? document.getElementById("customer_id").value : null;
+                customer_id = route.includes('edit') || typeof parseInt(route[2]) == 'number' ? get_customer_id : null;
 
                 if (!route.includes('edit')) {
-                  _context3.next = 12;
+                  _context3.next = 13;
                   break;
                 }
 
-                _context3.next = 9;
+                _context3.next = 10;
                 return this.requestBranchOffices(customer_id);
 
-              case 9:
+              case 10:
                 _context3.t0 = _context3.sent;
+                _context3.next = 23;
+                break;
+
+              case 13:
+                if (!(typeof parseInt(route[2]) == 'number')) {
+                  _context3.next = 19;
+                  break;
+                }
+
+                _context3.next = 16;
+                return this.requestBranchOffices(customer_id);
+
+              case 16:
+                _context3.t1 = _context3.sent;
                 _context3.next = 22;
                 break;
 
-              case 12:
-                if (!(typeof parseInt(route[2]) == 'number')) {
-                  _context3.next = 18;
-                  break;
-                }
-
-                _context3.next = 15;
-                return this.requestBranchOffices(customer_id);
-
-              case 15:
-                _context3.t1 = _context3.sent;
+              case 19:
                 _context3.next = 21;
-                break;
-
-              case 18:
-                _context3.next = 20;
                 return this.requestBranchOffices(customer_id);
-
-              case 20:
-                _context3.t1 = _context3.sent;
 
               case 21:
-                _context3.t0 = _context3.t1;
+                _context3.t1 = _context3.sent;
 
               case 22:
+                _context3.t0 = _context3.t1;
+
+              case 23:
                 assignedBranchOffices = _context3.t0;
 
                 if (assignedBranchOffices.state == 200) {
@@ -81753,7 +81756,7 @@ var Customers = /*#__PURE__*/function () {
                 this.editBranches();
                 this.listDepartments();
 
-              case 26:
+              case 27:
               case "end":
                 return _context3.stop();
             }
