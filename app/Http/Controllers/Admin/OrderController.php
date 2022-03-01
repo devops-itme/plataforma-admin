@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\BranchOffice;
 use App\Customer;
+use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order;
@@ -193,6 +194,25 @@ class OrderController extends Controller
 
             // $orders = Order::where('order_type', 1)->wh  ere('state', $type)->with(['getUser','getGuides'])->get();
             return $this->respond(200, $orders, null, 'Lista de ordenes');
+        } catch (\Throwable $e) {
+            return $this->respond(500, [], $e->getMessage());
+        }
+    }
+
+    public function guidesForDeliveryPacking($type)
+    {
+
+        try {
+            $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query) use ($type)  {
+                $query->where('state', $type)->where('order_type', 35);
+            })->where('state', $type)
+            ->with(['getRoute.getMessenger', 'getAddress', 'getTransportType'])
+            ->get();
+
+            // $guides = Guide::where('state', $type)
+            // ->with(['getOrder', 'getRoute.getMessenger', 'getAddress', 'getTransportType'])
+            // ->get();
+            return $this->respond(200, $guides, null, 'Lista de guiás packing');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }

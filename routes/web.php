@@ -38,7 +38,8 @@ Route::group(['middleware' => 'auth'], function () {
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');
-    Route::post('/guias/asignacion', 'Admin\DeliveryController@assignate')->name('guides.assignate');
+    Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignateOndemad')->name('orders.assignate');
+    Route::post('/quias/asignacion', 'Admin\DeliveryController@assignatePacking')->name('guides.assignate');
 
     Route::group(['middleware' => 'role'], function () {
         //USER
@@ -77,31 +78,24 @@ Route::group(['middleware' => 'auth'], function () {
 
         //ORDENES
         Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
-        // Route::get('orden', function () {
-        //     return view('orders.index');
-        // })->name('orders.index');
-        // Route::get('orden/crear', function () {
-        //     return view('orders.create');
-        // })->name('orders.create');
 
         //DOCUMENTOS DE GUIAS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
 
 
     });
-    //Orders delivery
+    //Orders states
     Route::get('order_states', 'Admin\DeliveryController@orderStates');
     //Orders delivery
-    Route::get('orders_delivery/{type}', 'Admin\OrderController@ordersForDelivery');
+    Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
+    //Orders Delivery Packing
+    Route::get('orders_packing/{type}', 'Admin\OrderController@guidesForDeliveryPacking');
     //Messengers delivery
     Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
 
-    Route::get('despachos', function () {
-        return view('deliveries.index');
-    })->name('delivery.index');
-    Route::get('despachos-packing', function () {
-        return view('deliveriesPacking.index');
-    })->name('deliveryPacking.index');
+
+    Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
+    Route::get('despachos-packing', 'Admin\DeliveryController@indexPacking')->name('deliveryPacking.index');
 
     Route::get('zonas', function () {
         return view('zones.index');

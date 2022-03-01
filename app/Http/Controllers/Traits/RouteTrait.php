@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Traits;
 
+use App\Guide;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Order;
@@ -70,6 +71,35 @@ trait RouteTrait
             ]);
 
             return $this->respond(200, $order, null, 'Orden asignada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage() , 'Error al crear la ruta');
+        }
+    }
+
+    public function storeRoutePacking($request)
+    {
+
+        $validator = $this->RouteValidate($request);
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
+        }
+        try {
+
+            $guides = $request->guides;
+            foreach ($guides as $guide) {
+
+                $route = Route::create([
+                    'guide_id' => $guide['id'],
+                    'messenger_user_id' => $request->messenger_user_id,
+                    'date' => $request->date
+                ]);
+
+                $route = Guide::where('id', $guide['id'])->update([
+                    'state' => 32
+                ]);
+            }
+
+            return $this->respond(200, $route, null, 'Orden asignada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage() , 'Error al crear la ruta');
         }
