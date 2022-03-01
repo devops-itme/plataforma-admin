@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
+use App\Mail\CodeMail;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -91,9 +93,9 @@ class AuthController extends Controller
             $user->update();
 
             // send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
-            // Mail::to($user->email)
-            //     ->send(new CodeMail($randomCode));
-            return $this->respond(200, $randomCode, null, 'Codigo de verificación generado con exito');
+            Mail::to($user->email)
+                ->send(new CodeMail($randomCode));
+            return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }
@@ -122,7 +124,7 @@ class AuthController extends Controller
             $user->code_confirmed = 1;
             $user->update();
 
-            return $this->respond(200, null, null, 'Codigo verificado con exito');
+            return $this->respond(200, null, null, 'Código verificado con éxito');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }
@@ -149,7 +151,7 @@ class AuthController extends Controller
             $user->password = Hash::make($request->password);
             $user->update();
 
-            return $this->respond(200, null, null, 'Contraseña restaurada con exito');
+            return $this->respond(200, null, null, 'Contraseña restaurada con éxito');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }
@@ -180,7 +182,7 @@ class AuthController extends Controller
             // send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
             // Mail::to($user->email)
             //     ->send(new CodeMail($randomCode));
-            return $this->respond(200, $randomCode, null, 'Codigo de verificación generado con exito');
+            return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
 
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
