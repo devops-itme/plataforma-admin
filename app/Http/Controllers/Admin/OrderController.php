@@ -81,12 +81,12 @@ class OrderController extends Controller
             if ($request->guideCheck) {
                 $assignGuide = $this->assignGuide($request, $response['data']->id);
                 if ($assignGuide['state'] != 200) {
-                    return redirect()->back()->with('danger', $assignGuide['error']);
+                    return redirect()->back()->with('danger', $assignGuide['message']);
                 }
             }
             return redirect()->route('orders.index')->with('success', 'Orden creada exitosamente.');
         } else {
-            return redirect()->back()->with('danger', $response['error']);
+            return redirect()->back()->with('danger', $response['message']);
         }
     }
 

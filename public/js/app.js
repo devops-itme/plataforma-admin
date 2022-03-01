@@ -61868,7 +61868,7 @@ var Permissions = /*#__PURE__*/function () {
 
       [].forEach.call(editButtons, function (item) {
         item.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-          var role_id, response, data, name, form;
+          var role_id, response, data, name, state, form;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
@@ -61893,10 +61893,14 @@ var Permissions = /*#__PURE__*/function () {
                   data = response.data;
                   name = document.getElementById("name_edit");
                   name.value = data.name;
+                  state = document.getElementById("state_edit");
+                  [].forEach.call(state, function (opt) {
+                    opt.value == data.state ? opt.selected = true : '';
+                  });
                   form = document.getElementById("formUpdateRole");
                   form.setAttribute("action", 'roles/' + data.id);
 
-                case 13:
+                case 15:
                 case "end":
                   return _context3.stop();
               }

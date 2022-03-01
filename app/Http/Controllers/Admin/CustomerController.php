@@ -80,18 +80,18 @@ class CustomerController extends Controller
         }
         $saveUserData = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
         if($saveUserData['state'] != 200){
-            return redirect()->back()->with('danger', $saveUserData['error']);
+            return redirect()->back()->with('danger', $saveUserData['message']);
         }
         if(!is_null($request->branchCheck)){
             $assignBranches = $this->storeUserBranch($saveUserData['data']->id, $request->branchCheck);
             if($assignBranches['state'] != 200){
-                return redirect()->back()->with('danger', $assignBranches['error']);
+                return redirect()->back()->with('danger', $assignBranches['message']);
             }
         }
         if(!is_null($request->departments)){
             $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
             if($assignDepartment['state'] != 200){
-                return redirect()->back()->with('danger', $assignDepartment['error']);
+                return redirect()->back()->with('danger', $assignDepartment['message']);
             }
         }
         // if(!is_null($request->branch_office_name)){
@@ -104,7 +104,7 @@ class CustomerController extends Controller
         if($response['state'] == 200){
             return redirect()->route('customers.index')->with('success', 'Cliente registrado exitosamente.');
         } else {
-            return redirect()->back()->withInput()->with('danger', $response['error']);
+            return redirect()->back()->withInput()->with('danger', $response['message']);
         }
     }
 

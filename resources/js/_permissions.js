@@ -117,6 +117,10 @@ export default class Permissions {
                 let data = response.data;
                 let name = document.getElementById("name_edit");
                 name.value = data.name;
+                let state = document.getElementById("state_edit");
+                [].forEach.call(state, opt => {
+                    opt.value == data.state ? opt.selected = true : '';
+                });
                 let form = document.getElementById("formUpdateRole");
                 form.setAttribute("action", 'roles/'+data.id);
             });
