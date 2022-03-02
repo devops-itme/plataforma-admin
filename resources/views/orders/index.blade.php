@@ -185,7 +185,7 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">Numero de orden</th>
+                        <th scope="col">Número de orden</th>
                         <th scope="col">Tipo de orden</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Fecha de creación</th>
