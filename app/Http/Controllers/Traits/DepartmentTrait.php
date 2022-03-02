@@ -29,16 +29,24 @@ trait DepartmentTrait
     public function getDepartments()
     {
         try {
-
-
+            $user_id = Request()->user_id;
+            // dd( is_numeric($user_id));
             $departments = Department::get();
-            $allAssignedDepartments = UserDeparment::get('department_id');
+            if(is_numeric(Request()->user_id)){
+                $allAssignedDepartments = UserDeparment::where('user_id', $user_id )->get('department_id');
+                $departments_id = $allAssignedDepartments->map(function ($item, $key) {
+                    return $item->department_id;
+                });
+                $departments = Department::whereIn('id', $departments_id)->get();
 
-            $departments_id = $allAssignedDepartments->map(function ($item, $key) {
-                return $item->department_id;
-            });
+            }else{
 
-            $departments = Department::whereNotIn('id', $departments_id)->get();
+                $allAssignedDepartments = UserDeparment::get('department_id');
+                $departments_id = $allAssignedDepartments->map(function ($item, $key) {
+                    return $item->department_id;
+                });
+                $departments = Department::whereNotIn('id', $departments_id)->get();
+            }
 
             return $this->respond(200, $departments);
         } catch (\Throwable $e) {
@@ -56,12 +64,18 @@ trait DepartmentTrait
     }
     public function saveDepartment($request)
     {
+        $user_id = $request->user_id;
         $validator = $this->departmentValidate($request);
         if ($validator->fails()) {
             return $this->respond(500, [] ,$validator->errors(),  $validator->errors()->first());
         }
         try {
+
             $department = Department::create($request->all());
+
+            if(isset($request->user_id)) UserDeparment::create(['department_id'=>$department->id, 'user_id'=>$user_id]);
+
+
             return $this->respond(200, $department, null, 'Departamento creado exitosamente');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al crear departamento');

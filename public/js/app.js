@@ -3385,6 +3385,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     modal: _modal_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  props: {
+    userId: Number
+  },
   data: function data() {
     return {
       data: [],
@@ -3414,7 +3417,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: myHeaders
                 };
                 _context.next = 6;
-                return fetch("/departamentos", requestOptions).then(function (response) {
+                return fetch("/departamentos?user_id=".concat(_this2.userId), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   _this.data = data.data;
@@ -3440,6 +3443,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _this3.department.user_id = _this3.userId;
                 _this = _this3;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
@@ -3451,7 +3455,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: myHeaders,
                   body: JSON.stringify(_this3.department)
                 };
-                _context2.next = 9;
+                _context2.next = 10;
                 return fetch("/departamentos", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3474,7 +3478,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return console.warn(err);
                 });
 
-              case 9:
+              case 10:
               case "end":
                 return _context2.stop();
             }

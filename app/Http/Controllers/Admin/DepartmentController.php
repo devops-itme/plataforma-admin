@@ -19,6 +19,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+
         $departments = $this->getDepartments();
         $departments = $departments['data'];
 

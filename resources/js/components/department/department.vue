@@ -168,6 +168,9 @@
 import modal from "../modal.vue";
 export default {
     components: { modal },
+    props: {
+        userId:Number,
+    },
     data() {
         return {
             data: [],
@@ -188,7 +191,7 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/departamentos`, requestOptions)
+            await fetch(`/departamentos?user_id=${this.userId}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     _this.data = data.data;
@@ -197,6 +200,7 @@ export default {
         },
 
         async addDepartment() {
+            this.department.user_id = this.userId
             let _this = this;
             let token = document
                 .querySelector('meta[name="csrf-token"]')
@@ -235,6 +239,7 @@ export default {
         },
 
         async  updateDepartment(){
+
             let _this = this;
             let token = document
                 .querySelector('meta[name="csrf-token"]')
