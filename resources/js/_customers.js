@@ -181,12 +181,16 @@ export default class Customers {
                     branchEdit.setAttribute('data-target', '#modalEdit');
                     branchEdit.setAttribute('id', 'branch-'+data[i].id);
                     branchEdit.setAttribute('type', 'button');
+                    branchEdit.setAttribute('title', 'Editar');
+                    branchEdit.setAttribute('data-tooltip', '');
                     branchEdit.innerHTML = '<i class="fas fa-edit"></i>';
                     //Delete button
                     const branchDelete = document.createElement("button");
                     branchDelete.onclick = function(){confirmDelete('/sucursales/null/'+data[i].id)};
                     branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                     branchDelete.setAttribute('type', 'button');
+                    branchDelete.setAttribute('title', 'Eliminar');
+                    branchDelete.setAttribute('data-tooltip', '');
                     branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
                     //Div
                     const buttonsDiv = document.createElement("div");

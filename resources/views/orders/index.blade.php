@@ -97,7 +97,7 @@
                 <!--begin::Button-->
 
 
-                <a href="historial" class="btn btn-light-primary font-weight-bolder mr-2">
+                <a href="{{ route('orders.historial') }}" class="btn btn-light-primary font-weight-bolder mr-2">
                     <i class="fas fa-history"></i>
                     </span>Historial</a>
 
@@ -226,15 +226,15 @@
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                         <a href="{{ route('orders.show', $order->id) }}"
-                                            class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="ARCHVOS">
+                                            class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
                                             <i class="fad fa-folder-open"></i>
                                         </a>
                                         <a href="{{ route('orders.edit', $order->id) }}"
-                                            class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="EDITAR">
+                                            class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                             <i class="fad fa-edit"></i>
                                         </a>
                                         <button type="button" onclick="deleteResource('/ordenes/'+{{ $order->id }})"
-                                            class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="ELIMINAR">
+                                            class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
                                     </div>

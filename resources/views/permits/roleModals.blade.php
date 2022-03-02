@@ -21,7 +21,8 @@
                             <option value="0"> Inactivo</option>
                         </select>
                     </div>
-                    <div class="col-md-2 d-flex justify-content-start align-items-center mt-3">
+                    <div class="col-md-2 d-flex justify-content-start aling-items-center mt-7" data-tooltip
+                    title="Guardar">
                         <button class="btn"><i class="fad fa-save text-primary" style="font-size:2.3rem"></i></button>
                     </div>
                 </div>
@@ -58,7 +59,8 @@
                             <option value="0"> Inactivo</option>
                         </select>
                     </div>
-                    <div class="col-md-2 d-flex justify-content-start align-items-center mt-3">
+                    <div class="col-md-2 d-flex justify-content-start align-items-center mt-7" data-tooltip
+                    title="Guardar">
                         <button class="btn"><i class="fad fa-save text-primary" style="font-size:2.3rem"></i></button>
                     </div>
                 </div>

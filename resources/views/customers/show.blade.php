@@ -175,7 +175,7 @@
                                 </td>
                             @endif
                             <td>
-                                <button type="button" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal{{$item->id}}">
+                                <button type="button" class="edit btn btn-icon btn-light-success"  data-tooltip title="Editar" data-toggle="modal" data-target="#editModal{{$item->id}}" >
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <!-- MODAL EDIT-->
