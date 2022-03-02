@@ -213,15 +213,7 @@
                                 </td>
                                 <td>{{ format_date(date('Y-n-d', strtotime($order->created_at))) }}</td>
                                 <td>
-                                    @if ($order->state == 1)
-                                        <span class="label label-inline label-light-success font-weight-bold">
-                                            Activo
-                                        </span>
-                                    @else
-                                        <span class="label label-inline label-light-danger font-weight-bold">
-                                            Inactivo
-                                        </span>
-                                    @endif
+                                    {{$order->getOrderState->name}}
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">

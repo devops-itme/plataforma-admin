@@ -55,7 +55,7 @@ class Order extends Model
 
     public function getOrderState()
     {
-        return $this->belongsTo(ParameterValue::class, 'order_states');
+        return $this->belongsTo(ParameterValue::class, 'state');
     }
 
     public function getDocumentType()
