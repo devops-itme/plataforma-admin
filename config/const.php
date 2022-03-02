@@ -216,7 +216,8 @@ return [
             'edit',
             'assignat',
             'import',
-            'export'
+            'export',
+            'record'
         ],
         'permissions' => [],
         'branch_office_types' => [
