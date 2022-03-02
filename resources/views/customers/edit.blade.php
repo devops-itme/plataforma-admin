@@ -28,6 +28,7 @@
     @include('layouts.alerts')
     @include('customers.modals.branches.editBranchModal')
     @include('customers.modals.branches.createBranchModal')
+    @include('customers.modals.users.createUserModal')
     <!--begin::Form-->
     <form action="{{route('customers.update', $customer->id)}}" method="post">
         @csrf @method('PUT')
@@ -74,7 +75,7 @@
                 <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{ $customer->getUser->phone }}" />
                 <span class="form-text text-muted"></span>
             </div>
-            {{-- <input type="hidden" value="{{$customer->business_name ? '2' : '1'}}" id="customer_type_edit"> --}}
+            <input type="hidden" value="{{$customer->business_name ? '2' : '1'}}" id="customer_type_edit">
             <div class="form-group py-3 m-0 col-md-3">
                 <label>Tipo de documento</label>
                 <select class="form-control form-control-solid" id="document_type" name="document_type">
@@ -116,11 +117,9 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="departament-tab" data-toggle="tab" href="#departament" role="tab" aria-controls="departament" aria-selected="false">Departamentos</a>
                     </li>
-                    @if($customer->getUser->role == 4)
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" href="{{route('bankUsers.index', $customer->getUser->id)}}">Usuarios</a>
-                        </li>
-                    @endif
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">Usuarios</a>
+                    </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -330,12 +329,42 @@
                             </div>
                         </div>
                     </div>
-                     {{-- DEPARTMENT MODULE --}}
-                     <div class="tab-pane fade" id="departament" role="tabpanel" aria-labelledby="departament-tab">
-                        <department-tab>
-
+                    {{-- DEPARTMENT MODULE --}}
+                    <div class="tab-pane fade" id="departament" role="tabpanel" aria-labelledby="departament-tab">
+                        <department-tab :user-id="{{ $customer->user_id  }}">
                         </department-tab>
-                     </div>
+                    </div>
+                    <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+                        <div class="col-md-12">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <!--tabla de datos-->
+                                    <table class="table table-sm" id="users_table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Nombres</th>
+                                                <th scope="col">Apellidos</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Teléfono</th>
+                                                <th scope="col">Estado</th>
+                                                <th scope="col">
+                                                    <div class="d-flex justify-content-end">
+                                                        <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalCreateUser">
+                                                            <span class="svg-icon svg-icon-md">
+                                                                <i class="fas fa-plus"></i>
+                                                            </span>Crear
+                                                        </a>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
