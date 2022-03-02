@@ -7,6 +7,7 @@ export default class Customers {
         this.saveBranchOffices();
         this.listBranchOffices();
         this.updateBranchOffice();
+        this.saveUser();
     }
 
     customerFeatures() {
@@ -386,4 +387,55 @@ export default class Customers {
             .catch(e => console.log(e));
         return response;
     }
+
+    saveUser(){
+        let btnSubmit = document.getElementById("saveUser");
+        if(btnSubmit == null){
+            return;
+        }
+        btnSubmit.addEventListener('click', async () => {
+            let parent_id = document.getElementById("customer_id").value,
+                name = document.getElementById("user_name").value,
+                last_name = document.getElementById("user_last_name").value,
+                email = document.getElementById("user_email").value,
+                phone = document.getElementById("user_phone").value,
+                password = document.getElementById("user_password").value,
+                password_confirm = document.getElementById("user_password_confirm").value;
+
+            let formData = new FormData();
+            formData.append('name', name);
+            formData.append('last_name', last_name);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('password', password);
+            formData.append('password_confirmation', password_confirm);
+
+            let response = await this.storeUserData(parent_id, formData);
+            if(response.state == 200){
+                correct(response.message);
+                let modal = document.getElementById("modalCreateUser");
+                modal.click();
+                this.listGuides();
+            } else {
+                error(response.error);
+                console.log('Error: '+response.error);
+            }
+        });
+    }
+
+    async storeUserData(parent_id, formData){
+        let response = {
+            'state': 500
+        };
+
+        response = await fetch("/usuario-banco/"+parent_id+"/store", {
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            body: formData
+        })
+        return response.json();
+    }
+
 }

@@ -81467,6 +81467,7 @@ var Customers = /*#__PURE__*/function () {
       this.saveBranchOffices();
       this.listBranchOffices();
       this.updateBranchOffice();
+      this.saveUser();
     }
   }, {
     key: "customerFeatures",
@@ -82138,6 +82139,95 @@ var Customers = /*#__PURE__*/function () {
       }
 
       return requestDepartments;
+    }()
+  }, {
+    key: "saveUser",
+    value: function saveUser() {
+      var _this4 = this;
+
+      var btnSubmit = document.getElementById("saveUser");
+
+      if (btnSubmit == null) {
+        return;
+      }
+
+      btnSubmit.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+        var parent_id, name, last_name, email, phone, password, password_confirm, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                parent_id = document.getElementById("customer_id").value, name = document.getElementById("user_name").value, last_name = document.getElementById("user_last_name").value, email = document.getElementById("user_email").value, phone = document.getElementById("user_phone").value, password = document.getElementById("user_password").value, password_confirm = document.getElementById("user_password_confirm").value;
+                formData = new FormData();
+                formData.append('name', name);
+                formData.append('last_name', last_name);
+                formData.append('email', email);
+                formData.append('phone', phone);
+                formData.append('password', password);
+                formData.append('password_confirmation', password_confirm);
+                _context11.next = 10;
+                return _this4.storeUserData(parent_id, formData);
+
+              case 10:
+                response = _context11.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalCreateUser");
+                  modal.click();
+
+                  _this4.listGuides();
+                } else {
+                  error(response.error);
+                  console.log('Error: ' + response.error);
+                }
+
+              case 12:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11);
+      })));
+    }
+  }, {
+    key: "storeUserData",
+    value: function () {
+      var _storeUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(parent_id, formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context12.next = 3;
+                return fetch("/usuario-banco/" + parent_id + "/store", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context12.sent;
+                return _context12.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }));
+
+      function storeUserData(_x6, _x7) {
+        return _storeUserData.apply(this, arguments);
+      }
+
+      return storeUserData;
     }()
   }]);
 
