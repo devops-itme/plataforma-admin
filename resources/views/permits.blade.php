@@ -36,13 +36,13 @@
                   <span class="badge badge-{{Config::get('const.states')[$role->state]['color']}} text-uppercase">{{Config::get('const.states')[$role->state]['name']}}</span>
                 </td>
                 <td class="text-center">
-                  <button class="btn btn-primary btn-sm btn-fab btn-icon">
+                  <button class="btn btn-primary btn-sm btn-fab btn-icon" data-tooltip title="EDITAR">
                     <i class="fa fa-pencil"></i>
                   </button>
-                  <button class="btn btn-danger btn-sm btn-fab btn-icon">
+                  <button class="btn btn-danger btn-sm btn-fab btn-icon" data-tooltip title="ELIMINAR">
                     <i class="fa fa-trash"></i>
                   </button>
-                  <button class="btn btn-info btn-sm btn-fab btn-icon configuration-btn">
+                  <button class="btn btn-info btn-sm btn-fab btn-icon configuration-btn" data-tooltip title="CONFIGURAR">
                     <i class="fa fa-cog"></i>
                   </button>
                 </td>
@@ -71,17 +71,17 @@
         </div>
         <div class="card-body">
           <div class="row align-items-center">
-            <div class="col-12">            
-                <div class="card my-2">                                   
-                    <div class="card-body" id="card-body">                              
-                    </div>                  
-                </div>              
+            <div class="col-12">
+                <div class="card my-2">
+                    <div class="card-body" id="card-body">
+                    </div>
+                </div>
             </div>
           </div>
         </div>
       </form>
     </div>
-    
+
   </div>
 </div>
 @endsection

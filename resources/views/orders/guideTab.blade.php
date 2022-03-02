@@ -13,12 +13,12 @@
             <th scope="col">
                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                     <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal"
-                        data-target="#modalCreate">
+                        data-target="#modalCreate" data-tooltip title="CREAR">
                         <span class="svg-icon svg-icon-md">
                             <i class="fas fa-plus"></i>
                         </span>Crear
                     </a>
-                    <a href="#" class="btn btn-success btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalImport">
+                    <a href="#" class="btn btn-success btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalImport" data-tooltip title="IMPORTAR">
                         <span class="svg-icon svg-icon-md">
                             <i class="fad fa-upload"></i>
                         </span>Importar
@@ -44,15 +44,15 @@
                         </span> --}}
             </td>
             <td>
-                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row" data-tooltip title="ARCHIVOS">
                     <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
                         <i class="far fa-folder-open"></i>
                     </a>
                     <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
-                        data-target="#modalEdit">
+                        data-target="#modalEdit" data-tooltip title="EDITAR">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a href="#" role="button" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                    <a href="#" role="button" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="ELIMINAR">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </div>
