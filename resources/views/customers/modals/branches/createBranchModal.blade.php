@@ -86,7 +86,7 @@
                     <div class="form-group col-md-3">
                         <label>Departamento de sucursal:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_department" name="branch_office_department">
-                            <option selected disabled>Seleccione</option>
+                            <option selected>Seleccione</option>
                         </select>
                         <span class="form-text text-muted"></span>
                     </div>
