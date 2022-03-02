@@ -42,6 +42,7 @@
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
+            <input type="hidden" name="user_id" id="customer_id" value="{{$customer->getUser->id}}">
             <div class="col-md-7 d-flex px-0" id="naturalCustomer">
                 <div class="form-group py-3 m-0 col-md-6">
                     <label>Nombres: <span class="text-danger">*</span></label>

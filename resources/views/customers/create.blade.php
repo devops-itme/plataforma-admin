@@ -170,15 +170,15 @@
                                     <span class="form-text text-muted"></span>
                                 </div>
                                 <div class="form-group py-3 m-0 col-md-4">
-                                    <label>Valor FullFill <span class="text-danger">*</span></label>
+                                    <label>Valor FullFill </label>
                                     <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="fullfill" value="{{ old('fullfill') }}" />
                                 </div>
                                 <div class="form-group py-3 m-0 col-md-4">
-                                    <label>Valor Handling <span class="text-danger">*</span></label>
+                                    <label>Valor Handling </label>
                                     <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="handling" value="{{ old('handling') }}" />
                                 </div>
                                 <div class="form-group py-3 m-0 col-md-4">
-                                    <label>Valor COD <span class="text-danger">*</span></label>
+                                    <label>Valor COD </label>
                                     <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="number" name="COD_value" value="{{ old('COD_value') }}" />
                                 </div>
                                 <div class="form-group col-md-4 mb-0 py-4">

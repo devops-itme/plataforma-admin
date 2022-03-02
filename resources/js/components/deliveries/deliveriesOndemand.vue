@@ -1,8 +1,10 @@
 <script>
+import moment from 'moment';
 export default {
     data() {
         return {
             data: [],
+            orders: [],
             activeIndex: null,
             shipmented: [],
             completed: [],
@@ -14,6 +16,9 @@ export default {
             searchMessenger: null,
             messenger: null,
             messengerName: null,
+            checkAllOrders: false,
+            startDate: moment(Date.now()).format("YYYY-MM-DD"),
+            endDate: moment(Date.now()).format("YYYY-MM-DD"),
             // orderTypes: null,
         };
     },
@@ -31,6 +36,17 @@ export default {
                 });
             }
         },
+        filterOrders() {
+            if(this.checkAllOrders == false){
+                return this.data = this.orders.filter((item) => {
+                    return this.localizeDate(item.schedule_date) >= this.localizeDate(this.startDate)
+                    && this.localizeDate(item.schedule_date) <= this.localizeDate(this.endDate)
+                });
+            }else{
+                 return this.data = this.orders;
+            }
+
+        },
 
         setMessenger() {
             if (this.searchMessenger) {
@@ -45,13 +61,20 @@ export default {
     watch: {},
 
     methods: {
+
+        localizeDate(date) {
+            if (!date || !date.includes('-')) return date
+            const [yyyy, mm, dd] = date.split('-')
+            return new Date(`${mm}/${dd}/${yyyy}`)
+        },
+
         async getOrders(type_id, index) {
             index != undefined &&
                 $(`#myTab li:nth-child(${index + 1}) a`).tab("show");
 
             this.currentTab = type_id;
             let response = await this.requestOrders();
-            this.data = response.data;
+            this.orders = response.data;
             this.activeIndex = null;
             this.showData = [];
             this.showMessengerData = [];
@@ -65,7 +88,7 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/orders_delivery/${this.currentTab}`, requestOptions)
+            await fetch(`/orders_ondemand/${this.currentTab}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     response = data;
@@ -126,7 +149,7 @@ export default {
                     order_id: this.showData.id,
                 }),
             };
-            await fetch(`/guias/asignacion`, requestOptions)
+            await fetch(`/ordenes/asignacion`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.state == 500) {

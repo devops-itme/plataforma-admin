@@ -22,7 +22,7 @@ class PermissionController extends Controller
         $roles = Role::get();
         $permissions = Permission::get();
         // dd($permissions);
-        return view('permits', compact('roles'));
+        return view('permits.permits', compact('roles'));
     }
 
     public function getPermissions($role_id)

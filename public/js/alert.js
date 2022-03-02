@@ -4,7 +4,7 @@ function confirmDelete(param) {
         .getAttribute("content");
     swal({
         title: "¿Estás seguro?",
-        text: "Recuerda que al eliminar un usuario borrarás todos sus registros",
+        text: "Recuerda que al eliminar ésto borrarás todos sus registros",
         icon: "warning",
         buttons: {
             cancel: 'Cancelar',

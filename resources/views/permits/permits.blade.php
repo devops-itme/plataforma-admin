@@ -4,6 +4,7 @@
 {{-- Content --}}
 @section('content')
 @include('layouts.alerts')
+@include('permits.roleModals')
 <div class="row">
   <div class="col-md-5">
     <div class="card">
@@ -14,7 +15,7 @@
           </div>
           <hr>
           <div class="col text-right">
-            <button type="button" class="btn btn-primary btn-sm text-uppercase" data-toggle="modal" data-target="#idAddRole"><i class="fa fa-plus"></i>Agregar rol</button>
+            <button type="button" class="btn btn-primary btn-sm text-uppercase" data-toggle="modal" data-target="#createRolModal"><i class="fa fa-plus"></i>Agregar rol</button>
             <button class="btn btn-primary btn-sm btn-filter"><i class="fa fa-filter" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -36,10 +37,10 @@
                   <span class="badge badge-{{Config::get('const.states')[$role->state]['color']}} text-uppercase">{{Config::get('const.states')[$role->state]['name']}}</span>
                 </td>
                 <td class="text-center">
-                  <button class="btn btn-primary btn-sm btn-fab btn-icon" data-tooltip title="EDITAR">
+                  <button name="btnEditRole" id="btnRole-{{$role->id}}" class="btn btn-primary btn-sm btn-fab btn-icon" data-toggle="modal" data-target="#editRolModal">
                     <i class="fa fa-pencil"></i>
                   </button>
-                  <button class="btn btn-danger btn-sm btn-fab btn-icon" data-tooltip title="ELIMINAR">
+                  <button class="btn btn-danger btn-sm btn-fab btn-icon" onclick="confirmDelete('/roles/'+{{$role->id}})">
                     <i class="fa fa-trash"></i>
                   </button>
                   <button class="btn btn-info btn-sm btn-fab btn-icon configuration-btn" data-tooltip title="CONFIGURAR">

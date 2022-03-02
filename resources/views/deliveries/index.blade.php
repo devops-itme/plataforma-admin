@@ -11,10 +11,10 @@
                 </div>
                 <div class="card-title">
                     <h6 class=" card-label">Desde:</h6>
-                    <input type="date" value="2022-10-02" min="2000-01-01" style="margin-right: 20px;">
+                    <input type="date" value="2022-10-02" min="2000-01-01" style="margin-right: 20px;" v-model="startDate">
                     <h6 class="card-label">Hasta:</h6>
-                    <input type="date" value="2022-10-02" min="2000-01-01" style="margin-right: 10px;">
-                    <input type="checkbox" id="check" style="margin-right: 5px;">
+                    <input type="date" value="2022-10-02" min="2000-01-01" style="margin-right: 10px;" v-model="endDate">
+                    <input type="checkbox" id="check" style="margin-right: 5px;" v-model="checkAllOrders">
                     <h6 class=" card-text">Ver todo</h6>
                 </div>
                 <div class="card-toolbar">

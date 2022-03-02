@@ -39,6 +39,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="user_id" id="customer_id" value="{{$customer->getUser->id}}">
             <!--end::Item-->
         </div>
         <div class="my-5">
@@ -77,7 +78,7 @@
                         <div class="line-height-xl">{{$customer->receive_emails == 1 ? 'Sí' : 'No'}}</div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-5 pb-5 border-bottom">
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Valor FullFill:</div>
                         <div class="line-height-xl">${{number_format($customer->fullfill)}}</div>
@@ -98,101 +99,157 @@
             </div>
             <!--end::Item-->
         </div>
+        <div class="my-5">
+            <h5 class="mb-10 font-weight-bold text-dark">Seguro de mercancia</h5>
+            <div class="mb-5 pb-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Valor asegurado:</div>
+                        <div class="line-height-xl">${{number_format($customer->insured_value)}}</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">A cobrar %:</div>
+                        <div class="line-height-xl">${{number_format($customer->percentage_to_collect)}}</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">A cobrar $:</div>
+                        <div class="line-height-xl">${{number_format($customer->money_to_collect)}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<div class="col-md-12">
+    <ul class="nav nav-light-success nav-pills border-bottom pb-2" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="addresses-tab" data-toggle="tab" href="#addresses" role="tab" aria-controls="addresses" aria-selected="true">Direcciones</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="branches-tab" data-toggle="tab" href="#branches" role="tab" aria-controls="branches" aria-selected="false">Sucursales</a>
+        </li>
+    </ul>
+</div>
 
-<br>
-<div class="card card-custom">
-    <div class="card-header">
-        <div class="card-title">
-            <h3 class="card-label">
-                Direcciones
-            </h3>
-        </div>
-        <div class="card-toolbar">
-            <button type="button" class="btn btn-sm font-weight-bold btn-primary" data-toggle="modal" data-target="#formCreateAddress">
-                <i class="fas fa-plus"></i>CREAR DIRECCION
-            </button>
-        </div>
-    </div>
-    <div class="card-body">
-        <table class="address_table table align-items-center text-center table-flush" id="{{$customer->user_id}}">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Dirección</th>
-                    <th scope="col">Estado</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($customer->getUser->getAddresses as $item)
-                <tr>
-                    <td id="description" >{{$item->description}}</td>
-                    <td id="name" >{{$item->name}}</td>
-                    @if($customer->state == 1)
-                    <td>
-                        <span class="label label-inline label-light-success font-weight-bold">
-                            Activo
-                        </span>
-                    </td>
-                    @else
-                        <td>
-                            <span class="label label-inline label-light-danger font-weight-bold">
-                                Inactivo
-                            </span>
-                        </td>
-                    @endif
-                    <td>
-                        <button type="button" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal{{$item->id}}">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <!-- MODAL EDIT-->
-                        <div class="modal fade" id="editModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">EDITAR DIRECCIÓN</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{ route('addresses.update', $item->id) }}" method="POST">
-                                            @csrf @method('PUT')
-                                            <input type="text" hidden name="user_id" value="{{$item->user_id}}">
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <label> Descripción </label>
-                                                    <input type="text" name="description" class="form-control" value="{{$item->description}}" placeholder="Descripción">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label> Dirección *</label>
-                                                    <input type="text" name="address" class="form-control" value="{{$item->name}}" id="address_edit" placeholder="Introduce una ubicación">
-                                                    <input type="hidden" name="lat" id="branch_office_lat_edit" value="{{$item->lat}}">
-                                                    <input type="hidden" name="lng" id="branch_office_lng_edit" value="{{$item->lng}}">
-                                                </div>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="addresses" role="tabpanel" aria-labelledby="addresses-tab">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">
+                        Direcciones
+                    </h3>
+                </div>
+                <div class="card-toolbar">
+                    <button type="button" class="btn btn-sm font-weight-bold btn-primary" data-toggle="modal" data-target="#formCreateAddress">
+                        <i class="fas fa-plus"></i>CREAR DIRECCION
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="address_table table align-items-center text-center table-flush" id="{{$customer->user_id}}">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Dirección</th>
+                            <th scope="col">Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($customer->getUser->getAddresses as $item)
+                        <tr>
+                            <td id="description" >{{$item->description}}</td>
+                            <td id="name" >{{$item->name}}</td>
+                            @if($customer->state == 1)
+                            <td>
+                                <span class="label label-inline label-light-success font-weight-bold">
+                                    Activo
+                                </span>
+                            </td>
+                            @else
+                                <td>
+                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                        Inactivo
+                                    </span>
+                                </td>
+                            @endif
+                            <td>
+                                <button type="button" class="edit btn btn-icon btn-light-success" data-toggle="modal" data-target="#editModal{{$item->id}}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <!-- MODAL EDIT-->
+                                <div class="modal fade" id="editModal{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">EDITAR DIRECCIÓN</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                                                <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>GUARDAR</button>
+                                            <div class="modal-body">
+                                                <form action="{{ route('addresses.update', $item->id) }}" method="POST">
+                                                    @csrf @method('PUT')
+                                                    <input type="text" hidden name="user_id" value="{{$item->user_id}}">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label> Descripción </label>
+                                                            <input type="text" name="description" class="form-control" value="{{$item->description}}" placeholder="Descripción">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label> Dirección *</label>
+                                                            <input type="text" name="address" class="form-control" value="{{$item->name}}" id="address_edit" placeholder="Introduce una ubicación">
+                                                            <input type="hidden" name="lat" id="branch_office_lat_edit" value="{{$item->lat}}">
+                                                            <input type="hidden" name="lng" id="branch_office_lng_edit" value="{{$item->lng}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+                                                        <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>GUARDAR</button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <button type="button" onclick="deleteResource('{{route('addresses.destroy', $item->id)}}', true)" class="delete btn btn-icon btn-light-danger">
-                            <i class="fas fa-eraser"></i>
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                                <button type="button" onclick="deleteResource('{{route('addresses.destroy', $item->id)}}', true)" class="delete btn btn-icon btn-light-danger">
+                                    <i class="fas fa-eraser"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="branches" role="tabpanel" aria-labelledby="branches-tab">
+        <div class="card">
+            <div class="card-header">
+                <h3>Sucursales</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm" id="branch_offices_table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre de Sucursal</th>
+                            <th scope="col">Tipo de Sucursal</th>
+                            <th scope="col">Zona de Sucursal</th>
+                            <th scope="col">Contacto de Sucursal</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
+@include('customers.modals.branches.createBranchModal')
+@include('customers.modals.branches.editBranchModal')
 
 <!-- MODAL CREATE-->
 <div class="modal fade" id="formCreateAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -230,9 +287,6 @@
     </div>
 </div>
 
-
-
-<br>
 
 @endsection
 
