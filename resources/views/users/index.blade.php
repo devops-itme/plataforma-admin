@@ -94,7 +94,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{ route('users.create') }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('users.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip title="CREAR">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -191,15 +191,15 @@
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="ARCHIVOS">
                                         <i class="far fa-folder-open"></i>
                                     </a>
                                     <a href="{{ route('users.edit', $user->id) }}"
-                                        class="btn btn-icon btn-light-success btn-sm mr-2">
+                                        class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="EDITAR">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a onclick="deleteResource('/usuarios/'+{{ $user->id }})" role="button"
-                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="ELIMINAR">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>

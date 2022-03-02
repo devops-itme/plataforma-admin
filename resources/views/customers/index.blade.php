@@ -88,7 +88,7 @@
             </div>
             <!--end::Dropdown-->
             <!--begin::Button-->
-            <a href="{{route('customers.create')}}" class="btn btn-primary font-weight-bolder">
+            <a href="{{route('customers.create')}}" class="btn btn-primary font-weight-bolder" data-tooltip title="CREAR">
                 <span class="svg-icon svg-icon-md">
                     <i class="fas fa-plus"></i>
                 </span>Crear</a>

@@ -94,7 +94,7 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{ route('messengers.create') }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('messengers.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip title="CREAR">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -207,19 +207,19 @@
                                             </button>
                                             <div class="dropdown-menu">
                                                 <a href="{{ route('messengers.show', $item->id) }}"
-                                                    class="dropdown-item align-items-center">
+                                                    class="dropdown-item align-items-center" data-tooltip title="DETALLE">
                                                     <div class="btn btn-icon btn-light-primary btn-sm mr-2">
                                                         <i class="fad fa-folder-open"></i>
                                                     </div> Detalle
                                                 </a>
                                                 <a href="{{ route('messengers.edit', $item->id) }}"
-                                                    class="dropdown-item align-items-center">
+                                                    class="dropdown-item align-items-center" data-tooltip title="EDITAR">
                                                     <div class="btn btn-icon btn-light-success btn-sm mr-2">
                                                         <i class="fad fa-edit"></i>
                                                     </div> Editar
                                                 </a>
                                                 <a type="button" onclick="deleteResource('/mensajeros/'+{{ $item->id }})"
-                                                    role="button" id="deleteMessenger" class="dropdown-item align-items-center">
+                                                    role="button" id="deleteMessenger" class="dropdown-item align-items-center" data-tooltip title="ELIMINAR">
                                                     {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
                                                         @csrf @method('DELETE') --}}
                                                     <div class="btn btn-icon btn-light-danger btn-sm mr-2">
