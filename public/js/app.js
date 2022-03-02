@@ -81468,6 +81468,7 @@ var Customers = /*#__PURE__*/function () {
       this.listBranchOffices();
       this.updateBranchOffice();
       this.saveUser();
+      this.listUsers();
     }
   }, {
     key: "customerFeatures",
@@ -82228,6 +82229,148 @@ var Customers = /*#__PURE__*/function () {
       }
 
       return storeUserData;
+    }()
+  }, {
+    key: "listUsers",
+    value: function () {
+      var _listUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        var tbody, parent_id, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                tbody = document.querySelector("#users_table tbody");
+
+                if (!(tbody == null)) {
+                  _context13.next = 3;
+                  break;
+                }
+
+                return _context13.abrupt("return");
+
+              case 3:
+                parent_id = document.getElementById("customer_id").value;
+
+                if (!(parent_id == null)) {
+                  _context13.next = 6;
+                  break;
+                }
+
+                return _context13.abrupt("return");
+
+              case 6:
+                _context13.next = 8;
+                return this.requestUsers(parent_id);
+
+              case 8:
+                response = _context13.sent;
+
+                if (response.state == 200) {
+                  data = response.data;
+
+                  if (data.length > 0) {
+                    [].forEach.call(data, function (key) {
+                      var row = tbody.insertRow();
+                      var nameCell = row.insertCell(0);
+                      nameCell.innerHTML = key.name;
+                      var lastNameCell = row.insertCell(1);
+                      lastNameCell.innerHTML = key.last_name;
+                      var emailCell = row.insertCell(2);
+                      emailCell.innerHTML = key.email;
+                      var phoneCell = row.insertCell(3);
+                      phoneCell.innerHTML = key.phone;
+                      var stateCell = row.insertCell(4);
+
+                      if (key.state == 1) {
+                        stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                                    Activo\
+                                                </span>';
+                      } else {
+                        stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                    Inactivo\
+                                                </span>';
+                      }
+
+                      var selectCell = row.insertCell(5);
+                      var userEdit = document.createElement("button");
+                      userEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                      userEdit.setAttribute('data-toggle', 'modal');
+                      userEdit.setAttribute('data-target', '#modalEdit');
+                      userEdit.setAttribute('id', 'branch-' + key.id);
+                      userEdit.setAttribute('type', 'button');
+                      userEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
+
+                      var userDelete = document.createElement("button");
+
+                      userDelete.onclick = function () {
+                        confirmDelete('/usuario-banco/' + parent_id + '/' + key.id);
+                      };
+
+                      userDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                      userDelete.setAttribute('type', 'button');
+                      userDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                      var buttonsDiv = document.createElement("div");
+                      buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                      buttonsDiv.appendChild(userEdit);
+                      buttonsDiv.appendChild(userDelete);
+                      selectCell.appendChild(buttonsDiv);
+                      tbody.appendChild(row);
+                    });
+                  }
+                }
+
+              case 10:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13, this);
+      }));
+
+      function listUsers() {
+        return _listUsers.apply(this, arguments);
+      }
+
+      return listUsers;
+    }()
+  }, {
+    key: "requestUsers",
+    value: function () {
+      var _requestUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(parent_id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context14.next = 3;
+                return fetch("/usuario-banco/" + parent_id + "").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context14.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14);
+      }));
+
+      function requestUsers(_x8) {
+        return _requestUsers.apply(this, arguments);
+      }
+
+      return requestUsers;
     }()
   }]);
 

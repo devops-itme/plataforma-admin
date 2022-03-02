@@ -339,13 +339,13 @@
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <!--tabla de datos-->
-                                    <table class="table table-sm" id="branch_offices_table">
+                                    <table class="table table-sm" id="users_table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Nombre de Sucursal</th>
-                                                <th scope="col">Tipo de Sucursal</th>
-                                                <th scope="col">Zona de Sucursal</th>
-                                                <th scope="col">Contacto de Sucursal</th>
+                                                <th scope="col">Nombres</th>
+                                                <th scope="col">Apellidos</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Teléfono</th>
                                                 <th scope="col">Estado</th>
                                                 <th scope="col">
                                                     <div class="d-flex justify-content-end">
