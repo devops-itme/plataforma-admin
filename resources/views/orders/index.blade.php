@@ -15,8 +15,7 @@
             <div class="card-toolbar">
                 <!--begin::Button filter-->
 
-                <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter" data-tooltip
-                    data-placement="left" title="FILTRO">
+                <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
@@ -102,7 +101,8 @@
                     <i class="fas fa-history"></i>
                     </span>Historial</a>
 
-                <a href="{{ route('orders.create') }}" class="btn btn-primary font-weight-bolder">
+                <a href="{{ route('orders.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip
+                    title="CREAR">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -118,18 +118,20 @@
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Numero de orden:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Orden_1" name="number"
-                                    value="{{ request()->number }}" />
+                                <input type="text" class="form-control form-control-solid" placeholder="Orden_1"
+                                    name="number" value="{{ request()->number }}" />
                                 <span class="form-text text-muted">Filtro numero</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label for="exampleSelect1">Tipo de orden:</label>
-                                        <select class="form-control form-control-solid" name="order_type">
-                                            <option selected disabled> Seleccione </option>
-                                            @foreach ($order_type as $key)
-                                                <option value="{{$key->id}}" {{ $key->id == request()->order_type ? 'selected' : ''}}>{{$key->name}}</option>
-                                            @endforeach
-                                        </select>
+                                <select class="form-control form-control-solid" name="order_type">
+                                    <option selected disabled> Seleccione </option>
+                                    @foreach ($order_type as $key)
+                                        <option value="{{ $key->id }}"
+                                            {{ $key->id == request()->order_type ? 'selected' : '' }}>{{ $key->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <span class="form-text text-muted">Filtro tipo de orden</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
@@ -167,7 +169,8 @@
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{route('orders.index')}}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                    <a href="{{ route('orders.index') }}"
+                                        class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
                         </div>
@@ -223,14 +226,15 @@
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                         <a href="{{ route('orders.show', $order->id) }}"
-                                            class="btn btn-icon btn-light-primary btn-sm mr-2">
+                                            class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="ARCHVOS">
                                             <i class="fad fa-folder-open"></i>
                                         </a>
                                         <a href="{{ route('orders.edit', $order->id) }}"
-                                            class="btn btn-icon btn-light-success btn-sm mr-2">
+                                            class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="EDITAR">
                                             <i class="fad fa-edit"></i>
                                         </a>
-                                        <button type="button" onclick="deleteResource('/ordenes/'+{{$order->id}})" class="btn btn-icon btn-light-danger btn-sm mr-2">
+                                        <button type="button" onclick="deleteResource('/ordenes/'+{{ $order->id }})"
+                                            class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="ELIMINAR">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
                                     </div>

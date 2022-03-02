@@ -43,7 +43,7 @@
                   <button class="btn btn-danger btn-sm btn-fab btn-icon" onclick="confirmDelete('/roles/'+{{$role->id}})">
                     <i class="fa fa-trash"></i>
                   </button>
-                  <button class="btn btn-info btn-sm btn-fab btn-icon configuration-btn">
+                  <button class="btn btn-info btn-sm btn-fab btn-icon configuration-btn" data-tooltip title="CONFIGURAR">
                     <i class="fa fa-cog"></i>
                   </button>
                 </td>
