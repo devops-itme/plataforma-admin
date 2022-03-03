@@ -83180,7 +83180,8 @@ var Orders = /*#__PURE__*/function () {
 
       var _loop = function _loop(i) {
         allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var response, data, modal;
+          var response, data, branches, branchSlc, _i, element, branchOpt, departments, departmentSlc, _i2, _element, _branchOpt, modal;
+
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
@@ -83194,8 +83195,28 @@ var Orders = /*#__PURE__*/function () {
                   document.getElementById("user_code").value = data[0]['id'];
                   document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
                   document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
-                  document.getElementById("user_department").value = data[2] != null ? data[2]['name'] : '';
-                  document.getElementById("user_branch_office").value = data[1] != null ? data[1]['name'] : '';
+                  branches = data[1];
+                  branchSlc = document.getElementById("user_branch_office");
+                  branchSlc.selectedIndex = 0;
+                  removeOptions(branchSlc);
+
+                  for (_i = 0; _i < branches.length; _i++) {
+                    element = branches[_i];
+                    branchOpt = '<option value="' + element.name + '"> ' + element.name + ' </option>';
+                    branchSlc.insertAdjacentHTML('beforeend', branchOpt);
+                  }
+
+                  departments = data[2];
+                  departmentSlc = document.getElementById("user_departments");
+                  departmentSlc.selectedIndex = 0;
+                  removeOptions(departmentSlc);
+
+                  for (_i2 = 0; _i2 < departments.length; _i2++) {
+                    _element = departments[_i2];
+                    _branchOpt = '<option value="' + _element.name + '"> ' + _element.name + ' </option>';
+                    branchSlc.insertAdjacentHTML('beforeend', _branchOpt);
+                  }
+
                   document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
                   modal = document.getElementById("detailCustomer");
                   modal.click();
@@ -83204,7 +83225,7 @@ var Orders = /*#__PURE__*/function () {
                     _this4.customerAddresses(document.getElementById("user_code").value);
                   }
 
-                case 13:
+                case 21:
                 case "end":
                   return _context4.stop();
               }

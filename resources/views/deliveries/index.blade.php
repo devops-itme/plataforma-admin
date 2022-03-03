@@ -95,15 +95,17 @@
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Movil:</div>
-                                <div class="line-height-xl">381, YEMAYEL ARIEL</div>
+                                <div class="line-height-xl" v-show="showData.id" v-text="`${[showMessengerData ? showMessengerData.id+', '+showMessengerData?.name+' '+showMessengerData?.last_name : 'No registra']}`">381, YEMAYEL ARIEL</div>
                             </div>
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">(1) Adicional*0:</div>
-                                <div class="line-height-xl">$0</div>
+                            <div class="col-md-12 m-0 p-0" v-for="(tab, i) in showData.get_guides"  >
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1" v-text="`${'('+(i+1)+'), '+tab.rate}`">(1) Adicional*0:</div>
+                                    <div class="line-height-xl" v-text="`${'$'+new Intl.NumberFormat().format(tab.value)}`">$0</div>
+                                </div>
                             </div>
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-12 mb-2">
                                 <div class="font-weight-bolder mb-1">Cliente Depto:</div>
                                 <div class="line-height-x1">84: PRINCIPAL</div>
                             </div>
