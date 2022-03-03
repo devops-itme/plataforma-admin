@@ -2143,7 +2143,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 
@@ -2176,7 +2175,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     loadingEvt: function loadingEvt() {
-      return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>';
+      $("#myTab li:nth-child(1) a").tab("show");
     },
     getGuides: function getGuides(type) {
       var _this2 = this;
@@ -2187,16 +2186,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                // let v = this.selected;
-                // this.selected = v + type;
                 _this2.type_guide = _this2.selected + type;
-                console.log(_this2.type_guide);
-                _context.next = 4;
+                _context.next = 3;
                 return _this2.requestGuides();
 
-              case 4:
+              case 3:
                 response = _context.sent;
                 _this2.guides = response.data;
+                _this2.guides2 = [];
 
               case 6:
               case "end":
@@ -2947,7 +2944,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       showMessengerData: [],
       searchMessenger: null,
       messenger: null,
-      messengerName: null
+      messengerName: null,
+      showGuide: null
     };
   },
   computed: {
@@ -2972,8 +2970,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    handleChange: function handleChange(evt) {
-      console.log(evt.items);
+    rowClick: function rowClick(data) {
+      this.showGuide = data;
     },
     formatDate: function formatDate(date) {
       if (date) {
@@ -3037,10 +3035,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
 
                   if (data.state == 200) {
-                    // let index = _this.data.findIndex(
-                    //     (item) => item.id == _this.showData.id
-                    // );
-                    // _this.data.splice(index, 1);
+                    _this.searchMessenger = null;
                     return correct(data.message);
                   }
                 })["catch"](function (err) {
@@ -62531,7 +62526,7 @@ var render = function () {
                           : $$selectedVal[0]
                       },
                       function ($event) {
-                        _vm.loadingEvt, _vm.getGuides(null)
+                        _vm.loadingEvt(), _vm.getGuides(null)
                       },
                     ],
                   },
@@ -63115,13 +63110,20 @@ var render = function () {
                             end: function ($event) {
                               _vm.drag = false
                             },
-                            select: _vm.handleChange,
                           },
                         },
                         _vm._l(_vm.guides, function (tblItem) {
                           return _c(
                             "tr",
-                            { key: tblItem.id, staticClass: "text-center" },
+                            {
+                              key: tblItem.id,
+                              staticClass: "text-center",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.handleChange(tblItem)
+                                },
+                              },
+                            },
                             [
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
@@ -85200,13 +85202,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
-=======
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> 532a80fda5b5f40739de738690c2dcfa3cf9a101
 
 
 /***/ })
