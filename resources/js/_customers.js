@@ -1,6 +1,7 @@
 export default class Customers {
     constructor(){
         this.branchId = '';
+        this.userId = '';
     }
     initialize() {
         this.customerFeatures();
@@ -9,6 +10,7 @@ export default class Customers {
         this.updateBranchOffice();
         this.saveUser();
         this.listUsers();
+        this.updateUser();
     }
 
     customerFeatures() {
@@ -420,7 +422,7 @@ export default class Customers {
                 correct(response.message);
                 let modal = document.getElementById("modalCreateUser");
                 modal.click();
-                this.listGuides();
+                this.listUsers();
             } else {
                 error(response.error);
                 console.log('Error: '+response.error);
@@ -452,6 +454,7 @@ export default class Customers {
         if(parent_id == null){
             return;
         }
+        tbody.innerHTML = '';
         let response = await this.requestUsers(parent_id);
         if(response.state == 200){
             let data = response.data;
@@ -483,9 +486,10 @@ export default class Customers {
                     }
                     let selectCell = row.insertCell(5);
                     const userEdit = document.createElement("button");
-                    userEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                    userEdit.setAttribute('name', 'btnEditUser');
+                    userEdit.setAttribute('class', 'btn btnEditUser btn-icon btn-light-success btn-sm mr-2');
                     userEdit.setAttribute('data-toggle', 'modal');
-                    userEdit.setAttribute('data-target', '#modalEdit');
+                    userEdit.setAttribute('data-target', '#modalEditUser');
                     userEdit.setAttribute('id', 'branch-'+key.id);
                     userEdit.setAttribute('type', 'button');
                     userEdit.innerHTML = '<i class="fas fa-edit"></i>';
@@ -504,6 +508,7 @@ export default class Customers {
 
                     tbody.appendChild(row);
                 });
+                this.editUser();
             }
         }
     }
@@ -514,6 +519,106 @@ export default class Customers {
         };
         await fetch("/usuario-banco/"+parent_id+"")
             .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    editUser(){
+        let users = document.getElementsByName("btnEditUser");
+        if(users == null){
+            return;
+        }
+        let parent_id = document.getElementById("customer_id").value;
+        if(parent_id == null){
+            return;
+        }
+        [].forEach.call(users, key => {
+            key.addEventListener('click', async () => {
+                let user_id = key['id'].split('-')[1];
+                this.userId = user_id;
+                let response = await this.requestUserData(parent_id, user_id);
+                let data = response.data;
+
+                document.getElementById("user_name_edit").value = data.name;
+                document.getElementById("user_last_name_edit").value = data.last_name;
+                document.getElementById("user_email_edit").value = data.email;
+                document.getElementById("user_phone_edit").value = data.phone;
+            });
+        });
+    }
+
+    async requestUserData(parent_id, id){
+        let response = {
+            'state': 500
+        };
+        await fetch("/usuario-banco/"+parent_id+"/"+id+"/edit")
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    updateUser(){
+        let updateBtn = document.getElementById("updateUser");
+        if(updateBtn == null){
+            return;
+        }
+        updateBtn.addEventListener('click', async () => {
+            let parent_id = document.getElementById("customer_id").value;
+            let name = document.getElementById("user_name_edit").value;
+            let last_name = document.getElementById("user_last_name_edit").value;
+            let email = document.getElementById("user_email_edit").value;
+            let phone = document.getElementById("user_phone_edit").value;
+            let password = document.getElementById("user_password_edit").value;
+            let password_confirm = document.getElementById("user_password_confirm_edit").value;
+
+            let formData = new FormData();
+            formData.append('name', name);
+            formData.append('last_name', last_name);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('password', password);
+            formData.append('password_confirmation', password_confirm);
+
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify(Object.fromEntries(formData))
+            };
+            let response = await this.sendUserDataToUpdate(parent_id, this.userId, requestOptions);
+            if(response.state == 200){
+                correct(response.message);
+                let modal = document.getElementById("modalEditUser");
+                modal.click();
+                this.listUsers();
+            } else {
+                error(response.error);
+                // console.log('Error: '+response.error);
+            }
+        });
+    }
+
+    async sendUserDataToUpdate(parent_id, id, requestOptions){
+        let response = {
+            'state': 500
+        };
+        await fetch('/usuario-banco/'+parent_id+'/'+id+'/update', requestOptions)
+            .then((response) => response.json())
             .then(data => {
                 response = data
             })

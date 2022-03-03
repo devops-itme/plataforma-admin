@@ -81534,6 +81534,7 @@ var Customers = /*#__PURE__*/function () {
     _classCallCheck(this, Customers);
 
     this.branchId = '';
+    this.userId = '';
   }
 
   _createClass(Customers, [{
@@ -81545,6 +81546,7 @@ var Customers = /*#__PURE__*/function () {
       this.updateBranchOffice();
       this.saveUser();
       this.listUsers();
+      this.updateUser();
     }
   }, {
     key: "customerFeatures",
@@ -82257,7 +82259,7 @@ var Customers = /*#__PURE__*/function () {
                   modal = document.getElementById("modalCreateUser");
                   modal.click();
 
-                  _this4.listGuides();
+                  _this4.listUsers();
                 } else {
                   error(response.error);
                   console.log('Error: ' + response.error);
@@ -82339,10 +82341,11 @@ var Customers = /*#__PURE__*/function () {
                 return _context13.abrupt("return");
 
               case 6:
-                _context13.next = 8;
+                tbody.innerHTML = '';
+                _context13.next = 9;
                 return this.requestUsers(parent_id);
 
-              case 8:
+              case 9:
                 response = _context13.sent;
 
                 if (response.state == 200) {
@@ -82373,9 +82376,10 @@ var Customers = /*#__PURE__*/function () {
 
                       var selectCell = row.insertCell(5);
                       var userEdit = document.createElement("button");
-                      userEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                      userEdit.setAttribute('name', 'btnEditUser');
+                      userEdit.setAttribute('class', 'btn btnEditUser btn-icon btn-light-success btn-sm mr-2');
                       userEdit.setAttribute('data-toggle', 'modal');
-                      userEdit.setAttribute('data-target', '#modalEdit');
+                      userEdit.setAttribute('data-target', '#modalEditUser');
                       userEdit.setAttribute('id', 'branch-' + key.id);
                       userEdit.setAttribute('type', 'button');
                       userEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
@@ -82397,10 +82401,11 @@ var Customers = /*#__PURE__*/function () {
                       selectCell.appendChild(buttonsDiv);
                       tbody.appendChild(row);
                     });
+                    this.editUser();
                   }
                 }
 
-              case 10:
+              case 11:
               case "end":
                 return _context13.stop();
             }
@@ -82451,6 +82456,196 @@ var Customers = /*#__PURE__*/function () {
       }
 
       return requestUsers;
+    }()
+  }, {
+    key: "editUser",
+    value: function editUser() {
+      var _this5 = this;
+
+      var users = document.getElementsByName("btnEditUser");
+
+      if (users == null) {
+        return;
+      }
+
+      var parent_id = document.getElementById("customer_id").value;
+
+      if (parent_id == null) {
+        return;
+      }
+
+      [].forEach.call(users, function (key) {
+        key.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+          var user_id, response, data;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+            while (1) {
+              switch (_context15.prev = _context15.next) {
+                case 0:
+                  user_id = key['id'].split('-')[1];
+                  _this5.userId = user_id;
+                  _context15.next = 4;
+                  return _this5.requestUserData(parent_id, user_id);
+
+                case 4:
+                  response = _context15.sent;
+                  data = response.data;
+                  document.getElementById("user_name_edit").value = data.name;
+                  document.getElementById("user_last_name_edit").value = data.last_name;
+                  document.getElementById("user_email_edit").value = data.email;
+                  document.getElementById("user_phone_edit").value = data.phone;
+
+                case 10:
+                case "end":
+                  return _context15.stop();
+              }
+            }
+          }, _callee15);
+        })));
+      });
+    }
+  }, {
+    key: "requestUserData",
+    value: function () {
+      var _requestUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(parent_id, id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context16.next = 3;
+                return fetch("/usuario-banco/" + parent_id + "/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context16.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16);
+      }));
+
+      function requestUserData(_x9, _x10) {
+        return _requestUserData.apply(this, arguments);
+      }
+
+      return requestUserData;
+    }()
+  }, {
+    key: "updateUser",
+    value: function updateUser() {
+      var _this6 = this;
+
+      var updateBtn = document.getElementById("updateUser");
+
+      if (updateBtn == null) {
+        return;
+      }
+
+      updateBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+        var parent_id, name, last_name, email, phone, password, password_confirm, formData, token, myHeaders, requestOptions, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+          while (1) {
+            switch (_context17.prev = _context17.next) {
+              case 0:
+                parent_id = document.getElementById("customer_id").value;
+                name = document.getElementById("user_name_edit").value;
+                last_name = document.getElementById("user_last_name_edit").value;
+                email = document.getElementById("user_email_edit").value;
+                phone = document.getElementById("user_phone_edit").value;
+                password = document.getElementById("user_password_edit").value;
+                password_confirm = document.getElementById("user_password_confirm_edit").value;
+                formData = new FormData();
+                formData.append('name', name);
+                formData.append('last_name', last_name);
+                formData.append('email', email);
+                formData.append('phone', phone);
+                formData.append('password', password);
+                formData.append('password_confirmation', password_confirm);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context17.next = 25;
+                return _this6.sendUserDataToUpdate(parent_id, _this6.userId, requestOptions);
+
+              case 25:
+                response = _context17.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalEditUser");
+                  modal.click();
+
+                  _this6.listUsers();
+                } else {
+                  error(response.error); // console.log('Error: '+response.error);
+                }
+
+              case 27:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17);
+      })));
+    }
+  }, {
+    key: "sendUserDataToUpdate",
+    value: function () {
+      var _sendUserDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(parent_id, id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context18.next = 3;
+                return fetch('/usuario-banco/' + parent_id + '/' + id + '/update', requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context18.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18);
+      }));
+
+      function sendUserDataToUpdate(_x11, _x12, _x13) {
+        return _sendUserDataToUpdate.apply(this, arguments);
+      }
+
+      return sendUserDataToUpdate;
     }()
   }]);
 
@@ -85005,8 +85200,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Documents\Proyectos_DevelopApp\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Documents\Proyectos_DevelopApp\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
