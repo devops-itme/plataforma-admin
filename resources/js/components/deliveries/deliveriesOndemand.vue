@@ -19,7 +19,6 @@ export default {
             checkAllOrders: false,
             startDate: moment(Date.now()).format("YYYY-MM-DD"),
             endDate: moment(Date.now()).format("YYYY-MM-DD"),
-            // orderTypes: null,
         };
     },
     computed: {
@@ -36,17 +35,17 @@ export default {
                 });
             }
         },
-        filterOrders() {
-            if(this.checkAllOrders == false){
-                return this.data = this.orders.filter((item) => {
-                    return this.localizeDate(item.schedule_date) >= this.localizeDate(this.startDate)
-                    && this.localizeDate(item.schedule_date) <= this.localizeDate(this.endDate)
-                });
-            }else{
-                 return this.data = this.orders;
-            }
+        // filterOrders() {
+        //     if(this.checkAllOrders == false){
+        //         return this.data = this.orders.filter((item) => {
+        //             return this.localizeDate(item.schedule_date) >= this.localizeDate(this.startDate)
+        //             && this.localizeDate(item.schedule_date) <= this.localizeDate(this.endDate)
+        //         });
+        //     }else{
+        //          return this.data = this.orders;
+        //     }
 
-        },
+        // },
 
         setMessenger() {
             if (this.searchMessenger) {
@@ -75,8 +74,9 @@ export default {
             this.currentTab = type_id;
             let response = await this.requestOrders();
             this.orders = response.data;
+            this.data = this.orders;
             this.activeIndex = null;
-            this.showData = [];
+            this.showData = "";
             this.showMessengerData = [];
         },
 
@@ -175,6 +175,48 @@ export default {
             this.tabs[1].href = "despachados";
             this.tabs[2].href = "completados";
         },
+
+        async updateStateOrders(state){
+            if (!this.showData) {
+                return await error("Debe seleccionar una orden");
+            }
+            let result = await confirmation('¿Estas Seguro?','Se cambiara el estado de la orden', 'info');
+            if (result == true) {
+                let _this = this;
+                let token = document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content");
+                let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                let requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: JSON.stringify({
+                        order_id: this.showData.id,
+                    }),
+                };
+                await fetch(`/despacho/orden/estado/${state}`, requestOptions)
+                    .then((response) => response.json())
+                    .then(function (data) {
+                        console.log(data)
+                        if (data.state == 500) {
+                            return error(data.message);
+                        }
+                        if (data.state == 200) {
+                             let index = _this.data.findIndex(
+                                (item) => item.id == _this.showData.id
+                            );
+                             _this.data.splice(index, 1);
+                            return correct(data.message);
+
+                        }
+                    })
+                    .catch((err) => console.warn(err));
+            }
+
+        }
     },
 
     async mounted() {

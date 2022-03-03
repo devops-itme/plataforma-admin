@@ -44,15 +44,15 @@
                         </span> --}}
             </td>
             <td>
-                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row" data-tooltip title="ARCHIVOS">
+                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row" data-tooltip title="Detalle">
                     <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
                         <i class="far fa-folder-open"></i>
                     </a>
                     <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
-                        data-target="#modalEdit" data-tooltip title="EDITAR">
+                        data-target="#modalEdit" data-tooltip title="Editar">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a href="#" role="button" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="ELIMINAR">
+                    <a href="#" role="button" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </div>
