@@ -253,7 +253,7 @@ class OrderController extends Controller
             ]);
         }
     }
-    public function orderRecord(){
+    public function record(){
         return view('orders.historial');
     }
 }
