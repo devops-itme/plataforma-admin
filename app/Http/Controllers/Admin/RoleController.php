@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RoleController extends Controller
 {
@@ -37,13 +38,12 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required | unique:roles,name',
-            'state' => 'required'
+            'name' => [Rule::unique('roles')->whereNull('deleted_at'), 'required'],
         ]);
         try {
             Role::create([
                 'name' => $request->name,
-                'state' => $request->state
+                'state' => 1
             ]);
             return redirect()->back()->with('success', 'Rol creado exitosamente.');
         } catch (\Exception $e) {
@@ -87,7 +87,7 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required | unique:roles,name,'.$id.'',
+            'name' => [Rule::unique('roles')->ignore($id)->whereNull('deleted_at'), 'required'],
             'state' => 'required'
         ]);
         try {

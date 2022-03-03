@@ -4,7 +4,6 @@
 {{-- Content --}}
 @section('content')
     @include('layouts.breadCrumbs')
-
     <div class="card card-custom">
         <form action="">
             <div class="card-header d-flex flex-row flex-wrap">

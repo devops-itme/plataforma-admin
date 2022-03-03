@@ -106,6 +106,14 @@ class OrderController extends Controller
         return view('orders.showFold.show', compact('order', 'order_type'));
     }
 
+
+    public function historial()
+    {
+        return view('orders.index');
+    }
+
+
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -252,14 +252,20 @@ class CustomerController extends Controller
 
     public function UserBankIndex($parent_id)
     {
-        $bankData = User::find($parent_id);
-        $users = User::where('parent_id', $parent_id)
-            ->name(request()->name)
-            ->email(request()->email)
-            ->phone(request()->phone)
-            ->state(request()->state)
-            ->get();
-        return view('bankUsers.index', compact('users', 'bankData'));
+        try {
+            $users = User::where('parent_id', $parent_id)->get();
+            return json_encode([
+                'state' => 200,
+                'data' => $users
+            ]);
+        } catch (\Exception $e) {
+            return json_encode([
+                'state' => 500,
+                'message' => 'Ha ocurrido un error.',
+                'error' => $e->getMessage()
+            ]);
+        }
+
     }
 
     public function UserBankCreate($parent_id = null)
@@ -274,9 +280,18 @@ class CustomerController extends Controller
         }
         $response = $this->saveUser($request->merge(['parent_id' => $parent_id ? $parent_id : null, 'role' => 4, 'state' => 1]));
         if($response['state'] == 200){
-            return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario registrado exitosamente');
+            // return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario registrado exitosamente');
+            return json_encode([
+                'state' => 200,
+                'message' => "Usuario creado exitosamente"
+            ]);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            // return redirect()->back()->with('danger', $response['message']);
+            return json_encode([
+                'state' => 500,
+                'message' => "Error al crear usuario",
+                'error' => $response['message']
+            ]);
         }
     }
 

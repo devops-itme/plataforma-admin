@@ -9,18 +9,18 @@
             <form action="{{route('roles.store')}}" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <label for=""> Nombre <span class="text-danger">*</span></label>
                         <input type="text" name="name" id="name" class="form-control form-control-solid" placeholder="Usuario">
                     </div>
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <label for=""> Estado <span class="text-danger">*</span></label>
                         <select name="state" id="state" class="form-control form-control-solid">
                             <option disabled selected> Seleccione </option>
                             <option value="1"> Activo</option>
                             <option value="0"> Inactivo</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="col-md-2 d-flex justify-content-start align-items-center mt-3">
                         <button class="btn"><i class="fad fa-save text-primary" style="font-size:2.3rem"></i></button>
                     </div>
@@ -58,7 +58,8 @@
                             <option value="0"> Inactivo</option>
                         </select>
                     </div>
-                    <div class="col-md-2 d-flex justify-content-start align-items-center mt-3">
+                    <div class="col-md-2 d-flex justify-content-start align-items-center mt-7" data-tooltip
+                    title="Guardar">
                         <button class="btn"><i class="fad fa-save text-primary" style="font-size:2.3rem"></i></button>
                     </div>
                 </div>

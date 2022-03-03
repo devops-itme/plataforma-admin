@@ -118,11 +118,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('historial', function () {
         return view('orders.historial');
-    })->name('historial.index');
+    })->name('orders.historial');
 
 });
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
+Route::get('admin/order', 'Admin\OrderController@historial');
+
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
 //REPORTS

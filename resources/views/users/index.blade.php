@@ -191,15 +191,15 @@
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="ARCHIVOS">
+                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
                                         <i class="far fa-folder-open"></i>
                                     </a>
                                     <a href="{{ route('users.edit', $user->id) }}"
-                                        class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="EDITAR">
+                                        class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <a onclick="deleteResource('/usuarios/'+{{ $user->id }})" role="button"
-                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="ELIMINAR">
+                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>
