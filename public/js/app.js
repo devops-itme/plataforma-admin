@@ -2632,7 +2632,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var _this, token, myHeaders, requestOptions;
+        var result, _this, token, myHeaders, requestOptions;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
@@ -2650,7 +2650,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 return _context6.abrupt("return", _context6.sent);
 
               case 4:
-                console.log(_this8.showData);
+                _context6.next = 6;
+                return confirmation('¿Estas Seguro?', 'Se cambiara el estado de la orden', 'info');
+
+              case 6:
+                result = _context6.sent;
+
+                if (!(result == true)) {
+                  _context6.next = 17;
+                  break;
+                }
+
                 _this = _this8;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
@@ -2664,7 +2674,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                     order_id: _this8.showData.id
                   })
                 };
-                _context6.next = 14;
+                _context6.next = 17;
                 return fetch("/despacho/orden/estado/".concat(state), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2687,7 +2697,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   return console.warn(err);
                 });
 
-              case 14:
+              case 17:
               case "end":
                 return _context6.stop();
             }

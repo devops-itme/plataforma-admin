@@ -180,39 +180,42 @@ export default {
             if (!this.showData) {
                 return await error("Debe seleccionar una orden");
             }
-            console.log(this.showData)
-            let _this = this;
-            let token = document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute("content");
-            let myHeaders = new Headers();
-            myHeaders.append("Accept", "application/json");
-            myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("X-CSRF-TOKEN", token);
-            let requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                body: JSON.stringify({
-                    order_id: this.showData.id,
-                }),
-            };
-            await fetch(`/despacho/orden/estado/${state}`, requestOptions)
-                .then((response) => response.json())
-                .then(function (data) {
-                    console.log(data)
-                    if (data.state == 500) {
-                        return error(data.message);
-                    }
-                    if (data.state == 200) {
-                         let index = _this.data.findIndex(
-                            (item) => item.id == _this.showData.id
-                        );
-                         _this.data.splice(index, 1);
-                        return correct(data.message);
+            let result = await confirmation('¿Estas Seguro?','Se cambiara el estado de la orden', 'info');
+            if (result == true) {
+                let _this = this;
+                let token = document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content");
+                let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                let requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: JSON.stringify({
+                        order_id: this.showData.id,
+                    }),
+                };
+                await fetch(`/despacho/orden/estado/${state}`, requestOptions)
+                    .then((response) => response.json())
+                    .then(function (data) {
+                        console.log(data)
+                        if (data.state == 500) {
+                            return error(data.message);
+                        }
+                        if (data.state == 200) {
+                             let index = _this.data.findIndex(
+                                (item) => item.id == _this.showData.id
+                            );
+                             _this.data.splice(index, 1);
+                            return correct(data.message);
 
-                    }
-                })
-                .catch((err) => console.warn(err));
+                        }
+                    })
+                    .catch((err) => console.warn(err));
+            }
+
         }
     },
 
