@@ -303,17 +303,38 @@ class CustomerController extends Controller
 
     public function UserBankEdit($parent_id, $id)
     {
-        $user = User::where('id', $id)->first();
-        return view('bankUsers.edit', compact('user'));
+        // $user = User::where('id', $id)->first();
+        try {
+            $user = User::find($id);
+            return json_encode([
+                'state' => 200,
+                'data' => $user
+            ]);
+        } catch (\Exception $e) {
+            return json_encode([
+                'state' => 500,
+                'message' => 'Ha ocurrido un error.',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     public function UserBankUpdate($parent_id, $id)
     {
         $response = $this->updateUser(request()->merge(['user_id' => $id]));
         if($response['state'] == 200){
-            return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario actualizado exitosamente');
+            // return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario actualizado exitosamente');
+            return json_encode([
+                'state' => 200,
+                'message' => $response['message']
+            ]);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            // return redirect()->back()->with('danger', $response['message']);
+            return json_encode([
+                'state' => 500,
+                'message' => $response['message'],
+                'error' => $response['message']
+            ]);
         }
     }
 

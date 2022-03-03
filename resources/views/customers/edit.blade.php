@@ -29,6 +29,7 @@
     @include('customers.modals.branches.editBranchModal')
     @include('customers.modals.branches.createBranchModal')
     @include('customers.modals.users.createUserModal')
+    @include('customers.modals.users.editUserModal')
     <!--begin::Form-->
     <form action="{{route('customers.update', $customer->id)}}" method="post">
         @csrf @method('PUT')
