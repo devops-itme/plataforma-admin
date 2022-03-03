@@ -271,8 +271,24 @@ export default class Orders {
                 document.getElementById("user_code").value = data[0]['id'];
                 document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
                 document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
-                document.getElementById("user_department").value = data[2] != null ? data[2]['name'] : '';
-                document.getElementById("user_branch_office").value = data[1] != null ? data[1]['name'] : '';
+                let branches = data[1];
+                let branchSlc = document.getElementById("user_branch_office");
+                    branchSlc.selectedIndex = 0;
+                    removeOptions(branchSlc);
+                    for (let i = 0; i < branches.length; i++) {
+                        let element = branches[i];
+                        let branchOpt = '<option value="'+element.name+'"> '+element.name+' </option>';
+                        branchSlc.insertAdjacentHTML('beforeend', branchOpt);
+                    }
+                let departments = data[2];
+                let departmentSlc = document.getElementById("user_departments");
+                    departmentSlc.selectedIndex = 0;
+                    removeOptions(departmentSlc);
+                    for (let i = 0; i < departments.length; i++) {
+                        let element = departments[i];
+                        let departmentOpt = '<option value="'+element.name+'"> '+element.name+' </option>';
+                        departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
+                    }
                 document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
 
                 let modal = document.getElementById("detailCustomer");

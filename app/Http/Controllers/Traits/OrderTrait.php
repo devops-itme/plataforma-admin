@@ -36,6 +36,7 @@ trait OrderTrait
                 'money_to_collect' => 'nullable',
                 'percentage_to_collect' => 'nullable',
                 'branch_office' => 'nullable',
+                'department_id' => 'nullable',
                 'state' => 'nullable'
             ]
         );
@@ -67,7 +68,8 @@ trait OrderTrait
                 'money_to_collect' => $request->money_to_collect,
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
-                'branch_office' => $request->branch_office
+                'branch_office' => $request->branch_office_id,
+                'department_id' => $request->department_id
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');
         } catch (\Exception $e) {
@@ -104,7 +106,8 @@ trait OrderTrait
                 'money_to_collect' => $request->money_to_collect,
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
-                'branch_office' => $request->branch_office
+                'branch_office' => $request->branch_office_id,
+                'department_id' => $request->department_id
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {

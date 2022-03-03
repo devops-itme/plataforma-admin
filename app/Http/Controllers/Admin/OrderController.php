@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\BranchOffice;
 use App\Customer;
+use App\Department;
 use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
@@ -123,12 +124,13 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::with('getUser', 'getUser.getCustomer', 'getGuides')->find($id);
-        $allBranches = UserBranch::where('user_id', $order->user_id)->get('id');
-        $ids = [];
-        foreach ($allBranches as $value) {
-            array_push($ids, $value->id);
-        }
-        $branch = BranchOffice::where('default', 1)->whereIn('id', $ids)->first();
+        $user_id = $order->getUser->id;
+        $branches = BranchOffice::with('getBranchUser')->whereHas('getBranchUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+        $departments = Department::with('getDepartmentUser')->whereHas('getDepartmentUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
@@ -138,7 +140,7 @@ class OrderController extends Controller
         $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'payment_method');
         })->get();
-        return view('orders.editFold.edit', compact('order', 'branch', 'order_type', 'transport_type', 'payment_method'));
+        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method'));
     }
 
     /**

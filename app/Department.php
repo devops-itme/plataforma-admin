@@ -23,6 +23,11 @@ class Department extends Model
         return $this->belongsTo(BranchOffice::class, 'branch_office_id');
     }
 
+    public function getDepartmentUser()
+    {
+        return $this->hasMany(UserDeparment::class, 'department_id');
+    }
+
     //SCOPES
     public function scopeName($query, $value)
     {

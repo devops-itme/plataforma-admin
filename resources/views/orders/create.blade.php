@@ -56,11 +56,16 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Departamento<span class="text-danger">*</span></label>
-                        <input type="text" id="user_department" class="form-control form-control-solid" readonly value="">
+                        <select name="department_id" id="user_departments" class="form-control form-control-solid">
+                            <option value="" selected disabled> Seleccione </option>
+                        </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Sucursal<span class="text-danger">*</span></label>
-                        <input type="text" id="user_branch_office" class="form-control form-control-solid" readonly value="">
+                        <select name="branch_office_id" id="user_branch_office" class="form-control form-control-solid">
+                            <option value="" selected disabled> Seleccione </option>
+                        </select>
+                        {{-- <input type="text" id="user_branch_office" class="form-control form-control-solid" readonly value=""> --}}
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Tipo de documento<span class="text-danger">*</span></label>

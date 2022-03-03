@@ -141,21 +141,18 @@ class CustomerController extends Controller
 
     public function customerData($id)
     {
-        $branchOffice = null;
-        $department = null;
+        $branches = null;
+        $departments = null;
         $customer = User::with(['getCustomer', 'getDocumentType'])->find($id);
-        $customer_branches = UserBranch::where('user_id', $customer->id)->get();
-        foreach ($customer_branches as $key) {
-            $branch = BranchOffice::find($key->branch_office_id);
-            if($branch){
-                if($branch->default == 1){
-                    $branchOffice = $branch;
-                }
-            }
-        }
+        $branches = BranchOffice::with('getBranchUser')->whereHas('getBranchUser', function ($query) use ($id) {
+            $query->where('user_id', $id);
+        })->get();
+        $departments = Department::with('getDepartmentUser')->whereHas('getDepartmentUser', function ($query) use ($id) {
+            $query->where('user_id', $id);
+        })->get();
         return json_encode([
             'state' => 200,
-            'data' => [$customer, $branchOffice, $department]
+            'data' => [$customer, $branches, $departments]
         ]);
     }
 
