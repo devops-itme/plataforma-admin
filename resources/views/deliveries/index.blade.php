@@ -103,41 +103,41 @@
                                     <div class="font-weight-bolder mb-1" v-text="`${'('+(i+1)+'), '+tab.rate}`">(1) Adicional*0:</div>
                                     <div class="line-height-xl" v-text="`${'$'+new Intl.NumberFormat().format(tab.value)}`">$0</div>
                                 </div>
-                            </div>
-                            <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
-                            <div class="col-md-12 mb-2">
-                                <div class="font-weight-bolder mb-1">Cliente Depto:</div>
-                                <div class="line-height-x1">84: PRINCIPAL</div>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
-                                <div class="line-height-x1">1179: PRINCIPAL</div>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Cliente Documento:</div>
-                                <div class="line-height-x1">1191: DELIVERY</div>
-                            </div>
-                            <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Concepto:</div>
-                                <div class="line-height-xl">RETIRAR FIANZA A NOMBRE DE EDEMET</div>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Dirección:</div>
-                                <div class="line-height-xl">CLL 50: SAN FRANCISCO: PANAMA</div>
-                            </div>
-                            <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Contacto:</div>
-                                <div class="line-height-xl"></div>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Contacto Email:</div>
-                                <div class="line-height-xl"></div>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <div class="font-weight-bolder mb-1">Contacto Phone:</div>
-                                <div class="line-height-xl">+507</div>
+                                <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1">Cliente Depto:</div>
+                                    <div class="line-height-x1" v-text="`${[showData.get_department ? showData.get_department.id+': '+showData.get_department.name : 'No registra']}`">84: PRINCIPAL</div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
+                                    <div class="line-height-x1" v-text="`${[showData.get_branch_office ? showData.get_branch_office.id+': '+showData.get_branch_office.name : 'No registra']}`">1179: PRINCIPAL</div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1">Cliente Documento:</div>
+                                    <div class="line-height-x1" v-text="`${[showData.get_user ? showData.get_user.document_number+': '+showData.get_user.get_document_type?.name : '']}`">1191: DELIVERY</div>
+                                </div>
+                                <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1">Concepto:</div>
+                                    <div class="line-height-xl" v-text="tab.concept">RETIRAR FIANZA A NOMBRE DE EDEMET</div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1">Dirección:</div>
+                                    <div class="line-height-xl" v-text="tab.get_address ? tab.get_address.name : 'No registra' ">CLL 50: SAN FRANCISCO: PANAMA</div>
+                                </div>
+                                <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1">Contacto:</div>
+                                    <div class="line-height-xl" v-text="tab.contact"></div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1">Email Contacto:</div>
+                                    <div class="line-height-xl" v-text="tab.email_contact"></div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="font-weight-bolder mb-1">Teléfono contacto:</div>
+                                    <div class="line-height-xl" v-text="tab.phone_contact">+507</div>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 border-bottom justify-content-center">
