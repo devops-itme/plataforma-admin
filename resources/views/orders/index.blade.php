@@ -97,9 +97,9 @@
                 <!--begin::Button-->
 
 
-                <a href="{{ route('orders.historial') }}" class="btn btn-light-primary font-weight-bolder mr-2">
+                <a href="{{ route('orders.record') }}" class="btn btn-light-primary font-weight-bolder mr-2">
                     <i class="fas fa-history"></i>
-                    </span>Historial</a>
+                    Historial</a>
 
                 <a href="{{ route('orders.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip
                     title="CREAR">

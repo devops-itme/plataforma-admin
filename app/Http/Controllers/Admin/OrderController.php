@@ -87,7 +87,7 @@ class OrderController extends Controller
             }
             return redirect()->route('orders.index')->with('success', 'Orden creada exitosamente.');
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return redirect()->back()->withInput()->with('danger', $response['error']);
         }
     }
 
@@ -132,7 +132,13 @@ class OrderController extends Controller
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
-        return view('orders.editFold.edit', compact('order', 'branch', 'order_type'));
+        $transport_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'transport_type');
+        })->get();
+        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_method');
+        })->get();
+        return view('orders.editFold.edit', compact('order', 'branch', 'order_type', 'transport_type', 'payment_method'));
     }
 
     /**
@@ -197,7 +203,7 @@ class OrderController extends Controller
             $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query)  {
                 $query->where('name', 'Ondemand');
             })->where('state', $type)
-            ->with(['getUser.getCustomer', 'getGuides.getRoute.getMessenger'])
+            ->with(['getUser.getCustomer', 'getGuides.getRoute.getMessenger', 'getPaymentMethod'])
             ->get();
 
             // $orders = Order::where('order_type', 1)->wh  ere('state', $type)->with(['getUser','getGuides'])->get();
@@ -244,5 +250,8 @@ class OrderController extends Controller
                 'data' => 'Orden_1',
             ]);
         }
+    }
+    public function record(){
+        return view('orders.historial');
     }
 }

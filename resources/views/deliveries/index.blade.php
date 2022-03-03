@@ -90,7 +90,7 @@
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Medio de pago:</div>
-                                <div class="line-height-xl">Efectivo</div>
+                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_payment_method?.name}`">Efectivo</div>
                             </div>
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-6 mb-2">
