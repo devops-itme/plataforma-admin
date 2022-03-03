@@ -83,7 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
             return view('orders.historial');
         })->name('orders.record');
         Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
-        Route::get('/ordenes/historial', 'Admin\OrderController@orderRecord')->name('orders.record');
+        // Route::get('/ordenes/historial', 'Admin\OrderController@orderRecord')->name('orders.record');
 
         //DOCUMENTOS DE GUIAS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
