@@ -38,8 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');
-    Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignateOndemad')->name('orders.assignate');
-    Route::post('/quias/asignacion', 'Admin\DeliveryController@assignatePacking')->name('guides.assignate');
+    Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignOndemad')->name('orders.assign');
+    Route::post('/quias/asignacion', 'Admin\DeliveryController@assignPacking')->name('guides.assign');
+    //update order state
+    Route::post('/despacho/orden/estado/{state}', 'Admin\DeliveryController@updateStateOrders');
 
     Route::group(['middleware' => 'role'], function () {
         //USER
@@ -109,15 +111,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('roles', 'Admin\RoleController')->names('roles');
     // Route::post('roles/store', 'Admin\PermissionController@storeRole')->name('permits.role');
     Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
-    Route::get('despachos', function () {
-        return view('deliveries.index');
-    })->name('delivery.index');
-    Route::get('despachos-packing', function () {
-        return view('deliveriesPacking.index');
-    })->name('deliveryPacking.index');
-    Route::get('zonas', function () {
-        return view('zones.index');
-    })->name('zone.index');
 
     Route::get('planes', function () {
         return view('plans.index');
