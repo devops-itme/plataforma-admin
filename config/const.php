@@ -31,10 +31,10 @@ return [
         ],
         'orders' => [
             'name' => 'Ordenes', 'reference' => 'orders', 'icon' => '', 'position' => '2',
-            'actions' => '6,7,8,9,10,11,12,13',
+            'actions' => '6,7,8,9,10,11,12,13,17',
             'children' => [],
             'permission' => [
-                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13,17'],
                 'Operador' => ['role_id' => 2, 'actions' => '6'],
                 'Mensajero' => ['role_id' => 3, 'actions' => '6'],
                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
@@ -216,7 +216,8 @@ return [
             'edit',
             'assign',
             'import',
-            'export'
+            'export',
+            'record'
         ],
         'permissions' => [],
         'branch_office_types' => [
