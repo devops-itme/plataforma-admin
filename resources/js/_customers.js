@@ -7,6 +7,8 @@ export default class Customers {
         this.saveBranchOffices();
         this.listBranchOffices();
         this.updateBranchOffice();
+        this.saveUser();
+        this.listUsers();
     }
 
     customerFeatures() {
@@ -181,12 +183,16 @@ export default class Customers {
                     branchEdit.setAttribute('data-target', '#modalEdit');
                     branchEdit.setAttribute('id', 'branch-'+data[i].id);
                     branchEdit.setAttribute('type', 'button');
+                    branchEdit.setAttribute('title', 'Editar');
+                    branchEdit.setAttribute('data-tooltip', '');
                     branchEdit.innerHTML = '<i class="fas fa-edit"></i>';
                     //Delete button
                     const branchDelete = document.createElement("button");
                     branchDelete.onclick = function(){confirmDelete('/sucursales/null/'+data[i].id)};
                     branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                     branchDelete.setAttribute('type', 'button');
+                    branchDelete.setAttribute('title', 'Eliminar');
+                    branchDelete.setAttribute('data-tooltip', '');
                     branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
                     //Div
                     const buttonsDiv = document.createElement("div");
@@ -386,4 +392,133 @@ export default class Customers {
             .catch(e => console.log(e));
         return response;
     }
+
+    saveUser(){
+        let btnSubmit = document.getElementById("saveUser");
+        if(btnSubmit == null){
+            return;
+        }
+        btnSubmit.addEventListener('click', async () => {
+            let parent_id = document.getElementById("customer_id").value,
+                name = document.getElementById("user_name").value,
+                last_name = document.getElementById("user_last_name").value,
+                email = document.getElementById("user_email").value,
+                phone = document.getElementById("user_phone").value,
+                password = document.getElementById("user_password").value,
+                password_confirm = document.getElementById("user_password_confirm").value;
+
+            let formData = new FormData();
+            formData.append('name', name);
+            formData.append('last_name', last_name);
+            formData.append('email', email);
+            formData.append('phone', phone);
+            formData.append('password', password);
+            formData.append('password_confirmation', password_confirm);
+
+            let response = await this.storeUserData(parent_id, formData);
+            if(response.state == 200){
+                correct(response.message);
+                let modal = document.getElementById("modalCreateUser");
+                modal.click();
+                this.listGuides();
+            } else {
+                error(response.error);
+                console.log('Error: '+response.error);
+            }
+        });
+    }
+
+    async storeUserData(parent_id, formData){
+        let response = {
+            'state': 500
+        };
+
+        response = await fetch("/usuario-banco/"+parent_id+"/store", {
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            body: formData
+        })
+        return response.json();
+    }
+
+    async listUsers(){
+        let tbody = document.querySelector("#users_table tbody");
+        if(tbody == null){
+            return;
+        }
+        let parent_id = document.getElementById("customer_id").value;
+        if(parent_id == null){
+            return;
+        }
+        let response = await this.requestUsers(parent_id);
+        if(response.state == 200){
+            let data = response.data;
+            if(data.length > 0){
+                [].forEach.call(data, key => {
+                    let row = tbody.insertRow();
+
+                    let nameCell = row.insertCell(0);
+                    nameCell.innerHTML = key.name;
+
+                    let lastNameCell = row.insertCell(1);
+                    lastNameCell.innerHTML = key.last_name;
+
+                    let emailCell = row.insertCell(2);
+                    emailCell.innerHTML = key.email;
+
+                    let phoneCell = row.insertCell(3);
+                    phoneCell.innerHTML = key.phone;
+
+                    let stateCell = row.insertCell(4);
+                    if(key.state == 1){
+                        stateCell.innerHTML =   '<span class="label label-inline label-light-success font-weight-bold">\
+                                                    Activo\
+                                                </span>';
+                    } else {
+                        stateCell.innerHTML =   '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                    Inactivo\
+                                                </span>';
+                    }
+                    let selectCell = row.insertCell(5);
+                    const userEdit = document.createElement("button");
+                    userEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                    userEdit.setAttribute('data-toggle', 'modal');
+                    userEdit.setAttribute('data-target', '#modalEdit');
+                    userEdit.setAttribute('id', 'branch-'+key.id);
+                    userEdit.setAttribute('type', 'button');
+                    userEdit.innerHTML = '<i class="fas fa-edit"></i>';
+                    //Delete button
+                    const userDelete = document.createElement("button");
+                    userDelete.onclick = function(){confirmDelete('/usuario-banco/'+parent_id+'/'+key.id)};
+                    userDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                    userDelete.setAttribute('type', 'button');
+                    userDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                    //Div
+                    const buttonsDiv = document.createElement("div");
+                    buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                    buttonsDiv.appendChild(userEdit);
+                    buttonsDiv.appendChild(userDelete);
+                    selectCell.appendChild(buttonsDiv);
+
+                    tbody.appendChild(row);
+                });
+            }
+        }
+    }
+
+    async requestUsers(parent_id){
+        let response = {
+            'state': 500
+        };
+        await fetch("/usuario-banco/"+parent_id+"")
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
 }

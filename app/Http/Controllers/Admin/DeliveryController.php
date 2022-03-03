@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\DeliveryTrait;
 use App\Http\Controllers\Traits\RouteTrait;
+use App\Order;
 use App\ParameterValue;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class DeliveryController extends Controller
         return view('deliveriesPacking.index');
     }
 
-    public function assignateOndemad(Request $request)
+    public function assignOndemad(Request $request)
     {
         $response = $this->storeRouteOndemand($request);
 
@@ -33,7 +34,7 @@ class DeliveryController extends Controller
         }
     }
 
-    public function assignatePacking(Request $request)
+    public function assignPacking(Request $request)
     {
         $response = $this->storeRoutePacking($request);
 
@@ -50,6 +51,14 @@ class DeliveryController extends Controller
             $query->where('name', 'order_states');
         })->get();
         return $this->respond(200, $order_states, null, 'Estado de las ordenes');
+    }
+
+    public function updateStateOrders($state, Request $request)
+    {
+        $order = Order::where('id', $request->order_id)->update([
+            'state' => $state
+        ]);
+        return $this->respond(200, $order, null, 'estado actualizado');
     }
 
 }

@@ -214,7 +214,7 @@ return [
             'delete',
             'update',
             'edit',
-            'assignat',
+            'assign',
             'import',
             'export',
             'record'

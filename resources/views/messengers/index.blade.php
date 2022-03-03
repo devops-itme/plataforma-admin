@@ -94,7 +94,8 @@
                 </div>
                 <!--end::Dropdown-->
                 <!--begin::Button-->
-                <a href="{{ route('messengers.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip title="CREAR">
+                <a href="{{ route('messengers.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip
+                    title="CREAR">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
@@ -143,7 +144,8 @@
                                 <select class="form-control form-control-solid" id="zone" name="state">
                                     <option selected disabled> Seleccione </option>
                                     <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                    <option value="0" {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>
+                                    <option value="0"
+                                        {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>
                                         Inactivo
                                     </option>
                                 </select>
@@ -151,10 +153,12 @@
                             </div>
                             <div class=" row form-group py-6 m-0 col-md-6">
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block"> Filtrar</button>
+                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block">
+                                        Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('messengers.index') }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                    <a href="{{ route('messengers.index') }}"
+                                        class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +183,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (count($messengers)>0)
+                    @if (count($messengers) > 0)
                         @foreach ($messengers as $item)
                             <tr>
                                 <th scope="row">{{ $item->user->name . ' ' . $item->user->last_name }}</th>
@@ -200,35 +204,22 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                        <div class="dropdown dropdown-inline">
-                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fad fa-ellipsis-v-alt"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a href="{{ route('messengers.show', $item->id) }}"
-                                                    class="dropdown-item align-items-center" data-tooltip title="DETALLE">
-                                                    <div class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                                        <i class="fad fa-folder-open"></i>
-                                                    </div> Detalle
-                                                </a>
-                                                <a href="{{ route('messengers.edit', $item->id) }}"
-                                                    class="dropdown-item align-items-center" data-tooltip title="EDITAR">
-                                                    <div class="btn btn-icon btn-light-success btn-sm mr-2">
-                                                        <i class="fad fa-edit"></i>
-                                                    </div> Editar
-                                                </a>
-                                                <a type="button" onclick="deleteResource('/mensajeros/'+{{ $item->id }})"
-                                                    role="button" id="deleteMessenger" class="dropdown-item align-items-center" data-tooltip title="ELIMINAR">
-                                                    {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
+                                        <a href="{{ route('messengers.show', $item->id) }}"
+                                            class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
+                                            title="Detalle"><i class="fad fa-folder-open"></i>
+                                        </a>
+                                        <a href="{{ route('messengers.edit', $item->id) }}"
+                                            class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
+                                            <i class="fad fa-edit"></i>
+                                        </a>
+                                        <button type="button" onclick="deleteResource('/mensajeros/'+{{ $item->id }})"
+                                            role="button" id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2"
+                                            data-tooltip title="Eliminar">
+                                            <i class="fad fa-trash-alt"></i>
+                                            {{-- <form action="{{route('customers.destroy', $customer->id)}}" method="{{'post'}}">
                                                         @csrf @method('DELETE') --}}
-                                                    <div class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                                        <i class="fad fa-trash-alt"></i>
-                                                    </div> Eliminar
-                                                    {{-- </form> --}}
-                                                </a>
-                                            </div>
-                                        </div>
+                                            {{-- </form> --}}
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -249,5 +240,4 @@
 
 {{-- Styles Section --}}
 @section('styles')
-
 @endsection

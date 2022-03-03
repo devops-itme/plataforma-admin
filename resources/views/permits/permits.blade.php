@@ -37,13 +37,13 @@
                   <span class="badge badge-{{Config::get('const.states')[$role->state]['color']}} text-uppercase">{{Config::get('const.states')[$role->state]['name']}}</span>
                 </td>
                 <td class="text-center">
-                  <button name="btnEditRole" id="btnRole-{{$role->id}}" class="btn btn-primary btn-sm btn-fab btn-icon" data-toggle="modal" data-target="#editRolModal">
+                  <button name="btnEditRole" id="btnRole-{{$role->id}}" class="btn btn-primary btn-sm btn-fab btn-icon" data-toggle="modal" data-target="#editRolModal" data-tooltip title="Editar">
                     <i class="fa fa-pencil"></i>
                   </button>
-                  <button class="btn btn-danger btn-sm btn-fab btn-icon" onclick="confirmDelete('/roles/'+{{$role->id}})">
+                  <button class="btn btn-danger btn-sm btn-fab btn-icon" data-tooltip title="Eliminar" onclick="confirmDelete('/roles/'+{{$role->id}})">
                     <i class="fa fa-trash"></i>
                   </button>
-                  <button class="btn btn-info btn-sm btn-fab btn-icon configuration-btn" data-tooltip title="CONFIGURAR">
+                  <button class="btn btn-info btn-sm btn-fab btn-icon configuration-btn" data-tooltip title="Configurar">
                     <i class="fa fa-cog"></i>
                   </button>
                 </td>

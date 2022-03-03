@@ -70,6 +70,7 @@ function confirmation(
     });
 }
 
+
 function success(action = "realizar esta operacion", message = "") {
     return swal({
         icon: "success",
