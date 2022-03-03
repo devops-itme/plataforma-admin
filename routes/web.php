@@ -79,6 +79,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
 
         //ORDENES
+        Route::get('ordenes/historial', function () {
+            return view('orders.historial');
+        })->name('orders.record');
         Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
         Route::get('/ordenes/historial', 'Admin\OrderController@orderRecord')->name('orders.record');
 
@@ -87,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     });
+
     //Orders states
     Route::get('order_states', 'Admin\DeliveryController@orderStates');
     //Orders delivery
@@ -117,9 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('plans.index');
     })->name('plans.index');
 
-    Route::get('historial', function () {
-        return view('orders.historial');
-    })->name('orders.historial');
+
 
 });
 //RUTAS
