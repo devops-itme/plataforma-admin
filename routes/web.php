@@ -96,7 +96,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Orders delivery
     Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
     //Orders Delivery Packing
-    Route::get('orders_packing/{type}', 'Admin\OrderController@guidesForDeliveryPacking');
+    Route::get('orders_packing/{type}', 'Admin\GuideController@guidesForDeliveryPacking');
     //Messengers delivery
     Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
 

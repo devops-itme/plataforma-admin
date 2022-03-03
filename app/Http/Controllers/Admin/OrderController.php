@@ -213,24 +213,7 @@ class OrderController extends Controller
         }
     }
 
-    public function guidesForDeliveryPacking($type)
-    {
 
-        try {
-            $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query) use ($type)  {
-                $query->where('order_type', 35);
-            })->where('state', $type)
-            ->with(['getRoute.getMessenger', 'getAddress', 'getTransportType'])
-            ->get();
-
-            // $guides = Guide::where('state', $type)
-            // ->with(['getOrder', 'getRoute.getMessenger', 'getAddress', 'getTransportType'])
-            // ->get();
-            return $this->respond(200, $guides, null, 'Lista de guiás packing');
-        } catch (\Throwable $e) {
-            return $this->respond(500, [], $e->getMessage());
-        }
-    }
 
     public function orderNumber()
     {
