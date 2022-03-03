@@ -59,12 +59,12 @@
                                     @start="drag = true"
                                     @end="drag = false"
                                     style="cursor: move"
-                                    @select="handleChange"
                                 >
                                     <tr
                                         v-for="tblItem of guides"
                                         v-bind:key="tblItem.id"
                                         class="text-center"
+                                        @click="handleChange(tblItem)"
                                     >
                                         <td>{{ tblItem.id }}</td>
                                         <td>{{ tblItem.get_order.order_number }}</td>
@@ -194,7 +194,7 @@ export default {
             searchMessenger: null,
             messenger: null,
             messengerName: null,
-
+            showGuide: null,
         };
     },
     computed: {
@@ -223,8 +223,8 @@ export default {
         },
     },
     methods: {
-        handleChange(evt) {
-            console.log(evt.items);
+        rowClick(data) {
+             this.showGuide = data;
         },
 
         formatDate(date) {
@@ -233,7 +233,6 @@ export default {
             }
         },
         async assignateDelivery() {
-
             if (this.guides2.length === 0) {
                 return await error("Debe seleccionar una orden");
             }
@@ -260,14 +259,10 @@ export default {
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.state == 500) {
-
                         return error(data.message);
                     }
                     if (data.state == 200) {
-                        // let index = _this.data.findIndex(
-                        //     (item) => item.id == _this.showData.id
-                        // );
-                        // _this.data.splice(index, 1);
+                        _this.searchMessenger = null;
                         return correct(data.message);
                     }
                 })

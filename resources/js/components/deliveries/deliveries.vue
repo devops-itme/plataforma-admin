@@ -11,12 +11,11 @@
                 class="d-flex align-items-center justify-content-between flex-row flex-wrap mb-3"
             >
                 <div class="form-group col-md-2 mb-0">
-                    <select class="form-control" v-model="selected" @change="loadingEvt,getGuides(null)">
+                    <select class="form-control" v-model="selected" @change="loadingEvt(),getGuides(null)">
                         <option
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
                             v-bind:value="item.value"
-
                         >
                             {{ item.text }}
                         </option>
@@ -242,18 +241,14 @@ export default {
     },
 
     methods: {
-       loadingEvt (){
-           return '<div class="spinner spinner-success spinner-right" style="position: fixed; top:50%; z-index:9999;"><h6>Cargando</h6></div>'
+        loadingEvt (){
+           $(`#myTab li:nth-child(1) a`).tab("show");
        },
         async getGuides(type) {
-
-                // let v = this.selected;
-                // this.selected = v + type;
-
             this.type_guide = this.selected + type;
-            console.log(this.type_guide)
             let response = await this.requestGuides();
             this.guides = response.data;
+            this.guides2 = [];
         },
         async requestGuides() {
             let response = { state: 500 };
