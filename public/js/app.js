@@ -2354,8 +2354,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       messengerName: null,
       checkAllOrders: false,
       startDate: moment__WEBPACK_IMPORTED_MODULE_1___default()(Date.now()).format("YYYY-MM-DD"),
-      endDate: moment__WEBPACK_IMPORTED_MODULE_1___default()(Date.now()).format("YYYY-MM-DD") // orderTypes: null,
-
+      endDate: moment__WEBPACK_IMPORTED_MODULE_1___default()(Date.now()).format("YYYY-MM-DD")
     };
   },
   computed: {
@@ -2370,17 +2369,16 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         });
       }
     },
-    filterOrders: function filterOrders() {
-      var _this3 = this;
-
-      if (this.checkAllOrders == false) {
-        return this.data = this.orders.filter(function (item) {
-          return _this3.localizeDate(item.schedule_date) >= _this3.localizeDate(_this3.startDate) && _this3.localizeDate(item.schedule_date) <= _this3.localizeDate(_this3.endDate);
-        });
-      } else {
-        return this.data = this.orders;
-      }
-    },
+    // filterOrders() {
+    //     if(this.checkAllOrders == false){
+    //         return this.data = this.orders.filter((item) => {
+    //             return this.localizeDate(item.schedule_date) >= this.localizeDate(this.startDate)
+    //             && this.localizeDate(item.schedule_date) <= this.localizeDate(this.endDate)
+    //         });
+    //     }else{
+    //          return this.data = this.orders;
+    //     }
+    // },
     setMessenger: function setMessenger() {
       if (this.searchMessenger) {
         var _this$filterMessenger, _this$filterMessenger2;
@@ -2404,7 +2402,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       return new Date("".concat(mm, "/").concat(dd, "/").concat(yyyy));
     },
     getOrders: function getOrders(type_id, index) {
-      var _this4 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
@@ -2413,18 +2411,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
             switch (_context.prev = _context.next) {
               case 0:
                 index != undefined && $("#myTab li:nth-child(".concat(index + 1, ") a")).tab("show");
-                _this4.currentTab = type_id;
+                _this3.currentTab = type_id;
                 _context.next = 4;
-                return _this4.requestOrders();
+                return _this3.requestOrders();
 
               case 4:
                 response = _context.sent;
-                _this4.orders = response.data;
-                _this4.activeIndex = null;
-                _this4.showData = [];
-                _this4.showMessengerData = [];
+                _this3.orders = response.data;
+                _this3.data = _this3.orders;
+                _this3.activeIndex = null;
+                _this3.showData = "";
+                _this3.showMessengerData = [];
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -2433,7 +2432,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }))();
     },
     requestOrders: function requestOrders() {
-      var _this5 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var response, myHeaders, requestOptions;
@@ -2451,7 +2450,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   headers: myHeaders
                 };
                 _context2.next = 6;
-                return fetch("/orders_ondemand/".concat(_this5.currentTab), requestOptions).then(function (response) {
+                return fetch("/orders_ondemand/".concat(_this4.currentTab), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2471,7 +2470,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this6 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var _this, myHeaders, requestOptions;
@@ -2480,7 +2479,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this = _this6;
+                _this = _this5;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
@@ -2520,7 +2519,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       this.activeIndex = index;
     },
     assignateDelivery: function assignateDelivery() {
-      var _this7 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, token, myHeaders, requestOptions;
@@ -2529,7 +2528,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                if (_this7.showData) {
+                if (_this6.showData) {
                   _context4.next = 4;
                   break;
                 }
@@ -2541,7 +2540,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 return _context4.abrupt("return", _context4.sent);
 
               case 4:
-                if (_this7.setMessenger) {
+                if (_this6.setMessenger) {
                   _context4.next = 8;
                   break;
                 }
@@ -2553,7 +2552,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 return _context4.abrupt("return", _context4.sent);
 
               case 8:
-                _this = _this7;
+                _this = _this6;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -2563,8 +2562,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    messenger_user_id: _this7.setMessenger.user_id,
-                    order_id: _this7.showData.id
+                    messenger_user_id: _this6.setMessenger.user_id,
+                    order_id: _this6.showData.id
                   })
                 };
                 _context4.next = 17;
@@ -2597,7 +2596,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }))();
     },
     orderState: function orderState() {
-      var _this8 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var req, res;
@@ -2615,11 +2614,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
               case 5:
                 res = _context5.sent;
-                _this8.tabs = res.data;
-                _this8.currentTab = _this8.tabs[0].id;
-                _this8.tabs[0].href = "pordespachar";
-                _this8.tabs[1].href = "despachados";
-                _this8.tabs[2].href = "completados";
+                _this7.tabs = res.data;
+                _this7.currentTab = _this7.tabs[0].id;
+                _this7.tabs[0].href = "pordespachar";
+                _this7.tabs[1].href = "despachados";
+                _this7.tabs[2].href = "completados";
 
               case 11:
               case "end":
@@ -2628,15 +2627,92 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           }
         }, _callee5);
       }))();
+    },
+    updateStateOrders: function updateStateOrders(state) {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var result, _this, token, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                if (_this8.showData) {
+                  _context6.next = 4;
+                  break;
+                }
+
+                _context6.next = 3;
+                return error("Debe seleccionar una orden");
+
+              case 3:
+                return _context6.abrupt("return", _context6.sent);
+
+              case 4:
+                _context6.next = 6;
+                return confirmation('¿Estas Seguro?', 'Se cambiara el estado de la orden', 'info');
+
+              case 6:
+                result = _context6.sent;
+
+                if (!(result == true)) {
+                  _context6.next = 17;
+                  break;
+                }
+
+                _this = _this8;
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: JSON.stringify({
+                    order_id: _this8.showData.id
+                  })
+                };
+                _context6.next = 17;
+                return fetch("/despacho/orden/estado/".concat(state), requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  console.log(data);
+
+                  if (data.state == 500) {
+                    return error(data.message);
+                  }
+
+                  if (data.state == 200) {
+                    var index = _this.data.findIndex(function (item) {
+                      return item.id == _this.showData.id;
+                    });
+
+                    _this.data.splice(index, 1);
+
+                    return correct(data.message);
+                  }
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 17:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
     }
   },
   mounted: function mounted() {
     var _this9 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
               _this9.orderState();
 
@@ -2646,10 +2722,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
             case 3:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     }))();
   }
 });

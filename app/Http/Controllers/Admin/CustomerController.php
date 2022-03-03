@@ -165,12 +165,12 @@ class CustomerController extends Controller
         $type = 1;
         if(!is_null($request->value)){
             if(is_numeric($request->value)){
-                $data = User::where('document_number', 'like', '%'.$request->value.'%')->with('getCustomer')->get();
+                $data = User::where('document_number', 'like', '%'.$request->value.'%')->where('role', 4)->with('getCustomer')->get();
                 if(count($data) > 0){$type = 1;}
             } else {
                 $data = Customer::where('tradename', 'like', '%'.$request->value.'%')->with('getUser')->get();
                 if(count($data) == 0){
-                    $data = User::where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$request->value.'%')->with('getCustomer')->get();
+                    $data = User::where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$request->value.'%')->where('role', 4)->with('getCustomer')->get();
                     if(count($data) > 0){$type = 1;}
                 } else {$type = 2;}
             }
