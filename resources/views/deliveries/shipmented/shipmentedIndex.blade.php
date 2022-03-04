@@ -17,11 +17,11 @@
             @click="rowClick(order,index)">
                 <td v-text="`${order.user_id}-${ order.order_number }`"></td>
                 <td>22333233</td>
-                <td>Juanito Perez</td>
-                <td>Snoop Dogg</td>
+                <td v-text="`${order.get_guides[0]?.get_route?.get_messenger.name} ${ order.get_guides[0]?.get_route?.get_messenger.last_name }`"></td>
+                <td v-text="`${ order.get_user.name } ${order.get_user.last_name }`"></td>
                 <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
                 <td v-text="`$${rowTotal(order.get_guides)}`"></td>
-                <td>Boston City</td>
+                <td v-text="`${ order.get_guides[0]?.address_description}`"></td>
                 <td>Pendiente</td>
             </tr>
         </tbody>

@@ -39,7 +39,7 @@ class CreateGuidesTable extends Migration
             $table->integer('take_photo')->nullable();
             $table->integer('packaging')->nullable();
             $table->unsignedBigInteger('customer_address')->nullable();
-            $table->integer('state')->default(31)->comment("{1:Por despachar;2:Despachado;3:Completado}");
+            $table->integer('state')->default(32)->comment("{1:Por despachar;2:Despachado;3:Completado}");
             $table->timestamps();
             $table->softDeletes();
         });

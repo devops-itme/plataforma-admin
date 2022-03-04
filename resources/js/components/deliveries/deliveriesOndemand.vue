@@ -157,6 +157,7 @@ export default {
                 body: JSON.stringify({
                     messenger_user_id: this.setMessenger.user_id,
                     order_id: this.showData.id,
+                    state_order: this.tabs[1].id
                 }),
             };
             await fetch(`/ordenes/asignacion`, requestOptions)

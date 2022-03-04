@@ -251,7 +251,7 @@ return [
         ],
         'order_types' => [
             'Ondemand',
-            'Multiple'
+            'Packaging'
         ],
         'transport_type' => [
             'Moto',
