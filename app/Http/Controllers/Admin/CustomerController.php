@@ -64,7 +64,10 @@ class CustomerController extends Controller
         $use_mode = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'use_mode');
         })->get();
-        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode'));
+        $plans = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'plans');
+        })->get();
+        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans'));
     }
 
     /**

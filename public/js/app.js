@@ -8200,7 +8200,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -83503,6 +83503,8 @@ var Orders = /*#__PURE__*/function () {
 
                 if (data.length > 0) {
                   [].forEach.call(data, function (key) {
+                    var _key$get_state;
+
                     var row = tbody.insertRow();
                     var idCell = row.insertCell(0);
                     idCell.innerHTML = key.id;
@@ -83519,17 +83521,7 @@ var Orders = /*#__PURE__*/function () {
                     var rateCell = row.insertCell(5);
                     rateCell.innerHTML = key.rate;
                     var stateCell = row.insertCell(6);
-
-                    if (key.state == 1) {
-                      stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
-                                                Activo\
-                                            </span>';
-                    } else {
-                      stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
-                                                Inactivo\
-                                            </span>';
-                    }
-
+                    stateCell.innerHTML = (_key$get_state = key.get_state) === null || _key$get_state === void 0 ? void 0 : _key$get_state.name;
                     var selectCell = row.insertCell(7); //CHECK
 
                     var guideCheck = document.createElement("input");
@@ -85256,8 +85248,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

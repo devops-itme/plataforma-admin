@@ -21,17 +21,17 @@ class GuideController extends Controller
     {
         $guides = [];
         if(str_contains(request()->path, 'create')){
-            $guides = Guide::where('order_id', NULL)->get();
+            $guides = Guide::where('order_id', NULL)->with('getState')->get();
         } else if(str_contains(request()->path, 'edit')){
             $order_id = request()->order;
             $guides = Guide::with('getOrder')->whereHas('getOrder', function ($query) use ($order_id) {
                 $query->where('order_number', $order_id);
-            })->orWhere('order_id', NULL)->get();
+            })->orWhere('order_id', NULL)->with('getState')->get();
         } else {
             $order_id = request()->order;
             $guides = Guide::with('getOrder')->whereHas('getOrder', function ($query) use ($order_id) {
                 $query->where('order_number', $order_id);
-            })->get();
+            })->with('getState')->get();
         }
         return json_encode([
             'state' => 200,

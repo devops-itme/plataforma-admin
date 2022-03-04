@@ -56,4 +56,9 @@ class Guide extends Model
     {
         return $this->belongsTo(ParameterValue::class, 'transport_type');
     }
+
+    public function getState()
+    {
+        return $this->belongsTo(ParameterValue::class, 'state');
+    }
 }
