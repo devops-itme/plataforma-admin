@@ -2421,6 +2421,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 _this3.data = _this3.orders;
                 _this3.activeIndex = null;
                 _this3.showData = "";
+                _this3.ordersQuantity = "";
+                _this3.ordersTotalValue = 0;
 
                 for (i = 0; i < _this3.orders.length; i++) {
                   sum = 0;
@@ -2435,7 +2437,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 _this3.ordersQuantity = _this3.orders.length;
                 _this3.showMessengerData = [];
 
-              case 12:
+              case 14:
               case "end":
                 return _context.stop();
             }
