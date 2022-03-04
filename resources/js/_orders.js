@@ -18,12 +18,12 @@ export default class Orders {
     initialize() {
         this.instantiateBoxes();
         this.addbox();
+        this.loadBranches();
         this.removeBox();
         this.loadCustomerModal();
         this.loadOrderNumber();
         this.saveGuides();
         this.listGuides();
-        this.loadBranches();
         this.createAddress();
     }
 
@@ -501,8 +501,12 @@ export default class Orders {
                 let response = await this.requestGuide(this.guideId);
                 let data = response.data;
 
-                let branch_office = document.getElementById("branch_off_edit").value = data.branch_office;
-                console.log(branch_office);
+                let branch_office = document.getElementById("branch_off_edit");
+                [].forEach.call(branch_office, key => {
+                    if(key.value == data.branch_office){
+                        key.setAttribute('selected', 'true');
+                    }
+                });
                 // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
                 let address_name = document.getElementById("address_edit").value = data.address_name;
                 let address_lat = document.getElementById("lat_edit").value = data.address_lat;
@@ -658,7 +662,7 @@ export default class Orders {
 
             for (var i = 0; i < data.length; i++) {
                 let element = data[i];
-                let branchOffice = '<option value="'+element.name+'"> '+element.name+' </option>';
+                let branchOffice = '<option value="'+element.id+'"> '+element.name+' </option>';
                 branch.insertAdjacentHTML('beforeend', branchOffice);
             }
         });
