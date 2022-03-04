@@ -30,19 +30,19 @@
     <div class="d-flex flex-row flex-wrap align-items-center justify-content-between border-top pt-3">
 
             <div class="col-md-8 d-flex flex-row flex-wrap">
-                <div class="form-group py-3 m-0 col-md-3">
+                <div class="form-group py-3 m-0 col-md-4">
                     <label>Nro Mensajero:</label>
-                    <input type="number" class="form-control" value="9013" />
+                    <input type="number" class="form-control" v-if="showData" disabled v-bind:value="`${showData.get_guides[0]?.get_route?.get_messenger.document_number}`" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group py-3 m-0 col-md-3">
                     <label>Orden:</label>
-                    <input type="text" class="form-control" value="104-2312333" />
+                    <input type="text" class="form-control" v-if="showData" disabled v-bind:value="`${showData.user_id}-${ showData.order_number }`" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group py-3 m-0 col-md-5">
                     <label>Cliente:</label>
-                    <input type="text" class="form-control" value="Juanito Perez" />
+                    <input type="text" class="form-control" v-if="showData" disabled v-bind:value="`${showData.get_user?.name} ${showData.get_user?.last_name}`" />
                     <span class="form-text text-muted"></span>
                 </div>
             </div>
@@ -54,9 +54,9 @@
                 <div class="col-md-7">
                     <p class="mb-0">
                         <span class="font-weight-bolder mb-3">Cantidad: </span>
-                        <span class="line-height-xl">7</span>,
+                        <span class="line-height-xl" v-text="`${new Intl.NumberFormat().format(ordersQuantity)}`"></span>,
                         <span class="font-weight-bolder mb-3">Valor: </span>
-                        <span class="line-height-xl">$120.00</span>
+                        <span class="line-height-xl" v-text="`${'$'+new Intl.NumberFormat().format(ordersTotalValue)}`"></span>
                     </p>
                 </div>
             </div>

@@ -79,6 +79,9 @@ export default {
             this.data = this.orders;
             this.activeIndex = null;
             this.showData = "";
+            this.ordersQuantity= "";
+            this.ordersTotalValue= 0;
+
             for (let i = 0; i < this.orders.length; i++) {
                 let sum = 0;
                 for (let x = 0; x < this.orders[i].get_guides.length; x++) {
@@ -88,6 +91,7 @@ export default {
             }
             this.ordersQuantity = this.orders.length;
             this.showMessengerData = [];
+
         },
 
         async requestOrders() {
