@@ -15,7 +15,7 @@
                     <div class="form-group col-md-3">
                         <label for="branch_off">Sucursal despacho <span class="text-danger">*</span></label>
                         <select name="branch_office" class="form-control form-control-solid" id="branch_off_edit">
-                            <option selected disabled> Seleccione </option>
+                            <option disabled> Seleccione </option>
                         </select>
                     </div>
                     {{-- <div class="form-group col-md-3">
