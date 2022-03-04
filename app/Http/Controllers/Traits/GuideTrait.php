@@ -96,6 +96,7 @@ trait GuideTrait
             }
             $guide->update([
                 // 'dispatched' => $request->dispatched,
+                'branch_office' => $request->branch_office,
                 'address_name' => $request->address_name,
                 'address_lat' => $request->address_lat,
                 'address_lng' => $request->address_lng,
