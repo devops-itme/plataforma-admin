@@ -83182,7 +83182,7 @@ var Orders = /*#__PURE__*/function () {
 
       var _loop = function _loop(i) {
         allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var response, data, branches, branchSlc, _i, element, branchOpt, departments, departmentSlc, _i2, _element, _branchOpt, modal;
+          var response, data, branches, branchSlc, _i, element, branchOpt, departments, departmentSlc, _i2, _element, departmentOpt, modal;
 
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
@@ -83215,8 +83215,8 @@ var Orders = /*#__PURE__*/function () {
 
                   for (_i2 = 0; _i2 < departments.length; _i2++) {
                     _element = departments[_i2];
-                    _branchOpt = '<option value="' + _element.name + '"> ' + _element.name + ' </option>';
-                    branchSlc.insertAdjacentHTML('beforeend', _branchOpt);
+                    departmentOpt = '<option value="' + _element.name + '"> ' + _element.name + ' </option>';
+                    departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
                   }
 
                   document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
