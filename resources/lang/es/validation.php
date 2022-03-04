@@ -195,13 +195,14 @@ return [
         'month_dues' => 'número meses',
         'password_confirmation'=> 'confirmación de contraseña',
         'code'=>'código',
-        'terms_and_conditions' => 'terminos y condiciones',
+        'terms_and_conditions' => 'términos y condiciones',
         'today' => 'hoy',
-        'vehicle_plate'=> 'placa del vehiculo',
+        'vehicle_plate'=> 'placa del vehículo',
         'admission_date'=> 'fecha de ingreso',
         'production_percentage' => 'porcentaje de producción',
         'exclusive' => 'exclusivo',
         'contract_type_id'=>'tipo de contrato',
+        'description'=>'descripción ',
 
     ],
 
