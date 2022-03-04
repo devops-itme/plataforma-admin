@@ -205,7 +205,7 @@
                                         </span>
                                     @else
                                         <span class="label label-inline label-light-info font-weight-blog">
-                                            Multiple
+                                            Packaking
                                         </span>
                                     @endif
                                 </td>

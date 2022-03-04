@@ -502,6 +502,7 @@ export default class Orders {
                 let data = response.data;
 
                 let branch_office = document.getElementById("branch_off_edit").value = data.branch_office;
+                console.log(branch_office);
                 // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
                 let address_name = document.getElementById("address_edit").value = data.address_name;
                 let address_lat = document.getElementById("lat_edit").value = data.address_lat;
@@ -530,7 +531,7 @@ export default class Orders {
                 let customer_address = document.getElementById("customer_address_edit");
                 for (let i = 0; i < customer_address.length; i++) {
                     if(customer_address[i].value == data.customer_address){
-                        customer_address[i].setAttribute('selected', 'selected');
+                        customer_address[i].setAttribute('selected', 'true');
                     }
                 }
                 this.updateGuide();

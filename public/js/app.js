@@ -83731,7 +83731,8 @@ var Orders = /*#__PURE__*/function () {
                 case 3:
                   response = _context11.sent;
                   data = response.data;
-                  branch_office = document.getElementById("branch_off_edit").value = data.branch_office; // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                  branch_office = document.getElementById("branch_off_edit").value = data.branch_office;
+                  console.log(branch_office); // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
 
                   address_name = document.getElementById("address_edit").value = data.address_name;
                   address_lat = document.getElementById("lat_edit").value = data.address_lat;
@@ -83763,13 +83764,13 @@ var Orders = /*#__PURE__*/function () {
 
                   for (i = 0; i < customer_address.length; i++) {
                     if (customer_address[i].value == data.customer_address) {
-                      customer_address[i].setAttribute('selected', 'selected');
+                      customer_address[i].setAttribute('selected', 'true');
                     }
                   }
 
                   _this7.updateGuide();
 
-                case 29:
+                case 30:
                 case "end":
                   return _context11.stop();
               }
