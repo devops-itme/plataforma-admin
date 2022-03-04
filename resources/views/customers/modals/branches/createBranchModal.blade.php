@@ -109,11 +109,11 @@
                     </div>
                     <div class="d-none" id="slcPlan">
                         <label>Planes:<span class="text-danger">*</span></label>
-                        <select class="form-control form-control-solid">
+                        <select class="form-control form-control-solid" id="branch_office_plan">
                             <option selected disabled>Seleccione</option>
-                            @foreach ($documents as $document)
-                            <option value="{{ $document->id }}" {{ $document->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
-                                {{ $document->name }}
+                            @foreach ($plans as $plan)
+                            <option value="{{ $plan->id }}" {{ $plan->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
+                                {{ $plan->name }}
                             </option>
                             @endforeach
                         </select>

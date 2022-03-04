@@ -257,6 +257,20 @@ return [
             'Moto',
             'Auto'
         ],
+        'plans' => [
+            'Cantidad a favor',
+            'Cantidad básico',
+            'Diamond',
+            'Diamond plus',
+            'Gold',
+            'Ondemand',
+            'Platinum',
+            'Platinum plus',
+            'Saldo a favor',
+            'Silver con retiro',
+            'Silver sin retiro',
+            'Special'
+        ],
         // 'payment_method' => [
         //     'Cheque',
         //     'Efectivo'

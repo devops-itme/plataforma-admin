@@ -61,6 +61,7 @@ export default class Customers {
                 branch_office_document_number = document.getElementById("branch_office_document_number"),
                 branch_office_payment_method = document.getElementById("branch_office_payment_method"),
                 branch_office_phone = document.getElementById("branch_office_phone"),
+                branch_office_plan = document.getElementById("branch_office_plan"),
                 branch_office_usage_mode = document.getElementById("branch_office_usage_mode"),
                 branch_office_default = document.getElementById("branch_office_default"),
                 branch_office_department = document.getElementById("branch_office_department");
@@ -79,6 +80,7 @@ export default class Customers {
             formData.append('branch_office_document_number', branch_office_document_number.value);
             formData.append('branch_office_payment_method', branch_office_payment_method.value);
             formData.append('branch_office_phone', branch_office_phone.value);
+            formData.append('branch_office_plan', branch_office_plan.value);
             formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
             formData.append('branch_office_default', branch_office_default.value);
             formData.append('branch_office_department', branch_office_department.value);
@@ -291,6 +293,12 @@ export default class Customers {
                         dpt.value == 'Seleccione' ? dpt.selected = true : ''
                     }
                 })
+                let plans = document.getElementById("branch_office_plan_edit");
+                [].forEach.call(plans, key => {
+                    if(key.value == data.plan){
+                        key.setAttribute('checked', 'true');
+                    }
+                });
             })
         });
     }

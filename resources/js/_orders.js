@@ -433,15 +433,7 @@ export default class Orders {
                 rateCell.innerHTML = key.rate;
 
                 let stateCell = row.insertCell(6);
-                if(key.state == 1){
-                    stateCell.innerHTML =   '<span class="label label-inline label-light-success font-weight-bold">\
-                                                Activo\
-                                            </span>';
-                } else {
-                    stateCell.innerHTML =   '<span class="label label-inline label-light-danger font-weight-bold">\
-                                                Inactivo\
-                                            </span>';
-                }
+                stateCell.innerHTML = key.get_state?.name;
                 let selectCell = row.insertCell(7);
                 //CHECK
                 const guideCheck = document.createElement("input");
