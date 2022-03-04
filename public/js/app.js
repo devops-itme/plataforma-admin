@@ -8201,7 +8201,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -84302,25 +84302,26 @@ var Permissions = /*#__PURE__*/function () {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   row = btn.parentNode.parentNode;
+                  console.log(row);
                   role_id = row.id;
-                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("name"));
+                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("role-name"));
                   form = document.getElementById("permits-form");
                   form.setAttribute("action", "/permisos/".concat(role_id));
                   url = '/permisos/getPermissions/' + role_id;
-                  _context2.next = 8;
+                  _context2.next = 9;
                   return requestPermissions(url);
 
-                case 8:
+                case 9:
                   response = _context2.sent;
 
                   if (!(response.state != 200)) {
-                    _context2.next = 11;
+                    _context2.next = 12;
                     break;
                   }
 
                   return _context2.abrupt("return");
 
-                case 11:
+                case 12:
                   data = response.data;
                   modules = data.modules;
                   actions = data.actions;
@@ -84362,7 +84363,7 @@ var Permissions = /*#__PURE__*/function () {
                     submitBtn.className = "btn btn-primary btn-sm d-block";
                   });
 
-                case 18:
+                case 19:
                 case "end":
                   return _context2.stop();
               }
@@ -85256,8 +85257,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -35,8 +35,9 @@ export default class Permissions {
         [].forEach.call(configurationBtn, function (btn) {
             btn.addEventListener('click', async () => {
                 let row = btn.parentNode.parentNode;
+                console.log(row)
                 let role_id = row.id;
-                permitsLbl.innerText = `Permisos - ${row.getAttribute("name")}`;
+                permitsLbl.innerText = `Permisos - ${row.getAttribute("role-name")}`; 
 
                 let form = document.getElementById("permits-form");
                 form.setAttribute("action", `/permisos/${role_id}`)
