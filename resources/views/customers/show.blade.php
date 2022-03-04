@@ -30,7 +30,7 @@
                         <div class="line-height-xl">{{$customer->getUser->phone}}</div>
                     </div>
                     <div class="col-md-3">
-                        <div class="font-weight-bolder mb-3">Tipo y numero de documento:</div>
+                        <div class="font-weight-bolder mb-3">Tipo y número de documento:</div>
                         <div class="line-height-xl"><b>{{$customer->getUser->getDocumentType->name}}</b> / {{$customer->getUser->document_number}}</div>
                     </div>
                     <div class="col-md-2">
@@ -142,7 +142,7 @@
                 </div>
                 <div class="card-toolbar">
                     <button type="button" class="btn btn-sm font-weight-bold btn-primary" data-toggle="modal" data-target="#formCreateAddress">
-                        <i class="fas fa-plus"></i>CREAR DIRECCION
+                        <i class="fas fa-plus"></i>CREAR DIRECCIÓN
                     </button>
                 </div>
             </div>

@@ -2527,7 +2527,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var _data$get_guides$, _data$get_guides$$get;
 
       this.showData = data;
-      this.ordersQuantity = data.length;
       this.showMessengerData = (_data$get_guides$ = data.get_guides[0]) === null || _data$get_guides$ === void 0 ? void 0 : (_data$get_guides$$get = _data$get_guides$.get_route) === null || _data$get_guides$$get === void 0 ? void 0 : _data$get_guides$$get.get_messenger;
       this.activeIndex = index;
     },
@@ -8219,7 +8218,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -8276,7 +8275,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
 
 // exports
 
@@ -84379,25 +84378,26 @@ var Permissions = /*#__PURE__*/function () {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   row = btn.parentNode.parentNode;
+                  console.log(row);
                   role_id = row.id;
-                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("name"));
+                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("role-name"));
                   form = document.getElementById("permits-form");
                   form.setAttribute("action", "/permisos/".concat(role_id));
                   url = '/permisos/getPermissions/' + role_id;
-                  _context2.next = 8;
+                  _context2.next = 9;
                   return requestPermissions(url);
 
-                case 8:
+                case 9:
                   response = _context2.sent;
 
                   if (!(response.state != 200)) {
-                    _context2.next = 11;
+                    _context2.next = 12;
                     break;
                   }
 
                   return _context2.abrupt("return");
 
-                case 11:
+                case 12:
                   data = response.data;
                   modules = data.modules;
                   actions = data.actions;
@@ -84439,7 +84439,7 @@ var Permissions = /*#__PURE__*/function () {
                     submitBtn.className = "btn btn-primary btn-sm d-block";
                   });
 
-                case 18:
+                case 19:
                 case "end":
                   return _context2.stop();
               }
@@ -85351,8 +85351,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
