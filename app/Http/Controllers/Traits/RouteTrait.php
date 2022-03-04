@@ -95,7 +95,7 @@ trait RouteTrait
                 ]);
 
                 $route = Guide::where('id', $guide['id'])->update([
-                    'state' => 32
+                    'state' => 33
                 ]);
             }
 

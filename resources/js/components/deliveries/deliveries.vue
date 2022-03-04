@@ -67,7 +67,7 @@
                         aria-controls="porRecoger"
                         aria-selected="true"
                         @click="getGuides(0)"
-                        >Por {{ selected == 31 ? "Entregar" : "Recoger" }}</a
+                        >Por {{ selected == 32 ? "Entregar" : "Recoger" }}</a
                     >
                 </li>
                 <li class="nav-item" role="presentation">
@@ -80,7 +80,7 @@
                         aria-controls="enproceso"
                         aria-selected="false"
                         @click="getGuides(1)"
-                        >{{ selected == 31 ? "Entregas" : "Recogidas" }} en
+                        >{{ selected == 32 ? "Entregas" : "Recogidas" }} en
                         proceso</a
                     >
                 </li>
@@ -223,10 +223,10 @@ export default {
     },
     data() {
         return {
-            selected: 31,
+            selected: 32,
             delivery_types: [
-                { value: 31, text: "Entregas" },
-                { value: 34, text: "Recogidas" },
+                { value: 32, text: "Entregas" },
+                { value: 35, text: "Recogidas" },
             ],
             showModal: false,
             columns:{
@@ -236,7 +236,7 @@ export default {
             guides: [],
             guides2: [],
             messengers: [],
-            type_guide: 31,
+            type_guide: 32,
 
         };
     },

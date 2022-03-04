@@ -16,7 +16,7 @@
                 <td v-text=order.get_user.name></td>
                 <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
                 <td v-text="`$${rowTotal(order.get_guides)}`"></td>
-                <td>Boston City</td>
+                <td v-text="`${ order.get_guides[0]?.address_description}`"></td>
             </tr>
         </tbody>
     </table>
