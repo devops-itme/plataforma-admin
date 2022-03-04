@@ -267,7 +267,7 @@
                     <input type="text" hidden name="user_id" value="{{$customer->user_id}}">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label> Descripción </label>
+                            <label> Descripción *</label>
                             <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Descripción">
                         </div>
                         <div class="col-md-6">
