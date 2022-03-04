@@ -24,6 +24,7 @@ class BranchOffice extends Model
         'default',
         'payment_method',
         'phone',
+        'plan',
         'usage_mode',
         'user_id',
         'state'

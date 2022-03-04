@@ -81703,12 +81703,12 @@ var Customers = /*#__PURE__*/function () {
       }
 
       btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_usage_mode, branch_office_default, branch_office_department, formData, response, modal;
+        var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_plan, branch_office_usage_mode, branch_office_default, branch_office_department, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                branch_office_name = document.getElementById("branch_office_name"), branch_office_type = document.getElementById("branch_office_type"), branch_office_description = document.getElementById("branch_office_description"), branch_office_zone = document.getElementById("branch_office_zone"), branch_office_address = document.getElementById("branch_office_address"), branch_office_lat = document.getElementById("branch_office_lat"), branch_office_lng = document.getElementById("branch_office_lng"), branch_office_email = document.getElementById("branch_office_email"), branch_office_contact = document.getElementById("branch_office_contact"), branch_office_document_type = document.getElementById("branch_office_document_type"), branch_office_document_number = document.getElementById("branch_office_document_number"), branch_office_payment_method = document.getElementById("branch_office_payment_method"), branch_office_phone = document.getElementById("branch_office_phone"), branch_office_usage_mode = document.getElementById("branch_office_usage_mode"), branch_office_default = document.getElementById("branch_office_default"), branch_office_department = document.getElementById("branch_office_department");
+                branch_office_name = document.getElementById("branch_office_name"), branch_office_type = document.getElementById("branch_office_type"), branch_office_description = document.getElementById("branch_office_description"), branch_office_zone = document.getElementById("branch_office_zone"), branch_office_address = document.getElementById("branch_office_address"), branch_office_lat = document.getElementById("branch_office_lat"), branch_office_lng = document.getElementById("branch_office_lng"), branch_office_email = document.getElementById("branch_office_email"), branch_office_contact = document.getElementById("branch_office_contact"), branch_office_document_type = document.getElementById("branch_office_document_type"), branch_office_document_number = document.getElementById("branch_office_document_number"), branch_office_payment_method = document.getElementById("branch_office_payment_method"), branch_office_phone = document.getElementById("branch_office_phone"), branch_office_plan = document.getElementById("branch_office_plan"), branch_office_usage_mode = document.getElementById("branch_office_usage_mode"), branch_office_default = document.getElementById("branch_office_default"), branch_office_department = document.getElementById("branch_office_department");
                 formData = new FormData();
                 formData.append('branch_office_name', branch_office_name.value);
                 formData.append('branch_office_type', branch_office_type.value);
@@ -81723,13 +81723,14 @@ var Customers = /*#__PURE__*/function () {
                 formData.append('branch_office_document_number', branch_office_document_number.value);
                 formData.append('branch_office_payment_method', branch_office_payment_method.value);
                 formData.append('branch_office_phone', branch_office_phone.value);
+                formData.append('branch_office_plan', branch_office_plan.value);
                 formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
                 formData.append('branch_office_default', branch_office_default.value);
                 formData.append('branch_office_department', branch_office_department.value);
-                _context.next = 20;
+                _context.next = 21;
                 return _this.sendBranchOfficeData(formData);
 
-              case 20:
+              case 21:
                 response = _context.sent;
 
                 if (response['state'] == 200) {
@@ -81759,7 +81760,7 @@ var Customers = /*#__PURE__*/function () {
                   console.log('Error ocurrido: ' + response['error']);
                 }
 
-              case 22:
+              case 23:
               case "end":
                 return _context.stop();
             }
@@ -82023,7 +82024,7 @@ var Customers = /*#__PURE__*/function () {
 
       [].forEach.call(branches, function (branch) {
         branch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-          var response, data, slcBranchType, slcZone, slcDocumentType, slcPaymentMethod, inpDefault, dpts;
+          var response, data, slcBranchType, slcZone, slcDocumentType, slcPaymentMethod, inpDefault, dpts, plans;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
             while (1) {
               switch (_context5.prev = _context5.next) {
@@ -82092,8 +82093,14 @@ var Customers = /*#__PURE__*/function () {
                       dpt.value == 'Seleccione' ? dpt.selected = true : '';
                     }
                   });
+                  plans = document.getElementById("branch_office_plan_edit");
+                  [].forEach.call(plans, function (key) {
+                    if (key.value == data.plan) {
+                      key.setAttribute('checked', 'true');
+                    }
+                  });
 
-                case 26:
+                case 28:
                 case "end":
                   return _context5.stop();
               }

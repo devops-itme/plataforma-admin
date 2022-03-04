@@ -65,6 +65,7 @@ class BranchOfficeController extends Controller
     {
         if($request->branch_office_payment_method == 24){
             $request->merge(['branch_office_usage_mode' => null]);
+            $request->merge(['branch_office_plan' => null]);
         }
         $response = $this->saveBranchOffice($request);
         if($response['state'] == 200){
@@ -97,7 +98,7 @@ class BranchOfficeController extends Controller
         } else {
             return json_encode([
                 'state' => 500,
-                'error' => $response['message']
+                'error' => $response['error']
             ]);
         }
     }

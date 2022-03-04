@@ -32,6 +32,7 @@ trait BranchOfficeTrait
                 'branch_office_default' => 'nullable',
                 'branch_office_payment_method' => 'nullable',
                 'branch_office_phone' => 'nullable',
+                'branch_office_plan' => 'nullable',
                 'branch_office_usage_mode' => 'nullable',
                 'user_id' => 'nullable|exists:users,id',
             ]
@@ -66,6 +67,7 @@ trait BranchOfficeTrait
                 'default' => $request->branch_office_default,
                 'payment_method' => $request->branch_office_payment_method,
                 'phone' => $request->branch_office_phone,
+                'plan' => $request->branch_office_plan,
                 'usage_mode' => $request->branch_office_usage_mode,
                 // 'user_id' => $request->user_id
             ]);
@@ -107,6 +109,7 @@ trait BranchOfficeTrait
                 'default' => $request->branch_office_default,
                 'payment_method' => $request->branch_office_payment_method,
                 'phone' => $request->branch_office_phone,
+                'plan' => $request->branch_office_plan,
                 'usage_mode' => $request->branch_office_usage_mode
             ]);
             return $this->respond(200, $branchOffice, null, 'Oficina actualizada exitosamente');
