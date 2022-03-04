@@ -198,10 +198,12 @@
                                         class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a onclick="deleteResource('/usuarios/'+{{ $user->id }})" role="button"
-                                        id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
+                                    @if ($user->id != 1)
+                                        <a onclick="deleteResource('/usuarios/'+{{ $user->id }})" role="button"
+                                            id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
