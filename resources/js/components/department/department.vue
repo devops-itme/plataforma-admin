@@ -60,6 +60,7 @@
                                         class="checkbox mt-3"
                                         name="departments[]"
                                         :value="department.id"
+                                        v-if="userId == undefined"
                                     />
                                     <a
                                         href="#"
