@@ -23,6 +23,8 @@
                 </thead>
                 <tbody>
                     <tr
+                        selected-class="sortableSelected"
+                        style="cursor: pointer"
                         v-for="tblItem of guides"
                         v-bind:key="tblItem.id"
                         class="text-center">
@@ -38,22 +40,7 @@
                         <td>5757848</td>
                         <td>City:Malambo</td>
                         <td>Calle Siempreviva</td>
-
                     </tr>
-                    <!-- <tr class="text-center">
-                        <td>Normal</td>
-                        <td>Recogido</td>
-                        <td>18/02/2022</td>
-                        <td>9988383</td>
-                        <td>0084774</td>
-                        <td>17/02/2022</td>
-                        <td>9013</td>
-                        <td>Leido</td>
-                        <td>Marta ayega</td>
-                        <td>5757848</td>
-                        <td>City:Malambo</td>
-                        <td>Calle Siempreviva</td>
-                    </tr> -->
                 </tbody>
             </table>
         </div>
@@ -66,6 +53,9 @@ export default {
         columnsNames: Array,
         widthTable: Number,
         guides: Array,
+    },
+    methods: {
+
     }
 }
 </script>

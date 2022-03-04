@@ -22,19 +22,19 @@
                         <!-- <option>Entrega</option> -->
                     </select>
                 </div>
-                <div
-                    class="col-md-8 d-flex align-items-center flex-row flex-wrap"
-                >
-                    <div class="col-md-5 py-2 border rounded">
-                        <p class="mb-0">
-                            <span class="font-weight-bolder mb-3"
-                                >Destinos en recogida por editar:
-                            </span>
-                            <span class="line-height-xl">2000</span>
-                        </p>
+                <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
+                    <div class="col-md-5 py-2" >
+                        <div class=" border rounded" v-if="type_guide == 33 ||  type_guide == 36">
+                            <p class="mb-0">
+                                <span class="font-weight-bolder mb-3"
+                                    >Destinos en recogida por editar:
+                                </span>
+                                <span class="line-height-xl">2000</span>
+                            </p>
+                        </div>
                     </div>
                     <div class="form-group col-md-3 mb-0">
-                        <select class="form-control" id="delivery_event_state">
+                        <select class="form-control" id="delivery_event_state"  v-if="type_guide == 33 ||  type_guide == 36">
                             <option>Seleccione estado</option>
                         </select>
                     </div>
@@ -42,6 +42,7 @@
                         <button
                             type="button"
                             class="btn btn-light-primary font-weight-bold"
+                            v-if="type_guide == 33 ||  type_guide == 36"
                         >
                             Aplicar nuevo estado
                         </button>
@@ -131,7 +132,7 @@
             <div class="col-md-3 py-4">
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
                     <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
-                    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
+                    <button v-if="type_guide == 33 ||  type_guide == 36" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
