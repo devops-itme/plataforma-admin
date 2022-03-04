@@ -2575,7 +2575,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   headers: myHeaders,
                   body: JSON.stringify({
                     messenger_user_id: _this6.setMessenger.user_id,
-                    order_id: _this6.showData.id
+                    order_id: _this6.showData.id,
+                    state_order: _this6.tabs[1].id
                   })
                 };
                 _context4.next = 17;
