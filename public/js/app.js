@@ -82991,12 +82991,12 @@ var Orders = /*#__PURE__*/function () {
       this.instantiateBoxes();
       this.addbox();
       this.loadBranches();
-      this.removeBox();
       this.loadCustomerModal();
+      this.removeBox();
       this.loadOrderNumber();
       this.saveGuides();
-      this.listGuides();
       this.createAddress();
+      this.listGuides();
     }
   }, {
     key: "setInput",
@@ -83722,7 +83722,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, i;
+          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -83735,11 +83735,9 @@ var Orders = /*#__PURE__*/function () {
                   response = _context11.sent;
                   data = response.data;
                   branch_office = document.getElementById("branch_off_edit");
-                  [].forEach.call(branch_office, function (key) {
-                    if (key.value == data.branch_office) {
-                      key.setAttribute('selected', 'true');
-                    }
-                  }); // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                  branch_office.value = data.branch_office;
+                  customer_address = document.getElementById("customer_address_edit");
+                  customer_address.value = data.customer_address; // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
 
                   address_name = document.getElementById("address_edit").value = data.address_name;
                   address_lat = document.getElementById("lat_edit").value = data.address_lat;
@@ -83761,23 +83759,7 @@ var Orders = /*#__PURE__*/function () {
                   take_photo = document.getElementById("take_photo_edit");
                   data.take_photo == 1 ? take_photo.checked = true : '';
 
-                  if (data.order_id == null) {
-                    _this7.customerAddresses(document.getElementById("user_code").value);
-                  } else {
-                    _this7.customerAddresses(data.get_order.user_id);
-                  }
-
-                  customer_address = document.getElementById("customer_address_edit");
-
-                  for (i = 0; i < customer_address.length; i++) {
-                    if (customer_address[i].value == data.customer_address) {
-                      customer_address[i].setAttribute('selected', 'true');
-                    }
-                  }
-
-                  _this7.updateGuide();
-
-                case 30:
+                case 28:
                 case "end":
                   return _context11.stop();
               }
@@ -83785,6 +83767,7 @@ var Orders = /*#__PURE__*/function () {
           }, _callee11);
         })));
       });
+      this.updateGuide();
     }
   }, {
     key: "requestGuide",

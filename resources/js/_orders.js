@@ -19,12 +19,12 @@ export default class Orders {
         this.instantiateBoxes();
         this.addbox();
         this.loadBranches();
-        this.removeBox();
         this.loadCustomerModal();
+        this.removeBox();
         this.loadOrderNumber();
         this.saveGuides();
-        this.listGuides();
         this.createAddress();
+        this.listGuides();
     }
 
     setInput() {
@@ -502,11 +502,9 @@ export default class Orders {
                 let data = response.data;
 
                 let branch_office = document.getElementById("branch_off_edit");
-                [].forEach.call(branch_office, key => {
-                    if(key.value == data.branch_office){
-                        key.setAttribute('selected', 'true');
-                    }
-                });
+                branch_office.value = data.branch_office;
+                let customer_address = document.getElementById("customer_address_edit");
+                customer_address.value = data.customer_address;
                 // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
                 let address_name = document.getElementById("address_edit").value = data.address_name;
                 let address_lat = document.getElementById("lat_edit").value = data.address_lat;
@@ -527,20 +525,9 @@ export default class Orders {
                 data.sign == 1 ? sign.checked = true : '';
                 let take_photo = document.getElementById("take_photo_edit");
                 data.take_photo == 1 ? take_photo.checked = true : '';
-                if(data.order_id == null){
-                    this.customerAddresses(document.getElementById("user_code").value);
-                } else {
-                    this.customerAddresses(data.get_order.user_id);
-                }
-                let customer_address = document.getElementById("customer_address_edit");
-                for (let i = 0; i < customer_address.length; i++) {
-                    if(customer_address[i].value == data.customer_address){
-                        customer_address[i].setAttribute('selected', 'true');
-                    }
-                }
-                this.updateGuide();
             });
         })
+        this.updateGuide();
     }
 
     async requestGuide(id){

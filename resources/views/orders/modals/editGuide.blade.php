@@ -104,7 +104,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
-                        <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
+                        <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit" onchange="console.log('ho')">
                             <option disabled>Seleccione </option>
                         </select>
                     </div>
