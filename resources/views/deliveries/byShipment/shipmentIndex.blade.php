@@ -46,9 +46,9 @@
                 <div class="col-md-7">
                     <p class="mb-0 text-right">
                         <span class="font-weight-bolder mb-3">Cantidad: </span>
-                        <span class="line-height-xl">7</span>,
+                        <span class="line-height-xl" v-text="`${new Intl.NumberFormat().format(ordersQuantity)}`">7</span>,
                         <span class="font-weight-bolder mb-3">Valor: </span>
-                        <span class="line-height-xl">$120.00</span>
+                        <span class="line-height-xl" v-text="`${'$'+new Intl.NumberFormat().format(ordersTotalValue)}`">$120.00</span>
                     </p>
                     <div class="d-flex flex-row flex-wrap align-items-center justify-content-between">
                         <div class="form-group col-md-8 mb-0 py-0">
