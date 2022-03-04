@@ -12,7 +12,7 @@ export default {
             ordersQuantity: "",
             ordersTotalValue: 0,
             tabs: [],
-            currentTab: 31,
+            currentTab: 32,
             showMessengerData:[],
             messengers: [],
             searchMessenger: null,

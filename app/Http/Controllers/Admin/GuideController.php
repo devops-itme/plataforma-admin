@@ -168,17 +168,17 @@ class GuideController extends Controller
         }
     }
 
-    public function guidesForDeliveryPacking($type)
+    public function guidesForDeliveryPacking($state)
     {
 
         try {
 
 
-            $type == 36? $type = [34,35,36] : ( $type == 33?  $type = [31,32,33] : $type =[intval($type)]);
+            $state == 37? $state = [35,36,37] : ( $state == 34?  $state = [32,33,34] : $state =[intval($state)]);
 
             $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query)  {
-                $query->where('order_type', 35);
-            })->whereIn('state', $type)
+                $query->where('order_type', 36);
+            })->whereIn('state', $state)
             ->with(['getRoute.getMessenger', 'getAddress', 'getTransportType'])
             ->get();
 
