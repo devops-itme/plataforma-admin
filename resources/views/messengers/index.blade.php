@@ -212,7 +212,7 @@
                                             class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                             <i class="fad fa-edit"></i>
                                         </a>
-                                        <button type="button" onclick="deleteResource('/mensajeros/'+{{ $item->id }})"
+                                        <button type="button" onclick="deleteResource('{{route('messengers.destroy', $item->id)}}', true)"
                                             role="button" id="deleteMessenger" class="btn btn-icon btn-light-danger btn-sm mr-2"
                                             data-tooltip title="Eliminar">
                                             <i class="fad fa-trash-alt"></i>

@@ -2143,6 +2143,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -3252,26 +3253,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
     columnsNames: Array,
     widthTable: Number,
     guides: Array
-  }
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -8250,7 +8239,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
 
 // exports
 
@@ -62563,7 +62552,52 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm._m(1),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "col-md-8 d-flex align-items-center flex-row flex-wrap",
+              },
+              [
+                _c("div", { staticClass: "col-md-5 py-2" }, [
+                  _vm.type_guide == 33 || _vm.type_guide == 36
+                    ? _c("div", { staticClass: " border rounded" }, [_vm._m(1)])
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
+                  _vm.type_guide == 33 || _vm.type_guide == 36
+                    ? _c(
+                        "select",
+                        {
+                          staticClass: "form-control",
+                          attrs: { id: "delivery_event_state" },
+                        },
+                        [_c("option", [_vm._v("Seleccione estado")])]
+                      )
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _vm.type_guide == 33 || _vm.type_guide == 36
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light-primary font-weight-bold",
+                          attrs: { type: "button" },
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Aplicar nuevo estado\n                    "
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _vm._m(2),
+              ]
+            ),
           ]
         ),
         _vm._v(" "),
@@ -62747,7 +62781,46 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _c("div", { staticClass: "col-md-3 py-4" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "d-flex flex-row flex-wrap align-items-center justify-content-center",
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "btn btn-light-success btn-block font-weight-bold mr-2",
+                    attrs: { href: "#" },
+                  },
+                  [_vm._v("Imprimir Guia")]
+                ),
+                _vm._v(" "),
+                _vm.type_guide == 33 || _vm.type_guide == 36
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-light-primary btn-block font-weight-bold mr-2",
+                        attrs: {
+                          type: "button",
+                          "data-toggle": "modal",
+                          "data-target": "#exampleModal",
+                        },
+                      },
+                      [_vm._v("Editar Destino")]
+                    )
+                  : _vm._e(),
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4),
+          ]),
         ]),
       ]),
       _vm._v(" "),
@@ -62771,50 +62844,165 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mb-0" }, [
+      _c("span", { staticClass: "font-weight-bolder mb-3" }, [
+        _vm._v(
+          "Destinos en recogida por editar:\n                            "
+        ),
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "line-height-xl" }, [_vm._v("2000")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-1" }, [
+      _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "col-md-8 d-flex align-items-center flex-row flex-wrap" },
+      {
+        staticClass:
+          "d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px",
+      },
       [
-        _c("div", { staticClass: "col-md-5 py-2 border rounded" }, [
-          _c("p", { staticClass: "mb-0" }, [
-            _c("span", { staticClass: "font-weight-bolder mb-3" }, [
-              _vm._v(
-                "Destinos en recogida por editar:\n                        "
-              ),
-            ]),
-            _vm._v(" "),
-            _c("span", { staticClass: "line-height-xl" }, [_vm._v("2000")]),
+        _c("h5", { staticClass: "mb-5 font-weight-bold text-dark col-md-12" }, [
+          _vm._v("Información de Destino"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Tipo de orden:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [_vm._v("Packing")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Cliente:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [
+            _vm._v("Juanito Perez"),
           ]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
-          _c(
-            "select",
-            {
-              staticClass: "form-control",
-              attrs: { id: "delivery_event_state" },
-            },
-            [_c("option", [_vm._v("Seleccione estado")])]
-          ),
+        _c("div", { staticClass: "col-md-6 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Destino:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [_vm._v("3534534")]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-light-primary font-weight-bold",
-              attrs: { type: "button" },
-            },
-            [
-              _vm._v(
-                "\n                        Aplicar nuevo estado\n                    "
-              ),
-            ]
-          ),
+        _c("div", { staticClass: "col-md-6 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Despacho:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [_vm._v("0")]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-1" }, [
-          _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
+        _c("div", { staticClass: "col-md-6 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Ref.Cliente:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [_vm._v("---")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Programado:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [_vm._v("2022/02/04")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Transporte:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [_vm._v("Moto")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Movil:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [
+            _vm._v("381, YEMAYEL ARIEL"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", {
+          staticClass:
+            "separator separator-dashed separator-border-2 col-md-12 my-3",
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Cliente Depto:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-x1" }, [
+            _vm._v("84: PRINCIPAL"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Cliente Sucursal:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-x1" }, [
+            _vm._v("1179: PRINCIPAL"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Cliente Documento:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-x1" }, [
+            _vm._v("1191: DELIVERY"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", {
+          staticClass:
+            "separator separator-dashed separator-border-2 col-md-12 my-3",
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Concepto:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [
+            _vm._v("RETIRAR FIANZA A NOMBRE DE EDEMET"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 mb-2" }, [
+          _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+            _vm._v("Dirección:"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "line-height-xl" }, [
+            _vm._v("CLL 50: SAN FRANCISCO: PANAMA"),
+          ]),
         ]),
       ]
     )
@@ -62823,220 +63011,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3 py-4" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-flex flex-row flex-wrap align-items-center justify-content-center",
-        },
-        [
-          _c(
-            "a",
-            {
-              staticClass:
-                "btn btn-light-success btn-block font-weight-bold mr-2",
-              attrs: { href: "#" },
-            },
-            [_vm._v("Imprimir Guia")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "btn btn-light-primary btn-block font-weight-bold mr-2",
-              attrs: {
-                type: "button",
-                "data-toggle": "modal",
-                "data-target": "#exampleModal",
-              },
-            },
-            [_vm._v("Editar Destino")]
-          ),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px",
-        },
-        [
-          _c(
-            "h5",
-            { staticClass: "mb-5 font-weight-bold text-dark col-md-12" },
-            [_vm._v("Información de Destino")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Tipo de orden:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [_vm._v("Packing")]),
+    return _c(
+      "div",
+      {
+        staticClass:
+          "d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center",
+      },
+      [
+        _c("h5", { staticClass: "mb-5 font-weight-bold text-dark col-md-12" }, [
+          _vm._v("Adjuntos"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12 symbol-group symbol-hover" }, [
+          _c("div", { staticClass: "symbol" }, [
+            _c("img", {
+              attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
+            }),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Cliente:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [
-              _vm._v("Juanito Perez"),
-            ]),
+          _c("div", { staticClass: "symbol" }, [
+            _c("img", {
+              attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
+            }),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Destino:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [_vm._v("3534534")]),
+          _c("div", { staticClass: "symbol" }, [
+            _c("img", {
+              attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
+            }),
           ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Despacho:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [_vm._v("0")]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Ref.Cliente:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [_vm._v("---")]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Programado:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [
-              _vm._v("2022/02/04"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Transporte:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [_vm._v("Moto")]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Movil:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [
-              _vm._v("381, YEMAYEL ARIEL"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", {
-            staticClass:
-              "separator separator-dashed separator-border-2 col-md-12 my-3",
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Cliente Depto:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-x1" }, [
-              _vm._v("84: PRINCIPAL"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Cliente Sucursal:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-x1" }, [
-              _vm._v("1179: PRINCIPAL"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Cliente Documento:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-x1" }, [
-              _vm._v("1191: DELIVERY"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", {
-            staticClass:
-              "separator separator-dashed separator-border-2 col-md-12 my-3",
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Concepto:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [
-              _vm._v("RETIRAR FIANZA A NOMBRE DE EDEMET"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 mb-2" }, [
-            _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-              _vm._v("Dirección:"),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "line-height-xl" }, [
-              _vm._v("CLL 50: SAN FRANCISCO: PANAMA"),
-            ]),
-          ]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center",
-        },
-        [
-          _c(
-            "h5",
-            { staticClass: "mb-5 font-weight-bold text-dark col-md-12" },
-            [_vm._v("Adjuntos")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 symbol-group symbol-hover" }, [
-            _c("div", { staticClass: "symbol" }, [
-              _c("img", {
-                attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-              }),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "symbol" }, [
-              _c("img", {
-                attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-              }),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "symbol" }, [
-              _c("img", {
-                attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-              }),
-            ]),
-          ]),
-        ]
-      ),
-    ])
+        ]),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -63135,7 +63141,7 @@ var render = function () {
                               staticClass: "text-center",
                               on: {
                                 click: function ($event) {
-                                  return _vm.handleChange(tblItem)
+                                  return _vm.rowClick(tblItem)
                                 },
                               },
                             },
@@ -63246,13 +63252,20 @@ var render = function () {
                             end: function ($event) {
                               _vm.drag = false
                             },
-                            select: _vm.handleChange,
                           },
                         },
                         _vm._l(_vm.guides2, function (tblItem) {
                           return _c(
                             "tr",
-                            { key: tblItem.id, staticClass: "text-center" },
+                            {
+                              key: tblItem.id,
+                              staticClass: "text-center",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.rowClick(tblItem)
+                                },
+                              },
+                            },
                             [
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
@@ -63924,7 +63937,12 @@ var render = function () {
               _vm._l(_vm.guides, function (tblItem) {
                 return _c(
                   "tr",
-                  { key: tblItem.id, staticClass: "text-center" },
+                  {
+                    key: tblItem.id,
+                    staticClass: "text-center",
+                    staticStyle: { cursor: "pointer" },
+                    attrs: { "selected-class": "sortableSelected" },
+                  },
                   [
                     _c("td", [_vm._v("Normal")]),
                     _vm._v(" "),
@@ -85238,8 +85256,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

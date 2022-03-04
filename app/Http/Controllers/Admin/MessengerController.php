@@ -120,9 +120,9 @@ class MessengerController extends Controller
     {
         $response = $this->deleteMessenger($id);
         if ($response['state'] == 200) {
-            return redirect()->route('messengers.index')->with('success', $response['message']);
+            return $this->respond(200, $response['data'], null, $response['message']);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return $this->respond(200, $response['data'], null, $response['message']);
         }
     }
 

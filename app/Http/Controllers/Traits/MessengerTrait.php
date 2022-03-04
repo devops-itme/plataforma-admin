@@ -9,6 +9,7 @@ use App\ParameterValue;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\UserTrait;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 trait MessengerTrait
 {
@@ -24,6 +25,10 @@ trait MessengerTrait
                 'production_percentage' => 'required|numeric',
                 'exclusive' => 'required',
                 'contract_type_id' => 'required',
+                'document_type' => 'required',
+                'document_number' => 'required',
+                'name' => 'required',
+                'last_name' => 'required'
                 // 'contract' => 'required',
             ]
         );

@@ -64,7 +64,7 @@
                                         v-for="tblItem of guides"
                                         v-bind:key="tblItem.id"
                                         class="text-center"
-                                        @click="handleChange(tblItem)"
+                                        @click="rowClick(tblItem)"
                                     >
                                         <td>{{ tblItem.id }}</td>
                                         <td>{{ tblItem.get_order.order_number }}</td>
@@ -121,13 +121,13 @@
                                     selected-class="sortableSelected"
                                     @start="drag = true"
                                     @end="drag = false"
-                                    @select="handleChange"
                                     style="cursor: move"
                                 >
                                     <tr
                                         v-for="tblItem of guides2"
                                         v-bind:key="tblItem.id"
                                         class="text-center"
+                                        @click="rowClick(tblItem)"
                                     >
                                         <td>{{ tblItem.id }}</td>
                                         <td>{{ tblItem.get_order.order_number }}</td>
