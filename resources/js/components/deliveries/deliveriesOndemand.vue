@@ -9,6 +9,8 @@ export default {
             shipmented: [],
             completed: [],
             showData: "",
+            ordersQuantity: "",
+            ordersTotalValue: 0,
             tabs: [],
             currentTab: 31,
             showMessengerData:[],
@@ -77,6 +79,14 @@ export default {
             this.data = this.orders;
             this.activeIndex = null;
             this.showData = "";
+            for (let i = 0; i < this.orders.length; i++) {
+                let sum = 0;
+                for (let x = 0; x < this.orders[i].get_guides.length; x++) {
+                    sum += this.orders[i].get_guides[x].value;
+                }
+                this.ordersTotalValue += sum;
+            }
+            this.ordersQuantity = this.orders.length;
             this.showMessengerData = [];
         },
 
@@ -122,6 +132,7 @@ export default {
 
         rowClick(data, index) {
             this.showData = data;
+            this.ordersQuantity = data.length;
             this.showMessengerData = data.get_guides[0]?.get_route?.get_messenger
             this.activeIndex = index;
         },

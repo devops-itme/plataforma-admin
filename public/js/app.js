@@ -2343,6 +2343,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       shipmented: [],
       completed: [],
       showData: "",
+      ordersQuantity: "",
+      ordersTotalValue: 0,
       tabs: [],
       currentTab: 31,
       showMessengerData: [],
@@ -2403,7 +2405,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
+        var response, i, sum, x;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2419,9 +2421,21 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 _this3.data = _this3.orders;
                 _this3.activeIndex = null;
                 _this3.showData = "";
+
+                for (i = 0; i < _this3.orders.length; i++) {
+                  sum = 0;
+
+                  for (x = 0; x < _this3.orders[i].get_guides.length; x++) {
+                    sum += _this3.orders[i].get_guides[x].value;
+                  }
+
+                  _this3.ordersTotalValue += sum;
+                }
+
+                _this3.ordersQuantity = _this3.orders.length;
                 _this3.showMessengerData = [];
 
-              case 10:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -2513,6 +2527,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var _data$get_guides$, _data$get_guides$$get;
 
       this.showData = data;
+      this.ordersQuantity = data.length;
       this.showMessengerData = (_data$get_guides$ = data.get_guides[0]) === null || _data$get_guides$ === void 0 ? void 0 : (_data$get_guides$$get = _data$get_guides$.get_route) === null || _data$get_guides$$get === void 0 ? void 0 : _data$get_guides$$get.get_messenger;
       this.activeIndex = index;
     },
