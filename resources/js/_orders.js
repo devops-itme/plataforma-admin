@@ -277,7 +277,7 @@ export default class Orders {
                     removeOptions(branchSlc);
                     for (let i = 0; i < branches.length; i++) {
                         let element = branches[i];
-                        let branchOpt = '<option value="'+element.name+'"> '+element.name+' </option>';
+                        let branchOpt = '<option value="'+element.id+'"> '+element.name+' </option>';
                         branchSlc.insertAdjacentHTML('beforeend', branchOpt);
                     }
                 let departments = data[2];
@@ -286,7 +286,7 @@ export default class Orders {
                     removeOptions(departmentSlc);
                     for (let i = 0; i < departments.length; i++) {
                         let element = departments[i];
-                        let departmentOpt = '<option value="'+element.name+'"> '+element.name+' </option>';
+                        let departmentOpt = '<option value="'+element.id+'"> '+element.name+' </option>';
                         departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
                     }
                 document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];

@@ -88,7 +88,7 @@ class OrderController extends Controller
             }
             return redirect()->route('orders.index')->with('success', 'Orden creada exitosamente.');
         } else {
-            return redirect()->back()->withInput()->with('danger', $response['error']);
+            return redirect()->back()->with('danger', $response['error']);
         }
     }
 
