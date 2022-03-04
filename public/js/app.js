@@ -2527,7 +2527,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var _data$get_guides$, _data$get_guides$$get;
 
       this.showData = data;
-      this.ordersQuantity = data.length;
       this.showMessengerData = (_data$get_guides$ = data.get_guides[0]) === null || _data$get_guides$ === void 0 ? void 0 : (_data$get_guides$$get = _data$get_guides$.get_route) === null || _data$get_guides$$get === void 0 ? void 0 : _data$get_guides$$get.get_messenger;
       this.activeIndex = index;
     },

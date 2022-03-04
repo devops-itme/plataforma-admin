@@ -132,7 +132,6 @@ export default {
 
         rowClick(data, index) {
             this.showData = data;
-            this.ordersQuantity = data.length;
             this.showMessengerData = data.get_guides[0]?.get_route?.get_messenger
             this.activeIndex = index;
         },
