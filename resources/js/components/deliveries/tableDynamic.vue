@@ -23,10 +23,11 @@
                 </thead>
                 <tbody>
                     <tr
-                        selected-class="sortableSelected"
+                        :class="[{'sortableSelected': index === activeIndex}]"
                         style="cursor: pointer"
-                        v-for="tblItem of guides"
+                        v-for="(tblItem, index) of guides"
                         v-bind:key="tblItem.id"
+                        @click="rowClick(tblItem, index)"
                         class="text-center">
                         <td>Normal</td>
                         <td>Recogido</td>
@@ -46,6 +47,12 @@
         </div>
     </div>
 </template>
+<style>
+    .sortableSelected {
+        background-color: #023E8A;
+        color: #fff;
+    }
+</style>
 <script>
 export default {
     props: {
@@ -54,7 +61,16 @@ export default {
         widthTable: Number,
         guides: Array,
     },
+    data() {
+        return{
+            activeIndex: null
+        }
+    },
     methods: {
+        rowClick(data, index) {
+             this.showGuide = data;
+             this.activeIndex = index
+        },
 
     }
 }
