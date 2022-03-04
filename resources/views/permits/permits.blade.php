@@ -40,10 +40,10 @@
                   <button name="btnEditRole" id="btnRole-{{$role->id}}" class="btn btn-primary btn-sm btn-fab btn-icon" data-toggle="modal" data-target="#editRolModal" data-tooltip title="Editar">
                     <i class="fa fa-pencil"></i>
                   </button>
-                  <button class="btn btn-danger btn-sm btn-fab btn-icon" data-tooltip title="Eliminar" onclick="confirmDelete('/roles/'+{{$role->id}})">
+                  <button {{$role->id == 1 ? 'disabled="disabled"' : '' }} class="btn btn-danger btn-sm btn-fab btn-icon" data-tooltip title="Eliminar" onclick="confirmDelete('/roles/'+{{$role->id}})">
                     <i class="fa fa-trash"></i>
                   </button>
-                  <button class="btn btn-info btn-sm btn-fab btn-icon configuration-btn" data-tooltip title="Configurar">
+                  <button {{$role->id == 1 ? 'disabled="disabled"' : '' }} class="btn btn-info btn-sm btn-fab btn-icon configuration-btn" data-tooltip title="Configurar">
                     <i class="fa fa-cog"></i>
                   </button>
                 </td>
