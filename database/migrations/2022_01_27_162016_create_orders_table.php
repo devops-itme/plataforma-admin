@@ -37,6 +37,7 @@ class CreateOrdersTable extends Migration
             $table->integer('customer_user_id');
             $table->integer('creator_user_id')->nullable();
             $table->integer('zone')->nullable();
+            $table->string('dispatch_code')->unique()->nullable();
             $table->integer('state')->default(32)->comment("{1:Por despachar;2:Despachado;3:Completado}");
             $table->timestamps();
             $table->softDeletes();
