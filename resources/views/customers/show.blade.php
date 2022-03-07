@@ -128,6 +128,9 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="branches-tab" data-toggle="tab" href="#branches" role="tab" aria-controls="branches" aria-selected="false">Sucursales</a>
         </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="departament-tab" data-toggle="tab" href="#departament" role="tab" aria-controls="departament" aria-selected="false">Departamentos</a>
+        </li>
     </ul>
 </div>
 
@@ -243,6 +246,19 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="departament" role="tabpanel" aria-labelledby="departament-tab">
+        <div class="card">
+            <div class="card-header">
+                <h3>Departamentos</h3>
+            </div>
+            <div class="card-body">
+                <div class="tab-pane fade" id="departament" role="tabpanel" aria-labelledby="departament-tab">
+                    <department-tab :user-id="{{ $customer->user_id  }}">
+                    </department-tab>
+                </div>
             </div>
         </div>
     </div>
