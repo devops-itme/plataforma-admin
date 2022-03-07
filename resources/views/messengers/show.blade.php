@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="font-weight-bolder mb-3">Tipo de contrato:</div>
-                        <div class="line-height-xl">{{$messenger->getContractType->name }}</div>
+                        <div class="line-height-xl">{{$messenger->getContractType  ?  $messenger->getContractType->name : '' }}</div>
                     </div>
                     <div class="col-md-4">
                         <div class="font-weight-bolder mb-3">Contrato:</div>
