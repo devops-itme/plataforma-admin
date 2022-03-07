@@ -8221,7 +8221,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -8278,7 +8278,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
 
 // exports
 
@@ -81655,6 +81655,7 @@ var Customers = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.customerFeatures();
+      this.saveCustomer();
       this.saveBranchOffices();
       this.listBranchOffices();
       this.updateBranchOffice();
@@ -81662,6 +81663,110 @@ var Customers = /*#__PURE__*/function () {
       this.listUsers();
       this.updateUser();
     }
+  }, {
+    key: "saveCustomer",
+    value: function saveCustomer() {
+      var _this = this;
+
+      var customerForm = document.getElementById("storeCustomerForm");
+
+      if (customerForm == null) {
+        return;
+      }
+
+      var customerBtn = document.getElementById("storeCustomerBtn");
+
+      if (customerBtn == null) {
+        return;
+      }
+
+      customerBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData, branchesCheck, branchArr, token, myHeaders, requestOptions, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData(storeCustomerForm);
+                branchesCheck = document.getElementsByName('branchCheck');
+                branchArr = [];
+                branchesCheck.forEach(function (e) {
+                  e.checked && branchArr.push(e.value);
+                });
+                formData.append('branchCheck', branchArr);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context.next = 16;
+                return _this.storeCustomer(requestOptions);
+
+              case 16:
+                response = _context.sent;
+                console.log(response);
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  window.location.replace("/clientes");
+                } else {
+                  error(response.message);
+                  console.log(response.error);
+                }
+
+              case 19:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+    }
+  }, {
+    key: "storeCustomer",
+    value: function () {
+      var _storeCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/clientes/store", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function storeCustomer(_x) {
+        return _storeCustomer.apply(this, arguments);
+      }
+
+      return storeCustomer;
+    }()
   }, {
     key: "customerFeatures",
     value: function customerFeatures() {
@@ -81697,7 +81802,7 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "saveBranchOffices",
     value: function saveBranchOffices() {
-      var _this = this;
+      var _this2 = this;
 
       var btnSendData = document.getElementById("saveBranchOffice");
 
@@ -81705,11 +81810,11 @@ var Customers = /*#__PURE__*/function () {
         return;
       }
 
-      btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_plan, branch_office_usage_mode, branch_office_default, branch_office_department, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 branch_office_name = document.getElementById("branch_office_name"), branch_office_type = document.getElementById("branch_office_type"), branch_office_description = document.getElementById("branch_office_description"), branch_office_zone = document.getElementById("branch_office_zone"), branch_office_address = document.getElementById("branch_office_address"), branch_office_lat = document.getElementById("branch_office_lat"), branch_office_lng = document.getElementById("branch_office_lng"), branch_office_email = document.getElementById("branch_office_email"), branch_office_contact = document.getElementById("branch_office_contact"), branch_office_document_type = document.getElementById("branch_office_document_type"), branch_office_document_number = document.getElementById("branch_office_document_number"), branch_office_payment_method = document.getElementById("branch_office_payment_method"), branch_office_phone = document.getElementById("branch_office_phone"), branch_office_plan = document.getElementById("branch_office_plan"), branch_office_usage_mode = document.getElementById("branch_office_usage_mode"), branch_office_default = document.getElementById("branch_office_default"), branch_office_department = document.getElementById("branch_office_department");
                 formData = new FormData();
@@ -81730,11 +81835,11 @@ var Customers = /*#__PURE__*/function () {
                 formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
                 formData.append('branch_office_default', branch_office_default.value);
                 formData.append('branch_office_department', branch_office_department.value);
-                _context.next = 21;
-                return _this.sendBranchOfficeData(formData);
+                _context3.next = 21;
+                return _this2.sendBranchOfficeData(formData);
 
               case 21:
-                response = _context.sent;
+                response = _context3.sent;
 
                 if (response['state'] == 200) {
                   correct('Sucursal creada de manera exitosa');
@@ -81757,7 +81862,7 @@ var Customers = /*#__PURE__*/function () {
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
-                  _this.listBranchOffices();
+                  _this2.listBranchOffices();
                 } else {
                   error("Error al crear sucursal");
                   console.log('Error ocurrido: ' + response['error']);
@@ -81765,25 +81870,25 @@ var Customers = /*#__PURE__*/function () {
 
               case 23:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee);
+        }, _callee3);
       })));
     }
   }, {
     key: "sendBranchOfficeData",
     value: function () {
-      var _sendBranchOfficeData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(formData) {
+      var _sendBranchOfficeData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(formData) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context2.next = 3;
+                _context4.next = 3;
                 return fetch("/sucursales/null/store", {
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -81793,18 +81898,18 @@ var Customers = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context2.sent;
-                return _context2.abrupt("return", response.json());
+                response = _context4.sent;
+                return _context4.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2);
+        }, _callee4);
       }));
 
-      function sendBranchOfficeData(_x) {
+      function sendBranchOfficeData(_x2) {
         return _sendBranchOfficeData.apply(this, arguments);
       }
 
@@ -81813,22 +81918,22 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "listBranchOffices",
     value: function () {
-      var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var _document$getElementB;
 
         var tbody, get_customer_id, route, customer_id, assignedBranchOffices;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 tbody = document.querySelector("#branch_offices_table tbody");
 
                 if (!(tbody == null)) {
-                  _context3.next = 3;
+                  _context5.next = 3;
                   break;
                 }
 
-                return _context3.abrupt("return");
+                return _context5.abrupt("return");
 
               case 3:
                 tbody.innerHTML = '';
@@ -81837,49 +81942,48 @@ var Customers = /*#__PURE__*/function () {
                 customer_id = route.includes('edit') || typeof parseInt(route[2]) == 'number' ? get_customer_id : null;
 
                 if (!route.includes('edit')) {
-                  _context3.next = 13;
+                  _context5.next = 13;
                   break;
                 }
 
-                _context3.next = 10;
+                _context5.next = 10;
                 return this.requestBranchOffices(customer_id);
 
               case 10:
-                _context3.t0 = _context3.sent;
-                _context3.next = 23;
+                _context5.t0 = _context5.sent;
+                _context5.next = 23;
                 break;
 
               case 13:
                 if (!(typeof parseInt(route[2]) == 'number')) {
-                  _context3.next = 19;
+                  _context5.next = 19;
                   break;
                 }
 
-                _context3.next = 16;
+                _context5.next = 16;
                 return this.requestBranchOffices(customer_id);
 
               case 16:
-                _context3.t1 = _context3.sent;
-                _context3.next = 22;
+                _context5.t1 = _context5.sent;
+                _context5.next = 22;
                 break;
 
               case 19:
-                _context3.next = 21;
+                _context5.next = 21;
                 return this.requestBranchOffices(customer_id);
 
               case 21:
-                _context3.t1 = _context3.sent;
+                _context5.t1 = _context5.sent;
 
               case 22:
-                _context3.t0 = _context3.t1;
+                _context5.t0 = _context5.t1;
 
               case 23:
-                assignedBranchOffices = _context3.t0;
+                assignedBranchOffices = _context5.t0;
 
                 if (assignedBranchOffices.state == 200) {
                   (function () {
                     var data = assignedBranchOffices.data;
-                    console.log(data);
 
                     if (data.length > 0) {
                       var _loop = function _loop(i) {
@@ -81908,7 +82012,7 @@ var Customers = /*#__PURE__*/function () {
                         var branchCheck = document.createElement("input");
                         branchCheck.setAttribute('class', 'checkbox-inline mt-3');
                         branchCheck.setAttribute('type', 'checkbox');
-                        branchCheck.setAttribute('name', 'branchCheck[]');
+                        branchCheck.setAttribute('name', 'branchCheck');
                         branchCheck.setAttribute('value', data[i].id);
                         branchCheck.checked = true; // //Show button
                         // const showBranch = document.createElement("button");
@@ -81940,8 +82044,11 @@ var Customers = /*#__PURE__*/function () {
                         branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
 
                         var buttonsDiv = document.createElement("div");
-                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                        buttonsDiv.appendChild(branchCheck); // buttonsDiv.appendChild(showBranch);
+                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row'); // console.log(location.pathname.split('/')[2]);
+
+                        if (!(typeof parseInt(location.pathname.split('/')[2]) == 'number' && !location.pathname.includes('edit')) || location.pathname.includes('create')) {
+                          buttonsDiv.appendChild(branchCheck);
+                        }
 
                         buttonsDiv.appendChild(branchEdit);
                         buttonsDiv.appendChild(branchDelete);
@@ -81961,10 +82068,10 @@ var Customers = /*#__PURE__*/function () {
 
               case 27:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee5, this);
       }));
 
       function listBranchOffices() {
@@ -81976,19 +82083,19 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "requestBranchOffices",
     value: function () {
-      var _requestBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var _requestBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var customer_id,
             response,
-            _args4 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            _args6 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                customer_id = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : null;
+                customer_id = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : null;
                 response = {
                   'state': 500
                 };
-                _context4.next = 4;
+                _context6.next = 4;
                 return fetch("/unassigned_branch_offices?customer=" + customer_id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -81998,14 +82105,14 @@ var Customers = /*#__PURE__*/function () {
                 });
 
               case 4:
-                return _context4.abrupt("return", response);
+                return _context6.abrupt("return", response);
 
               case 5:
               case "end":
-                return _context4.stop();
+                return _context6.stop();
             }
           }
-        }, _callee4);
+        }, _callee6);
       }));
 
       function requestBranchOffices() {
@@ -82017,7 +82124,7 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "editBranches",
     value: function editBranches() {
-      var _this2 = this;
+      var _this3 = this;
 
       var branches = document.getElementsByClassName("btnEdit");
 
@@ -82026,18 +82133,18 @@ var Customers = /*#__PURE__*/function () {
       }
 
       [].forEach.call(branches, function (branch) {
-        branch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        branch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
           var response, data, slcBranchType, slcZone, slcDocumentType, slcPaymentMethod, inpDefault, dpts, plans;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context7.prev = _context7.next) {
                 case 0:
-                  _this2.branchId = branch['id'].split('-')[1];
-                  _context5.next = 3;
-                  return _this2.requestBranchToEdit(_this2.branchId);
+                  _this3.branchId = branch['id'].split('-')[1];
+                  _context7.next = 3;
+                  return _this3.requestBranchToEdit(_this3.branchId);
 
                 case 3:
-                  response = _context5.sent;
+                  response = _context7.sent;
                   data = response.data[0];
                   document.getElementById("branch_office_name_edit").value = data.name;
                   slcBranchType = document.getElementById("branch_office_type_edit");
@@ -82105,123 +82212,17 @@ var Customers = /*#__PURE__*/function () {
 
                 case 28:
                 case "end":
-                  return _context5.stop();
+                  return _context7.stop();
               }
             }
-          }, _callee5);
+          }, _callee7);
         })));
       });
     }
   }, {
     key: "requestBranchToEdit",
     value: function () {
-      var _requestBranchToEdit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context6.next = 3;
-                return fetch("/sucursales/null/" + id).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context6.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }));
-
-      function requestBranchToEdit(_x2) {
-        return _requestBranchToEdit.apply(this, arguments);
-      }
-
-      return requestBranchToEdit;
-    }()
-  }, {
-    key: "updateBranchOffice",
-    value: function updateBranchOffice() {
-      var _this3 = this;
-
-      var formUpdateBranch = document.getElementById("formUpdate");
-      var btnSubmit = document.getElementById("updateBranchOffice");
-
-      if (formUpdateBranch == null) {
-        return;
-      }
-
-      if (btnSubmit == null) {
-        return;
-      }
-
-      btnSubmit.addEventListener('click', /*#__PURE__*/function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(e) {
-          var formData, token, myHeaders, requestOptions, response, modal;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-            while (1) {
-              switch (_context7.prev = _context7.next) {
-                case 0:
-                  e.preventDefault();
-                  formData = new FormData(formUpdateBranch);
-                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                  myHeaders = new Headers();
-                  myHeaders.append("Accept", "application/json");
-                  myHeaders.append("Access-Control-Allow-Origin", "*");
-                  myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                  myHeaders.append('Content-Type', "application/json");
-                  myHeaders.append('Content-Type', "multipart/form-data");
-                  myHeaders.append("X-CSRF-TOKEN", token);
-                  requestOptions = {
-                    method: "PUT",
-                    headers: myHeaders,
-                    body: JSON.stringify(Object.fromEntries(formData))
-                  };
-                  _context7.next = 13;
-                  return _this3.sendDataToUpdate(_this3.branchId, requestOptions);
-
-                case 13:
-                  response = _context7.sent;
-
-                  if (response.state == 200) {
-                    alert(response.message);
-                    modal = document.getElementById("modalEdit");
-                    modal.click();
-
-                    _this3.listBranchOffices();
-                  } else {
-                    alert('Ha ocurrido un error al actualizar la sucursal.');
-                    console.log('Error ' + response.error);
-                  }
-
-                case 15:
-                case "end":
-                  return _context7.stop();
-              }
-            }
-          }, _callee7);
-        }));
-
-        return function (_x3) {
-          return _ref3.apply(this, arguments);
-        };
-      }());
-    }
-  }, {
-    key: "sendDataToUpdate",
-    value: function () {
-      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(id, requestOptions) {
+      var _requestBranchToEdit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(id) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
@@ -82231,7 +82232,7 @@ var Customers = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context8.next = 3;
-                return fetch("/sucursales/" + null + "/" + id + "/update", requestOptions).then(function (response) {
+                return fetch("/sucursales/null/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -82250,66 +82251,84 @@ var Customers = /*#__PURE__*/function () {
         }, _callee8);
       }));
 
-      function sendDataToUpdate(_x4, _x5) {
-        return _sendDataToUpdate.apply(this, arguments);
+      function requestBranchToEdit(_x3) {
+        return _requestBranchToEdit.apply(this, arguments);
       }
 
-      return sendDataToUpdate;
+      return requestBranchToEdit;
     }()
   }, {
-    key: "listDepartments",
-    value: function () {
-      var _listDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        var slcDepartments, departments, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                slcDepartments = document.getElementsByName("branch_office_department");
+    key: "updateBranchOffice",
+    value: function updateBranchOffice() {
+      var _this4 = this;
 
-                if (!(slcDepartments == null)) {
-                  _context9.next = 3;
-                  break;
-                }
+      var formUpdateBranch = document.getElementById("formUpdate");
+      var btnSubmit = document.getElementById("updateBranchOffice");
 
-                return _context9.abrupt("return");
+      if (formUpdateBranch == null) {
+        return;
+      }
 
-              case 3:
-                _context9.next = 5;
-                return this.requestDepartments();
+      if (btnSubmit == null) {
+        return;
+      }
 
-              case 5:
-                departments = _context9.sent;
-                data = departments.data;
-                [].forEach.call(slcDepartments, function (slcDept) {
-                  slcDept.selectedIndex = "0";
-                  removeOptions(slcDept);
+      btnSubmit.addEventListener('click', /*#__PURE__*/function () {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(e) {
+          var formData, token, myHeaders, requestOptions, response, modal;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+            while (1) {
+              switch (_context9.prev = _context9.next) {
+                case 0:
+                  e.preventDefault();
+                  formData = new FormData(formUpdateBranch);
+                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                  myHeaders = new Headers();
+                  myHeaders.append("Accept", "application/json");
+                  myHeaders.append("Access-Control-Allow-Origin", "*");
+                  myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                  myHeaders.append('Content-Type', "application/json");
+                  myHeaders.append('Content-Type', "multipart/form-data");
+                  myHeaders.append("X-CSRF-TOKEN", token);
+                  requestOptions = {
+                    method: "PUT",
+                    headers: myHeaders,
+                    body: JSON.stringify(Object.fromEntries(formData))
+                  };
+                  _context9.next = 13;
+                  return _this4.sendDataToUpdate(_this4.branchId, requestOptions);
 
-                  for (var i = 0; i < data.length; i++) {
-                    var element = data[i];
-                    var department = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                    slcDept.insertAdjacentHTML('beforeend', department);
+                case 13:
+                  response = _context9.sent;
+
+                  if (response.state == 200) {
+                    alert(response.message);
+                    modal = document.getElementById("modalEdit");
+                    modal.click();
+
+                    _this4.listBranchOffices();
+                  } else {
+                    alert('Ha ocurrido un error al actualizar la sucursal.');
+                    console.log('Error ' + response.error);
                   }
-                });
 
-              case 8:
-              case "end":
-                return _context9.stop();
+                case 15:
+                case "end":
+                  return _context9.stop();
+              }
             }
-          }
-        }, _callee9, this);
-      }));
+          }, _callee9);
+        }));
 
-      function listDepartments() {
-        return _listDepartments.apply(this, arguments);
-      }
-
-      return listDepartments;
-    }()
+        return function (_x4) {
+          return _ref4.apply(this, arguments);
+        };
+      }());
+    }
   }, {
-    key: "requestDepartments",
+    key: "sendDataToUpdate",
     value: function () {
-      var _requestDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(id, requestOptions) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
@@ -82319,7 +82338,7 @@ var Customers = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context10.next = 3;
-                return fetch("/unassigned_depts").then(function (response) {
+                return fetch("/sucursales/" + null + "/" + id + "/update", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -82338,66 +82357,66 @@ var Customers = /*#__PURE__*/function () {
         }, _callee10);
       }));
 
-      function requestDepartments() {
-        return _requestDepartments.apply(this, arguments);
+      function sendDataToUpdate(_x5, _x6) {
+        return _sendDataToUpdate.apply(this, arguments);
       }
 
-      return requestDepartments;
+      return sendDataToUpdate;
     }()
   }, {
-    key: "saveUser",
-    value: function saveUser() {
-      var _this4 = this;
-
-      var btnSubmit = document.getElementById("saveUser");
-
-      if (btnSubmit == null) {
-        return;
-      }
-
-      btnSubmit.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-        var parent_id, name, last_name, email, phone, password, password_confirm, formData, response, modal;
+    key: "listDepartments",
+    value: function () {
+      var _listDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+        var slcDepartments, departments, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                parent_id = document.getElementById("customer_id").value, name = document.getElementById("user_name").value, last_name = document.getElementById("user_last_name").value, email = document.getElementById("user_email").value, phone = document.getElementById("user_phone").value, password = document.getElementById("user_password").value, password_confirm = document.getElementById("user_password_confirm").value;
-                formData = new FormData();
-                formData.append('name', name);
-                formData.append('last_name', last_name);
-                formData.append('email', email);
-                formData.append('phone', phone);
-                formData.append('password', password);
-                formData.append('password_confirmation', password_confirm);
-                _context11.next = 10;
-                return _this4.storeUserData(parent_id, formData);
+                slcDepartments = document.getElementsByName("branch_office_department");
 
-              case 10:
-                response = _context11.sent;
-
-                if (response.state == 200) {
-                  correct(response.message);
-                  modal = document.getElementById("modalCreateUser");
-                  modal.click();
-
-                  _this4.listUsers();
-                } else {
-                  error(response.error);
-                  console.log('Error: ' + response.error);
+                if (!(slcDepartments == null)) {
+                  _context11.next = 3;
+                  break;
                 }
 
-              case 12:
+                return _context11.abrupt("return");
+
+              case 3:
+                _context11.next = 5;
+                return this.requestDepartments();
+
+              case 5:
+                departments = _context11.sent;
+                data = departments.data;
+                [].forEach.call(slcDepartments, function (slcDept) {
+                  slcDept.selectedIndex = "0";
+                  removeOptions(slcDept);
+
+                  for (var i = 0; i < data.length; i++) {
+                    var element = data[i];
+                    var department = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    slcDept.insertAdjacentHTML('beforeend', department);
+                  }
+                });
+
+              case 8:
               case "end":
                 return _context11.stop();
             }
           }
-        }, _callee11);
-      })));
-    }
+        }, _callee11, this);
+      }));
+
+      function listDepartments() {
+        return _listDepartments.apply(this, arguments);
+      }
+
+      return listDepartments;
+    }()
   }, {
-    key: "storeUserData",
+    key: "requestDepartments",
     value: function () {
-      var _storeUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(parent_id, formData) {
+      var _requestDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
@@ -82407,6 +82426,94 @@ var Customers = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context12.next = 3;
+                return fetch("/unassigned_depts").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context12.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }));
+
+      function requestDepartments() {
+        return _requestDepartments.apply(this, arguments);
+      }
+
+      return requestDepartments;
+    }()
+  }, {
+    key: "saveUser",
+    value: function saveUser() {
+      var _this5 = this;
+
+      var btnSubmit = document.getElementById("saveUser");
+
+      if (btnSubmit == null) {
+        return;
+      }
+
+      btnSubmit.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        var parent_id, name, last_name, email, phone, password, password_confirm, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                parent_id = document.getElementById("customer_id").value, name = document.getElementById("user_name").value, last_name = document.getElementById("user_last_name").value, email = document.getElementById("user_email").value, phone = document.getElementById("user_phone").value, password = document.getElementById("user_password").value, password_confirm = document.getElementById("user_password_confirm").value;
+                formData = new FormData();
+                formData.append('name', name);
+                formData.append('last_name', last_name);
+                formData.append('email', email);
+                formData.append('phone', phone);
+                formData.append('password', password);
+                formData.append('password_confirmation', password_confirm);
+                _context13.next = 10;
+                return _this5.storeUserData(parent_id, formData);
+
+              case 10:
+                response = _context13.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalCreateUser");
+                  modal.click();
+
+                  _this5.listUsers();
+                } else {
+                  error(response.error);
+                  console.log('Error: ' + response.error);
+                }
+
+              case 12:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      })));
+    }
+  }, {
+    key: "storeUserData",
+    value: function () {
+      var _storeUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(parent_id, formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context14.next = 3;
                 return fetch("/usuario-banco/" + parent_id + "/store", {
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -82416,18 +82523,18 @@ var Customers = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context12.sent;
-                return _context12.abrupt("return", response.json());
+                response = _context14.sent;
+                return _context14.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context12.stop();
+                return _context14.stop();
             }
           }
-        }, _callee12);
+        }, _callee14);
       }));
 
-      function storeUserData(_x6, _x7) {
+      function storeUserData(_x7, _x8) {
         return _storeUserData.apply(this, arguments);
       }
 
@@ -82436,38 +82543,38 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "listUsers",
     value: function () {
-      var _listUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+      var _listUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
         var tbody, parent_id, response, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
                 tbody = document.querySelector("#users_table tbody");
 
                 if (!(tbody == null)) {
-                  _context13.next = 3;
+                  _context15.next = 3;
                   break;
                 }
 
-                return _context13.abrupt("return");
+                return _context15.abrupt("return");
 
               case 3:
                 parent_id = document.getElementById("customer_id").value;
 
                 if (!(parent_id == null)) {
-                  _context13.next = 6;
+                  _context15.next = 6;
                   break;
                 }
 
-                return _context13.abrupt("return");
+                return _context15.abrupt("return");
 
               case 6:
                 tbody.innerHTML = '';
-                _context13.next = 9;
+                _context15.next = 9;
                 return this.requestUsers(parent_id);
 
               case 9:
-                response = _context13.sent;
+                response = _context15.sent;
 
                 if (response.state == 200) {
                   data = response.data;
@@ -82528,10 +82635,10 @@ var Customers = /*#__PURE__*/function () {
 
               case 11:
               case "end":
-                return _context13.stop();
+                return _context15.stop();
             }
           }
-        }, _callee13, this);
+        }, _callee15, this);
       }));
 
       function listUsers() {
@@ -82543,91 +82650,7 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "requestUsers",
     value: function () {
-      var _requestUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(parent_id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
-          while (1) {
-            switch (_context14.prev = _context14.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context14.next = 3;
-                return fetch("/usuario-banco/" + parent_id + "").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context14.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context14.stop();
-            }
-          }
-        }, _callee14);
-      }));
-
-      function requestUsers(_x8) {
-        return _requestUsers.apply(this, arguments);
-      }
-
-      return requestUsers;
-    }()
-  }, {
-    key: "editUser",
-    value: function editUser() {
-      var _this5 = this;
-
-      var users = document.getElementsByName("btnEditUser");
-
-      if (users == null) {
-        return;
-      }
-
-      var parent_id = document.getElementById("customer_id").value;
-
-      if (parent_id == null) {
-        return;
-      }
-
-      [].forEach.call(users, function (key) {
-        key.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
-          var user_id, response, data;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
-            while (1) {
-              switch (_context15.prev = _context15.next) {
-                case 0:
-                  user_id = key['id'].split('-')[1];
-                  _this5.userId = user_id;
-                  _context15.next = 4;
-                  return _this5.requestUserData(parent_id, user_id);
-
-                case 4:
-                  response = _context15.sent;
-                  data = response.data;
-                  document.getElementById("user_name_edit").value = data.name;
-                  document.getElementById("user_last_name_edit").value = data.last_name;
-                  document.getElementById("user_email_edit").value = data.email;
-                  document.getElementById("user_phone_edit").value = data.phone;
-
-                case 10:
-                case "end":
-                  return _context15.stop();
-              }
-            }
-          }, _callee15);
-        })));
-      });
-    }
-  }, {
-    key: "requestUserData",
-    value: function () {
-      var _requestUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(parent_id, id) {
+      var _requestUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(parent_id) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
           while (1) {
@@ -82637,7 +82660,7 @@ var Customers = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context16.next = 3;
-                return fetch("/usuario-banco/" + parent_id + "/" + id + "/edit").then(function (response) {
+                return fetch("/usuario-banco/" + parent_id + "").then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -82656,7 +82679,91 @@ var Customers = /*#__PURE__*/function () {
         }, _callee16);
       }));
 
-      function requestUserData(_x9, _x10) {
+      function requestUsers(_x9) {
+        return _requestUsers.apply(this, arguments);
+      }
+
+      return requestUsers;
+    }()
+  }, {
+    key: "editUser",
+    value: function editUser() {
+      var _this6 = this;
+
+      var users = document.getElementsByName("btnEditUser");
+
+      if (users == null) {
+        return;
+      }
+
+      var parent_id = document.getElementById("customer_id").value;
+
+      if (parent_id == null) {
+        return;
+      }
+
+      [].forEach.call(users, function (key) {
+        key.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+          var user_id, response, data;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+            while (1) {
+              switch (_context17.prev = _context17.next) {
+                case 0:
+                  user_id = key['id'].split('-')[1];
+                  _this6.userId = user_id;
+                  _context17.next = 4;
+                  return _this6.requestUserData(parent_id, user_id);
+
+                case 4:
+                  response = _context17.sent;
+                  data = response.data;
+                  document.getElementById("user_name_edit").value = data.name;
+                  document.getElementById("user_last_name_edit").value = data.last_name;
+                  document.getElementById("user_email_edit").value = data.email;
+                  document.getElementById("user_phone_edit").value = data.phone;
+
+                case 10:
+                case "end":
+                  return _context17.stop();
+              }
+            }
+          }, _callee17);
+        })));
+      });
+    }
+  }, {
+    key: "requestUserData",
+    value: function () {
+      var _requestUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(parent_id, id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context18.next = 3;
+                return fetch("/usuario-banco/" + parent_id + "/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context18.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18);
+      }));
+
+      function requestUserData(_x10, _x11) {
         return _requestUserData.apply(this, arguments);
       }
 
@@ -82665,7 +82772,7 @@ var Customers = /*#__PURE__*/function () {
   }, {
     key: "updateUser",
     value: function updateUser() {
-      var _this6 = this;
+      var _this7 = this;
 
       var updateBtn = document.getElementById("updateUser");
 
@@ -82673,11 +82780,11 @@ var Customers = /*#__PURE__*/function () {
         return;
       }
 
-      updateBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+      updateBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
         var parent_id, name, last_name, email, phone, password, password_confirm, formData, token, myHeaders, requestOptions, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
           while (1) {
-            switch (_context17.prev = _context17.next) {
+            switch (_context19.prev = _context19.next) {
               case 0:
                 parent_id = document.getElementById("customer_id").value;
                 name = document.getElementById("user_name_edit").value;
@@ -82706,43 +82813,43 @@ var Customers = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context17.next = 25;
-                return _this6.sendUserDataToUpdate(parent_id, _this6.userId, requestOptions);
+                _context19.next = 25;
+                return _this7.sendUserDataToUpdate(parent_id, _this7.userId, requestOptions);
 
               case 25:
-                response = _context17.sent;
+                response = _context19.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
                   modal = document.getElementById("modalEditUser");
                   modal.click();
 
-                  _this6.listUsers();
+                  _this7.listUsers();
                 } else {
                   error(response.error); // console.log('Error: '+response.error);
                 }
 
               case 27:
               case "end":
-                return _context17.stop();
+                return _context19.stop();
             }
           }
-        }, _callee17);
+        }, _callee19);
       })));
     }
   }, {
     key: "sendUserDataToUpdate",
     value: function () {
-      var _sendUserDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(parent_id, id, requestOptions) {
+      var _sendUserDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(parent_id, id, requestOptions) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
           while (1) {
-            switch (_context18.prev = _context18.next) {
+            switch (_context20.prev = _context20.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context18.next = 3;
+                _context20.next = 3;
                 return fetch('/usuario-banco/' + parent_id + '/' + id + '/update', requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -82752,17 +82859,17 @@ var Customers = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context18.abrupt("return", response);
+                return _context20.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context18.stop();
+                return _context20.stop();
             }
           }
-        }, _callee18);
+        }, _callee20);
       }));
 
-      function sendUserDataToUpdate(_x11, _x12, _x13) {
+      function sendUserDataToUpdate(_x12, _x13, _x14) {
         return _sendUserDataToUpdate.apply(this, arguments);
       }
 
@@ -84298,6 +84405,22 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var translated_actions = {
+  'all': 'Todo',
+  'index': 'Inicio',
+  'create': 'Vista crear',
+  'store': 'Crear',
+  'show': 'Detalle',
+  'destroy': 'Eliminar',
+  'delete': 'Eliminar',
+  'update': 'Actualizar',
+  'edit': 'Vista editar',
+  'assign': 'Asignar',
+  'import': 'Importar',
+  'export': 'Exportar',
+  'record': 'Historial'
+};
+
 var requestPermissions = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(url) {
     var response, token;
@@ -84420,7 +84543,8 @@ var Permissions = /*#__PURE__*/function () {
                       });
                       var label = document.createElement("label");
                       label.className = "form-check-label text-uppercase font-weight-bold mx-4";
-                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        ");
+                      label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
+                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        >  ").concat(translated_actions[action.name], "\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);
@@ -85341,8 +85465,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

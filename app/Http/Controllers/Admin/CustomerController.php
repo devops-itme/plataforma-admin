@@ -83,18 +83,31 @@ class CustomerController extends Controller
         }
         $saveUserData = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
         if($saveUserData['state'] != 200){
-            return redirect()->back()->with('danger', $saveUserData['message']);
+            // return redirect()->back()->with('danger', $saveUserData['message']);
+            return json_encode([
+                'state' => 500,
+                'message' => $saveUserData['message']
+            ]);
         }
         if(!is_null($request->branchCheck)){
+            $request->branchCheck = explode(',', $request->branchCheck);
             $assignBranches = $this->storeUserBranch($saveUserData['data']->id, $request->branchCheck);
             if($assignBranches['state'] != 200){
-                return redirect()->back()->with('danger', $assignBranches['message']);
+                // return redirect()->back()->with('danger', $assignBranches['message']);
+                return json_encode([
+                    'state' => 500,
+                    'message' => $assignBranches['message']
+                ]);
             }
         }
         if(!is_null($request->departments)){
             $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
             if($assignDepartment['state'] != 200){
-                return redirect()->back()->with('danger', $assignDepartment['message']);
+                // return redirect()->back()->with('danger', $assignDepartment['message']);
+                return json_encode([
+                    'state' => 500,
+                    'message' => $assignDepartment['message']
+                ]);
             }
         }
         // if(!is_null($request->branch_office_name)){
@@ -105,9 +118,15 @@ class CustomerController extends Controller
         // }
         $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
         if($response['state'] == 200){
-            return redirect()->route('customers.index')->with('success', 'Cliente registrado exitosamente.');
+            return json_encode([
+                'state' => 200,
+                'message' => $response['message']
+            ]);
         } else {
-            return redirect()->back()->withInput()->with('danger', $response['message']);
+            return json_encode([
+                'state' => 500,
+                'message' => $response['message']
+            ]);
         }
     }
 

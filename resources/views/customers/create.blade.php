@@ -14,7 +14,7 @@
     @include('customers.modals.branches.editBranchModal')
     @include('customers.modals.branches.createBranchModal')
     <!--begin::Form-->
-    <form action="{{ route('customers.store') }}" method="post">
+    <form id="storeCustomerForm">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
             <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información basica de cliente</h5>
@@ -253,7 +253,7 @@
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary mr-2">Guardar</button>
+            <button type="button" class="btn btn-primary mr-2" id="storeCustomerBtn">Guardar</button>
             <button type="reset" class="btn btn-secondary">Limpiar</button>
         </div>
     </form>

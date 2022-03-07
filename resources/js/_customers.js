@@ -5,12 +5,71 @@ export default class Customers {
     }
     initialize() {
         this.customerFeatures();
+        this.saveCustomer();
         this.saveBranchOffices();
         this.listBranchOffices();
         this.updateBranchOffice();
         this.saveUser();
         this.listUsers();
         this.updateUser();
+    }
+
+    saveCustomer(){
+        let customerForm = document.getElementById("storeCustomerForm");
+        if(customerForm == null){
+            return;
+        }
+        let customerBtn = document.getElementById("storeCustomerBtn");
+        if(customerBtn == null){
+            return;
+        }
+        customerBtn.addEventListener("click", async () => {
+
+            let formData = new FormData(storeCustomerForm);
+            let branchesCheck = document.getElementsByName('branchCheck');
+            let branchArr = [];
+            branchesCheck.forEach((e) => {
+                e.checked && branchArr.push(e.value);
+            });
+            formData.append('branchCheck', branchArr);
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: JSON.stringify(Object.fromEntries(formData))
+            };
+            let response = await this.storeCustomer(requestOptions);
+            console.log(response);
+            if(response.state == 200){
+                correct(response.message);
+                window.location.replace("/clientes");
+            } else {
+                error(response.message);
+                console.log(response.error);
+            }
+        });
+    }
+
+    async storeCustomer(requestOptions){
+        let response = {
+            'state': 500
+        };
+        await fetch("/clientes/store", requestOptions)
+            .then((response) => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
     }
 
     customerFeatures() {
@@ -141,7 +200,6 @@ export default class Customers {
 
         if(assignedBranchOffices.state == 200){
             let data = assignedBranchOffices.data;
-            console.log(data);
             if(data.length > 0){
                 for (let i = 0; i < data.length; i++) {
                     let row = tbody.insertRow();
@@ -172,7 +230,7 @@ export default class Customers {
                     const branchCheck = document.createElement("input");
                     branchCheck.setAttribute('class', 'checkbox-inline mt-3')
                     branchCheck.setAttribute('type', 'checkbox');
-                    branchCheck.setAttribute('name', 'branchCheck[]');
+                    branchCheck.setAttribute('name', 'branchCheck');
                     branchCheck.setAttribute('value', data[i].id);
                     branchCheck.checked = true;
                     // //Show button
@@ -201,8 +259,10 @@ export default class Customers {
                     //Div
                     const buttonsDiv = document.createElement("div");
                     buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                    buttonsDiv.appendChild(branchCheck);
-                    // buttonsDiv.appendChild(showBranch);
+                    // console.log(location.pathname.split('/')[2]);
+                    if(!(typeof(parseInt(location.pathname.split('/')[2])) == 'number' && !location.pathname.includes('edit')) || location.pathname.includes('create')){
+                        buttonsDiv.appendChild(branchCheck);
+                    }
                     buttonsDiv.appendChild(branchEdit);
                     buttonsDiv.appendChild(branchDelete);
                     selectCell.appendChild(buttonsDiv);
