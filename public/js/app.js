@@ -82044,8 +82044,11 @@ var Customers = /*#__PURE__*/function () {
                         branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
 
                         var buttonsDiv = document.createElement("div");
-                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                        buttonsDiv.appendChild(branchCheck); // buttonsDiv.appendChild(showBranch);
+                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row'); // console.log(location.pathname.split('/')[2]);
+
+                        if (!(typeof parseInt(location.pathname.split('/')[2]) == 'number' && !location.pathname.includes('edit')) || location.pathname.includes('create')) {
+                          buttonsDiv.appendChild(branchCheck);
+                        }
 
                         buttonsDiv.appendChild(branchEdit);
                         buttonsDiv.appendChild(branchDelete);
