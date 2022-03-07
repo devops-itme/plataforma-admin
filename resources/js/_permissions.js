@@ -1,3 +1,19 @@
+const translated_actions = {
+    'all': 'Todo',
+    'index': 'Inicio',
+    'create': 'Vista crear',
+    'store': 'Crear',
+    'show': 'Detalle',
+    'destroy': 'Eliminar',
+    'delete': 'Eliminar',
+    'update': 'Actualizar',
+    'edit': 'Vista editar',
+    'assign': 'Asignar',
+    'import': 'Importar',
+    'export': 'Exportar',
+    'record': 'Historial'
+};
+
 const requestPermissions = async (url) => {
     let response = { state: 500 };
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -23,8 +39,6 @@ export default class Permissions {
         this.roleData();
     }
 
-
-
     loadPermissions() {
         let configurationBtn = document.getElementsByClassName("configuration-btn");
         let permitsLbl = document.getElementById("permits-label");
@@ -37,7 +51,7 @@ export default class Permissions {
                 let row = btn.parentNode.parentNode;
                 console.log(row)
                 let role_id = row.id;
-                permitsLbl.innerText = `Permisos - ${row.getAttribute("role-name")}`; 
+                permitsLbl.innerText = `Permisos - ${row.getAttribute("role-name")}`;
 
                 let form = document.getElementById("permits-form");
                 form.setAttribute("action", `/permisos/${role_id}`)
@@ -77,12 +91,17 @@ export default class Permissions {
 
                         let label = document.createElement("label");
                         label.className = "form-check-label text-uppercase font-weight-bold mx-4";
+                        label.style = `
+                            font-size: 0.8571em;
+                            margin-bottom: 5px;
+                            color: #9A9A9A;
+                        `;
 
                         label.innerHTML = `
                         <input class="form-check-input" type="checkbox" value="${action.id}"
                          name="${module.reference}[]" ${!action_found && 'disabled'}
                          ${permission_found && 'checked'}
-                        > ${action.name}
+                        >  ${translated_actions[action.name]}
                         `;
                         checkContainer.childNodes[0].appendChild(label);
                     });
@@ -101,16 +120,16 @@ export default class Permissions {
         });
     }
 
-    roleData(){
+    roleData() {
         let editButtons = document.getElementsByName("btnEditRole");
-        if(editButtons == null){
+        if (editButtons == null) {
             return;
         }
         [].forEach.call(editButtons, item => {
             item.addEventListener('click', async () => {
                 let role_id = item['id'].split('-')[1];
                 let response = await this.requestRoleData(role_id);
-                if(response.state != 200){
+                if (response.state != 200) {
                     alert('Error inesperado.');
                     console.log(response.error);
                     return;
@@ -123,7 +142,7 @@ export default class Permissions {
                     opt.value == data.state ? opt.selected = true : '';
                 });
                 let form = document.getElementById("formUpdateRole");
-                form.setAttribute("action", 'roles/'+data.id);
+                form.setAttribute("action", 'roles/' + data.id);
             });
         });
     }
@@ -132,7 +151,7 @@ export default class Permissions {
         let response = {
             'state': 500
         };
-        await fetch("/roles/"+id+"/edit")
+        await fetch("/roles/" + id + "/edit")
             .then(response => response.json())
             .then(data => {
                 response = data

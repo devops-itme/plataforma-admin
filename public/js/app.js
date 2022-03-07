@@ -8221,7 +8221,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -8278,7 +8278,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
 
 // exports
 
@@ -84298,6 +84298,22 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var translated_actions = {
+  'all': 'Todo',
+  'index': 'Inicio',
+  'create': 'Vista crear',
+  'store': 'Crear',
+  'show': 'Detalle',
+  'destroy': 'Eliminar',
+  'delete': 'Eliminar',
+  'update': 'Actualizar',
+  'edit': 'Vista editar',
+  'assign': 'Asignar',
+  'import': 'Importar',
+  'export': 'Exportar',
+  'record': 'Historial'
+};
+
 var requestPermissions = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(url) {
     var response, token;
@@ -84420,7 +84436,8 @@ var Permissions = /*#__PURE__*/function () {
                       });
                       var label = document.createElement("label");
                       label.className = "form-check-label text-uppercase font-weight-bold mx-4";
-                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > ").concat(action.name, "\n                        ");
+                      label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
+                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        >  ").concat(translated_actions[action.name], "\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);
@@ -85341,8 +85358,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
