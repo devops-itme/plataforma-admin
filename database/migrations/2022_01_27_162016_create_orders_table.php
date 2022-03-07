@@ -39,6 +39,7 @@ class CreateOrdersTable extends Migration
             $table->integer('zone')->nullable();
             $table->string('dispatched')->unique()->nullable();
             $table->integer('state')->default(32)->comment("{1:Por despachar;2:Despachado;3:Completado}");
+            $table->integer('app_status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
