@@ -13,10 +13,10 @@
             </tr>
         </thead>
         <tbody class="text-center max-h-300px" style="overflow-y: scroll;">
-            <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}]"
+            <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}, {'urgent_row': order.urgent_dispatch === 1  && index != activeIndex}]"
             @click="rowClick(order,index)">
                 <td v-text="`${order.user_id}-${ order.order_number }`"></td>
-                <td>22333233</td>
+                <td v-text="`${order.dispatched}`"></td>
                 <td v-text="`${order.get_guides[0]?.get_route?.get_messenger.name} ${ order.get_guides[0]?.get_route?.get_messenger.last_name }`"></td>
                 <td v-text="`${ order.get_user.name } ${order.get_user.last_name }`"></td>
                 <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>

@@ -9,6 +9,8 @@ use App\Order;
 use App\ParameterValue;
 use App\Route;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
+
 
 trait RouteTrait
 {
@@ -48,11 +50,24 @@ trait RouteTrait
 
     public function storeRouteOndemand($request)
     {
+
+        // $dispatch_random = rand(000000, 999999);
+
+        // $dispatch =  Order::get('dispatched');
+        // $dispatch_codes = $dispatch->map(function ($item, $key) {
+        //     return $item->dispatch_code;
+        // });
+        // $dispatch_codes = $dispatch_codes->toArray();
+
+        // in_array($dispatch,  $dispatch_codes);
+
         $validator = $this->RouteValidate($request);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
         }
         try {
+            $dispatch_code = strtotime(Carbon::now());
+
             $order = Order::where('id', $request->order_id)->with('getGuides')->first();
             $guides = $order->getGuides;
             foreach ($guides as $guide) {
@@ -67,7 +82,8 @@ trait RouteTrait
             })->where('name', 'Despachados')->first();
 
             $order->update([
-                'state'=>$order_states->id
+                'state'=>$order_states->id,
+                'dispatched'=>$dispatch_code
             ]);
 
             return $this->respond(200, $order, null, 'Orden asignada exitosamente');
@@ -84,7 +100,7 @@ trait RouteTrait
             return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
         }
         try {
-
+            $dispatch_code = strtotime(Carbon::now());
             $guides = $request->guides;
             foreach ($guides as $guide) {
 
@@ -95,7 +111,8 @@ trait RouteTrait
                 ]);
 
                 $route = Guide::where('id', $guide['id'])->update([
-                    'state' => $request->state_order
+                    'state' => $request->state_order,
+                    'dispatched'=>$dispatch_code
                 ]);
             }
 
