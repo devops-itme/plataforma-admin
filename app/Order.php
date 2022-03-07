@@ -35,7 +35,8 @@ class Order extends Model
         'state',
         'service_type',
         'department_id',
-        'branch_office'
+        'branch_office',
+        'dispatched',
     ];
 
     public function getUser()
