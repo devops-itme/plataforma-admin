@@ -247,4 +247,9 @@ export default {
     background: #2f45b5;
     color: #ffff;
 }
+
+.urgent_row {
+    background: #d31928;
+    color: #ffff;
+}
 </style>
