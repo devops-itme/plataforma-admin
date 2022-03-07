@@ -225,7 +225,7 @@
                                             class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                             <i class="fad fa-edit"></i>
                                         </a>
-                                        <button type="button" onclick="deleteResource('/ordenes/'+{{ $order->id }})"
+                                        <button type="button" onclick="confirmDelete('/ordenes/'+{{ $order->id }})"
                                             class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
