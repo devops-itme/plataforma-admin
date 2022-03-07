@@ -3,7 +3,6 @@ import moment from 'moment';
 export default {
     data() {
         return {
-            data: [],
             orders: [],
             activeIndex: null,
             shipmented: [],
@@ -37,17 +36,17 @@ export default {
                 });
             }
         },
-        // filterOrders() {
-        //     if(this.checkAllOrders == false){
-        //         return this.data = this.orders.filter((item) => {
-        //             return this.localizeDate(item.schedule_date) >= this.localizeDate(this.startDate)
-        //             && this.localizeDate(item.schedule_date) <= this.localizeDate(this.endDate)
-        //         });
-        //     }else{
-        //          return this.data = this.orders;
-        //     }
+        data() {
+            if(this.checkAllOrders == false){
+                return this.data = this.orders.filter((item) => {
+                    return this.localizeDate(item.schedule_date) >= this.localizeDate(this.startDate)
+                    && this.localizeDate(item.schedule_date) <= this.localizeDate(this.endDate)
+                });
+            }else{
+                 return this.data = this.orders;
+            }
 
-        // },
+        },
 
         setMessenger() {
             if (this.searchMessenger) {
@@ -76,7 +75,7 @@ export default {
             this.currentTab = type_id;
             let response = await this.requestOrders();
             this.orders = response.data;
-            this.data = this.orders;
+            // this.data = this.orders;
             this.activeIndex = null;
             this.showData = "";
             this.ordersQuantity= "";
