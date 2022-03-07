@@ -47,14 +47,8 @@ class MessengerController extends Controller
      */
     public function store(Request $request)
     {
-        request()->merge(['role' => 3, 'state' => 1]);
-        $user = $this->saveUser($request);
-        if ($user['state'] != 200) {
-            return redirect()->back()->withInput()->with('danger', $user['message']);
-        }
-        $user = $user['data'];
-        $messenger = $this->saveMessenger($request, $user->id);
 
+        $messenger = $this->saveMessenger($request);
         if ($messenger['state'] == 200) {
             return redirect()->route('messengers.index')->with('success', 'Mensajero registrado exitosamente.');
         } else {
