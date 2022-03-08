@@ -253,6 +253,7 @@ export default {
                 body: JSON.stringify({
                     messenger_user_id: this.setMessenger.user_id,
                     guides: this.guides2,
+                    state_order: this.tabs[1].id
                 }),
             };
             await fetch(`/quias/asignacion`, requestOptions)
@@ -269,7 +270,17 @@ export default {
                 .catch((err) => console.warn(err));
         },
 
+          async orderState() {
+            let req = await fetch("/order_states");
+            let res = await req.json();
+            this.tabs = res.data;
+        },
 
+
+
+    },
+    async mounted() {
+        this.orderState();
     },
 
 };

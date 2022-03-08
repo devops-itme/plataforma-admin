@@ -63,7 +63,8 @@ export default {
     },
     data() {
         return{
-            activeIndex: null
+            activeIndex: null,
+            showGuide: null
         }
     },
     methods: {
@@ -71,6 +72,7 @@ export default {
              this.showGuide = data;
              this.activeIndex = index
         },
+
 
     }
 }

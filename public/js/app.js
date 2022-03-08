@@ -3041,7 +3041,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: myHeaders,
                   body: JSON.stringify({
                     messenger_user_id: _this3.setMessenger.user_id,
-                    guides: _this3.guides2
+                    guides: _this3.guides2,
+                    state_order: _this3.tabs[1].id
                   })
                 };
                 _context.next = 17;
@@ -3067,7 +3068,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    orderState: function orderState() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return fetch("/order_states");
+
+              case 2:
+                req = _context2.sent;
+                _context2.next = 5;
+                return req.json();
+
+              case 5:
+                res = _context2.sent;
+                _this4.tabs = res.data;
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
+  },
+  mounted: function mounted() {
+    var _this5 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _this5.orderState();
+
+            case 1:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
   }
 });
 
@@ -3271,7 +3319,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      activeIndex: null
+      activeIndex: null,
+      showGuide: null
     };
   },
   methods: {
