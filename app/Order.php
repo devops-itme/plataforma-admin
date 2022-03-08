@@ -37,6 +37,7 @@ class Order extends Model
         'department_id',
         'branch_office',
         'dispatched',
+        'app_status',
     ];
 
     public function getUser()
