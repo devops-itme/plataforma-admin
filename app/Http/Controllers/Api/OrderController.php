@@ -49,7 +49,7 @@ class OrderController extends Controller
             $order = Order::where('id', $request->order_id)->first();
             
             if (is_null($order)) {
-                return $this->respond(500, null, 'not found', 'No se encontró laa orden');
+                return $this->respond(500, null, 'not found', 'No se encontró la orden');
             }
             $updates = ['app_status' => 1];
             if ($order->update($updates)) {

@@ -28,5 +28,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('order/markAsRead', 'Api\OrderController@markAsRead');
     Route::resource('orders', 'Api\OrderController')->names('order');
     
+    Route::post('guide/markAsRead', 'Api\GuideController@markAsRead');
     Route::resource('guides', 'Api\GuideController')->names('guides');
 });

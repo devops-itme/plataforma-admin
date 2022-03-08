@@ -14,7 +14,24 @@ class GuideController extends Controller
     {
         try {
             $guides = Guide::where('order_id', $request->order_id)->get();
-            return $this->respond(200, $guides, null, 'Guiás asignadas');
+            return $this->respond(200, $guides, null, 'Guías asignadas');
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
+
+    public function markAsRead(Request $request)
+    {
+        try {
+            $guide = Guide::where('id', $request->guide_id)->first();
+            
+            if (is_null($guide)) {
+                return $this->respond(500, null, 'not found', 'No se encontró la guiá');
+            }
+            $updates = ['app_status' => 1];
+            if ($guide->update($updates)) {
+                return $this->respond(200, $guide, null, 'Guía marcada como leída');
+            }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }

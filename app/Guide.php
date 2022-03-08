@@ -34,7 +34,8 @@ class Guide extends Model
         'take_photo',
         'packaging',
         'customer_address',
-        'state'
+        'state',
+        'app_status',
     ];
 
     public function getOrder()
