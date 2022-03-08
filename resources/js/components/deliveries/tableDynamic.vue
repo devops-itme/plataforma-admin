@@ -60,16 +60,17 @@ export default {
         columnsNames: Array,
         widthTable: Number,
         guides: Array,
+        showGuide: Array,
     },
     data() {
         return{
-            activeIndex: null
+            activeIndex: null,
         }
     },
     methods: {
         rowClick(data, index) {
              this.showGuide = data;
-             this.activeIndex = index
+             this.activeIndex = index;
         },
 
     }

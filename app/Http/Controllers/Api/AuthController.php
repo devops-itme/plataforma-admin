@@ -45,11 +45,11 @@ class AuthController extends Controller
         try {
             $user = User::where(($is_numeric ? 'phone' : 'email'), $request->user)->first();
 
-            $messenger_role = Role::where('name', 'Mensajero')->first();
-            $messenger_role_id = $messenger_role->id;
+            $user_role = Role::where('name', $request->user_type)->first();
+            $user_role_id = $user_role->id;
 
-            if ($user->role != $messenger_role_id) {
-                return $this->respond(401,  null, 'Unauthorized', 'El usuario no es un mensajero');
+            if ($user->role != $user_role_id) {
+                return $this->respond(401,  null, 'Unauthorized', 'El usuario no es un ' . $request->user_type);
             }
 
             if ($user->state != 1) {
@@ -183,7 +183,6 @@ class AuthController extends Controller
             // Mail::to($user->email)
             //     ->send(new CodeMail($randomCode));
             return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
-
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }

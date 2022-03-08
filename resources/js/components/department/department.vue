@@ -21,6 +21,7 @@
                                         class="btn btn-primary btn-sm font-weight-bolder"
                                         data-toggle="modal"
                                         @click="crateDepartment()"
+                                        v-if="showDep == undefined"
                                     >
                                         <span class="svg-icon svg-icon-md">
                                             <i class="fas fa-plus"></i> </span
@@ -171,6 +172,7 @@ export default {
     components: { modal },
     props: {
         userId:Number,
+        showDep:String
     },
     data() {
         return {
