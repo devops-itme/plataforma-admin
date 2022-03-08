@@ -77,7 +77,7 @@ export default class Orders {
 
             let numberCell = document.createElement("td");
             numberCell.className = `col-1 py-4 border-right`;
-            numberCell.innerHTML = `<input type="number" name="weight[]" class="form-control" min="0" value="${box.number}">`;
+            numberCell.innerHTML = `<input type="number" name="id[]" class="form-control" min="0" value="${box.number}">`;
             row.appendChild(numberCell);
 
             let weightCell = document.createElement("td");
@@ -349,8 +349,29 @@ export default class Orders {
             let sign = document.getElementById("sign").value;
             let take_photo = document.getElementById("take_photo").value;
             let customer_address = document.getElementById("customer_address").value;
-
+            //Boxes
+            let ids = document.getElementsByName('id[]');
+            let weights = document.getElementsByName('weight[]');
+            let longs = document.getElementsByName('long[]');
+            let broads = document.getElementsByName('broad[]');
+            let highs = document.getElementsByName('high[]');
+            let vol_weights = document.getElementsByName('vol_weight[]');
+            let descriptions = document.getElementsByName('description[]');
+            let boxArr = [];
+            for (let i = 0; i < ids.length; i++) {
+                let individualBoxArr = {
+                    'id' : ids[i].value,
+                    'weight' : weights[i].value,
+                    'long' : longs[i].value,
+                    'broad' : broads[i].value,
+                    'high' : highs[i].value,
+                    'vol_weight' : vol_weights[i].value,
+                    'description' : descriptions[i].value
+                };
+                boxArr.push(individualBoxArr);
+            }
             let formData = new FormData();
+            formData.append('boxes', JSON.stringify(boxArr));
             formData.append('branch_office', branch_office);
             formData.append('transport_type',transport_type);
             // formData.append('dispatched',dispatched);
