@@ -2171,7 +2171,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       guides: [],
       guides2: [],
       messengers: [],
-      type_guide: 32
+      type_guide: 32,
+      showGuide: []
     };
   },
   methods: {
@@ -2954,7 +2955,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     selected: Number,
     guides: Array,
     guides2: Array,
-    messengers: Array
+    messengers: Array,
+    showGuide: Array
   },
   data: function data() {
     return {
@@ -2962,8 +2964,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       showMessengerData: [],
       searchMessenger: null,
       messenger: null,
-      messengerName: null,
-      showGuide: null
+      messengerName: null
     };
   },
   computed: {
@@ -3315,12 +3316,12 @@ __webpack_require__.r(__webpack_exports__);
     rows: Number,
     columnsNames: Array,
     widthTable: Number,
-    guides: Array
+    guides: Array,
+    showGuide: Array
   },
   data: function data() {
     return {
-      activeIndex: null,
-      showGuide: null
+      activeIndex: null
     };
   },
   methods: {
@@ -62845,6 +62846,7 @@ var render = function () {
                         selected: _vm.selected,
                         guides: _vm.guides,
                         guides2: _vm.guides2,
+                        showGuide: _vm.showGuide,
                         messengers: _vm.messengers,
                       },
                     }),
@@ -62867,6 +62869,7 @@ var render = function () {
                       attrs: {
                         rows: _vm.columns.inProcess.length,
                         guides: _vm.guides,
+                        showGuide: _vm.showGuide,
                         columnsNames: _vm.columns.inProcess,
                         widthTable: 1100,
                       },
@@ -62890,6 +62893,7 @@ var render = function () {
                       attrs: {
                         rows: _vm.columns.inEdit.length,
                         guides: _vm.guides,
+                        showGuide: _vm.showGuide,
                         columnsNames: _vm.columns.inEdit,
                         widthTable: 1600,
                       },

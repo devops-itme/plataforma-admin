@@ -106,7 +106,7 @@
                     role="tabpanel"
                     aria-labelledby="porRecoger-tab">
                     <!-- Draggable component -->
-                        <draggables :selected=selected :guides=guides :guides2=guides2 :messengers=messengers ref="childcomponent"></draggables>
+                        <draggables :selected=selected :guides=guides :guides2=guides2 :showGuide=showGuide :messengers=messengers ref="childcomponent"></draggables>
 
                 </div>
                 <div
@@ -116,7 +116,7 @@
                     aria-labelledby="enproceso-tab"
                 >
                     <!-- In process table -->
-                    <tabledy :rows=columns.inProcess.length :guides=guides :columnsNames=columns.inProcess :widthTable=1100></tabledy>
+                    <tabledy :rows=columns.inProcess.length :guides=guides :showGuide=showGuide :columnsNames=columns.inProcess :widthTable=1100></tabledy>
                 </div>
                 <div
                     class="tab-pane fade"
@@ -125,7 +125,7 @@
                     aria-labelledby="consultas-tab"
                 >
                     <!-- Queries and Edit table -->
-                    <tabledy :rows=columns.inEdit.length :guides=guides :columnsNames=columns.inEdit :widthTable=1600></tabledy>
+                    <tabledy :rows=columns.inEdit.length :guides=guides :showGuide=showGuide :columnsNames=columns.inEdit :widthTable=1600></tabledy>
                 </div>
             </div>
             </div>
@@ -237,6 +237,7 @@ export default {
             guides2: [],
             messengers: [],
             type_guide: 32,
+            showGuide: [],
 
         };
     },

@@ -186,6 +186,7 @@ export default {
         guides: Array,
         guides2: Array,
         messengers: Array,
+        showGuide: Array,
     },
     data() {
         return {
@@ -194,7 +195,6 @@ export default {
             searchMessenger: null,
             messenger: null,
             messengerName: null,
-            showGuide: null,
         };
     },
     computed: {
