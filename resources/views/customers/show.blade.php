@@ -255,10 +255,8 @@
                 <h3>Departamentos</h3>
             </div>
             <div class="card-body">
-                <div class="tab-pane fade" id="departament" role="tabpanel" aria-labelledby="departament-tab">
-                    <department-tab :user-id="{{ $customer->user_id  }}">
-                    </department-tab>
-                </div>
+                <department-tab :user-id="{{ $customer->user_id  }}" :show-dep="1">
+                </department-tab>
             </div>
         </div>
     </div>
