@@ -83619,7 +83619,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, response, modal;
+        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -83635,7 +83635,7 @@ var Orders = /*#__PURE__*/function () {
                 rate = document.getElementById("rate").value;
                 value = document.getElementById("value").value;
                 corp_value = document.getElementById("corp_value").value;
-                document_type_customes = document.getElementById("document_type_customes").value;
+                customer_document_type = document.getElementById("customer_document_type").value;
                 contact = document.getElementById("contact").value;
                 phone_contact = document.getElementById("phone_contact").value;
                 email_contact = document.getElementById("email_contact").value;
@@ -83656,7 +83656,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('rate', rate);
                 formData.append('value', value);
                 formData.append('corp_value', corp_value);
-                formData.append('document_type_customes', document_type_customes);
+                formData.append('customer_document_type', customer_document_type);
                 formData.append('contact', contact);
                 formData.append('phone_contact', phone_contact);
                 formData.append('email_contact', email_contact);
@@ -83892,7 +83892,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
+          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -83917,7 +83917,7 @@ var Orders = /*#__PURE__*/function () {
                   rate = document.getElementById("rate_edit").value = data.rate;
                   value = document.getElementById("value_edit").value = data.value;
                   corp_value = document.getElementById("corp_value_edit").value = data.corp_value;
-                  document_type_customes = document.getElementById("document_type_customes_edit").value = data.document_type_customes;
+                  customer_document_type = document.getElementById("customer_document_type_edit").value = data.customer_document_type;
                   contact = document.getElementById("contact_edit").value = data.contact;
                   phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
                   email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
@@ -83989,7 +83989,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -84004,7 +84004,7 @@ var Orders = /*#__PURE__*/function () {
                 rate = document.getElementById("rate_edit").value;
                 value = document.getElementById("value_edit").value;
                 corp_value = document.getElementById("corp_value_edit").value;
-                document_type_customes = document.getElementById("document_type_customes_edit").value;
+                customer_document_type = document.getElementById("customer_document_type_edit").value;
                 contact = document.getElementById("contact_edit").value;
                 phone_contact = document.getElementById("phone_contact_edit").value;
                 email_contact = document.getElementById("email_contact_edit").value;
@@ -84027,7 +84027,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("rate", rate);
                 formData.append("value", value);
                 formData.append("corp_value", corp_value);
-                formData.append("document_type_customes", document_type_customes);
+                formData.append("customer_document_type", customer_document_type);
                 formData.append("contact", contact);
                 formData.append("phone_contact", phone_contact);
                 formData.append("email_contact", email_contact);

@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="doc_type">Cliente tipo documento <span class="text-danger">*</span></label>
-                        <select name="doc_type" class="form-control form-control-solid" id="document_type_customes_edit">
+                        <select name="doc_type" class="form-control form-control-solid" id="customer_document_type_edit">
                             <option selected disabled>Seleccione tipo documento</option>
                             <option>CC</option>
                             <option>CE</option>
