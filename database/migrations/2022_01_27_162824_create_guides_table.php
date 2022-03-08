@@ -29,7 +29,7 @@ class CreateGuidesTable extends Migration
             $table->string('rate')->nullable();
             $table->double('value')->nullable();
             $table->double('corp_value')->nullable();
-            $table->string('document_type_customes')->nullable();
+            $table->string('customer_document_type')->nullable();
             $table->string('contact')->nullable();
             $table->string('phone_contact')->nullable();
             $table->string('email_contact')->nullable();
