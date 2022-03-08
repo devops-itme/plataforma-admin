@@ -24,7 +24,7 @@ class Guide extends Model
         'rate',
         'value',
         'corp_value',
-        'document_type_customes',
+        'customer_document_type',
         'contact',
         'phone_contact',
         'email_contact',

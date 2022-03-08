@@ -17,7 +17,7 @@ class GuidesImport implements ToModel, WithHeadingRow,
     {
         if($row){
             return new Guide([
-                'document_type_customes' => $row['TipoDocumento'],
+                'customer_document_type' => $row['TipoDocumento'],
                 'order_id' => $row['OrdenID'],
                 'address_name' => $row['Direccion'],
                 'concept' => $row['Concepto'],
