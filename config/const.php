@@ -271,6 +271,11 @@ return [
             'Silver sin retiro',
             'Special'
         ],
+        'customer_document_type' => [
+            'Cheque',
+            'Tarjeta',
+            'Delivery'
+        ]
         // 'payment_method' => [
         //     'Cheque',
         //     'Efectivo'
