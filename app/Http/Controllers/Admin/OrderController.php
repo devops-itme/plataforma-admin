@@ -53,7 +53,10 @@ class OrderController extends Controller
             $query->where('name', 'payment_method');
         })->get();
         $customers = Customer::with('getUser')->get();
-        return view('orders.create', compact('customers','order_type','transport_type','payment_method'));
+        $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'customer_document_type');
+        })->get();
+        return view('orders.create', compact('customers','order_type','transport_type','payment_method', 'customer_document_type'));
     }
 
     /**
