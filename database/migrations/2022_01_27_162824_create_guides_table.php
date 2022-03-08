@@ -40,6 +40,7 @@ class CreateGuidesTable extends Migration
             $table->integer('packaging')->nullable();
             $table->unsignedBigInteger('customer_address')->nullable();
             $table->integer('state')->default(32)->comment("{1:Por despachar;2:Despachado;3:Completado}");
+            $table->integer('app_status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

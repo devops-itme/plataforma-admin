@@ -2337,7 +2337,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      data: [],
       orders: [],
       activeIndex: null,
       shipmented: [],
@@ -2369,16 +2368,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         });
       }
     },
-    // filterOrders() {
-    //     if(this.checkAllOrders == false){
-    //         return this.data = this.orders.filter((item) => {
-    //             return this.localizeDate(item.schedule_date) >= this.localizeDate(this.startDate)
-    //             && this.localizeDate(item.schedule_date) <= this.localizeDate(this.endDate)
-    //         });
-    //     }else{
-    //          return this.data = this.orders;
-    //     }
-    // },
+    data: function data() {
+      var _this3 = this;
+
+      if (this.checkAllOrders == false) {
+        return this.data = this.orders.filter(function (item) {
+          return _this3.localizeDate(item.schedule_date) >= _this3.localizeDate(_this3.startDate) && _this3.localizeDate(item.schedule_date) <= _this3.localizeDate(_this3.endDate);
+        });
+      } else {
+        return this.data = this.orders;
+      }
+    },
     setMessenger: function setMessenger() {
       if (this.searchMessenger) {
         var _this$filterMessenger, _this$filterMessenger2;
@@ -2402,7 +2402,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       return new Date("".concat(mm, "/").concat(dd, "/").concat(yyyy));
     },
     getOrders: function getOrders(type_id, index) {
-      var _this3 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response, i, sum, x;
@@ -2411,33 +2411,33 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
             switch (_context.prev = _context.next) {
               case 0:
                 index != undefined && $("#myTab li:nth-child(".concat(index + 1, ") a")).tab("show");
-                _this3.currentTab = type_id;
+                _this4.currentTab = type_id;
                 _context.next = 4;
-                return _this3.requestOrders();
+                return _this4.requestOrders();
 
               case 4:
                 response = _context.sent;
-                _this3.orders = response.data;
-                _this3.data = _this3.orders;
-                _this3.activeIndex = null;
-                _this3.showData = "";
-                _this3.ordersQuantity = "";
-                _this3.ordersTotalValue = 0;
+                _this4.orders = response.data; // this.data = this.orders;
 
-                for (i = 0; i < _this3.orders.length; i++) {
+                _this4.activeIndex = null;
+                _this4.showData = "";
+                _this4.ordersQuantity = "";
+                _this4.ordersTotalValue = 0;
+
+                for (i = 0; i < _this4.orders.length; i++) {
                   sum = 0;
 
-                  for (x = 0; x < _this3.orders[i].get_guides.length; x++) {
-                    sum += _this3.orders[i].get_guides[x].value;
+                  for (x = 0; x < _this4.orders[i].get_guides.length; x++) {
+                    sum += _this4.orders[i].get_guides[x].value;
                   }
 
-                  _this3.ordersTotalValue += sum;
+                  _this4.ordersTotalValue += sum;
                 }
 
-                _this3.ordersQuantity = _this3.orders.length;
-                _this3.showMessengerData = [];
+                _this4.ordersQuantity = _this4.orders.length;
+                _this4.showMessengerData = [];
 
-              case 14:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -2446,7 +2446,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }))();
     },
     requestOrders: function requestOrders() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var response, myHeaders, requestOptions;
@@ -2464,7 +2464,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   headers: myHeaders
                 };
                 _context2.next = 6;
-                return fetch("/orders_ondemand/".concat(_this4.currentTab), requestOptions).then(function (response) {
+                return fetch("/orders_ondemand/".concat(_this5.currentTab), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2484,7 +2484,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this5 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var _this, myHeaders, requestOptions;
@@ -2493,7 +2493,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this = _this5;
+                _this = _this6;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
@@ -2533,7 +2533,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       this.activeIndex = index;
     },
     assignateDelivery: function assignateDelivery() {
-      var _this6 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, token, myHeaders, requestOptions;
@@ -2542,7 +2542,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                if (_this6.showData) {
+                if (_this7.showData) {
                   _context4.next = 4;
                   break;
                 }
@@ -2554,7 +2554,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 return _context4.abrupt("return", _context4.sent);
 
               case 4:
-                if (_this6.setMessenger) {
+                if (_this7.setMessenger) {
                   _context4.next = 8;
                   break;
                 }
@@ -2566,7 +2566,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 return _context4.abrupt("return", _context4.sent);
 
               case 8:
-                _this = _this6;
+                _this = _this7;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -2576,9 +2576,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    messenger_user_id: _this6.setMessenger.user_id,
-                    order_id: _this6.showData.id,
-                    state_order: _this6.tabs[1].id
+                    messenger_user_id: _this7.setMessenger.user_id,
+                    order_id: _this7.showData.id,
+                    state_order: _this7.tabs[1].id
                   })
                 };
                 _context4.next = 17;
@@ -2611,7 +2611,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }))();
     },
     orderState: function orderState() {
-      var _this7 = this;
+      var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var req, res;
@@ -2629,11 +2629,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
               case 5:
                 res = _context5.sent;
-                _this7.tabs = res.data;
-                _this7.currentTab = _this7.tabs[0].id;
-                _this7.tabs[0].href = "pordespachar";
-                _this7.tabs[1].href = "despachados";
-                _this7.tabs[2].href = "completados";
+                _this8.tabs = res.data;
+                _this8.currentTab = _this8.tabs[0].id;
+                _this8.tabs[0].href = "pordespachar";
+                _this8.tabs[1].href = "despachados";
+                _this8.tabs[2].href = "completados";
 
               case 11:
               case "end":
@@ -2644,7 +2644,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }))();
     },
     updateStateOrders: function updateStateOrders(state) {
-      var _this8 = this;
+      var _this9 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var result, _this, token, myHeaders, requestOptions;
@@ -2653,7 +2653,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                if (_this8.showData) {
+                if (_this9.showData) {
                   _context6.next = 4;
                   break;
                 }
@@ -2676,7 +2676,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   break;
                 }
 
-                _this = _this8;
+                _this = _this9;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -2686,7 +2686,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    order_id: _this8.showData.id
+                    order_id: _this9.showData.id
                   })
                 };
                 _context6.next = 17;
@@ -2722,18 +2722,18 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     }
   },
   mounted: function mounted() {
-    var _this9 = this;
+    var _this10 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              _this9.orderState();
+              _this10.orderState();
 
-              _this9.getOrders(_this9.currentTab);
+              _this10.getOrders(_this10.currentTab);
 
-              _this9.getMessengers();
+              _this10.getMessengers();
 
             case 3:
             case "end":

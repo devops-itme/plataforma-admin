@@ -15,7 +15,7 @@ trait MessengerTrait
 {
     use UserTrait;
 
-    public function messengerValidate($request)
+    public function validationMessenger($request)
     {
         return Validator::make(
             $request->all(),
@@ -60,15 +60,23 @@ trait MessengerTrait
     }
 
 
-    public function saveMessenger($request, $id)
+    public function saveMessenger($request)
     {
 
-        $validator = $this->messengerValidate($request);
+
+        $validator = $this->validationMessenger($request);
 
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
         }
         try {
+
+            request()->merge(['role' => 3, 'state' => 1]);
+            $user = $this->saveUser($request);
+            if ($user['state'] != 200) {
+                return redirect()->back()->withInput()->with('danger', $user['message']);
+            }
+            $user = $user['data'];
 
             $contract_file = null;
             if ($request->hasFile('contract')) {
@@ -77,7 +85,7 @@ trait MessengerTrait
                 // \Storage::disk('local')->put($document_file,  \File::get($contract));
             }
             $messenger = Messenger::create([
-                'user_id' => $id,
+                'user_id' => $user->id,
                 'vehicle_plate' => $request->vehicle_plate,
                 'admission_date' => $request->admission_date,
                 'production_percentage' => $request->production_percentage,
@@ -94,6 +102,11 @@ trait MessengerTrait
 
     public function updateMessenger($request, $id)
     {
+        $validator = $this->validationMessenger($request);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
+        }
 
         try {
             if ($request->hasFile('contract')) {

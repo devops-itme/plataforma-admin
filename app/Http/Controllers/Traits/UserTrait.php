@@ -12,7 +12,7 @@ trait UserTrait
 {
     use RestActions;
 
-    public function valide($request, $action = null, $id = null)
+    public function validateUser($request, $action = null, $id = null)
     {
         return Validator::make(
             $request->all(),
@@ -38,7 +38,7 @@ trait UserTrait
                     $action == 'create' ? 'confirmed' : 'nullable',
                     Rule::requiredIf($action == 'create')
                 ],
-                'role' => 'required|numeric|exists:roles,id',
+                'role' => 'nullable|numeric|exists:roles,id',
                 'state' => 'nullable|numeric',
             ]
         );
@@ -70,7 +70,7 @@ trait UserTrait
 
     public function saveUser($request)
     {
-        $validator = $this->valide($request, 'create');
+        $validator = $this->validateUser($request, 'create');
 
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
@@ -98,7 +98,7 @@ trait UserTrait
 
     public function updateUser($request)
     {
-        $validator = $this->valide($request,null,$request->user_id);
+        $validator = $this->validateUser($request,null,$request->user_id);
 
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
