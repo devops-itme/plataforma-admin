@@ -27,11 +27,17 @@ export default class Customers {
 
             let formData = new FormData(storeCustomerForm);
             let branchesCheck = document.getElementsByName('branchCheck');
+            let departmentsCheck = document.getElementsByName("departments[]");
             let branchArr = [];
+            let deptsArr = [];
             branchesCheck.forEach((e) => {
                 e.checked && branchArr.push(e.value);
             });
+            departmentsCheck.forEach((e) => {
+                e.checked && deptsArr.push(e.value);
+            });
             formData.append('branchCheck', branchArr);
+            formData.append('departments', deptsArr);
             let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");

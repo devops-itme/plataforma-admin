@@ -101,6 +101,7 @@ class CustomerController extends Controller
             }
         }
         if(!is_null($request->departments)){
+            $request->departments = explode(',', $request->departments);
             $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
             if($assignDepartment['state'] != 200){
                 // return redirect()->back()->with('danger', $assignDepartment['message']);
