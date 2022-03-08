@@ -32,6 +32,7 @@ class OrderResource extends JsonResource
             "insured_value" => $this->insured_value,
             "money_to_collect" => $this->money_to_collect,
             "percentage_to_collect" => $this->percentage_to_collect,
+            "app_status" => $this->app_status,
             "user" => [
                 "id" => $this->getUser->id ?? '',
                 "name" => $this->getUser->name,
