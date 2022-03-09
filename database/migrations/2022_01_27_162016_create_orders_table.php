@@ -40,6 +40,8 @@ class CreateOrdersTable extends Migration
             $table->string('dispatched')->unique()->nullable();
             $table->integer('state')->default(32)->comment("{1:Por despachar;2:Despachado;3:Completado}");
             $table->integer('app_status')->nullable()->default(0)->comment("{0:Pendiente;1:Leído;}");
+            $table->unsignedBigInteger('status_matrix_id')->nullable();
+            $table->foreign('status_matrix_id')->references('id')->on('status_matrix');
             $table->timestamps();
             $table->softDeletes();
         });
