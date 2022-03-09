@@ -108,7 +108,11 @@ class OrderController extends Controller
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
-        return view('orders.showFold.show', compact('order', 'order_type'));
+        $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'customer_document_type');
+        })->get();
+
+        return view('orders.showFold.show', compact('order', 'order_type', 'customer_document_type'));
     }
 
 
