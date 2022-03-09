@@ -275,6 +275,17 @@ return [
             'Cheque',
             'Tarjeta',
             'Delivery'
+        ],
+        'scopes' => [
+            'creation',
+            'pickup',
+            'delivery'
+        ],
+        'issues' => [
+            'ENTREGADO',
+            'NO ENTREGADO- DIRECCIÓN EQUIVOCADA',
+            'NO ENTREGADO AUSENTE',
+            'OTROS'
         ]
         // 'payment_method' => [
         //     'Cheque',
