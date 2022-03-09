@@ -186,15 +186,15 @@ export default {
         guides: Array,
         guides2: Array,
         messengers: Array,
-        showGuide: Array,
+        tabs: Array,
     },
     data() {
         return {
-            tabs: [],
             showMessengerData:[],
             searchMessenger: null,
             messenger: null,
             messengerName: null,
+            activeIndex: null,
         };
     },
     computed: {
@@ -222,9 +222,13 @@ export default {
             }
         },
     },
+
+    watch: {
+
+    },
     methods: {
         rowClick(data) {
-             this.showGuide = data;
+            this.$emit("getGuide", data);
         },
 
         formatDate(date) {
@@ -270,17 +274,13 @@ export default {
                 .catch((err) => console.warn(err));
         },
 
-          async orderState() {
-            let req = await fetch("/order_states");
-            let res = await req.json();
-            this.tabs = res.data;
-        },
+
 
 
 
     },
     async mounted() {
-        this.orderState();
+
     },
 
 };

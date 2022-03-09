@@ -106,7 +106,7 @@
                     role="tabpanel"
                     aria-labelledby="porRecoger-tab">
                     <!-- Draggable component -->
-                        <draggables :selected=selected :guides=guides :guides2=guides2 :showGuide=showGuide :messengers=messengers ref="childcomponent"></draggables>
+                    <draggables :selected=selected @getGuide="getGuide" :guides=guides :guides2=guides2 :tabs=tabs :messengers=messengers ref="childcomponent"></draggables>
 
                 </div>
                 <div
@@ -116,7 +116,7 @@
                     aria-labelledby="enproceso-tab"
                 >
                     <!-- In process table -->
-                    <tabledy :rows=columns.inProcess.length :guides=guides :showGuide=showGuide :columnsNames=columns.inProcess :widthTable=1100></tabledy>
+                    <tabledy :rows=columns.inProcess.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inProcess :widthTable=1100></tabledy>
                 </div>
                 <div
                     class="tab-pane fade"
@@ -125,7 +125,7 @@
                     aria-labelledby="consultas-tab"
                 >
                     <!-- Queries and Edit table -->
-                    <tabledy :rows=columns.inEdit.length :guides=guides :showGuide=showGuide :columnsNames=columns.inEdit :widthTable=1600></tabledy>
+                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600></tabledy>
                 </div>
             </div>
             </div>
@@ -138,23 +138,23 @@
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Tipo de orden:</div>
-                        <div class="line-height-xl">Packing</div>
+                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.get_order.get_order_type.name"></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente:</div>
-                        <div class="line-height-xl">Juanito Perez</div>
+                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.get_order.get_user.name"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Destino:</div>
-                        <div class="line-height-xl">3534534</div>
+                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.id"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Despacho:</div>
-                        <div class="line-height-xl">0</div>
+                        <div class="line-height-xl" v-if="showGuide != null"  v-text="showGuide.dispatched"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Ref.Cliente:</div>
-                        <div class="line-height-xl">---</div>
+                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.get_order.get_user.document_number"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Programado:</div>
@@ -162,20 +162,20 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
-                        <div class="line-height-xl">Moto</div>
+                        <div class="line-height-xl"  v-if="showGuide != null"  v-text="showGuide.get_transport_type.name" ></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Movil:</div>
-                        <div class="line-height-xl">381, YEMAYEL ARIEL</div>
+                        <div class="line-height-xl" v-if="if_route == true"  v-text="showGuide.get_route.get_messenger.name+' '+showGuide.get_route.get_messenger.last_name"></div>
                     </div>
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Depto:</div>
-                        <div class="line-height-x1">84: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="if_department == true" v-text="showGuide.get_branch_office.get_department.get_department.id+':'+showGuide.get_branch_office.get_department.get_department.name" >84: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
-                        <div class="line-height-x1">1179: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showGuide != null" v-text="showGuide.get_branch_office.id+': '+showGuide.get_branch_office.name">1179: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Documento:</div>
@@ -184,11 +184,11 @@
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Concepto:</div>
-                        <div class="line-height-xl">RETIRAR FIANZA A NOMBRE DE EDEMET</div>
+                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.concept" ></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Dirección:</div>
-                        <div class="line-height-xl">CLL 50: SAN FRANCISCO: PANAMA</div>
+                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.address_name"></div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
@@ -237,7 +237,11 @@ export default {
             guides2: [],
             messengers: [],
             type_guide: 32,
-            showGuide: [],
+            showGuide: null,
+            activeIndex: 2,
+            tabs: [],
+            if_route: false,
+            if_department: false,
 
         };
     },
@@ -246,11 +250,19 @@ export default {
         loadingEvt (){
            $(`#myTab li:nth-child(1) a`).tab("show");
        },
+
+        getGuide(data){
+            this.showGuide = data;
+            this.showGuide.get_route ? this.if_route = true : this.if_route = false;
+            this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
+
+        },
         async getGuides(type) {
             this.type_guide = this.selected + type;
             let response = await this.requestGuides();
             this.guides = response.data;
             this.guides2 = [];
+            this.showGuide = null;
         },
         async requestGuides() {
             let response = { state: 500 };
@@ -283,12 +295,20 @@ export default {
                 })
                 .catch((err) => console.warn(err));
         },
+
+        async orderState() {
+            let req = await fetch("/order_states");
+            let res = await req.json();
+            this.tabs = res.data;
+        },
+
     },
 
      async mounted() {
         // this.orderState();
         this.getGuides(null);
         this.getMessengers();
+        this.orderState();
     },
 
 };

@@ -6,6 +6,7 @@ use App\Guide;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Order;
+use App\StatusMatrix;
 use Illuminate\Validation\Rule;
 
 trait OrderTrait
@@ -44,10 +45,14 @@ trait OrderTrait
 
     public function storeOrder($request)
     {
+
+
         $validator = $this->OrderValidate($request);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
+        $status = StatusMatrix::get();
+        $status_id = $status[0]->id;
         try {
             $order = Order::create([
                 'order_number' => $request->order_number,
@@ -69,7 +74,8 @@ trait OrderTrait
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
                 'branch_office' => $request->branch_office_id,
-                'department_id' => $request->department_id
+                'department_id' => $request->department_id,
+                'status_matrix_id' => $status_id,
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');
         } catch (\Exception $e) {
