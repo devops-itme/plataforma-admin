@@ -29,7 +29,7 @@ class CreateGuidesTable extends Migration
             $table->string('rate')->nullable();
             $table->double('value')->nullable();
             $table->double('corp_value')->nullable();
-            $table->string('document_type_customes')->nullable();
+            $table->string('customer_document_type')->nullable();
             $table->string('contact')->nullable();
             $table->string('phone_contact')->nullable();
             $table->string('email_contact')->nullable();
@@ -41,6 +41,7 @@ class CreateGuidesTable extends Migration
             $table->unsignedBigInteger('customer_address')->nullable();
             $table->integer('state')->default(32)->comment("{1:Por despachar;2:Despachado;3:Completado}");
             $table->integer('app_status')->nullable()->default(0)->comment("{0:Pendiente;1:Leído;}");
+            $table->json('boxes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

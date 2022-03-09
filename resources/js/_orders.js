@@ -77,7 +77,7 @@ export default class Orders {
 
             let numberCell = document.createElement("td");
             numberCell.className = `col-1 py-4 border-right`;
-            numberCell.innerHTML = `<input type="number" name="weight[]" class="form-control" min="0" value="${box.number}">`;
+            numberCell.innerHTML = `<input type="number" name="id[]" class="form-control" min="0" value="${box.number}">`;
             row.appendChild(numberCell);
 
             let weightCell = document.createElement("td");
@@ -340,7 +340,7 @@ export default class Orders {
             let rate = document.getElementById("rate").value;
             let value = document.getElementById("value").value;
             let corp_value = document.getElementById("corp_value").value;
-            let document_type_customes = document.getElementById("document_type_customes").value;
+            let customer_document_type = document.getElementById("customer_document_type").value;
             let contact = document.getElementById("contact").value;
             let phone_contact = document.getElementById("phone_contact").value;
             let email_contact = document.getElementById("email_contact").value;
@@ -349,8 +349,29 @@ export default class Orders {
             let sign = document.getElementById("sign").value;
             let take_photo = document.getElementById("take_photo").value;
             let customer_address = document.getElementById("customer_address").value;
-
+            //Boxes
+            let ids = document.getElementsByName('id[]');
+            let weights = document.getElementsByName('weight[]');
+            let longs = document.getElementsByName('long[]');
+            let broads = document.getElementsByName('broad[]');
+            let highs = document.getElementsByName('high[]');
+            let vol_weights = document.getElementsByName('vol_weight[]');
+            let descriptions = document.getElementsByName('description[]');
+            let boxArr = [];
+            for (let i = 0; i < ids.length; i++) {
+                let individualBoxArr = {
+                    'id' : ids[i].value,
+                    'weight' : weights[i].value,
+                    'long' : longs[i].value,
+                    'broad' : broads[i].value,
+                    'high' : highs[i].value,
+                    'vol_weight' : vol_weights[i].value,
+                    'description' : descriptions[i].value
+                };
+                boxArr.push(individualBoxArr);
+            }
             let formData = new FormData();
+            formData.append('boxes', JSON.stringify(boxArr));
             formData.append('branch_office', branch_office);
             formData.append('transport_type',transport_type);
             // formData.append('dispatched',dispatched);
@@ -362,7 +383,7 @@ export default class Orders {
             formData.append('rate',rate);
             formData.append('value',value);
             formData.append('corp_value',corp_value);
-            formData.append('document_type_customes',document_type_customes);
+            formData.append('customer_document_type',customer_document_type);
             formData.append('contact',contact);
             formData.append('phone_contact',phone_contact);
             formData.append('email_contact',email_contact);
@@ -514,7 +535,7 @@ export default class Orders {
                 let rate = document.getElementById("rate_edit").value = data.rate;
                 let value = document.getElementById("value_edit").value = data.value;
                 let corp_value = document.getElementById("corp_value_edit").value = data.corp_value;
-                let document_type_customes = document.getElementById("document_type_customes_edit").value = data.document_type_customes;
+                let customer_document_type = document.getElementById("customer_document_type_edit").value = data.customer_document_type;
                 let contact = document.getElementById("contact_edit").value = data.contact;
                 let phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
                 let email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
@@ -559,7 +580,7 @@ export default class Orders {
             let rate = document.getElementById("rate_edit").value;
             let value = document.getElementById("value_edit").value;
             let corp_value = document.getElementById("corp_value_edit").value;
-            let document_type_customes = document.getElementById("document_type_customes_edit").value;
+            let customer_document_type = document.getElementById("customer_document_type_edit").value;
             let contact = document.getElementById("contact_edit").value;
             let phone_contact = document.getElementById("phone_contact_edit").value;
             let email_contact = document.getElementById("email_contact_edit").value;
@@ -583,7 +604,7 @@ export default class Orders {
             formData.append("rate", rate);
             formData.append("value", value);
             formData.append("corp_value", corp_value);
-            formData.append("document_type_customes", document_type_customes);
+            formData.append("customer_document_type", customer_document_type);
             formData.append("contact", contact);
             formData.append("phone_contact", phone_contact);
             formData.append("email_contact", email_contact);

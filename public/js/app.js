@@ -2171,7 +2171,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       guides: [],
       guides2: [],
       messengers: [],
-      type_guide: 32
+      type_guide: 32,
+      showGuide: []
     };
   },
   methods: {
@@ -2954,7 +2955,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     selected: Number,
     guides: Array,
     guides2: Array,
-    messengers: Array
+    messengers: Array,
+    showGuide: Array
   },
   data: function data() {
     return {
@@ -2962,8 +2964,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       showMessengerData: [],
       searchMessenger: null,
       messenger: null,
-      messengerName: null,
-      showGuide: null
+      messengerName: null
     };
   },
   computed: {
@@ -3315,12 +3316,12 @@ __webpack_require__.r(__webpack_exports__);
     rows: Number,
     columnsNames: Array,
     widthTable: Number,
-    guides: Array
+    guides: Array,
+    showGuide: Array
   },
   data: function data() {
     return {
-      activeIndex: null,
-      showGuide: null
+      activeIndex: null
     };
   },
   methods: {
@@ -8272,7 +8273,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -8329,7 +8330,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
 
 // exports
 
@@ -62845,6 +62846,7 @@ var render = function () {
                         selected: _vm.selected,
                         guides: _vm.guides,
                         guides2: _vm.guides2,
+                        showGuide: _vm.showGuide,
                         messengers: _vm.messengers,
                       },
                     }),
@@ -62867,6 +62869,7 @@ var render = function () {
                       attrs: {
                         rows: _vm.columns.inProcess.length,
                         guides: _vm.guides,
+                        showGuide: _vm.showGuide,
                         columnsNames: _vm.columns.inProcess,
                         widthTable: 1100,
                       },
@@ -62890,6 +62893,7 @@ var render = function () {
                       attrs: {
                         rows: _vm.columns.inEdit.length,
                         guides: _vm.guides,
+                        showGuide: _vm.showGuide,
                         columnsNames: _vm.columns.inEdit,
                         widthTable: 1600,
                       },
@@ -83206,7 +83210,7 @@ var Orders = /*#__PURE__*/function () {
         row.className = "row border mt-0 text-center box-register col-md-13 \"";
         var numberCell = document.createElement("td");
         numberCell.className = "col-1 py-4 border-right";
-        numberCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.number, "\">");
+        numberCell.innerHTML = "<input type=\"number\" name=\"id[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.number, "\">");
         row.appendChild(numberCell);
         var weightCell = document.createElement("td");
         weightCell.className = "col-1 py-4 border-right";
@@ -83615,7 +83619,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, response, modal;
+        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -83631,7 +83635,7 @@ var Orders = /*#__PURE__*/function () {
                 rate = document.getElementById("rate").value;
                 value = document.getElementById("value").value;
                 corp_value = document.getElementById("corp_value").value;
-                document_type_customes = document.getElementById("document_type_customes").value;
+                customer_document_type = document.getElementById("customer_document_type").value;
                 contact = document.getElementById("contact").value;
                 phone_contact = document.getElementById("phone_contact").value;
                 email_contact = document.getElementById("email_contact").value;
@@ -83639,8 +83643,32 @@ var Orders = /*#__PURE__*/function () {
                 same_day_delivery = document.getElementById("same_day_delivery").value;
                 sign = document.getElementById("sign").value;
                 take_photo = document.getElementById("take_photo").value;
-                customer_address = document.getElementById("customer_address").value;
+                customer_address = document.getElementById("customer_address").value; //Boxes
+
+                ids = document.getElementsByName('id[]');
+                weights = document.getElementsByName('weight[]');
+                longs = document.getElementsByName('long[]');
+                broads = document.getElementsByName('broad[]');
+                highs = document.getElementsByName('high[]');
+                vol_weights = document.getElementsByName('vol_weight[]');
+                descriptions = document.getElementsByName('description[]');
+                boxArr = [];
+
+                for (i = 0; i < ids.length; i++) {
+                  individualBoxArr = {
+                    'id': ids[i].value,
+                    'weight': weights[i].value,
+                    'long': longs[i].value,
+                    'broad': broads[i].value,
+                    'high': highs[i].value,
+                    'vol_weight': vol_weights[i].value,
+                    'description': descriptions[i].value
+                  };
+                  boxArr.push(individualBoxArr);
+                }
+
                 formData = new FormData();
+                formData.append('boxes', JSON.stringify(boxArr));
                 formData.append('branch_office', branch_office);
                 formData.append('transport_type', transport_type); // formData.append('dispatched',dispatched);
 
@@ -83652,7 +83680,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('rate', rate);
                 formData.append('value', value);
                 formData.append('corp_value', corp_value);
-                formData.append('document_type_customes', document_type_customes);
+                formData.append('customer_document_type', customer_document_type);
                 formData.append('contact', contact);
                 formData.append('phone_contact', phone_contact);
                 formData.append('email_contact', email_contact);
@@ -83661,10 +83689,10 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('sign', sign);
                 formData.append('take_photo', take_photo);
                 formData.append('customer_address', customer_address);
-                _context7.next = 41;
+                _context7.next = 51;
                 return _this5.sendGuideData(formData);
 
-              case 41:
+              case 51:
                 response = _context7.sent;
 
                 if (response.state == 200) {
@@ -83678,7 +83706,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 43:
+              case 53:
               case "end":
                 return _context7.stop();
             }
@@ -83888,7 +83916,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
+          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -83913,7 +83941,7 @@ var Orders = /*#__PURE__*/function () {
                   rate = document.getElementById("rate_edit").value = data.rate;
                   value = document.getElementById("value_edit").value = data.value;
                   corp_value = document.getElementById("corp_value_edit").value = data.corp_value;
-                  document_type_customes = document.getElementById("document_type_customes_edit").value = data.document_type_customes;
+                  customer_document_type = document.getElementById("customer_document_type_edit").value = data.customer_document_type;
                   contact = document.getElementById("contact_edit").value = data.contact;
                   phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
                   email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
@@ -83985,7 +84013,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, document_type_customes, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -84000,7 +84028,7 @@ var Orders = /*#__PURE__*/function () {
                 rate = document.getElementById("rate_edit").value;
                 value = document.getElementById("value_edit").value;
                 corp_value = document.getElementById("corp_value_edit").value;
-                document_type_customes = document.getElementById("document_type_customes_edit").value;
+                customer_document_type = document.getElementById("customer_document_type_edit").value;
                 contact = document.getElementById("contact_edit").value;
                 phone_contact = document.getElementById("phone_contact_edit").value;
                 email_contact = document.getElementById("email_contact_edit").value;
@@ -84023,7 +84051,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("rate", rate);
                 formData.append("value", value);
                 formData.append("corp_value", corp_value);
-                formData.append("document_type_customes", document_type_customes);
+                formData.append("customer_document_type", customer_document_type);
                 formData.append("contact", contact);
                 formData.append("phone_contact", phone_contact);
                 formData.append("email_contact", email_contact);
@@ -85524,8 +85552,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

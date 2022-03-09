@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Traits;
 
+use App\Box;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Guide;
@@ -32,7 +33,7 @@ trait GuideTrait
                 'rate' => 'nullable',
                 'value' => 'nullable',
                 'corp_value' => 'nullable',
-                'document_type_customes' => 'nullable',
+                'customer_document_type' => 'nullable',
                 'contact' => 'nullable',
                 'phone_contact' => 'nullable',
                 'email_contact' => 'nullable',
@@ -66,7 +67,7 @@ trait GuideTrait
                 'rate' => $request->rate,
                 'value' => $request->value,
                 'corp_value' => $request->corp_value,
-                'document_type_customes' => $request->document_type_customes,
+                'customer_document_type' => $request->customer_document_type,
                 'contact' => $request->contact,
                 'phone_contact' => $request->phone_contact,
                 'email_contact' => $request->email_contact,
@@ -75,7 +76,8 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
-                'customer_address' => $request->customer_address
+                'customer_address' => $request->customer_address,
+                'boxes' => $request->boxes
             ]);
             return $this->respond(200, $order, null, 'Guiá creada exitosamente');
         } catch (\Exception $e) {
@@ -106,7 +108,7 @@ trait GuideTrait
                 'rate' => $request->rate,
                 'value' => $request->value,
                 'corp_value' => $request->corp_value,
-                'document_type_customes' => $request->document_type_customes,
+                'customer_document_type' => $request->customer_document_type,
                 'contact' => $request->contact,
                 'phone_contact' => $request->phone_contact,
                 'email_contact' => $request->email_contact,
@@ -131,7 +133,7 @@ trait GuideTrait
                 return $this->respond(500, [], 'user not found', 'No se encontró la guiá');
             }
             $guide->delete();
-            return $this->respond(200, $guide, null, 'Guiá eliminada exitosamente');
+            return $this->respond(200, $guide, null, 'Guia eliminada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al eliminar guiá');
         }
