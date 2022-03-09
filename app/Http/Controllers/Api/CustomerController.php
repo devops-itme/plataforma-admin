@@ -13,6 +13,15 @@ class CustomerController extends Controller
 {
     use CustomerTrait;
 
+    // public function store()
+    // {
+    //     try {
+
+    //     } catch (\Exception $e) {
+    //         return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
+    //     }
+    // }
+
     public function show()
     {
         $user_id = Auth::user()->id;
