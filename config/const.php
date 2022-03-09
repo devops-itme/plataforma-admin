@@ -165,14 +165,6 @@ return [
                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
-
-
-        // 1 => 'Dashboard',
-        // 2 => 'Ordenes',
-        // 3 => 'Mensajeros',
-        // 4 => 'Clientes',
-        // 5 => 'Tarifas',
-        // 6 => '',
     ],
     'months' => [
         1 => 'Enero',
@@ -291,6 +283,24 @@ return [
         //     'Cheque',
         //     'Efectivo'
         // ],
+    ],
+    'system_status' => [
+        'creation'/*_scope*/ => [
+            'CREADO',
+            'X EDITAR'
+        ],
+        'pickup'/*_scope*/ => [
+            'POR DESPACHAR',
+            'DESPACHADO',
+            'INCIDENCIA',
+            'RECOGIDO'
+        ],
+        'delivery'/*_scope*/ => [
+            'POR DESPACHAR',
+            'DESPACHADO',
+            'INCIDENCIA',
+            'ENTREGADO'
+        ]
     ]
 
 ];
