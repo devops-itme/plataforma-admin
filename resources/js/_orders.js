@@ -14,6 +14,7 @@ let boxes = [
 export default class Orders {
     constructor(){
         this.guideId = '';
+        this.boxes = boxes;
     }
     initialize() {
         this.instantiateBoxes();
@@ -65,8 +66,8 @@ export default class Orders {
         });
     }
 
-    instantiateBoxes() {
-        let boxContainer = document.getElementById('box-container');
+    instantiateBoxes(container = 'box-container', boxes = this.boxes) {
+        let boxContainer = document.getElementById(container);
         if (boxContainer == null) {
             return
         }
@@ -132,8 +133,8 @@ export default class Orders {
         this.removeBox();
     };
 
-    addbox() {
-        let addBoxBtn = document.getElementById("add-box-btn");
+    addbox(button = 'add-box-btn', boxes = this.boxes, container = 'box-container') {
+        let addBoxBtn = document.getElementById(button);
 
         if (addBoxBtn == null) {
             return
@@ -149,7 +150,7 @@ export default class Orders {
                 vol_weight: 0,
                 description: '',
             });
-            this.instantiateBoxes();
+            this.instantiateBoxes(container, boxes);
         });
     }
 
@@ -360,7 +361,7 @@ export default class Orders {
             let boxArr = [];
             for (let i = 0; i < ids.length; i++) {
                 let individualBoxArr = {
-                    'id' : ids[i].value,
+                    'number' : ids[i].value,
                     'weight' : weights[i].value,
                     'long' : longs[i].value,
                     'broad' : broads[i].value,
@@ -484,6 +485,7 @@ export default class Orders {
                 buttonsDiv.appendChild(guideEdit);
                 buttonsDiv.appendChild(guideDelete);
                 selectCell.appendChild(buttonsDiv);
+
                 tbody.appendChild(row);
             });
         }
@@ -546,6 +548,9 @@ export default class Orders {
                 data.sign == 1 ? sign.checked = true : '';
                 let take_photo = document.getElementById("take_photo_edit");
                 data.take_photo == 1 ? take_photo.checked = true : '';
+                let boxes = JSON.parse(data.boxes);
+                this.instantiateBoxes('box-container-edit', (boxes??this.boxes));
+                this.addbox('add-box-btn-edit', (boxes??[]), 'box-container-edit');
             });
         })
         this.updateGuide();
@@ -593,7 +598,30 @@ export default class Orders {
             take_photo.checked == true ? take_photo = 1 : take_photo = 0;
             let customer_address = document.getElementById("customer_address_edit").value;
 
+            //Boxes
+            let ids = document.getElementsByName('id[]');
+            let weights = document.getElementsByName('weight[]');
+            let longs = document.getElementsByName('long[]');
+            let broads = document.getElementsByName('broad[]');
+            let highs = document.getElementsByName('high[]');
+            let vol_weights = document.getElementsByName('vol_weight[]');
+            let descriptions = document.getElementsByName('description[]');
+            let boxArr = [];
+            for (let i = 1; i < ids.length; i++) {
+                let individualBoxArr = {
+                    'number' : ids[i].value,
+                    'weight' : weights[i].value,
+                    'long' : longs[i].value,
+                    'broad' : broads[i].value,
+                    'high' : highs[i].value,
+                    'vol_weight' : vol_weights[i].value,
+                    'description' : descriptions[i].value
+                };
+                boxArr.push(individualBoxArr);
+            }
+
             let formData = new FormData();
+            formData.append('boxes', JSON.stringify(boxArr));
             formData.append("branch_office", branch_off_edit);
             // formData.append("dispatched", dispatched);
             formData.append("address_name", address_name);

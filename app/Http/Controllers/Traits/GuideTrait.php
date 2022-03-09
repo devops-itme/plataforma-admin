@@ -117,7 +117,8 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
-                'customer_address' => $request->customer_address
+                'customer_address' => $request->customer_address,
+                'boxes' => $request->boxes
             ]);
             return $this->respond(200, $guide, null, 'Guía actualizada exitosamente');
         } catch (\Exception $e) {
