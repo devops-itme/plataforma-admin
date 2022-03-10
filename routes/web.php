@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     //update order state
     Route::post('/despacho/orden/estado/{state}', 'Admin\DeliveryController@updateStateOrders');
 
+    Route::resource('parametros', 'Admin\ParameterController')->names('parameters');
+
     Route::group(['middleware' => 'role'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');

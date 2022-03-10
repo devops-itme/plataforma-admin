@@ -13,4 +13,9 @@ class Parameter extends Model
         'description',
         'state'
     ];
+
+    public function getParameterValue()
+    {
+        return $this->hasMany(ParameterValue::class, 'parameter_id');
+    }
 }
