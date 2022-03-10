@@ -15,7 +15,7 @@ class ParameterValueController extends Controller
     {
         try {
             $parameter_name = $request->parameter_name;
-            $parameter = Parameter::where('name')->first();
+            $parameter = Parameter::where('name', $parameter_name)->first();
             if (is_null($parameter)) {
                 return $this->respond(500, [], 'not found', 'El parámetro no existe');
             }
