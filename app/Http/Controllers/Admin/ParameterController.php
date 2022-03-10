@@ -66,7 +66,17 @@ class ParameterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $parameter = Parameter::find($id);
+        if(is_null($parameter)){
+            return json_encode([
+                'state' => 500,
+                'message' => 'No se encontró el parametro'
+            ]);
+        }
+        return json_encode([
+            'state' => 200,
+            'data' => $parameter
+        ]);
     }
 
     /**
@@ -78,7 +88,10 @@ class ParameterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->state == 'on'){$request->merge(['state' => '1']);}
+        else{$request->merge(['state' => 0]);}
+        $response = $this->updateParameter($id, $request);
+        return $response;
     }
 
     /**
