@@ -43,6 +43,7 @@ trait CustomerTrait
             return $this->respond(500, $validator->errors(), 'validation error, ', $validator->errors()->first());
         }
         try {
+            return $request;
             $customer = Customer::create([
                 'user_id' => $request->user_id,
                 'birthday' => $request->birthday,
