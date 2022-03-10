@@ -169,7 +169,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                 <div id="box-container">
+                                 <div id="box-container" name="box-container">
                                     <div class="row border mt-0 text-center box-register" id="0">
                                         <div class="col-1 py-4 border-right"><input type="number" name="id[]"
                                                 class="form-control" min="0" value="0"></div>

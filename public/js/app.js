@@ -83263,6 +83263,7 @@ var Orders = /*#__PURE__*/function () {
     _classCallCheck(this, Orders);
 
     this.guideId = '';
+    this.boxes = boxes;
   }
 
   _createClass(Orders, [{
@@ -83308,7 +83309,9 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "instantiateBoxes",
     value: function instantiateBoxes() {
-      var boxContainer = document.getElementById('box-container');
+      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'box-container';
+      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
+      var boxContainer = document.getElementById(container);
 
       if (boxContainer == null) {
         return;
@@ -83367,7 +83370,10 @@ var Orders = /*#__PURE__*/function () {
     value: function addbox() {
       var _this = this;
 
-      var addBoxBtn = document.getElementById("add-box-btn");
+      var button = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'add-box-btn';
+      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
+      var container = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'box-container';
+      var addBoxBtn = document.getElementById(button);
 
       if (addBoxBtn == null) {
         return;
@@ -83384,7 +83390,7 @@ var Orders = /*#__PURE__*/function () {
           description: ''
         });
 
-        _this.instantiateBoxes();
+        _this.instantiateBoxes(container, boxes);
       });
     }
   }, {
@@ -83766,7 +83772,7 @@ var Orders = /*#__PURE__*/function () {
 
                 for (i = 0; i < ids.length; i++) {
                   individualBoxArr = {
-                    'id': ids[i].value,
+                    'number': ids[i].value,
                     'weight': weights[i].value,
                     'long': longs[i].value,
                     'broad': broads[i].value,
@@ -84026,7 +84032,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
+          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, boxes;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -84062,8 +84068,13 @@ var Orders = /*#__PURE__*/function () {
                   data.sign == 1 ? sign.checked = true : '';
                   take_photo = document.getElementById("take_photo_edit");
                   data.take_photo == 1 ? take_photo.checked = true : '';
+                  boxes = JSON.parse(data.boxes);
 
-                case 28:
+                  _this7.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this7.boxes);
+
+                  _this7.addbox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
+
+                case 31:
                 case "end":
                   return _context11.stop();
               }
@@ -84123,7 +84134,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -84149,8 +84160,32 @@ var Orders = /*#__PURE__*/function () {
                 sign.checked == true ? sign = 1 : sign = 0;
                 take_photo = document.getElementById("take_photo_edit");
                 take_photo.checked == true ? take_photo = 1 : take_photo = 0;
-                customer_address = document.getElementById("customer_address_edit").value;
+                customer_address = document.getElementById("customer_address_edit").value; //Boxes
+
+                ids = document.getElementsByName('id[]');
+                weights = document.getElementsByName('weight[]');
+                longs = document.getElementsByName('long[]');
+                broads = document.getElementsByName('broad[]');
+                highs = document.getElementsByName('high[]');
+                vol_weights = document.getElementsByName('vol_weight[]');
+                descriptions = document.getElementsByName('description[]');
+                boxArr = [];
+
+                for (i = 1; i < ids.length; i++) {
+                  individualBoxArr = {
+                    'number': ids[i].value,
+                    'weight': weights[i].value,
+                    'long': longs[i].value,
+                    'broad': broads[i].value,
+                    'high': highs[i].value,
+                    'vol_weight': vol_weights[i].value,
+                    'description': descriptions[i].value
+                  };
+                  boxArr.push(individualBoxArr);
+                }
+
                 formData = new FormData();
+                formData.append('boxes', JSON.stringify(boxArr));
                 formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
 
                 formData.append("address_name", address_name);
@@ -84183,10 +84218,10 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context13.next = 51;
+                _context13.next = 61;
                 return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
 
-              case 51:
+              case 61:
                 response = _context13.sent;
 
                 if (response.state == 200) {
@@ -84200,7 +84235,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 53:
+              case 63:
               case "end":
                 return _context13.stop();
             }

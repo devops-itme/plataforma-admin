@@ -56,6 +56,7 @@ class OrderController extends Controller
         $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'customer_document_type');
         })->get();
+
         return view('orders.create', compact('customers','order_type','transport_type','payment_method', 'customer_document_type'));
     }
 
@@ -107,7 +108,11 @@ class OrderController extends Controller
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
-        return view('orders.showFold.show', compact('order', 'order_type'));
+        $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'customer_document_type');
+        })->get();
+
+        return view('orders.showFold.show', compact('order', 'order_type', 'customer_document_type'));
     }
 
 
@@ -143,7 +148,11 @@ class OrderController extends Controller
         $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'payment_method');
         })->get();
-        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method'));
+        $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'customer_document_type');
+        })->get();
+
+        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type'));
     }
 
     /**
