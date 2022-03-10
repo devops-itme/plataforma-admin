@@ -192,6 +192,8 @@ class AuthController extends Controller
 
     public function registerCustomer(Request $request)
     {
+        $request->taxes = $request->taxes == 'on' ? 1 : 0;
+        
         $validator = $this->validateUser($request, 'create');
 
         if ($validator->fails()) {
