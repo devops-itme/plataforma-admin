@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Auth
-Route::post('login', 'Api\AuthController@SignIn');
+Route::post('login', 'Api\AuthController@Login');
 Route::post('logout', 'Api\AuthController@signOut');
 Route::post('forgotPassword', 'Api\AuthController@recovery');
 Route::post('confirmCode', 'Api\AuthController@verifyCode');
 Route::post('restorePassword', 'Api\AuthController@restore');
 Route::post('resendCode', 'Api\AuthController@forward');
+Route::post('customer/signIn', 'Api\CustomerController@store')->name('messenger.store');
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -30,7 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('order/markAsRead', 'Api\OrderController@markAsRead');
     Route::resource('orders', 'Api\OrderController')->names('order');
-    
+
     Route::post('guide/markAsRead', 'Api\GuideController@markAsRead');
     Route::resource('guides', 'Api\GuideController')->names('guides');
 });

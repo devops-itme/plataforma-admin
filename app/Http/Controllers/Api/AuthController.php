@@ -17,7 +17,7 @@ class AuthController extends Controller
 {
     use RestActions;
 
-    public function SignIn(Request $request)
+    public function Login(Request $request)
     {
         $is_numeric = is_numeric($request->user);
 
