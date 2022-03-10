@@ -40,7 +40,7 @@ trait CustomerTrait
         $validator = $this->customerValidate($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500, $validator->errors(), 'validation error, ' , $validator->errors()->first());
         }
         try {
             $customer = Customer::create([
@@ -73,7 +73,7 @@ trait CustomerTrait
         $validator = $this->customerValidate($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500, $validator->errors(), 'validation error' , $validator->errors()->first());
         }
 
         try {

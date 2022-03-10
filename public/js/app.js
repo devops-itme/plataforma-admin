@@ -8281,7 +8281,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -8338,7 +8338,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
 
 // exports
 
@@ -83263,6 +83263,7 @@ var Orders = /*#__PURE__*/function () {
     _classCallCheck(this, Orders);
 
     this.guideId = '';
+    this.boxes = boxes;
   }
 
   _createClass(Orders, [{
@@ -83310,7 +83311,9 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "instantiateBoxes",
     value: function instantiateBoxes() {
-      var boxContainer = document.getElementById('box-container');
+      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'box-container';
+      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
+      var boxContainer = document.getElementById(container);
 
       if (boxContainer == null) {
         return;
@@ -83369,7 +83372,10 @@ var Orders = /*#__PURE__*/function () {
     value: function addbox() {
       var _this = this;
 
-      var addBoxBtn = document.getElementById("add-box-btn");
+      var button = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'add-box-btn';
+      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
+      var container = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'box-container';
+      var addBoxBtn = document.getElementById(button);
 
       if (addBoxBtn == null) {
         return;
@@ -83386,7 +83392,7 @@ var Orders = /*#__PURE__*/function () {
           description: ''
         });
 
-        _this.instantiateBoxes();
+        _this.instantiateBoxes(container, boxes);
       });
     }
   }, {
@@ -83768,7 +83774,7 @@ var Orders = /*#__PURE__*/function () {
 
                 for (i = 0; i < ids.length; i++) {
                   individualBoxArr = {
-                    'id': ids[i].value,
+                    'number': ids[i].value,
                     'weight': weights[i].value,
                     'long': longs[i].value,
                     'broad': broads[i].value,
@@ -84028,7 +84034,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo;
+          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, boxes;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -84064,8 +84070,13 @@ var Orders = /*#__PURE__*/function () {
                   data.sign == 1 ? sign.checked = true : '';
                   take_photo = document.getElementById("take_photo_edit");
                   data.take_photo == 1 ? take_photo.checked = true : '';
+                  boxes = JSON.parse(data.boxes);
 
-                case 28:
+                  _this7.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this7.boxes);
+
+                  _this7.addbox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
+
+                case 31:
                 case "end":
                   return _context11.stop();
               }
@@ -84125,7 +84136,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -84151,8 +84162,32 @@ var Orders = /*#__PURE__*/function () {
                 sign.checked == true ? sign = 1 : sign = 0;
                 take_photo = document.getElementById("take_photo_edit");
                 take_photo.checked == true ? take_photo = 1 : take_photo = 0;
-                customer_address = document.getElementById("customer_address_edit").value;
+                customer_address = document.getElementById("customer_address_edit").value; //Boxes
+
+                ids = document.getElementsByName('id[]');
+                weights = document.getElementsByName('weight[]');
+                longs = document.getElementsByName('long[]');
+                broads = document.getElementsByName('broad[]');
+                highs = document.getElementsByName('high[]');
+                vol_weights = document.getElementsByName('vol_weight[]');
+                descriptions = document.getElementsByName('description[]');
+                boxArr = [];
+
+                for (i = 1; i < ids.length; i++) {
+                  individualBoxArr = {
+                    'number': ids[i].value,
+                    'weight': weights[i].value,
+                    'long': longs[i].value,
+                    'broad': broads[i].value,
+                    'high': highs[i].value,
+                    'vol_weight': vol_weights[i].value,
+                    'description': descriptions[i].value
+                  };
+                  boxArr.push(individualBoxArr);
+                }
+
                 formData = new FormData();
+                formData.append('boxes', JSON.stringify(boxArr));
                 formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
 
                 formData.append("address_name", address_name);
@@ -84185,10 +84220,10 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context13.next = 51;
+                _context13.next = 61;
                 return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
 
-              case 51:
+              case 61:
                 response = _context13.sent;
 
                 if (response.state == 200) {
@@ -84202,7 +84237,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 53:
+              case 63:
               case "end":
                 return _context13.stop();
             }
@@ -84745,6 +84780,245 @@ var Orders = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/_parameters.js":
+/*!*************************************!*\
+  !*** ./resources/js/_parameters.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Parameters; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Parameters = /*#__PURE__*/function () {
+  function Parameters() {
+    _classCallCheck(this, Parameters);
+  }
+
+  _createClass(Parameters, [{
+    key: "initialize",
+    value: function initialize() {
+      this.parameterData();
+    }
+  }, {
+    key: "parameterData",
+    value: function parameterData() {
+      var _this = this;
+
+      var editButtons = document.getElementsByName('btnEditParameter');
+
+      if (editButtons == null) {
+        return;
+      }
+
+      [].forEach.call(editButtons, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var id, response, data, name, description, state;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  id = btn.id;
+                  _context.next = 3;
+                  return _this.requestParameterData(id);
+
+                case 3:
+                  response = _context.sent;
+                  data = response.data;
+                  name = document.getElementById("parameter_name");
+                  name.value = data.name;
+                  description = document.getElementById("parameter_description");
+                  description.value = data.description;
+                  state = document.getElementById("parameter_state_edit");
+                  data.state == 1 ? state.checked = true : state.checked = false;
+
+                  _this.updateParameter(id);
+
+                case 12:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        })));
+      });
+    }
+  }, {
+    key: "requestParameterData",
+    value: function () {
+      var _requestParameterData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/parametros/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function requestParameterData(_x) {
+        return _requestParameterData.apply(this, arguments);
+      }
+
+      return requestParameterData;
+    }()
+  }, {
+    key: "updateParameter",
+    value: function () {
+      var _updateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
+        var _this2 = this;
+
+        var btnUpdate;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                btnUpdate = document.getElementById("btnUpdateParameter");
+
+                if (!(btnUpdate == null)) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                return _context4.abrupt("return");
+
+              case 3:
+                btnUpdate.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                  var updateForm, formData, token, myHeaders, requestOptions, response;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                      switch (_context3.prev = _context3.next) {
+                        case 0:
+                          updateForm = document.getElementById("formUpdateParameter");
+                          formData = new FormData(updateForm);
+                          token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                          myHeaders = new Headers();
+                          myHeaders.append("Accept", "application/json");
+                          myHeaders.append("Access-Control-Allow-Origin", "*");
+                          myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                          myHeaders.append('Content-Type', "application/json");
+                          myHeaders.append('Content-Type', "multipart/form-data");
+                          myHeaders.append("X-CSRF-TOKEN", token);
+                          requestOptions = {
+                            method: "PUT",
+                            headers: myHeaders,
+                            body: JSON.stringify(Object.fromEntries(formData))
+                          };
+                          _context3.next = 13;
+                          return _this2.requestUpdateParameter(id, requestOptions);
+
+                        case 13:
+                          response = _context3.sent;
+
+                          if (response.state == 200) {
+                            success(response.message);
+                            location.reload();
+                          } else {
+                            error(response.message);
+                          }
+
+                        case 15:
+                        case "end":
+                          return _context3.stop();
+                      }
+                    }
+                  }, _callee3);
+                })));
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function updateParameter(_x2) {
+        return _updateParameter.apply(this, arguments);
+      }
+
+      return updateParameter;
+    }()
+  }, {
+    key: "requestUpdateParameter",
+    value: function () {
+      var _requestUpdateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context5.next = 3;
+                return fetch("/parametros/" + id + "/", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context5.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function requestUpdateParameter(_x3, _x4) {
+        return _requestUpdateParameter.apply(this, arguments);
+      }
+
+      return requestUpdateParameter;
+    }()
+  }]);
+
+  return Parameters;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/_permissions.js":
 /*!**************************************!*\
   !*** ./resources/js/_permissions.js ***!
@@ -85119,9 +85393,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_permissions */ "./resources/js/_permissions.js");
 /* harmony import */ var _zones__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_zones */ "./resources/js/_zones.js");
 /* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
+/* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_parameters */ "./resources/js/_parameters.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -85144,6 +85420,7 @@ var general = new _general__WEBPACK_IMPORTED_MODULE_4__["default"]();
 var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_5__["default"]();
 var zones = new _zones__WEBPACK_IMPORTED_MODULE_6__["default"]();
 var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
+var parameters = new _parameters__WEBPACK_IMPORTED_MODULE_8__["default"]();
 var app = new Vue({
   el: '#app'
 });
@@ -85157,6 +85434,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   permissions.initialize();
   zones.initialize();
   branchOffice.initialize();
+  parameters.initialize();
 });
 
 /***/ }),
@@ -85829,8 +86107,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

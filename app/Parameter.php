@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Parameter extends Model
 {
+    use SoftDeletes;
     protected $table = 'parameters';
 
     protected $fillable = [
@@ -13,4 +15,9 @@ class Parameter extends Model
         'description',
         'state'
     ];
+
+    public function getParameterValue()
+    {
+        return $this->hasMany(ParameterValue::class, 'parameter_id');
+    }
 }
