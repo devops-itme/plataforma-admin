@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\AddressTrait;
 use App\Http\Controllers\Traits\UserTrait;
 use App\Http\Controllers\Traits\CustomerTrait;
 use App\Mail\CodeMail;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    use UserTrait, CustomerTrait;
+    use UserTrait, CustomerTrait, AddressTrait;
 
     public function Login(Request $request)
     {
@@ -203,11 +204,24 @@ class AuthController extends Controller
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
 
+        $validator = $this->AddressesValidate($request);
+
+        if ($validator->fails()) {
+            return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
+        }
+
         try {
             $saveUserResponse = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
             $user_id = $saveUserResponse['data']->id;
-            $saveUserResponse = $this->saveCustomer($request->merge(['user_id' => $user_id]));
-            return $saveUserResponse;
+            
+            if (!is_null($request->address)) {
+                $saveAddressResponse = $this->saveAddress($request->merge(['user_id' => $user_id]));
+                if ($saveAddressResponse['state'] != 200) {
+                    return $saveAddressResponse;
+                }
+            };
+            $saveCustomerResponse = $this->saveCustomer($request->merge(['user_id' => $user_id]));
+            return $saveCustomerResponse;
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }
