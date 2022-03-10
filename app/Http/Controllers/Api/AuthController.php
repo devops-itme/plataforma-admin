@@ -213,7 +213,7 @@ class AuthController extends Controller
         try {
             $saveUserResponse = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
             $user_id = $saveUserResponse['data']->id;
-            
+
             if (!is_null($request->address)) {
                 $saveAddressResponse = $this->saveAddress($request->merge(['user_id' => $user_id]));
                 if ($saveAddressResponse['state'] != 200) {
@@ -221,6 +221,16 @@ class AuthController extends Controller
                 }
             };
             $saveCustomerResponse = $this->saveCustomer($request->merge(['user_id' => $user_id]));
+            if ($saveCustomerResponse['state'] == 200) {
+                $randomCode = rand(100000, 999999);
+                $user = User::where('id', $user_id)->first();
+                $user->code = $randomCode;
+                $user->code_confirmed = 0;
+                $user->update();
+                // send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
+                Mail::to($user->email)
+                    ->send(new CodeMail($randomCode));
+            }
             return $saveCustomerResponse;
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
