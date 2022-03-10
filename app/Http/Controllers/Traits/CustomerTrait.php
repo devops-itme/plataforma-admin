@@ -43,7 +43,6 @@ trait CustomerTrait
             return $this->respond(500, $validator->errors(), 'validation error, ', $validator->errors()->first());
         }
         try {
-            return $request;
             $customer = Customer::create([
                 'user_id' => $request->user_id,
                 'birthday' => $request->birthday,
@@ -65,7 +64,7 @@ trait CustomerTrait
             ]);
             return $this->respond(200, $customer, null, 'Cliente creado exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . $e->getLine(), 'Error al crear cliente');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear cliente');
         }
     }
 
