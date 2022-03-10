@@ -66,7 +66,7 @@
                                                 <i class="fad fa-eye" style="padding:0px;"></i>
                                             </button>
                                             <button type="button" class="btn btn-success btn-rd"
-                                                data-toggle="modal" data-target="#modalEditParameter">
+                                                data-toggle="modal" data-target="#modalEditParameter" name="btnEditParameter" id="{{$parameter->id}}">
                                                 <i class="fad fa-edit" style="padding:0px;"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-rd" onclick="confirmDelete('parametros/delete/{{$parameter->id}}')">
