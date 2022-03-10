@@ -89,6 +89,11 @@ class ParameterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->deleteParameter($id);
+        if($response['state'] == 200){
+            return redirect()->route('parameters.index')->with('success', $response['message']);
+        } else {
+            return redirect()->back()->withInput()->with('danger', $response['message']);
+        }
     }
 }

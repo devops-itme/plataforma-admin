@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ParameterValue extends Model
 {
+    use SoftDeletes;
     protected $table = 'parameter_values';
 
     protected $fillable = [

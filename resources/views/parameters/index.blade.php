@@ -65,10 +65,11 @@
                                             <button type="button" class="btn btn-primary btn-rd">
                                                 <i class="fad fa-eye" style="padding:0px;"></i>
                                             </button>
-                                            <button type="button" class="btn btn-success btn-rd">
+                                            <button type="button" class="btn btn-success btn-rd"
+                                                data-toggle="modal" data-target="#modalEditParameter">
                                                 <i class="fad fa-edit" style="padding:0px;"></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-rd">
+                                            <button type="button" class="btn btn-danger btn-rd" onclick="confirmDelete('parametros/delete/{{$parameter->id}}')">
                                                 <i class="fad fa-trash-alt" style="padding:0px;"></i>
                                             </button>
                                         </td>
@@ -82,4 +83,5 @@
             </div>
         </div>
     </div>
+    @include('parameters.editParameterModal')
 @endsection
