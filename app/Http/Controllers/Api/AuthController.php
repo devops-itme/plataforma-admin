@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\RestActions;
+use App\Http\Controllers\Traits\UserTrait;
+use App\Http\Controllers\Traits\CustomerTrait;
 use App\Mail\CodeMail;
 use App\Role;
 use App\User;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    use RestActions;
+    use UserTrait, CustomerTrait;
 
     public function Login(Request $request)
     {
@@ -183,6 +184,30 @@ class AuthController extends Controller
             // Mail::to($user->email)
             //     ->send(new CodeMail($randomCode));
             return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
+        }
+    }
+
+    public function registerCustomer(Request $request)
+    {
+        $validator = $this->validateUser($request, 'create');
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+
+        $validator = $this->customerValidate($request);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+        }
+
+        try {
+            $saveUserResponse = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
+            $user_id = $saveUserResponse['data']->id;
+            $saveUserResponse = $this->saveCustomer($request->merge(['user_id' => $user_id]));
+            return $saveUserResponse;
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }

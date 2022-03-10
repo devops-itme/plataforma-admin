@@ -20,7 +20,7 @@ Route::post('forgotPassword', 'Api\AuthController@recovery');
 Route::post('confirmCode', 'Api\AuthController@verifyCode');
 Route::post('restorePassword', 'Api\AuthController@restore');
 Route::post('resendCode', 'Api\AuthController@forward');
-Route::post('customer/signIn', 'Api\CustomerController@store')->name('messenger.store');
+Route::post('customer/signIn', 'Api\AuthController@registerCustomer');
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
