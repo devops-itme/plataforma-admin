@@ -193,7 +193,7 @@ class AuthController extends Controller
     public function registerCustomer(Request $request)
     {
         $request->taxes = $request->taxes == 'on' ? 1 : 0;
-        
+
         $validator = $this->validateUser($request, 'create');
 
         if ($validator->fails()) {
@@ -215,7 +215,7 @@ class AuthController extends Controller
 
         try {
             $saveUserResponse = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
-            $user_id = $saveUserResponse['data']['id'];
+            $user_id = $saveUserResponse['data']->id;
 
             if (!is_null($request->address)) {
                 $saveAddressResponse = $this->saveAddress($request->merge(['user_id' => $user_id]));

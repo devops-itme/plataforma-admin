@@ -62,9 +62,9 @@ trait CustomerTrait
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'state' => 1
             ]);
-            return $this->respond(200, $customer, null, 'Usuario creado exitosamente');
+            return $this->respond(200, $customer, null, 'Cliente creado exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . $e->getLine(), 'Error al crear usuario');
+            return $this->respond(500, [], $e->getMessage() . $e->getLine(), 'Error al crear cliente');
         }
     }
 
