@@ -22,6 +22,9 @@ Route::post('restorePassword', 'Api\AuthController@restore');
 Route::post('resendCode', 'Api\AuthController@forward');
 Route::post('customer/signIn', 'Api\AuthController@registerCustomer');
 
+//Parameter values
+Route::get('parameter_values', 'Api\ParameterValueController@getParameterValues');
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('customer/show', 'Api\CustomerController@show')->name('messenger.show');
