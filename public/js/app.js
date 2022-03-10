@@ -83278,6 +83278,8 @@ var Orders = /*#__PURE__*/function () {
       this.saveGuides();
       this.createAddress();
       this.listGuides();
+      this.porDespacharOndemand();
+      this.porDespacharPackaging();
     }
   }, {
     key: "setInput",
@@ -84604,6 +84606,171 @@ var Orders = /*#__PURE__*/function () {
       };
       return months[month];
     }
+  }, {
+    key: "porDespacharOndemand",
+    value: function () {
+      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22() {
+        var button;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
+          while (1) {
+            switch (_context22.prev = _context22.next) {
+              case 0:
+                button = document.getElementById('porDespacharOndemand');
+
+                if (!(button == null)) {
+                  _context22.next = 3;
+                  break;
+                }
+
+                return _context22.abrupt("return");
+
+              case 3:
+                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21() {
+                  var order_id, result, req;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
+                    while (1) {
+                      switch (_context21.prev = _context21.next) {
+                        case 0:
+                          order_id = button.value;
+                          _context21.next = 3;
+                          return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
+
+                        case 3:
+                          result = _context21.sent;
+
+                          if (!(result == true)) {
+                            _context21.next = 9;
+                            break;
+                          }
+
+                          _context21.next = 7;
+                          return fetch("/pordespachar/ondemand/".concat(order_id), {
+                            method: "POST",
+                            headers: {
+                              "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                              accept: "application/json"
+                            }
+                          });
+
+                        case 7:
+                          req = _context21.sent;
+
+                          if (req.ok) {
+                            correct("Estado actualizado!");
+                            window.location.reload();
+                          } else {
+                            error("Error al actualizar estado");
+                          }
+
+                        case 9:
+                        case "end":
+                          return _context21.stop();
+                      }
+                    }
+                  }, _callee21);
+                })));
+
+              case 4:
+              case "end":
+                return _context22.stop();
+            }
+          }
+        }, _callee22);
+      }));
+
+      function porDespacharOndemand() {
+        return _porDespacharOndemand.apply(this, arguments);
+      }
+
+      return porDespacharOndemand;
+    }()
+  }, {
+    key: "porDespacharPackaging",
+    value: function () {
+      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
+        var button;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
+          while (1) {
+            switch (_context24.prev = _context24.next) {
+              case 0:
+                button = document.getElementById('porDespacharPackaging');
+
+                if (!(button == null)) {
+                  _context24.next = 3;
+                  break;
+                }
+
+                return _context24.abrupt("return");
+
+              case 3:
+                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23() {
+                  var order_id, result, formData, token, myHeaders, requestOptions, data, req;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
+                    while (1) {
+                      switch (_context23.prev = _context23.next) {
+                        case 0:
+                          order_id = button.value;
+                          _context23.next = 3;
+                          return porDespacharPackagingAlert();
+
+                        case 3:
+                          result = _context23.sent;
+
+                          if (!(result == 3 || result == 7)) {
+                            _context23.next = 18;
+                            break;
+                          }
+
+                          formData = new FormData();
+                          formData.append('type', result);
+                          token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                          myHeaders = new Headers();
+                          myHeaders.append("accept", "application/json");
+                          myHeaders.append("Access-Control-Allow-Origin", "*");
+                          myHeaders.append("X-CSRF-TOKEN", token);
+                          requestOptions = {
+                            method: "POST",
+                            headers: myHeaders,
+                            body: formData
+                          };
+                          data = {
+                            type: result
+                          };
+                          _context23.next = 16;
+                          return fetch("/pordespachar/packaging/".concat(order_id), requestOptions);
+
+                        case 16:
+                          req = _context23.sent;
+
+                          if (req.ok) {
+                            correct("Estado actualizado!");
+                            window.location.reload();
+                          } else {
+                            error("Error al actualizar estado");
+                          }
+
+                        case 18:
+                        case "end":
+                          return _context23.stop();
+                      }
+                    }
+                  }, _callee23);
+                })));
+
+              case 4:
+              case "end":
+                return _context24.stop();
+            }
+          }
+        }, _callee24);
+      }));
+
+      function porDespacharPackaging() {
+        return _porDespacharPackaging.apply(this, arguments);
+      }
+
+      return porDespacharPackaging;
+    }()
   }]);
 
   return Orders;

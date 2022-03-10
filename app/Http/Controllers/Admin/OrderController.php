@@ -227,6 +227,21 @@ class OrderController extends Controller
         }
     }
 
+    public function porDespacharOndemand($id)
+    {
+        try {
+            $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+                $query->where('name', 'order_types');
+            })->get();
+
+            $order = Order::where('id', $id)->where('order_type', $order_type[0]->id)->update([
+                'status_matrix_id' => 3
+            ]);
+            return $this->respond(200, [], null, 'Estado actualizado');
+        } catch (\Throwable $e) {
+            return $this->respond(500, [], $e->getMessage());
+        }
+    }
 
 
     public function orderNumber()
