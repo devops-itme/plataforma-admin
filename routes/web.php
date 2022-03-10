@@ -86,11 +86,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/ordenes/historial', 'Admin\OrderController@record')->name('orders.record');
         Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
 
-        //DOCUMENTOS DE GUIAS
+        //DOCUMENTOS DE GUIÁS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
 
 
     });
+
+    //Por despachar ondemand
+    Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');
+    //Por despachar packaging
+    Route::post('pordespachar/packaging/{id}', 'Admin\GuideController@porDespacharPackaging');
 
     //Orders states
     Route::get('order_states', 'Admin\DeliveryController@orderStates');
@@ -128,7 +133,6 @@ Route::group(['middleware' => 'auth'], function () {
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 // Route::get('admin/order', 'Admin\OrderController@historial');
-
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
 //REPORTS

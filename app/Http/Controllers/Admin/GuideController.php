@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuidanceDocsTrait;
 use App\Http\Controllers\Traits\GuideTrait;
 use App\Order;
+use App\ParameterValue;
 use Illuminate\Http\Request;
 
 class GuideController extends Controller
@@ -187,4 +188,28 @@ class GuideController extends Controller
             return $this->respond(500, [], $e->getMessage());
         }
     }
+
+    public function porDespacharPackaging(Request $request, $id)
+    {
+        try {
+            $type = $request->type;
+            // $order_type = Order::with('getGuides')->whereHas('getGuides', function ($query) use ($id, $type) {
+            //     $query->where('order_id', $id)->update([
+            //         'status_matrix_id' => $type
+            //     ]);
+            // })->update([
+            //     'status_matrix_id' => $type
+            // ]);
+            $guides = Guide::where('order_id', $id)->update([
+                'status_matrix_id' => $type
+            ]);
+            $order = Order::where('id', $id)->update([
+                'status_matrix_id' => $type
+            ]);
+            return $this->respond(200, [], null, 'Estado actualizado');
+        } catch (\Throwable $e) {
+            return $this->respond(500, [], $e->getMessage());
+        }
+    }
+
 }

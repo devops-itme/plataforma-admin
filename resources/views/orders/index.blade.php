@@ -191,6 +191,7 @@
                         <th scope="col">Fecha de creación</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -214,6 +215,18 @@
                                 <td>{{ format_date(date('Y-n-d', strtotime($order->created_at))) }}</td>
                                 <td>
                                     {{$order->getOrderState->name}}
+                                </td>
+                                <td>
+                                    @if ($order->order_type == 35 && $order->status_matrix_id == 1 )
+                                        <button type="button" id="porDespacharOndemand" value="{{$order->id}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Enviar a por despachar">
+                                            <i class="fad fa-hand-holding-box"></i>
+                                        </button>
+                                    @endif
+                                    @if ($order->order_type == 36 && $order->status_matrix_id == 1)
+                                        <button type="button" id="porDespacharPackaging" value="{{$order->id}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Enviar a por despachar">
+                                            <i class="fad fa-hand-holding-box"></i>
+                                        </button>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">

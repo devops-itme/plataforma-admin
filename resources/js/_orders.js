@@ -25,6 +25,8 @@ export default class Orders {
         this.saveGuides();
         this.createAddress();
         this.listGuides();
+        this.porDespacharOndemand();
+        this.porDespacharPackaging();
     }
 
     setInput() {
@@ -799,4 +801,73 @@ export default class Orders {
         }
         return months[month];
     }
+    async porDespacharOndemand(){
+
+        let button = document.getElementById('porDespacharOndemand');
+        if(button == null){
+            return;
+        }
+
+        button.addEventListener("click", async () => {
+            let order_id = button.value;
+            let result = await confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
+            if (result == true) {
+                let req = await fetch(`/pordespachar/ondemand/${order_id}`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                        accept: "application/json",
+                    },
+                });
+                if (req.ok) {
+                    correct("Estado actualizado!");
+                    window.location.reload()
+                } else {
+                    error("Error al actualizar estado");
+
+                }
+            }
+        });
+    }
+
+    async porDespacharPackaging(){
+
+        let button = document.getElementById('porDespacharPackaging');
+        if(button == null){
+            return;
+        }
+        button.addEventListener("click", async () => {
+            let order_id = button.value;
+            let result = await porDespacharPackagingAlert();
+            if (result == 3 || result == 7) {
+                let formData = new FormData();
+                formData.append('type', result);
+                let token = document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content");
+                let myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append("X-CSRF-TOKEN", token);
+
+                let requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: formData,
+                };
+                var data = {type: result};
+                let req = await fetch(`/pordespachar/packaging/${order_id}`, requestOptions);
+                if (req.ok) {
+                    correct("Estado actualizado!");
+                    window.location.reload()
+                } else {
+                    error("Error al actualizar estado");
+
+                }
+            }
+        });
+    }
+
 }
