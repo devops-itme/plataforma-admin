@@ -125,10 +125,10 @@ class Order extends Model
             return $query->where('state', $value);
         }
     }
-    public function scopeStatus($query, $status)
+    public function scopeScope($query, $statusArr)
     {
-        if (!is_null($status)) {
-            return $query->whereIn('status_matrix_id', $status);
+        if (!is_null($statusArr)) {
+            return $query->whereIn('status_matrix_id', $statusArr);
         }
     }
 
