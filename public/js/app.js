@@ -2114,46 +2114,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2245,30 +2205,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this3.statusMatrix(_this3.selected); // if(type !=null){
-                //     this.type_guide = type
-                // }
+                _this3.statusMatrix(_this3.selected);
 
-
-                if (type == 55) {
-                  _this3.type_guide = 3;
-                }
-
-                if (type == 53) {
-                  _this3.type_guide = 7;
-                }
-
+                type == 55 && (type = 3);
+                type == 53 && (type = 7);
                 _context2.next = 5;
-                return _this3.requestGuides();
+                return _this3.requestGuides(type);
 
               case 5:
                 response = _context2.sent;
                 _this3.guides = response.data;
                 _this3.guides2 = [];
                 _this3.showGuide = null;
-                _this3.type_guide = type;
 
-              case 10:
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -2276,16 +2226,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    requestGuides: function requestGuides() {
-      var _this4 = this;
-
+    requestGuides: function requestGuides(type) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var response, myHeaders, requestOptions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log(_this4.type_guide);
+                // console.log(this.type_guide )
                 response = {
                   state: 500
                 };
@@ -2296,8 +2244,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   headers: myHeaders
                 }; // console.log(this.type_guide)
 
-                _context3.next = 7;
-                return fetch("/orders_packing/".concat(_this4.type_guide), requestOptions).then(function (response) {
+                _context3.next = 6;
+                return fetch("/orders_packing/".concat(type), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2305,10 +2253,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return console.warn(err);
                 });
 
-              case 7:
+              case 6:
                 return _context3.abrupt("return", response);
 
-              case 8:
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -2317,7 +2265,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this5 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, myHeaders, requestOptions;
@@ -2326,7 +2274,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this = _this5;
+                _this = _this4;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
@@ -2352,16 +2300,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this5 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              _this6.getGuides(null);
+              _this5.getGuides(3);
 
-              _this6.getMessengers();
+              _this5.getMessengers();
 
             case 2:
             case "end":
@@ -62959,22 +62907,7 @@ var render = function () {
                 _vm._v(" "),
                 _vm._m(3),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-12 mb-2" }, [
-                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-                    _vm._v("Transporte:"),
-                  ]),
-                  _vm._v(" "),
-                  _vm.showGuide != null
-                    ? _c("div", {
-                        staticClass: "line-height-xl",
-                        domProps: {
-                          textContent: _vm._s(
-                            _vm.showGuide.get_transport_type.name
-                          ),
-                        },
-                      })
-                    : _vm._e(),
-                ]),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
@@ -63048,7 +62981,7 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _vm._m(4),
+                _vm._m(5),
                 _vm._v(" "),
                 _c("div", {
                   staticClass:
@@ -63087,7 +63020,7 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(5),
+            _vm._m(6),
           ]),
         ]),
       ]),
@@ -63209,6 +63142,16 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "line-height-xl" }, [_vm._v("2022/02/04")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 mb-2" }, [
+      _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+        _vm._v("Transporte:"),
+      ]),
     ])
   },
   function () {

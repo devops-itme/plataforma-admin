@@ -67,46 +67,6 @@
                     :href="`#${tab.href}`"
                     v-text=tab.name></a>
                 </li>
-                <!-- <li class="nav-item" role="presentation">
-                    <a
-                        class="nav-link active"
-                        id="porRecoger-tab"
-                        data-toggle="tab"
-                        href="#porRecoger"
-                        role="tab"
-                        aria-controls="porRecoger"
-                        aria-selected="true"
-                        @click="getGuides(0)"
-                        >Por {{ selected == 32 ? "Entregar" : "Recoger" }}</a
-                    >
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a
-                        class="nav-link"
-                        id="enproceso-tab"
-                        data-toggle="tab"
-                        href="#enproceso"
-                        role="tab"
-                        aria-controls="enproceso"
-                        aria-selected="false"
-                        @click="getGuides(1)"
-                        >{{ selected == 32 ? "Entregas" : "Recogidas" }} en
-                        proceso</a
-                    >
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a
-                        class="nav-link"
-                        id="consultas-tab"
-                        data-toggle="tab"
-                        href="#consultas"
-                        role="tab"
-                        aria-controls="consultas"
-                        aria-selected="false"
-                        @click="getGuides(2)"
-                        >Consultas y edición</a
-                    >
-                </li> -->
             </ul>
            <div class="d-flex flex-row flex-wrap">
                 <div class="col-md-9">
@@ -172,7 +132,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
-                        <div class="line-height-xl"  v-if="showGuide != null"  v-text="showGuide.get_transport_type.name" ></div>
+                        <!-- <div class="line-height-xl"  v-if="showGuide != null"  v-text="showGuide.get_transport_type.name" ></div> -->
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Movil:</div>
@@ -286,26 +246,18 @@ export default {
 
         },
         async getGuides(type) {
-
             this.statusMatrix(this.selected);
-            // if(type !=null){
-            //     this.type_guide = type
-            // }
-            if(type == 55){
-                this.type_guide = 3
-            }
-            if(type == 53){
-                this.type_guide = 7
-            }
-
-            let response = await this.requestGuides();
+            type == 55 && (type = 3);
+            type == 53 && (type = 7);
+            let response = await this.requestGuides(type);
             this.guides = response.data;
             this.guides2 = [];
             this.showGuide = null;
-            this.type_guide = type;
+
+
         },
-        async requestGuides() {
-            console.log(this.type_guide )
+        async requestGuides(type) {
+            // console.log(this.type_guide )
             let response = { state: 500 };
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -314,7 +266,7 @@ export default {
                 headers: myHeaders,
             };
             // console.log(this.type_guide)
-            await fetch(`/orders_packing/${this.type_guide}`, requestOptions)
+            await fetch(`/orders_packing/${type}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     response = data;
@@ -341,7 +293,7 @@ export default {
     },
 
      async mounted() {
-        this.getGuides(null);
+        this.getGuides(3);
         this.getMessengers();
     },
 
