@@ -178,12 +178,10 @@ class GuideController extends Controller
 
         try {
 
-
-            $state == 37? $state = [35,36,37] : ( $state == 34?  $state = [32,33,34] : $state =[intval($state)]);
-
+            $state == 5? $state = [3,4,5,6] : ( $state == 9?  $state = [7,8,9,10] : $state =[intval($state)]);
             $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query)  {
                 $query->where('order_type', 36);
-            })->whereIn('state', $state)
+            })->whereIn('status_matrix_id', $state)
             ->with(['getRoute.getMessenger', 'getAddress', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment'])
             ->get();
 

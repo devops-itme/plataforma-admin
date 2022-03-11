@@ -12,4 +12,18 @@ class StatusMatrix extends Model
         'scope_id',
         'issue_id',
     ];
+
+
+    public function getDescriptor()
+    {
+        return $this->hasMany(StatusDescriptor::class, 'status_matrix_id');
+    }
+
+    public function scopeScope($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('scope_id',$value);
+    }
+
+
 }

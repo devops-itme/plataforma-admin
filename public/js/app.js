@@ -2114,36 +2114,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2155,12 +2125,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      selected: 32,
+      selected: 55,
       delivery_types: [{
-        value: 32,
+        value: 55,
         text: "Entregas"
       }, {
-        value: 35,
+        value: 53,
         text: "Recogidas"
       }],
       showModal: false,
@@ -2171,7 +2141,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       guides: [],
       guides2: [],
       messengers: [],
-      type_guide: 32,
+      type_guide: 3,
       showGuide: null,
       activeIndex: 2,
       tabs: [],
@@ -2183,31 +2153,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     loadingEvt: function loadingEvt() {
       $("#myTab li:nth-child(1) a").tab("show");
     },
-    getGuide: function getGuide(data) {
-      this.showGuide = data;
-      this.showGuide.get_route ? this.if_route = true : this.if_route = false;
-      this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
-    },
-    getGuides: function getGuides(type) {
+    statusMatrix: function statusMatrix(scope) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
+        var req, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this2.type_guide = _this2.selected + type;
-                _context.next = 3;
-                return _this2.requestGuides();
+                _context.next = 2;
+                return fetch("/matriz_estados?scope_id=".concat(scope));
 
-              case 3:
-                response = _context.sent;
-                _this2.guides = response.data;
-                _this2.guides2 = [];
-                _this2.showGuide = null;
+              case 2:
+                req = _context.sent;
+                _context.next = 5;
+                return req.json();
 
-              case 7:
+              case 5:
+                res = _context.sent;
+                // take the first 3 data from the consulate
+                _this2.tabs = res.data.slice(0, 3); //#HREF TAB
+
+                _this2.tabs[0].href = "porRecoger";
+                _this2.tabs[1].href = "enproceso";
+                _this2.tabs[2].href = "consultas"; //NAME TABS
+
+                _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
+                _this2.selected == 54 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
+                _this2.selected == 55 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
+
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -2215,15 +2191,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    requestGuides: function requestGuides() {
+    getGuide: function getGuide(data) {
+      this.showGuide = data;
+      this.showGuide.get_route ? this.if_route = true : this.if_route = false;
+      this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
+    },
+    getGuides: function getGuides(type) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response, myHeaders, requestOptions;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _this3.statusMatrix(_this3.selected);
+
+                type == 55 && (type = 3);
+                type == 53 && (type = 7);
+                _context2.next = 5;
+                return _this3.requestGuides(type);
+
+              case 5:
+                response = _context2.sent;
+                _this3.guides = response.data;
+                _this3.guides2 = [];
+                _this3.showGuide = null;
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    requestGuides: function requestGuides(type) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response, myHeaders, requestOptions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                // console.log(this.type_guide )
                 response = {
                   state: 500
                 };
@@ -2232,9 +2242,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 requestOptions = {
                   method: "GET",
                   headers: myHeaders
-                };
-                _context2.next = 6;
-                return fetch("/orders_packing/".concat(_this3.type_guide), requestOptions).then(function (response) {
+                }; // console.log(this.type_guide)
+
+                _context3.next = 6;
+                return fetch("/orders_packing/".concat(type), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2243,25 +2254,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 6:
-                return _context2.abrupt("return", response);
+                return _context3.abrupt("return", response);
 
               case 7:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     getMessengers: function getMessengers() {
       var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, myHeaders, requestOptions;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 _this = _this4;
                 myHeaders = new Headers();
@@ -2270,7 +2281,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   method: "GET",
                   headers: myHeaders
                 };
-                _context3.next = 6;
+                _context4.next = 6;
                 return fetch("/messengers_delivery", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2281,35 +2292,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
               case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    orderState: function orderState() {
-      var _this5 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var req, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
-                return fetch("/order_states");
-
-              case 2:
-                req = _context4.sent;
-                _context4.next = 5;
-                return req.json();
-
-              case 5:
-                res = _context4.sent;
-                _this5.tabs = res.data;
-
-              case 7:
-              case "end":
                 return _context4.stop();
             }
           }
@@ -2318,21 +2300,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this5 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              // this.orderState();
-              _this6.getGuides(null);
+              _this5.getGuides(3);
 
-              _this6.getMessengers();
+              _this5.getMessengers();
 
-              _this6.orderState();
-
-            case 3:
+            case 2:
             case "end":
               return _context5.stop();
           }
@@ -2357,12 +2336,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2376,6 +2349,12 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2387,7 +2366,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       ordersQuantity: "",
       ordersTotalValue: 0,
       tabs: [],
-      currentTab: 32,
+      currentTab: 3,
       showMessengerData: [],
       messengers: [],
       searchMessenger: null,
@@ -2414,11 +2393,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var _this3 = this;
 
       if (this.checkAllOrders == false) {
-        return this.data = this.orders.filter(function (item) {
+        return this.orders.filter(function (item) {
           return _this3.localizeDate(item.schedule_date) >= _this3.localizeDate(_this3.startDate) && _this3.localizeDate(item.schedule_date) <= _this3.localizeDate(_this3.endDate);
         });
       } else {
-        return this.data = this.orders;
+        return this.orders;
       }
     },
     setMessenger: function setMessenger() {
@@ -2432,6 +2411,41 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   watch: {},
   methods: {
+    statusMatrix: function statusMatrix() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var scope_id, req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                scope_id = 55;
+                _context.next = 3;
+                return fetch("/matriz_estados?scope_id=".concat(scope_id));
+
+              case 3:
+                req = _context.sent;
+                _context.next = 6;
+                return req.json();
+
+              case 6:
+                res = _context.sent;
+                _this4.tabs = res.data.slice(0, 3);
+                _this4.currentTab = _this4.tabs[0].id;
+                _this4.tabs[0].href = "pordespachar";
+                _this4.tabs[1].href = "despachados";
+                _this4.tabs[2].href = "completados";
+                _this4.tabs[2].name = "COMPLETADOS";
+
+              case 13:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     localizeDate: function localizeDate(date) {
       if (!date || !date.includes('-')) return date;
 
@@ -2444,57 +2458,57 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       return new Date("".concat(mm, "/").concat(dd, "/").concat(yyyy));
     },
     getOrders: function getOrders(type_id, index) {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, i, sum, x;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                index != undefined && $("#myTab li:nth-child(".concat(index + 1, ") a")).tab("show");
-                _this4.currentTab = type_id;
-                _context.next = 4;
-                return _this4.requestOrders();
-
-              case 4:
-                response = _context.sent;
-                _this4.orders = response.data; // this.data = this.orders;
-
-                _this4.activeIndex = null;
-                _this4.showData = "";
-                _this4.ordersQuantity = "";
-                _this4.ordersTotalValue = 0;
-
-                for (i = 0; i < _this4.orders.length; i++) {
-                  sum = 0;
-
-                  for (x = 0; x < _this4.orders[i].get_guides.length; x++) {
-                    sum += _this4.orders[i].get_guides[x].value;
-                  }
-
-                  _this4.ordersTotalValue += sum;
-                }
-
-                _this4.ordersQuantity = _this4.orders.length;
-                _this4.showMessengerData = [];
-
-              case 13:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    requestOrders: function requestOrders() {
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response, myHeaders, requestOptions;
+        var response, i, sum, x;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
+              case 0:
+                index != undefined && $("#myTab li:nth-child(".concat(index + 1, ") a")).tab("show");
+                _this5.currentTab = type_id;
+                _context2.next = 4;
+                return _this5.requestOrders();
+
+              case 4:
+                response = _context2.sent;
+                _this5.orders = response.data; // this.data = this.orders;
+
+                _this5.activeIndex = null;
+                _this5.showData = "";
+                _this5.ordersQuantity = "";
+                _this5.ordersTotalValue = 0;
+
+                for (i = 0; i < _this5.orders.length; i++) {
+                  sum = 0;
+
+                  for (x = 0; x < _this5.orders[i].get_guides.length; x++) {
+                    sum += _this5.orders[i].get_guides[x].value;
+                  }
+
+                  _this5.ordersTotalValue += sum;
+                }
+
+                _this5.ordersQuantity = _this5.orders.length;
+                _this5.showMessengerData = [];
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    requestOrders: function requestOrders() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response, myHeaders, requestOptions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 response = {
                   state: 500
@@ -2505,8 +2519,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "GET",
                   headers: myHeaders
                 };
-                _context2.next = 6;
-                return fetch("/orders_ondemand/".concat(_this5.currentTab), requestOptions).then(function (response) {
+                _context3.next = 6;
+                return fetch("/orders_ondemand/".concat(_this6.currentTab), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2515,34 +2529,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 });
 
               case 6:
-                return _context2.abrupt("return", response);
+                return _context3.abrupt("return", response);
 
               case 7:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this6 = this;
+      var _this7 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, myHeaders, requestOptions;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _this = _this6;
+                _this = _this7;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
                   method: "GET",
                   headers: myHeaders
                 };
-                _context3.next = 6;
+                _context4.next = 6;
                 return fetch("/messengers_delivery", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2553,10 +2567,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
               case 6:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     },
     rowTotal: function rowTotal(item) {
@@ -2575,40 +2589,40 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       this.activeIndex = index;
     },
     assignateDelivery: function assignateDelivery() {
-      var _this7 = this;
+      var _this8 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var _this, token, myHeaders, requestOptions;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                if (_this7.showData) {
-                  _context4.next = 4;
+                if (_this8.showData) {
+                  _context5.next = 4;
                   break;
                 }
 
-                _context4.next = 3;
+                _context5.next = 3;
                 return error("Debe seleccionar una orden");
 
               case 3:
-                return _context4.abrupt("return", _context4.sent);
+                return _context5.abrupt("return", _context5.sent);
 
               case 4:
-                if (_this7.setMessenger) {
-                  _context4.next = 8;
+                if (_this8.setMessenger) {
+                  _context5.next = 8;
                   break;
                 }
 
-                _context4.next = 7;
+                _context5.next = 7;
                 return error("Debe seleccionar un mensajero");
 
               case 7:
-                return _context4.abrupt("return", _context4.sent);
+                return _context5.abrupt("return", _context5.sent);
 
               case 8:
-                _this = _this7;
+                _this = _this8;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -2618,12 +2632,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    messenger_user_id: _this7.setMessenger.user_id,
-                    order_id: _this7.showData.id,
-                    state_order: _this7.tabs[1].id
+                    messenger_user_id: _this8.setMessenger.user_id,
+                    order_id: _this8.showData.id,
+                    state: _this8.tabs[1].id
                   })
                 };
-                _context4.next = 17;
+                _context5.next = 17;
                 return fetch("/ordenes/asignacion", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2646,75 +2660,68 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
               case 17:
               case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    orderState: function orderState() {
-      var _this8 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var req, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _context5.next = 2;
-                return fetch("/order_states");
-
-              case 2:
-                req = _context5.sent;
-                _context5.next = 5;
-                return req.json();
-
-              case 5:
-                res = _context5.sent;
-                _this8.tabs = res.data;
-                _this8.currentTab = _this8.tabs[0].id;
-                _this8.tabs[0].href = "pordespachar";
-                _this8.tabs[1].href = "despachados";
-                _this8.tabs[2].href = "completados";
-
-              case 11:
-              case "end":
                 return _context5.stop();
             }
           }
         }, _callee5);
       }))();
     },
-    updateStateOrders: function updateStateOrders(state) {
-      var _this9 = this;
-
+    orderState: function orderState() {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var result, _this, token, myHeaders, requestOptions;
-
+        var req, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
+                _context6.next = 2;
+                return fetch("/order_states");
+
+              case 2:
+                req = _context6.sent;
+                _context6.next = 5;
+                return req.json();
+
+              case 5:
+                res = _context6.sent;
+
+              case 6:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    updateStateOrders: function updateStateOrders() {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var result, _this, token, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
                 if (_this9.showData) {
-                  _context6.next = 4;
+                  _context7.next = 4;
                   break;
                 }
 
-                _context6.next = 3;
+                _context7.next = 3;
                 return error("Debe seleccionar una orden");
 
               case 3:
-                return _context6.abrupt("return", _context6.sent);
+                return _context7.abrupt("return", _context7.sent);
 
               case 4:
-                _context6.next = 6;
+                _context7.next = 6;
                 return confirmation('¿Estas Seguro?', 'Se cambiara el estado de la orden', 'info');
 
               case 6:
-                result = _context6.sent;
+                result = _context7.sent;
 
                 if (!(result == true)) {
-                  _context6.next = 17;
+                  _context7.next = 17;
                   break;
                 }
 
@@ -2728,11 +2735,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    order_id: _this9.showData.id
+                    order_id: _this9.showData.id,
+                    state: _this9.tabs[1].id //id tap por despachar
+
                   })
                 };
-                _context6.next = 17;
-                return fetch("/despacho/orden/estado/".concat(state), requestOptions).then(function (response) {
+                _context7.next = 17;
+                return fetch("/despacho/orden/estado", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   console.log(data);
@@ -2756,33 +2765,35 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
               case 17:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6);
+        }, _callee7);
       }))();
     }
   },
   mounted: function mounted() {
     var _this10 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context8.prev = _context8.next) {
             case 0:
+              _this10.statusMatrix();
+
               _this10.orderState();
 
               _this10.getOrders(_this10.currentTab);
 
               _this10.getMessengers();
 
-            case 3:
+            case 4:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7);
+      }, _callee8);
     }))();
   }
 });
@@ -8281,7 +8292,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -8338,7 +8349,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
 
 // exports
 
@@ -62659,7 +62670,7 @@ var render = function () {
                           : $$selectedVal[0]
                       },
                       function ($event) {
-                        _vm.loadingEvt(), _vm.getGuides(null)
+                        _vm.loadingEvt(), _vm.getGuides(_vm.selected)
                       },
                     ],
                   },
@@ -62681,52 +62692,7 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-md-8 d-flex align-items-center flex-row flex-wrap",
-              },
-              [
-                _c("div", { staticClass: "col-md-5 py-2" }, [
-                  _vm.type_guide == 34 || _vm.type_guide == 37
-                    ? _c("div", { staticClass: " border rounded" }, [_vm._m(1)])
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
-                  _vm.type_guide == 34 || _vm.type_guide == 37
-                    ? _c(
-                        "select",
-                        {
-                          staticClass: "form-control",
-                          attrs: { id: "delivery_event_state" },
-                        },
-                        [_c("option", [_vm._v("Seleccione estado")])]
-                      )
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _vm.type_guide == 34 || _vm.type_guide == 37
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-light-primary font-weight-bold",
-                          attrs: { type: "button" },
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Aplicar nuevo estado\n                    "
-                          ),
-                        ]
-                      )
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _vm._m(2),
-              ]
-            ),
+            _vm._m(1),
           ]
         ),
         _vm._v(" "),
@@ -62737,98 +62703,26 @@ var render = function () {
               "nav nav-tabs nav-tabs-line nav-tabs-line-3x nav-bolder",
             attrs: { id: "myTab", role: "tablist" },
           },
-          [
-            _c(
-              "li",
-              { staticClass: "nav-item", attrs: { role: "presentation" } },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link active",
-                    attrs: {
-                      id: "porRecoger-tab",
-                      "data-toggle": "tab",
-                      href: "#porRecoger",
-                      role: "tab",
-                      "aria-controls": "porRecoger",
-                      "aria-selected": "true",
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.getGuides(0)
-                      },
-                    },
+          _vm._l(_vm.tabs, function (tab) {
+            return _c("li", { key: tab.id, staticClass: "nav-item" }, [
+              _c("a", {
+                staticClass: "nav-link tablink",
+                class: { active: _vm.type_guide === tab.id },
+                attrs: {
+                  id: tab.id,
+                  "data-toggle": "tab",
+                  href: "#" + tab.href,
+                },
+                domProps: { textContent: _vm._s(tab.name) },
+                on: {
+                  click: function ($event) {
+                    return _vm.getGuides(tab.id)
                   },
-                  [
-                    _vm._v(
-                      "Por " +
-                        _vm._s(_vm.selected == 32 ? "Entregar" : "Recoger")
-                    ),
-                  ]
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item", attrs: { role: "presentation" } },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    attrs: {
-                      id: "enproceso-tab",
-                      "data-toggle": "tab",
-                      href: "#enproceso",
-                      role: "tab",
-                      "aria-controls": "enproceso",
-                      "aria-selected": "false",
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.getGuides(1)
-                      },
-                    },
-                  },
-                  [
-                    _vm._v(
-                      _vm._s(_vm.selected == 32 ? "Entregas" : "Recogidas") +
-                        " en\n                    proceso"
-                    ),
-                  ]
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item", attrs: { role: "presentation" } },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    attrs: {
-                      id: "consultas-tab",
-                      "data-toggle": "tab",
-                      href: "#consultas",
-                      role: "tab",
-                      "aria-controls": "consultas",
-                      "aria-selected": "false",
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.getGuides(2)
-                      },
-                    },
-                  },
-                  [_vm._v("Consultas y edición")]
-                ),
-              ]
-            ),
-          ]
+                },
+              }),
+            ])
+          }),
+          0
         ),
         _vm._v(" "),
         _c("div", { staticClass: "d-flex flex-row flex-wrap" }, [
@@ -62917,40 +62811,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3 py-4" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-flex flex-row flex-wrap align-items-center justify-content-center",
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "btn btn-light-success btn-block font-weight-bold mr-2",
-                    attrs: { href: "#" },
-                  },
-                  [_vm._v("Imprimir Guia")]
-                ),
-                _vm._v(" "),
-                _vm.type_guide == 34 || _vm.type_guide == 37
-                  ? _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-light-primary btn-block font-weight-bold mr-2",
-                        attrs: {
-                          type: "button",
-                          "data-toggle": "modal",
-                          "data-target": "#exampleModal",
-                        },
-                      },
-                      [_vm._v("Editar Destino")]
-                    )
-                  : _vm._e(),
-              ]
-            ),
+            _vm._m(2),
             _vm._v(" "),
             _c(
               "div",
@@ -63046,22 +62907,7 @@ var render = function () {
                 _vm._v(" "),
                 _vm._m(3),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-12 mb-2" }, [
-                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-                    _vm._v("Transporte:"),
-                  ]),
-                  _vm._v(" "),
-                  _vm.showGuide != null
-                    ? _c("div", {
-                        staticClass: "line-height-xl",
-                        domProps: {
-                          textContent: _vm._s(
-                            _vm.showGuide.get_transport_type.name
-                          ),
-                        },
-                      })
-                    : _vm._e(),
-                ]),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
@@ -63135,7 +62981,7 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _vm._m(4),
+                _vm._m(5),
                 _vm._v(" "),
                 _c("div", {
                   staticClass:
@@ -63174,7 +63020,7 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(5),
+            _vm._m(6),
           ]),
         ]),
       ]),
@@ -63199,23 +63045,92 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mb-0" }, [
-      _c("span", { staticClass: "font-weight-bolder mb-3" }, [
-        _vm._v(
-          "Destinos en recogida por editar:\n                            "
-        ),
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "line-height-xl" }, [_vm._v("2000")]),
-    ])
+    return _c(
+      "div",
+      { staticClass: "col-md-8 d-flex align-items-center flex-row flex-wrap" },
+      [
+        _c("div", { staticClass: "col-md-5 py-2" }, [
+          _c("div", { staticClass: " border rounded" }, [
+            _c("p", { staticClass: "mb-0" }, [
+              _c("span", { staticClass: "font-weight-bolder mb-3" }, [
+                _vm._v(
+                  "Destinos en recogida por editar:\n                            "
+                ),
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "line-height-xl" }, [_vm._v("2000")]),
+            ]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
+          _c(
+            "select",
+            {
+              staticClass: "form-control",
+              attrs: { id: "delivery_event_state" },
+            },
+            [_c("option", [_vm._v("Seleccione estado")])]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light-primary font-weight-bold",
+              attrs: { type: "button" },
+            },
+            [
+              _vm._v(
+                "\n                        Aplicar nuevo estado\n                    "
+              ),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-1" }, [
+          _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
+        ]),
+      ]
+    )
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1" }, [
-      _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
-    ])
+    return _c(
+      "div",
+      {
+        staticClass:
+          "d-flex flex-row flex-wrap align-items-center justify-content-center",
+      },
+      [
+        _c(
+          "a",
+          {
+            staticClass:
+              "btn btn-light-success btn-block font-weight-bold mr-2",
+            attrs: { href: "#" },
+          },
+          [_vm._v("Imprimir Guia")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-light-primary btn-block font-weight-bold mr-2",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal",
+            },
+          },
+          [_vm._v("Editar Destino")]
+        ),
+      ]
+    )
   },
   function () {
     var _vm = this
@@ -63227,6 +63142,16 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "line-height-xl" }, [_vm._v("2022/02/04")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 mb-2" }, [
+      _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+        _vm._v("Transporte:"),
+      ]),
     ])
   },
   function () {
@@ -63319,7 +63244,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Destinos por\n                        " +
-                      _vm._s(_vm.selected == 32 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -63444,7 +63369,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Seleccionados por\n                        " +
-                      _vm._s(_vm.selected == 32 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -86349,8 +86274,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobProjects/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
