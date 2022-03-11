@@ -54,7 +54,7 @@ trait ParametersTrait
             return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
-            $parameter = Parameter::find($id);
+            $parameter = ParameterValue::find($id);
             if(is_null($parameter)){
                 return $this->respond(500, [], 'user not found', 'No se encontró el parametro');
             }
@@ -73,15 +73,9 @@ trait ParametersTrait
     public function deleteParameter($id)
     {
         try {
-            $parameter = Parameter::find($id);
+            $parameter = ParameterValue::find($id);
             if (is_null($parameter)) {
                 return $this->respond(500, [], 'user not found', 'No se encontró el parametro');
-            }
-            $parameterValues = ParameterValue::where('parameter_id', $id)->get();
-            if(!is_null($parameterValues)) {
-                foreach ($parameterValues as $child) {
-                    $child->delete();
-                }
             }
             $parameter->delete();
             return $this->respond(200, $parameter, null, 'Parametro eliminado exitosamente');

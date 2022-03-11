@@ -1,6 +1,6 @@
 export default class Parameters {
     initialize() {
-        this.parameterData();
+        this.loadParameterValues();
     }
 
     parameterData(){
@@ -63,7 +63,11 @@ export default class Parameters {
             let response = await this.requestUpdateParameter(id, requestOptions);
             if(response.state == 200){
                 success(response.message);
-                location.reload();
+                let modal = document.getElementById("modalEditUser");
+                modal.click();
+                let requestData = await this.requestParameterValues(id);
+                let data = requestData.data;
+                this.renderParameterTable(data);
             } else {
                 error(response.message);
             }
@@ -81,6 +85,81 @@ export default class Parameters {
             })
             .catch(e => console.log(e));
         return response;
+    }
+
+    loadParameterValues(){
+        let buttons = document.getElementsByName('btnShowParameters');
+        if(buttons == null){
+            return;
+        }
+        [].forEach.call(buttons, btn => {
+            btn.addEventListener('click', async () => {
+                let response = await this.requestParameterValues(btn['id']);
+                let data = response.data;
+                this.renderParameterTable(data);
+                this.parameterData();
+                // this.updateParameter(btn['id']);
+            });
+        });
+    }
+
+    async requestParameterValues(id){
+        let response = {
+            'state': 500
+        };
+        await fetch("/parametros/"+id)
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    renderParameterTable(data){
+        let tbody = document.querySelector("#parameterValueTable tbody");
+        tbody.innerHTML = '';
+        [].forEach.call(data, key => {
+            let row = tbody.insertRow();
+
+            let nameCell = row.insertCell(0);
+            nameCell.innerHTML = key.name;
+            let descriptionCell = row.insertCell(1);
+            descriptionCell.innerHTML = key.description??'Sin descripción';
+            let stateCell = row.insertCell(2);
+            if(key.state == 1){
+                stateCell.innerHTML =   '<span class="label label-inline label-light-success font-weight-bold">\
+                                            Activo\
+                                        </span>';
+            } else {
+                stateCell.innerHTML =   '<span class="label label-inline label-light-danger font-weight-bold">\
+                                            Inactivo\
+                                        </span>';
+            }
+            let selectCell = row.insertCell(3);
+            const editBtn = document.createElement("button");
+            editBtn.setAttribute('name', 'btnEditParameter');
+            editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+            editBtn.setAttribute('data-toggle', 'modal');
+            editBtn.setAttribute('data-target', '#modalEditParameter');
+            editBtn.setAttribute('id', +key.id);
+            editBtn.setAttribute('type', 'button');
+            editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.onclick = function(){confirmDelete('parametros/delete/'+key.id)};
+            deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+            deleteBtn.setAttribute('type', 'button');
+            deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+
+            const buttonsDiv = document.createElement("div");
+            buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+            buttonsDiv.appendChild(editBtn);
+            buttonsDiv.appendChild(deleteBtn);
+            selectCell.appendChild(buttonsDiv);
+
+            tbody.appendChild(row);
+        });
     }
 
 }

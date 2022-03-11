@@ -84645,7 +84645,7 @@ var Parameters = /*#__PURE__*/function () {
   _createClass(Parameters, [{
     key: "initialize",
     value: function initialize() {
-      this.parameterData();
+      this.loadParameterValues();
     }
   }, {
     key: "parameterData",
@@ -84750,7 +84750,7 @@ var Parameters = /*#__PURE__*/function () {
 
               case 3:
                 btnUpdate.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-                  var updateForm, formData, token, myHeaders, requestOptions, response;
+                  var updateForm, formData, token, myHeaders, requestOptions, response, modal, requestData, data;
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                       switch (_context3.prev = _context3.next) {
@@ -84776,14 +84776,30 @@ var Parameters = /*#__PURE__*/function () {
                         case 13:
                           response = _context3.sent;
 
-                          if (response.state == 200) {
-                            success(response.message);
-                            location.reload();
-                          } else {
-                            error(response.message);
+                          if (!(response.state == 200)) {
+                            _context3.next = 25;
+                            break;
                           }
 
-                        case 15:
+                          success(response.message);
+                          modal = document.getElementById("modalEditUser");
+                          modal.click();
+                          _context3.next = 20;
+                          return _this2.requestParameterValues(id);
+
+                        case 20:
+                          requestData = _context3.sent;
+                          data = requestData.data;
+
+                          _this2.renderParameterTable(data);
+
+                          _context3.next = 26;
+                          break;
+
+                        case 25:
+                          error(response.message);
+
+                        case 26:
                         case "end":
                           return _context3.stop();
                       }
@@ -84843,6 +84859,134 @@ var Parameters = /*#__PURE__*/function () {
 
       return requestUpdateParameter;
     }()
+  }, {
+    key: "loadParameterValues",
+    value: function loadParameterValues() {
+      var _this3 = this;
+
+      var buttons = document.getElementsByName('btnShowParameters');
+
+      if (buttons == null) {
+        return;
+      }
+
+      [].forEach.call(buttons, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+          var response, data;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.next = 2;
+                  return _this3.requestParameterValues(btn['id']);
+
+                case 2:
+                  response = _context6.sent;
+                  data = response.data;
+
+                  _this3.renderParameterTable(data);
+
+                  _this3.parameterData(); // this.updateParameter(btn['id']);
+
+
+                case 6:
+                case "end":
+                  return _context6.stop();
+              }
+            }
+          }, _callee6);
+        })));
+      });
+    }
+  }, {
+    key: "requestParameterValues",
+    value: function () {
+      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context7.next = 3;
+                return fetch("/parametros/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context7.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function requestParameterValues(_x5) {
+        return _requestParameterValues.apply(this, arguments);
+      }
+
+      return requestParameterValues;
+    }()
+  }, {
+    key: "renderParameterTable",
+    value: function renderParameterTable(data) {
+      var tbody = document.querySelector("#parameterValueTable tbody");
+      tbody.innerHTML = '';
+      [].forEach.call(data, function (key) {
+        var _key$description;
+
+        var row = tbody.insertRow();
+        var nameCell = row.insertCell(0);
+        nameCell.innerHTML = key.name;
+        var descriptionCell = row.insertCell(1);
+        descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
+        var stateCell = row.insertCell(2);
+
+        if (key.state == 1) {
+          stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                            Activo\
+                                        </span>';
+        } else {
+          stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                            Inactivo\
+                                        </span>';
+        }
+
+        var selectCell = row.insertCell(3);
+        var editBtn = document.createElement("button");
+        editBtn.setAttribute('name', 'btnEditParameter');
+        editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+        editBtn.setAttribute('data-toggle', 'modal');
+        editBtn.setAttribute('data-target', '#modalEditParameter');
+        editBtn.setAttribute('id', +key.id);
+        editBtn.setAttribute('type', 'button');
+        editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+        var deleteBtn = document.createElement("button");
+
+        deleteBtn.onclick = function () {
+          confirmDelete('parametros/delete/' + key.id);
+        };
+
+        deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+        deleteBtn.setAttribute('type', 'button');
+        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        var buttonsDiv = document.createElement("div");
+        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+        buttonsDiv.appendChild(editBtn);
+        buttonsDiv.appendChild(deleteBtn);
+        selectCell.appendChild(buttonsDiv);
+        tbody.appendChild(row);
+      });
+    }
   }]);
 
   return Parameters;

@@ -5,35 +5,12 @@
     @include('layouts.breadCrumbs')
     <div class="content" id="app">
         <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <h4 class="card-title">Parametros</h4>
-                    </div>
-                    <div class="card-body">
-                        <form action="{{route('parameters.store')}}" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <label for="">Nombre<span class="text-danger">*</span></label>
-                                <input type="text" name="name" class="form-control form-control-solid">
-                                <small id="helpId" class="text-muted">Ejemplo: Tipo de documento, tipo de
-                                    pago</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Descripcion<span class="text-danger">*</span></label>
-                                <textarea required ref="description" cols="30" rows="5"
-                                    type="text" name="description" id="" class="form-control form-control-solid"
-                                    placeholder="Ingrese Descripcion"></textarea>
-                                <small id="helpId" class="text-muted">Ejemplo: Parametro para ....</small>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg btn-block"> Crear </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
+            <div class="col-md-7">
                 @include('layouts.alerts')
                 <div class="card">
+                    <div class="card-header pb-0">
+                        <h4 class="card-title">Parametros </h4>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table">
@@ -62,20 +39,40 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-rd">
+                                            <button type="button" class="btn btn-primary btn-rd" name="btnShowParameters" id="{{$parameter->id}}">
                                                 <i class="fad fa-eye" style="padding:0px;"></i>
                                             </button>
-                                            <button type="button" class="btn btn-success btn-rd"
+                                            {{-- <button type="button" class="btn btn-success btn-rd"
                                                 data-toggle="modal" data-target="#modalEditParameter" name="btnEditParameter" id="{{$parameter->id}}">
                                                 <i class="fad fa-edit" style="padding:0px;"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-rd" onclick="confirmDelete('parametros/delete/{{$parameter->id}}')">
                                                 <i class="fad fa-trash-alt" style="padding:0px;"></i>
-                                            </button>
+                                            </button> --}}
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h4 class="card-title">Parametros - Valor</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table" id="parameterValueTable">
+                                <thead class=" text-primary">
+                                    <th>Nombre</th>
+                                    <th>Descripcion</th>
+                                    <th>Estado</th>
+                                    <th>Opciones</th>
+                                </thead>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>

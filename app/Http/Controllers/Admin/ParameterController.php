@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ParametersTrait;
 use App\Parameter;
+use App\ParameterValue;
 use Illuminate\Http\Request;
 
 class ParameterController extends Controller
@@ -55,7 +56,17 @@ class ParameterController extends Controller
      */
     public function show($id)
     {
-        //
+        $parameters = ParameterValue::where('parameter_id', $id)->get();
+        if(is_null($parameters)){
+            return json_encode([
+                'state' => 500,
+                'message' => 'No se encontró el parametro'
+            ]);
+        }
+        return json_encode([
+            'state' => 200,
+            'data' => $parameters
+        ]);
     }
 
     /**
@@ -66,7 +77,7 @@ class ParameterController extends Controller
      */
     public function edit($id)
     {
-        $parameter = Parameter::find($id);
+        $parameter = ParameterValue::find($id);
         if(is_null($parameter)){
             return json_encode([
                 'state' => 500,
