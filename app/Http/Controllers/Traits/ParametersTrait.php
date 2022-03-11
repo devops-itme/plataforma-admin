@@ -21,7 +21,9 @@ trait ParametersTrait
                 'name' => 'required | string',
                 'description' => 'nullable|string',
                 'state' => 'nullable',
-                'parameter_id' => 'required'
+                'parameter_id' => [
+                    Rule::requiredIf($action == 'create')
+                ]
             ]
         );
     }
