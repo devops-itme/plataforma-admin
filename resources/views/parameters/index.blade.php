@@ -65,7 +65,7 @@
                             <div class="col">
                                 <h4 class="card-title">Parametros - Valor</h4>
                             </div>
-                            <div class="col d-flex align-items-top justify-content-end">
+                            <div class="d-none" id="divCreateParameter">
                                 <button class="btn btn-success btn-rd" data-toggle="modal" data-target="#modalCreateParameter"> <i class="fad fa-plus p-0"></i> </button>
                             </div>
                         </div>

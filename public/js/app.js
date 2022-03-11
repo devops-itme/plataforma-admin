@@ -84807,6 +84807,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Parameters = /*#__PURE__*/function () {
   function Parameters() {
     _classCallCheck(this, Parameters);
+
+    this.id = '';
   }
 
   _createClass(Parameters, [{
@@ -85036,10 +85038,17 @@ var Parameters = /*#__PURE__*/function () {
       }
 
       [].forEach.call(buttons, function (btn) {
+        _this3.id = '';
         btn.addEventListener('click', function () {
-          _this3.renderParameterTable(btn['id']);
+          _this3.id = btn['id'];
+          var btnOpenModalCreate = document.getElementById("divCreateParameter");
+          btnOpenModalCreate.className = 'col d-flex align-items-top justify-content-end';
 
-          _this3.storeParameterValue(btn['id']);
+          _this3.renderParameterTable(_this3.id);
+
+          _this3.storeParameterValue(_this3.id);
+
+          throw 'break';
         });
       });
     }
@@ -85160,7 +85169,7 @@ var Parameters = /*#__PURE__*/function () {
     }()
   }, {
     key: "storeParameterValue",
-    value: function storeParameterValue(id) {
+    value: function storeParameterValue() {
       var _this4 = this;
 
       var btnStore = document.getElementById("btnStoreParameter");
@@ -85186,7 +85195,7 @@ var Parameters = /*#__PURE__*/function () {
 
               case 3:
                 formData = new FormData(form);
-                formData.append('parameter_id', id);
+                formData.append('parameter_id', _this4.id);
                 _context8.next = 7;
                 return _this4.requestStoreParameterValue(formData);
 
@@ -85198,7 +85207,7 @@ var Parameters = /*#__PURE__*/function () {
                   modal = document.getElementById("modalCreateParameter");
                   modal.click();
 
-                  _this4.renderParameterTable(id);
+                  _this4.renderParameterTable(_this4.id);
                 } else {
                   error(response.message);
                 }

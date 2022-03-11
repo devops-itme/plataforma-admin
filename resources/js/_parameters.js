@@ -1,4 +1,7 @@
 export default class Parameters {
+    constructor() {
+        this.id = '';
+    }
     initialize() {
         this.loadParameterValues();
     }
@@ -93,9 +96,14 @@ export default class Parameters {
             return;
         }
         [].forEach.call(buttons, btn => {
+            this.id = '';
             btn.addEventListener('click', () => {
-                this.renderParameterTable(btn['id']);
-                this.storeParameterValue(btn['id']);
+                this.id = btn['id'];
+                let btnOpenModalCreate = document.getElementById("divCreateParameter");
+                btnOpenModalCreate.className = 'col d-flex align-items-top justify-content-end';
+                this.renderParameterTable(this.id);
+                this.storeParameterValue(this.id);
+                throw 'break';
             });
         });
     }
@@ -162,7 +170,7 @@ export default class Parameters {
         });
     }
 
-    storeParameterValue(id){
+    storeParameterValue(){
         let btnStore = document.getElementById("btnStoreParameter");
         if(btnStore == null){
             return;
@@ -173,13 +181,13 @@ export default class Parameters {
                 return;
             }
             let formData = new FormData(form);
-            formData.append('parameter_id', id);
+            formData.append('parameter_id', this.id);
             let response = await this.requestStoreParameterValue(formData);
             if(response.state == 200){
                 success(response.message);
                 let modal = document.getElementById("modalCreateParameter");
                 modal.click();
-                this.renderParameterTable(id);
+                this.renderParameterTable(this.id);
             } else {
                 error(response.message);
             }
