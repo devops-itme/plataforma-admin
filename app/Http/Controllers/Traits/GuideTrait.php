@@ -42,7 +42,7 @@ trait GuideTrait
                 'sign' => 'nullable',
                 'take_photo' => 'nullable',
                 'packaging' => 'nullable',
-                'customer_address' => 'nullable'
+                // 'customer_address' => 'nullable'
             ]
         );
     }
@@ -76,7 +76,7 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
-                'customer_address' => $request->customer_address,
+                // 'customer_address' => $request->customer_address,
                 'boxes' => $request->boxes
             ]);
             return $this->respond(200, $order, null, 'Guiá creada exitosamente');
@@ -117,7 +117,7 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
-                'customer_address' => $request->customer_address,
+                // 'customer_address' => $request->customer_address,
                 'boxes' => $request->boxes
             ]);
             return $this->respond(200, $guide, null, 'Guía actualizada exitosamente');
