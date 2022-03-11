@@ -7,8 +7,8 @@ function confirmDelete(param) {
         text: "Recuerda que al eliminar ésto borrarás todos sus registros",
         icon: "warning",
         buttons: {
-            cancel: 'Cancelar',
-            confirm: 'Confirmar'
+            cancel: "Cancelar",
+            confirm: "Confirmar",
         },
         dangerMode: true,
     }).then((willDelete) => {
@@ -64,12 +64,11 @@ function confirmation(
         text: text,
         icon: icon,
         buttons: {
-            cancel: 'Cancelar',
-            confirm: 'Confirmar'
-        }
+            cancel: "Cancelar",
+            confirm: "Confirmar",
+        },
     });
 }
-
 
 function success(action = "realizar esta operacion", message = "") {
     return swal({
@@ -90,4 +89,20 @@ function correct(message) {
         icon: "success",
         title: message,
     });
+}
+
+function porDespacharPackagingAlert() {
+    return swal("Seleccione el estado de la orden?", {
+        buttons: {
+            delivery: {
+                text: "Entrega!",
+                value: 3,
+            },
+            pickup: {
+                text: "Recogida!",
+                value: 7,
+            },
+            cancel: "Cancelar",
+        },
+    })
 }

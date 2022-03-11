@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\RestActions;
+use App\Http\Controllers\Traits\OrderTrait;
 use App\Http\Resources\OrderResource;
 use App\Order;
 use App\ParameterValue;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    use RestActions;
+    use OrderTrait;
 
     protected $relationships = [
         'getUser', 'getUser.getDocumentType',
@@ -43,11 +43,24 @@ class OrderController extends Controller
         }
     }
 
+    public function store(Request $request)
+    {
+        if (Auth()->user()->role != 1) {
+            $request->merge(['user_id' => Auth()->user()->id]);
+        };
+        return($request->all());
+        
+        try {
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
+
     public function markAsRead(Request $request)
     {
         try {
             $order = Order::where('id', $request->order_id)->first();
-            
+
             if (is_null($order)) {
                 return $this->respond(500, null, 'not found', 'No se encontró la orden');
             }

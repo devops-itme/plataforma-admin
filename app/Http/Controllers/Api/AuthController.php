@@ -192,6 +192,8 @@ class AuthController extends Controller
 
     public function registerCustomer(Request $request)
     {
+        $request->taxes = $request->taxes == 'on' ? 1 : 0;
+
         $validator = $this->validateUser($request, 'create');
 
         if ($validator->fails()) {
@@ -203,11 +205,12 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
+        if (!is_null($request->address)) {
+            $validator = $this->AddressesValidate($request);
 
-        $validator = $this->AddressesValidate($request);
-
-        if ($validator->fails()) {
-            return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
+            if ($validator->fails()) {
+                return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
+            }
         }
 
         try {
