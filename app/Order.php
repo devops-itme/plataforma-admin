@@ -97,7 +97,7 @@ class Order extends Model
     public function scopeNumber($query, $value)
     {
         if (!is_null($value))
-            return $query->where('order_number', 'like', '%'.$value.'%');
+            return $query->where('order_number', 'like', '%' . $value . '%');
     }
     public function scopeOrder_type($query, $value)
     {
@@ -107,8 +107,8 @@ class Order extends Model
     public function scopeCustomer($query, $value)
     {
         if (!is_null($value)) {
-            return $query->whereHas('getUser', function($q) use($value){
-                $q->where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$value.'%');
+            return $query->whereHas('getUser', function ($q) use ($value) {
+                $q->where(DB::raw('concat(name," ",last_name)'), 'like', '%' . $value . '%');
             });
         }
     }
@@ -120,8 +120,19 @@ class Order extends Model
     }
     public function scopeState($query, $value)
     {
-        if(!is_null($value)){
+        if (!is_null($value)) {
             return $query->where('state', $value);
+        }
+    }
+
+    public function scopeMessengerOrders($query, $messenger_user_id)
+    {
+        if (!is_null($messenger_user_id)) {
+            return $query->whereHas('getGuides', function ($query) use ($messenger_user_id) {
+                $query->whereHas('getRoute', function ($query) use ($messenger_user_id) {
+                    $query->where('messenger_user_id', $messenger_user_id);
+                });
+            });
         }
     }
 }
