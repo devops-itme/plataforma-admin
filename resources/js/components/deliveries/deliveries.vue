@@ -241,18 +241,19 @@ export default {
 
         getGuide(data){
             this.showGuide = data;
-            this.showGuide.get_route ? this.if_route = true : this.if_route = false;
+            // this.showGuide.get_route ? this.if_route = true : this.if_route = false;
             this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
 
         },
         async getGuides(type) {
+            this.guides2 = [];
+            this.showGuide = null;
             this.statusMatrix(this.selected);
             type == 55 && (type = 3);
             type == 53 && (type = 7);
             let response = await this.requestGuides(type);
             this.guides = response.data;
-            this.guides2 = [];
-            this.showGuide = null;
+
 
 
         },

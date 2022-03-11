@@ -2192,8 +2192,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getGuide: function getGuide(data) {
-      this.showGuide = data;
-      this.showGuide.get_route ? this.if_route = true : this.if_route = false;
+      this.showGuide = data; // this.showGuide.get_route ? this.if_route = true : this.if_route = false;
+
       this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
     },
     getGuides: function getGuides(type) {
@@ -2205,18 +2205,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _this3.guides2 = [];
+                _this3.showGuide = null;
+
                 _this3.statusMatrix(_this3.selected);
 
                 type == 55 && (type = 3);
                 type == 53 && (type = 7);
-                _context2.next = 5;
+                _context2.next = 7;
                 return _this3.requestGuides(type);
 
-              case 5:
+              case 7:
                 response = _context2.sent;
                 _this3.guides = response.data;
-                _this3.guides2 = [];
-                _this3.showGuide = null;
 
               case 9:
               case "end":
