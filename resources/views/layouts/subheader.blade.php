@@ -202,7 +202,7 @@
                                 Parámetros</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('zone.index') }}">Zonas</a></li>
-
+                                <li><a class="dropdown-item" href="{{ route('parameters.index') }}">Parametros</a></li>
                             </ul>
                         </li>
                     </ul>
