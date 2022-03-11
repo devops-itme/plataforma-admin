@@ -18,12 +18,12 @@ trait ParametersTrait
         return Validator::make(
             $request->all(),
             [
-                'name' => [
-                    'required', 'string',
-                    Rule::unique('parameters', 'name')->ignore($id)->whereNull('deleted_at')
-                ],
+                'name' => 'required | string',
                 'description' => 'nullable|string',
-                'state' => 'nullable'
+                'state' => 'nullable',
+                'parameter_id' => [
+                    Rule::requiredIf($action == 'create')
+                ]
             ]
         );
     }
@@ -35,9 +35,10 @@ trait ParametersTrait
             return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
-            $parameter = Parameter::create([
+            $parameter = ParameterValue::create([
                 'name' => $request->name,
                 'description' => $request->description,
+                'parameter_id' => $request->parameter_id,
                 'state' => 1
             ]);
 
@@ -54,7 +55,7 @@ trait ParametersTrait
             return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
-            $parameter = Parameter::find($id);
+            $parameter = ParameterValue::find($id);
             if(is_null($parameter)){
                 return $this->respond(500, [], 'user not found', 'No se encontró el parametro');
             }
@@ -73,15 +74,9 @@ trait ParametersTrait
     public function deleteParameter($id)
     {
         try {
-            $parameter = Parameter::find($id);
+            $parameter = ParameterValue::find($id);
             if (is_null($parameter)) {
                 return $this->respond(500, [], 'user not found', 'No se encontró el parametro');
-            }
-            $parameterValues = ParameterValue::where('parameter_id', $id)->get();
-            if(!is_null($parameterValues)) {
-                foreach ($parameterValues as $child) {
-                    $child->delete();
-                }
             }
             $parameter->delete();
             return $this->respond(200, $parameter, null, 'Parametro eliminado exitosamente');

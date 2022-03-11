@@ -84839,48 +84839,48 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Parameters = /*#__PURE__*/function () {
   function Parameters() {
     _classCallCheck(this, Parameters);
+
+    this.id = '';
   }
 
   _createClass(Parameters, [{
     key: "initialize",
     value: function initialize() {
-      this.parameterData();
+      this.loadParameterValues();
     }
   }, {
-    key: "parameterData",
-    value: function parameterData() {
+    key: "loadParameterValues",
+    value: function loadParameterValues() {
       var _this = this;
 
-      var editButtons = document.getElementsByName('btnEditParameter');
+      var buttons = document.getElementsByName('btnShowParameters');
 
-      if (editButtons == null) {
+      if (buttons == null) {
         return;
       }
 
-      [].forEach.call(editButtons, function (btn) {
+      [].forEach.call(buttons, function (btn) {
+        _this.id = '';
         btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var id, response, data, name, description, state;
+          var btnOpenModalCreate;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  id = btn.id;
-                  _context.next = 3;
-                  return _this.requestParameterData(id);
+                  _this.id = btn['id'];
+                  btnOpenModalCreate = document.getElementById("divCreateParameter");
+                  btnOpenModalCreate.className = 'col d-flex align-items-top justify-content-end';
+                  _context.next = 5;
+                  return _this.renderParameterTable(_this.id);
 
-                case 3:
-                  response = _context.sent;
-                  data = response.data;
-                  name = document.getElementById("parameter_name");
-                  name.value = data.name;
-                  description = document.getElementById("parameter_description");
-                  description.value = data.description;
-                  state = document.getElementById("parameter_state_edit");
-                  data.state == 1 ? state.checked = true : state.checked = false;
+                case 5:
+                  _this.storeParameterValue(_this.id);
 
-                  _this.updateParameter(id);
+                  _this.editParameterValue();
 
-                case 12:
+                  return _context.abrupt("return");
+
+                case 8:
                 case "end":
                   return _context.stop();
               }
@@ -84890,9 +84890,9 @@ var Parameters = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "requestParameterData",
+    key: "requestParameterValues",
     value: function () {
-      var _requestParameterData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -84902,7 +84902,7 @@ var Parameters = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context2.next = 3;
-                return fetch("/parametros/" + id + "/edit").then(function (response) {
+                return fetch("/parametros/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -84921,26 +84921,109 @@ var Parameters = /*#__PURE__*/function () {
         }, _callee2);
       }));
 
-      function requestParameterData(_x) {
-        return _requestParameterData.apply(this, arguments);
+      function requestParameterValues(_x) {
+        return _requestParameterValues.apply(this, arguments);
       }
 
-      return requestParameterData;
+      return requestParameterValues;
     }()
   }, {
-    key: "updateParameter",
+    key: "renderParameterTable",
     value: function () {
-      var _updateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
-        var _this2 = this;
+      var _renderParameterTable = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
+        var tbody, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                tbody = document.querySelector("#parameterValueTable tbody");
+                tbody.innerHTML = '';
+                _context3.next = 4;
+                return this.requestParameterValues(id);
 
-        var btnUpdate;
+              case 4:
+                response = _context3.sent;
+                data = response.data;
+                [].forEach.call(data, function (key) {
+                  var _key$description;
+
+                  var row = tbody.insertRow();
+                  var nameCell = row.insertCell(0);
+                  nameCell.innerHTML = key.name;
+                  var descriptionCell = row.insertCell(1);
+                  descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
+                  var stateCell = row.insertCell(2);
+
+                  if (key.state == 1) {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                            Activo\
+                                        </span>';
+                  } else {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                            Inactivo\
+                                        </span>';
+                  }
+
+                  var selectCell = row.insertCell(3);
+                  var editBtn = document.createElement("button");
+                  editBtn.setAttribute('name', 'btnEditParameter');
+                  editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                  editBtn.setAttribute('data-toggle', 'modal');
+                  editBtn.setAttribute('data-target', '#modalEditParameter');
+                  editBtn.setAttribute('id', +key.id);
+                  editBtn.setAttribute('type', 'button');
+                  editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                  var deleteBtn = document.createElement("button");
+
+                  deleteBtn.onclick = function () {
+                    confirmDelete('parametros/delete/' + key.id);
+                  };
+
+                  deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                  deleteBtn.setAttribute('type', 'button');
+                  deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                  var buttonsDiv = document.createElement("div");
+                  buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                  buttonsDiv.appendChild(editBtn);
+                  buttonsDiv.appendChild(deleteBtn);
+                  selectCell.appendChild(buttonsDiv);
+                  tbody.appendChild(row);
+                });
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function renderParameterTable(_x2) {
+        return _renderParameterTable.apply(this, arguments);
+      }
+
+      return renderParameterTable;
+    }()
+  }, {
+    key: "storeParameterValue",
+    value: function storeParameterValue() {
+      var _this2 = this;
+
+      var btnStore = document.getElementById("btnStoreParameter");
+
+      if (btnStore == null) {
+        return;
+      }
+
+      btnStore.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var form, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                btnUpdate = document.getElementById("btnUpdateParameter");
+                form = document.getElementById("formCreateParameter");
 
-                if (!(btnUpdate == null)) {
+                if (!(form == null)) {
                   _context4.next = 3;
                   break;
                 }
@@ -84948,66 +85031,35 @@ var Parameters = /*#__PURE__*/function () {
                 return _context4.abrupt("return");
 
               case 3:
-                btnUpdate.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-                  var updateForm, formData, token, myHeaders, requestOptions, response;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-                    while (1) {
-                      switch (_context3.prev = _context3.next) {
-                        case 0:
-                          updateForm = document.getElementById("formUpdateParameter");
-                          formData = new FormData(updateForm);
-                          token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                          myHeaders = new Headers();
-                          myHeaders.append("Accept", "application/json");
-                          myHeaders.append("Access-Control-Allow-Origin", "*");
-                          myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                          myHeaders.append('Content-Type', "application/json");
-                          myHeaders.append('Content-Type', "multipart/form-data");
-                          myHeaders.append("X-CSRF-TOKEN", token);
-                          requestOptions = {
-                            method: "PUT",
-                            headers: myHeaders,
-                            body: JSON.stringify(Object.fromEntries(formData))
-                          };
-                          _context3.next = 13;
-                          return _this2.requestUpdateParameter(id, requestOptions);
+                formData = new FormData(form);
+                formData.append('parameter_id', _this2.id);
+                _context4.next = 7;
+                return _this2.requestStoreParameterValue(formData);
 
-                        case 13:
-                          response = _context3.sent;
+              case 7:
+                response = _context4.sent;
 
-                          if (response.state == 200) {
-                            success(response.message);
-                            location.reload();
-                          } else {
-                            error(response.message);
-                          }
+                if (response.state == 200) {
+                  success(response.message);
+                  modal = document.getElementById("modalCreateParameter");
+                  modal.click();
+                  location.reload(); // this.renderParameterTable(this.id);
+                } else {
+                  error(response.message);
+                }
 
-                        case 15:
-                        case "end":
-                          return _context3.stop();
-                      }
-                    }
-                  }, _callee3);
-                })));
-
-              case 4:
+              case 9:
               case "end":
                 return _context4.stop();
             }
           }
         }, _callee4);
-      }));
-
-      function updateParameter(_x2) {
-        return _updateParameter.apply(this, arguments);
-      }
-
-      return updateParameter;
-    }()
+      })));
+    }
   }, {
-    key: "requestUpdateParameter",
+    key: "requestStoreParameterValue",
     value: function () {
-      var _requestUpdateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(id, requestOptions) {
+      var _requestStoreParameterValue = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(formData) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
@@ -85017,7 +85069,88 @@ var Parameters = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context5.next = 3;
-                return fetch("/parametros/" + id + "/", requestOptions).then(function (response) {
+                return fetch("/parametros", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context5.sent;
+                return _context5.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function requestStoreParameterValue(_x3) {
+        return _requestStoreParameterValue.apply(this, arguments);
+      }
+
+      return requestStoreParameterValue;
+    }()
+  }, {
+    key: "editParameterValue",
+    value: function editParameterValue() {
+      var _this3 = this;
+
+      var allEditBtns = document.getElementsByName('btnEditParameter');
+
+      if (allEditBtns == null) {
+        return;
+      }
+
+      allEditBtns.forEach(function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+          var response, data, name, description, state;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.next = 2;
+                  return _this3.requestParameterData(btn['id']);
+
+                case 2:
+                  response = _context6.sent;
+                  data = response.data;
+                  name = document.getElementById("parameter_name");
+                  name.value = data.name;
+                  description = document.getElementById("parameter_description");
+                  description.value = data.description;
+                  state = document.getElementById("parameter_state_edit");
+                  data.state == 1 ? state.checked = true : '';
+
+                  _this3.updateParameterValue(btn['id']);
+
+                case 11:
+                case "end":
+                  return _context6.stop();
+              }
+            }
+          }, _callee6);
+        })));
+      });
+    }
+  }, {
+    key: "requestParameterData",
+    value: function () {
+      var _requestParameterData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context7.next = 3;
+                return fetch("parametros/" + id + "/edit").then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -85026,17 +85159,115 @@ var Parameters = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context5.abrupt("return", response);
+                return _context7.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context5.stop();
+                return _context7.stop();
             }
           }
-        }, _callee5);
+        }, _callee7);
       }));
 
-      function requestUpdateParameter(_x3, _x4) {
+      function requestParameterData(_x4) {
+        return _requestParameterData.apply(this, arguments);
+      }
+
+      return requestParameterData;
+    }()
+  }, {
+    key: "updateParameterValue",
+    value: function updateParameterValue(id) {
+      var _this4 = this;
+
+      var form = document.getElementById('formUpdateParameter');
+
+      if (form == null) {
+        return;
+      }
+
+      var btnUpdate = document.getElementById("btnUpdateParameter");
+
+      if (btnUpdate == null) {
+        return;
+      }
+
+      btnUpdate.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var formData, token, myHeaders, requestOptions, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                formData = new FormData(form);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context8.next = 12;
+                return _this4.requestUpdateParameter(id, requestOptions);
+
+              case 12:
+                response = _context8.sent;
+
+                if (response.state == 200) {
+                  success(response.message);
+                  modal = document.getElementById("modalEditParameter");
+                  modal.click();
+                  location.reload();
+                } else {
+                  error(response.message);
+                }
+
+              case 14:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      })));
+    }
+  }, {
+    key: "requestUpdateParameter",
+    value: function () {
+      var _requestUpdateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context9.next = 3;
+                return fetch("parametros/" + id, requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context9.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      function requestUpdateParameter(_x5, _x6) {
         return _requestUpdateParameter.apply(this, arguments);
       }
 

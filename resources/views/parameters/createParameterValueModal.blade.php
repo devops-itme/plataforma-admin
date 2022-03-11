@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="modalEditParameter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="modalCreateParameter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header pb-0">
-                <h4 class="card-title">Editar parametro</h4>
+                <h4 class="card-title">Crear parametro</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,7 +11,7 @@
             <div class="modal-body">
             <div class="row">
                 <div class="col-md-12">
-                    <form id="formUpdateParameter">
+                    <form id="formCreateParameter">
                         @csrf
                         <div class="form-group">
                             <label for="">Nombre<span class="text-danger">*</span></label>
@@ -35,7 +35,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="btnUpdateParameter">Actualizar</button>
+                <button type="button" class="btn btn-primary" id="btnStoreParameter">Guardar</button>
             </div>
         </div>
     </div>
