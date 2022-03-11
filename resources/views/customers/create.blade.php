@@ -18,7 +18,7 @@
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
             <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información basica de cliente</h5>
-            <div class="form-group py-3 m-0 col-md-2">
+            <div class="form-group py-3 m-0 col-md-3">
                 <label>Tipo de persona</label>
                 <select class="form-control form-control-solid" id="slc_type">
                     <option disabled selected> Seleccione </option>
@@ -27,7 +27,7 @@
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="col-md-7 d-flex px-0" id="naturalCustomer">
+            <div class="col-md-6 d-flex px-0" id="naturalCustomer">
                 <div class="form-group py-3 m-0 col-md-6">
                     <label>Nombres: <span class="text-danger">*</span></label>
                     <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{ old('name') }}" />
@@ -39,14 +39,14 @@
                 </div>
             </div>
             <div class="d-none" id="legalCustomer">
-                <div class="form-group py-3 m-0 col-md-6">
+                <div class="form-group py-3 m-0 col-md-12">
                     <label>Nombre de empresa <span class="text-danger">*</span></label>
                     <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text" name="business_name" value="{{ old('business_name') }}" />
                 </div>
-                <div class="form-group py-3 m-0 col-md-6">
-                    <label>Nombre comercial <span class="text-danger">*</span></label>
-                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text" name="tradename" value="{{ old('tradename') }}" />
-                </div>
+            </div>
+            <div class="form-group py-3 m-0 col-md-3">
+                <label>Nombre comercial <span class="text-danger">*</span></label>
+                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text" name="tradename" value="{{ old('tradename') }}" />
             </div>
             <div class="form-group py-3 m-0 col-md-3">
                 <label>Email: <span class="text-danger">*</span></label>
@@ -74,16 +74,16 @@
                 <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{ old('document_number') }}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group py-3 m-0 col-md-3">
+            <div class="form-group py-3 m-0 col-md-4" id="datebirth">
                 <label>Fecha de nacimiento: <span class="text-danger">*</span></label>
                 <input type="date" class="form-control form-control-solid" placeholder="" name="birthday" value="{{ old('birthday') }}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group py-3 m-0 col-md-6">
+            <div class="form-group py-3 m-0 col-md-4" id="passwordDiv">
                 <label>Contraseña <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="password" name="password" />
             </div>
-            <div class="form-group py-3 m-0 col-md-6">
+            <div class="form-group py-3 m-0 col-md-4" id="r_passwordDiv">
                 <label>Repetir Contraseña <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="password" name="password_confirmation" />
             </div>

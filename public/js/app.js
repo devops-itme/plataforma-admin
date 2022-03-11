@@ -81947,6 +81947,9 @@ var Customers = /*#__PURE__*/function () {
       var option = document.getElementById("slc_type");
       var naturalCustomer = document.getElementById("naturalCustomer");
       var legalCustomer = document.getElementById("legalCustomer");
+      var datebirth = document.getElementById("datebirth");
+      var password = document.getElementById("passwordDiv");
+      var r_password = document.getElementById("r_passwordDiv");
 
       if (option == null) {
         return;
@@ -81955,20 +81958,28 @@ var Customers = /*#__PURE__*/function () {
       if (typeSelected != null) {
         if (typeSelected.value == 1) {
           legalCustomer.className = 'd-none';
-          naturalCustomer.className = 'col-md-7 d-flex px-0';
+          naturalCustomer.className = 'col-md-6 d-flex px-0';
+          datebirth.className = 'form-group py-3 m-0 col-md-4';
         } else if (typeSelected.value == 2) {
           naturalCustomer.className = 'd-none';
-          legalCustomer.className = 'col-md-7 d-flex px-0';
+          legalCustomer.className = 'col-md-3 d-flex px-0';
+          datebirth.className = 'form-group py-3 m-0 col-md-3';
         }
       }
 
       option.addEventListener('change', function (event) {
         if (option.value == 1) {
           legalCustomer.className = 'd-none';
-          naturalCustomer.className = 'col-md-7 d-flex px-0';
+          naturalCustomer.className = 'col-md-6 d-flex px-0';
+          datebirth.className = 'form-group py-3 m-0 col-md-4';
+          password.className = 'form-group py-3 m-0 col-md-4';
+          r_password.className = 'form-group py-3 m-0 col-md-4';
         } else if (option.value == 2) {
           naturalCustomer.className = 'd-none';
-          legalCustomer.className = 'col-md-7 d-flex px-0';
+          legalCustomer.className = 'col-md-3 d-flex px-0';
+          datebirth.className = 'form-group py-3 m-0 col-md-3';
+          password.className = 'form-group py-3 m-0 col-md-6';
+          r_password.className = 'form-group py-3 m-0 col-md-6';
         }
       });
     }

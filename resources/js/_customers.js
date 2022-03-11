@@ -84,25 +84,36 @@ export default class Customers {
         let option = document.getElementById("slc_type");
         let naturalCustomer = document.getElementById("naturalCustomer");
         let legalCustomer = document.getElementById("legalCustomer");
+        let datebirth = document.getElementById("datebirth");
+        let password = document.getElementById("passwordDiv");
+        let r_password = document.getElementById("r_passwordDiv");
         if(option == null){
             return;
         }
         if(typeSelected != null){
             if (typeSelected.value == 1) {
                 legalCustomer.className = 'd-none'
-                naturalCustomer.className = 'col-md-7 d-flex px-0';
+                naturalCustomer.className = 'col-md-6 d-flex px-0';
+                datebirth.className = 'form-group py-3 m-0 col-md-4';
             } else if (typeSelected.value == 2) {
                 naturalCustomer.className = 'd-none'
-                legalCustomer.className = 'col-md-7 d-flex px-0'
+                legalCustomer.className = 'col-md-3 d-flex px-0'
+                datebirth.className = 'form-group py-3 m-0 col-md-3';
             }
         }
         option.addEventListener('change', (event) => {
             if (option.value == 1) {
-                legalCustomer.className = 'd-none'
-                naturalCustomer.className = 'col-md-7 d-flex px-0';
+                legalCustomer.className = 'd-none';
+                naturalCustomer.className = 'col-md-6 d-flex px-0';
+                datebirth.className = 'form-group py-3 m-0 col-md-4';
+                password.className = 'form-group py-3 m-0 col-md-4';
+                r_password.className = 'form-group py-3 m-0 col-md-4';
             } else if (option.value == 2) {
-                naturalCustomer.className = 'd-none'
-                legalCustomer.className = 'col-md-7 d-flex px-0'
+                naturalCustomer.className = 'd-none';
+                legalCustomer.className = 'col-md-3 d-flex px-0';
+                datebirth.className = 'form-group py-3 m-0 col-md-3';
+                password.className = 'form-group py-3 m-0 col-md-6';
+                r_password.className = 'form-group py-3 m-0 col-md-6';
             }
         })
     }
