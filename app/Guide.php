@@ -36,7 +36,8 @@ class Guide extends Model
         'customer_address',
         'state',
         'app_status',
-        'boxes'
+        'boxes',
+        'status_matrix_id'
     ];
 
     public function getOrder()

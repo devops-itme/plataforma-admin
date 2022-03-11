@@ -2144,6 +2144,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2155,12 +2165,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      selected: 32,
+      selected: 55,
       delivery_types: [{
-        value: 32,
+        value: 55,
         text: "Entregas"
       }, {
-        value: 35,
+        value: 53,
         text: "Recogidas"
       }],
       showModal: false,
@@ -2171,7 +2181,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       guides: [],
       guides2: [],
       messengers: [],
-      type_guide: 32,
+      type_guide: 3,
       showGuide: null,
       activeIndex: 2,
       tabs: [],
@@ -2183,31 +2193,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     loadingEvt: function loadingEvt() {
       $("#myTab li:nth-child(1) a").tab("show");
     },
-    getGuide: function getGuide(data) {
-      this.showGuide = data;
-      this.showGuide.get_route ? this.if_route = true : this.if_route = false;
-      this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
-    },
-    getGuides: function getGuides(type) {
+    statusMatrix: function statusMatrix(scope) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
+        var req, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this2.type_guide = _this2.selected + type;
-                _context.next = 3;
-                return _this2.requestGuides();
+                _context.next = 2;
+                return fetch("/matriz_estados?scope_id=".concat(scope));
 
-              case 3:
-                response = _context.sent;
-                _this2.guides = response.data;
-                _this2.guides2 = [];
-                _this2.showGuide = null;
+              case 2:
+                req = _context.sent;
+                _context.next = 5;
+                return req.json();
 
-              case 7:
+              case 5:
+                res = _context.sent;
+                // take the first 3 data from the consulate
+                _this2.tabs = res.data.slice(0, 3); //#HREF TAB
+
+                _this2.tabs[0].href = "porRecoger";
+                _this2.tabs[1].href = "enproceso";
+                _this2.tabs[2].href = "consultas"; //NAME TABS
+
+                _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
+                _this2.selected == 54 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
+                _this2.selected == 55 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
+
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -2215,15 +2231,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    requestGuides: function requestGuides() {
+    getGuide: function getGuide(data) {
+      this.showGuide = data;
+      this.showGuide.get_route ? this.if_route = true : this.if_route = false;
+      this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
+    },
+    getGuides: function getGuides(type) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response, myHeaders, requestOptions;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _this3.statusMatrix(_this3.selected); // if(type !=null){
+                //     this.type_guide = type
+                // }
+
+
+                if (type == 55) {
+                  _this3.type_guide = 3;
+                }
+
+                if (type == 53) {
+                  _this3.type_guide = 7;
+                }
+
+                _context2.next = 5;
+                return _this3.requestGuides();
+
+              case 5:
+                response = _context2.sent;
+                _this3.guides = response.data;
+                _this3.guides2 = [];
+                _this3.showGuide = null;
+                _this3.type_guide = type;
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    requestGuides: function requestGuides() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response, myHeaders, requestOptions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log(_this4.type_guide);
                 response = {
                   state: 500
                 };
@@ -2232,9 +2294,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 requestOptions = {
                   method: "GET",
                   headers: myHeaders
-                };
-                _context2.next = 6;
-                return fetch("/orders_packing/".concat(_this3.type_guide), requestOptions).then(function (response) {
+                }; // console.log(this.type_guide)
+
+                _context3.next = 7;
+                return fetch("/orders_packing/".concat(_this4.type_guide), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2242,35 +2305,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return console.warn(err);
                 });
 
-              case 6:
-                return _context2.abrupt("return", response);
-
               case 7:
+                return _context3.abrupt("return", response);
+
+              case 8:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this4 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, myHeaders, requestOptions;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _this = _this4;
+                _this = _this5;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
                   method: "GET",
                   headers: myHeaders
                 };
-                _context3.next = 6;
+                _context4.next = 6;
                 return fetch("/messengers_delivery", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2280,35 +2343,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 6:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    orderState: function orderState() {
-      var _this5 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var req, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
-                return fetch("/order_states");
-
-              case 2:
-                req = _context4.sent;
-                _context4.next = 5;
-                return req.json();
-
-              case 5:
-                res = _context4.sent;
-                _this5.tabs = res.data;
-
-              case 7:
               case "end":
                 return _context4.stop();
             }
@@ -2325,14 +2359,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              // this.orderState();
               _this6.getGuides(null);
 
               _this6.getMessengers();
 
-              _this6.orderState();
-
-            case 3:
+            case 2:
             case "end":
               return _context5.stop();
           }
@@ -62691,7 +62722,7 @@ var render = function () {
                           : $$selectedVal[0]
                       },
                       function ($event) {
-                        _vm.loadingEvt(), _vm.getGuides(null)
+                        _vm.loadingEvt(), _vm.getGuides(_vm.selected)
                       },
                     ],
                   },
@@ -62713,52 +62744,7 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-md-8 d-flex align-items-center flex-row flex-wrap",
-              },
-              [
-                _c("div", { staticClass: "col-md-5 py-2" }, [
-                  _vm.type_guide == 34 || _vm.type_guide == 37
-                    ? _c("div", { staticClass: " border rounded" }, [_vm._m(1)])
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
-                  _vm.type_guide == 34 || _vm.type_guide == 37
-                    ? _c(
-                        "select",
-                        {
-                          staticClass: "form-control",
-                          attrs: { id: "delivery_event_state" },
-                        },
-                        [_c("option", [_vm._v("Seleccione estado")])]
-                      )
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _vm.type_guide == 34 || _vm.type_guide == 37
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-light-primary font-weight-bold",
-                          attrs: { type: "button" },
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Aplicar nuevo estado\n                    "
-                          ),
-                        ]
-                      )
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _vm._m(2),
-              ]
-            ),
+            _vm._m(1),
           ]
         ),
         _vm._v(" "),
@@ -62769,98 +62755,26 @@ var render = function () {
               "nav nav-tabs nav-tabs-line nav-tabs-line-3x nav-bolder",
             attrs: { id: "myTab", role: "tablist" },
           },
-          [
-            _c(
-              "li",
-              { staticClass: "nav-item", attrs: { role: "presentation" } },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link active",
-                    attrs: {
-                      id: "porRecoger-tab",
-                      "data-toggle": "tab",
-                      href: "#porRecoger",
-                      role: "tab",
-                      "aria-controls": "porRecoger",
-                      "aria-selected": "true",
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.getGuides(0)
-                      },
-                    },
+          _vm._l(_vm.tabs, function (tab) {
+            return _c("li", { key: tab.id, staticClass: "nav-item" }, [
+              _c("a", {
+                staticClass: "nav-link tablink",
+                class: { active: _vm.type_guide === tab.id },
+                attrs: {
+                  id: tab.id,
+                  "data-toggle": "tab",
+                  href: "#" + tab.href,
+                },
+                domProps: { textContent: _vm._s(tab.name) },
+                on: {
+                  click: function ($event) {
+                    return _vm.getGuides(tab.id)
                   },
-                  [
-                    _vm._v(
-                      "Por " +
-                        _vm._s(_vm.selected == 32 ? "Entregar" : "Recoger")
-                    ),
-                  ]
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item", attrs: { role: "presentation" } },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    attrs: {
-                      id: "enproceso-tab",
-                      "data-toggle": "tab",
-                      href: "#enproceso",
-                      role: "tab",
-                      "aria-controls": "enproceso",
-                      "aria-selected": "false",
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.getGuides(1)
-                      },
-                    },
-                  },
-                  [
-                    _vm._v(
-                      _vm._s(_vm.selected == 32 ? "Entregas" : "Recogidas") +
-                        " en\n                    proceso"
-                    ),
-                  ]
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              { staticClass: "nav-item", attrs: { role: "presentation" } },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    attrs: {
-                      id: "consultas-tab",
-                      "data-toggle": "tab",
-                      href: "#consultas",
-                      role: "tab",
-                      "aria-controls": "consultas",
-                      "aria-selected": "false",
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.getGuides(2)
-                      },
-                    },
-                  },
-                  [_vm._v("Consultas y edición")]
-                ),
-              ]
-            ),
-          ]
+                },
+              }),
+            ])
+          }),
+          0
         ),
         _vm._v(" "),
         _c("div", { staticClass: "d-flex flex-row flex-wrap" }, [
@@ -62949,40 +62863,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3 py-4" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-flex flex-row flex-wrap align-items-center justify-content-center",
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "btn btn-light-success btn-block font-weight-bold mr-2",
-                    attrs: { href: "#" },
-                  },
-                  [_vm._v("Imprimir Guia")]
-                ),
-                _vm._v(" "),
-                _vm.type_guide == 34 || _vm.type_guide == 37
-                  ? _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-light-primary btn-block font-weight-bold mr-2",
-                        attrs: {
-                          type: "button",
-                          "data-toggle": "modal",
-                          "data-target": "#exampleModal",
-                        },
-                      },
-                      [_vm._v("Editar Destino")]
-                    )
-                  : _vm._e(),
-              ]
-            ),
+            _vm._m(2),
             _vm._v(" "),
             _c(
               "div",
@@ -63231,23 +63112,92 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mb-0" }, [
-      _c("span", { staticClass: "font-weight-bolder mb-3" }, [
-        _vm._v(
-          "Destinos en recogida por editar:\n                            "
-        ),
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "line-height-xl" }, [_vm._v("2000")]),
-    ])
+    return _c(
+      "div",
+      { staticClass: "col-md-8 d-flex align-items-center flex-row flex-wrap" },
+      [
+        _c("div", { staticClass: "col-md-5 py-2" }, [
+          _c("div", { staticClass: " border rounded" }, [
+            _c("p", { staticClass: "mb-0" }, [
+              _c("span", { staticClass: "font-weight-bolder mb-3" }, [
+                _vm._v(
+                  "Destinos en recogida por editar:\n                            "
+                ),
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "line-height-xl" }, [_vm._v("2000")]),
+            ]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
+          _c(
+            "select",
+            {
+              staticClass: "form-control",
+              attrs: { id: "delivery_event_state" },
+            },
+            [_c("option", [_vm._v("Seleccione estado")])]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light-primary font-weight-bold",
+              attrs: { type: "button" },
+            },
+            [
+              _vm._v(
+                "\n                        Aplicar nuevo estado\n                    "
+              ),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-1" }, [
+          _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
+        ]),
+      ]
+    )
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1" }, [
-      _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
-    ])
+    return _c(
+      "div",
+      {
+        staticClass:
+          "d-flex flex-row flex-wrap align-items-center justify-content-center",
+      },
+      [
+        _c(
+          "a",
+          {
+            staticClass:
+              "btn btn-light-success btn-block font-weight-bold mr-2",
+            attrs: { href: "#" },
+          },
+          [_vm._v("Imprimir Guia")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-light-primary btn-block font-weight-bold mr-2",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal",
+            },
+          },
+          [_vm._v("Editar Destino")]
+        ),
+      ]
+    )
   },
   function () {
     var _vm = this
@@ -63351,7 +63301,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Destinos por\n                        " +
-                      _vm._s(_vm.selected == 32 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -63476,7 +63426,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Seleccionados por\n                        " +
-                      _vm._s(_vm.selected == 32 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
