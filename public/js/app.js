@@ -2357,12 +2357,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2376,6 +2370,12 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2387,7 +2387,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       ordersQuantity: "",
       ordersTotalValue: 0,
       tabs: [],
-      currentTab: 32,
+      currentTab: 3,
       showMessengerData: [],
       messengers: [],
       searchMessenger: null,
@@ -2432,6 +2432,41 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   watch: {},
   methods: {
+    statusMatrix: function statusMatrix() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var scope_id, req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                scope_id = 55;
+                _context.next = 3;
+                return fetch("/matriz_estados?scope_id=".concat(scope_id));
+
+              case 3:
+                req = _context.sent;
+                _context.next = 6;
+                return req.json();
+
+              case 6:
+                res = _context.sent;
+                _this4.tabs = res.data.slice(0, 3);
+                _this4.currentTab = _this4.tabs[0].id;
+                _this4.tabs[0].href = "pordespachar";
+                _this4.tabs[1].href = "despachados";
+                _this4.tabs[2].href = "completados";
+                _this4.tabs[2].name = "COMPLETADOS";
+
+              case 13:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     localizeDate: function localizeDate(date) {
       if (!date || !date.includes('-')) return date;
 
@@ -2444,57 +2479,57 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       return new Date("".concat(mm, "/").concat(dd, "/").concat(yyyy));
     },
     getOrders: function getOrders(type_id, index) {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, i, sum, x;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                index != undefined && $("#myTab li:nth-child(".concat(index + 1, ") a")).tab("show");
-                _this4.currentTab = type_id;
-                _context.next = 4;
-                return _this4.requestOrders();
-
-              case 4:
-                response = _context.sent;
-                _this4.orders = response.data; // this.data = this.orders;
-
-                _this4.activeIndex = null;
-                _this4.showData = "";
-                _this4.ordersQuantity = "";
-                _this4.ordersTotalValue = 0;
-
-                for (i = 0; i < _this4.orders.length; i++) {
-                  sum = 0;
-
-                  for (x = 0; x < _this4.orders[i].get_guides.length; x++) {
-                    sum += _this4.orders[i].get_guides[x].value;
-                  }
-
-                  _this4.ordersTotalValue += sum;
-                }
-
-                _this4.ordersQuantity = _this4.orders.length;
-                _this4.showMessengerData = [];
-
-              case 13:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    requestOrders: function requestOrders() {
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response, myHeaders, requestOptions;
+        var response, i, sum, x;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
+              case 0:
+                index != undefined && $("#myTab li:nth-child(".concat(index + 1, ") a")).tab("show");
+                _this5.currentTab = type_id;
+                _context2.next = 4;
+                return _this5.requestOrders();
+
+              case 4:
+                response = _context2.sent;
+                _this5.orders = response.data; // this.data = this.orders;
+
+                _this5.activeIndex = null;
+                _this5.showData = "";
+                _this5.ordersQuantity = "";
+                _this5.ordersTotalValue = 0;
+
+                for (i = 0; i < _this5.orders.length; i++) {
+                  sum = 0;
+
+                  for (x = 0; x < _this5.orders[i].get_guides.length; x++) {
+                    sum += _this5.orders[i].get_guides[x].value;
+                  }
+
+                  _this5.ordersTotalValue += sum;
+                }
+
+                _this5.ordersQuantity = _this5.orders.length;
+                _this5.showMessengerData = [];
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    requestOrders: function requestOrders() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response, myHeaders, requestOptions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 response = {
                   state: 500
@@ -2505,8 +2540,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "GET",
                   headers: myHeaders
                 };
-                _context2.next = 6;
-                return fetch("/orders_ondemand/".concat(_this5.currentTab), requestOptions).then(function (response) {
+                _context3.next = 6;
+                return fetch("/orders_ondemand/".concat(_this6.currentTab), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -2515,34 +2550,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                 });
 
               case 6:
-                return _context2.abrupt("return", response);
+                return _context3.abrupt("return", response);
 
               case 7:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this6 = this;
+      var _this7 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, myHeaders, requestOptions;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _this = _this6;
+                _this = _this7;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
                   method: "GET",
                   headers: myHeaders
                 };
-                _context3.next = 6;
+                _context4.next = 6;
                 return fetch("/messengers_delivery", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2553,10 +2588,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
               case 6:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     },
     rowTotal: function rowTotal(item) {
@@ -2575,40 +2610,40 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       this.activeIndex = index;
     },
     assignateDelivery: function assignateDelivery() {
-      var _this7 = this;
+      var _this8 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var _this, token, myHeaders, requestOptions;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                if (_this7.showData) {
-                  _context4.next = 4;
+                if (_this8.showData) {
+                  _context5.next = 4;
                   break;
                 }
 
-                _context4.next = 3;
+                _context5.next = 3;
                 return error("Debe seleccionar una orden");
 
               case 3:
-                return _context4.abrupt("return", _context4.sent);
+                return _context5.abrupt("return", _context5.sent);
 
               case 4:
-                if (_this7.setMessenger) {
-                  _context4.next = 8;
+                if (_this8.setMessenger) {
+                  _context5.next = 8;
                   break;
                 }
 
-                _context4.next = 7;
+                _context5.next = 7;
                 return error("Debe seleccionar un mensajero");
 
               case 7:
-                return _context4.abrupt("return", _context4.sent);
+                return _context5.abrupt("return", _context5.sent);
 
               case 8:
-                _this = _this7;
+                _this = _this8;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -2618,12 +2653,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    messenger_user_id: _this7.setMessenger.user_id,
-                    order_id: _this7.showData.id,
-                    state_order: _this7.tabs[1].id
+                    messenger_user_id: _this8.setMessenger.user_id,
+                    order_id: _this8.showData.id,
+                    state: _this8.tabs[1].id
                   })
                 };
-                _context4.next = 17;
+                _context5.next = 17;
                 return fetch("/ordenes/asignacion", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2646,75 +2681,68 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
               case 17:
               case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    orderState: function orderState() {
-      var _this8 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var req, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _context5.next = 2;
-                return fetch("/order_states");
-
-              case 2:
-                req = _context5.sent;
-                _context5.next = 5;
-                return req.json();
-
-              case 5:
-                res = _context5.sent;
-                _this8.tabs = res.data;
-                _this8.currentTab = _this8.tabs[0].id;
-                _this8.tabs[0].href = "pordespachar";
-                _this8.tabs[1].href = "despachados";
-                _this8.tabs[2].href = "completados";
-
-              case 11:
-              case "end":
                 return _context5.stop();
             }
           }
         }, _callee5);
       }))();
     },
-    updateStateOrders: function updateStateOrders(state) {
-      var _this9 = this;
-
+    orderState: function orderState() {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var result, _this, token, myHeaders, requestOptions;
-
+        var req, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
+                _context6.next = 2;
+                return fetch("/order_states");
+
+              case 2:
+                req = _context6.sent;
+                _context6.next = 5;
+                return req.json();
+
+              case 5:
+                res = _context6.sent;
+
+              case 6:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    updateStateOrders: function updateStateOrders() {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var result, _this, token, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
                 if (_this9.showData) {
-                  _context6.next = 4;
+                  _context7.next = 4;
                   break;
                 }
 
-                _context6.next = 3;
+                _context7.next = 3;
                 return error("Debe seleccionar una orden");
 
               case 3:
-                return _context6.abrupt("return", _context6.sent);
+                return _context7.abrupt("return", _context7.sent);
 
               case 4:
-                _context6.next = 6;
+                _context7.next = 6;
                 return confirmation('¿Estas Seguro?', 'Se cambiara el estado de la orden', 'info');
 
               case 6:
-                result = _context6.sent;
+                result = _context7.sent;
 
                 if (!(result == true)) {
-                  _context6.next = 17;
+                  _context7.next = 17;
                   break;
                 }
 
@@ -2728,11 +2756,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    order_id: _this9.showData.id
+                    order_id: _this9.showData.id,
+                    state: _this9.tabs[1].id //id tap por despachar
+
                   })
                 };
-                _context6.next = 17;
-                return fetch("/despacho/orden/estado/".concat(state), requestOptions).then(function (response) {
+                _context7.next = 17;
+                return fetch("/despacho/orden/estado", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   console.log(data);
@@ -2756,33 +2786,35 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
               case 17:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6);
+        }, _callee7);
       }))();
     }
   },
   mounted: function mounted() {
     var _this10 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context8.prev = _context8.next) {
             case 0:
+              _this10.statusMatrix();
+
               _this10.orderState();
 
               _this10.getOrders(_this10.currentTab);
 
               _this10.getMessengers();
 
-            case 3:
+            case 4:
             case "end":
-              return _context7.stop();
+              return _context8.stop();
           }
         }
-      }, _callee7);
+      }, _callee8);
     }))();
   }
 });

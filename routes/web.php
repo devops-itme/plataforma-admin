@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignOndemad')->name('orders.assign');
     Route::post('/quias/asignacion', 'Admin\DeliveryController@assignPacking')->name('guides.assign');
     //update order state
-    Route::post('/despacho/orden/estado/{state}', 'Admin\DeliveryController@updateStateOrders');
+    Route::post('/despacho/orden/estado', 'Admin\DeliveryController@updateStateOrders');
 
     Route::resource('parametros', 'Admin\ParameterController')->except('destroy')->names('parameters');
     Route::delete('parametros/delete/{id}', 'Admin\ParameterController@destroy')->name('parameters.destroy');

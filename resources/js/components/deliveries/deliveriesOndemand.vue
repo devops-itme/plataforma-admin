@@ -11,7 +11,7 @@ export default {
             ordersQuantity: "",
             ordersTotalValue: 0,
             tabs: [],
-            currentTab: 32,
+            currentTab: 3,
             showMessengerData:[],
             messengers: [],
             searchMessenger: null,
@@ -62,6 +62,18 @@ export default {
 
     methods: {
 
+          async statusMatrix() {
+            let scope_id = 55
+            let req = await fetch(`/matriz_estados?scope_id=${scope_id}`);
+            let res = await req.json();
+            this.tabs = res.data.slice(0, 3);
+            this.currentTab = this.tabs[0].id;
+            this.tabs[0].href = "pordespachar";
+            this.tabs[1].href = "despachados";
+            this.tabs[2].href = "completados";
+            this.tabs[2].name = "COMPLETADOS";
+
+        },
         localizeDate(date) {
             if (!date || !date.includes('-')) return date
             const [yyyy, mm, dd] = date.split('-')
@@ -160,7 +172,7 @@ export default {
                 body: JSON.stringify({
                     messenger_user_id: this.setMessenger.user_id,
                     order_id: this.showData.id,
-                    state_order: this.tabs[1].id
+                    state: this.tabs[1].id
                 }),
             };
             await fetch(`/ordenes/asignacion`, requestOptions)
@@ -183,14 +195,11 @@ export default {
         async orderState() {
             let req = await fetch("/order_states");
             let res = await req.json();
-            this.tabs = res.data;
-            this.currentTab = this.tabs[0].id;
-            this.tabs[0].href = "pordespachar";
-            this.tabs[1].href = "despachados";
-            this.tabs[2].href = "completados";
+
         },
 
-        async updateStateOrders(state){
+
+        async updateStateOrders(){
             if (!this.showData) {
                 return await error("Debe seleccionar una orden");
             }
@@ -209,9 +218,10 @@ export default {
                     headers: myHeaders,
                     body: JSON.stringify({
                         order_id: this.showData.id,
+                        state: this.tabs[1].id, //id tap por despachar
                     }),
                 };
-                await fetch(`/despacho/orden/estado/${state}`, requestOptions)
+                await fetch(`/despacho/orden/estado`, requestOptions)
                     .then((response) => response.json())
                     .then(function (data) {
                         console.log(data)
@@ -234,6 +244,7 @@ export default {
     },
 
     async mounted() {
+        this.statusMatrix();
         this.orderState();
         this.getOrders(this.currentTab);
         this.getMessengers();

@@ -57,10 +57,10 @@ class DeliveryController extends Controller
         return $this->respond(200, $order_states, null, 'Estado de las ordenes');
     }
 
-    public function updateStateOrders($state, Request $request)
+    public function updateStateOrders(Request $request)
     {
         $order = Order::where('id', $request->order_id)->update([
-            'state' => $state
+            'status_matrix_id' => $request->state
         ]);
         return $this->respond(200, $order, null, 'estado actualizado');
     }
@@ -68,7 +68,7 @@ class DeliveryController extends Controller
     public function statusMatrix()
     {
         $role_id = 1;
-        $statusMatrix = StatusMatrix::get();
+        $statusMatrix = StatusMatrix::scope(Request()->scope_id)->get();
 
         $data = $statusMatrix->map(function ($item, $key) use ($role_id) {
             $descriptor = StatusDescriptor::where('status_matrix_id', $item->id)->where('role_id', $role_id)->first();
