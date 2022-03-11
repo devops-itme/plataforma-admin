@@ -84807,12 +84807,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Parameters = /*#__PURE__*/function () {
   function Parameters() {
     _classCallCheck(this, Parameters);
+
+    this.id = '';
   }
 
   _createClass(Parameters, [{
     key: "initialize",
     value: function initialize() {
-      this.parameterData();
+      this.loadParameterValues();
     }
   }, {
     key: "parameterData",
@@ -84844,11 +84846,9 @@ var Parameters = /*#__PURE__*/function () {
                   description = document.getElementById("parameter_description");
                   description.value = data.description;
                   state = document.getElementById("parameter_state_edit");
-                  data.state == 1 ? state.checked = true : state.checked = false;
+                  data.state == 1 ? state.checked = true : state.checked = false; // this.updateParameter(id);
 
-                  _this.updateParameter(id);
-
-                case 12:
+                case 11:
                 case "end":
                   return _context.stop();
               }
@@ -84917,7 +84917,7 @@ var Parameters = /*#__PURE__*/function () {
 
               case 3:
                 btnUpdate.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-                  var updateForm, formData, token, myHeaders, requestOptions, response;
+                  var updateForm, formData, token, myHeaders, requestOptions, response, modal, requestData, data;
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                       switch (_context3.prev = _context3.next) {
@@ -84943,14 +84943,30 @@ var Parameters = /*#__PURE__*/function () {
                         case 13:
                           response = _context3.sent;
 
-                          if (response.state == 200) {
-                            success(response.message);
-                            location.reload();
-                          } else {
-                            error(response.message);
+                          if (!(response.state == 200)) {
+                            _context3.next = 25;
+                            break;
                           }
 
-                        case 15:
+                          success(response.message);
+                          modal = document.getElementById("modalEditUser");
+                          modal.click();
+                          _context3.next = 20;
+                          return _this2.requestParameterValues(id);
+
+                        case 20:
+                          requestData = _context3.sent;
+                          data = requestData.data;
+
+                          _this2.renderParameterTable(data);
+
+                          _context3.next = 26;
+                          break;
+
+                        case 25:
+                          error(response.message);
+
+                        case 26:
                         case "end":
                           return _context3.stop();
                       }
@@ -85009,6 +85025,239 @@ var Parameters = /*#__PURE__*/function () {
       }
 
       return requestUpdateParameter;
+    }()
+  }, {
+    key: "loadParameterValues",
+    value: function loadParameterValues() {
+      var _this3 = this;
+
+      var buttons = document.getElementsByName('btnShowParameters');
+
+      if (buttons == null) {
+        return;
+      }
+
+      [].forEach.call(buttons, function (btn) {
+        _this3.id = '';
+        btn.addEventListener('click', function () {
+          _this3.id = btn['id'];
+          var btnOpenModalCreate = document.getElementById("divCreateParameter");
+          btnOpenModalCreate.className = 'col d-flex align-items-top justify-content-end';
+
+          _this3.renderParameterTable(_this3.id);
+
+          _this3.storeParameterValue(_this3.id);
+
+          throw 'break';
+        });
+      });
+    }
+  }, {
+    key: "requestParameterValues",
+    value: function () {
+      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context6.next = 3;
+                return fetch("/parametros/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context6.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function requestParameterValues(_x5) {
+        return _requestParameterValues.apply(this, arguments);
+      }
+
+      return requestParameterValues;
+    }()
+  }, {
+    key: "renderParameterTable",
+    value: function () {
+      var _renderParameterTable = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
+        var tbody, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                tbody = document.querySelector("#parameterValueTable tbody");
+                tbody.innerHTML = '';
+                _context7.next = 4;
+                return this.requestParameterValues(id);
+
+              case 4:
+                response = _context7.sent;
+                data = response.data;
+                [].forEach.call(data, function (key) {
+                  var _key$description;
+
+                  var row = tbody.insertRow();
+                  var nameCell = row.insertCell(0);
+                  nameCell.innerHTML = key.name;
+                  var descriptionCell = row.insertCell(1);
+                  descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
+                  var stateCell = row.insertCell(2);
+
+                  if (key.state == 1) {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                            Activo\
+                                        </span>';
+                  } else {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                            Inactivo\
+                                        </span>';
+                  }
+
+                  var selectCell = row.insertCell(3);
+                  var editBtn = document.createElement("button");
+                  editBtn.setAttribute('name', 'btnEditParameter');
+                  editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                  editBtn.setAttribute('data-toggle', 'modal');
+                  editBtn.setAttribute('data-target', '#modalEditParameter');
+                  editBtn.setAttribute('id', +key.id);
+                  editBtn.setAttribute('type', 'button');
+                  editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                  var deleteBtn = document.createElement("button");
+
+                  deleteBtn.onclick = function () {
+                    confirmDelete('parametros/delete/' + key.id);
+                  };
+
+                  deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                  deleteBtn.setAttribute('type', 'button');
+                  deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                  var buttonsDiv = document.createElement("div");
+                  buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                  buttonsDiv.appendChild(editBtn);
+                  buttonsDiv.appendChild(deleteBtn);
+                  selectCell.appendChild(buttonsDiv);
+                  tbody.appendChild(row);
+                });
+
+              case 7:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      function renderParameterTable(_x6) {
+        return _renderParameterTable.apply(this, arguments);
+      }
+
+      return renderParameterTable;
+    }()
+  }, {
+    key: "storeParameterValue",
+    value: function storeParameterValue() {
+      var _this4 = this;
+
+      var btnStore = document.getElementById("btnStoreParameter");
+
+      if (btnStore == null) {
+        return;
+      }
+
+      btnStore.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var form, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                form = document.getElementById("formCreateParameter");
+
+                if (!(form == null)) {
+                  _context8.next = 3;
+                  break;
+                }
+
+                return _context8.abrupt("return");
+
+              case 3:
+                formData = new FormData(form);
+                formData.append('parameter_id', _this4.id);
+                _context8.next = 7;
+                return _this4.requestStoreParameterValue(formData);
+
+              case 7:
+                response = _context8.sent;
+
+                if (response.state == 200) {
+                  success(response.message);
+                  modal = document.getElementById("modalCreateParameter");
+                  modal.click();
+
+                  _this4.renderParameterTable(_this4.id);
+                } else {
+                  error(response.message);
+                }
+
+              case 9:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      })));
+    }
+  }, {
+    key: "requestStoreParameterValue",
+    value: function () {
+      var _requestStoreParameterValue = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context9.next = 3;
+                return fetch("/parametros", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context9.sent;
+                return _context9.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      function requestStoreParameterValue(_x7) {
+        return _requestStoreParameterValue.apply(this, arguments);
+      }
+
+      return requestStoreParameterValue;
     }()
   }]);
 
