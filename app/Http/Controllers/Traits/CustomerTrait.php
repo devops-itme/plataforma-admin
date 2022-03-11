@@ -20,7 +20,7 @@ trait CustomerTrait
                 'zone' => 'required',
                 'contact' => 'required|string',
                 'payment_period' => 'required',
-                'credit' => 'required|string',
+                'credit' => 'nullable|integer',
                 'taxes' => 'required',
                 'receive_emails' => 'nullable',
                 'fullfill' => 'nullable',
