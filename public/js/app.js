@@ -84844,11 +84844,9 @@ var Parameters = /*#__PURE__*/function () {
                   description = document.getElementById("parameter_description");
                   description.value = data.description;
                   state = document.getElementById("parameter_state_edit");
-                  data.state == 1 ? state.checked = true : state.checked = false;
+                  data.state == 1 ? state.checked = true : state.checked = false; // this.updateParameter(id);
 
-                  _this.updateParameter(id);
-
-                case 12:
+                case 11:
                 case "end":
                   return _context.stop();
               }
@@ -85038,46 +85036,26 @@ var Parameters = /*#__PURE__*/function () {
       }
 
       [].forEach.call(buttons, function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-          var response, data;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-            while (1) {
-              switch (_context6.prev = _context6.next) {
-                case 0:
-                  _context6.next = 2;
-                  return _this3.requestParameterValues(btn['id']);
+        btn.addEventListener('click', function () {
+          _this3.renderParameterTable(btn['id']);
 
-                case 2:
-                  response = _context6.sent;
-                  data = response.data;
-
-                  _this3.renderParameterTable(data);
-
-                  _this3.parameterData(); // this.updateParameter(btn['id']);
-
-
-                case 6:
-                case "end":
-                  return _context6.stop();
-              }
-            }
-          }, _callee6);
-        })));
+          _this3.storeParameterValue(btn['id']);
+        });
       });
     }
   }, {
     key: "requestParameterValues",
     value: function () {
-      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
+      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context7.next = 3;
+                _context6.next = 3;
                 return fetch("/parametros/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -85087,14 +85065,14 @@ var Parameters = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context7.abrupt("return", response);
+                return _context6.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7);
+        }, _callee6);
       }));
 
       function requestParameterValues(_x5) {
@@ -85105,55 +85083,173 @@ var Parameters = /*#__PURE__*/function () {
     }()
   }, {
     key: "renderParameterTable",
-    value: function renderParameterTable(data) {
-      var tbody = document.querySelector("#parameterValueTable tbody");
-      tbody.innerHTML = '';
-      [].forEach.call(data, function (key) {
-        var _key$description;
+    value: function () {
+      var _renderParameterTable = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
+        var tbody, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                tbody = document.querySelector("#parameterValueTable tbody");
+                tbody.innerHTML = '';
+                _context7.next = 4;
+                return this.requestParameterValues(id);
 
-        var row = tbody.insertRow();
-        var nameCell = row.insertCell(0);
-        nameCell.innerHTML = key.name;
-        var descriptionCell = row.insertCell(1);
-        descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
-        var stateCell = row.insertCell(2);
+              case 4:
+                response = _context7.sent;
+                data = response.data;
+                [].forEach.call(data, function (key) {
+                  var _key$description;
 
-        if (key.state == 1) {
-          stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                  var row = tbody.insertRow();
+                  var nameCell = row.insertCell(0);
+                  nameCell.innerHTML = key.name;
+                  var descriptionCell = row.insertCell(1);
+                  descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
+                  var stateCell = row.insertCell(2);
+
+                  if (key.state == 1) {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
                                             Activo\
                                         </span>';
-        } else {
-          stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                  } else {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
                                             Inactivo\
                                         </span>';
-        }
+                  }
 
-        var selectCell = row.insertCell(3);
-        var editBtn = document.createElement("button");
-        editBtn.setAttribute('name', 'btnEditParameter');
-        editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
-        editBtn.setAttribute('data-toggle', 'modal');
-        editBtn.setAttribute('data-target', '#modalEditParameter');
-        editBtn.setAttribute('id', +key.id);
-        editBtn.setAttribute('type', 'button');
-        editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-        var deleteBtn = document.createElement("button");
+                  var selectCell = row.insertCell(3);
+                  var editBtn = document.createElement("button");
+                  editBtn.setAttribute('name', 'btnEditParameter');
+                  editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                  editBtn.setAttribute('data-toggle', 'modal');
+                  editBtn.setAttribute('data-target', '#modalEditParameter');
+                  editBtn.setAttribute('id', +key.id);
+                  editBtn.setAttribute('type', 'button');
+                  editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                  var deleteBtn = document.createElement("button");
 
-        deleteBtn.onclick = function () {
-          confirmDelete('parametros/delete/' + key.id);
-        };
+                  deleteBtn.onclick = function () {
+                    confirmDelete('parametros/delete/' + key.id);
+                  };
 
-        deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-        deleteBtn.setAttribute('type', 'button');
-        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-        var buttonsDiv = document.createElement("div");
-        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-        buttonsDiv.appendChild(editBtn);
-        buttonsDiv.appendChild(deleteBtn);
-        selectCell.appendChild(buttonsDiv);
-        tbody.appendChild(row);
-      });
+                  deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                  deleteBtn.setAttribute('type', 'button');
+                  deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                  var buttonsDiv = document.createElement("div");
+                  buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                  buttonsDiv.appendChild(editBtn);
+                  buttonsDiv.appendChild(deleteBtn);
+                  selectCell.appendChild(buttonsDiv);
+                  tbody.appendChild(row);
+                });
+
+              case 7:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, this);
+      }));
+
+      function renderParameterTable(_x6) {
+        return _renderParameterTable.apply(this, arguments);
+      }
+
+      return renderParameterTable;
+    }()
+  }, {
+    key: "storeParameterValue",
+    value: function storeParameterValue(id) {
+      var _this4 = this;
+
+      var btnStore = document.getElementById("btnStoreParameter");
+
+      if (btnStore == null) {
+        return;
+      }
+
+      btnStore.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var form, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                form = document.getElementById("formCreateParameter");
+
+                if (!(form == null)) {
+                  _context8.next = 3;
+                  break;
+                }
+
+                return _context8.abrupt("return");
+
+              case 3:
+                formData = new FormData(form);
+                formData.append('parameter_id', id);
+                _context8.next = 7;
+                return _this4.requestStoreParameterValue(formData);
+
+              case 7:
+                response = _context8.sent;
+
+                if (response.state == 200) {
+                  success(response.message);
+                  modal = document.getElementById("modalCreateParameter");
+                  modal.click();
+
+                  _this4.renderParameterTable(id);
+                } else {
+                  error(response.message);
+                }
+
+              case 9:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      })));
     }
+  }, {
+    key: "requestStoreParameterValue",
+    value: function () {
+      var _requestStoreParameterValue = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context9.next = 3;
+                return fetch("/parametros", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context9.sent;
+                return _context9.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      function requestStoreParameterValue(_x7) {
+        return _requestStoreParameterValue.apply(this, arguments);
+      }
+
+      return requestStoreParameterValue;
+    }()
   }]);
 
   return Parameters;

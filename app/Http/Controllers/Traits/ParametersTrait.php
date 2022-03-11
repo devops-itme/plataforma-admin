@@ -18,12 +18,10 @@ trait ParametersTrait
         return Validator::make(
             $request->all(),
             [
-                'name' => [
-                    'required', 'string',
-                    Rule::unique('parameters', 'name')->ignore($id)->whereNull('deleted_at')
-                ],
+                'name' => 'required | string',
                 'description' => 'nullable|string',
-                'state' => 'nullable'
+                'state' => 'nullable',
+                'parameter_id' => 'required'
             ]
         );
     }
@@ -35,9 +33,10 @@ trait ParametersTrait
             return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
-            $parameter = Parameter::create([
+            $parameter = ParameterValue::create([
                 'name' => $request->name,
                 'description' => $request->description,
+                'parameter_id' => $request->parameter_id,
                 'state' => 1
             ]);
 

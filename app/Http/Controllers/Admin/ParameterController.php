@@ -41,11 +41,7 @@ class ParameterController extends Controller
     public function store(Request $request)
     {
         $response = $this->storeParameter($request);
-        if($response['state'] == 200){
-            return redirect()->route('parameters.index')->with('success', $response['message']);
-        } else {
-            return redirect()->back()->withInput()->with('danger', $response['message']);
-        }
+        return $response;
     }
 
     /**

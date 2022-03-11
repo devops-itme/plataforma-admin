@@ -19,7 +19,7 @@ export default class Parameters {
                 description.value = data.description;
                 let state = document.getElementById("parameter_state_edit");
                 data.state == 1 ? state.checked = true : state.checked = false;
-                this.updateParameter(id);
+                // this.updateParameter(id);
             });
         });
     }
@@ -93,12 +93,9 @@ export default class Parameters {
             return;
         }
         [].forEach.call(buttons, btn => {
-            btn.addEventListener('click', async () => {
-                let response = await this.requestParameterValues(btn['id']);
-                let data = response.data;
-                this.renderParameterTable(data);
-                this.parameterData();
-                // this.updateParameter(btn['id']);
+            btn.addEventListener('click', () => {
+                this.renderParameterTable(btn['id']);
+                this.storeParameterValue(btn['id']);
             });
         });
     }
@@ -116,9 +113,12 @@ export default class Parameters {
         return response;
     }
 
-    renderParameterTable(data){
+    async renderParameterTable(id){
         let tbody = document.querySelector("#parameterValueTable tbody");
         tbody.innerHTML = '';
+
+        let response = await this.requestParameterValues(id);
+        let data = response.data;
         [].forEach.call(data, key => {
             let row = tbody.insertRow();
 
@@ -160,6 +160,45 @@ export default class Parameters {
 
             tbody.appendChild(row);
         });
+    }
+
+    storeParameterValue(id){
+        let btnStore = document.getElementById("btnStoreParameter");
+        if(btnStore == null){
+            return;
+        }
+        btnStore.addEventListener('click', async () => {
+            let form = document.getElementById("formCreateParameter");
+            if(form == null){
+                return;
+            }
+            let formData = new FormData(form);
+            formData.append('parameter_id', id);
+            let response = await this.requestStoreParameterValue(formData);
+            if(response.state == 200){
+                success(response.message);
+                let modal = document.getElementById("modalCreateParameter");
+                modal.click();
+                this.renderParameterTable(id);
+            } else {
+                error(response.message);
+            }
+        });
+    }
+
+    async requestStoreParameterValue(formData){
+        let response = {
+            'state': 500
+        };
+
+        response = await fetch("/parametros", {
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            body: formData
+        })
+        return response.json();
     }
 
 }
