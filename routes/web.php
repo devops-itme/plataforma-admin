@@ -100,6 +100,8 @@ Route::group(['middleware' => 'auth'], function () {
     //Por despachar packaging
     Route::post('pordespachar/packaging/{id}', 'Admin\GuideController@porDespacharPackaging');
 
+
+
     //Orders states
     Route::get('order_states', 'Admin\DeliveryController@orderStates');
     //Orders delivery
@@ -133,6 +135,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 });
+
+ //MAtriz de estados lógica
+ Route::get('matriz_estados', 'Admin\DeliveryController@statusMatrix');
+
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 // Route::get('admin/order', 'Admin\OrderController@historial');

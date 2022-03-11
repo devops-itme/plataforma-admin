@@ -10,7 +10,12 @@ class StatusDescriptor extends Model
     protected $fillable = [
         'description',
         'role_id',
-        'status_matrix_is',
+        'status_matrix_id',
     ];
+
+    public function getStatus()
+    {
+        return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
+    }
 
 }
