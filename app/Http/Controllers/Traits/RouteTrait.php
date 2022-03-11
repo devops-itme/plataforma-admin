@@ -99,7 +99,7 @@ trait RouteTrait
 
 
                 $route = Guide::where('id', $guide['id'])->update([
-                    'state' => $request->state_order,
+                    'status_matrix_id' => $request->state_order,
                     'dispatched'=>$dispatch_code
                 ]);
             }
