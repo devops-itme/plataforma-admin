@@ -29,7 +29,13 @@
             <input name="schedule_time" type="time" class="form-control form-control-solid" placeholder="" />
             <span class="form-text text-muted"></span>
         </div>
-        <div class="form-group col-md-12 m-0 d-flex align-items-center">
+        <div class="form-group col-md-6">
+            <label for="address">Dirección origen <span class="text-danger">*</span></label>
+            <select name="customer_address" class="form-control form-control-solid" id="address">
+                <option disabled selected>Seleccione </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6 m-0 d-flex align-items-center">
             <div class="checkbox-inline">
                 <label class="checkbox">
                     <input type="checkbox" name="urgent_dispatch"/>

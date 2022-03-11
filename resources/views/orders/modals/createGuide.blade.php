@@ -24,7 +24,7 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3">
-                        <label for="address">Dirección <span class="text-danger">*</span></label>
+                        <label for="address">Dirección destino <span class="text-danger">*</span></label>
                         <select name="customer_address" class="form-control form-control-solid" id="address">
                             <option disabled selected>Seleccione </option>
                         </select>

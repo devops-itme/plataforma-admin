@@ -32,6 +32,7 @@ class Order extends Model
         'customer_user_id',
         'creator_user_id',
         'zone',
+        'address_id',
         'state',
         'service_type',
         'department_id',
