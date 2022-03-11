@@ -8,6 +8,7 @@ use App\Http\Resources\OrderResource;
 use App\Order;
 use App\ParameterValue;
 use App\Route;
+use App\StatusMatrix;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,27 +31,30 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user_id = $request->user_id ?? Auth::user()->id;
-        $role = $request->role_id ?? Auth::user()->getRole;
-        $state_name = $request->state_name;
+        $role_name = $request->role_name ?? Auth::user()->getRole->name;
+        $scope_name = $request->scope_name;
         $orders = [];
 
         try {
-            $state = ParameterValue::where('name', $state_name)->first();
+            $scope = ParameterValue::where('name', $scope_name)->first();
 
-            if ($role->name == 'Cliente') {
+            $scope_id = $scope->id ?? null;
+            $status = StatusMatrix::where('scope_id', $scope_id)->get(['id']);
+
+            if ($role_name == 'Cliente') {
                 $orders = Order::where('user_id', $user_id)
-                    ->state($state->id ?? null)
+                    ->status($status)
                     ->with($this->customerRelationships)->get();
             }
 
-            if ($role->name == 'Mensajero') {
+            if ($role_name == 'Mensajero') {
                 $orders = Order::messengerOrders($user_id)
-                    ->state($state->id ?? null)
+                    ->status($status)
                     ->with($this->messengerRelationships)->get();
             }
 
             $orders = OrderResource::collection($orders);
-            return $this->respond(200, $orders, null, 'Ordenes en ' . $state_name);
+            return $this->respond(200, $orders, null, 'Lista de ordenes');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
