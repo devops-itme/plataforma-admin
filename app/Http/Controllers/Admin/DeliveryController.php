@@ -7,7 +7,11 @@ use App\Http\Controllers\Traits\DeliveryTrait;
 use App\Http\Controllers\Traits\RouteTrait;
 use App\Order;
 use App\ParameterValue;
+use App\StatusDescriptor;
+use App\StatusMatrix;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DeliveryController extends Controller
 {
@@ -27,7 +31,7 @@ class DeliveryController extends Controller
     {
         $response = $this->storeRouteOndemand($request);
 
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return $this->respond(200, $response['data'], null, $response['message']);
         } else {
             return $this->respond(500, null, $response['error'], $response['message']);
@@ -38,7 +42,7 @@ class DeliveryController extends Controller
     {
         $response = $this->storeRoutePacking($request);
 
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return $this->respond(200, $response['data'], null, $response['message']);
         } else {
             return $this->respond(500, null, $response['error'], $response['message']);
@@ -53,12 +57,28 @@ class DeliveryController extends Controller
         return $this->respond(200, $order_states, null, 'Estado de las ordenes');
     }
 
-    public function updateStateOrders($state, Request $request)
+    public function updateStateOrders(Request $request)
     {
         $order = Order::where('id', $request->order_id)->update([
-            'state' => $state
+            'status_matrix_id' => $request->state
         ]);
         return $this->respond(200, $order, null, 'estado actualizado');
     }
 
+    public function statusMatrix()
+    {
+        $role_id = 1;
+        $statusMatrix = StatusMatrix::scope(Request()->scope_id)->get();
+
+        $data = $statusMatrix->map(function ($item, $key) use ($role_id) {
+            $descriptor = StatusDescriptor::where('status_matrix_id', $item->id)->where('role_id', $role_id)->first();
+            if (!is_null($descriptor)) {
+                $item->name = $descriptor->description;
+            }
+            return $item;
+
+        });
+
+        return $this->respond(200, $data, null, 'matriz de estados');
+    }
 }

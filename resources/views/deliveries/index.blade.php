@@ -119,11 +119,11 @@
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Concepto:</div>
-                                    <div class="line-height-xl" v-text="tab.concept">RETIRAR FIANZA A NOMBRE DE EDEMET</div>
+                                    <div class="line-height-xl" v-text="tab.concept"></div>
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Dirección:</div>
-                                    <div class="line-height-xl" v-text="tab.get_address ? tab.get_address.name : 'No registra' ">CLL 50: SAN FRANCISCO: PANAMA</div>
+                                    <div class="line-height-xl" v-text="tab.get_address ? tab.get_address.name : 'No registra' "></div>
                                 </div>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">
@@ -136,12 +136,12 @@
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Teléfono contacto:</div>
-                                    <div class="line-height-xl" v-text="tab.phone_contact">+507</div>
+                                    <div class="line-height-xl" v-text="tab.phone_contact"></div>
                                 </div>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             </div>
                         </div>
-                        <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 border-bottom justify-content-center" v-if=currentTab==33>
+                        <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 border-bottom justify-content-center"  v-if=currentTab==tabs[2]?.id>
                             <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
                             <div class="col-md">
                                 <img class="img-fluid rounded" src="https://placem.at/things?h=100" alt="">
@@ -153,7 +153,7 @@
                         <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
                             <a href="#" class="btn btn-light-success font-weight-bold mr-2">Imprimir</a>
                             <a href="#" class="btn btn-light-primary font-weight-bold mr-2">Detalle GPS</a>
-                            <a type="button" href="#" v-if=currentTab==34 @click="updateStateOrders(32)" class="btn btn-light-primary font-weight-bold mr-2">Volver a despachar</a>
+                            <a type="button" href="#" v-if=currentTab==tabs[2]?.id @click="updateStateOrders()" class="btn btn-light-primary font-weight-bold mr-2">Volver a despachar</a>
                         </div>
                     </div>
                 </div>

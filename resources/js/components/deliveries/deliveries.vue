@@ -11,11 +11,12 @@
                 class="d-flex align-items-center justify-content-between flex-row flex-wrap mb-3"
             >
                 <div class="form-group col-md-2 mb-0">
-                    <select class="form-control" v-model="selected" @change="loadingEvt(),getGuides(null)">
+                    <select class="form-control" v-model="selected" @change="loadingEvt(),getGuides(selected)">
                         <option
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
                             v-bind:value="item.value"
+
                         >
                             {{ item.text }}
                         </option>
@@ -24,7 +25,7 @@
                 </div>
                 <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
                     <div class="col-md-5 py-2" >
-                        <div class=" border rounded" v-if="type_guide == 34 ||  type_guide == 37">
+                        <div class=" border rounded">
                             <p class="mb-0">
                                 <span class="font-weight-bolder mb-3"
                                     >Destinos en recogida por editar:
@@ -34,7 +35,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-3 mb-0">
-                        <select class="form-control" id="delivery_event_state"  v-if="type_guide == 34 ||  type_guide == 37">
+                        <select class="form-control" id="delivery_event_state" >
                             <option>Seleccione estado</option>
                         </select>
                     </div>
@@ -42,7 +43,7 @@
                         <button
                             type="button"
                             class="btn btn-light-primary font-weight-bold"
-                            v-if="type_guide == 34 ||  type_guide == 37"
+
                         >
                             Aplicar nuevo estado
                         </button>
@@ -57,45 +58,14 @@
                 id="myTab"
                 role="tablist"
             >
-                <li class="nav-item" role="presentation">
+                <li  class="nav-item"  v-for="(tab) in tabs" :key="tab.id" >
                     <a
-                        class="nav-link active"
-                        id="porRecoger-tab"
-                        data-toggle="tab"
-                        href="#porRecoger"
-                        role="tab"
-                        aria-controls="porRecoger"
-                        aria-selected="true"
-                        @click="getGuides(0)"
-                        >Por {{ selected == 32 ? "Entregar" : "Recoger" }}</a
-                    >
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a
-                        class="nav-link"
-                        id="enproceso-tab"
-                        data-toggle="tab"
-                        href="#enproceso"
-                        role="tab"
-                        aria-controls="enproceso"
-                        aria-selected="false"
-                        @click="getGuides(1)"
-                        >{{ selected == 32 ? "Entregas" : "Recogidas" }} en
-                        proceso</a
-                    >
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a
-                        class="nav-link"
-                        id="consultas-tab"
-                        data-toggle="tab"
-                        href="#consultas"
-                        role="tab"
-                        aria-controls="consultas"
-                        aria-selected="false"
-                        @click="getGuides(2)"
-                        >Consultas y edición</a
-                    >
+                    class="nav-link tablink"
+                    @click="getGuides(tab.id)"
+                    :class="{'active': type_guide === tab.id}"
+                    :id="tab.id"  data-toggle="tab"
+                    :href="`#${tab.href}`"
+                    v-text=tab.name></a>
                 </li>
             </ul>
            <div class="d-flex flex-row flex-wrap">
@@ -132,7 +102,7 @@
             <div class="col-md-3 py-4">
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
                     <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
-                    <button v-if="type_guide == 34 ||  type_guide == 37" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
+                    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
@@ -162,7 +132,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
-                        <div class="line-height-xl"  v-if="showGuide != null"  v-text="showGuide.get_transport_type.name" ></div>
+                        <!-- <div class="line-height-xl"  v-if="showGuide != null"  v-text="showGuide.get_transport_type.name" ></div> -->
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Movil:</div>
@@ -223,10 +193,10 @@ export default {
     },
     data() {
         return {
-            selected: 32,
+            selected: 55,
             delivery_types: [
-                { value: 32, text: "Entregas" },
-                { value: 35, text: "Recogidas" },
+                { value: 55, text: "Entregas" },
+                { value: 53, text: "Recogidas" },
             ],
             showModal: false,
             columns:{
@@ -236,7 +206,7 @@ export default {
             guides: [],
             guides2: [],
             messengers: [],
-            type_guide: 32,
+            type_guide: 3,
             showGuide: null,
             activeIndex: 2,
             tabs: [],
@@ -250,21 +220,45 @@ export default {
         loadingEvt (){
            $(`#myTab li:nth-child(1) a`).tab("show");
        },
+        async statusMatrix(scope) {
+            //STATUS MATRIX
+            let req = await fetch(`/matriz_estados?scope_id=${scope}`);
+            let res = await req.json();
+            // take the first 3 data from the consulate
+            this.tabs = res.data.slice(0, 3);
+
+            //#HREF TAB
+            this.tabs[0].href = "porRecoger";
+            this.tabs[1].href = "enproceso";
+            this.tabs[2].href = "consultas";
+
+            //NAME TABS
+            this.tabs[2].name = "CONSULTA Y EDICIÓN";
+            this.selected == 54?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
+            this.selected == 55?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
+        },
+
 
         getGuide(data){
             this.showGuide = data;
-            this.showGuide.get_route ? this.if_route = true : this.if_route = false;
+            // this.showGuide.get_route ? this.if_route = true : this.if_route = false;
             this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
 
         },
         async getGuides(type) {
-            this.type_guide = this.selected + type;
-            let response = await this.requestGuides();
-            this.guides = response.data;
             this.guides2 = [];
             this.showGuide = null;
+            this.statusMatrix(this.selected);
+            type == 55 && (type = 3);
+            type == 53 && (type = 7);
+            let response = await this.requestGuides(type);
+            this.guides = response.data;
+
+
+
         },
-        async requestGuides() {
+        async requestGuides(type) {
+            // console.log(this.type_guide )
             let response = { state: 500 };
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -272,7 +266,8 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/orders_packing/${this.type_guide}`, requestOptions)
+            // console.log(this.type_guide)
+            await fetch(`/orders_packing/${type}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     response = data;
@@ -296,19 +291,11 @@ export default {
                 .catch((err) => console.warn(err));
         },
 
-        async orderState() {
-            let req = await fetch("/order_states");
-            let res = await req.json();
-            this.tabs = res.data;
-        },
-
     },
 
      async mounted() {
-        // this.orderState();
-        this.getGuides(null);
+        this.getGuides(3);
         this.getMessengers();
-        this.orderState();
     },
 
 };

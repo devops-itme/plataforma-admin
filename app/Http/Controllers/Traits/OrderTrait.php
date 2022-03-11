@@ -38,6 +38,7 @@ trait OrderTrait
                 'percentage_to_collect' => 'nullable',
                 'branch_office' => 'nullable',
                 'department_id' => 'nullable',
+                'address_id' => 'nullable',
                 'state' => 'nullable'
             ]
         );
@@ -74,6 +75,7 @@ trait OrderTrait
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
                 'branch_office' => $request->branch_office_id,
+                'address_id' => $request->address_id,
                 'department_id' => $request->department_id,
                 'status_matrix_id' => $status_id,
             ]);

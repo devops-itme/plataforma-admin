@@ -33,10 +33,11 @@ class Guide extends Model
         'sign',
         'take_photo',
         'packaging',
-        'customer_address',
+        // 'customer_address',
         'state',
         'app_status',
-        'boxes'
+        'boxes',
+        'status_matrix_id'
     ];
 
     public function getOrder()

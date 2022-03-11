@@ -81,7 +81,7 @@ class OrderController extends Controller
         } else {
             $request->merge(['return_last_destination' => 0]);
         }
-        $request->merge(['state' => 1]);
+        $request->merge(['state' => 1, 'address_id' => $request->customer_address]);
         $response = $this->storeOrder($request);
         if ($response['state'] == 200) {
             if ($request->guideCheck) {
@@ -214,9 +214,12 @@ class OrderController extends Controller
     public function ordersForDelivery($type)
     {
         try {
+            $matriz_id = $type != 5 ?  $matriz_id = [$type]: $matriz_id = [5, 6];
+
+
             $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query)  {
                 $query->where('name', 'Ondemand');
-            })->where('state', $type)
+            })->whereIn('status_matrix_id', $matriz_id)
             ->with(['getUser.getCustomer', 'getUser.getDocumentType', 'getGuides.getRoute.getMessenger', 'getPaymentMethod', 'getDepartment', 'getBranchOffice', 'getGuides.getAddress'])
             ->get();
 

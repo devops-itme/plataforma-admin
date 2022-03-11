@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Address;
 use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuidanceDocsTrait;
@@ -65,14 +66,17 @@ class GuideController extends Controller
         if($request->take_photo == 'on'){$request->merge(['take_photo' => 1]);}
         else{$request->merge(['take_photo' => 0]);}
 
-        if($request->address){
-            $request->merge([
-                'address_name' => $request->addres,
-                'address_lat' => $request->lat,
-                'address_lng' => $request->lng
-            ]);
+        if($request->address_name){
+            $address = Address::find($request->address_name);
+            if(!is_null($address)){
+                $request->merge([
+                    'address_name' => $address->name,
+                    'address_lat' => $address->lat,
+                    'address_lng' => $address->lng
+                ]);
+            }
         }
-        if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
+        // if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
         $request->merge(['state' => 31]);
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
@@ -174,12 +178,10 @@ class GuideController extends Controller
 
         try {
 
-
-            $state == 37? $state = [35,36,37] : ( $state == 34?  $state = [32,33,34] : $state =[intval($state)]);
-
+            $state == 5? $state = [3,4,5,6] : ( $state == 9?  $state = [7,8,9,10] : $state =[intval($state)]);
             $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query)  {
                 $query->where('order_type', 36);
-            })->whereIn('state', $state)
+            })->whereIn('status_matrix_id', $state)
             ->with(['getRoute.getMessenger', 'getAddress', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment'])
             ->get();
 

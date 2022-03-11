@@ -336,8 +336,8 @@ export default class Orders {
             let transport_type = document.getElementById("trans_type").value;
             // let dispatched = document.getElementById("dispatched").value;
             let address_name = document.getElementById("address").value;
-            let address_lat = document.getElementById("lat").value;
-            let address_lng = document.getElementById("lng").value;
+            // let address_lat = document.getElementById("lat").value;
+            // let address_lng = document.getElementById("lng").value;
             let address_description = document.getElementById("address_description").value;
             let concept = document.getElementById("concept").value;
             let rate = document.getElementById("rate").value;
@@ -351,7 +351,7 @@ export default class Orders {
             let same_day_delivery = document.getElementById("same_day_delivery").value;
             let sign = document.getElementById("sign").value;
             let take_photo = document.getElementById("take_photo").value;
-            let customer_address = document.getElementById("customer_address").value;
+            // let customer_address = document.getElementById("customer_address").value;
             //Boxes
             let ids = document.getElementsByName('id[]');
             let weights = document.getElementsByName('weight[]');
@@ -379,8 +379,8 @@ export default class Orders {
             formData.append('transport_type',transport_type);
             // formData.append('dispatched',dispatched);
             formData.append('address_name',address_name);
-            formData.append('address_lat',address_lat);
-            formData.append('address_lng',address_lng);
+            // formData.append('address_lat',address_lat);
+            // formData.append('address_lng',address_lng);
             formData.append('address_description',address_description);
             formData.append('concept',concept);
             formData.append('rate',rate);
@@ -394,7 +394,7 @@ export default class Orders {
             formData.append('same_day_delivery',same_day_delivery);
             formData.append('sign',sign);
             formData.append('take_photo',take_photo);
-            formData.append('customer_address',customer_address);
+            // formData.append('customer_address',customer_address);
 
             let response = await this.sendGuideData(formData);
             if(response.state == 200){
