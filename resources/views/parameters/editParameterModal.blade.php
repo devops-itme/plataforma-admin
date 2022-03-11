@@ -11,8 +11,8 @@
             <div class="modal-body">
             <div class="row">
                 <div class="col-md-12">
-                    <form method="post" id="formUpdateParameter">
-                        @csrf @method('put')
+                    <form id="formUpdateParameter">
+                        @csrf
                         <div class="form-group">
                             <label for="">Nombre<span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control form-control-solid" id="parameter_name">
