@@ -33,7 +33,7 @@ class Guide extends Model
         'sign',
         'take_photo',
         'packaging',
-        'customer_address',
+        // 'customer_address',
         'state',
         'app_status',
         'boxes',

@@ -83674,7 +83674,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
+        var branch_office, transport_type, address_name, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -83682,9 +83682,9 @@ var Orders = /*#__PURE__*/function () {
                 branch_office = document.getElementById("branch_off").value;
                 transport_type = document.getElementById("trans_type").value; // let dispatched = document.getElementById("dispatched").value;
 
-                address_name = document.getElementById("address").value;
-                address_lat = document.getElementById("lat").value;
-                address_lng = document.getElementById("lng").value;
+                address_name = document.getElementById("address").value; // let address_lat = document.getElementById("lat").value;
+                // let address_lng = document.getElementById("lng").value;
+
                 address_description = document.getElementById("address_description").value;
                 concept = document.getElementById("concept").value;
                 rate = document.getElementById("rate").value;
@@ -83697,8 +83697,8 @@ var Orders = /*#__PURE__*/function () {
                 invoice_contact = document.getElementById("invoice_contact").value;
                 same_day_delivery = document.getElementById("same_day_delivery").value;
                 sign = document.getElementById("sign").value;
-                take_photo = document.getElementById("take_photo").value;
-                customer_address = document.getElementById("customer_address").value; //Boxes
+                take_photo = document.getElementById("take_photo").value; // let customer_address = document.getElementById("customer_address").value;
+                //Boxes
 
                 ids = document.getElementsByName('id[]');
                 weights = document.getElementsByName('weight[]');
@@ -83727,9 +83727,9 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('branch_office', branch_office);
                 formData.append('transport_type', transport_type); // formData.append('dispatched',dispatched);
 
-                formData.append('address_name', address_name);
-                formData.append('address_lat', address_lat);
-                formData.append('address_lng', address_lng);
+                formData.append('address_name', address_name); // formData.append('address_lat',address_lat);
+                // formData.append('address_lng',address_lng);
+
                 formData.append('address_description', address_description);
                 formData.append('concept', concept);
                 formData.append('rate', rate);
@@ -83742,12 +83742,12 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('invoice_contact', invoice_contact);
                 formData.append('same_day_delivery', same_day_delivery);
                 formData.append('sign', sign);
-                formData.append('take_photo', take_photo);
-                formData.append('customer_address', customer_address);
-                _context7.next = 51;
+                formData.append('take_photo', take_photo); // formData.append('customer_address',customer_address);
+
+                _context7.next = 45;
                 return _this5.sendGuideData(formData);
 
-              case 51:
+              case 45:
                 response = _context7.sent;
 
                 if (response.state == 200) {
@@ -83761,7 +83761,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 53:
+              case 47:
               case "end":
                 return _context7.stop();
             }

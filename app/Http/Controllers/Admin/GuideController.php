@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Address;
 use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuidanceDocsTrait;
@@ -65,14 +66,17 @@ class GuideController extends Controller
         if($request->take_photo == 'on'){$request->merge(['take_photo' => 1]);}
         else{$request->merge(['take_photo' => 0]);}
 
-        if($request->address){
-            $request->merge([
-                'address_name' => $request->addres,
-                'address_lat' => $request->lat,
-                'address_lng' => $request->lng
-            ]);
+        if($request->address_name){
+            $address = Address::find($request->address_name);
+            if(!is_null($address)){
+                $request->merge([
+                    'address_name' => $address->name,
+                    'address_lat' => $address->lat,
+                    'address_lng' => $address->lng
+                ]);
+            }
         }
-        if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
+        // if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
         $request->merge(['state' => 31]);
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
