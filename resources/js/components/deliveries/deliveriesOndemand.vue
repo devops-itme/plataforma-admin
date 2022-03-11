@@ -38,12 +38,12 @@ export default {
         },
         data() {
             if(this.checkAllOrders == false){
-                return this.data = this.orders.filter((item) => {
+                return this.orders.filter((item) => {
                     return this.localizeDate(item.schedule_date) >= this.localizeDate(this.startDate)
                     && this.localizeDate(item.schedule_date) <= this.localizeDate(this.endDate)
                 });
             }else{
-                 return this.data = this.orders;
+                 return this.orders;
             }
 
         },
