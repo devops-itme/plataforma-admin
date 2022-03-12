@@ -80,6 +80,7 @@ trait OrderTrait
                 'description' => $request->description,
                 'department_id' => $request->department_id,
                 'status_matrix_id' => $status_id,
+                'creator_user_id' => $request->creator_user_id
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');
         } catch (\Exception $e) {
