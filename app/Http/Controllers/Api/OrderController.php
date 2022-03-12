@@ -65,9 +65,26 @@ class OrderController extends Controller
         if (Auth()->user()->role != 1) {
             $request->merge(['user_id' => Auth()->user()->id]);
         };
-        return ($request->all());
+
+        $validator = $this->OrderValidate($request);
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+        }
+
 
         try {
+            $last_id = Order::all()->last()->id ?? 0;
+            $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
+
+            $response = $this->storeOrder($request);
+            if ($response['state'] != 200) {
+                return $response;
+            }
+            $guides = json_decode(json_encode($request->guides));
+            foreach($guides as $guide){
+                return ($guide);
+            }
+            
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }

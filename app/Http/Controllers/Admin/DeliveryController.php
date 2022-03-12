@@ -67,7 +67,7 @@ class DeliveryController extends Controller
 
     public function statusMatrix()
     {
-        $role_id = 1;
+        $role_id = Auth()->user()->role;
         $statusMatrix = StatusMatrix::scope(Request()->scope_id)->get();
 
         $data = $statusMatrix->map(function ($item, $key) use ($role_id) {

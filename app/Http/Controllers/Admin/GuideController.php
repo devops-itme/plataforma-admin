@@ -136,9 +136,19 @@ class GuideController extends Controller
     public function update(Request $request, $id)
     {
         if(!($request->state)){
-            $request->merge(['state' => 1]);
+            $request->merge(['state' => 31]);
         }
-        if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
+        // if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
+        if($request->address_name){
+            $address = Address::find($request->address_name);
+            if(!is_null($address)){
+                $request->merge([
+                    'address_name' => $address->name,
+                    'address_lat' => $address->lat,
+                    'address_lng' => $address->lng
+                ]);
+            }
+        }
         $response = $this->updateGuide($request->merge(['guide_id' => $id]));
         if($response['state'] == 200){
             return json_encode([
