@@ -136,7 +136,7 @@ class GuideController extends Controller
     public function update(Request $request, $id)
     {
         if(!($request->state)){
-            $request->merge(['state' => 1]);
+            $request->merge(['state' => 31]);
         }
         // if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
         if($request->address_name){
