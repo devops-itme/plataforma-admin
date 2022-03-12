@@ -2143,12 +2143,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       messengers: [],
       type_guide: 3,
       showGuide: null,
+      showDataGuide: {},
       activeIndex: 2,
       tabs: [],
       if_route: false,
       if_department: false
     };
   },
+  computed: {
+    tabEdition: function tabEdition() {
+      var _this$tabs$;
+
+      return (_this$tabs$ = this.tabs[2]) === null || _this$tabs$ === void 0 ? void 0 : _this$tabs$.id;
+    }
+  },
+  watch: {},
   methods: {
     loadingEvt: function loadingEvt() {
       $("#myTab li:nth-child(1) a").tab("show");
@@ -2192,9 +2201,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getGuide: function getGuide(data) {
-      this.showGuide = data; // this.showGuide.get_route ? this.if_route = true : this.if_route = false;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route2, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_order4;
 
-      this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
+      this.showGuide = data;
+      this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
+      this.showDataGuide.client = (_data$get_order2 = data.get_order) === null || _data$get_order2 === void 0 ? void 0 : _data$get_order2.get_user.name;
+      this.showDataGuide.posting = data.id;
+      this.showDataGuide.dispatched = data.dispatched;
+      this.showDataGuide.ref_client = (_data$get_order3 = data.get_order) === null || _data$get_order3 === void 0 ? void 0 : _data$get_order3.get_user.document_number;
+      this.showDataGuide.programming = data.get_order.schedule_date;
+      this.showDataGuide.transport = (_data$get_transport_t = data.get_transport_type) === null || _data$get_transport_t === void 0 ? void 0 : _data$get_transport_t.name;
+      this.showDataGuide.movil = ((_data$get_route = data.get_route) === null || _data$get_route === void 0 ? void 0 : _data$get_route.get_messenger.name) + ' ' + ((_data$get_route2 = data.get_route) === null || _data$get_route2 === void 0 ? void 0 : _data$get_route2.get_messenger.last_name);
+      this.showDataGuide.client_depto = ((_data$get_branch_offi = data.get_branch_office) === null || _data$get_branch_offi === void 0 ? void 0 : (_data$get_branch_offi2 = _data$get_branch_offi.get_department) === null || _data$get_branch_offi2 === void 0 ? void 0 : _data$get_branch_offi2.get_department.id) + ':' + ((_data$get_branch_offi3 = data.get_branch_office) === null || _data$get_branch_offi3 === void 0 ? void 0 : (_data$get_branch_offi4 = _data$get_branch_offi3.get_department) === null || _data$get_branch_offi4 === void 0 ? void 0 : _data$get_branch_offi4.get_department.name);
+      this.showDataGuide.client_branch_office = ((_data$get_branch_offi5 = data.get_branch_office) === null || _data$get_branch_offi5 === void 0 ? void 0 : _data$get_branch_offi5.id) + ': ' + ((_data$get_branch_offi6 = data.get_branch_office) === null || _data$get_branch_offi6 === void 0 ? void 0 : _data$get_branch_offi6.name);
+      this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
+      this.showDataGuide.concept = data.concept;
+      this.showDataGuide.direction = data.address_name;
     },
     getGuides: function getGuides(type) {
       var _this3 = this;
@@ -2207,9 +2229,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this3.guides2 = [];
                 _this3.showGuide = null;
-
-                _this3.statusMatrix(_this3.selected);
-
+                _this3.showDataGuide = {
+                  type_order: null,
+                  client: null,
+                  posting: null,
+                  dispatched: null,
+                  ref_client: null,
+                  programming: null,
+                  transport: null,
+                  movil: null,
+                  client_depto: null,
+                  client_branch_office: null,
+                  client_document: null,
+                  concept: null,
+                  direction: null
+                }, _this3.statusMatrix(_this3.selected);
                 type == 55 && (type = 3);
                 type == 53 && (type = 7);
                 _context2.next = 7;
@@ -2228,13 +2262,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     requestGuides: function requestGuides(type) {
+      var _this4 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var response, myHeaders, requestOptions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                // console.log(this.type_guide )
                 response = {
                   state: 500
                 };
@@ -2243,8 +2278,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 requestOptions = {
                   method: "GET",
                   headers: myHeaders
-                }; // console.log(this.type_guide)
-
+                };
                 _context3.next = 6;
                 return fetch("/orders_packing/".concat(type), requestOptions).then(function (response) {
                   return response.json();
@@ -2255,9 +2289,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 6:
+                _this4.type_guide = type;
                 return _context3.abrupt("return", response);
 
-              case 7:
+              case 8:
               case "end":
                 return _context3.stop();
             }
@@ -2266,7 +2301,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this4 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, myHeaders, requestOptions;
@@ -2275,7 +2310,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this = _this4;
+                _this = _this5;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
@@ -2301,16 +2336,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this5 = this;
+    var _this6 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              _this5.getGuides(3);
+              _this6.getGuides(3);
 
-              _this5.getMessengers();
+              _this6.getMessengers();
 
             case 2:
             case "end":
@@ -62693,7 +62728,69 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm._m(1),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "col-md-8 d-flex align-items-center flex-row flex-wrap",
+              },
+              [
+                _c("div", { staticClass: "col-md-5 py-2" }, [
+                  _vm.type_guide === _vm.tabEdition
+                    ? _c("div", { staticClass: " border rounded" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _c(
+                            "span",
+                            { staticClass: "font-weight-bolder mb-3" },
+                            [
+                              _vm._v(
+                                "Destinos en recogida por editar:\n                            "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("span", {
+                            staticClass: "line-height-xl",
+                            domProps: { textContent: _vm._s(200) },
+                          }),
+                        ]),
+                      ])
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
+                  _vm.type_guide === _vm.tabEdition
+                    ? _c(
+                        "select",
+                        {
+                          staticClass: "form-control",
+                          attrs: { id: "delivery_event_state" },
+                        },
+                        [_c("option", [_vm._v("Seleccione estado")])]
+                      )
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _vm.type_guide === _vm.tabEdition
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light-primary font-weight-bold",
+                          attrs: { type: "button" },
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Aplicar nuevo estado\n                    "
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _vm._m(1),
+              ]
+            ),
           ]
         ),
         _vm._v(" "),
@@ -62812,7 +62909,40 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3 py-4" }, [
-            _vm._m(2),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "d-flex flex-row flex-wrap align-items-center justify-content-center",
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "btn btn-light-success btn-block font-weight-bold mr-2",
+                    attrs: { href: "#" },
+                  },
+                  [_vm._v("Imprimir Guia")]
+                ),
+                _vm._v(" "),
+                _vm.type_guide === _vm.tabEdition
+                  ? _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-light-primary btn-block font-weight-bold mr-2",
+                        attrs: {
+                          type: "button",
+                          "data-toggle": "modal",
+                          "data-target": "#exampleModal",
+                        },
+                      },
+                      [_vm._v("Editar Destino")]
+                    )
+                  : _vm._e(),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -62832,13 +62962,11 @@ var render = function () {
                     _vm._v("Tipo de orden:"),
                   ]),
                   _vm._v(" "),
-                  _vm.showGuide != null
+                  _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(
-                            _vm.showGuide.get_order.get_order_type.name
-                          ),
+                          textContent: _vm._s(_vm.showDataGuide.type_order),
                         },
                       })
                     : _vm._e(),
@@ -62849,13 +62977,11 @@ var render = function () {
                     _vm._v("Cliente:"),
                   ]),
                   _vm._v(" "),
-                  _vm.showGuide != null
+                  _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(
-                            _vm.showGuide.get_order.get_user.name
-                          ),
+                          textContent: _vm._s(_vm.showDataGuide.client),
                         },
                       })
                     : _vm._e(),
@@ -62866,10 +62992,12 @@ var render = function () {
                     _vm._v("Destino:"),
                   ]),
                   _vm._v(" "),
-                  _vm.showGuide != null
+                  _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
-                        domProps: { textContent: _vm._s(_vm.showGuide.id) },
+                        domProps: {
+                          textContent: _vm._s(_vm.showDataGuide.posting),
+                        },
                       })
                     : _vm._e(),
                 ]),
@@ -62879,11 +63007,11 @@ var render = function () {
                     _vm._v("Despacho:"),
                   ]),
                   _vm._v(" "),
-                  _vm.showGuide != null
+                  _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(_vm.showGuide.dispatched),
+                          textContent: _vm._s(_vm.showDataGuide.dispatched),
                         },
                       })
                     : _vm._e(),
@@ -62894,36 +63022,60 @@ var render = function () {
                     _vm._v("Ref.Cliente:"),
                   ]),
                   _vm._v(" "),
-                  _vm.showGuide != null
+                  _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(
-                            _vm.showGuide.get_order.get_user.document_number
-                          ),
+                          textContent: _vm._s(_vm.showDataGuide.ref_client),
                         },
                       })
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _vm._m(3),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Programado:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "line-height-xl",
+                          domProps: {
+                            textContent: _vm._s(_vm.showDataGuide.programming),
+                          },
+                        },
+                        [_vm._v("2022/02/04")]
+                      )
+                    : _vm._e(),
+                ]),
                 _vm._v(" "),
-                _vm._m(4),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Transporte:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(_vm.showDataGuide.transport),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
                     _vm._v("Movil:"),
                   ]),
                   _vm._v(" "),
-                  _vm.if_route == true
+                  _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(
-                            _vm.showGuide.get_route.get_messenger.name +
-                              " " +
-                              _vm.showGuide.get_route.get_messenger.last_name
-                          ),
+                          textContent: _vm._s(_vm.showDataGuide.movil),
                         },
                       })
                     : _vm._e(),
@@ -62939,19 +63091,13 @@ var render = function () {
                     _vm._v("Cliente Depto:"),
                   ]),
                   _vm._v(" "),
-                  _vm.if_department == true
+                  _vm.showDataGuide
                     ? _c(
                         "div",
                         {
                           staticClass: "line-height-x1",
                           domProps: {
-                            textContent: _vm._s(
-                              _vm.showGuide.get_branch_office.get_department
-                                .get_department.id +
-                                ":" +
-                                _vm.showGuide.get_branch_office.get_department
-                                  .get_department.name
-                            ),
+                            textContent: _vm._s(_vm.showDataGuide.client_depto),
                           },
                         },
                         [_vm._v("84: PRINCIPAL")]
@@ -62964,16 +63110,14 @@ var render = function () {
                     _vm._v("Cliente Sucursal:"),
                   ]),
                   _vm._v(" "),
-                  _vm.showGuide != null
+                  _vm.showDataGuide
                     ? _c(
                         "div",
                         {
                           staticClass: "line-height-x1",
                           domProps: {
                             textContent: _vm._s(
-                              _vm.showGuide.get_branch_office.id +
-                                ": " +
-                                _vm.showGuide.get_branch_office.name
+                              _vm.showDataGuide.client_branch_office
                             ),
                           },
                         },
@@ -62982,7 +63126,26 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _vm._m(5),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Cliente Documento:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "line-height-x1",
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.showDataGuide.client_document
+                            ),
+                          },
+                        },
+                        [_vm._v("1191: DELIVERY")]
+                      )
+                    : _vm._e(),
+                ]),
                 _vm._v(" "),
                 _c("div", {
                   staticClass:
@@ -62994,11 +63157,11 @@ var render = function () {
                     _vm._v("Concepto:"),
                   ]),
                   _vm._v(" "),
-                  _vm.showGuide != null
+                  _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(_vm.showGuide.concept),
+                          textContent: _vm._s(_vm.showDataGuide.concept),
                         },
                       })
                     : _vm._e(),
@@ -63009,11 +63172,11 @@ var render = function () {
                     _vm._v("Dirección:"),
                   ]),
                   _vm._v(" "),
-                  _vm.showGuide != null
+                  _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(_vm.showGuide.address_name),
+                          textContent: _vm._s(_vm.showDataGuide.direction),
                         },
                       })
                     : _vm._e(),
@@ -63021,7 +63184,34 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(6),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center",
+              },
+              [
+                _c(
+                  "h5",
+                  { staticClass: "mb-5 font-weight-bold text-dark col-md-12" },
+                  [_vm._v("Adjuntos")]
+                ),
+                _vm._v(" "),
+                _vm.type_guide === _vm.tabEdition
+                  ? _c(
+                      "div",
+                      { staticClass: "col-md-12 symbol-group symbol-hover" },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _vm._m(4),
+                      ]
+                    )
+                  : _vm._e(),
+              ]
+            ),
           ]),
         ]),
       ]),
@@ -63046,163 +63236,39 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-md-8 d-flex align-items-center flex-row flex-wrap" },
-      [
-        _c("div", { staticClass: "col-md-5 py-2" }, [
-          _c("div", { staticClass: " border rounded" }, [
-            _c("p", { staticClass: "mb-0" }, [
-              _c("span", { staticClass: "font-weight-bolder mb-3" }, [
-                _vm._v(
-                  "Destinos en recogida por editar:\n                            "
-                ),
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "line-height-xl" }, [_vm._v("2000")]),
-            ]),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
-          _c(
-            "select",
-            {
-              staticClass: "form-control",
-              attrs: { id: "delivery_event_state" },
-            },
-            [_c("option", [_vm._v("Seleccione estado")])]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-light-primary font-weight-bold",
-              attrs: { type: "button" },
-            },
-            [
-              _vm._v(
-                "\n                        Aplicar nuevo estado\n                    "
-              ),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-1" }, [
-          _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
-        ]),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "d-flex flex-row flex-wrap align-items-center justify-content-center",
-      },
-      [
-        _c(
-          "a",
-          {
-            staticClass:
-              "btn btn-light-success btn-block font-weight-bold mr-2",
-            attrs: { href: "#" },
-          },
-          [_vm._v("Imprimir Guia")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-light-primary btn-block font-weight-bold mr-2",
-            attrs: {
-              type: "button",
-              "data-toggle": "modal",
-              "data-target": "#exampleModal",
-            },
-          },
-          [_vm._v("Editar Destino")]
-        ),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 mb-2" }, [
-      _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-        _vm._v("Programado:"),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "line-height-xl" }, [_vm._v("2022/02/04")]),
+    return _c("div", { staticClass: "col-md-1" }, [
+      _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
     ])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 mb-2" }, [
-      _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-        _vm._v("Transporte:"),
-      ]),
+    return _c("div", { staticClass: "symbol" }, [
+      _c("img", {
+        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
+      }),
     ])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 mb-2" }, [
-      _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-        _vm._v("Cliente Documento:"),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "line-height-x1" }, [_vm._v("1191: DELIVERY")]),
+    return _c("div", { staticClass: "symbol" }, [
+      _c("img", {
+        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
+      }),
     ])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center",
-      },
-      [
-        _c("h5", { staticClass: "mb-5 font-weight-bold text-dark col-md-12" }, [
-          _vm._v("Adjuntos"),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-12 symbol-group symbol-hover" }, [
-          _c("div", { staticClass: "symbol" }, [
-            _c("img", {
-              attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "symbol" }, [
-            _c("img", {
-              attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "symbol" }, [
-            _c("img", {
-              attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-            }),
-          ]),
-        ]),
-      ]
-    )
+    return _c("div", { staticClass: "symbol" }, [
+      _c("img", {
+        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
+      }),
+    ])
   },
 ]
 render._withStripped = true
