@@ -39,6 +39,7 @@ class CreateOrdersTable extends Migration
             $table->integer('zone')->nullable();
             $table->string('dispatched')->unique()->nullable();
             $table->unsignedBigInteger('address_id')->nullable();
+            $table->string('description')->nullable();
             $table->integer('state')->default(32)->comment("{1:Por despachar;2:Despachado;3:Completado}");
             $table->integer('app_status')->nullable()->default(0)->comment("{0:Pendiente;1:Leído;}");
             $table->unsignedBigInteger('status_matrix_id')->nullable();

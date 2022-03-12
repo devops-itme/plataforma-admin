@@ -81,7 +81,7 @@ class OrderController extends Controller
         } else {
             $request->merge(['return_last_destination' => 0]);
         }
-        $request->merge(['state' => 1, 'address_id' => $request->customer_address]);
+        $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order]);
         $response = $this->storeOrder($request);
         if ($response['state'] == 200) {
             if ($request->guideCheck) {
