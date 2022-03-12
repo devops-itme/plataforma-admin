@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\GuideTrait;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Http\Resources\OrderResource;
 use App\Order;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    use OrderTrait;
+    use OrderTrait, GuideTrait;
 
     protected $customerRelationships = [
         'getOrderType', 'getDocumentType', 'getPaymentMethod',
@@ -82,7 +83,7 @@ class OrderController extends Controller
             }
             $guides = $request->guides;
             foreach($guides as $guide){
-                return ($guide);
+                return ($guide->contact);
             }
             
         } catch (\Throwable $e) {

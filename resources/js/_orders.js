@@ -339,7 +339,7 @@ export default class Orders {
             let address_name = document.getElementById("address").value;
             // let address_lat = document.getElementById("lat").value;
             // let address_lng = document.getElementById("lng").value;
-            let address_description = document.getElementById("address_description").value;
+            let guide_description = document.getElementById("guide_description").value;
             let concept = document.getElementById("concept").value;
             let rate = document.getElementById("rate").value;
             let value = document.getElementById("value").value;
@@ -382,7 +382,7 @@ export default class Orders {
             formData.append('address_name',address_name);
             // formData.append('address_lat',address_lat);
             // formData.append('address_lng',address_lng);
-            formData.append('address_description',address_description);
+            formData.append('guide_description',guide_description);
             formData.append('concept',concept);
             formData.append('rate',rate);
             formData.append('value',value);
@@ -538,7 +538,7 @@ export default class Orders {
                 // let address_name = document.getElementById("address_edit").value = data.address_name;
                 // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                 // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
-                let address_description = document.getElementById("address_description_edit").value = data.address_description;
+                let guide_description = document.getElementById("address_description_edit").value = data.guide_description;
                 let concept = document.getElementById("concept_edit").value = data.concept;
                 let rate = document.getElementById("rate_edit").value = data.rate;
                 let value = document.getElementById("value_edit").value = data.value;
@@ -586,7 +586,7 @@ export default class Orders {
             let address_name = document.getElementById("customer_address_edit").value;
             // let address_lat = document.getElementById("lat_edit").value;
             // let address_lng = document.getElementById("lng_edit").value;
-            let address_description = document.getElementById("address_description_edit").value;
+            let guide_description = document.getElementById("address_description_edit").value;
             let concept = document.getElementById("concept_edit").value;
             let rate = document.getElementById("rate_edit").value;
             let value = document.getElementById("value_edit").value;
@@ -633,7 +633,7 @@ export default class Orders {
             formData.append("address_name", address_name);
             // formData.append("address_lat", address_lat);
             // formData.append("address_lng", address_lng);
-            formData.append("address_description", address_description);
+            formData.append("guide_description", guide_description);
             formData.append("concept", concept);
             formData.append("rate", rate);
             formData.append("value", value);

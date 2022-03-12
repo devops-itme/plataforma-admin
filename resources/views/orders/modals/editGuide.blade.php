@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="district">Descripción <span class="text-danger">*</span></label>
-                        <textarea name="address_description" id="address_description_edit" class="form-control form-control-solid"></textarea>
+                        <textarea name="guide_description" id="address_description_edit" class="form-control form-control-solid"></textarea>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Concepto: <span class="text-danger">*</span></label>

@@ -72,7 +72,8 @@ class GuideController extends Controller
                 $request->merge([
                     'address_name' => $address->name,
                     'address_lat' => $address->lat,
-                    'address_lng' => $address->lng
+                    'address_lng' => $address->lng,
+                    'address_description' => $address->description
                 ]);
             }
         }

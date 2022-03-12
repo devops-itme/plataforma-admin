@@ -55,6 +55,7 @@ trait GuideTrait
         }
         try {
             $order = Guide::create([
+                'description' => $request->guide_description,
                 'branch_office' => $request->branch_office,
                 'transport_type' => $request->transport_type,
                 'dispatched' => $request->dispatched,
