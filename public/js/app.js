@@ -83217,6 +83217,7 @@ var Orders = /*#__PURE__*/function () {
       this.listGuides();
       this.porDespacharOndemand();
       this.porDespacharPackaging();
+      this.customerAddresses();
     }
   }, {
     key: "setInput",
@@ -83971,7 +83972,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, customer_address, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, boxes;
+          var response, data, branch_office, customer_address, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, boxes;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -83985,12 +83986,15 @@ var Orders = /*#__PURE__*/function () {
                   data = response.data;
                   branch_office = document.getElementById("branch_off_edit");
                   branch_office.value = data.branch_office;
-                  customer_address = document.getElementById("customer_address_edit");
-                  customer_address.value = data.customer_address; // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                  customer_address = document.getElementById('customer_address_edit').options;
+                  [].forEach.call(customer_address, function (key) {
+                    key.text == data.address_name ? key.selected = true : key.selected = false;
+                  }); // customer_address.value = data.customer_address;
+                  // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                  // let address_name = document.getElementById("address_edit").value = data.address_name;
+                  // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
+                  // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
 
-                  address_name = document.getElementById("address_edit").value = data.address_name;
-                  address_lat = document.getElementById("lat_edit").value = data.address_lat;
-                  address_lng = document.getElementById("lng_edit").value = data.address_lng;
                   address_description = document.getElementById("address_description_edit").value = data.address_description;
                   concept = document.getElementById("concept_edit").value = data.concept;
                   rate = document.getElementById("rate_edit").value = data.rate;
@@ -84013,7 +84017,7 @@ var Orders = /*#__PURE__*/function () {
 
                   _this7.addbox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
 
-                case 31:
+                case 28:
                 case "end":
                   return _context11.stop();
               }
@@ -84073,16 +84077,16 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, address_lat, address_lng, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
               case 0:
                 branch_off_edit = document.getElementById("branch_off_edit").value; // let dispatched = document.getElementById("dispatched_edit").value;
 
-                address_name = document.getElementById("address_edit").value;
-                address_lat = document.getElementById("lat_edit").value;
-                address_lng = document.getElementById("lng_edit").value;
+                address_name = document.getElementById("customer_address_edit").value; // let address_lat = document.getElementById("lat_edit").value;
+                // let address_lng = document.getElementById("lng_edit").value;
+
                 address_description = document.getElementById("address_description_edit").value;
                 concept = document.getElementById("concept_edit").value;
                 rate = document.getElementById("rate_edit").value;
@@ -84127,9 +84131,9 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('boxes', JSON.stringify(boxArr));
                 formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
 
-                formData.append("address_name", address_name);
-                formData.append("address_lat", address_lat);
-                formData.append("address_lng", address_lng);
+                formData.append("address_name", address_name); // formData.append("address_lat", address_lat);
+                // formData.append("address_lng", address_lng);
+
                 formData.append("address_description", address_description);
                 formData.append("concept", concept);
                 formData.append("rate", rate);
@@ -84157,10 +84161,10 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context13.next = 61;
+                _context13.next = 57;
                 return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
 
-              case 61:
+              case 57:
                 response = _context13.sent;
 
                 if (response.state == 200) {
@@ -84174,7 +84178,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 63:
+              case 59:
               case "end":
                 return _context13.stop();
             }
@@ -84357,7 +84361,7 @@ var Orders = /*#__PURE__*/function () {
 
                   for (var i = 0; i < data.length; i++) {
                     var element = data[i];
-                    var optAddress = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    var optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + ' </option>';
                     slcAddress.insertAdjacentHTML('beforeend', optAddress);
                   }
                 });

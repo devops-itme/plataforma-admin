@@ -6,7 +6,7 @@
             <select name="vehicle_type_id" class="form-control form-control-solid" id="trans_type">
                 <option selected disabled>Seleccione tipo de transporte</option>
                 @foreach ($transport_type as $item)
-                    <option value="{{ $item->id }}" {{ ($order->getGuides[0] != null ) ? ($order->getGuides[0]->transport_type == 2 ? 'selected' : '') : ''}} >{{$item->name}}</option>
+                    <option value="{{ $item->id }}" {{ (count($order->getGuides) > 0 ) ? ($order->getGuides[0]->transport_type == 2 ? 'selected' : '') : ''}} >{{$item->name}}</option>
                 @endforeach
             </select>
         </div>
@@ -29,7 +29,14 @@
             <input name="schedule_time" type="time" class="form-control form-control-solid" placeholder="" value="{{$order->schedule_time}}" />
             <span class="form-text text-muted"></span>
         </div>
-        <div class="form-group col-md-12 m-0 d-flex align-items-center">
+        <div class="form-group col-md-6">
+            <label for="address">Dirección origen <span class="text-danger">*</span></label>
+            <select name="customer_address" class="form-control form-control-solid" id="address">
+                <option disabled selected>Seleccione </option>
+            </select>
+        </div>
+        {{-- <input type="hidden" id="add_id" value="{{$order->address_id}}"> --}}
+        <div class="form-group col-md-6 m-0 d-flex align-items-center">
             <div class="checkbox-inline">
                 <label class="checkbox">
                     <input type="checkbox" name="urgent_dispatch" {{$order->urgent_dispatch == 1 ? 'checked' : ''}} />

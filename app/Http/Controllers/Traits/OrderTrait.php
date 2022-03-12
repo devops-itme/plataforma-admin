@@ -115,7 +115,8 @@ trait OrderTrait
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
                 'branch_office' => $request->branch_office_id,
-                'department_id' => $request->department_id
+                'department_id' => $request->department_id,
+                'address_id' => $request->address_id
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {
