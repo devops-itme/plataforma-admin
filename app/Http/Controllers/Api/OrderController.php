@@ -80,9 +80,9 @@ class OrderController extends Controller
             if ($response['state'] != 200) {
                 return $response;
             }
-            $guides = json_encode($request->guides);
+            $guides = json_decode($request->guides);
             foreach($guides as $guide){
-                return (json_encode($guide));
+                return ($guide);
             }
             
         } catch (\Throwable $e) {
