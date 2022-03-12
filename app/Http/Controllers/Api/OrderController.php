@@ -84,7 +84,7 @@ class OrderController extends Controller
             $guides = $request->guides;
             foreach($guides as $guide){
                 $guide = json_encode($guide);
-                return ($guide);
+                return ($guide[0]);
             }
             
         } catch (\Throwable $e) {
