@@ -84,7 +84,7 @@ class OrderController extends Controller
             $guides = $request->guides;
             foreach ($guides as $guide) {
                 $guide = json_decode(json_encode($guide));
-                return ($guide);
+                return ($guide['address_id']);
             }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
