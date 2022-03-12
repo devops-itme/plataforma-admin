@@ -83,7 +83,7 @@ class OrderController extends Controller
             }
             $guides = $request->guides;
             foreach($guides as $guide){
-                return ($guide->contact);
+                return ($guide['contact']);
             }
             
         } catch (\Throwable $e) {
