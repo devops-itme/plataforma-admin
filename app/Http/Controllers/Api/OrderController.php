@@ -87,7 +87,7 @@ class OrderController extends Controller
                     json_encode($guide),
                     json_decode($guide),
                     json_decode(json_encode($guide)),
-                    json_decode(json_decode($guide))
+                    json_encode(json_decode($guide))
                 );
                 $guide = json_decode(json_encode($guide));
                 return ($guide['address_id']);
