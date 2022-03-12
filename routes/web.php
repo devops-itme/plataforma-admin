@@ -132,12 +132,11 @@ Route::group(['middleware' => 'auth'], function () {
         return view('plans.index');
     })->name('plans.index');
 
+    //MAtriz de estados lógica
+    Route::get('matriz_estados', 'Admin\DeliveryController@statusMatrix');
 
 
 });
-
- //MAtriz de estados lógica
- Route::get('matriz_estados', 'Admin\DeliveryController@statusMatrix');
 
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
