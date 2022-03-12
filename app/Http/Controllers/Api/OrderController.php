@@ -81,17 +81,11 @@ class OrderController extends Controller
             if ($response['state'] != 200) {
                 return $response;
             }
-            $guides = $request->guides;
-            foreach ($guides as $guide) {
-                // dd(
-                //     json_encode($guide),
-                //     json_decode($guide),
-                //     json_decode(json_encode($guide)),
-                //     json_encode(json_decode($guide))
-                // );
-                $guide = json_encode(json_encode($guide));
-                return ($guide['address_id']);
-            }
+            // $guides = $request->guides;
+            // foreach ($guides as $guide) {
+            //     $guide = json_encode(json_encode($guide));
+            //     return ($guide['address_id']);
+            // }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
