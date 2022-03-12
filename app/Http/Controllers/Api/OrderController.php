@@ -70,13 +70,17 @@ class OrderController extends Controller
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
-        $response = $this->storeOrder($request);
-        if ($response['state'] != 200) {
-            return $response;
-        }
 
-        return (json_encode($request->guides));
+
         try {
+            $last_id = Order::all()->last()->id ?? 0;
+            $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
+
+            $response = $this->storeOrder($request);
+            if ($response['state'] != 200) {
+                return $response;
+            }
+            return (json_encode($request->guides));
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
