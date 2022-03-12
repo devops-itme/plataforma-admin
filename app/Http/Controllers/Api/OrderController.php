@@ -80,7 +80,11 @@ class OrderController extends Controller
             if ($response['state'] != 200) {
                 return $response;
             }
-            return (json_encode($request->guides));
+            $guides = json_encode($request->guides);
+            foreach($guides as $guide){
+                return (json_encode($guide));
+            }
+            
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
