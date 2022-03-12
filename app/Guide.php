@@ -19,6 +19,7 @@ class Guide extends Model
         'address_lat',
         'address_lng',
         'address_description',
+        'description',
         'zone',
         'concept',
         'rate',

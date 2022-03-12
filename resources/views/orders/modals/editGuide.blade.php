@@ -24,19 +24,25 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3">
-                        <label for="address">Dirección <span class="text-danger">*</span></label>
-                        <input name="address" id="address_edit" type="text" class="form-control form-control-solid" placeholder=""/>
+                        <label for="address">Dirección destino <span class="text-danger">*</span></label>
+                        <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
+                            <option disabled selected>Seleccione </option>
+                        </select>
+                        {{-- <input name="address" id="address" type="text" class="form-control form-control-solid" placeholder=""/> --}}
                         {{-- <select name="address" class="form-control form-control-solid" id="address">
                             <option selected disabled>Seleccione dirección</option>
                             <option>Dirección 1</option>
                             <option>Dirección 2</option>
                         </select> --}}
                     </div>
-                    <input name="lat" id="lat_edit" type="hidden" class="form-control form-control-solid" placeholder=""/>
-                    <input name="lng" id="lng_edit" type="hidden" class="form-control form-control-solid" placeholder=""/>
+                    <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
+                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
+                            <i class="fad fa-plus-circle text-info"></i>
+                        </a>
+                    </div>
                     <div class="form-group col-md-3">
-                        <label for="district">Barrio <span class="text-danger">*</span></label>
-                        <textarea name="address_description" id="address_description_edit" class="form-control form-control-solid"></textarea>
+                        <label for="district">Descripción <span class="text-danger">*</span></label>
+                        <textarea name="guide_description" id="address_description_edit" class="form-control form-control-solid"></textarea>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Concepto: <span class="text-danger">*</span></label>
@@ -102,17 +108,6 @@
                         <label>Contacto Factura: <span class="text-danger">*</span></label>
                         <input name="invoice_contact" id="invoice_contact_edit" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
-                        <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit" onchange="console.log('ho')">
-                            <option disabled>Seleccione </option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
-                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
-                            <i class="fad fa-plus-circle text-info"></i>
-                        </a>
                     </div>
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">

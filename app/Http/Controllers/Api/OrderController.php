@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\GuideTrait;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Http\Resources\OrderResource;
 use App\Order;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    use OrderTrait;
+    use OrderTrait, GuideTrait;
 
     protected $customerRelationships = [
         'getOrderType', 'getDocumentType', 'getPaymentMethod',
@@ -65,9 +66,27 @@ class OrderController extends Controller
         if (Auth()->user()->role != 1) {
             $request->merge(['user_id' => Auth()->user()->id]);
         };
-        return ($request->all());
+
+        $validator = $this->OrderValidate($request);
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+        }
+
 
         try {
+            $last_id = Order::all()->last()->id ?? 0;
+            $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
+
+            $response = $this->storeOrder($request);
+            return $response;
+            if ($response['state'] != 200) {
+                return $response;
+            }
+            // $guides = $request->guides;
+            // foreach ($guides as $guide) {
+            //     $guide = json_encode(json_encode($guide));
+            //     return ($guide['address_id']);
+            // }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }

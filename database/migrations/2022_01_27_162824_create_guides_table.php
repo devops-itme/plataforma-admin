@@ -17,6 +17,7 @@ class CreateGuidesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id')->nullable();
             // $table->foreign('order_id')->references('id')->on('orders');
+            $table->string('description')->nullable();
             $table->string('branch_office')->nullable();
             $table->string('transport_type')->nullable();
             $table->string('dispatched')->nullable();
