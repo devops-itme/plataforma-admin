@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\AddressTrait;
 use App\Http\Controllers\Traits\UserTrait;
 use App\Http\Controllers\Traits\CustomerTrait;
-use App\Http\Controllers\Traits\RestActions;
 use App\Mail\CodeMail;
 use App\Role;
 use App\User;
@@ -18,7 +17,17 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    use UserTrait, CustomerTrait, AddressTrait, RestActions;
+    use UserTrait, CustomerTrait, AddressTrait;
+
+    public function respond($state, $data = [], $error = null, $message = '')
+    {
+        return [
+            'state' => $state, //response status
+            'data' => $data, //response data
+            'error' => $error, //bug for developer
+            'message' => $message //user message
+        ];
+    }
 
     public function Login(Request $request)
     {
