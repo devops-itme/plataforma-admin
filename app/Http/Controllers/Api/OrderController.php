@@ -79,7 +79,7 @@ class OrderController extends Controller
         }
 
         try {
-            DB::transaction(function () use ($request) {
+            // DB::transaction(function () use ($request) {
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -111,7 +111,7 @@ class OrderController extends Controller
                             'state' => 31
                         ]);
                     }
-                    return $array->all();
+                    // return $array->all();
                     $validator = $this->GuideValidate($array);
                     if ($validator->fails()) {
                         return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
@@ -122,7 +122,7 @@ class OrderController extends Controller
                         return $storeGuideResponse;
                     }
                 }
-            });
+            // });
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {
