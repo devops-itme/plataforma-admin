@@ -111,7 +111,7 @@ class OrderController extends Controller
 
                 $validated_guides[] = $array;
             }
-
+            return 1;
             //go to the creation of orders and guides
             $storeOderResponse = $this->storeOrder($request);
             if ($storeOderResponse['state'] != 200) {
