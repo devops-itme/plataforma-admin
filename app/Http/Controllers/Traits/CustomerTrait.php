@@ -5,23 +5,22 @@ namespace App\Http\Controllers\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Customer;
-use App\User;
 
 trait CustomerTrait
 {
-    use BranchOfficeTrait;
+    use RestActions;
 
     public function customerValidate($request)
     {
         return Validator::make(
             $request->all(),
             [
-                'birthday' => 'required|date|before:today',
-                'zone' => 'required',
-                'contact' => 'required|string',
-                'payment_period' => 'required',
+                'birthday' => 'nullable|date|before:today',
+                'zone' => 'nullable',
+                'contact' => 'nullable|string',
+                'payment_period' => 'nullable',
                 'credit' => 'nullable|integer',
-                'taxes' => 'required',
+                'taxes' => 'nullable',
                 'receive_emails' => 'nullable',
                 'fullfill' => 'nullable',
                 'handling' => 'nullable',

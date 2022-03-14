@@ -19,6 +19,16 @@ class AuthController extends Controller
 {
     use UserTrait, CustomerTrait, AddressTrait;
 
+    public function respond($state, $data = [], $error = null, $message = '')
+    {
+        return [
+            'state' => $state, //response status
+            'data' => $data, //response data
+            'error' => $error, //bug for developer
+            'message' => $message //user message
+        ];
+    }
+
     public function Login(Request $request)
     {
         $is_numeric = is_numeric($request->user);

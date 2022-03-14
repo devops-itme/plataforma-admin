@@ -29,6 +29,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('customer/show', 'Api\CustomerController@show')->name('messenger.show');
 
+    Route::get('address', 'Api\AddressController@index')->name('address');
+    Route::post('address/store', 'Api\AddressController@store')->name('address.store');
+    Route::put('address/update/{id}', 'Api\AddressController@update')->name('address.update');
+    Route::delete('address/{id}', 'Api\AddressController@destroy')->name('address.delete');
+
     Route::get('messenger/show', 'Api\MessengerController@show')->name('messenger.show');
     Route::put('messenger/update', 'Api\MessengerController@update')->name('messenger.update');
 

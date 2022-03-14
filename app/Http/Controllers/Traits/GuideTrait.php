@@ -42,7 +42,7 @@ trait GuideTrait
                 'sign' => 'nullable',
                 'take_photo' => 'nullable',
                 'packaging' => 'nullable',
-                // 'customer_address' => 'nullable'
+                'return_last_destination' => 'nullable',
             ]
         );
     }
@@ -55,6 +55,8 @@ trait GuideTrait
         }
         try {
             $order = Guide::create([
+                'order_id' => $request->order_id ?? null,
+                'description' => $request->guide_description,
                 'branch_office' => $request->branch_office,
                 'transport_type' => $request->transport_type,
                 'dispatched' => $request->dispatched,
@@ -76,7 +78,7 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
-                // 'customer_address' => $request->customer_address,
+                'return_last_destination' => $request->return_last_destination,
                 'boxes' => $request->boxes
             ]);
             return $this->respond(200, $order, null, 'Guiá creada exitosamente');
@@ -117,7 +119,7 @@ trait GuideTrait
                 'sign' => $request->sign,
                 'take_photo' => $request->take_photo,
                 'packaging' => $request->packaging,
-                // 'customer_address' => $request->customer_address,
+                'return_last_destination' => $request->return_last_destination,
                 'boxes' => $request->boxes
             ]);
             return $this->respond(200, $guide, null, 'Guía actualizada exitosamente');

@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Traits;
 
 use App\Address;
-use App\Http\Controllers\RestActions;
-use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
+use App\Http\Controllers\Traits\RestActions;
 use App\ParameterValue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 trait AddressTrait
 {
-    use TraitsRestActions;
+    use RestActions;
 
     public function addressesValidate($request)
     {
