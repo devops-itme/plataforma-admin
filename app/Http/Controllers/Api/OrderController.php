@@ -119,9 +119,9 @@ class OrderController extends Controller
             
             $order_id = $storeOderResponse['data']->id;
             
-            return 1;
             foreach ($validated_guides as $guide) {
                 $guide->merge(['order_id' => $order_id,]);
+                return 1;
                 $storeGuideResponse = $this->storeGuide($guide);
                 if ($storeGuideResponse['state'] != 200) {
                     return $storeGuideResponse;
