@@ -19,19 +19,19 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Nombres:</div>
-                        <div class="line-height-xl">{{$customer->getUser->name??''." ".$customer->getUser->last_name??''}}</div>
+                        <div class="line-height-xl">{{$customer->getUser->name??'No registra'." ".$customer->getUser->last_name??'No registra'}}</div>
                     </div>
                     <div class="col-md-2">
                         <div class="font-weight-bolder mb-3">Email:</div>
-                        <div class="line-height-xl">{{$customer->getUser->email??''}}</div>
+                        <div class="line-height-xl">{{$customer->getUser->email??'No registra'}}</div>
                     </div>
                     <div class="col-md-2">
                         <div class="font-weight-bolder mb-3">Teléfono:</div>
-                        <div class="line-height-xl">{{$customer->getUser->phone??''}}</div>
+                        <div class="line-height-xl">{{$customer->getUser->phone??'No registra'}}</div>
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Tipo y número de documento:</div>
-                        <div class="line-height-xl"><b>{{$customer->getUser->getDocumentType->name??''}}</b> / {{$customer->getUser->document_number??''}}</div>
+                        <div class="line-height-xl"><b>{{$customer->getUser->getDocumentType->name??'No registra'}}</b> / {{$customer->getUser->document_number??'No registra'}}</div>
                     </div>
                     <div class="col-md-2">
                         <div class="font-weight-bolder mb-3">Fecha de nacimiento:</div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="user_id" id="customer_id" value="{{$customer->getUser->id??''}}">
+            <input type="hidden" name="user_id" id="customer_id" value="{{$customer->getUser->id??'No registra'}}">
             <!--end::Item-->
         </div>
         <div class="my-5">
@@ -59,7 +59,7 @@
                 <div class="row mb-5 pb-5 border-bottom">
                     <div class="col-md-2">
                         <div class="font-weight-bolder mb-3">Zona:</div>
-                        <div class="line-height-xl">{{$customer->getZone->name??''}}</div>
+                        <div class="line-height-xl">{{$customer->getZone->name??'No registra'}}</div>
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Contacto:</div>
