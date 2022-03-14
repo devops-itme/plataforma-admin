@@ -79,7 +79,7 @@ class OrderController extends Controller
         }
 
         try {
-            DB::transaction(function () use ($request) {
+            // DB::transaction(function () use ($request) {
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -90,9 +90,9 @@ class OrderController extends Controller
 
                 $guides = $request->guides;
                 $guides = (array) json_decode($guides, true);
-
+                $array = $request;
                 foreach ($guides as $guide) {
-                    $array = new Collection([
+                    $request->merge([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
                         'contact' => $guide['contact'],
@@ -103,7 +103,7 @@ class OrderController extends Controller
 
                     $address = Address::find($guide['address_id']);
                     if (!is_null($address)) {
-                        $array->merge([
+                        $request->merge([
                             'address_name' => $address->name,
                             'address_lat' => $address->lat,
                             'address_lng' => $address->lng,
@@ -111,18 +111,18 @@ class OrderController extends Controller
                             'state' => 31
                         ]);
                     }
-
-                    $validator = $this->GuideValidate($array);
-                    if ($validator->fails()) {
-                        return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-                    }
+                    // return $array;
+                    // $validator = $this->GuideValidate($request);
+                    // if ($validator->fails()) {
+                    //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+                    // }
 
                     $storeGuideResponse = $this->storeGuide($guide);
                     if ($storeGuideResponse['state'] != 200) {
                         return $storeGuideResponse;
                     }
                 }
-            });
+            // });
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {
