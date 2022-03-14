@@ -69,24 +69,21 @@ class OrderController extends Controller
             $request->merge(['user_id' => Auth()->user()->id]);
         };
 
+        $last_id = Order::all()->last()->id ?? 0;
+        $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
+
         $validator = $this->OrderValidate($request);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
 
+        $guides = $request->guides;
+        $guides = (array) json_decode($guides, true);
+
+        $validated_guides = [];
 
         try {
-            $last_id = Order::all()->last()->id ?? 0;
-            $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
-
-            $response = $this->storeOrder($request);
-            if ($response['state'] != 200) {
-                return $response;
-            }
-
-            $guides = $request->guides;
-            $guides = (array) json_decode($guides, true);
-
+            //validate guides
             foreach ($guides as $guide) {
                 $array = new Collection([
                     'guide_description' => $guide['guide_description'],
@@ -102,7 +99,8 @@ class OrderController extends Controller
                         'address_name' => $address->name,
                         'address_lat' => $address->lat,
                         'address_lng' => $address->lng,
-                        'address_description' => $address->description
+                        'address_description' => $address->description,
+                        'state' => 31
                     ]);
                 }
 
@@ -110,8 +108,26 @@ class OrderController extends Controller
                 if ($validator->fails()) {
                     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
                 }
-                return ($guide);
+
+                $validated_guides[] = $array;
             }
+
+            $storeOderResponse = $this->storeOrder($request);
+            if ($storeOderResponse['state'] != 200) {
+                return $storeOderResponse;
+            }
+
+            $order_id = $storeOderResponse['data']->id;
+
+            foreach ($validated_guides as $guide) {
+                $guide->merge(['order_id' => $order_id,]);
+                $storeGuideResponse = $this->storeGuide($guide);
+                if ($storeGuideResponse['state'] != 200) {
+                    return $storeGuideResponse;
+                }
+            }
+
+            return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
