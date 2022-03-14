@@ -5,8 +5,9 @@
             <label for="trans_type">Tipo de transporte <span class="text-danger">*</span></label>
             <select name="trans_type" class="form-control form-control-solid" id="trans_type" disabled>
                 <option>Seleccione tipo de transporte</option>
-                <option {{($order->getGuides[0] != null ) ? ($order->getGuides[0]->transport_type == 1 ? 'selected' : '') : ''}}>Moto</option>
-                <option {{($order->getGuides[0] != null ) ? ($order->getGuides[0]->transport_type == 2 ? 'selected' : '') : ''}}>Auto</option>
+                @foreach ($transport_type as $item)
+                    <option value="{{ $item->id }}" {{ (count($order->getGuides) > 0 ) ? ($order->getGuides[0]->transport_type == 2 ? 'selected' : '') : ''}} >{{$item->name}}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group col-md-6">
@@ -26,6 +27,19 @@
             <label>Hora de programación: <span class="text-danger">*</span></label>
             <input name="order_num" type="time" class="form-control form-control-solid" value="{{$order->schedule_time}}" placeholder="" disabled/>
             <span class="form-text text-muted"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="address">Dirección origen <span class="text-danger">*</span></label>
+            <select name="cus_add_show" class="form-control form-control-solid" id="address" disabled>
+                <option disabled selected>Seleccione </option>
+                @foreach ($customer_addresses as $address)
+                    <option value="{{$address->id}}" {{$address->id == $order->address_id ? 'selected' : ''}}> {{$address->name}} </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="description">Descripción <span class="text-danger">*</span></label>
+            <textarea name="description_order" cols="10" rows="2" class="form-control form-control-solid">{{$order->description}}</textarea>
         </div>
         <div class="form-group col-md-12 m-0 d-flex align-items-center">
             <div class="checkbox-inline">

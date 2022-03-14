@@ -33,6 +33,9 @@
             <label for="address">Dirección origen <span class="text-danger">*</span></label>
             <select name="customer_address" class="form-control form-control-solid" id="address">
                 <option disabled selected>Seleccione </option>
+                @foreach ($customer_addresses as $address)
+                    <option value="{{$address->id}}" {{$address->id == $order->address_id ? 'selected' : ''}}> {{$address->name}} </option>
+                @endforeach
             </select>
         </div>
         <div class="form-group col-md-6">
