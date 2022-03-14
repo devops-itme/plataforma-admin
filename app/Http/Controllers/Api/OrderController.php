@@ -80,7 +80,7 @@ class OrderController extends Controller
         $guides = $request->guides;
         $guides = (array) json_decode($guides, true);
 
-        $validated_guides = [];
+        $validated_guides = new Collection();
 
         try {
             //validate guides
@@ -110,7 +110,7 @@ class OrderController extends Controller
                     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
                 }
 
-                $validated_guides[] = $array;
+                $validated_guides->push($array);
             }
             //go to the creation of orders and guides
             $storeOderResponse = $this->storeOrder($request);
