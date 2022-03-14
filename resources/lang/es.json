@@ -8,5 +8,7 @@
     "bankUsers" : "Usuario-banco",
     "branchOffices" : "Sucursales",
     "departments" : "Departamentos",
-    "orders" : "Ordenes"
+    "orders" : "Ordenes",
+    "parameters":"Parametros",
+    "record":"Historial"
 }

@@ -65,7 +65,7 @@ class GuideController extends Controller
         else{$request->merge(['sign' => 0]);}
         if($request->take_photo == 'on'){$request->merge(['take_photo' => 1]);}
         else{$request->merge(['take_photo' => 0]);}
-
+        $request->merge(['return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0]);
         if($request->address_name){
             $address = Address::find($request->address_name);
             if(!is_null($address)){
@@ -139,14 +139,16 @@ class GuideController extends Controller
         if(!($request->state)){
             $request->merge(['state' => 31]);
         }
-        // if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
+        $request->merge(['return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0]);
+        
         if($request->address_name){
             $address = Address::find($request->address_name);
             if(!is_null($address)){
                 $request->merge([
                     'address_name' => $address->name,
                     'address_lat' => $address->lat,
-                    'address_lng' => $address->lng
+                    'address_lng' => $address->lng,
+                    'address_description' => $address->description
                 ]);
             }
         }

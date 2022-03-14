@@ -23,7 +23,6 @@ class Order extends Model
         'tax_total',
         'payment_method',
         'urgent_dispatch',
-        'return_last_destination',
         'schedule_date',
         'schedule_time',
         'insured_value',

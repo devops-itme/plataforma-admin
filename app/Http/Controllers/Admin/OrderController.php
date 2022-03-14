@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Address;
 use App\BranchOffice;
 use App\Customer;
 use App\Department;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order;
 use App\ParameterValue;
+use App\User;
 use App\UserBranch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,11 +78,6 @@ class OrderController extends Controller
         } else {
             $request->merge(['urgent_dispatch' => 0]);
         }
-        if ($request->return_last_destination == 'on') {
-            $request->merge(['return_last_destination' => 1]);
-        } else {
-            $request->merge(['return_last_destination' => 0]);
-        }
         $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order,
             'creator_user_id' => Auth::user()->id,
         ]);
@@ -107,14 +104,29 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('getUser')->find($id);
-        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
-            $query->where('name', 'order_types');
-        })->get();
+        $user_id = $order->getUser->id;
         $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'customer_document_type');
         })->get();
-
-        return view('orders.showFold.show', compact('order', 'order_type', 'customer_document_type'));
+        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_method');
+        })->get();
+        $transport_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'transport_type');
+        })->get();
+        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'order_types');
+        })->get();
+        $branches = BranchOffice::with('getBranchUser')->whereHas('getBranchUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+        $departments = Department::with('getDepartmentUser')->whereHas('getDepartmentUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+        $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+        return view('orders.showFold.show', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses'));
     }
 
 
@@ -153,8 +165,11 @@ class OrderController extends Controller
         $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'customer_document_type');
         })->get();
+        $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
 
-        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type'));
+        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses'));
     }
 
     /**
@@ -173,11 +188,6 @@ class OrderController extends Controller
             $request->merge(['urgent_dispatch' => 1]);
         } else {
             $request->merge(['urgent_dispatch' => 0]);
-        }
-        if ($request->return_last_destination == 'on') {
-            $request->merge(['return_last_destination' => 1]);
-        } else {
-            $request->merge(['return_last_destination' => 0]);
         }
         $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order]);
         $response = $this->updateOrder($request->merge(['order_id' => $id]));

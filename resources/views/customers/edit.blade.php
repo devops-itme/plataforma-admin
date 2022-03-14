@@ -44,16 +44,16 @@
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
-            <input type="hidden" name="user_id" id="customer_id" value="{{$customer->getUser->id}}">
+            <input type="hidden" name="user_id" id="customer_id" value="{{$customer->getUser->id??''}}">
             <div class="col-md-6 d-flex px-0" id="naturalCustomer">
                 <div class="form-group py-3 m-0 col-md-6">
                     <label>Nombres: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{ $customer->getUser->name }}" />
+                    <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{ $customer->getUser->name??'' }}" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group py-3 m-0 col-md-6">
                     <label>Apellidos <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{ $customer->getUser->last_name }}" />
+                    <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{ $customer->getUser->last_name??'' }}" />
                 </div>
             </div>
             <div class="d-none" id="legalCustomer">
@@ -68,12 +68,12 @@
             </div>
             <div class="form-group py-3 m-0 col-md-3">
                 <label>Email: <span class="text-danger">*</span></label>
-                <input type="email" class="form-control form-control-solid" placeholder="Email" name="email" value="{{ $customer->getUser->email }}" />
+                <input type="email" class="form-control form-control-solid" placeholder="Email" name="email" value="{{ $customer->getUser->email??'' }}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-3">
                 <label>Teléfono: <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{ $customer->getUser->phone }}" />
+                <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{ $customer->getUser->phone??'' }}" />
                 <span class="form-text text-muted"></span>
             </div>
             <input type="hidden" value="{{$customer->business_name ? '2' : '1'}}" id="customer_type_edit">
@@ -90,7 +90,7 @@
             </div>
             <div class="form-group py-3 m-0 col-md-3">
                 <label>Número de identificación: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{ $customer->getUser->document_number  }}" />
+                <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{ $customer->getUser->document_number??''}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-3" id="datebirth">

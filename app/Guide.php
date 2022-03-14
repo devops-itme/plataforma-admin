@@ -34,7 +34,7 @@ class Guide extends Model
         'sign',
         'take_photo',
         'packaging',
-        // 'customer_address',
+        'return_last_destination',
         'state',
         'app_status',
         'boxes',
