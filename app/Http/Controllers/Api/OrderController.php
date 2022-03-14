@@ -112,7 +112,7 @@ class OrderController extends Controller
                         ]);
                     }
                     // return $array->all();
-                    $validator = $this->GuideValidate($array);
+                    $validator = $this->GuideValidate($guide);
                     if ($validator->fails()) {
                         return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
                     }
