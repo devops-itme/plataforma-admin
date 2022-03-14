@@ -80,53 +80,54 @@ class OrderController extends Controller
         }
 
         try {
-            // DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request) {
 
-            $storeOderResponse = $this->storeOrder($request);
-            if ($storeOderResponse['state'] != 200) {
-                return $storeOderResponse;
-            }
-
-            $order_id = $storeOderResponse['data']->id;
-
-            $guides = $request->guides;
-            $guides = (array) json_decode($guides, true);
-
-            foreach ($guides as $guide) {
-
-                $address = Address::find($guide['address_id']);
-                if (is_null($address)) {
-                    return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                $storeOderResponse = $this->storeOrder($request);
+                if ($storeOderResponse['state'] != 200) {
+                    return $storeOderResponse;
                 }
 
-                $newGuide = Guide::create([
-                    'order_id' => $order_id,
-                    'guide_description' => $guide['guide_description'],
-                    'contact' => $guide['contact'],
-                    'phone_contact' => $guide['phone_contact'],
-                    'email_contact' => $guide['email_contact'],
-                    'return_last_destination' => $guide['return_last_destination'],
-                    'address_name' => $address->name,
-                    'address_lat' => $address->lat,
-                    'address_lng' => $address->lng,
-                    'address_description' => $address->description,
-                    'state' => 31
-                ]);
+                $order_id = $storeOderResponse['data']->id;
 
-                if ($newGuide) {
-                    return $this->respond(200, $newGuide, null, 'Guiá creada exitosamente');
+                $guides = $request->guides;
+                $guides = (array) json_decode($guides, true);
+
+                foreach ($guides as $guide) {
+
+                    $address = Address::find($guide['address_id']);
+                    if (is_null($address)) {
+                        return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                    }
+
+                    $newGuide = Guide::create([
+                        'order_id' => $order_id,
+                        'guide_description' => $guide['guide_description'],
+                        'contact' => $guide['contact'],
+                        'phone_contact' => $guide['phone_contact'],
+                        'email_contact' => $guide['email_contact'],
+                        'return_last_destination' => $guide['return_last_destination'],
+                        'address_name' => $address->name,
+                        'address_lat' => $address->lat,
+                        'address_lng' => $address->lng,
+                        'address_description' => $address->description,
+                        'state' => 31
+                    ]);
+
+                    if (!$newGuide) {
+                        return $this->respond(500, null, 'error', 'Guiá errada');
+                    }
+                    // $validator = $this->GuideValidate($request);
+                    // if ($validator->fails()) {
+                    //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+                    // }
+
+                    // $storeGuideResponse = $this->storeGuide($guide);
+                    // if ($storeGuideResponse['state'] != 200) {
+                    //     return $storeGuideResponse;
+                    // }
                 }
-                // $validator = $this->GuideValidate($request);
-                // if ($validator->fails()) {
-                //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-                // }
-
-                // $storeGuideResponse = $this->storeGuide($guide);
-                // if ($storeGuideResponse['state'] != 200) {
-                //     return $storeGuideResponse;
-                // }
-            }
-            // });
+                return $this->respond(200, null, null, 'Orden creada correctamente');
+            });
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {
