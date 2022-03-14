@@ -78,10 +78,10 @@ class OrderController extends Controller
             $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
 
             $response = $this->storeOrder($request);
-            return $response;
             if ($response['state'] != 200) {
                 return $response;
             }
+            
             $guides = $request->guides;
             $guides = json_decode($guides);
             foreach ($guides as $guide) {
