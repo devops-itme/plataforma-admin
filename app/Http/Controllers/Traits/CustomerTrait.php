@@ -8,7 +8,7 @@ use App\Customer;
 
 trait CustomerTrait
 {
-    use RestActions;
+    use RestActions, UserTrait;
 
     public function customerValidate($request)
     {
