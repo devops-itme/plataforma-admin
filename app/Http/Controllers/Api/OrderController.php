@@ -92,7 +92,7 @@ class OrderController extends Controller
                 $guides = (array) json_decode($guides, true);
 
                 foreach ($guides as $guide) {
-                    $array = new Collection([
+                    $array = collect([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
                         'contact' => $guide['contact'],
