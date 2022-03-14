@@ -15,12 +15,12 @@ trait CustomerTrait
         return Validator::make(
             $request->all(),
             [
-                'birthday' => 'required|date|before:today',
-                'zone' => 'required',
-                'contact' => 'required|string',
-                'payment_period' => 'required',
+                'birthday' => 'nullable|date|before:today',
+                'zone' => 'nullable',
+                'contact' => 'nullable|string',
+                'payment_period' => 'nullable',
                 'credit' => 'nullable|integer',
-                'taxes' => 'required',
+                'taxes' => 'nullable',
                 'receive_emails' => 'nullable',
                 'fullfill' => 'nullable',
                 'handling' => 'nullable',
