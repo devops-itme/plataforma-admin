@@ -49,10 +49,10 @@ trait GuideTrait
 
     public function storeGuide($request)
     {
-        // $validator = $this->GuideValidate($request);
-        // if ($validator->fails()) {
-        //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-        // }
+        $validator = $this->GuideValidate($request);
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+        }
         try {
             $order = Guide::create([
                 'order_id' => $request->order_id ?? null,
@@ -83,7 +83,7 @@ trait GuideTrait
             ]);
             return $this->respond(200, $order, null, 'Guiá creada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . 'Error al crear guiá');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear guiá');
         }
     }
 
