@@ -25,25 +25,25 @@
                 </div>
                 <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
                     <div class="col-md-5 py-2" >
-                        <div class=" border rounded">
+                        <div class=" border rounded" v-if="type_guide === tabEdition">
                             <p class="mb-0">
                                 <span class="font-weight-bolder mb-3"
                                     >Destinos en recogida por editar:
                                 </span>
-                                <span class="line-height-xl">2000</span>
+                                <span class="line-height-xl" v-text="200"></span>
                             </p>
                         </div>
                     </div>
-                    <div class="form-group col-md-3 mb-0">
-                        <select class="form-control" id="delivery_event_state" >
+                    <div class="form-group col-md-3 mb-0" >
+                        <select class="form-control" id="delivery_event_state" v-if="type_guide === tabEdition" >
                             <option>Seleccione estado</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" >
                         <button
+                            v-if="type_guide === tabEdition"
                             type="button"
                             class="btn btn-light-primary font-weight-bold"
-
                         >
                             Aplicar nuevo estado
                         </button>
@@ -102,68 +102,68 @@
             <div class="col-md-3 py-4">
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
                     <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
-                    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
+                    <button v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Tipo de orden:</div>
-                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.get_order.get_order_type.name"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.type_order"></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente:</div>
-                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.get_order.get_user.name"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.client"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Destino:</div>
-                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.id"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.posting"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Despacho:</div>
-                        <div class="line-height-xl" v-if="showGuide != null"  v-text="showGuide.dispatched"></div>
+                        <div class="line-height-xl" v-if="showDataGuide"  v-text="showDataGuide.dispatched"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Ref.Cliente:</div>
-                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.get_order.get_user.document_number"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.ref_client"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Programado:</div>
-                        <div class="line-height-xl">2022/02/04</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.programming">2022/02/04</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
-                        <!-- <div class="line-height-xl"  v-if="showGuide != null"  v-text="showGuide.get_transport_type.name" ></div> -->
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport" ></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Movil:</div>
-                        <div class="line-height-xl" v-if="if_route == true"  v-text="showGuide.get_route.get_messenger.name+' '+showGuide.get_route.get_messenger.last_name"></div>
+                        <div class="line-height-xl" v-if="showDataGuide"  v-text="showDataGuide.movil"></div>
                     </div>
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Depto:</div>
-                        <div class="line-height-x1" v-if="if_department == true" v-text="showGuide.get_branch_office.get_department.get_department.id+':'+showGuide.get_branch_office.get_department.get_department.name" >84: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_depto" >84: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
-                        <div class="line-height-x1" v-if="showGuide != null" v-text="showGuide.get_branch_office.id+': '+showGuide.get_branch_office.name">1179: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_branch_office">1179: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Documento:</div>
-                        <div class="line-height-x1">1191: DELIVERY</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_document" >1191: DELIVERY</div>
                     </div>
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Concepto:</div>
-                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.concept" ></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.concept"></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Dirección:</div>
-                        <div class="line-height-xl" v-if="showGuide != null" v-text="showGuide.address_name"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.direction"></div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
-                    <div class="col-md-12 symbol-group symbol-hover">
+                    <div class="col-md-12 symbol-group symbol-hover" v-if="type_guide === tabEdition">
                         <div class="symbol">
                             <img alt="Pic" src="https://placem.at/things?h=100"/>
                         </div>
@@ -208,6 +208,7 @@ export default {
             messengers: [],
             type_guide: 3,
             showGuide: null,
+            showDataGuide: {},
             activeIndex: 2,
             tabs: [],
             if_route: false,
@@ -215,7 +216,14 @@ export default {
 
         };
     },
+    computed:{
+        tabEdition(){
+            return this.tabs[2]?.id;
+        }
+    },
+    watch:{
 
+    },
     methods: {
         loadingEvt (){
            $(`#myTab li:nth-child(1) a`).tab("show");
@@ -241,24 +249,47 @@ export default {
 
         getGuide(data){
             this.showGuide = data;
-            // this.showGuide.get_route ? this.if_route = true : this.if_route = false;
-            this.showGuide.get_branch_office.get_department ? this.if_department = true : this.if_department = false;
-
+            this.showDataGuide.type_order = data.get_order?.get_order_type.name;
+            this.showDataGuide.client = data.get_order?.get_user.name;
+            this.showDataGuide.posting = data.id;
+            this.showDataGuide.dispatched = data.dispatched;
+            this.showDataGuide.ref_client = data.get_order?.get_user.document_number;
+            this.showDataGuide.programming = data.get_order.schedule_date;
+            this.showDataGuide.transport =  data.get_transport_type?.name;
+            this.showDataGuide.movil = data.get_route?.get_messenger.name+' '+data.get_route?.get_messenger.last_name  ;
+            this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department.id+':'+data.get_branch_office?.get_department?.get_department.name;
+            this.showDataGuide.client_branch_office = data.get_branch_office?.id+': '+data.get_branch_office?.name;
+            this.showDataGuide.client_document = data.get_order?.get_user.document_number;
+            this.showDataGuide.concept = data.concept;
+            this.showDataGuide.direction = data.address_name;
         },
         async getGuides(type) {
             this.guides2 = [];
             this.showGuide = null;
+            this.showDataGuide = {
+                type_order: null,
+                client: null,
+                posting: null,
+                dispatched: null,
+                ref_client: null,
+                programming: null,
+                transport: null,
+                movil: null,
+                client_depto: null,
+                client_branch_office: null,
+                client_document: null,
+                concept: null,
+                direction: null,
+            },
             this.statusMatrix(this.selected);
             type == 55 && (type = 3);
             type == 53 && (type = 7);
             let response = await this.requestGuides(type);
             this.guides = response.data;
 
-
-
         },
         async requestGuides(type) {
-            // console.log(this.type_guide )
+
             let response = { state: 500 };
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -266,14 +297,16 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            // console.log(this.type_guide)
+
             await fetch(`/orders_packing/${type}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     response = data;
                 })
                 .catch((err) => console.warn(err));
+            this.type_guide = type;
             return response;
+
         },
            async getMessengers() {
             let _this = this;
