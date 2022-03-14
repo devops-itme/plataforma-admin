@@ -86,6 +86,7 @@ class OrderController extends Controller
             //validate guides
             foreach ($guides as $guide) {
                 $array = new Collection([
+                    'order_id' => null,
                     'guide_description' => $guide['guide_description'],
                     'contact' => $guide['contact'],
                     'phone_contact' => $guide['phone_contact'],
@@ -116,12 +117,12 @@ class OrderController extends Controller
             if ($storeOderResponse['state'] != 200) {
                 return $storeOderResponse;
             }
-            
+
             $order_id = $storeOderResponse['data']->id;
-            
+
             foreach ($validated_guides as $guide) {
-                $guide->merge(['order_id' => $order_id,]);
-                return 1;
+                $guide->order_id = $order_id;
+
                 $storeGuideResponse = $this->storeGuide($guide);
                 if ($storeGuideResponse['state'] != 200) {
                     return $storeGuideResponse;
@@ -130,7 +131,7 @@ class OrderController extends Controller
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage().$e->getLine(), 'Error del servidor');
+            return $this->respond(500, null, $e->getMessage() . $e->getLine(), 'Error del servidor');
         }
     }
 
