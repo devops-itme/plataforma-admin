@@ -91,28 +91,28 @@ class OrderController extends Controller
 
             $guides = $request->guides;
             $guides = (array) json_decode($guides, true);
-            $array = $request;
+
             foreach ($guides as $guide) {
-                $array->merge([
+
+                $address = Address::find($guide['address_id']);
+                if (is_null($address)) {
+                    return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                }
+
+                $newGuide = Guide::create([
                     'order_id' => $order_id,
                     'guide_description' => $guide['guide_description'],
                     'contact' => $guide['contact'],
                     'phone_contact' => $guide['phone_contact'],
                     'email_contact' => $guide['email_contact'],
                     'return_last_destination' => $guide['return_last_destination'],
+                    'address_name' => $address->name,
+                    'address_lat' => $address->lat,
+                    'address_lng' => $address->lng,
+                    'address_description' => $address->description,
+                    'state' => 31
                 ]);
 
-                $address = Address::find($guide['address_id']);
-                if (!is_null($address)) {
-                    $array->merge([
-                        'address_name' => $address->name,
-                        'address_lat' => $address->lat,
-                        'address_lng' => $address->lng,
-                        'address_description' => $address->description,
-                        'state' => 31
-                    ]);
-                }
-                $newGuide = Guide::create($array);
                 if ($newGuide) {
                     return $this->respond(200, $newGuide, null, 'Guiá creada exitosamente');
                 }
