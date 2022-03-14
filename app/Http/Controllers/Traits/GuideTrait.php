@@ -49,7 +49,7 @@ trait GuideTrait
 
     public function storeGuide($request)
     {
-        $validator = $this->GuideValidate($request);
+        // $validator = $this->GuideValidate($request);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
