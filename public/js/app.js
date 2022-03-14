@@ -2147,7 +2147,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       activeIndex: 2,
       tabs: [],
       if_route: false,
-      if_department: false
+      if_department: false,
+      guide: {},
+      document_types: null,
+      transport_types: null,
+      payment_methods: null
     };
   },
   computed: {
@@ -2333,26 +2337,79 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee4);
       }))();
+    },
+    editDepartment: function editDepartment(guide) {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _this6.guide.name = departament.name;
+                _this6.guide.description = departament.description;
+                _this6.guide.state = departament.state;
+                _this6.guide.id = departament.id;
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    documentTypes: function documentTypes() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var name, req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                name = "document_type";
+                _context6.next = 3;
+                return fetch("/api/parameter_values?parameter_name=".concat(name));
+
+              case 3:
+                req = _context6.sent;
+                _context6.next = 6;
+                return req.json();
+
+              case 6:
+                res = _context6.sent;
+                _this7.document_types = res.data;
+
+              case 8:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this8 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
-              _this6.getGuides(3);
+              _this8.getGuides(3);
 
-              _this6.getMessengers();
+              _this8.getMessengers();
 
-            case 2:
+              _this8.documentTypes();
+
+            case 3:
             case "end":
-              return _context5.stop();
+              return _context7.stop();
           }
         }
-      }, _callee5);
+      }, _callee7);
     }))();
   }
 });
@@ -83741,7 +83798,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, address_name, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
+        var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -83752,7 +83809,7 @@ var Orders = /*#__PURE__*/function () {
                 address_name = document.getElementById("address").value; // let address_lat = document.getElementById("lat").value;
                 // let address_lng = document.getElementById("lng").value;
 
-                address_description = document.getElementById("address_description").value;
+                guide_description = document.getElementById("guide_description").value;
                 concept = document.getElementById("concept").value;
                 rate = document.getElementById("rate").value;
                 value = document.getElementById("value").value;
@@ -83797,7 +83854,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('address_name', address_name); // formData.append('address_lat',address_lat);
                 // formData.append('address_lng',address_lng);
 
-                formData.append('address_description', address_description);
+                formData.append('guide_description', guide_description);
                 formData.append('concept', concept);
                 formData.append('rate', rate);
                 formData.append('value', value);
@@ -84038,7 +84095,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, customer_address, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, boxes;
+          var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, boxes;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -84061,7 +84118,7 @@ var Orders = /*#__PURE__*/function () {
                   // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                   // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
 
-                  address_description = document.getElementById("address_description_edit").value = data.address_description;
+                  guide_description = document.getElementById("address_description_edit").value = data.guide_description;
                   concept = document.getElementById("concept_edit").value = data.concept;
                   rate = document.getElementById("rate_edit").value = data.rate;
                   value = document.getElementById("value_edit").value = data.value;
@@ -84143,7 +84200,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, address_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -84153,7 +84210,7 @@ var Orders = /*#__PURE__*/function () {
                 address_name = document.getElementById("customer_address_edit").value; // let address_lat = document.getElementById("lat_edit").value;
                 // let address_lng = document.getElementById("lng_edit").value;
 
-                address_description = document.getElementById("address_description_edit").value;
+                guide_description = document.getElementById("address_description_edit").value;
                 concept = document.getElementById("concept_edit").value;
                 rate = document.getElementById("rate_edit").value;
                 value = document.getElementById("value_edit").value;
@@ -84200,7 +84257,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("address_name", address_name); // formData.append("address_lat", address_lat);
                 // formData.append("address_lng", address_lng);
 
-                formData.append("address_description", address_description);
+                formData.append("guide_description", guide_description);
                 formData.append("concept", concept);
                 formData.append("rate", rate);
                 formData.append("value", value);

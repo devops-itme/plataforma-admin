@@ -213,6 +213,10 @@ export default {
             tabs: [],
             if_route: false,
             if_department: false,
+            guide:{},
+            document_types:null,
+            transport_types:null,
+            payment_methods:null,
 
         };
     },
@@ -323,12 +327,28 @@ export default {
                 })
                 .catch((err) => console.warn(err));
         },
+         async editDepartment(guide) {
+            this.guide.name = departament.name
+            this.guide.description =departament.description
+            this.guide.state =departament.state
+            this.guide.id =departament.id
+        },
+
+        async documentTypes() {
+            let name = "document_type";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.document_types = res.data;
+        },
+
 
     },
 
      async mounted() {
         this.getGuides(3);
         this.getMessengers();
+        this.documentTypes();
+
     },
 
 };
