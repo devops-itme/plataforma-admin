@@ -348,6 +348,13 @@ export default {
             this.transport_types = res.data;
         },
 
+        async paymentMethods() {
+            let name = "payment_method";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.payment_methods = res.data;
+        },
+
 
     },
 
@@ -356,7 +363,7 @@ export default {
         this.getMessengers();
         this.documentTypes();
         this.transportTypes();
-
+        this.paymentMethods();
     },
 
 };
