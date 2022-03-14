@@ -92,7 +92,7 @@ class OrderController extends Controller
                 $guides = (array) json_decode($guides, true);
 
                 foreach ($guides as $guide) {
-                    $array = collect([
+                    $array = new Collection([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
                         'contact' => $guide['contact'],
@@ -111,7 +111,7 @@ class OrderController extends Controller
                             'state' => 31
                         ]);
                     }
-
+                    return $array->all();
                     $validator = $this->GuideValidate($array);
                     if ($validator->fails()) {
                         return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
