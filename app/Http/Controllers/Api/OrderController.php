@@ -112,6 +112,7 @@ class OrderController extends Controller
                 $validated_guides[] = $array;
             }
 
+            //go to the creation of orders and guides
             $storeOderResponse = $this->storeOrder($request);
             if ($storeOderResponse['state'] != 200) {
                 return $storeOderResponse;
@@ -129,7 +130,7 @@ class OrderController extends Controller
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+            return $this->respond(500, null, $e->getMessage().$e->getLine(), 'Error del servidor');
         }
     }
 
