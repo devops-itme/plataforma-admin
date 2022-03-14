@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Tipo y número de documento:</div>
-                        <div class="line-height-xl"><b>{{$customer->getUser??$customer->getUser->getDocumentType->name??''}}</b> / {{$customer->getUser->document_number??''}}</div>
+                        <div class="line-height-xl"><b>{{$customer->getUser->getDocumentType->name??''}}</b> / {{$customer->getUser->document_number??''}}</div>
                     </div>
                     <div class="col-md-2">
                         <div class="font-weight-bolder mb-3">Fecha de nacimiento:</div>
