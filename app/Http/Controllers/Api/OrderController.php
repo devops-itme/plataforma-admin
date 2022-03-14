@@ -89,15 +89,15 @@ class OrderController extends Controller
 
             foreach ($guides as $guide) {
                 $array = new Collection([
-                    'guide_description' => $guide->guide_description,
-                    'address_name' => $guide->address_name,
-                    'address_lat' => $guide->address_lat,
-                    'address_lng' => $guide->address_lng,
-                    'address_description' => $guide->address_description,
-                    'contact' => $guide->contact,
-                    'phone_contact' => $guide->phone_contact,
-                    'email_contact' => $guide->email_contact,
-                    'return_last_destination' => $guide->return_last_destination,
+                    'guide_description' => $guide['guide_description'],
+                    'address_name' => $guide['address_name'],
+                    'address_lat' => $guide['address_lat'],
+                    'address_lng' => $guide['address_lng'],
+                    'address_description' => $guide['address_description'],
+                    'contact' => $guide['contact'],
+                    'phone_contact' => $guide['phone_contact'],
+                    'email_contact' => $guide['email_contact'],
+                    'return_last_destination' => $guide['return_last_destination'],
                 ]);
 
                 $address = Address::find($guide->address_id);
