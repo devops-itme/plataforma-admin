@@ -76,11 +76,6 @@ class OrderController extends Controller
         } else {
             $request->merge(['urgent_dispatch' => 0]);
         }
-        if ($request->return_last_destination == 'on') {
-            $request->merge(['return_last_destination' => 1]);
-        } else {
-            $request->merge(['return_last_destination' => 0]);
-        }
         $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order,
             'creator_user_id' => Auth::user()->id,
         ]);
@@ -173,11 +168,6 @@ class OrderController extends Controller
             $request->merge(['urgent_dispatch' => 1]);
         } else {
             $request->merge(['urgent_dispatch' => 0]);
-        }
-        if ($request->return_last_destination == 'on') {
-            $request->merge(['return_last_destination' => 1]);
-        } else {
-            $request->merge(['return_last_destination' => 0]);
         }
         $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order]);
         $response = $this->updateOrder($request->merge(['order_id' => $id]));

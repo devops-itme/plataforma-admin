@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Address;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuideTrait;
 use App\Http\Controllers\Traits\OrderTrait;
@@ -11,6 +12,7 @@ use App\ParameterValue;
 use App\Route;
 use App\StatusMatrix;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -86,7 +88,29 @@ class OrderController extends Controller
             $guides = (array) json_decode($guides, true);
 
             foreach ($guides as $guide) {
-                $validator = $this->GuideValidate($guide);
+                $array = new Collection([
+                    'guide_description' => $guide->guide_description,
+                    'address_name' => $request->address_name,
+                    'address_lat' => $request->address_lat,
+                    'address_lng' => $request->address_lng,
+                    'address_description' => $request->address_description,
+                    'contact' => $request->contact,
+                    'phone_contact' => $request->phone_contact,
+                    'email_contact' => $request->email_contact,
+                    'return_last_destination' => $request->return_last_destination,
+                ]);
+
+                $address = Address::find($guide->address_id);
+                if (!is_null($address)) {
+                    $array->merge([
+                        'address_name' => $address->name,
+                        'address_lat' => $address->lat,
+                        'address_lng' => $address->lng,
+                        'address_description' => $address->description
+                    ]);
+                }
+
+                $validator = $this->GuideValidate($array);
                 if ($validator->fails()) {
                     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
                 }
