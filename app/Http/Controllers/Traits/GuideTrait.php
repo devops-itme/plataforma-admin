@@ -50,9 +50,9 @@ trait GuideTrait
     public function storeGuide($request)
     {
         // $validator = $this->GuideValidate($request);
-        if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-        }
+        // if ($validator->fails()) {
+        //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+        // }
         try {
             $order = Guide::create([
                 'order_id' => $request->order_id ?? null,
