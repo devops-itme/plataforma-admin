@@ -122,7 +122,7 @@ class OrderController extends Controller
 
             foreach ($validated_guides as $guide) {
                 $guide->order_id = $order_id;
-                return $guide;
+                return $guide->guide_description;
                 $storeGuideResponse = $this->storeGuide($guide);
                 if ($storeGuideResponse['state'] != 200) {
                     return $storeGuideResponse;
