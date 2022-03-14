@@ -73,6 +73,11 @@ class OrderController extends Controller
         $last_id = Order::all()->last()->id ?? 0;
         $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
 
+        $validator = $this->GuideValidate($request);
+                if ($validator->fails()) {
+                    return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+                }
+
         $validator = $this->OrderValidate($request);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
@@ -84,11 +89,6 @@ class OrderController extends Controller
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
                     return $storeOderResponse;
-                }
-
-                $validator = $this->GuideValidate($request);
-                if ($validator->fails()) {
-                    return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
                 }
 
                 $order_id = $storeOderResponse['data']->id;
