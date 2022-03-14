@@ -82,9 +82,14 @@ class OrderController extends Controller
             // DB::transaction(function () use ($request) {
 
                 $storeOderResponse = $this->storeOrder($request);
-                // if ($storeOderResponse['state'] != 200) {
+                if ($storeOderResponse['state'] != 200) {
                     return $storeOderResponse;
-                // }
+                }
+
+                $validator = $this->GuideValidate($request);
+                if ($validator->fails()) {
+                    return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+                }
 
                 $order_id = $storeOderResponse['data']->id;
 
