@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -77,57 +78,51 @@ class OrderController extends Controller
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
 
-        $guides = $request->guides;
-        $guides = (array) json_decode($guides, true);
-
-        $validated_guides = [];
-
         try {
-            //validate guides
-            foreach ($guides as $guide) {
-                $array = new Collection([
-                    'order_id' => null,
-                    'guide_description' => $guide['guide_description'],
-                    'contact' => $guide['contact'],
-                    'phone_contact' => $guide['phone_contact'],
-                    'email_contact' => $guide['email_contact'],
-                    'return_last_destination' => $guide['return_last_destination'],
-                ]);
+            DB::transaction(function () use ($request) {
 
-                $address = Address::find($guide['address_id']);
-                if (!is_null($address)) {
-                    $array->merge([
-                        'address_name' => $address->name,
-                        'address_lat' => $address->lat,
-                        'address_lng' => $address->lng,
-                        'address_description' => $address->description,
-                        'state' => 31
+                $storeOderResponse = $this->storeOrder($request);
+                if ($storeOderResponse['state'] != 200) {
+                    return $storeOderResponse;
+                }
+
+                $order_id = $storeOderResponse['data']->id;
+
+                $guides = $request->guides;
+                $guides = (array) json_decode($guides, true);
+
+                foreach ($guides as $guide) {
+                    $array = new Collection([
+                        'order_id' => $order_id,
+                        'guide_description' => $guide['guide_description'],
+                        'contact' => $guide['contact'],
+                        'phone_contact' => $guide['phone_contact'],
+                        'email_contact' => $guide['email_contact'],
+                        'return_last_destination' => $guide['return_last_destination'],
                     ]);
+
+                    $address = Address::find($guide['address_id']);
+                    if (!is_null($address)) {
+                        $array->merge([
+                            'address_name' => $address->name,
+                            'address_lat' => $address->lat,
+                            'address_lng' => $address->lng,
+                            'address_description' => $address->description,
+                            'state' => 31
+                        ]);
+                    }
+
+                    $validator = $this->GuideValidate($array);
+                    if ($validator->fails()) {
+                        return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+                    }
+
+                    $storeGuideResponse = $this->storeGuide($guide);
+                    if ($storeGuideResponse['state'] != 200) {
+                        return $storeGuideResponse;
+                    }
                 }
-
-                $validator = $this->GuideValidate($array);
-                if ($validator->fails()) {
-                    return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-                }
-
-                $validated_guides[] = $array;
-            }
-            //go to the creation of orders and guides
-            $storeOderResponse = $this->storeOrder($request);
-            if ($storeOderResponse['state'] != 200) {
-                return $storeOderResponse;
-            }
-
-            $order_id = $storeOderResponse['data']->id;
-
-            foreach ($validated_guides as $guide) {
-                $guide->order_id = $order_id;
-                return $guide->all();
-                $storeGuideResponse = $this->storeGuide($guide);
-                if ($storeGuideResponse['state'] != 200) {
-                    return $storeGuideResponse;
-                }
-            }
+            });
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {
