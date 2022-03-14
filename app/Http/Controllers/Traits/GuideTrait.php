@@ -83,7 +83,7 @@ trait GuideTrait
             ]);
             return $this->respond(200, $order, null, 'Guiá creada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . 'Error al crear guiá');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear guiá');
         }
     }
 

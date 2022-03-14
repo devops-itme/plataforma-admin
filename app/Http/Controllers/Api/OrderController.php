@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Address;
+use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuideTrait;
 use App\Http\Controllers\Traits\OrderTrait;
@@ -79,7 +80,7 @@ class OrderController extends Controller
         }
 
         try {
-            // DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request) {
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -92,37 +93,41 @@ class OrderController extends Controller
                 $guides = (array) json_decode($guides, true);
 
                 foreach ($guides as $guide) {
-                    $array = new Request([
+
+                    $address = Address::find($guide['address_id']);
+                    if (is_null($address)) {
+                        return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                    }
+
+                    $newGuide = Guide::create([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
                         'contact' => $guide['contact'],
                         'phone_contact' => $guide['phone_contact'],
                         'email_contact' => $guide['email_contact'],
                         'return_last_destination' => $guide['return_last_destination'],
+                        'address_name' => $address->name,
+                        'address_lat' => $address->lat,
+                        'address_lng' => $address->lng,
+                        'address_description' => $address->description,
+                        'state' => 31
                     ]);
 
-                    $address = Address::find($guide['address_id']);
-                    if (!is_null($address)) {
-                        $array->merge([
-                            'address_name' => $address->name,
-                            'address_lat' => $address->lat,
-                            'address_lng' => $address->lng,
-                            'address_description' => $address->description,
-                            'state' => 31
-                        ]);
+                    if (!$newGuide) {
+                        return $this->respond(500, null, 'error', 'Guiá errada');
                     }
-                    // return $array->all();
-                    $validator = $this->GuideValidate($array);
-                    if ($validator->fails()) {
-                        return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-                    }
+                    // $validator = $this->GuideValidate($request);
+                    // if ($validator->fails()) {
+                    //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+                    // }
 
-                    $storeGuideResponse = $this->storeGuide($guide);
-                    if ($storeGuideResponse['state'] != 200) {
-                        return $storeGuideResponse;
-                    }
+                    // $storeGuideResponse = $this->storeGuide($guide);
+                    // if ($storeGuideResponse['state'] != 200) {
+                    //     return $storeGuideResponse;
+                    // }
                 }
-            // });
+                return $this->respond(200, null, null, 'Orden creada correctamente');
+            });
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {
