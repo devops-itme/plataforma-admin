@@ -92,7 +92,7 @@ class OrderController extends Controller
                 $guides = (array) json_decode($guides, true);
                 $array = $request;
                 foreach ($guides as $guide) {
-                    $array->merge([
+                    $request->merge([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
                         'contact' => $guide['contact'],
@@ -103,7 +103,7 @@ class OrderController extends Controller
 
                     $address = Address::find($guide['address_id']);
                     if (!is_null($address)) {
-                        $array->merge([
+                        $request->merge([
                             'address_name' => $address->name,
                             'address_lat' => $address->lat,
                             'address_lng' => $address->lng,
@@ -111,8 +111,8 @@ class OrderController extends Controller
                             'state' => 31
                         ]);
                     }
-                    return $array;
-                    $validator = $this->GuideValidate($array);
+                    // return $array;
+                    $validator = $this->GuideValidate($request);
                     if ($validator->fails()) {
                         return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
                     }
