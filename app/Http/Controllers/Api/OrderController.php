@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Address;
+use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuideTrait;
 use App\Http\Controllers\Traits\OrderTrait;
@@ -73,11 +74,6 @@ class OrderController extends Controller
         $last_id = Order::all()->last()->id ?? 0;
         $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
 
-        $validator = $this->GuideValidate($request);
-                if ($validator->fails()) {
-                    return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-                }
-
         $validator = $this->OrderValidate($request);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
@@ -86,47 +82,50 @@ class OrderController extends Controller
         try {
             // DB::transaction(function () use ($request) {
 
-                $storeOderResponse = $this->storeOrder($request);
-                if ($storeOderResponse['state'] != 200) {
-                    return $storeOderResponse;
-                }
+            $storeOderResponse = $this->storeOrder($request);
+            if ($storeOderResponse['state'] != 200) {
+                return $storeOderResponse;
+            }
 
-                $order_id = $storeOderResponse['data']->id;
+            $order_id = $storeOderResponse['data']->id;
 
-                $guides = $request->guides;
-                $guides = (array) json_decode($guides, true);
-                $array = $request;
-                foreach ($guides as $guide) {
-                    $request->merge([
-                        'order_id' => $order_id,
-                        'guide_description' => $guide['guide_description'],
-                        'contact' => $guide['contact'],
-                        'phone_contact' => $guide['phone_contact'],
-                        'email_contact' => $guide['email_contact'],
-                        'return_last_destination' => $guide['return_last_destination'],
+            $guides = $request->guides;
+            $guides = (array) json_decode($guides, true);
+            $array = $request;
+            foreach ($guides as $guide) {
+                $array = new Collection([
+                    'order_id' => $order_id,
+                    'guide_description' => $guide['guide_description'],
+                    'contact' => $guide['contact'],
+                    'phone_contact' => $guide['phone_contact'],
+                    'email_contact' => $guide['email_contact'],
+                    'return_last_destination' => $guide['return_last_destination'],
+                ]);
+
+                $address = Address::find($guide['address_id']);
+                if (!is_null($address)) {
+                    $array->merge([
+                        'address_name' => $address->name,
+                        'address_lat' => $address->lat,
+                        'address_lng' => $address->lng,
+                        'address_description' => $address->description,
+                        'state' => 31
                     ]);
-
-                    $address = Address::find($guide['address_id']);
-                    if (!is_null($address)) {
-                        $request->merge([
-                            'address_name' => $address->name,
-                            'address_lat' => $address->lat,
-                            'address_lng' => $address->lng,
-                            'address_description' => $address->description,
-                            'state' => 31
-                        ]);
-                    }
-                    // return $array;
-                    $validator = $this->GuideValidate($request);
-                    if ($validator->fails()) {
-                        return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-                    }
-
-                    $storeGuideResponse = $this->storeGuide($guide);
-                    if ($storeGuideResponse['state'] != 200) {
-                        return $storeGuideResponse;
-                    }
                 }
+                $newGuide = Guide::create($array);
+                if ($newGuide) {
+                    return $this->respond(200, $newGuide, null, 'Guiá creada exitosamente');
+                }
+                // $validator = $this->GuideValidate($request);
+                // if ($validator->fails()) {
+                //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+                // }
+
+                // $storeGuideResponse = $this->storeGuide($guide);
+                // if ($storeGuideResponse['state'] != 200) {
+                //     return $storeGuideResponse;
+                // }
+            }
             // });
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
