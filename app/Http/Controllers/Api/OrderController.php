@@ -81,9 +81,10 @@ class OrderController extends Controller
             if ($response['state'] != 200) {
                 return $response;
             }
-            
+
             $guides = $request->guides;
             $guides = json_decode($guides);
+            return $guides;
             foreach ($guides as $guide) {
                 return ($guide['address_id']);
             }
