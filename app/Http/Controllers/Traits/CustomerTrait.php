@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Customer;
-use App\User;
 
 trait CustomerTrait
 {
-    use BranchOfficeTrait;
+    use RestActions;
 
     public function customerValidate($request)
     {
