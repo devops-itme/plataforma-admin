@@ -111,7 +111,7 @@ class OrderController extends Controller
                             'state' => 31
                         ]);
                     }
-                    // return $array->all();
+                    return $array;
                     $validator = $this->GuideValidate($array);
                     if ($validator->fails()) {
                         return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
