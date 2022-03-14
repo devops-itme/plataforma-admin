@@ -90,9 +90,9 @@ class OrderController extends Controller
 
                 $guides = $request->guides;
                 $guides = (array) json_decode($guides, true);
-
+                $array = $request;
                 foreach ($guides as $guide) {
-                    $array = new Request([
+                    $array->merge([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
                         'contact' => $guide['contact'],
