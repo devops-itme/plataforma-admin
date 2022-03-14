@@ -84,7 +84,7 @@ class OrderController extends Controller
 
             $guides = $request->guides;
             $guides = json_decode($guides);
-            return $guides;
+            
             foreach ($guides as $guide) {
                 return ($guide['address_id']);
             }
