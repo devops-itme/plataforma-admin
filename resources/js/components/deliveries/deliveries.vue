@@ -341,6 +341,13 @@ export default {
             this.document_types = res.data;
         },
 
+         async transportTypes() {
+            let name = "transport_type";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.transport_types = res.data;
+        },
+
 
     },
 
@@ -348,6 +355,7 @@ export default {
         this.getGuides(3);
         this.getMessengers();
         this.documentTypes();
+        this.transportTypes();
 
     },
 
