@@ -132,8 +132,8 @@
                                     </div>
                                     <td>${{number_format($value)}}</td>
                                     <td>{{format_date(date('Y-n-d', strtotime($key->schedule_date)))}}</td>
-                                    <td>{{count($key->getGuides) > 0 ? format_date(date('Y-n-d', strtotime($key->getGuides[0]->getRoute->created_at))) : 'No registra'}}</td>
-                                    <td></td>
+                                    <td>{{format_date(date('Y-n-d', strtotime(explode(' ',$key->getLog->where('state', 3)->first()->datetime??'')[0])))}}</td>
+                                    <td>{{format_date(date('Y-n-d', strtotime(explode(' ',$key->getLog->where('state', 10)->first()->datetime??'')[0])))}}</td>
                                     <td>{{$key->getStatusMatrix->name??''}}</td>
                                 </tr>
                                 @endforeach
