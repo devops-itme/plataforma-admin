@@ -91,7 +91,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         //DOCUMENTOS DE GUIÁS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
-
+        //Status matrix
+        Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');
 
     });
 
@@ -136,8 +137,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
 
 });
-//Status matrix
-Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 // Route::get('admin/order', 'Admin\OrderController@historial');

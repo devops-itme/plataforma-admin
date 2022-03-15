@@ -167,10 +167,10 @@ return [
         ],
         'statusMatrix' => [
             'name' => 'Matriz de estados', 'reference' => 'reports', 'icon' => '', 'position' => '10',
-            'actions' => '6,7,8,9,10,11,12,13',
+            'actions' => '6',
             'children' => [],
             'permission' => [
-                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13'],
+                'Admin' =>  ['role_id' => 1, 'actions' => '6'],
                 'Operador' => ['role_id' => 2, 'actions' => '6'],
                 'Mensajero' => ['role_id' => 3, 'actions' => '6'],
                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
