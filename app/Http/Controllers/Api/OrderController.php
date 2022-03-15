@@ -70,7 +70,8 @@ class OrderController extends Controller
         $guides = $request->guides;
         // $guides = (array) json_decode($guides, true);
         foreach ($guides as $guide) {
-            $guide = (array) json_decode($guide, true);
+            // $guide = (array) json_decode($guide, true);
+            $guide = json_decode($guide, true);
             // return $guide;
             $storeGuideResponse = $this->storeGuide($guide);
         }       
