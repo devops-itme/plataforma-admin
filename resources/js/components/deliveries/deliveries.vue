@@ -178,10 +178,134 @@
             </div>
            </div>
         </div>
-        <modalEdit :document_types=document_types :transport_types=transport_types :payment_methods=payment_methods :showGuide=showGuide></modalEdit>
+        <modalEdit
+            v-if="showModal"
+            @close="showModal = false">
+        <div slot="header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar destinos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div slot="body">
+            <div class="d-flex flex-row flex-wrap">
+                <h5 class="my-4 font-weight-bold text-dark col-md-12">Información de destino</h5>
+                <div class="form-group col-md-4">
+                    <label>Cliente: </label>
+                    <input name="customer" type="text" class="form-control form-control-solid" v-model="guide.client" disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Saldo Cantidad: </label>
+                    <input name="quantity_ballance" type="number" class="form-control form-control-solid" v-model="guide.balance" disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Saldo Dinero: </label>
+                    <input name="money_ballance" type="number" class="form-control form-control-solid" v-model="guide.balance_money" disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="separator separator-solid separator-border-3 col-12 mb-3"></div>
+                <h5 class="my-4 font-weight-bold text-dark col-md-12">Contenido a editar</h5>
+                <div class="form-group col-md-6">
+                    <label>Dirección: </label>
+                    <input name="address" type="text" v-model="guide.address" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="type_doc">Tipo de documento </label>
+                    <select name="document_type"  v-model="guide.document_type" class="form-control form-control-solid" id="type_doc">
+                        <option
+                            v-for="document_type in document_types"
+                            v-bind:key="document_type.id"
+                            v-bind:value="document_type.id"
+                            >
+                            {{ document_type.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Concepto: </label>
+                    <input name="concept" type="text" class="form-control form-control-solid" v-model="guide.concept" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="type_doc">Barrio </label>
+                    <select name="location" class="form-control form-control-solid" id="location">
+                        <option selected>Seleccione Barrio</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="type_doc">Medio de pago </label>
+                    <select name="location" v-model="guide.payment_method"  class="form-control form-control-solid" id="location">
+                        <option
+                            v-for="payment_method in payment_methods"
+                            v-bind:key="payment_method.id"
+                            v-bind:value="payment_method.id"
+                            >
+                            {{ payment_method.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="type_doc">Transporte </label>
+                    <select name="transport" v-model="guide.transport_type"  class="form-control form-control-solid" id="transport">
+                        <option
+                            v-for="transport_type in transport_types"
+                            v-bind:key="transport_type.id"
+                            v-bind:value="transport_type.id"
+                            >
+                            {{ transport_type.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="type_doc">Tarifa </label>
+                    <select name="rate" class="form-control form-control-solid" id="rate">
+                        <option selected>Adicional</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Valor: </label>
+                    <input name="value" type="number" class="form-control form-control-solid text-right" v-model="guide.value"  />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Valor Corp: </label>
+                    <input name="corp_value" type="number" class="form-control form-control-solid text-right" v-model="guide.value_corp"  />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Contacto: </label>
+                    <input name="contact" type="text" class="form-control form-control-solid" v-model="guide.contact" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Contacto Teléfono: </label>
+                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-bind:value="guide.contact_email"  />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Contacto email: </label>
+                    <input name="contact_mail" type="email" class="form-control form-control-solid" v-model="guide.contact_phone" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                 <div class="form-group col-md-4">
+                    <label>Programado (Fecha-Hora): </label>
+                    <input name="programming_date" type="datetime-local"  v-model="guide.programming" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+            </div>
+        </div>
+        <div slot="footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+        </modalEdit>
     </div>
 </template>
 <script>
+import moment from 'moment';
 import draggables from "./draggable.vue";
 import tabledy from "./tableDynamic.vue";
 import modalEdit from "./modalEditComponent.vue";
@@ -193,6 +317,7 @@ export default {
     },
     data() {
         return {
+
             selected: 55,
             delivery_types: [
                 { value: 55, text: "Entregas" },
@@ -217,6 +342,7 @@ export default {
             document_types:null,
             transport_types:null,
             payment_methods:null,
+            showModal:false
 
         };
     },
@@ -285,6 +411,7 @@ export default {
                 concept: null,
                 direction: null,
             },
+            this.guide = {};
             this.statusMatrix(this.selected);
             type == 55 && (type = 3);
             type == 53 && (type = 7);
@@ -331,25 +458,26 @@ export default {
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
             }
-            // let guide = this.showGuide;
-            // this.guide.client =  guide.get_order?.get_user.name;
-            // this.guide.balance  = '';
-            // this.guide.balance_money  = '';
-            // this.guide.address = '';
-            // this.guide.document_types = '';
-            // this.guide.concept = '';
-            // this.guide.payment_method = '';
-            // this.guide.transport_types = '';
-            // this.guide.value = '';
-            // this.guide.value_corp = '';
-            // this.guide.contact = '';
-            // this.guide.contact_phone = '';
-            // this.guide.contact_email = '';
-            // this.guide.programming = '';
+            let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
+            this.showModal = true;
+            this.guide.client =  this.showGuide.get_order?.get_user.name;
+            this.guide.balance  = 0;
+            this.guide.balance_money  = 0;
+            this.guide.address = this.showGuide.address_name;
+            this.guide.document_type = this.showGuide.customer_document_type;
+            this.guide.concept = this.showGuide.concept;
+            this.guide.payment_method = this.showGuide.get_order.payment_method;
+            this.guide.transport_type = this.showGuide.transport_type;
+            this.guide.value = this.showGuide.value;
+            this.guide.value_corp = this.showGuide.corp_value;
+            this.guide.contact = this.showGuide.contact;
+            this.guide.contact_phone = this.showGuide.phone_contact;
+            this.guide.contact_email = this.showGuide.email_contact;
+            this.guide.programming = moment(programming_date).format("YYYY-MM-DDTHH:mm")
         },
 
         async documentTypes() {
-            let name = "document_type";
+            let name = "customer_document_type";
             let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
             let res = await req.json()
             this.document_types = res.data;
