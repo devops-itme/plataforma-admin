@@ -66,13 +66,19 @@ class OrderController extends Controller
     }
 
     public function store(Request $request)
-    { 
+    {
         $guides = $request->guides;
         // $guides = (array) json_decode($guides, true);
         foreach ($guides as $guide) {
-            return $guide;
-            $storeGuideResponse = $this->storeGuide($guide);
-        }       
+            $request->merge([
+                'guide_description' => $guide['guide_description'],
+                'contact' => $guide['contact'],
+                'phone_contact' => $guide['phone_contact'],
+                'email_contact' => $guide['email_contact'],
+                'return_last_destination' => $guide['return_last_destination'],
+            ]);
+            $storeGuideResponse = $this->storeGuide($request);
+        }
         return $storeGuideResponse;
 
 
