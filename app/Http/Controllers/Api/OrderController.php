@@ -3,17 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Address;
-use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\GuideTrait;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Http\Resources\OrderResource;
 use App\Order;
 use App\ParameterValue;
-use App\Route;
 use App\StatusMatrix;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
