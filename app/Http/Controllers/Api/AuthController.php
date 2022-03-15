@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    use UserTrait, CustomerTrait, AddressTrait;
+    use CustomerTrait, AddressTrait;
 
     public function respond($state, $data = [], $error = null, $message = '')
     {

@@ -2147,7 +2147,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       activeIndex: 2,
       tabs: [],
       if_route: false,
-      if_department: false
+      if_department: false,
+      guide: {},
+      document_types: null,
+      transport_types: null,
+      payment_methods: null
     };
   },
   computed: {
@@ -2333,26 +2337,149 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee4);
       }))();
+    },
+    editGuide: function editGuide() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                if (_this6.showGuide) {
+                  _context5.next = 4;
+                  break;
+                }
+
+                _context5.next = 3;
+                return error("Debe seleccionar una guía");
+
+              case 3:
+                return _context5.abrupt("return", _context5.sent);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    documentTypes: function documentTypes() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var name, req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                name = "document_type";
+                _context6.next = 3;
+                return fetch("/api/parameter_values?parameter_name=".concat(name));
+
+              case 3:
+                req = _context6.sent;
+                _context6.next = 6;
+                return req.json();
+
+              case 6:
+                res = _context6.sent;
+                _this7.document_types = res.data;
+
+              case 8:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    transportTypes: function transportTypes() {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var name, req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                name = "transport_type";
+                _context7.next = 3;
+                return fetch("/api/parameter_values?parameter_name=".concat(name));
+
+              case 3:
+                req = _context7.sent;
+                _context7.next = 6;
+                return req.json();
+
+              case 6:
+                res = _context7.sent;
+                _this8.transport_types = res.data;
+
+              case 8:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    },
+    paymentMethods: function paymentMethods() {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var name, req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                name = "payment_method";
+                _context8.next = 3;
+                return fetch("/api/parameter_values?parameter_name=".concat(name));
+
+              case 3:
+                req = _context8.sent;
+                _context8.next = 6;
+                return req.json();
+
+              case 6:
+                res = _context8.sent;
+                _this9.payment_methods = res.data;
+
+              case 8:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this10 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context9.prev = _context9.next) {
             case 0:
-              _this6.getGuides(3);
+              _this10.getGuides(3);
 
-              _this6.getMessengers();
+              _this10.getMessengers();
 
-            case 2:
+              _this10.documentTypes();
+
+              _this10.transportTypes();
+
+              _this10.paymentMethods();
+
+            case 5:
             case "end":
-              return _context5.stop();
+              return _context9.stop();
           }
         }
-      }, _callee5);
+      }, _callee9);
     }))();
   }
 });
@@ -3298,7 +3425,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    document_types: Array,
+    transport_types: Array,
+    payment_methods: Array,
+    showGuide: Object
+  },
+  data: function data() {
+    return {
+      selected: 1
+    };
+  }
+});
 
 /***/ }),
 
@@ -62937,6 +63094,12 @@ var render = function () {
                           "data-toggle": "modal",
                           "data-target": "#exampleModal",
                         },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.editGuide()
+                          },
+                        },
                       },
                       [_vm._v("Editar Destino")]
                     )
@@ -63216,7 +63379,14 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("modalEdit"),
+      _c("modalEdit", {
+        attrs: {
+          document_types: _vm.document_types,
+          transport_types: _vm.transport_types,
+          payment_methods: _vm.payment_methods,
+          showGuide: _vm.showGuide,
+        },
+      }),
     ],
     1
   )
@@ -63749,361 +63919,435 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "exampleModal",
+        tabindex: "-1",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true",
+      },
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "modal-dialog modal-lg modal-dialog-scrollable" },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "d-flex flex-row flex-wrap" }, [
+                _c(
+                  "h5",
+                  { staticClass: "my-4 font-weight-bold text-dark col-md-12" },
+                  [_vm._v("Información de destino")]
+                ),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass:
+                    "separator separator-solid separator-border-3 col-12 mb-3",
+                }),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  { staticClass: "my-4 font-weight-bold text-dark col-md-12" },
+                  [_vm._v("Contenido a editar")]
+                ),
+                _vm._v(" "),
+                _vm._m(4),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-md-6" }, [
+                  _c("label", { attrs: { for: "type_doc" } }, [
+                    _vm._v("Tipo de documento "),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      staticClass: "form-control form-control-solid",
+                      attrs: { name: "document_type", id: "type_doc" },
+                    },
+                    _vm._l(_vm.document_types, function (document_type) {
+                      return _c(
+                        "option",
+                        {
+                          key: document_type.id,
+                          domProps: { value: document_type.id },
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(document_type.name) +
+                              "\n                    "
+                          ),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-md-5" }, [
+                  _c("label", { attrs: { for: "type_doc" } }, [
+                    _vm._v("Medio de pago "),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      staticClass: "form-control form-control-solid",
+                      attrs: { name: "location", id: "location" },
+                    },
+                    _vm._l(_vm.payment_methods, function (payment_method) {
+                      return _c(
+                        "option",
+                        {
+                          key: payment_method.id,
+                          domProps: { value: payment_method.id },
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(payment_method.name) +
+                              "\n                    "
+                          ),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-md-4" }, [
+                  _c("label", { attrs: { for: "type_doc" } }, [
+                    _vm._v("Transporte "),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      staticClass: "form-control form-control-solid",
+                      attrs: { name: "transport", id: "transport" },
+                    },
+                    _vm._l(_vm.transport_types, function (transport_type) {
+                      return _c(
+                        "option",
+                        {
+                          key: transport_type.id,
+                          domProps: { value: transport_type.id },
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(transport_type.name) +
+                              "\n                    "
+                          ),
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._m(7),
+                _vm._v(" "),
+                _vm._m(8),
+                _vm._v(" "),
+                _vm._m(9),
+                _vm._v(" "),
+                _vm._m(10),
+                _vm._v(" "),
+                _vm._m(11),
+                _vm._v(" "),
+                _vm._m(12),
+                _vm._v(" "),
+                _vm._m(13),
+              ]),
+            ]),
+            _vm._v(" "),
+            _vm._m(14),
+          ]),
+        ]
+      ),
+    ]
+  )
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "exampleModal",
-          tabindex: "-1",
-          "aria-labelledby": "exampleModalLabel",
-          "aria-hidden": "true",
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Editar destinos")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
         },
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog modal-lg modal-dialog-scrollable" },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLabel" },
-                  },
-                  [_vm._v("Editar destinos")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close",
-                    },
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "false" } }, [
-                      _vm._v("×"),
-                    ]),
-                  ]
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "d-flex flex-row flex-wrap" }, [
-                  _c(
-                    "h5",
-                    {
-                      staticClass: "my-4 font-weight-bold text-dark col-md-12",
-                    },
-                    [_vm._v("Información de destino")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Cliente: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "customer",
-                        type: "text",
-                        value: "Juanito Perez",
-                        disabled: "",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Saldo Cantidad: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "quantity_ballance",
-                        type: "number",
-                        value: "0",
-                        disabled: "",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Saldo Dinero: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "money_ballance",
-                        type: "number",
-                        value: "20.00",
-                        disabled: "",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", {
-                    staticClass:
-                      "separator separator-solid separator-border-3 col-12 mb-3",
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "h5",
-                    {
-                      staticClass: "my-4 font-weight-bold text-dark col-md-12",
-                    },
-                    [_vm._v("Contenido a editar")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-6" }, [
-                    _c("label", [_vm._v("Dirección: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "address",
-                        type: "text",
-                        value: "Calle Siempre Viva Norte de Esquina",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-6" }, [
-                    _c("label", { attrs: { for: "type_doc" } }, [
-                      _vm._v("Tipo de documento "),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control form-control-solid",
-                        attrs: { name: "document_type", id: "type_doc" },
-                      },
-                      [
-                        _c("option", { attrs: { selected: "" } }, [
-                          _vm._v("Seleccione tipo de documento"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-6" }, [
-                    _c("label", [_vm._v("Concepto: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "concept",
-                        type: "text",
-                        value: "Tarjetas de crédito",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-6" }, [
-                    _c("label", { attrs: { for: "type_doc" } }, [
-                      _vm._v("Barrio "),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control form-control-solid",
-                        attrs: { name: "location", id: "location" },
-                      },
-                      [
-                        _c("option", { attrs: { selected: "" } }, [
-                          _vm._v("Seleccione Barrio"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-5" }, [
-                    _c("label", { attrs: { for: "type_doc" } }, [
-                      _vm._v("Medio de pago "),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control form-control-solid",
-                        attrs: { name: "location", id: "location" },
-                      },
-                      [
-                        _c("option", { attrs: { selected: "" } }, [
-                          _vm._v("Plan/Consumo: Por Saldo"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", { attrs: { for: "type_doc" } }, [
-                      _vm._v("Transporte "),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control form-control-solid",
-                        attrs: { name: "transport", id: "transport" },
-                      },
-                      [
-                        _c("option", { attrs: { selected: "" } }, [
-                          _vm._v("Moto"),
-                        ]),
-                        _vm._v(" "),
-                        _c("option", [_vm._v("Auto")]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-3" }, [
-                    _c("label", { attrs: { for: "type_doc" } }, [
-                      _vm._v("Tarifa "),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control form-control-solid",
-                        attrs: { name: "rate", id: "rate" },
-                      },
-                      [
-                        _c("option", { attrs: { selected: "" } }, [
-                          _vm._v("Adicional"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Valor: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid text-right",
-                      attrs: { name: "value", type: "number", value: "20.00" },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Valor Corp: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid text-right",
-                      attrs: {
-                        name: "corp_value",
-                        type: "number",
-                        value: "20.00",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Contacto: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "contact",
-                        type: "text",
-                        value: "Evelin Castro",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Contacto Teléfono: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "contact_phone",
-                        type: "tel",
-                        value: "30123123",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Contacto email: ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "contact_mail",
-                        type: "email",
-                        value: "maiol@correo.co",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Programado (Fecha-Hora): ")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control form-control-solid",
-                      attrs: { name: "corp_value", type: "datetime-local" },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" },
-                  },
-                  [_vm._v("Cancelar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
-                  [_vm._v("Guardar")]
-                ),
-              ]),
-            ]),
-          ]
-        ),
-      ]
-    )
+        [_c("span", { attrs: { "aria-hidden": "false" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Cliente: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: { name: "customer", type: "text", disabled: "" },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Saldo Cantidad: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: {
+          name: "quantity_ballance",
+          type: "number",
+          value: "0",
+          disabled: "",
+        },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Saldo Dinero: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: {
+          name: "money_ballance",
+          type: "number",
+          value: "20.00",
+          disabled: "",
+        },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("label", [_vm._v("Dirección: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: { name: "address", type: "text" },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("label", [_vm._v("Concepto: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: { name: "concept", type: "text", value: "Tarjetas de crédito" },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("label", { attrs: { for: "type_doc" } }, [_vm._v("Barrio ")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control form-control-solid",
+          attrs: { name: "location", id: "location" },
+        },
+        [
+          _c("option", { attrs: { selected: "" } }, [
+            _vm._v("Seleccione Barrio"),
+          ]),
+        ]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-3" }, [
+      _c("label", { attrs: { for: "type_doc" } }, [_vm._v("Tarifa ")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control form-control-solid",
+          attrs: { name: "rate", id: "rate" },
+        },
+        [_c("option", { attrs: { selected: "" } }, [_vm._v("Adicional")])]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Valor: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid text-right",
+        attrs: { name: "value", type: "number", value: "20.00" },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Valor Corp: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid text-right",
+        attrs: { name: "corp_value", type: "number", value: "20.00" },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Contacto: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: { name: "contact", type: "text", value: "Evelin Castro" },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Contacto Teléfono: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: { name: "contact_phone", type: "tel", value: "30123123" },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Contacto email: ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: {
+          name: "contact_mail",
+          type: "email",
+          value: "maiol@correo.co",
+        },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-4" }, [
+      _c("label", [_vm._v("Programado (Fecha-Hora): ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control form-control-solid",
+        attrs: { name: "corp_value", type: "datetime-local" },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "form-text text-muted" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" },
+        },
+        [_vm._v("Cancelar")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Guardar")]
+      ),
+    ])
   },
 ]
 render._withStripped = true

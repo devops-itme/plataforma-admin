@@ -102,7 +102,7 @@
             <div class="col-md-3 py-4">
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
                     <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
-                    <button v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
+                    <button v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2"  @click.prevent="editGuide()">Editar Destino</button>
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
@@ -178,7 +178,7 @@
             </div>
            </div>
         </div>
-        <modalEdit></modalEdit>
+        <modalEdit :document_types=document_types :transport_types=transport_types :payment_methods=payment_methods :showGuide=showGuide></modalEdit>
     </div>
 </template>
 <script>
@@ -213,6 +213,10 @@ export default {
             tabs: [],
             if_route: false,
             if_department: false,
+            guide:{},
+            document_types:null,
+            transport_types:null,
+            payment_methods:null,
 
         };
     },
@@ -323,12 +327,57 @@ export default {
                 })
                 .catch((err) => console.warn(err));
         },
+         async editGuide() {
+            if (!this.showGuide) {
+                return await error("Debe seleccionar una guía");
+            }
+            // let guide = this.showGuide;
+            // this.guide.client =  guide.get_order?.get_user.name;
+            // this.guide.balance  = '';
+            // this.guide.balance_money  = '';
+            // this.guide.address = '';
+            // this.guide.document_types = '';
+            // this.guide.concept = '';
+            // this.guide.payment_method = '';
+            // this.guide.transport_types = '';
+            // this.guide.value = '';
+            // this.guide.value_corp = '';
+            // this.guide.contact = '';
+            // this.guide.contact_phone = '';
+            // this.guide.contact_email = '';
+            // this.guide.programming = '';
+        },
+
+        async documentTypes() {
+            let name = "document_type";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.document_types = res.data;
+        },
+
+         async transportTypes() {
+            let name = "transport_type";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.transport_types = res.data;
+        },
+
+        async paymentMethods() {
+            let name = "payment_method";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.payment_methods = res.data;
+        },
+
 
     },
 
      async mounted() {
         this.getGuides(3);
         this.getMessengers();
+        this.documentTypes();
+        this.transportTypes();
+        this.paymentMethods();
     },
 
 };

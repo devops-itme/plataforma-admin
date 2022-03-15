@@ -90,7 +90,6 @@ class OrderController extends Controller
                 $order_id = $storeOderResponse['data']->id;
 
                 $guides = $request->guides;
-                $guides = (array) json_decode($guides, true);
 
                 foreach ($guides as $guide) {
 
@@ -99,7 +98,7 @@ class OrderController extends Controller
                         return $this->respond(500, null, 'not found', 'Dirección no encontrada');
                     }
 
-                    $newGuide = Guide::create([
+                    $request->merge([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
                         'contact' => $guide['contact'],
@@ -112,19 +111,10 @@ class OrderController extends Controller
                         'address_description' => $address->description,
                         'state' => 31
                     ]);
-
-                    if (!$newGuide) {
-                        return $this->respond(500, null, 'error', 'Guiá errada');
+                    $storeGuideResponse = $this->storeGuide($request);
+                    if ($storeGuideResponse['state'] != 200) {
+                        return $storeGuideResponse;
                     }
-                    // $validator = $this->GuideValidate($request);
-                    // if ($validator->fails()) {
-                    //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-                    // }
-
-                    // $storeGuideResponse = $this->storeGuide($guide);
-                    // if ($storeGuideResponse['state'] != 200) {
-                    //     return $storeGuideResponse;
-                    // }
                 }
                 return $this->respond(200, null, null, 'Orden creada correctamente');
             });
