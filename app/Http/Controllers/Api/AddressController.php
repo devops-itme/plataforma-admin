@@ -28,16 +28,6 @@ class AddressController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -46,33 +36,7 @@ class AddressController extends Controller
     public function store(Request $request)
     {
         $response = $this->saveAddress($request);
-        if ($response['state'] == 200) {
-            return $this->respond(200, $response['data'], null, 'Se ha creado una nueva dirección');
-        } else {
-            return $this->respond($response['state'], null, null, 'Error del servidor');
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $response;
     }
 
     /**
@@ -84,20 +48,8 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // try {
-        //     $addresses = Address::findOrFail($id);
-        //     $addresses->update($request->all());
-        //     return $this->respond(200, $addresses, null, 'Se ha editado correctamente');
-        // } catch (\Throwable $e) {
-        //     return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
-        // }
-
         $response = $this->updateAddress($request, $id);
-        if ($response['state'] == 200) {
-            return $this->respond(200, $response['data'], null, 'Se ha editado correctamente');
-        } else {
-            return $this->respond($response['state'], null, null, 'Error del servidor');
-        }
+        return $response;
     }
 
     /**
@@ -108,11 +60,7 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $addresses = Address::find($id)->delete();
-            return $this->respond(204, $addresses, null, 'Se ha eliminado correctamente');
-        } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
-        }
+        $response = $this->deleteAddress($id);
+        return $response;
     }
 }
