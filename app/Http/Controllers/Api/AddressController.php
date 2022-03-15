@@ -45,29 +45,12 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        // $user_id = $request->user_id ?? Auth::user()->id;
-        // try {
-        //     $addresses = Address::create(['user_id' => $user_id,
-        //         'name' => $request->name,
-        //         'lat' => $request->lat,
-        //         'lng' => $request->lng,
-        //         'description' => $request->description
-        //     ]);
-        //     return $this->respond(200, $addresses, null, 'Se ha creado una nueva dirección');
-        // } catch (\Throwable $e) {
-        //     return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
-        // }
         $response = $this->saveAddress($request);
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return $this->respond(200, $response['data'], null, 'Se ha creado una nueva dirección');
         } else {
             return $this->respond($response['state'], null, null, 'Error del servidor');
         }
-        // return json_encode([
-        //     'state' => 200,
-        //     'data' => $response['data'],
-        //     'message' => $response['message']
-        // ]);
     }
 
     /**
@@ -110,7 +93,7 @@ class AddressController extends Controller
         // }
 
         $response = $this->updateAddress($request, $id);
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return $this->respond(200, $response['data'], null, 'Se ha editado correctamente');
         } else {
             return $this->respond($response['state'], null, null, 'Error del servidor');
