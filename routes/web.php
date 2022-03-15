@@ -135,9 +135,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Matriz de estados del despacho lógica
     Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
 
-    //Status matrix
-    Route::get('matriz-estados', 'Admin\StatusMatrixController')->names('statusMatrix.index');
 });
+//Status matrix
+Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 // Route::get('admin/order', 'Admin\OrderController@historial');
