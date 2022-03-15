@@ -14,8 +14,9 @@
                 <h5 class="my-4 font-weight-bold text-dark col-md-12">Información de destino</h5>
                 <div class="form-group col-md-4">
                     <label>Cliente: </label>
-                    <input name="customer" type="text" class="form-control form-control-solid" value="Juanito Perez" disabled />
+                    <input name="customer" type="text" class="form-control form-control-solid" disabled />
                     <span class="form-text text-muted"></span>
+                    <!-- <p v-text="showGuide"></p> -->
                 </div>
                 <div class="form-group col-md-4">
                     <label>Saldo Cantidad: </label>
@@ -31,13 +32,19 @@
                 <h5 class="my-4 font-weight-bold text-dark col-md-12">Contenido a editar</h5>
                 <div class="form-group col-md-6">
                     <label>Dirección: </label>
-                    <input name="address" type="text" class="form-control form-control-solid" value="Calle Siempre Viva Norte de Esquina" />
+                    <input name="address" type="text" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="type_doc">Tipo de documento </label>
                     <select name="document_type" class="form-control form-control-solid" id="type_doc">
-                        <option selected>Seleccione tipo de documento</option>
+                        <option
+                            v-for="document_type in document_types"
+                            v-bind:key="document_type.id"
+                            v-bind:value="document_type.id"
+                            >
+                            {{ document_type.name }}
+                        </option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
@@ -54,14 +61,25 @@
                 <div class="form-group col-md-5">
                     <label for="type_doc">Medio de pago </label>
                     <select name="location" class="form-control form-control-solid" id="location">
-                        <option selected>Plan/Consumo: Por Saldo</option>
+                        <option
+                            v-for="payment_method in payment_methods"
+                            v-bind:key="payment_method.id"
+                            v-bind:value="payment_method.id"
+                            >
+                            {{ payment_method.name }}
+                        </option>
                     </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="type_doc">Transporte </label>
                     <select name="transport" class="form-control form-control-solid" id="transport">
-                        <option selected>Moto</option>
-                        <option >Auto</option>
+                        <option
+                            v-for="transport_type in transport_types"
+                            v-bind:key="transport_type.id"
+                            v-bind:value="transport_type.id"
+                            >
+                            {{ transport_type.name }}
+                        </option>
                     </select>
                 </div>
                 <div class="form-group col-md-3">
@@ -112,6 +130,18 @@
 </template>
 <script>
 export default {
+    props: {
+       document_types:Array,
+       transport_types:Array,
+       payment_methods:Array,
+       showGuide:Object
+    },
+
+    data() {
+        return {
+            selected: 1,
+        }
+    },
 
 }
 </script>

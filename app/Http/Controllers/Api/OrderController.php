@@ -9,10 +9,7 @@ use App\Http\Controllers\Traits\OrderTrait;
 use App\Http\Resources\OrderResource;
 use App\Order;
 use App\ParameterValue;
-use App\Route;
 use App\StatusMatrix;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -79,7 +76,7 @@ class OrderController extends Controller
         }
 
         try {
-            // DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request) {
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -89,9 +86,14 @@ class OrderController extends Controller
                 $order_id = $storeOderResponse['data']->id;
 
                 $guides = $request->guides;
-                $guides = (array) json_decode($guides, true);
-                $array = $request;
+
                 foreach ($guides as $guide) {
+
+                    $address = Address::find($guide['address_id']);
+                    if (is_null($address)) {
+                        return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                    }
+
                     $request->merge([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
@@ -99,30 +101,19 @@ class OrderController extends Controller
                         'phone_contact' => $guide['phone_contact'],
                         'email_contact' => $guide['email_contact'],
                         'return_last_destination' => $guide['return_last_destination'],
+                        'address_name' => $address->name,
+                        'address_lat' => $address->lat,
+                        'address_lng' => $address->lng,
+                        'address_description' => $address->description,
+                        'state' => 31
                     ]);
-
-                    $address = Address::find($guide['address_id']);
-                    if (!is_null($address)) {
-                        $request->merge([
-                            'address_name' => $address->name,
-                            'address_lat' => $address->lat,
-                            'address_lng' => $address->lng,
-                            'address_description' => $address->description,
-                            'state' => 31
-                        ]);
-                    }
-                    // return $array;
-                    // $validator = $this->GuideValidate($request);
-                    // if ($validator->fails()) {
-                    //     return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
-                    // }
-
-                    $storeGuideResponse = $this->storeGuide($guide);
+                    $storeGuideResponse = $this->storeGuide($request);
                     if ($storeGuideResponse['state'] != 200) {
                         return $storeGuideResponse;
                     }
                 }
-            // });
+                return $this->respond(200, null, null, 'Orden creada correctamente');
+            });
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
         } catch (\Throwable $e) {

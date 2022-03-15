@@ -32,6 +32,12 @@ class OrderResource extends JsonResource
             "money_to_collect" => $this->money_to_collect,
             "percentage_to_collect" => $this->percentage_to_collect,
             "app_status" => $this->app_status,
+            "address" => [
+                "id" => $this->getAddress->id ?? '',
+                "name" => $this->getAddress->name ?? '',
+                "lat" => $this->getAddress->lat ?? '',
+                "lng" => $this->getAddress->lng ?? '',
+            ],
             "user" => [
                 "id" => $this->getUser->id ?? '',
                 "name" => $this->getUser->name,
