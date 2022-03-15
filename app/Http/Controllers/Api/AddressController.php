@@ -35,6 +35,8 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = $request->user_id ?? Auth::user()->id;
+        $request->merge(['user_id' => $user_id]);
         $response = $this->saveAddress($request);
         return $response;
     }
