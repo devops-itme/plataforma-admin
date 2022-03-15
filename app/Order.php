@@ -47,6 +47,11 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function getAddress()
+    {
+        return $this->hasOne(Address::class, 'address_id');
+    }
+
     public function getStatusMatrix()
     {
         return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
