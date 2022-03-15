@@ -64,7 +64,7 @@ export default {
 
           async statusMatrix() {
             let scope_id = 55
-            let req = await fetch(`/matriz_estados?scope_id=${scope_id}`);
+            let req = await fetch(`despacho/matriz_estados?scope_id=${scope_id}`);
             let res = await req.json();
             this.tabs = res.data.slice(0, 3);
             this.currentTab = this.tabs[0].id;

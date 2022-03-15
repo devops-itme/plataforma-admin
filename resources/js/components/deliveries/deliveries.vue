@@ -360,7 +360,7 @@ export default {
        },
         async statusMatrix(scope) {
             //STATUS MATRIX
-            let req = await fetch(`/matriz_estados?scope_id=${scope}`);
+            let req = await fetch(`despacho/matriz_estados?scope_id=${scope}`);
             let res = await req.json();
             // take the first 3 data from the consulate
             this.tabs = res.data.slice(0, 3);
