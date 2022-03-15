@@ -67,6 +67,12 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        $validator = $this->GuideValidate($request);
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+        }
+
+
         if (Auth()->user()->role != 1) {
             $request->merge(['user_id' => Auth()->user()->id]);
         };
