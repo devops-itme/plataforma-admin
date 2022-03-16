@@ -126,9 +126,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('zones.index');
     })->name('zone.index');
 
-    Route::get('perfil', function () {
-        return view('profile.index');
-    })->name('profile');
+    Route::resource('perfil', 'Admin\ProfileController')->names('profile');
+    // Route::get('perfil', function () {
+
+    // })->name('profile');
 
     Route::resource('permisos', 'Admin\PermissionController')->names('permits');
     Route::resource('roles', 'Admin\RoleController')->names('roles');

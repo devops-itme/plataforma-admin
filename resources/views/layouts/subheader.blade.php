@@ -120,7 +120,7 @@
                                 <i class="far fa-info-circle"></i> Información
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{route('profile')}}">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="{{route('profile.index')}}">Mi perfil</a></li>
                                 <li><a class="dropdown-item" href="{{ route('users.index') }}">Usuarios</a></li>
                                 <li><a class="dropdown-item" href="{{ route('customers.index') }}">Clientes (Web)</a>
                                 </li>
