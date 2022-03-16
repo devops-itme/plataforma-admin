@@ -83,14 +83,14 @@ export default class Permissions {
 
                     let checkContainer = document.createElement("div");
                     checkContainer.className = "col-9 align-self-center";
-                    checkContainer.innerHTML = `<div class="form-check"></div>`;
+                    checkContainer.innerHTML = `<div class="checkbox-inline"></div>`;
 
                     [].forEach.call(actions, action => {
                         const action_found = module_actions.find(element => element == action.id);
                         const permission_found = allowed_actions.find(element => element == action.id);
 
                         let label = document.createElement("label");
-                        label.className = "form-check-label text-uppercase font-weight-bold mx-4";
+                        label.className = "checkbox text-uppercase font-weight-bold mx-4";
                         label.style = `
                             font-size: 0.8571em;
                             margin-bottom: 5px;
@@ -98,10 +98,10 @@ export default class Permissions {
                         `;
 
                         label.innerHTML = `
-                        <input class="form-check-input" type="checkbox" value="${action.id}"
+                        <input class="" type="checkbox" value="${action.id}"
                          name="${module.reference}[]" ${!action_found && 'disabled'}
                          ${permission_found && 'checked'}
-                        >  ${translated_actions[action.name]}
+                        > <span></span> ${translated_actions[action.name]}
                         `;
                         checkContainer.childNodes[0].appendChild(label);
                     });

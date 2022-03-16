@@ -85653,7 +85653,7 @@ var Permissions = /*#__PURE__*/function () {
                     mainContainer.appendChild(nameContainer);
                     var checkContainer = document.createElement("div");
                     checkContainer.className = "col-9 align-self-center";
-                    checkContainer.innerHTML = "<div class=\"form-check\"></div>";
+                    checkContainer.innerHTML = "<div class=\"checkbox-inline\"></div>";
                     [].forEach.call(actions, function (action) {
                       var action_found = module_actions.find(function (element) {
                         return element == action.id;
@@ -85662,9 +85662,9 @@ var Permissions = /*#__PURE__*/function () {
                         return element == action.id;
                       });
                       var label = document.createElement("label");
-                      label.className = "form-check-label text-uppercase font-weight-bold mx-4";
+                      label.className = "checkbox text-uppercase font-weight-bold mx-4";
                       label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
-                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        >  ").concat(translated_actions[action.name], "\n                        ");
+                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > <span></span> ").concat(translated_actions[action.name], "\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);
@@ -86589,8 +86589,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
