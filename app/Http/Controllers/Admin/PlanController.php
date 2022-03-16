@@ -17,7 +17,8 @@ class PlanController extends Controller
      */
     public function index()
     {
-        return view('plans.index');
+        $plans = Plan::get();
+        return view('plans.index', compact('plans'));
     }
 
     /**
@@ -41,9 +42,9 @@ class PlanController extends Controller
         $request->merge(['state' => 1]);
         $response = $this->storePlans($request);
         if($response['state'] == 200){
-            return redirect()->route('planes')->with('success', $response['message']);
+            return redirect()->route('plans.index')->with('success', $response['message']);
         } else {
-            return redirect()->back()->withInput()->with('danger', $response['message']);
+            return redirect()->back()->withInput()->with('danger', $response['error']);
         }
     }
 

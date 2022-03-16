@@ -17,7 +17,7 @@ trait PlansTrait
         return Validator::make(
             $request->all(),
             [
-                'name' => ['required', 'string', Rule::unique('users')->where($action == 'crear')],
+                'name' => ['required', 'string', Rule::unique('plans', 'name')->ignore($id)],
                 'description' => 'nullable|string',
                 'state' => 'nullable|numeric',
             ]
@@ -26,7 +26,7 @@ trait PlansTrait
 
     public function storePlans($request)
     {
-        $validator = $this->validateParameter($request, 'create');
+        $validator = $this->validatePlans($request, 'create');
         if ($validator->fails()) {
             return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }
@@ -45,7 +45,7 @@ trait PlansTrait
 
     public function updatePlans($id, $request)
     {
-        $validator = $this->validateParameter($request, 'update');
+        $validator = $this->validatePlans($request, 'update');
         if ($validator->fails()) {
             return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }

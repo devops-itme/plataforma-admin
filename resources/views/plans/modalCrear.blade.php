@@ -8,20 +8,23 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Nombre del plan</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Nombre"/>
+            <form action="{{route('plans.store')}}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nombre del plan</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Descripción" name="description"/>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Descripción"/>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Guardar</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary font-weight-bold">Guardar</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
