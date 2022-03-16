@@ -1,22 +1,48 @@
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nombre</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>DIAMOND</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>CANTIDAD A FAVOR</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>CANTIDAD BASICO</td>
-    </tr>
-  </tbody>
+<table class="table table-sm">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">Nombres</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Estado</th>
+            <th scope="col">
+                <a href="#"
+                    class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip
+                    title="Crear" data-toggle="modal" data-target="#modalCrear"><i class="fad fa-plus"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr class="text-center">
+                <td>---</td>
+                <td>---</td>
+                <td>
+                    <span class="label label-inline label-light-success font-weight-bold">
+                        Activo
+                    </span>
+                    {{-- <span class="label label-inline label-light-danger font-weight-bold">
+                        Inactivo
+                    </span> --}}
+                </td>
+                <td>
+                    <div class="d-flex justify-content-center aling-items-center flex-wrap flex-row">
+                        {{-- <a href="#"
+                            class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
+                            title="Detalle"><i class="fad fa-folder-open"></i>
+                        </a> --}}
+                        <a href="#"
+                            class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Editar">
+                            <i class="fad fa-edit" data-toggle="modal" data-target="#modalEditar"></i>
+                        </a>
+                        <button type="button"
+                            role="button" class="btn btn-icon btn-light-danger btn-sm mr-2"
+                            data-tooltip title="Eliminar">
+                            <i class="fad fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+    </tbody>
 </table>
+@include('plans.modalCrear')
+@include('plans.modalEditar')

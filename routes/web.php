@@ -135,9 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('roles/store', 'Admin\PermissionController@storeRole')->name('permits.role');
     Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
 
-    Route::get('planes', function () {
-        return view('plans.index');
-    })->name('plans.index');
+    Route::resource('planes', 'Admin\PlanController')->names('plans');
 
     //Matriz de estados del despacho lógica
     Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
