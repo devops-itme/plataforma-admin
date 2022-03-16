@@ -289,11 +289,20 @@ return [
             'NO ENTREGADO- DIRECCIÓN EQUIVOCADA',
             'NO ENTREGADO AUSENTE',
             'OTROS'
-        ]
+        ],
         // 'payment_method' => [
         //     'Cheque',
         //     'Efectivo'
         // ],
+        'days' => [
+            'Domingo',
+            'Lunes',
+            'Martes',
+            'Miércoles',
+            'Jueves',
+            'Viernes',
+            'Sábado',
+        ],
     ],
     'system_status' => [
         'creation'/*_scope*/ => [
