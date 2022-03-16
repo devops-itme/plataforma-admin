@@ -188,7 +188,7 @@
                         <th scope="col">Número de orden</th>
                         <th scope="col">Tipo de orden</th>
                         <th scope="col">Cliente</th>
-                        <th scope="col">Fechay Hora de creación</th>
+                        <th scope="col">Fecha y Hora de creación</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -214,7 +214,7 @@
                                 </td>
                                 <td>{{ format_date(date('Y-n-d', strtotime($order->created_at)))}} <b>{{date('h:m A', strtotime($order->created_at))}}</b></td>
                                 <td>
-                                    {{$order->getOrderState->name}}
+                                    {{$order->getStatusMatrix->name}}
                                 </td>
                                 <td>
                                     @if ($order->order_type == 35 && $order->status_matrix_id == 1 )
