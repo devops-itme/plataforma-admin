@@ -141,6 +141,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Matriz de estados del despacho lógica
     Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
 
+    Route::resource('horas', 'Admin\PickupHourController')->except('delete')->names('hours');
+    Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');
+
 });
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
