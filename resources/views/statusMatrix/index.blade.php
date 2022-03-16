@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-    <status-matrix inline-template>
+    <status-matrix :matrix="{{ $statusMatrix  }}" :roles="{{ $roles  }}">
 
     </status-matrix>
 @endsection

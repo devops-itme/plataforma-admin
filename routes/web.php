@@ -91,10 +91,15 @@ Route::group(['middleware' => 'auth'], function () {
 
         //DOCUMENTOS DE GUIÁS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
-        //Status matrix
-        Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');
 
     });
+    //Status matrix
+    Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');
+
+    //Status Descriptor
+    Route::get('descriptor-estado/{id}', 'Admin\StatusDescriptorController@index')->name('statusDescriptor.index');
+
+    Route::post('descriptor-estado/{id}', 'Admin\StatusDescriptorController@store')->name('statusDescriptor.store');
 
     //Por despachar ondemand
     Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');
@@ -150,3 +155,5 @@ Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serv
 Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
 //CHAT
 Route::resource('chat', 'Admin\ChatController')->names('chats');
+
+

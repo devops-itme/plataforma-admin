@@ -4149,6 +4149,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _modal_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modal.vue */ "./resources/js/components/modal.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -4214,10 +4229,269 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
+  components: {
+    modal: _modal_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: ['matrix', 'roles'],
+  data: function data() {
+    return {
+      statusDescriptors: null,
+      selectedStatusMatrixId: null,
+      showModal: false,
+      methodValue: 'POST',
+      descriptor: {}
+    };
+  },
+  methods: {
+    getStatusDescriptors: function getStatusDescriptors(id) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return fetch("/descriptor-estado/".concat(id));
+
+              case 2:
+                req = _context.sent;
+                _context.next = 5;
+                return req.json();
+
+              case 5:
+                res = _context.sent;
+                _this2.statusDescriptors = res.data;
+                _this2.selectedStatusMatrixId = id;
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    createDescriptor: function createDescriptor() {
+      this.methodValue = 'POST';
+      this.showModal = true;
+    },
+    addDescriptor: function addDescriptor() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response, descriptor, id;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this3.requestStoreDescriptor();
+
+              case 2:
+                response = _context2.sent;
+                descriptor = response.data;
+
+                if (response.state == 200) {
+                  id = _this3.statusDescriptors.findIndex(function (item) {
+                    return item.id == descriptor.id;
+                  });
+
+                  if (id == -1) {
+                    _this3.statusDescriptors.push(_objectSpread({}, descriptor));
+                  } else {
+                    _this3.statusDescriptors[id].description = descriptor.description;
+                    _this3.statusDescriptors[id].role_id = descriptor.role_id;
+                  }
+
+                  correct(descriptor.message);
+
+                  _this3.clearValue();
+
+                  _this3.showModal = false;
+                } else {
+                  error(descriptor.message);
+                }
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    requestStoreDescriptor: function requestStoreDescriptor() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response, status_matrix_id, _this, token, myHeaders, requestOptions;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                response = {
+                  state: 500
+                };
+                status_matrix_id = _this4.selectedStatusMatrixId;
+                _this = _this4;
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: JSON.stringify(_this4.descriptor)
+                };
+                _context3.next = 11;
+                return fetch("/descriptor-estado/".concat(status_matrix_id), requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 11:
+                return _context3.abrupt("return", response);
+
+              case 12:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    updateDescriptor: function updateDescriptor() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    clearValue: function clearValue() {
+      this.descriptor = {};
+      this.showModal = false;
+    }
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -65428,55 +65702,49 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "content", attrs: { id: "app" } }, [
+  return _c(
+    "div",
+    { staticClass: "content" },
+    [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-7" }, [
           _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header pb-0" }, [
-              _c("h4", { staticClass: "card-title" }, [
-                _vm._v("Matriz de estados "),
-              ]),
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table" }, [
-                  _c("thead", { staticClass: " text-primary" }, [
-                    _c("th", [
-                      _vm._v(
-                        "\n                                     Nombre\n                                 "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("th", [
-                      _vm._v(
-                        "\n                                     Ámbito\n                                 "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("th", [
-                      _vm._v(
-                        "\n                                     Opciones\n                                 "
-                      ),
-                    ]),
-                  ]),
+                  _vm._m(1),
                   _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                    ]),
-                  ]),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.matrix, function (status) {
+                      return _c("tr", { key: status.id }, [
+                        _c("td", [_vm._v(_vm._s(status.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(status.scope_id))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn btn-icon btn-light-success btn-xl mr-2",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function ($event) {
+                                  $event.preventDefault()
+                                  return _vm.getStatusDescriptors(status.id)
+                                },
+                              },
+                            },
+                            [_c("i", { staticClass: "fas fa-edit" })]
+                          ),
+                        ]),
+                      ])
+                    }),
+                    0
+                  ),
                 ]),
               ]),
             ]),
@@ -65487,32 +65755,29 @@ var staticRenderFns = [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header pb-0" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col" }, [
-                  _c("h4", { staticClass: "card-title" }, [
-                    _vm._v("Descripción - Matriz"),
-                  ]),
-                ]),
+                _vm._m(2),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "d-none",
-                    attrs: { id: "divCreateParameter" },
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success btn-rd",
-                        attrs: {
-                          "data-toggle": "modal",
-                          "data-target": "#modalCreateParameter",
+                _vm.statusDescriptors != null
+                  ? _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "btn btn-primary btn-sm font-weight-bolder",
+                          attrs: { href: "#", "data-toggle": "modal" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.createDescriptor()
+                            },
+                          },
                         },
-                      },
-                      [_c("i", { staticClass: "fad fa-plus p-0" })]
-                    ),
-                  ]
-                ),
+                        [
+                          _vm._m(3),
+                          _vm._v("Crear\n                            "),
+                        ]
+                      ),
+                    ])
+                  : _vm._e(),
               ]),
             ]),
             _vm._v(" "),
@@ -65525,17 +65790,21 @@ var staticRenderFns = [
                     attrs: { id: "parameterValueTable" },
                   },
                   [
-                    _c("thead", { staticClass: " text-primary" }, [
-                      _c("th", [_vm._v("Nombre")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Descripcion")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Estado")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Opciones")]),
-                    ]),
+                    _vm._m(4),
                     _vm._v(" "),
-                    _c("tbody"),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.statusDescriptors, function (descriptor) {
+                        return _c("tr", { key: descriptor.id }, [
+                          _c("td", [_vm._v(_vm._s(descriptor.description))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(descriptor.role_id))]),
+                          _vm._v(" "),
+                          _vm._m(5, true),
+                        ])
+                      }),
+                      0
+                    ),
                   ]
                 ),
               ]),
@@ -65543,6 +65812,297 @@ var staticRenderFns = [
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _vm.showModal
+        ? _c(
+            "modal",
+            {
+              on: {
+                close: function ($event) {
+                  _vm.showModal = false
+                },
+              },
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "d-flex justify-content-between w-100",
+                  attrs: { slot: "header" },
+                  slot: "header",
+                },
+                [
+                  _vm.methodValue == "POST"
+                    ? _c("h4", { staticClass: "card-title" }, [
+                        _vm._v("Crear descriptor "),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.methodValue == "PUT"
+                    ? _c("h4", { staticClass: "card-title" }, [
+                        _vm._v("Editar descriptor"),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "alert",
+                        "aria-label": "Close",
+                      },
+                      on: {
+                        click: function ($event) {
+                          return _vm.clearValue()
+                        },
+                      },
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×"),
+                      ]),
+                    ]
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+                _c("form", { attrs: { action: "", id: "formDescriptor" } }, [
+                  _c("div", { staticClass: "card d-flex flex-row flex-wrap" }, [
+                    _c("div", { staticClass: "form-group col-md-12" }, [
+                      _c("label", [
+                        _vm._v("Descripción:\n                            "),
+                        _c("span", { staticClass: "text-danger" }, [
+                          _vm._v("*"),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.descriptor.description,
+                            expression: "descriptor.description",
+                          },
+                        ],
+                        staticClass: "form-control form-control-solid",
+                        attrs: {
+                          name: "description",
+                          type: "text",
+                          placeholder: "Descripción",
+                        },
+                        domProps: { value: _vm.descriptor.description },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.descriptor,
+                              "description",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "form-text text-muted" }),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group col-md-12" }, [
+                      _c("label", [_vm._v("Role")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.descriptor.role_id,
+                              expression: "descriptor.role_id",
+                            },
+                          ],
+                          staticClass: "form-control form-control-solid",
+                          attrs: { name: "role_id", id: "type_doc" },
+                          on: {
+                            change: function ($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function (o) {
+                                  return o.selected
+                                })
+                                .map(function (o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.descriptor,
+                                "role_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                          },
+                        },
+                        [
+                          _c("option", { attrs: { disabled: "", value: "" } }, [
+                            _vm._v("Seleccione un role"),
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.roles, function (role) {
+                            return _c(
+                              "option",
+                              { key: role.id, domProps: { value: role.id } },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(role.name) +
+                                    "\n                            "
+                                ),
+                              ]
+                            )
+                          }),
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "form-text text-muted" }),
+                    ]),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light-primary font-weight-bold",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.clearValue()
+                      },
+                    },
+                  },
+                  [_vm._v("\n                Cerrar\n            ")]
+                ),
+                _vm._v(" "),
+                _vm.methodValue == "POST"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary font-weight-bold",
+                        attrs: { type: "submit", form: "formDescriptor" },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.addDescriptor()
+                          },
+                        },
+                      },
+                      [_vm._v("\n                Guardar\n            ")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.methodValue == "PUT"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary font-weight-bold",
+                        attrs: { type: "submit", form: "formDescriptor" },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.updateDescriptor()
+                          },
+                        },
+                      },
+                      [_vm._v("\n                Editar\n            ")]
+                    )
+                  : _vm._e(),
+              ]),
+            ]
+          )
+        : _vm._e(),
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header pb-0" }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Matriz de estados")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "text-primary" }, [
+      _c("th", [_vm._v("Nombre")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Ámbito")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Opciones")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("h4", { staticClass: "card-title" }, [_vm._v("Descripción - Matriz")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "svg-icon svg-icon-md" }, [
+      _c("i", { staticClass: "fas fa-plus" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "text-primary" }, [
+      _c("th", [_vm._v("Descripcion")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Rol")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Opciones")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-icon btn-light-success btn-xl mr-2",
+          attrs: { href: "#", "data-toggle": "modal" },
+        },
+        [_c("i", { staticClass: "fas fa-edit" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-icon btn-light-danger btn-sm mr-2",
+          attrs: { href: "#", role: "button" },
+        },
+        [_c("i", { staticClass: "fas fa-trash-alt" })]
+      ),
     ])
   },
 ]
