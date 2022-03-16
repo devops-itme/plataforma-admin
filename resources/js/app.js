@@ -16,6 +16,7 @@ import Parameters from './_parameters';
 Vue.component('deliveries-ondemand', require('./components/deliveries/deliveriesOndemand.vue').default);
 Vue.component('example-component', require('./components/exampleComponent.vue').default);
 Vue.component('department-tab', require('./components/department/department.vue').default);
+Vue.component('status-matrix', require('./components/statusMatrix/statusMatrix.vue').default);
 Vue.component('deliveries', require('./components/deliveries/deliveries.vue').default);
 Vue.component('modal', require('./components/modal.vue').default);
 

@@ -193,7 +193,7 @@
                                     class="fas fa-shield"></i> Administración</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('permits.index') }}">Permisos</a></li>
-
+                                <li><a class="dropdown-item" href="{{ route('statusMatrix.index') }}">Matriz de estados</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

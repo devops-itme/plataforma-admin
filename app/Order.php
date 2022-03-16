@@ -97,6 +97,11 @@ class Order extends Model
         return $this->belongsTo(BranchOffice::class, 'branch_office');
     }
 
+    public function getLog()
+    {
+        return $this->hasMany(OrderLog::class, 'order_id');
+    }
+
 
     //SCOPES
 

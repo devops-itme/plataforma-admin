@@ -18,4 +18,9 @@ class StatusDescriptor extends Model
         return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
     }
 
+    public function getRole()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
 }
