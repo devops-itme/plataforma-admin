@@ -62,7 +62,7 @@
                         <div class="table-responsive">
                             <table class="table" id="parameterValueTable">
                                 <thead class="text-primary">
-                                    <th>Descripcion</th>
+                                    <th>Descripción</th>
                                     <th>Rol</th>
                                     <th>Opciones</th>
                                 </thead>
