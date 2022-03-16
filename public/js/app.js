@@ -65731,7 +65731,7 @@ var render = function () {
     { staticClass: "content" },
     [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-7" }, [
+        _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "card" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -65746,7 +65746,7 @@ var render = function () {
                       return _c("tr", { key: status.id }, [
                         _c("td", [_vm._v(_vm._s(status.name))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(status.scope_id))]),
+                        _c("td", [_vm._v(_vm._s(status.get_scope.name))]),
                         _vm._v(" "),
                         _c("td", [
                           _c(
@@ -65775,7 +65775,7 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-5" }, [
+        _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header pb-0" }, [
               _c("div", { staticClass: "row" }, [
@@ -65824,7 +65824,7 @@ var render = function () {
                         return _c("tr", { key: descriptor.id }, [
                           _c("td", [_vm._v(_vm._s(descriptor.description))]),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(descriptor.role_id))]),
+                          _c("td", [_vm._v(_vm._s(descriptor.get_role.name))]),
                           _vm._v(" "),
                           _c("td", [
                             _c(
@@ -66115,7 +66115,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "text-primary" }, [
-      _c("th", [_vm._v("Descripcion")]),
+      _c("th", [_vm._v("Descripción")]),
       _vm._v(" "),
       _c("th", [_vm._v("Rol")]),
       _vm._v(" "),
@@ -86712,7 +86712,7 @@ var Permissions = /*#__PURE__*/function () {
                     mainContainer.appendChild(nameContainer);
                     var checkContainer = document.createElement("div");
                     checkContainer.className = "col-9 align-self-center";
-                    checkContainer.innerHTML = "<div class=\"form-check\"></div>";
+                    checkContainer.innerHTML = "<div class=\"checkbox-inline\"></div>";
                     [].forEach.call(actions, function (action) {
                       var action_found = module_actions.find(function (element) {
                         return element == action.id;
@@ -86721,9 +86721,9 @@ var Permissions = /*#__PURE__*/function () {
                         return element == action.id;
                       });
                       var label = document.createElement("label");
-                      label.className = "form-check-label text-uppercase font-weight-bold mx-4";
+                      label.className = "checkbox text-uppercase font-weight-bold mx-4";
                       label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
-                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        >  ").concat(translated_actions[action.name], "\n                        ");
+                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        > <span></span> ").concat(translated_actions[action.name], "\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);

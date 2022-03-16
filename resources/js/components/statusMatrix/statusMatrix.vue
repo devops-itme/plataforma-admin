@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header pb-0">
                         <h4 class="card-title">Matriz de estados</h4>
@@ -20,7 +20,7 @@
                                         v-bind:key="status.id"
                                     >
                                         <td>{{ status.name }}</td>
-                                        <td>{{ status.scope_id }}</td>
+                                        <td>{{ status.get_scope.name }}</td>
                                         <td>
                                             <a
                                                 href="#"
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header pb-0">
                         <div class="row">
@@ -62,7 +62,7 @@
                         <div class="table-responsive">
                             <table class="table" id="parameterValueTable">
                                 <thead class="text-primary">
-                                    <th>Descripcion</th>
+                                    <th>Descripción</th>
                                     <th>Rol</th>
                                     <th>Opciones</th>
                                 </thead>
@@ -72,7 +72,7 @@
                                         v-bind:key="descriptor.id"
                                     >
                                         <td>{{ descriptor.description }}</td>
-                                        <td>{{ descriptor.role_id }}</td>
+                                        <td>{{ descriptor.get_role.name }}</td>
                                         <td>
                                             <a
                                                 href="#"

@@ -11,7 +11,7 @@ class StatusMatrixController extends Controller
 {
     public function index()
     {
-        $statusMatrix = StatusMatrix::get();
+        $statusMatrix = StatusMatrix::with('getScope')->get();
         $roles = Role::get();
         return view('statusMatrix.index', compact('statusMatrix', 'roles'));
     }

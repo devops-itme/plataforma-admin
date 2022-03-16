@@ -21,7 +21,7 @@ class StatusDescriptorController extends Controller
      */
     public function index($id)
     {
-        $statusDescriptor = StatusDescriptor::where('status_matrix_id', $id)->get();
+        $statusDescriptor = StatusDescriptor::with('getRole')->where('status_matrix_id', $id)->get();
         return $this->respond(200, $statusDescriptor, null, 'Descriptores del estado');
     }
 
