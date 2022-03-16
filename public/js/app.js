@@ -4326,13 +4326,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -4411,13 +4404,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this3.statusDescriptors[id].role_id = descriptor.role_id;
                   }
 
-                  correct(descriptor.message);
+                  correct(response.message);
 
                   _this3.clearValue();
 
                   _this3.showModal = false;
                 } else {
-                  error(descriptor.message);
+                  error(response.message);
                 }
 
               case 5:
@@ -4484,6 +4477,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee4);
+      }))();
+    },
+    removeDescriptor: function removeDescriptor(id) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var remove, index;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return deleteResource("/descriptor-estado/".concat(id));
+
+              case 2:
+                remove = _context5.sent;
+
+                if (remove) {
+                  index = _this5.statusDescriptors.findIndex(function (item) {
+                    return item.id == id;
+                  });
+
+                  _this5.statusDescriptors.splice(index, 1);
+                }
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     },
     clearValue: function clearValue() {
@@ -65773,7 +65797,9 @@ var render = function () {
                         },
                         [
                           _vm._m(3),
-                          _vm._v("Crear\n                            "),
+                          _vm._v(
+                            "Crear o Actualizar\n                            "
+                          ),
                         ]
                       ),
                     ])
@@ -65800,7 +65826,22 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(descriptor.role_id))]),
                           _vm._v(" "),
-                          _vm._m(5, true),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "btn btn-icon btn-light-danger btn-sm mr-2",
+                                attrs: { href: "#", role: "button" },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.removeDescriptor(descriptor.id)
+                                  },
+                                },
+                              },
+                              [_c("i", { staticClass: "fas fa-trash-alt" })]
+                            ),
+                          ]),
                         ])
                       }),
                       0
@@ -66079,30 +66120,6 @@ var staticRenderFns = [
       _c("th", [_vm._v("Rol")]),
       _vm._v(" "),
       _c("th", [_vm._v("Opciones")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-icon btn-light-success btn-xl mr-2",
-          attrs: { href: "#", "data-toggle": "modal" },
-        },
-        [_c("i", { staticClass: "fas fa-edit" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-icon btn-light-danger btn-sm mr-2",
-          attrs: { href: "#", role: "button" },
-        },
-        [_c("i", { staticClass: "fas fa-trash-alt" })]
-      ),
     ])
   },
 ]

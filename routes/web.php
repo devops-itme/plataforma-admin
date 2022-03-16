@@ -98,8 +98,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Status Descriptor
     Route::get('descriptor-estado/{id}', 'Admin\StatusDescriptorController@index')->name('statusDescriptor.index');
-
+    //Store
     Route::post('descriptor-estado/{id}', 'Admin\StatusDescriptorController@store')->name('statusDescriptor.store');
+    Route::delete('descriptor-estado/{id}', 'Admin\StatusDescriptorController@destroy')->name('statusDescriptor.destroy');
 
     //Por despachar ondemand
     Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');

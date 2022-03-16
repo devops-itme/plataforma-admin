@@ -92,6 +92,7 @@ class StatusDescriptorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->deleteDescriptor($id);
+        return $response;
     }
 }

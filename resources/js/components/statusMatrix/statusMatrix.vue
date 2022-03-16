@@ -53,7 +53,7 @@
                                 >
                                     <span class="svg-icon svg-icon-md">
                                         <i class="fas fa-plus"></i> </span
-                                    >Crear
+                                    >Crear o Actualizar
                                 </a>
                             </div>
                         </div>
@@ -76,16 +76,9 @@
                                         <td>
                                             <a
                                                 href="#"
-                                                class="btn btn-icon btn-light-success btn-xl mr-2"
-                                                data-toggle="modal"
-                                            >
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a
-                                                href="#"
                                                 role="button"
                                                 class="btn btn-icon btn-light-danger btn-sm mr-2"
-
+                                                @click="removeDescriptor(descriptor.id)"
                                             >
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
@@ -206,11 +199,11 @@ export default {
                     this.statusDescriptors[id].description=descriptor.description
                     this.statusDescriptors[id].role_id=descriptor.role_id
                 }
-                correct(descriptor.message);
+                correct(response.message);
                 this.clearValue();
                 this.showModal = false;
             }else{
-                error(descriptor.message);
+                error(response.message);
             }
         },
         async requestStoreDescriptor() {
@@ -238,13 +231,21 @@ export default {
 
              return response;
         },
-        async updateDescriptor(){
+        async updateDescriptor(){},
 
+        async removeDescriptor(id) {
+            let remove = await deleteResource(`/descriptor-estado/${id}`);
+            if (remove) {
+                let index = this.statusDescriptors.findIndex((item) => item.id == id);
+                this.statusDescriptors.splice(index, 1);
+            }
         },
         clearValue() {
             this.descriptor = {};
             this.showModal = false;
         }
+
+
     },
     mounted() {
 
