@@ -84493,19 +84493,19 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var translated_actions = {
-  'all': 'Todo',
-  'index': 'Inicio',
-  'create': 'Vista crear',
-  'store': 'Crear',
-  'show': 'Detalle',
-  'destroy': 'Eliminar',
-  'delete': 'Eliminar',
-  'update': 'Actualizar',
-  'edit': 'Vista editar',
-  'assign': 'Asignar',
-  'import': 'Importar',
-  'export': 'Exportar',
-  'record': 'Historial'
+  all: "Todo",
+  index: "Inicio",
+  create: "Vista crear",
+  store: "Crear",
+  show: "Detalle",
+  destroy: "Eliminar",
+  "delete": "Eliminar",
+  update: "Actualizar",
+  edit: "Vista editar",
+  assign: "Asignar",
+  "import": "Importar",
+  "export": "Exportar",
+  record: "Historial"
 };
 
 var requestPermissions = /*#__PURE__*/function () {
@@ -84518,12 +84518,12 @@ var requestPermissions = /*#__PURE__*/function () {
             response = {
               state: 500
             };
-            token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             _context.next = 4;
             return fetch(url, {
-              method: 'GET',
+              method: "GET",
               headers: {
-                'X-CSRF-TOKEN': token
+                "X-CSRF-TOKEN": token
               }
             }).then(function (response) {
               return response.json();
@@ -84571,7 +84571,7 @@ var Permissions = /*#__PURE__*/function () {
       }
 
       [].forEach.call(configurationBtn, function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
@@ -84583,7 +84583,7 @@ var Permissions = /*#__PURE__*/function () {
                   permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("role-name"));
                   form = document.getElementById("permits-form");
                   form.setAttribute("action", "/permisos/".concat(role_id));
-                  url = '/permisos/getPermissions/' + role_id;
+                  url = "/permisos/getPermissions/" + role_id;
                   _context2.next = 9;
                   return requestPermissions(url);
 
@@ -84607,20 +84607,20 @@ var Permissions = /*#__PURE__*/function () {
                   [].forEach.call(modules, function (module) {
                     var _module$actions$split, _module$actions, _module_permissions$a, _module_permissions$a2;
 
-                    var module_actions = (_module$actions$split = module === null || module === void 0 ? void 0 : (_module$actions = module.actions) === null || _module$actions === void 0 ? void 0 : _module$actions.split(',')) !== null && _module$actions$split !== void 0 ? _module$actions$split : [];
+                    var module_actions = (_module$actions$split = module === null || module === void 0 ? void 0 : (_module$actions = module.actions) === null || _module$actions === void 0 ? void 0 : _module$actions.split(",")) !== null && _module$actions$split !== void 0 ? _module$actions$split : [];
                     var module_permissions = permissions.find(function (element) {
                       return element.module_id == module.id;
                     });
-                    var allowed_actions = (_module_permissions$a = module_permissions === null || module_permissions === void 0 ? void 0 : (_module_permissions$a2 = module_permissions.actions) === null || _module_permissions$a2 === void 0 ? void 0 : _module_permissions$a2.split(',')) !== null && _module_permissions$a !== void 0 ? _module_permissions$a : [];
-                    var mainContainer = document.createElement('div');
+                    var allowed_actions = (_module_permissions$a = module_permissions === null || module_permissions === void 0 ? void 0 : (_module_permissions$a2 = module_permissions.actions) === null || _module_permissions$a2 === void 0 ? void 0 : _module_permissions$a2.split(",")) !== null && _module_permissions$a !== void 0 ? _module_permissions$a : [];
+                    var mainContainer = document.createElement("div");
                     mainContainer.className = "row";
                     var nameContainer = document.createElement("div");
                     nameContainer.className = "col-3 align-self-center";
                     nameContainer.innerHTML = "<h6 class=\"mb-0 text-muted font-weight-bold\">".concat(module.name, "</h6>");
                     mainContainer.appendChild(nameContainer);
                     var checkContainer = document.createElement("div");
-                    checkContainer.className = "col-9 align-self-center";
-                    checkContainer.innerHTML = "<div class=\"form-check\"></div>";
+                    checkContainer.className = "col-9 align-self-center border-bottom my-5";
+                    checkContainer.innerHTML = "<div class=\"checkbox-inline\"></div>";
                     [].forEach.call(actions, function (action) {
                       var action_found = module_actions.find(function (element) {
                         return element == action.id;
@@ -84629,9 +84629,9 @@ var Permissions = /*#__PURE__*/function () {
                         return element == action.id;
                       });
                       var label = document.createElement("label");
-                      label.className = "form-check-label text-uppercase font-weight-bold mx-4";
+                      label.className = "checkbox col-3 text-uppercase font-weight-bold mx-4";
                       label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
-                      label.innerHTML = "\n                        <input class=\"form-check-input\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && 'disabled', "\n                         ").concat(permission_found && 'checked', "\n                        >  ").concat(translated_actions[action.name], "\n                        ");
+                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && "disabled", "\n\n                         ").concat(permission_found && "checked", "\n                        > <span></span> ").concat(translated_actions[action.name], "\n\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);
@@ -84661,13 +84661,13 @@ var Permissions = /*#__PURE__*/function () {
       }
 
       [].forEach.call(editButtons, function (item) {
-        item.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        item.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
           var role_id, response, data, name, state, form;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
-                  role_id = item['id'].split('-')[1];
+                  role_id = item["id"].split("-")[1];
                   _context3.next = 3;
                   return _this.requestRoleData(role_id);
 
@@ -84679,7 +84679,7 @@ var Permissions = /*#__PURE__*/function () {
                     break;
                   }
 
-                  alert('Error inesperado.');
+                  alert("Error inesperado.");
                   console.log(response.error);
                   return _context3.abrupt("return");
 
@@ -84689,10 +84689,10 @@ var Permissions = /*#__PURE__*/function () {
                   name.value = data.name;
                   state = document.getElementById("state_edit");
                   [].forEach.call(state, function (opt) {
-                    opt.value == data.state ? opt.selected = true : '';
+                    opt.value == data.state ? opt.selected = true : "";
                   });
                   form = document.getElementById("formUpdateRole");
-                  form.setAttribute("action", 'roles/' + data.id);
+                  form.setAttribute("action", "roles/" + data.id);
 
                 case 15:
                 case "end":
@@ -84713,7 +84713,7 @@ var Permissions = /*#__PURE__*/function () {
             switch (_context4.prev = _context4.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context4.next = 3;
                 return fetch("/roles/" + id + "/edit").then(function (response) {
@@ -85552,8 +85552,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Documents\Proyectos_DevelopApp\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Documents\Proyectos_DevelopApp\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

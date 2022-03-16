@@ -1,29 +1,31 @@
 const translated_actions = {
-    'all': 'Todo',
-    'index': 'Inicio',
-    'create': 'Vista crear',
-    'store': 'Crear',
-    'show': 'Detalle',
-    'destroy': 'Eliminar',
-    'delete': 'Eliminar',
-    'update': 'Actualizar',
-    'edit': 'Vista editar',
-    'assign': 'Asignar',
-    'import': 'Importar',
-    'export': 'Exportar',
-    'record': 'Historial'
+    all: "Todo",
+    index: "Inicio",
+    create: "Vista crear",
+    store: "Crear",
+    show: "Detalle",
+    destroy: "Eliminar",
+    delete: "Eliminar",
+    update: "Actualizar",
+    edit: "Vista editar",
+    assign: "Asignar",
+    import: "Importar",
+    export: "Exportar",
+    record: "Historial",
 };
 
 const requestPermissions = async (url) => {
     let response = { state: 500 };
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
     await fetch(url, {
-        method: 'GET',
+        method: "GET",
         headers: {
-            'X-CSRF-TOKEN': token
-        }
+            "X-CSRF-TOKEN": token,
+        },
     })
-        .then(response => response.json())
+        .then((response) => response.json())
         .then((data) => {
             response = data;
         })
@@ -31,8 +33,8 @@ const requestPermissions = async (url) => {
             console.log(e);
         });
 
-    return response
-}
+    return response;
+};
 export default class Permissions {
     initialize() {
         this.loadPermissions();
@@ -40,23 +42,26 @@ export default class Permissions {
     }
 
     loadPermissions() {
-        let configurationBtn = document.getElementsByClassName("configuration-btn");
+        let configurationBtn =
+            document.getElementsByClassName("configuration-btn");
         let permitsLbl = document.getElementById("permits-label");
         if (configurationBtn == null) {
-            return
+            return;
         }
 
         [].forEach.call(configurationBtn, function (btn) {
-            btn.addEventListener('click', async () => {
+            btn.addEventListener("click", async () => {
                 let row = btn.parentNode.parentNode;
-                console.log(row)
+                console.log(row);
                 let role_id = row.id;
-                permitsLbl.innerText = `Permisos - ${row.getAttribute("role-name")}`;
+                permitsLbl.innerText = `Permisos - ${row.getAttribute(
+                    "role-name"
+                )}`;
 
                 let form = document.getElementById("permits-form");
-                form.setAttribute("action", `/permisos/${role_id}`)
+                form.setAttribute("action", `/permisos/${role_id}`);
 
-                let url = '/permisos/getPermissions/' + role_id;
+                let url = "/permisos/getPermissions/" + role_id;
                 let response = await requestPermissions(url);
                 if (response.state != 200) {
                     return;
@@ -68,12 +73,15 @@ export default class Permissions {
 
                 let cardBody = document.getElementById("card-body");
                 cardBody.innerHTML = ``;
-                [].forEach.call(modules, module => {
-                    let module_actions = module?.actions?.split(',') ?? [];
-                    let module_permissions = permissions.find(element => element.module_id == module.id);
-                    let allowed_actions = module_permissions?.actions?.split(',') ?? [];
+                [].forEach.call(modules, (module) => {
+                    let module_actions = module?.actions?.split(",") ?? [];
+                    let module_permissions = permissions.find(
+                        (element) => element.module_id == module.id
+                    );
+                    let allowed_actions =
+                        module_permissions?.actions?.split(",") ?? [];
 
-                    let mainContainer = document.createElement('div');
+                    let mainContainer = document.createElement("div");
                     mainContainer.className = "row";
 
                     let nameContainer = document.createElement("div");
@@ -82,15 +90,20 @@ export default class Permissions {
                     mainContainer.appendChild(nameContainer);
 
                     let checkContainer = document.createElement("div");
-                    checkContainer.className = "col-9 align-self-center";
-                    checkContainer.innerHTML = `<div class="form-check"></div>`;
+                    checkContainer.className = "col-9 align-self-center border-bottom my-5";
+                    checkContainer.innerHTML = `<div class="checkbox-inline"></div>`;
 
-                    [].forEach.call(actions, action => {
-                        const action_found = module_actions.find(element => element == action.id);
-                        const permission_found = allowed_actions.find(element => element == action.id);
+                    [].forEach.call(actions, (action) => {
+                        const action_found = module_actions.find(
+                            (element) => element == action.id
+                        );
+                        const permission_found = allowed_actions.find(
+                            (element) => element == action.id
+                        );
 
                         let label = document.createElement("label");
-                        label.className = "form-check-label text-uppercase font-weight-bold mx-4";
+                        label.className =
+                            "checkbox col-3 text-uppercase font-weight-bold mx-4";
                         label.style = `
                             font-size: 0.8571em;
                             margin-bottom: 5px;
@@ -98,10 +111,14 @@ export default class Permissions {
                         `;
 
                         label.innerHTML = `
-                        <input class="form-check-input" type="checkbox" value="${action.id}"
-                         name="${module.reference}[]" ${!action_found && 'disabled'}
-                         ${permission_found && 'checked'}
-                        >  ${translated_actions[action.name]}
+                        <input class="" type="checkbox" value="${action.id}"
+                         name="${module.reference}[]" ${
+                            !action_found && "disabled"
+                        }
+
+                         ${permission_found && "checked"}
+                        > <span></span> ${translated_actions[action.name]}
+
                         `;
                         checkContainer.childNodes[0].appendChild(label);
                     });
@@ -111,11 +128,8 @@ export default class Permissions {
                     cardBody.appendChild(mainContainer);
 
                     let submitBtn = document.getElementById("submit-btn");
-                    submitBtn.className = `btn btn-primary btn-sm d-block`
+                    submitBtn.className = `btn btn-primary btn-sm d-block`;
                 });
-
-
-
             });
         });
     }
@@ -125,12 +139,12 @@ export default class Permissions {
         if (editButtons == null) {
             return;
         }
-        [].forEach.call(editButtons, item => {
-            item.addEventListener('click', async () => {
-                let role_id = item['id'].split('-')[1];
+        [].forEach.call(editButtons, (item) => {
+            item.addEventListener("click", async () => {
+                let role_id = item["id"].split("-")[1];
                 let response = await this.requestRoleData(role_id);
                 if (response.state != 200) {
-                    alert('Error inesperado.');
+                    alert("Error inesperado.");
                     console.log(response.error);
                     return;
                 }
@@ -138,25 +152,25 @@ export default class Permissions {
                 let name = document.getElementById("name_edit");
                 name.value = data.name;
                 let state = document.getElementById("state_edit");
-                [].forEach.call(state, opt => {
-                    opt.value == data.state ? opt.selected = true : '';
+                [].forEach.call(state, (opt) => {
+                    opt.value == data.state ? (opt.selected = true) : "";
                 });
                 let form = document.getElementById("formUpdateRole");
-                form.setAttribute("action", 'roles/' + data.id);
+                form.setAttribute("action", "roles/" + data.id);
             });
         });
     }
 
     async requestRoleData(id) {
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/roles/" + id + "/edit")
-            .then(response => response.json())
-            .then(data => {
-                response = data
+            .then((response) => response.json())
+            .then((data) => {
+                response = data;
             })
-            .catch(e => console.log(e));
+            .catch((e) => console.log(e));
         return response;
     }
 }
