@@ -44,36 +44,36 @@
                 </select>
                 <span class="form-text text-muted"></span>
             </div>
-            <input type="hidden" name="user_id" id="customer_id" value="{{$customer->getUser->id}}">
-            <div class="col-md-7 d-flex px-0" id="naturalCustomer">
+            <input type="hidden" name="user_id" id="customer_id" value="{{$customer->getUser->id??''}}">
+            <div class="col-md-6 d-flex px-0" id="naturalCustomer">
                 <div class="form-group py-3 m-0 col-md-6">
                     <label>Nombres: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{ $customer->tradename == null ?  $customer->getUser->name : ''}}" />
+                    <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{ $customer->getUser->name??'' }}" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group py-3 m-0 col-md-6">
                     <label>Apellidos <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{ $customer->tradename == null ?  $customer->getUser->last_name : ''}}" />
+                    <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{ $customer->getUser->last_name??'' }}" />
                 </div>
             </div>
             <div class="d-none" id="legalCustomer">
-                <div class="form-group py-3 m-0 col-md-6">
+                <div class="form-group py-3 m-0 col-md-12">
                     <label>Nombre de empresa <span class="text-danger">*</span></label>
-                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" placeholder="Nombre de empresa" type="text" name="business_name" value="{{ $customer->business_name }}" />
-                </div>
-                <div class="form-group py-3 m-0 col-md-6">
-                    <label>Nombre comercial <span class="text-danger">*</span></label>
-                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" placeholder="Nombre comercial"  type="text" name="tradename" value="{{ $customer->tradename }}" />
+                    <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text" name="business_name" value="{{ $customer->business_name }}" />
                 </div>
             </div>
             <div class="form-group py-3 m-0 col-md-3">
+                <label>Nombre comercial <span class="text-danger">*</span></label>
+                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text" name="tradename" value="{{ $customer->tradename }}" />
+            </div>
+            <div class="form-group py-3 m-0 col-md-3">
                 <label>Email: <span class="text-danger">*</span></label>
-                <input type="email" class="form-control form-control-solid" placeholder="Email" name="email" value="{{ $customer->getUser->email }}" />
+                <input type="email" class="form-control form-control-solid" placeholder="Email" name="email" value="{{ $customer->getUser->email??'' }}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-3">
                 <label>Teléfono: <span class="text-danger">*</span></label>
-                <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{ $customer->getUser->phone }}" />
+                <input type="tel" class="form-control form-control-solid" placeholder="Teléfono" name="phone" value="{{ $customer->getUser->phone??'' }}" />
                 <span class="form-text text-muted"></span>
             </div>
             <input type="hidden" value="{{$customer->business_name ? '2' : '1'}}" id="customer_type_edit">
@@ -90,19 +90,19 @@
             </div>
             <div class="form-group py-3 m-0 col-md-3">
                 <label>Número de identificación: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{ $customer->getUser->document_number  }}" />
+                <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{ $customer->getUser->document_number??''}}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group py-3 m-0 col-md-3">
+            <div class="form-group py-3 m-0 col-md-3" id="datebirth">
                 <label>Fecha de nacimiento: <span class="text-danger">*</span></label>
                 <input type="date" class="form-control form-control-solid" placeholder="" name="birthday" value="{{ $customer->birthday }}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group py-3 m-0 col-md-6">
+            <div class="form-group py-3 m-0 col-md-6" id="passwordDiv">
                 <label>Contraseña <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="password" name="password" />
             </div>
-            <div class="form-group py-3 m-0 col-md-6">
+            <div class="form-group py-3 m-0 col-md-6" id="r_passwordDiv">
                 <label>Repetir Contraseña <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="password" name="password_confirmation" />
             </div>

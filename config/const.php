@@ -165,14 +165,17 @@ return [
                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
-
-
-        // 1 => 'Dashboard',
-        // 2 => 'Ordenes',
-        // 3 => 'Mensajeros',
-        // 4 => 'Clientes',
-        // 5 => 'Tarifas',
-        // 6 => '',
+        'statusMatrix' => [
+            'name' => 'Matriz de estados', 'reference' => 'reports', 'icon' => '', 'position' => '10',
+            'actions' => '6',
+            'children' => [],
+            'permission' => [
+                'Admin' =>  ['role_id' => 1, 'actions' => '6'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
+            ]
+        ],
     ],
     'months' => [
         1 => 'Enero',
@@ -275,11 +278,49 @@ return [
             'Cheque',
             'Tarjeta',
             'Delivery'
-        ]
+        ],
+        'scopes' => [
+            'creation',
+            'pickup',
+            'delivery'
+        ],
+        'issues' => [
+            'ENTREGADO',
+            'NO ENTREGADO- DIRECCIÓN EQUIVOCADA',
+            'NO ENTREGADO AUSENTE',
+            'OTROS'
+        ],
         // 'payment_method' => [
         //     'Cheque',
         //     'Efectivo'
         // ],
+        'days' => [
+            'Domingo',
+            'Lunes',
+            'Martes',
+            'Miércoles',
+            'Jueves',
+            'Viernes',
+            'Sábado',
+        ],
+    ],
+    'system_status' => [
+        'creation'/*_scope*/ => [
+            'CREADO',
+            'X EDITAR'
+        ],
+        'pickup'/*_scope*/ => [
+            'POR DESPACHAR',
+            'DESPACHADO',
+            'INCIDENCIA',
+            'RECOGIDO'
+        ],
+        'delivery'/*_scope*/ => [
+            'POR DESPACHAR',
+            'DESPACHADO',
+            'INCIDENCIA',
+            'ENTREGADO'
+        ]
     ]
 
 ];

@@ -51,16 +51,6 @@ trait RouteTrait
     public function storeRouteOndemand($request)
     {
 
-        // $dispatch_random = rand(000000, 999999);
-
-        // $dispatch =  Order::get('dispatched');
-        // $dispatch_codes = $dispatch->map(function ($item, $key) {
-        //     return $item->dispatch_code;
-        // });
-        // $dispatch_codes = $dispatch_codes->toArray();
-
-        // in_array($dispatch,  $dispatch_codes);
-
         $validator = $this->RouteValidate($request);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
@@ -77,12 +67,9 @@ trait RouteTrait
                     'date' => $request->date
                 ]);
             }
-            $order_states = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
-                $query->where('name', 'order_states');
-            })->where('name', 'Despachados')->first();
 
             $order->update([
-                'state'=>$order_states->id,
+                'status_matrix_id'=>$request->state,
                 'dispatched'=>$dispatch_code
             ]);
 
@@ -112,7 +99,7 @@ trait RouteTrait
 
 
                 $route = Guide::where('id', $guide['id'])->update([
-                    'state' => $request->state_order,
+                    'status_matrix_id' => $request->state_order,
                     'dispatched'=>$dispatch_code
                 ]);
             }

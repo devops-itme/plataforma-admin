@@ -60,7 +60,7 @@ export default {
         columnsNames: Array,
         widthTable: Number,
         guides: Array,
-        showGuide: Array,
+        tabs: Array,
     },
     data() {
         return{
@@ -69,8 +69,8 @@ export default {
     },
     methods: {
         rowClick(data, index) {
-             this.showGuide = data;
-             this.activeIndex = index;
+            this.activeIndex = index;
+            this.$emit("getGuide", data);
         },
 
     }

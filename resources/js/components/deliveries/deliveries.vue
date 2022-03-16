@@ -11,11 +11,12 @@
                 class="d-flex align-items-center justify-content-between flex-row flex-wrap mb-3"
             >
                 <div class="form-group col-md-2 mb-0">
-                    <select class="form-control" v-model="selected" @change="loadingEvt(),getGuides(null)">
+                    <select class="form-control" v-model="selected" @change="loadingEvt(),getGuides(selected)">
                         <option
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
                             v-bind:value="item.value"
+
                         >
                             {{ item.text }}
                         </option>
@@ -24,25 +25,25 @@
                 </div>
                 <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
                     <div class="col-md-5 py-2" >
-                        <div class=" border rounded" v-if="type_guide == 34 ||  type_guide == 37">
+                        <div class=" border rounded" v-if="type_guide === tabEdition">
                             <p class="mb-0">
                                 <span class="font-weight-bolder mb-3"
                                     >Destinos en recogida por editar:
                                 </span>
-                                <span class="line-height-xl">2000</span>
+                                <span class="line-height-xl" v-text="200"></span>
                             </p>
                         </div>
                     </div>
-                    <div class="form-group col-md-3 mb-0">
-                        <select class="form-control" id="delivery_event_state"  v-if="type_guide == 34 ||  type_guide == 37">
+                    <div class="form-group col-md-3 mb-0" >
+                        <select class="form-control" id="delivery_event_state" v-if="type_guide === tabEdition" >
                             <option>Seleccione estado</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" >
                         <button
+                            v-if="type_guide === tabEdition"
                             type="button"
                             class="btn btn-light-primary font-weight-bold"
-                            v-if="type_guide == 34 ||  type_guide == 37"
                         >
                             Aplicar nuevo estado
                         </button>
@@ -57,45 +58,14 @@
                 id="myTab"
                 role="tablist"
             >
-                <li class="nav-item" role="presentation">
+                <li  class="nav-item"  v-for="(tab) in tabs" :key="tab.id" >
                     <a
-                        class="nav-link active"
-                        id="porRecoger-tab"
-                        data-toggle="tab"
-                        href="#porRecoger"
-                        role="tab"
-                        aria-controls="porRecoger"
-                        aria-selected="true"
-                        @click="getGuides(0)"
-                        >Por {{ selected == 32 ? "Entregar" : "Recoger" }}</a
-                    >
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a
-                        class="nav-link"
-                        id="enproceso-tab"
-                        data-toggle="tab"
-                        href="#enproceso"
-                        role="tab"
-                        aria-controls="enproceso"
-                        aria-selected="false"
-                        @click="getGuides(1)"
-                        >{{ selected == 32 ? "Entregas" : "Recogidas" }} en
-                        proceso</a
-                    >
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a
-                        class="nav-link"
-                        id="consultas-tab"
-                        data-toggle="tab"
-                        href="#consultas"
-                        role="tab"
-                        aria-controls="consultas"
-                        aria-selected="false"
-                        @click="getGuides(2)"
-                        >Consultas y edición</a
-                    >
+                    class="nav-link tablink"
+                    @click="getGuides(tab.id)"
+                    :class="{'active': type_guide === tab.id}"
+                    :id="tab.id"  data-toggle="tab"
+                    :href="`#${tab.href}`"
+                    v-text=tab.name></a>
                 </li>
             </ul>
            <div class="d-flex flex-row flex-wrap">
@@ -106,7 +76,7 @@
                     role="tabpanel"
                     aria-labelledby="porRecoger-tab">
                     <!-- Draggable component -->
-                        <draggables :selected=selected :guides=guides :guides2=guides2 :showGuide=showGuide :messengers=messengers ref="childcomponent"></draggables>
+                    <draggables :selected=selected @getGuide="getGuide" :guides=guides :guides2=guides2 :tabs=tabs :messengers=messengers ref="childcomponent"></draggables>
 
                 </div>
                 <div
@@ -116,7 +86,7 @@
                     aria-labelledby="enproceso-tab"
                 >
                     <!-- In process table -->
-                    <tabledy :rows=columns.inProcess.length :guides=guides :showGuide=showGuide :columnsNames=columns.inProcess :widthTable=1100></tabledy>
+                    <tabledy :rows=columns.inProcess.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inProcess :widthTable=1100></tabledy>
                 </div>
                 <div
                     class="tab-pane fade"
@@ -125,75 +95,75 @@
                     aria-labelledby="consultas-tab"
                 >
                     <!-- Queries and Edit table -->
-                    <tabledy :rows=columns.inEdit.length :guides=guides :showGuide=showGuide :columnsNames=columns.inEdit :widthTable=1600></tabledy>
+                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600></tabledy>
                 </div>
             </div>
             </div>
             <div class="col-md-3 py-4">
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
                     <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
-                    <button v-if="type_guide == 34 ||  type_guide == 37" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2">Editar Destino</button>
+                    <button v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2"  @click.prevent="editGuide()">Editar Destino</button>
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Tipo de orden:</div>
-                        <div class="line-height-xl">Packing</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.type_order"></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente:</div>
-                        <div class="line-height-xl">Juanito Perez</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.client"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Destino:</div>
-                        <div class="line-height-xl">3534534</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.posting"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Despacho:</div>
-                        <div class="line-height-xl">0</div>
+                        <div class="line-height-xl" v-if="showDataGuide"  v-text="showDataGuide.dispatched"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Ref.Cliente:</div>
-                        <div class="line-height-xl">---</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.ref_client"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Programado:</div>
-                        <div class="line-height-xl">2022/02/04</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.programming">2022/02/04</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
-                        <div class="line-height-xl">Moto</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport" ></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Movil:</div>
-                        <div class="line-height-xl">381, YEMAYEL ARIEL</div>
+                        <div class="line-height-xl" v-if="showDataGuide"  v-text="showDataGuide.movil"></div>
                     </div>
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Depto:</div>
-                        <div class="line-height-x1">84: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_depto" >84: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
-                        <div class="line-height-x1">1179: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_branch_office">1179: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Documento:</div>
-                        <div class="line-height-x1">1191: DELIVERY</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_document" >1191: DELIVERY</div>
                     </div>
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Concepto:</div>
-                        <div class="line-height-xl">RETIRAR FIANZA A NOMBRE DE EDEMET</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.concept"></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Dirección:</div>
-                        <div class="line-height-xl">CLL 50: SAN FRANCISCO: PANAMA</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.direction"></div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
-                    <div class="col-md-12 symbol-group symbol-hover">
+                    <div class="col-md-12 symbol-group symbol-hover" v-if="type_guide === tabEdition">
                         <div class="symbol">
                             <img alt="Pic" src="https://placem.at/things?h=100"/>
                         </div>
@@ -208,10 +178,134 @@
             </div>
            </div>
         </div>
-        <modalEdit></modalEdit>
+        <modalEdit
+            v-if="showModal"
+            @close="showModal = false">
+        <div slot="header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar destinos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div slot="body">
+            <div class="d-flex flex-row flex-wrap">
+                <h5 class="my-4 font-weight-bold text-dark col-md-12">Información de destino</h5>
+                <div class="form-group col-md-4">
+                    <label>Cliente: </label>
+                    <input name="customer" type="text" class="form-control form-control-solid" v-model="guide.client" disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Saldo Cantidad: </label>
+                    <input name="quantity_ballance" type="number" class="form-control form-control-solid" v-model="guide.balance" disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Saldo Dinero: </label>
+                    <input name="money_ballance" type="number" class="form-control form-control-solid" v-model="guide.balance_money" disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="separator separator-solid separator-border-3 col-12 mb-3"></div>
+                <h5 class="my-4 font-weight-bold text-dark col-md-12">Contenido a editar</h5>
+                <div class="form-group col-md-6">
+                    <label>Dirección: </label>
+                    <input name="address" type="text" v-model="guide.address" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="type_doc">Tipo de documento </label>
+                    <select name="document_type"  v-model="guide.document_type" class="form-control form-control-solid" id="type_doc">
+                        <option
+                            v-for="document_type in document_types"
+                            v-bind:key="document_type.id"
+                            v-bind:value="document_type.id"
+                            >
+                            {{ document_type.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Concepto: </label>
+                    <input name="concept" type="text" class="form-control form-control-solid" v-model="guide.concept" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="type_doc">Barrio </label>
+                    <select name="location" class="form-control form-control-solid" id="location">
+                        <option selected>Seleccione Barrio</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="type_doc">Medio de pago </label>
+                    <select name="location" v-model="guide.payment_method"  class="form-control form-control-solid" id="location">
+                        <option
+                            v-for="payment_method in payment_methods"
+                            v-bind:key="payment_method.id"
+                            v-bind:value="payment_method.id"
+                            >
+                            {{ payment_method.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="type_doc">Transporte </label>
+                    <select name="transport" v-model="guide.transport_type"  class="form-control form-control-solid" id="transport">
+                        <option
+                            v-for="transport_type in transport_types"
+                            v-bind:key="transport_type.id"
+                            v-bind:value="transport_type.id"
+                            >
+                            {{ transport_type.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="type_doc">Tarifa </label>
+                    <select name="rate" class="form-control form-control-solid" id="rate">
+                        <option selected>Adicional</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Valor: </label>
+                    <input name="value" type="number" class="form-control form-control-solid text-right" v-model="guide.value"  />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Valor Corp: </label>
+                    <input name="corp_value" type="number" class="form-control form-control-solid text-right" v-model="guide.value_corp"  />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Contacto: </label>
+                    <input name="contact" type="text" class="form-control form-control-solid" v-model="guide.contact" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Contacto Teléfono: </label>
+                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-bind:value="guide.contact_email"  />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Contacto email: </label>
+                    <input name="contact_mail" type="email" class="form-control form-control-solid" v-model="guide.contact_phone" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                 <div class="form-group col-md-4">
+                    <label>Programado (Fecha-Hora): </label>
+                    <input name="programming_date" type="datetime-local"  v-model="guide.programming" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+            </div>
+        </div>
+        <div slot="footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+        </modalEdit>
     </div>
 </template>
 <script>
+import moment from 'moment';
 import draggables from "./draggable.vue";
 import tabledy from "./tableDynamic.vue";
 import modalEdit from "./modalEditComponent.vue";
@@ -223,10 +317,11 @@ export default {
     },
     data() {
         return {
-            selected: 32,
+
+            selected: 55,
             delivery_types: [
-                { value: 32, text: "Entregas" },
-                { value: 35, text: "Recogidas" },
+                { value: 55, text: "Entregas" },
+                { value: 53, text: "Recogidas" },
             ],
             showModal: false,
             columns:{
@@ -236,23 +331,96 @@ export default {
             guides: [],
             guides2: [],
             messengers: [],
-            type_guide: 32,
-            showGuide: [],
+            type_guide: 3,
+            showGuide: null,
+            showDataGuide: {},
+            activeIndex: 2,
+            tabs: [],
+            if_route: false,
+            if_department: false,
+            guide:{},
+            document_types:null,
+            transport_types:null,
+            payment_methods:null,
+            showModal:false
 
         };
     },
+    computed:{
+        tabEdition(){
+            return this.tabs[2]?.id;
+        }
+    },
+    watch:{
 
+    },
     methods: {
         loadingEvt (){
            $(`#myTab li:nth-child(1) a`).tab("show");
        },
-        async getGuides(type) {
-            this.type_guide = this.selected + type;
-            let response = await this.requestGuides();
-            this.guides = response.data;
-            this.guides2 = [];
+        async statusMatrix(scope) {
+            //STATUS MATRIX
+            let req = await fetch(`despacho/matriz_estados?scope_id=${scope}`);
+            let res = await req.json();
+            // take the first 3 data from the consulate
+            this.tabs = res.data.slice(0, 3);
+
+            //#HREF TAB
+            this.tabs[0].href = "porRecoger";
+            this.tabs[1].href = "enproceso";
+            this.tabs[2].href = "consultas";
+
+            //NAME TABS
+            this.tabs[2].name = "CONSULTA Y EDICIÓN";
+            this.selected == 54?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
+            this.selected == 55?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
         },
-        async requestGuides() {
+
+
+        getGuide(data){
+            this.showGuide = data;
+            this.showDataGuide.type_order = data.get_order?.get_order_type.name;
+            this.showDataGuide.client = data.get_order?.get_user.name;
+            this.showDataGuide.posting = data.id;
+            this.showDataGuide.dispatched = data.dispatched;
+            this.showDataGuide.ref_client = data.get_order?.get_user.document_number;
+            this.showDataGuide.programming = data.get_order.schedule_date;
+            this.showDataGuide.transport =  data.get_transport_type?.name;
+            this.showDataGuide.movil = data.get_route?.get_messenger.name+' '+data.get_route?.get_messenger.last_name  ;
+            this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department.id+':'+data.get_branch_office?.get_department?.get_department.name;
+            this.showDataGuide.client_branch_office = data.get_branch_office?.id+': '+data.get_branch_office?.name;
+            this.showDataGuide.client_document = data.get_order?.get_user.document_number;
+            this.showDataGuide.concept = data.concept;
+            this.showDataGuide.direction = data.address_name;
+        },
+        async getGuides(type) {
+            this.guides2 = [];
+            this.showGuide = null;
+            this.showDataGuide = {
+                type_order: null,
+                client: null,
+                posting: null,
+                dispatched: null,
+                ref_client: null,
+                programming: null,
+                transport: null,
+                movil: null,
+                client_depto: null,
+                client_branch_office: null,
+                client_document: null,
+                concept: null,
+                direction: null,
+            },
+            this.guide = {};
+            this.statusMatrix(this.selected);
+            type == 55 && (type = 3);
+            type == 53 && (type = 7);
+            let response = await this.requestGuides(type);
+            this.guides = response.data;
+
+        },
+        async requestGuides(type) {
+
             let response = { state: 500 };
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -260,13 +428,16 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/orders_packing/${this.type_guide}`, requestOptions)
+
+            await fetch(`/orders_packing/${type}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     response = data;
                 })
                 .catch((err) => console.warn(err));
+            this.type_guide = type;
             return response;
+
         },
            async getMessengers() {
             let _this = this;
@@ -283,12 +454,58 @@ export default {
                 })
                 .catch((err) => console.warn(err));
         },
+         async editGuide() {
+            if (!this.showGuide) {
+                return await error("Debe seleccionar una guía");
+            }
+            let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
+            this.showModal = true;
+            this.guide.client =  this.showGuide.get_order?.get_user.name;
+            this.guide.balance  = 0;
+            this.guide.balance_money  = 0;
+            this.guide.address = this.showGuide.address_name;
+            this.guide.document_type = this.showGuide.customer_document_type;
+            this.guide.concept = this.showGuide.concept;
+            this.guide.payment_method = this.showGuide.get_order.payment_method;
+            this.guide.transport_type = this.showGuide.transport_type;
+            this.guide.value = this.showGuide.value;
+            this.guide.value_corp = this.showGuide.corp_value;
+            this.guide.contact = this.showGuide.contact;
+            this.guide.contact_phone = this.showGuide.phone_contact;
+            this.guide.contact_email = this.showGuide.email_contact;
+            this.guide.programming = moment(programming_date).format("YYYY-MM-DDTHH:mm")
+        },
+
+        async documentTypes() {
+            let name = "customer_document_type";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.document_types = res.data;
+        },
+
+         async transportTypes() {
+            let name = "transport_type";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.transport_types = res.data;
+        },
+
+        async paymentMethods() {
+            let name = "payment_method";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.payment_methods = res.data;
+        },
+
+
     },
 
      async mounted() {
-        // this.orderState();
-        this.getGuides(null);
+        this.getGuides(3);
         this.getMessengers();
+        this.documentTypes();
+        this.transportTypes();
+        this.paymentMethods();
     },
 
 };

@@ -36,34 +36,55 @@
             </div>
         </div>
         <div class="col-md-8 text-center">
-            <form action="" class="col-md-12">
-
+            <form action="{{route('profile.store')}}" class="col-md-12" method="POST">
+                @csrf
                     <div class="card mb-7 card-round">
                         <div class="card-header">
                             <h2 class="title">Editar Perfil</h2>
                         </div>
                         <div class="card-body card-round">
                             <div class="row">
-                                <label class="col-md-3 col-form-label">Nombre</label>
-
-                                <div class="form-group col-md-9">
-                                    <input type="text" class="form-control" name="name" placeholder="Name"
-                                        required="required">
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Nombre</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Chris Steven"
+                                        required="required" value="{{$user->name}}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Apellido</label>
+                                    <input type="text" class="form-control" name="last_name" placeholder="Morris Dangerous"
+                                        required="required" value="{{$user->last_name}}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Tipo documento</label>
+                                    <select name="document_type" class="form-control">
+                                        <option value="" selected disabled> Seleccione </option>
+                                        @foreach ($documents as $item)
+                                            <option value="{{$item->id}}" {{$item->id == $user->document_type ? 'selected' : ''}}> {{$item->name}} </option>
+                                        @endforeach
+                                    </select>
+                                    {{-- <input type="text" class="form-control" name="name" placeholder="Name"
+                                        required="required"value="{{$user->name}}"> --}}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Numero documento</label>
+                                    <input type="text" class="form-control" name="document_number" placeholder="1001330920"
+                                        required="required" value="{{$user->document_number}}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Correo</label>
+                                    <input type="text" class="form-control" name="email" placeholder="chrismd@example.com"
+                                        required="required" value="{{$user->email}}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Teléfono</label>
+                                    <input type="text" class="form-control" name="phone" placeholder="+1 (871) 636-6686"
+                                        required="required" value="{{$user->phone}}">
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-md-3 col-form-label">Email</label>
-
-                                <div class="form-group col-md-9">
-                                    <input type="email" name="email" placeholder="Email" required="required"
-                                        class="form-control">
+                            <div class="row mt-5">
+                                <div class="col-md-12 text-center"><button type="submit"
+                                        class="btn btn-primary btn-round">Actualizar Cambios</button>
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12"><button type="submit"
-                                        class="btn btn-primary btn-round">Actualizar
-                                        Cambios</button></div>
                             </div>
                         </div>
                     </div>

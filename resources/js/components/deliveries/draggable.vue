@@ -6,7 +6,7 @@
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center px-0">
                         <h5 class="font-weight-bold text-dark">
                             Destinos por
-                            {{ selected == 32 ? "Entregar" : "Recoger" }}
+                            {{ selected == 55 ? "Entregar" : "Recoger" }}
                         </h5>
                         <div class="col-md-2 px-0">
                             <button
@@ -88,7 +88,7 @@
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center py-2">
                         <h5 class="font-weight-bold text-dark">
                             Seleccionados por
-                            {{ selected == 32 ? "Entregar" : "Recoger" }}
+                            {{ selected == 55 ? "Entregar" : "Recoger" }}
                         </h5>
                     </div>
                     <div class="max-h-425px h-425px col-md-12 border rounded px-0">
@@ -186,15 +186,15 @@ export default {
         guides: Array,
         guides2: Array,
         messengers: Array,
-        showGuide: Array,
+        tabs: Array,
     },
     data() {
         return {
-            tabs: [],
             showMessengerData:[],
             searchMessenger: null,
             messenger: null,
             messengerName: null,
+            activeIndex: null,
         };
     },
     computed: {
@@ -222,9 +222,13 @@ export default {
             }
         },
     },
+
+    watch: {
+
+    },
     methods: {
         rowClick(data) {
-             this.showGuide = data;
+            this.$emit("getGuide", data);
         },
 
         formatDate(date) {
@@ -270,17 +274,13 @@ export default {
                 .catch((err) => console.warn(err));
         },
 
-          async orderState() {
-            let req = await fetch("/order_states");
-            let res = await req.json();
-            this.tabs = res.data;
-        },
+
 
 
 
     },
     async mounted() {
-        this.orderState();
+
     },
 
 };

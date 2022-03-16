@@ -188,8 +188,9 @@
                         <th scope="col">Número de orden</th>
                         <th scope="col">Tipo de orden</th>
                         <th scope="col">Cliente</th>
-                        <th scope="col">Fecha de creación</th>
+                        <th scope="col">Fecha y Hora de creación</th>
                         <th scope="col">Estado</th>
+                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -211,9 +212,21 @@
                                 </td>
                                 <td>{{ $order->getUser->name? $order->getUser->name . ' ' . $order->getUser->last_name: $order->getUser->getCustomer->business_name }}
                                 </td>
-                                <td>{{ format_date(date('Y-n-d', strtotime($order->created_at))) }}</td>
+                                <td>{{ format_date(date('Y-n-d', strtotime($order->created_at)))}} <b>{{date('h:m A', strtotime($order->created_at))}}</b></td>
                                 <td>
-                                    {{$order->getOrderState->name}}
+                                    {{$order->getStatusMatrix->name}}
+                                </td>
+                                <td>
+                                    @if ($order->order_type == 35 && $order->status_matrix_id == 1 )
+                                        <button type="button" id="porDespacharOndemand" value="{{$order->id}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Enviar a por despachar">
+                                            <i class="fad fa-hand-holding-box"></i>
+                                        </button>
+                                    @endif
+                                    @if ($order->order_type == 36 && $order->status_matrix_id == 1)
+                                        <button type="button" id="porDespacharPackaging" value="{{$order->id}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Enviar a por despachar">
+                                            <i class="fad fa-hand-holding-box"></i>
+                                        </button>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">

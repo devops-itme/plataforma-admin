@@ -14,6 +14,7 @@ let boxes = [
 export default class Orders {
     constructor(){
         this.guideId = '';
+        this.boxes = boxes;
     }
     initialize() {
         this.instantiateBoxes();
@@ -25,6 +26,9 @@ export default class Orders {
         this.saveGuides();
         this.createAddress();
         this.listGuides();
+        this.porDespacharOndemand();
+        this.porDespacharPackaging();
+        this.customerAddresses();
     }
 
     setInput() {
@@ -65,8 +69,8 @@ export default class Orders {
         });
     }
 
-    instantiateBoxes() {
-        let boxContainer = document.getElementById('box-container');
+    instantiateBoxes(container = 'box-container', boxes = this.boxes) {
+        let boxContainer = document.getElementById(container);
         if (boxContainer == null) {
             return
         }
@@ -132,8 +136,8 @@ export default class Orders {
         this.removeBox();
     };
 
-    addbox() {
-        let addBoxBtn = document.getElementById("add-box-btn");
+    addbox(button = 'add-box-btn', boxes = this.boxes, container = 'box-container') {
+        let addBoxBtn = document.getElementById(button);
 
         if (addBoxBtn == null) {
             return
@@ -149,7 +153,7 @@ export default class Orders {
                 vol_weight: 0,
                 description: '',
             });
-            this.instantiateBoxes();
+            this.instantiateBoxes(container, boxes);
         });
     }
 
@@ -333,9 +337,9 @@ export default class Orders {
             let transport_type = document.getElementById("trans_type").value;
             // let dispatched = document.getElementById("dispatched").value;
             let address_name = document.getElementById("address").value;
-            let address_lat = document.getElementById("lat").value;
-            let address_lng = document.getElementById("lng").value;
-            let address_description = document.getElementById("address_description").value;
+            // let address_lat = document.getElementById("lat").value;
+            // let address_lng = document.getElementById("lng").value;
+            let guide_description = document.getElementById("guide_description").value;
             let concept = document.getElementById("concept").value;
             let rate = document.getElementById("rate").value;
             let value = document.getElementById("value").value;
@@ -348,7 +352,7 @@ export default class Orders {
             let same_day_delivery = document.getElementById("same_day_delivery").value;
             let sign = document.getElementById("sign").value;
             let take_photo = document.getElementById("take_photo").value;
-            let customer_address = document.getElementById("customer_address").value;
+            // let customer_address = document.getElementById("customer_address").value;
             //Boxes
             let ids = document.getElementsByName('id[]');
             let weights = document.getElementsByName('weight[]');
@@ -360,7 +364,7 @@ export default class Orders {
             let boxArr = [];
             for (let i = 0; i < ids.length; i++) {
                 let individualBoxArr = {
-                    'id' : ids[i].value,
+                    'number' : ids[i].value,
                     'weight' : weights[i].value,
                     'long' : longs[i].value,
                     'broad' : broads[i].value,
@@ -376,9 +380,9 @@ export default class Orders {
             formData.append('transport_type',transport_type);
             // formData.append('dispatched',dispatched);
             formData.append('address_name',address_name);
-            formData.append('address_lat',address_lat);
-            formData.append('address_lng',address_lng);
-            formData.append('address_description',address_description);
+            // formData.append('address_lat',address_lat);
+            // formData.append('address_lng',address_lng);
+            formData.append('guide_description',guide_description);
             formData.append('concept',concept);
             formData.append('rate',rate);
             formData.append('value',value);
@@ -391,7 +395,7 @@ export default class Orders {
             formData.append('same_day_delivery',same_day_delivery);
             formData.append('sign',sign);
             formData.append('take_photo',take_photo);
-            formData.append('customer_address',customer_address);
+            // formData.append('customer_address',customer_address);
 
             let response = await this.sendGuideData(formData);
             if(response.state == 200){
@@ -484,6 +488,7 @@ export default class Orders {
                 buttonsDiv.appendChild(guideEdit);
                 buttonsDiv.appendChild(guideDelete);
                 selectCell.appendChild(buttonsDiv);
+
                 tbody.appendChild(row);
             });
         }
@@ -524,13 +529,16 @@ export default class Orders {
 
                 let branch_office = document.getElementById("branch_off_edit");
                 branch_office.value = data.branch_office;
-                let customer_address = document.getElementById("customer_address_edit");
-                customer_address.value = data.customer_address;
+                let customer_address = document.getElementById('customer_address_edit').options;
+                [].forEach.call(customer_address, key => {
+                    key.text == data.address_name ? key.selected=true : key.selected=false;
+                });
+                // customer_address.value = data.customer_address;
                 // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
-                let address_name = document.getElementById("address_edit").value = data.address_name;
-                let address_lat = document.getElementById("lat_edit").value = data.address_lat;
-                let address_lng = document.getElementById("lng_edit").value = data.address_lng;
-                let address_description = document.getElementById("address_description_edit").value = data.address_description;
+                // let address_name = document.getElementById("address_edit").value = data.address_name;
+                // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
+                // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
+                let guide_description = document.getElementById("address_description_edit").value = data.guide_description;
                 let concept = document.getElementById("concept_edit").value = data.concept;
                 let rate = document.getElementById("rate_edit").value = data.rate;
                 let value = document.getElementById("value_edit").value = data.value;
@@ -546,6 +554,9 @@ export default class Orders {
                 data.sign == 1 ? sign.checked = true : '';
                 let take_photo = document.getElementById("take_photo_edit");
                 data.take_photo == 1 ? take_photo.checked = true : '';
+                let boxes = JSON.parse(data.boxes);
+                this.instantiateBoxes('box-container-edit', (boxes??this.boxes));
+                this.addbox('add-box-btn-edit', (boxes??[]), 'box-container-edit');
             });
         })
         this.updateGuide();
@@ -572,10 +583,10 @@ export default class Orders {
         btnUpdateGuide.addEventListener("click", async () => {
             let branch_off_edit = document.getElementById("branch_off_edit").value;
             // let dispatched = document.getElementById("dispatched_edit").value;
-            let address_name = document.getElementById("address_edit").value;
-            let address_lat = document.getElementById("lat_edit").value;
-            let address_lng = document.getElementById("lng_edit").value;
-            let address_description = document.getElementById("address_description_edit").value;
+            let address_name = document.getElementById("customer_address_edit").value;
+            // let address_lat = document.getElementById("lat_edit").value;
+            // let address_lng = document.getElementById("lng_edit").value;
+            let guide_description = document.getElementById("address_description_edit").value;
             let concept = document.getElementById("concept_edit").value;
             let rate = document.getElementById("rate_edit").value;
             let value = document.getElementById("value_edit").value;
@@ -593,13 +604,36 @@ export default class Orders {
             take_photo.checked == true ? take_photo = 1 : take_photo = 0;
             let customer_address = document.getElementById("customer_address_edit").value;
 
+            //Boxes
+            let ids = document.getElementsByName('id[]');
+            let weights = document.getElementsByName('weight[]');
+            let longs = document.getElementsByName('long[]');
+            let broads = document.getElementsByName('broad[]');
+            let highs = document.getElementsByName('high[]');
+            let vol_weights = document.getElementsByName('vol_weight[]');
+            let descriptions = document.getElementsByName('description[]');
+            let boxArr = [];
+            for (let i = 1; i < ids.length; i++) {
+                let individualBoxArr = {
+                    'number' : ids[i].value,
+                    'weight' : weights[i].value,
+                    'long' : longs[i].value,
+                    'broad' : broads[i].value,
+                    'high' : highs[i].value,
+                    'vol_weight' : vol_weights[i].value,
+                    'description' : descriptions[i].value
+                };
+                boxArr.push(individualBoxArr);
+            }
+
             let formData = new FormData();
+            formData.append('boxes', JSON.stringify(boxArr));
             formData.append("branch_office", branch_off_edit);
             // formData.append("dispatched", dispatched);
             formData.append("address_name", address_name);
-            formData.append("address_lat", address_lat);
-            formData.append("address_lng", address_lng);
-            formData.append("address_description", address_description);
+            // formData.append("address_lat", address_lat);
+            // formData.append("address_lng", address_lng);
+            formData.append("guide_description", guide_description);
             formData.append("concept", concept);
             formData.append("rate", rate);
             formData.append("value", value);
@@ -709,7 +743,7 @@ export default class Orders {
 
             for (var i = 0; i < data.length; i++) {
                 let element = data[i];
-                let optAddress = '<option value="'+element.id+'"> '+element.name+' </option>';
+                let optAddress = '<option value="'+element.id+'" name="'+element.name+'"> '+element.name+' </option>';
                 slcAddress.insertAdjacentHTML('beforeend', optAddress);
             }
         });
@@ -799,4 +833,73 @@ export default class Orders {
         }
         return months[month];
     }
+    async porDespacharOndemand(){
+
+        let button = document.getElementById('porDespacharOndemand');
+        if(button == null){
+            return;
+        }
+
+        button.addEventListener("click", async () => {
+            let order_id = button.value;
+            let result = await confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
+            if (result == true) {
+                let req = await fetch(`/pordespachar/ondemand/${order_id}`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                        accept: "application/json",
+                    },
+                });
+                if (req.ok) {
+                    correct("Estado actualizado!");
+                    window.location.reload()
+                } else {
+                    error("Error al actualizar estado");
+
+                }
+            }
+        });
+    }
+
+    async porDespacharPackaging(){
+
+        let button = document.getElementById('porDespacharPackaging');
+        if(button == null){
+            return;
+        }
+        button.addEventListener("click", async () => {
+            let order_id = button.value;
+            let result = await porDespacharPackagingAlert();
+            if (result == 3 || result == 7) {
+                let formData = new FormData();
+                formData.append('type', result);
+                let token = document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content");
+                let myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append("X-CSRF-TOKEN", token);
+
+                let requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: formData,
+                };
+                var data = {type: result};
+                let req = await fetch(`/pordespachar/packaging/${order_id}`, requestOptions);
+                if (req.ok) {
+                    correct("Estado actualizado!");
+                    window.location.reload()
+                } else {
+                    error("Error al actualizar estado");
+
+                }
+            }
+        });
+    }
+
 }

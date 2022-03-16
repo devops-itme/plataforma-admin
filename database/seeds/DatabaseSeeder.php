@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ZonesSeeder::class,
             ModuleSeeder::class,
             MessengerSeeder::class,
+            StatusMatrixSeeder::class,
         ]);
 
     }

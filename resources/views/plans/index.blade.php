@@ -11,14 +11,14 @@
 
         <div class="card-header card-header-tabs-line">
             <div class="card-title">
-                <h6 class=" card-label">ID:</h6>
-                <input type="number" class="form-control" value="1" min="1" style="margin-right: 10px; width: 50px">
+                <h6 class="card-label">Planes</h6>
+                {{-- <input type="number" class="form-control" value="1" min="1" style="margin-right: 10px; width: 50px">
                 <h6 class="card-label">Nombre:</h6>
                 <div class=" row col-md-12">
                     <input type="text" class="form-control" placeholder="Escriba su nombre" style="width: 100vh">
                     <button class="btn-primary btn" style="margin: 0px 10px"><span>Limpiar</span></button>
                     <button class="btn-primary btn"><span>Guardar</span></button>
-                </div>
+                </div> --}}
             </div>
 
         </div>

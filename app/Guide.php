@@ -19,6 +19,7 @@ class Guide extends Model
         'address_lat',
         'address_lng',
         'address_description',
+        'description',
         'zone',
         'concept',
         'rate',
@@ -33,10 +34,11 @@ class Guide extends Model
         'sign',
         'take_photo',
         'packaging',
-        'customer_address',
+        'return_last_destination',
         'state',
         'app_status',
-        'boxes'
+        'boxes',
+        'status_matrix_id'
     ];
 
     public function getOrder()
@@ -57,6 +59,10 @@ class Guide extends Model
     public function getTransportType()
     {
         return $this->belongsTo(ParameterValue::class, 'transport_type');
+    }
+    public function getBranchOffice()
+    {
+        return $this->belongsTo(BranchOffice::class, 'branch_office');
     }
 
     public function getState()

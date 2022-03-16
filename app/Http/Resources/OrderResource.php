@@ -25,7 +25,6 @@ class OrderResource extends JsonResource
             "diligence_expenses" => $this->diligence_expenses,
             "tax_total" => $this->tax_total,
             "urgent_dispatch" => $this->urgent_dispatch,
-            "return_last_destination" => $this->return_last_destination,
             "schedule_date" => Carbon::parse($this->schedule_date)->format('d/m/Y'),
             "schedule_time" => Carbon::parse($this->schedule_time)->format('H:m:i'),
             "diffForHumans" => Carbon::parse($this->schedule_date . $this->schedule_time)->diffForHumans(),
@@ -33,6 +32,12 @@ class OrderResource extends JsonResource
             "money_to_collect" => $this->money_to_collect,
             "percentage_to_collect" => $this->percentage_to_collect,
             "app_status" => $this->app_status,
+            "address" => [
+                "id" => $this->getAddress->id ?? '',
+                "name" => $this->getAddress->name ?? '',
+                "lat" => $this->getAddress->lat ?? '',
+                "lng" => $this->getAddress->lng ?? '',
+            ],
             "user" => [
                 "id" => $this->getUser->id ?? '',
                 "name" => $this->getUser->name,

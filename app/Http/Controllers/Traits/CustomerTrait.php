@@ -5,23 +5,22 @@ namespace App\Http\Controllers\Traits;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Customer;
-use App\User;
 
 trait CustomerTrait
 {
-    use BranchOfficeTrait;
+    use UserTrait;
 
     public function customerValidate($request)
     {
         return Validator::make(
             $request->all(),
             [
-                'birthday' => 'required|date|before:today',
-                'zone' => 'required',
-                'contact' => 'required|string',
-                'payment_period' => 'required',
-                'credit' => 'required|string',
-                'taxes' => 'required',
+                'birthday' => 'nullable|date|before:today',
+                'zone' => 'nullable',
+                'contact' => 'nullable|string',
+                'payment_period' => 'nullable',
+                'credit' => 'nullable|integer',
+                'taxes' => 'nullable',
                 'receive_emails' => 'nullable',
                 'fullfill' => 'nullable',
                 'handling' => 'nullable',
@@ -40,7 +39,7 @@ trait CustomerTrait
         $validator = $this->customerValidate($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500, $validator->errors(), 'validation error, ', $validator->errors()->first());
         }
         try {
             $customer = Customer::create([
@@ -62,9 +61,9 @@ trait CustomerTrait
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'state' => 1
             ]);
-            return $this->respond(200, $customer, null, 'Usuario creado exitosamente');
+            return $this->respond(200, $customer, null, 'Cliente creado exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . 'Error al crear usuario');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear cliente');
         }
     }
 
@@ -73,7 +72,7 @@ trait CustomerTrait
         $validator = $this->customerValidate($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }
 
         try {
@@ -83,7 +82,7 @@ trait CustomerTrait
             }
             //Actualizar tabla usuario
             $updateUser = $this->updateUser($request->merge(['user_id' => $customer->user_id]));
-            if($updateUser['state'] != 200){
+            if ($updateUser['state'] != 200) {
                 return $this->respond(500, [], $updateUser['error'], $updateUser['message']);
             }
             $customer->update([
@@ -114,11 +113,11 @@ trait CustomerTrait
     {
         try {
             $customer = Customer::find($id);
-            if(is_null($customer)){
+            if (is_null($customer)) {
                 return $this->respond(500, [], 'user not found', 'No se encontró el usuario');
             }
             $deleteUser = $this->deleteUser($customer->user_id);
-            if($deleteUser['state'] == 500){
+            if ($deleteUser['state'] == 500) {
                 return $this->respond(500, [], $deleteUser['error'], $deleteUser['message']);
             }
             $customer->delete();

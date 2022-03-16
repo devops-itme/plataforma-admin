@@ -6,6 +6,7 @@ use App\Guide;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Order;
+use App\StatusMatrix;
 use Illuminate\Validation\Rule;
 
 trait OrderTrait
@@ -21,15 +22,14 @@ trait OrderTrait
                     Rule::requiredIf($action == 'create'), 'unique:orders,order_number,'.$id],
                 'user_id' => 'required|exists:users,id',
                 'order_type' => 'required',
-                'order_value' => 'required',
-                'receive_by_COD' => 'required',
-                'internal_product' => 'required',
-                'expenses' => 'required',
-                'diligence_expenses' => 'required',
-                'tax_total' => 'required',
-                'payment_method' => 'required',
-                'urgent_dispatch' => 'required',
-                'return_last_destination' => 'required',
+                'order_value' => 'nullable',
+                'receive_by_COD' => 'nullable',
+                'internal_product' => 'nullable',
+                'expenses' => 'nullable',
+                'diligence_expenses' => 'nullable',
+                'tax_total' => 'nullable',
+                'payment_method' => 'nullable',
+                'urgent_dispatch' => 'nullable',
                 'schedule_date' => 'required',
                 'schedule_time' => 'required',
                 'insured_value' => 'nullable',
@@ -37,6 +37,8 @@ trait OrderTrait
                 'percentage_to_collect' => 'nullable',
                 'branch_office' => 'nullable',
                 'department_id' => 'nullable',
+                'address_id' => 'nullable',
+                'description' => 'nullable',
                 'state' => 'nullable'
             ]
         );
@@ -44,10 +46,14 @@ trait OrderTrait
 
     public function storeOrder($request)
     {
+
+
         $validator = $this->OrderValidate($request);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
         }
+        $status = StatusMatrix::get();
+        $status_id = $status[0]->id;
         try {
             $order = Order::create([
                 'order_number' => $request->order_number,
@@ -61,7 +67,6 @@ trait OrderTrait
                 'tax_total' => $request->tax_total,
                 'payment_method' => $request->payment_method,
                 'urgent_dispatch' => $request->urgent_dispatch,
-                'return_last_destination' => $request->return_last_destination,
                 'schedule_date' => $request->schedule_date,
                 'schedule_time' => $request->schedule_time,
                 'insured_value' => $request->insured_value,
@@ -69,7 +74,11 @@ trait OrderTrait
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
                 'branch_office' => $request->branch_office_id,
-                'department_id' => $request->department_id
+                'address_id' => $request->address_id,
+                'description' => $request->description,
+                'department_id' => $request->department_id,
+                'status_matrix_id' => $status_id,
+                'creator_user_id' => $request->creator_user_id
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');
         } catch (\Exception $e) {
@@ -99,7 +108,6 @@ trait OrderTrait
                 'tax_total' => $request->tax_total,
                 'payment_method' => $request->payment_method,
                 'urgent_dispatch' => $request->urgent_dispatch,
-                'return_last_destination' => $request->return_last_destination,
                 'schedule_date' => $request->schedule_date,
                 'schedule_time' => $request->schedule_time,
                 'insured_value' => $request->insured_value,
@@ -107,7 +115,9 @@ trait OrderTrait
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
                 'branch_office' => $request->branch_office_id,
-                'department_id' => $request->department_id
+                'department_id' => $request->department_id,
+                'address_id' => $request->address_id,
+                'description' => $request->description
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {

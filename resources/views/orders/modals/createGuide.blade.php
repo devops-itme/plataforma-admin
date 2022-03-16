@@ -24,19 +24,27 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3">
-                        <label for="address">Dirección <span class="text-danger">*</span></label>
-                        <input name="address" id="address" type="text" class="form-control form-control-solid" placeholder=""/>
+                        <label for="address">Dirección destino <span class="text-danger">*</span></label>
+                        <select name="customer_address" class="form-control form-control-solid" id="address">
+                            <option disabled selected>Seleccione </option>
+                        </select>
+                        {{-- <input name="address" id="address" type="text" class="form-control form-control-solid" placeholder=""/> --}}
                         {{-- <select name="address" class="form-control form-control-solid" id="address">
                             <option selected disabled>Seleccione dirección</option>
                             <option>Dirección 1</option>
                             <option>Dirección 2</option>
                         </select> --}}
                     </div>
-                    <input name="lat" id="lat" type="hidden" class="form-control form-control-solid" placeholder=""/>
-                    <input name="lng" id="lng" type="hidden" class="form-control form-control-solid" placeholder=""/>
+                    <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
+                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
+                            <i class="fad fa-plus-circle text-info"></i>
+                        </a>
+                    </div>
+                    {{-- <input name="lat" id="lat" type="hidden" class="form-control form-control-solid" placeholder=""/>
+                    <input name="lng" id="lng" type="hidden" class="form-control form-control-solid" placeholder=""/> --}}
                     <div class="form-group col-md-3">
-                        <label for="district">Barrio <span class="text-danger">*</span></label>
-                        <textarea name="address_description" id="address_description" class="form-control form-control-solid"></textarea>
+                        <label for="district">Descripción <span class="text-danger">*</span></label>
+                        <textarea name="guide_description" id="guide_description" class="form-control form-control-solid"></textarea>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Concepto: <span class="text-danger">*</span></label>
@@ -103,7 +111,7 @@
                         <input name="invoice_contact" id="invoice_contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
-                    <div class="form-group col-md-3">
+                    {{-- <div class="form-group col-md-3">
                         <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
                         <select name="customer_address" class="form-control form-control-solid" id="customer_address">
                             <option disabled selected>Seleccione </option>
@@ -113,7 +121,7 @@
                         <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
                             <i class="fad fa-plus-circle text-info"></i>
                         </a>
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">
@@ -169,7 +177,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                 <div id="box-container">
+                                 <div id="box-container" name="box-container">
                                     <div class="row border mt-0 text-center box-register" id="0">
                                         <div class="col-1 py-4 border-right"><input type="number" name="id[]"
                                                 class="form-control" min="0" value="0"></div>

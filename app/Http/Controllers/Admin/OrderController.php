@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Address;
 use App\BranchOffice;
 use App\Customer;
 use App\Department;
@@ -9,7 +10,9 @@ use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order;
+use App\OrderLog;
 use App\ParameterValue;
+use App\User;
 use App\UserBranch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +32,9 @@ class OrderController extends Controller
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->state(request()->state)
-            ->get();
+            ->with('getStatusMatrix')->whereHas('getStatusMatrix', function($query) {
+                $query->where('name','!=', 'ENTREGADO');
+            })->get();
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
@@ -56,6 +61,7 @@ class OrderController extends Controller
         $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'customer_document_type');
         })->get();
+
         return view('orders.create', compact('customers','order_type','transport_type','payment_method', 'customer_document_type'));
     }
 
@@ -75,12 +81,9 @@ class OrderController extends Controller
         } else {
             $request->merge(['urgent_dispatch' => 0]);
         }
-        if ($request->return_last_destination == 'on') {
-            $request->merge(['return_last_destination' => 1]);
-        } else {
-            $request->merge(['return_last_destination' => 0]);
-        }
-        $request->merge(['state' => 1]);
+        $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order,
+            'creator_user_id' => Auth::user()->id,
+        ]);
         $response = $this->storeOrder($request);
         if ($response['state'] == 200) {
             if ($request->guideCheck) {
@@ -104,10 +107,29 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('getUser')->find($id);
+        $user_id = $order->getUser->id;
+        $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'customer_document_type');
+        })->get();
+        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_method');
+        })->get();
+        $transport_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'transport_type');
+        })->get();
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
-        return view('orders.showFold.show', compact('order', 'order_type'));
+        $branches = BranchOffice::with('getBranchUser')->whereHas('getBranchUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+        $departments = Department::with('getDepartmentUser')->whereHas('getDepartmentUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+        $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+        return view('orders.showFold.show', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses'));
     }
 
 
@@ -143,7 +165,14 @@ class OrderController extends Controller
         $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'payment_method');
         })->get();
-        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method'));
+        $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'customer_document_type');
+        })->get();
+        $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+
+        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses'));
     }
 
     /**
@@ -163,12 +192,7 @@ class OrderController extends Controller
         } else {
             $request->merge(['urgent_dispatch' => 0]);
         }
-        if ($request->return_last_destination == 'on') {
-            $request->merge(['return_last_destination' => 1]);
-        } else {
-            $request->merge(['return_last_destination' => 0]);
-        }
-        $request->merge(['state' => 1]);
+        $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order]);
         $response = $this->updateOrder($request->merge(['order_id' => $id]));
         if ($response['state'] == 200) {
             if ($request->guideCheck) {
@@ -205,9 +229,12 @@ class OrderController extends Controller
     public function ordersForDelivery($type)
     {
         try {
+            $matriz_id = $type != 5 ?  $matriz_id = [$type]: $matriz_id = [5, 6];
+
+
             $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query)  {
                 $query->where('name', 'Ondemand');
-            })->where('state', $type)
+            })->whereIn('status_matrix_id', $matriz_id)
             ->with(['getUser.getCustomer', 'getUser.getDocumentType', 'getGuides.getRoute.getMessenger', 'getPaymentMethod', 'getDepartment', 'getBranchOffice', 'getGuides.getAddress'])
             ->get();
 
@@ -218,6 +245,21 @@ class OrderController extends Controller
         }
     }
 
+    public function porDespacharOndemand($id)
+    {
+        try {
+            $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+                $query->where('name', 'order_types');
+            })->get();
+
+            $order = Order::where('id', $id)->where('order_type', $order_type[0]->id)->update([
+                'status_matrix_id' => 3
+            ]);
+            return $this->respond(200, [], null, 'Estado actualizado');
+        } catch (\Throwable $e) {
+            return $this->respond(500, [], $e->getMessage());
+        }
+    }
 
 
     public function orderNumber()
@@ -240,6 +282,16 @@ class OrderController extends Controller
         }
     }
     public function record(){
-        return view('orders.historial');
+        $orders = Order::with('getStatusMatrix')->whereHas('getStatusMatrix', function($query) {
+            $query->where('name', 'ENTREGADO');
+        })->number(request()->number)
+            ->order_type(request()->order_type)
+            ->customer(request()->name)
+            ->date(request()->from, request()->to)
+            ->with('getUser')->get();
+        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'order_types');
+        })->get();
+        return view('orders.historial', compact('orders', 'order_type'));
     }
 }

@@ -41,7 +41,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignOndemad')->name('orders.assign');
     Route::post('/quias/asignacion', 'Admin\DeliveryController@assignPacking')->name('guides.assign');
     //update order state
-    Route::post('/despacho/orden/estado/{state}', 'Admin\DeliveryController@updateStateOrders');
+    Route::post('/despacho/orden/estado', 'Admin\DeliveryController@updateStateOrders');
+
+    Route::resource('parametros', 'Admin\ParameterController')->except('destroy')->names('parameters');
+    Route::delete('parametros/delete/{id}', 'Admin\ParameterController@destroy')->name('parameters.destroy');
 
     Route::group(['middleware' => 'role'], function () {
         //USER
@@ -86,11 +89,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/ordenes/historial', 'Admin\OrderController@record')->name('orders.record');
         Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
 
-        //DOCUMENTOS DE GUIAS
+        //DOCUMENTOS DE GUIÁS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
 
-
     });
+    //Status matrix
+    Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');
+
+    //Status Descriptor
+    Route::get('descriptor-estado/{id}', 'Admin\StatusDescriptorController@index')->name('statusDescriptor.index');
+    //Store
+    Route::post('descriptor-estado/{id}', 'Admin\StatusDescriptorController@store')->name('statusDescriptor.store');
+    Route::delete('descriptor-estado/{id}', 'Admin\StatusDescriptorController@destroy')->name('statusDescriptor.destroy');
+
+    //Por despachar ondemand
+    Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');
+    //Por despachar packaging
+    Route::post('pordespachar/packaging/{id}', 'Admin\GuideController@porDespacharPackaging');
+
+
 
     //Orders states
     Route::get('order_states', 'Admin\DeliveryController@orderStates');
@@ -109,26 +126,25 @@ Route::group(['middleware' => 'auth'], function () {
         return view('zones.index');
     })->name('zone.index');
 
-    Route::get('perfil', function () {
-        return view('profile.index');
-    })->name('profile');
+    Route::resource('perfil', 'Admin\ProfileController')->names('profile');
+    // Route::get('perfil', function () {
+
+    // })->name('profile');
 
     Route::resource('permisos', 'Admin\PermissionController')->names('permits');
     Route::resource('roles', 'Admin\RoleController')->names('roles');
     // Route::post('roles/store', 'Admin\PermissionController@storeRole')->name('permits.role');
     Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
 
-    Route::get('planes', function () {
-        return view('plans.index');
-    })->name('plans.index');
+    Route::resource('planes', 'Admin\PlanController')->names('plans');
 
-
+    //Matriz de estados del despacho lógica
+    Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
 
 });
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 // Route::get('admin/order', 'Admin\OrderController@historial');
-
 //ADDRESSES
 Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
 //REPORTS
@@ -139,3 +155,5 @@ Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serv
 Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
 //CHAT
 Route::resource('chat', 'Admin\ChatController')->names('chats');
+
+

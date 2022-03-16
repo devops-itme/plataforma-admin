@@ -43,6 +43,11 @@ class User extends Model implements AuthenticatableContract
         return $this->belongsTo(ParameterValue::class, 'document_type');
     }
 
+    public function getRole()
+    {
+        return $this->belongsTo(Role::class, 'role')->select(['id', 'name']);
+    }
+
     public function getParent()
     {
         return $this->belongsTo(User::class, 'parent_id');
@@ -62,27 +67,26 @@ class User extends Model implements AuthenticatableContract
     public function scopeName($query, $value)
     {
         if (!is_null($value))
-            $query->where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$value.'%');
+            $query->where(DB::raw('concat(name," ",last_name)'), 'like', '%' . $value . '%');
     }
     public function scopeDocument($query, $value)
     {
         if (!is_null($value))
-        $query->where('document_number', 'like', '%'.$value.'%');
+            $query->where('document_number', 'like', '%' . $value . '%');
     }
     public function scopeEmail($query, $value)
     {
         if (!is_null($value))
-            $query->where('email', 'like', '%'.$value.'%');
+            $query->where('email', 'like', '%' . $value . '%');
     }
     public function scopePhone($query, $value)
     {
         if (!is_null($value))
-            $query->where('phone', 'like', '%'.$value.'%');
+            $query->where('phone', 'like', '%' . $value . '%');
     }
     public function scopeState($query, $value)
     {
         if (!is_null($value))
-            $query->where('state',$value);
+            $query->where('state', $value);
     }
-
 }

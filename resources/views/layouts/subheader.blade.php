@@ -120,7 +120,7 @@
                                 <i class="far fa-info-circle"></i> Información
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{route('profile')}}">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="{{route('profile.index')}}">Mi perfil</a></li>
                                 <li><a class="dropdown-item" href="{{ route('users.index') }}">Usuarios</a></li>
                                 <li><a class="dropdown-item" href="{{ route('customers.index') }}">Clientes (Web)</a>
                                 </li>
@@ -193,7 +193,7 @@
                                     class="fas fa-shield"></i> Administración</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('permits.index') }}">Permisos</a></li>
-
+                                <li><a class="dropdown-item" href="{{ route('statusMatrix.index') }}">Matriz de estados</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -202,7 +202,7 @@
                                 Parámetros</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('zone.index') }}">Zonas</a></li>
-
+                                <li><a class="dropdown-item" href="{{ route('parameters.index') }}">Parametros</a></li>
                             </ul>
                         </li>
                     </ul>

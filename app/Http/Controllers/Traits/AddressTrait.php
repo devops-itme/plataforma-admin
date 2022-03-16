@@ -3,24 +3,23 @@
 namespace App\Http\Controllers\Traits;
 
 use App\Address;
-use App\Http\Controllers\RestActions;
-use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
+use App\Http\Controllers\Traits\RestActions;
 use App\ParameterValue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 trait AddressTrait
 {
-    use TraitsRestActions;
+    use RestActions;
 
     public function addressesValidate($request)
     {
         return Validator::make(
             $request->all(),
             [
-                'user_id'=>'required',
-                'address' => 'required',
-                'description' => 'required',
+                'user_id' => 'required|exists:users,id',
+                'address' => 'required|string',
+                'description' => 'required|string',
                 'lat' => 'required',
                 'lng' => 'required',
             ]
@@ -49,11 +48,11 @@ trait AddressTrait
         $validator = $this->AddressesValidate($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,[],  $validator->errors(),  $validator->errors()->first());
+            return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
         }
         try {
             request()->merge([
-                'name'=> $request->address
+                'name' => $request->address
             ]);
             $address = Address::create($request->all());
             return $this->respond(200, $address, null, 'Dirección creado exitosamente');
@@ -69,7 +68,7 @@ trait AddressTrait
                 return $this->respond(500, null, $validator->errors(),  $validator->errors()->first());
             }
             request()->merge([
-                'name'=> $request->address
+                'name' => $request->address
             ]);
             $address = Address::find($id);
             $address->update($request->all());
