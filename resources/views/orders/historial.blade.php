@@ -117,39 +117,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($orders as $key)
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <th scope="row">{{$key->index + 1}}</th>
+                                    <td>{{$key->order_number}}</td>
+                                    {{-- {{count($key->getGuides)}} --}}
+                                    <td>{{count($key->getGuides) > 0 ? $key->getGuides[0]->getRoute->getMessenger->name??'' : 'No'}}  {{count($key->getGuides) ? $key->getGuides[0]->getRoute->getMessenger->last_name??'' : 'Registra'}}</td>
+                                    <td>{{ format_date(date('Y-n-d', strtotime($key->created_at)))}}</td>
+                                    <div class="d-none">
+                                        {{$value = 0}}
+                                        @foreach ($key->getGuides as $item)
+                                            {{$value += $item->value }}
+                                        @endforeach
+                                    </div>
+                                    <td>${{number_format($value)}}</td>
+                                    <td>{{format_date(date('Y-n-d', strtotime($key->schedule_date)))}}</td>
+                                    <td>{{format_date(date('Y-n-d', strtotime(explode(' ',$key->getLog->where('state', 3)->first()->datetime??'')[0])))}}</td>
+                                    <td>{{format_date(date('Y-n-d', strtotime(explode(' ',$key->getLog->where('state', 10)->first()->datetime??'')[0])))}}</td>
+                                    <td>{{$key->getStatusMatrix->name??''}}</td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

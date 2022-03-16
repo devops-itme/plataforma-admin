@@ -10,6 +10,7 @@ use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order;
+use App\OrderLog;
 use App\ParameterValue;
 use App\User;
 use App\UserBranch;
@@ -31,7 +32,9 @@ class OrderController extends Controller
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->state(request()->state)
-            ->get();
+            ->with('getStatusMatrix')->whereHas('getStatusMatrix', function($query) {
+                $query->where('name','!=', 'ENTREGADO');
+            })->get();
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
@@ -279,6 +282,12 @@ class OrderController extends Controller
         }
     }
     public function record(){
-        return view('orders.historial');
+        $orders = Order::with('getStatusMatrix')->whereHas('getStatusMatrix', function($query) {
+            $query->where('name', 'ENTREGADO');
+        })->with('getGuides.getRoute.getMessenger', 'getUser', 'getLog')->get();
+        // $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
+        //     $query->where('user_id', $user_id);
+        // })->get();
+        return view('orders.historial', compact('orders'));
     }
 }

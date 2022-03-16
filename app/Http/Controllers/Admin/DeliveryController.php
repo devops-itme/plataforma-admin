@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\DeliveryTrait;
 use App\Http\Controllers\Traits\RouteTrait;
 use App\Order;
+use App\OrderLog;
 use App\ParameterValue;
 use App\StatusDescriptor;
 use App\StatusMatrix;
@@ -30,8 +31,13 @@ class DeliveryController extends Controller
     public function assignOndemad(Request $request)
     {
         $response = $this->storeRouteOndemand($request);
-
         if ($response['state'] == 200) {
+            OrderLog::create([
+                'state' => 3,
+                'datetime' => now(),
+                'user_id' => Auth::user()->id,
+                'order_id' => $response['data']->id
+            ]);
             return $this->respond(200, $response['data'], null, $response['message']);
         } else {
             return $this->respond(500, null, $response['error'], $response['message']);

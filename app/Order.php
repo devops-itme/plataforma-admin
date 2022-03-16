@@ -47,6 +47,11 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function getAddress()
+    {
+        return $this->belongsTo(Address::class, 'address_id');
+    }
+
     public function getStatusMatrix()
     {
         return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
@@ -90,6 +95,11 @@ class Order extends Model
     public function getBranchOffice()
     {
         return $this->belongsTo(BranchOffice::class, 'branch_office');
+    }
+
+    public function getLog()
+    {
+        return $this->hasMany(OrderLog::class, 'order_id');
     }
 
 
