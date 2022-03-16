@@ -65731,7 +65731,7 @@ var render = function () {
     { staticClass: "content" },
     [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-7" }, [
+        _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "card" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -65746,7 +65746,7 @@ var render = function () {
                       return _c("tr", { key: status.id }, [
                         _c("td", [_vm._v(_vm._s(status.name))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(status.scope_id))]),
+                        _c("td", [_vm._v(_vm._s(status.get_scope.name))]),
                         _vm._v(" "),
                         _c("td", [
                           _c(
@@ -65775,7 +65775,7 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-5" }, [
+        _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header pb-0" }, [
               _c("div", { staticClass: "row" }, [
@@ -65824,7 +65824,7 @@ var render = function () {
                         return _c("tr", { key: descriptor.id }, [
                           _c("td", [_vm._v(_vm._s(descriptor.description))]),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(descriptor.role_id))]),
+                          _c("td", [_vm._v(_vm._s(descriptor.get_role.name))]),
                           _vm._v(" "),
                           _c("td", [
                             _c(
