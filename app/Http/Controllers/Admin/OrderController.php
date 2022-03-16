@@ -284,10 +284,14 @@ class OrderController extends Controller
     public function record(){
         $orders = Order::with('getStatusMatrix')->whereHas('getStatusMatrix', function($query) {
             $query->where('name', 'ENTREGADO');
-        })->with('getGuides.getRoute.getMessenger', 'getUser', 'getLog')->get();
-        // $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
-        //     $query->where('user_id', $user_id);
-        // })->get();
-        return view('orders.historial', compact('orders'));
+        })->number(request()->number)
+            ->order_type(request()->order_type)
+            ->customer(request()->name)
+            ->date(request()->from, request()->to)
+            ->with('getUser')->get();
+        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'order_types');
+        })->get();
+        return view('orders.historial', compact('orders', 'order_type'));
     }
 }
