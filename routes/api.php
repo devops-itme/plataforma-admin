@@ -42,4 +42,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('guide/markAsRead', 'Api\GuideController@markAsRead');
     Route::resource('guides', 'Api\GuideController')->names('guides');
+
+    Route::resource('hours', 'Api\PickupHourController')->names('hours');
 });
