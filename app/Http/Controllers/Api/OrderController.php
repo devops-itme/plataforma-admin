@@ -82,7 +82,7 @@ class OrderController extends Controller
 
         $validator = $this->OrderValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
         }
 
         try {

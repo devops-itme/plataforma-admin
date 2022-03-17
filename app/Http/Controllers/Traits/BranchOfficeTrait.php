@@ -43,7 +43,7 @@ trait BranchOfficeTrait
     {
         $validator = $this->branchOfficeValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
         }
         try {
             if($request->branch_office_default == 1){
