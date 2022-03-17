@@ -28,7 +28,7 @@ class PickupHourController extends Controller
             }
 
 
-            return $this->respond(200, $pickup_days, null, 'Horas registradas');
+            return $this->respond(200, $pickup_days[0], null, 'Horas registradas');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error');
         }
