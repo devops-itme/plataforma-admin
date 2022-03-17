@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="card-title col-md-12 d-flex flex-row flex-wrap justify-content-end aling-items-center">
                 <select name="lista" class="form-control col-2 mr-2" id="listaConsumo">
-                    <option value="modoConsumo">Modos de Consumos</option>
+                    <option value="modoConsumo">Seleccionar un plan</option>
                 </select>
 
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseConsumo"
