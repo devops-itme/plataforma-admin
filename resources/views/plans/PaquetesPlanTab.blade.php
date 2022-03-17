@@ -12,92 +12,95 @@
     </div>
 
 
-
-    <div class="card-body pt-2">
+    <p class="d-flex flex-row flex-wrap justify-content-end aling-items-center my-7">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseConsumo"
+            aria-expanded="false" aria-controls="collapseExample">
+            Modo Consumo
+        </button>
+    </p>
+    <div class="collapse" id="collapseConsumo">
+        <div class="card-body pt-2">
         <form action="form">
             <div class="row d-flex flex-row flex-wrap">
-                <div class="col-md-6 border">
+                <div class="col-md-6 border-right">
                     <div class="d-flex flex-row flex-wrap">
-
                         <h5 class="my-4 font-weight-bold text-dark col-md-12">Modo de Consumo</h5>
                         <div class="form-group col-md-12">
                             <select name="lista" class="form-control" id="listaConsumo"
                                 style="width: 100%; height: 60%"></select>
                         </div>
 
-
                         <div class="form-group col-md-6 d-flex">
-                            <div class="col">
-                                <label for="label">Saldo Minimo</label>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" name="text" id=""
-                                    style="width: 100px; height: 70%">
+                            <div class="form-group">
+                                <label>Saldo Mínimo:</label>
+                                <input type="text" class="form-control form-control-solid" name="name" value="" />
+                                <span class="form-text text-muted"></span>
                             </div>
                         </div>
                         <div class="form-group col-md-6 d-flex">
-                            <div class="col">
-                                <label for="label">Des/to X</label>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" name="text" id=""
-                                    style="width: 100px;  height: 70%">
+                            <div class="form-group">
+                                <label>Des/to X:</label>
+                                <input type="text" class="form-control form-control-solid" name="name" value="" />
+                                <span class="form-text text-muted"></span>
                             </div>
                         </div>
                         <div class="form-group col-md-6 d-flex">
-                            <div class="col">
-                                <label for="label">Cantidad</label>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" name="text" id=""
-                                    style="width: 100px;  height: 70%">
+                            <div class="form-group">
+                                <label>Cantidad:</label>
+                                <input type="text" class="form-control form-control-solid" name="name" value="" />
+                                <span class="form-text text-muted"></span>
                             </div>
                         </div>
                         <div class="form-group col-md-6 d-flex">
-                            <div class="col">
-                                <label for="label">Valor Unidad</label>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" name="text" id=""
-                                    style="width: 100px;  height: 70%">
+                            <div class="form-group">
+                                <label>Valor Unidad:</label>
+                                <input type="text" class="form-control form-control-solid" name="name"
+                                    value="{{ old('name') }}" />
+                                <span class="form-text text-muted"></span>
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                <div class="col-md-6" >
+                <div class="col-md-6 d-flex align-items-center">
                     <div class="d-flex flex-row flex-wrap">
                         <div class="form-group col-md-6">
-                            <div class="row d-flex flex-row" style="display: flex; align-items: center;">
-                                <input type="checkbox" class="form-control" id="check"
-                                    style="margin-right: 5px;  width: 14px;">
-                                <label for="">Activo</label>
-                            </div>
-                            <div class="row d-flex flex-row" style="display: flex; align-items: center;">
-                                <input type="checkbox" class="form-control" id="check"
-                                    style="margin-right: 5px;  width: 14px;"><label for="">Impuesto
-                                    includio</label>
-                            </div>
-                            <div class="row d-flex flex-row" style="display: flex; align-items: center;">
-                                <input type="checkbox" class="form-control" id="check"
-                                    style="margin-right: 5px; width: 14px;"><label for="">Días Vence</label>
-                            </div>
-                            <div class="row d-flex flex-row" style="display: flex; align-items: center;">
-                                <input type="number" class="form-control" value="1" min="1" style="width: 50px">
-                            </div>
+                            <div class="form-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" class="form-control" id="check">
+                                    <span class="mr-2"></span>
+                                    Activo
+                                </label>
 
+                                <label class="checkbox my-4">
+                                    <input type="checkbox" class="form-control" id="check">
+                                    <span class="mr-2"></span>
+                                    Impuesto incluido
+                                </label>
+
+                                <label class="checkbox mb-4">
+                                    <input type="checkbox" class="form-control" id="check">
+                                    <span class="mr-2"></span>
+                                    Días Vence
+                                </label>
+
+                                <input type="number" class="form-control" value="1" min="1" style="width: 100px">
+                            </div>
                         </div>
                         <div class="form-group col-md-6 d-flex flex-row">
                             <div class="col-6">
                                 <label for="label">Impuesto %</label>
-                                <label for="label" style="margin: 25px 0px">Valor Impuesto</label>
+                                <label for="label" class="my-5">Valor Impuesto</label>
                                 <label for="label">Valor Total</label>
                             </div>
                             <div class="col-6">
-                                <input type="text" class="form-control" name="text" id="">
-                                <input type="text" class="form-control" name="text" id="" style="margin: 5px 0">
-                                <input type="text" class="form-control" name="text" id="">
+                                <input type="text" class="form-control" name="text" id=""
+                                    style="width: 120px; height: 20%">
+                                <input type="text" class="form-control my-2" name="text" id=""
+                                    style="width: 120px; height: 20%">
+                                <input type="text" class="form-control" name="text" id=""
+                                    style="width: 120px; height: 20%">
                             </div>
                         </div>
                     </div>
@@ -105,6 +108,9 @@
             </div>
         </form>
     </div>
+    </div>
+
+
 </div>
 <table class="table table-bordered">
     <thead>
