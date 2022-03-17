@@ -47,8 +47,11 @@ class ProfileController extends Controller
         if($request->name){
             $response = $this->updateGeneralData($request);
         }
+        if($request->password){
+            $response = $this->updatePassword($request);
+        }
         if($response['state'] == 200){
-            return redirect()->route('planes')->with('success', $response['message']);
+            return redirect()->route('profile.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->withInput()->with('danger', $response['message']);
         }
