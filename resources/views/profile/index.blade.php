@@ -38,10 +38,11 @@
         <div class="col-md-8 text-center">
             <form action="{{route('profile.store')}}" class="col-md-12" method="POST">
                 @csrf
-                    <div class="card mb-7 card-round">
-                        <div class="card-header">
-                            <h2 class="title">Editar Perfil</h2>
-                        </div>
+                <div class="card mb-7 card-round">
+                    <div class="card-header">
+                        <h2 class="title">Editar Perfil</h2>
+                    </div>
+                    @include('layouts.alerts')
                         <div class="card-body card-round">
                             <div class="row">
                                 <div class="col-md-6">
@@ -92,19 +93,13 @@
             </form>
 
 
-            <form action="#" method="POST" class="col-md-12 ">
+            <form action="{{route('profile.store')}}" method="POST" class="col-md-12 ">
+                @csrf
                 <div class="card card-round">
                     <div class="card-header">
                         <h2 class="title">Cambiar Contraseña</h2>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <label class="col-md-3 col-form-label">Contraseña antigua</label>
-                            <div class="form-group col-md-9">
-                                <input type="password" class="form-control" name="old-password"
-                                    placeholder="Contraseña antigua" required="required">
-                            </div>
-                        </div>
                         <div class="row">
                             <label class="col-md-3 col-form-label">Nueva contraseña</label>
                             <div class="form-group col-md-9">
@@ -116,7 +111,7 @@
                             <label class="col-md-3 col-form-label">Confirmar Contraseña</label>
 
                             <div class="form-group col-md-9">
-                                <input type="password" name="password-confirmation" placeholder="Confirme contraseña"
+                                <input type="password" name="password_confirmation" placeholder="Confirme contraseña"
                                     required="required" class="form-control">
                             </div>
                         </div>
