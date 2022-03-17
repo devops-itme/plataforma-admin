@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Resources\GuideResource;
 use Illuminate\Http\Request;
 
 class GuideController extends Controller
@@ -20,6 +21,7 @@ class GuideController extends Controller
         try {
             $guides = Guide::where('order_id', $request->order_id)
             ->with($this->messengerRelationships)->get();
+            $guides = GuideResource::collection($guides);
             return $this->respond(200, $guides, null, 'Guías asignadas');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
