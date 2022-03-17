@@ -10,10 +10,16 @@ use Illuminate\Http\Request;
 class GuideController extends Controller
 {
     use RestActions;
+
+    protected $messengerRelationships = [
+        'getRoute', 'getRoute.getMessenger', 'getRoute.getMessenger.getMessenger',
+    ];
+    
     public function index(Request $request)
     {
         try {
-            $guides = Guide::where('order_id', $request->order_id)->get();
+            $guides = Guide::where('order_id', $request->order_id)
+            ->with($this->messengerRelationships)->get();
             return $this->respond(200, $guides, null, 'Guías asignadas');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
