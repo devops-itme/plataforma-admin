@@ -15,12 +15,9 @@ class PickupHourController extends Controller
     public function index()
     {
         try {
-            $pickupdays = PickupHour::with('getDay')->get();
-            $days = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
-                $query->where('name', 'days');
-            })->get();
+            $pickup_days = PickupHour::with('getDay')->get();
 
-            return $this->respond(200, $pickupdays, null, 'Horas registradas');
+            return $this->respond(200, $pickup_days, null, 'Horas registradas');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error');
         }
