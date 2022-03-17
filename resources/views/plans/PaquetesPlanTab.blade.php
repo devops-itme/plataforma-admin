@@ -1,12 +1,14 @@
 <div class="card card-custom col-md-12 ">
-    <div class="card-header d-flex flex-row flex-wrap justify-content-end aling-items-center">
-        <div class="card-title">
-            <p>
+    <div class="card-header">
+        <div class="card-title col-md-12 d-flex flex-row flex-wrap justify-content-end aling-items-center">
+                <select name="lista" class="form-control col-2 mr-2" id="listaConsumo">
+                    <option value="modoConsumo">Modos de Consumos</option>
+                </select>
+
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseConsumo"
                     aria-expanded="false" aria-controls="collapseExample">
                     Modo de Consumos
                 </button>
-            </p>
         </div>
     </div>
 
