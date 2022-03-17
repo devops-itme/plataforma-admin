@@ -69,9 +69,9 @@ class PlanController extends Controller
     {
         $plan = Plan::find($id);
         if(!is_null($plan)){
-            return $plan;
+            return $this->respond(200, $plan, '', 'Plan encontrado');
         } else {
-            return "No se encontró el plan";
+            return $this->respond(500, [], 'plan not found', 'No se encontró el plan');
         }
     }
 
@@ -84,9 +84,10 @@ class PlanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->merge(['state' => 1]);
         $response = $this->updatePlans($id, $request);
         if($response['state'] == 200){
-            return redirect()->route('planes')->with('success', $response['message']);
+            return redirect()->route('plans.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->withInput()->with('danger', $response['message']);
         }

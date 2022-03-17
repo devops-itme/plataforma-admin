@@ -45,7 +45,7 @@ trait PlansTrait
 
     public function updatePlans($id, $request)
     {
-        $validator = $this->validatePlans($request, 'update');
+        $validator = $this->validatePlans($request, 'update', $id);
         if ($validator->fails()) {
             return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }

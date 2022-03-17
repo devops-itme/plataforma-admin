@@ -28,10 +28,10 @@
                             class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
                             title="Detalle"><i class="fad fa-folder-open"></i>
                         </a> --}}
-                        <a href="#"
+                        <button id="{{$key->id}}" name="planEditBtn"
                             class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Editar">
                             <i class="fad fa-edit" data-toggle="modal" data-target="#modalEditar"></i>
-                        </a>
+                        </button>
                         <button type="button"
                             role="button" class="btn btn-icon btn-light-danger btn-sm mr-2"
                             data-tooltip title="Eliminar"

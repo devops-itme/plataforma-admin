@@ -8,20 +8,23 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Nombre del plan</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Nombre"/>
+            <form method="post" id="formUpdate">
+                @csrf @method('PUT')
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nombre del plan</label>
+                        <input name="name" type="text" class="form-control form-control-solid" placeholder="Nombre" id="plan_name_edit" />
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <input name="description" type="text" class="form-control form-control-solid" placeholder="Descripción" id="plan_description_edit"/>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Descripción"/>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Actualizar</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary font-weight-bold">Guardar</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
