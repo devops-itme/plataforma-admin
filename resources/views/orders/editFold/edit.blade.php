@@ -44,15 +44,15 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="customers">Codigo<span class="text-danger">*</span></label>
-                        <input type="text" id="user_code" class="form-control form-control-solid" readonly value="{{$order->getUser->id}}" name="user_id">
+                        <input type="text" id="user_code" class="form-control form-control-solid" readonly value="{{$order->getUser->id??''}}" name="user_id">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Marca / Nombre Comercial<span class="text-danger">*</span></label>
-                        <input type="text" id="user_name" class="form-control form-control-solid" readonly value="{{$order->getUser->name != null ? $order->getUser->name." ".$order->getUser->last_name : $order->getUser->getCustomer->tradename}}">
+                        <input type="text" id="user_name" class="form-control form-control-solid" readonly value="{{$order->getUser ? ($order->getUser->name??$order->getUser->getCustomer->tradename." ".$order->getUser->last_name??'') : 'No registra'}}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Contacto<span class="text-danger">*</span></label>
-                        <input type="text" id="user_contact" class="form-control form-control-solid" readonly value="{{$order->getUser->getCustomer->contact}}">
+                        <input type="text" id="user_contact" class="form-control form-control-solid" readonly value="{{$order->getUser ? $order->getUser->getCustomer->contact : 'No registra'}}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Departamento<span class="text-danger">*</span></label>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Tipo de documento<span class="text-danger">*</span></label>
-                        <input type="text" id="user_document_type" class="form-control form-control-solid" readonly value="{{$order->getUser->getDocumentType->name}}">
+                        <input type="text" id="user_document_type" class="form-control form-control-solid" readonly value="{{$order->getUser ? $order->getUser->getDOcumentType->name??'No registra' : 'No registra'}}">
                     </div>
                     {{-- <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
                         <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" id="btn-customerData">

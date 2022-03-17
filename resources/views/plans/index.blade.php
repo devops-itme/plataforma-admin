@@ -8,7 +8,6 @@
 
 
     <div class="card card-custom ">
-
         <div class="card-header card-header-tabs-line">
             <div class="card-title">
                 <h6 class="card-label">Planes</h6>
@@ -20,8 +19,8 @@
                     <button class="btn-primary btn"><span>Guardar</span></button>
                 </div> --}}
             </div>
-
         </div>
+        @include('layouts.alerts')
         <div class="card-body d-flex flex-row flex-wrap pt-10">
             <div class="col-md-12">
                 <ul class="nav nav-light-success nav-pills border-bottom pb-3" id="myTab" role="tablist">

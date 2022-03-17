@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Traits;
 
 use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
+use App\PickupHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 trait PickupHourTrait
 {
@@ -16,9 +18,69 @@ trait PickupHourTrait
         return Validator::make(
             $request->all(),
             [
-
+                'day' => ['required',
+                    'numeric',
+                    Rule::unique('pickup_hours', 'day_id')->ignore($id)
+                ],
+                'from' => 'required | regex:/(\d+\:\d+)/',
+                'to' => 'required | regex:/(\d+\:\d+)/ |after:from'
             ]
         );
+    }
+
+    public function storePickupHour($request)
+    {
+        $validator = $this->validatePickupTrait($request, 'create');
+        if ($validator->fails()) {
+            return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+        try {
+            $hour = PickupHour::create([
+                'day_id' => $request->day,
+                'init_time' => $request->from,
+                'end_time' => $request->to
+            ]);
+
+            return $this->respond(200, $hour, null, 'Hora registrada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al registrar la hora');
+        }
+    }
+
+    public function updatePickUpHour($id, $request)
+    {
+        $validator = $this->validatePickupTrait($request, 'update', $id);
+        if ($validator->fails()) {
+            return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+        try {
+            $hour = PickupHour::find($id);
+            if(is_null($hour)){
+                return $this->respond(500, [], 'register not found', 'No se encontró el registro');
+            }
+            $hour->update([
+                'day_id' => $request->day,
+                'init_time' => $request->from,
+                'end_time' => $request->to
+            ]);
+            return $this->respond(200, $hour, null, 'Regisitro actualizado exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar registro');
+        }
+    }
+
+    public function deletePickupHour($id)
+    {
+        try {
+            $hour = PickupHour::find($id);
+            if (is_null($hour)) {
+                return $this->respond(500, [], 'hour not found', 'No se encontró el registro de hora');
+            }
+            $hour->delete();
+            return $this->respond(200, $hour, null, 'Registro de hora eliminado exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar registro de hora');
+        }
     }
 
 }

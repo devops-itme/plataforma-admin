@@ -13,16 +13,14 @@
         </tr>
     </thead>
     <tbody>
+        @foreach ($plans as $key)
             <tr class="text-center">
-                <td>---</td>
-                <td>---</td>
+                <td>{{$key->name}}</td>
+                <td>{{$key->description}}</td>
                 <td>
-                    <span class="label label-inline label-light-success font-weight-bold">
-                        Activo
+                    <span class="label label-inline label-light-{{$key->state == 1 ? 'success' : 'danger'}} font-weight-bold">
+                        {{$key->state == 1 ? 'Activo' : 'Inactivo'}}
                     </span>
-                    {{-- <span class="label label-inline label-light-danger font-weight-bold">
-                        Inactivo
-                    </span> --}}
                 </td>
                 <td>
                     <div class="d-flex justify-content-center aling-items-center flex-wrap flex-row">
@@ -36,12 +34,15 @@
                         </a>
                         <button type="button"
                             role="button" class="btn btn-icon btn-light-danger btn-sm mr-2"
-                            data-tooltip title="Eliminar">
+                            data-tooltip title="Eliminar"
+                            onclick="confirmDelete('/planes/'+{{ $key->id }})">
                             <i class="fad fa-trash-alt"></i>
                         </button>
                     </div>
                 </td>
             </tr>
+
+        @endforeach
     </tbody>
 </table>
 @include('plans.modalCrear')

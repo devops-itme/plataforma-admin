@@ -198,7 +198,7 @@
                     @if (count($orders) > 0)
                         @foreach ($orders as $order)
                             <tr>
-                                <th scope="row">{{ $order->order_number }}</th>
+                                <th scope="row">{{ $order->order_number??'No registra' }}</th>
                                 <td>
                                     @if ($order->getOrderType->name == 'Ondemand')
                                         <span class="label label-inline label-light-warning font-weight-blog">
@@ -210,11 +210,11 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td>{{ $order->getUser->name? $order->getUser->name . ' ' . $order->getUser->last_name: $order->getUser->getCustomer->business_name }}
+                                <td>{{ $order->getUser ? $order->getUser->name." ".$order->getUser->last_name : 'No registra' }}
                                 </td>
                                 <td>{{ format_date(date('Y-n-d', strtotime($order->created_at)))}} <b>{{date('h:m A', strtotime($order->created_at))}}</b></td>
                                 <td>
-                                    {{$order->getStatusMatrix->name}}
+                                    {{$order->getStatusMatrix->name??'No registra'}}
                                 </td>
                                 <td>
                                     @if ($order->order_type == 35 && $order->status_matrix_id == 1 )
