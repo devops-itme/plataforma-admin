@@ -86,7 +86,7 @@ class OrderController extends Controller
         }
 
         try {
-            // DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request) {
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -122,10 +122,9 @@ class OrderController extends Controller
                         return $storeGuideResponse;
                     }
                 }
-            //     return;
-            // });
-
-            return $this->respond(200, null, null, 'Orden creada correctamente');
+                return $this->respond(200, null, null, 'Orden creada correctamente');
+            });
+            
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . $e->getLine(), 'Error del servidor');
         }
