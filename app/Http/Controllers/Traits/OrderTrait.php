@@ -137,9 +137,9 @@ trait OrderTrait
             ]
         );
 
-        if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
-        }
+        // if ($validator->fails()) {
+        //     return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        // }
         try {
             $order = Order::find($request->order_id);
             if (is_null($order)) {
