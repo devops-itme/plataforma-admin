@@ -149,11 +149,7 @@ trait GuideTrait
                 return $this->respond(500, [], 'guide not found', 'No se encontró la orden');
             }
 
-            $guide->update([
-                'additional_address' => $request->additional_address,
-                'additional_email' => $request->additional_email,
-                'additional_phone' => $request->additional_phone,
-            ]);
+            $guide->update([$request->all()]);
 
             return $this->respond(200, $guide, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {
