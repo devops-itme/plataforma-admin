@@ -122,7 +122,7 @@ class OrderController extends Controller
                         return $storeGuideResponse;
                     }
                 }
-                return $this->respond(200, null, null, 'Orden creada correctamente');
+                return;
             });
 
             return $this->respond(200, null, null, 'Orden creada correctamente');
