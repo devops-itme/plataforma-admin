@@ -30,13 +30,15 @@ class OrderController extends Controller
 
     protected $customerRelationships = [
         'getOrderType', 'getDocumentType', 'getPaymentMethod',
-        'getState', 'getDepartment', 'getBranchOffice'
+        'getState', 'getDepartment', 'getBranchOffice',
+        'getScheduleTime', 'getScheduleTime.getDay'
     ];
 
     protected $messengerRelationships = [
         'getUser', 'getUser.getDocumentType',
         'getOrderType', 'getDocumentType', 'getPaymentMethod',
-        'getState', 'getDepartment', 'getBranchOffice'
+        'getState', 'getDepartment', 'getBranchOffice',
+        'getScheduleTime', 'getScheduleTime.getDay'
     ];
 
     public function index(Request $request)
