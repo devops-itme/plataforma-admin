@@ -127,6 +127,12 @@ class OrderController extends Controller
         }
     }
 
+    public function updateAdditionalInformation(Request $request)
+    {
+        $response = $this->setAdditionalInformation($request);
+        return $response;
+    }
+
     public function markAsRead(Request $request)
     {
         try {
