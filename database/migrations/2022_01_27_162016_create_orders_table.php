@@ -29,7 +29,8 @@ class CreateOrdersTable extends Migration
             $table->integer('payment_method')->nullable();
             $table->integer('urgent_dispatch')->nullable();
             $table->date('schedule_date');
-            $table->time('schedule_time');
+            $table->integer('schedule_time');
+            $table->string('schedule_time_range');
             $table->double('insured_value')->nullable();
             $table->double('money_to_collect')->nullable();
             $table->double('percentage_to_collect')->nullable()->comment('Porcentaje de seguro');
@@ -43,6 +44,9 @@ class CreateOrdersTable extends Migration
             $table->integer('app_status')->nullable()->default(0)->comment("{0:Pendiente;1:Leído;}");
             $table->unsignedBigInteger('status_matrix_id')->nullable();
             $table->foreign('status_matrix_id')->references('id')->on('status_matrix');
+            $table->string('additional_address')->nullable();
+            $table->string('additional_email')->nullable();
+            $table->string('additional_phone');
             $table->timestamps();
             $table->softDeletes();
         });
