@@ -4,23 +4,34 @@ namespace App\Http\Controllers\Api;
 
 use App\Guide;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\GuideTrait;
 use App\Http\Controllers\Traits\RestActions;
 use App\Http\Resources\GuideResource;
 use Illuminate\Http\Request;
 
 class GuideController extends Controller
 {
-    use RestActions;
+    use GuideTrait;
+
+    public function respond($state, $data = [], $error = null, $message = '')
+    {
+        return [
+            'state' => $state, //response status
+            'data' => $data, //response data
+            'error' => $error, //bug for developer
+            'message' => $message //user message
+        ];
+    }
 
     protected $messengerRelationships = [
         'getRoute', 'getRoute.getMessenger', 'getRoute.getMessenger.getMessenger',
     ];
-    
+
     public function index(Request $request)
     {
         try {
             $guides = Guide::where('order_id', $request->order_id)
-            ->with($this->messengerRelationships)->get();
+                ->with($this->messengerRelationships)->get();
             $guides = GuideResource::collection($guides);
             return $this->respond(200, $guides, null, 'Guías asignadas');
         } catch (\Throwable $e) {
@@ -28,11 +39,17 @@ class GuideController extends Controller
         }
     }
 
+    public function updateAdditionalInformation(Request $request)
+    {
+        $response = $this->setAdditionalInformation($request);
+        return $response;
+    }
+
     public function markAsRead(Request $request)
     {
         try {
             $guide = Guide::where('id', $request->guide_id)->first();
-            
+
             if (is_null($guide)) {
                 return $this->respond(500, null, 'not found', 'No se encontró la guiá');
             }
