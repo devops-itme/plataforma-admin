@@ -18,7 +18,7 @@ trait ParametersTrait
         return Validator::make(
             $request->all(),
             [
-                'name' => 'required | string',
+                'name' => 'required|string',
                 'description' => 'nullable|string',
                 'state' => 'nullable',
                 'parameter_id' => [

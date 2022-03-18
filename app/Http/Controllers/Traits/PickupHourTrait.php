@@ -22,8 +22,8 @@ trait PickupHourTrait
                     'numeric',
                     Rule::unique('pickup_hours', 'day_id')->ignore($id)->where('deleted_at', 'NULL')
                 ],
-                'from' => 'required | regex:/(\d+\:\d+)/',
-                'to' => 'required | regex:/(\d+\:\d+)/ |after:from'
+                'from' => 'required|regex:/(\d+\:\d+)/',
+                'to' => 'required|regex:/(\d+\:\d+)/ |after:from'
             ]
         );
     }
