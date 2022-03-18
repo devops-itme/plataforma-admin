@@ -27,6 +27,7 @@ class OrderResource extends JsonResource
             "urgent_dispatch" => $this->urgent_dispatch,
             "schedule_date" => Carbon::parse($this->schedule_date)->format('d/m/Y'),
             "schedule_time" => [
+                'id' => $this->getScheduleTime->id,
                 'day_id' => $this->getScheduleTime->day_id,
                 'day' => $this->getScheduleTime->getDay->name,
                 'init_time' => $this->getScheduleTime->init_time,
