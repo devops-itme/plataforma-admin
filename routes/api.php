@@ -38,6 +38,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('messenger/update', 'Api\MessengerController@update')->name('messenger.update');
 
     Route::post('order/markAsRead', 'Api\OrderController@markAsRead');
+    Route::post('order/update-additional-information', 'Api\OrderController@updateAdditionalInformation');
     Route::resource('orders', 'Api\OrderController')->names('order');
 
     Route::post('guide/markAsRead', 'Api\GuideController@markAsRead');
