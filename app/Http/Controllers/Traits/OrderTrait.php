@@ -144,7 +144,7 @@ trait OrderTrait
         try {
             $order = Order::find($request->order_id);
             if (is_null($order)) {
-                return $this->respond(500, [], 'user not found', 'No se encontró la orden');
+                return $this->respond(500, [], 'order not found', 'No se encontró la orden');
             }
 
             $order->update([
