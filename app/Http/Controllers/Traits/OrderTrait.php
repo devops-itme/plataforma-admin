@@ -130,6 +130,7 @@ trait OrderTrait
         $validator = Validator::make(
             $request->all(),
             [
+                'order_id' => 'required|exists:order,id',
                 'additional_address' => 'nullable|string',
                 'additional_email' => 'nullable|email',
                 'additional_phone' => 'nullable|numeric',
