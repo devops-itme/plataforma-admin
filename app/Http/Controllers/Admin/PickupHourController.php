@@ -59,4 +59,10 @@ class PickupHourController extends Controller
             return redirect()->back()->with('danger', $response['message']);
         }
     }
+
+    public function pickupHours()
+    {
+        $response = $this->getPickupHours();
+        return $response;
+    }
 }

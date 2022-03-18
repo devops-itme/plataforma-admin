@@ -21,14 +21,17 @@
         </div>
         <div class="form-group col-md-6">
             <label>Fecha de programación: <span class="text-danger">*</span></label>
-            <input name="schedule_date" type="date" class="form-control form-control-solid" placeholder="" />
+            <input name="schedule_date" id="schedule_date" type="date" class="form-control form-control-solid" placeholder="" />
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
             <label>Hora de programación: <span class="text-danger">*</span></label>
-            <input name="schedule_time" type="time" class="form-control form-control-solid" placeholder="" />
+            <select name="schedule_time_range" class="form-control form-control-solid" id="schedule_time_range">
+                <option disabled selected>Seleccione </option>
+            </select>
             <span class="form-text text-muted"></span>
         </div>
+        <input type="hidden" name="schedule_time" id="schedule_time">
         <div class="form-group col-md-6">
             <label for="address">Dirección origen <span class="text-danger">*</span></label>
             <select name="customer_address" class="form-control form-control-solid" id="address">

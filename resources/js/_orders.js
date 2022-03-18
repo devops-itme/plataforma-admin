@@ -29,6 +29,7 @@ export default class Orders {
         this.porDespacharOndemand();
         this.porDespacharPackaging();
         this.customerAddresses();
+        this.loadPickupHours();
     }
 
     setInput() {
@@ -901,5 +902,67 @@ export default class Orders {
             }
         });
     }
+
+    async loadPickupHours(){
+        let date_selector = document.getElementById("schedule_date");
+        if(date_selector == null){
+            return;
+        }
+        let response = await this.requestPickupHours();
+        let days = response.data;
+        date_selector.addEventListener('change', () => {
+            let day = this.getDayReference(date_selector.value);
+            let day_data = days[day];
+
+            let schedule_time_range = document.getElementById("schedule_time_range");
+                schedule_time_range.selectedIndex = 0;
+                removeOptions(schedule_time_range);
+
+                if(day_data){
+                    for (let i = 0; i < day_data.length; i++) {
+                        let element = day_data[i];
+                        let text = formatAMPM(element.init_time)+" - "+formatAMPM(element.end_time)
+                        let option = '<option value="'+text+'" id="'+element.id+'"> '+text+' </option>';
+                        schedule_time_range.insertAdjacentHTML('beforeend', option);
+                    }
+                    schedule_time_range.addEventListener('change', () => {
+                        let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+                        let schedule_time = document.getElementById("schedule_time");
+                        schedule_time.value = id;
+                    })
+
+                }
+
+        });
+    }
+
+    async requestPickupHours(){
+        let response = {
+            'state': 500
+        };
+        await fetch("/getPickupHours")
+            .then(response => response.json())
+            .then(data => {
+                response = data
+            })
+            .catch(e => console.log(e));
+        return response;
+    }
+
+    getDayReference(day){
+        let days = [
+            'Lunes',
+            'Martes',
+            'Miercoles',
+            'Jueves',
+            'Viernes',
+            'Sábado',
+            'Domingo'
+        ];
+        day = new Date(day).getDay();
+        return days[day];
+    }
+
+
 
 }

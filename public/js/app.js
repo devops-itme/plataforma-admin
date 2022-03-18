@@ -84708,6 +84708,7 @@ var Orders = /*#__PURE__*/function () {
       this.porDespacharOndemand();
       this.porDespacharPackaging();
       this.customerAddresses();
+      this.loadPickupHours();
     }
   }, {
     key: "setInput",
@@ -86202,6 +86203,116 @@ var Orders = /*#__PURE__*/function () {
 
       return porDespacharPackaging;
     }()
+  }, {
+    key: "loadPickupHours",
+    value: function () {
+      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25() {
+        var _this11 = this;
+
+        var date_selector, response, days;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
+          while (1) {
+            switch (_context25.prev = _context25.next) {
+              case 0:
+                date_selector = document.getElementById("schedule_date");
+
+                if (!(date_selector == null)) {
+                  _context25.next = 3;
+                  break;
+                }
+
+                return _context25.abrupt("return");
+
+              case 3:
+                _context25.next = 5;
+                return this.requestPickupHours();
+
+              case 5:
+                response = _context25.sent;
+                days = response.data;
+                date_selector.addEventListener('change', function () {
+                  var day = _this11.getDayReference(date_selector.value);
+
+                  var day_data = days[day];
+                  var schedule_time_range = document.getElementById("schedule_time_range");
+                  schedule_time_range.selectedIndex = 0;
+                  removeOptions(schedule_time_range);
+
+                  if (day_data) {
+                    for (var i = 0; i < day_data.length; i++) {
+                      var element = day_data[i];
+                      var text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time);
+                      var option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
+                      schedule_time_range.insertAdjacentHTML('beforeend', option);
+                    }
+
+                    schedule_time_range.addEventListener('change', function () {
+                      var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+                      var schedule_time = document.getElementById("schedule_time");
+                      schedule_time.value = id;
+                    });
+                  }
+                });
+
+              case 8:
+              case "end":
+                return _context25.stop();
+            }
+          }
+        }, _callee25, this);
+      }));
+
+      function loadPickupHours() {
+        return _loadPickupHours.apply(this, arguments);
+      }
+
+      return loadPickupHours;
+    }()
+  }, {
+    key: "requestPickupHours",
+    value: function () {
+      var _requestPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
+          while (1) {
+            switch (_context26.prev = _context26.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context26.next = 3;
+                return fetch("/getPickupHours").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context26.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context26.stop();
+            }
+          }
+        }, _callee26);
+      }));
+
+      function requestPickupHours() {
+        return _requestPickupHours.apply(this, arguments);
+      }
+
+      return requestPickupHours;
+    }()
+  }, {
+    key: "getDayReference",
+    value: function getDayReference(day) {
+      var days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+      day = new Date(day).getDay();
+      return days[day];
+    }
   }]);
 
   return Orders;

@@ -25,6 +25,7 @@ class Order extends Model
         'urgent_dispatch',
         'schedule_date',
         'schedule_time',
+        'schedule_time_range',
         'insured_value',
         'money_to_collect',
         'percentage_to_collect',
@@ -40,6 +41,9 @@ class Order extends Model
         'dispatched',
         'app_status',
         'status_matrix_id',
+        'additional_address',
+        'additional_email',
+        'additional_phone'
     ];
 
     public function getUser()
