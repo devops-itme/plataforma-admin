@@ -30,13 +30,15 @@ class OrderController extends Controller
 
     protected $customerRelationships = [
         'getOrderType', 'getDocumentType', 'getPaymentMethod',
-        'getState', 'getDepartment', 'getBranchOffice'
+        'getState', 'getDepartment', 'getBranchOffice',
+        'getScheduleTime', 'getScheduleTime.getDay'
     ];
 
     protected $messengerRelationships = [
         'getUser', 'getUser.getDocumentType',
         'getOrderType', 'getDocumentType', 'getPaymentMethod',
-        'getState', 'getDepartment', 'getBranchOffice'
+        'getState', 'getDepartment', 'getBranchOffice',
+        'getScheduleTime', 'getScheduleTime.getDay'
     ];
 
     public function index(Request $request)
@@ -80,13 +82,8 @@ class OrderController extends Controller
         $last_id = Order::all()->last()->id ?? 0;
         $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
 
-        $validator = $this->OrderValidate($request);
-        if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
-        }
-
         try {
-            DB::transaction(function () use ($request) {
+            $transactionResponse = DB::transaction(function () use ($request) {
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -124,8 +121,7 @@ class OrderController extends Controller
                 }
                 return $this->respond(200, null, null, 'Orden creada correctamente');
             });
-
-            return $this->respond(200, null, null, 'Orden creada correctamente');
+            return $transactionResponse;
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . $e->getLine(), 'Error del servidor');
         }
