@@ -40,10 +40,7 @@ class Order extends Model
         'branch_office',
         'dispatched',
         'app_status',
-        'status_matrix_id',
-        'additional_address',
-        'additional_email',
-        'additional_phone'
+        'status_matrix_id'
     ];
 
     public function getUser()
