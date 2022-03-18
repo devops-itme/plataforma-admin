@@ -82,7 +82,7 @@ class OrderController extends Controller
 
         $validator = $this->OrderValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
 
         try {
@@ -124,7 +124,7 @@ class OrderController extends Controller
                 }
                 return $this->respond(200, null, null, 'Orden creada correctamente');
             });
-            
+            return $this->respond(500, null, null, 'Error inesperado');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . $e->getLine(), 'Error del servidor');
         }
