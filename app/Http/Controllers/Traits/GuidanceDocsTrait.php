@@ -25,7 +25,7 @@ trait GuidanceDocsTrait
     {
         $validator = $this->GuidanceDocsValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
         }
         try {
             $guidance_doc = GuidanceDocument::create([

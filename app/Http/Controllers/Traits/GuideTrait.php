@@ -51,7 +51,7 @@ trait GuideTrait
     {
         $validator = $this->GuideValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
         }
         try {
             $order = Guide::create([

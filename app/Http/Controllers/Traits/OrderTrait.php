@@ -50,7 +50,7 @@ trait OrderTrait
 
         $validator = $this->OrderValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' . $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         $status = StatusMatrix::get();
         $status_id = $status[0]->id;

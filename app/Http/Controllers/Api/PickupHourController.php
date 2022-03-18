@@ -17,6 +17,10 @@ class PickupHourController extends Controller
         try {
             $pickup_days = PickupHour::with('getDay')->get();
 
+            $pickup_days = $pickup_days->groupBy(function ($item, $key){
+                return $item->getDay->name;
+            });
+
             return $this->respond(200, $pickup_days, null, 'Horas registradas');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error');
