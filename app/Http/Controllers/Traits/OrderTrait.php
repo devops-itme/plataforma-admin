@@ -125,39 +125,6 @@ trait OrderTrait
         }
     }
 
-    public function setAdditionalInformation($request)
-    {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'order_id' => 'required|exists:order,id',
-                'additional_address' => 'nullable|string',
-                'additional_email' => 'nullable|email',
-                'additional_phone' => 'nullable|numeric',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
-        }
-        try {
-            $order = Order::find($request->order_id);
-            if (is_null($order)) {
-                return $this->respond(500, [], 'order not found', 'No se encontró la orden');
-            }
-
-            $order->update([
-                'additional_address' => $request->additional_address,
-                'additional_email' => $request->additional_email,
-                'additional_phone' => $request->additional_phone,
-            ]);
-
-            return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
-        } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar orden');
-        }
-    }
-
     public function deleteOrder($id)
     {
         try {
