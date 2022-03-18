@@ -81,7 +81,7 @@ class OrderController extends Controller
         $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
 
         try {
-            $result = DB::transaction(function () use ($request) {
+            $transactionResponse = DB::transaction(function () use ($request) {
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -119,7 +119,7 @@ class OrderController extends Controller
                 }
                 return $this->respond(200, null, null, 'Orden creada correctamente');
             });
-            return $this->respond(500, null, $result, 'Error inesperado');
+            return $transactionResponse;
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . $e->getLine(), 'Error del servidor');
         }
