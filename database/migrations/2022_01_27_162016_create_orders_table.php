@@ -46,7 +46,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('status_matrix_id')->references('id')->on('status_matrix');
             $table->string('additional_address')->nullable();
             $table->string('additional_email')->nullable();
-            $table->string('additional_phone');
+            $table->string('additional_phone')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

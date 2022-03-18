@@ -20,27 +20,27 @@ trait OrderTrait
             [
                 'order_number' => [$action == 'create' ? 'confirmed' : 'nullable',
                     Rule::requiredIf($action == 'create'), Rule::unique('orders', 'order_number')->ignore($id), 'string'],
-                'user_id' => 'required|exists:users,id | numeric',
-                'order_type' => 'required | numeric',
-                'order_value' => 'nullable | numeric',
-                'receive_by_COD' => 'nullable | numeric',
-                'internal_product' => 'nullable | numeric',
-                'expenses' => 'nullable | numeric',
-                'diligence_expenses' => 'nullable | numeric',
-                'tax_total' => 'nullable | numeric',
-                'payment_method' => 'nullable | numeric',
-                'urgent_dispatch' => 'nullable | numeric',
-                'schedule_date' => 'required | regex:/(\d+\:\d+)/',
-                'schedule_time' => 'required | numeric | exists:pickup_hours,id',
-                'schedule_time_range' => 'required | string',
-                'insured_value' => 'nullable | numeric',
-                'money_to_collect' => 'nullable | numeric',
-                'percentage_to_collect' => 'nullable | numeric',
-                'branch_office' => 'nullable | numeric | exists:branch_offices,id',
-                'department_id' => 'nullable | numeric | exists:departments,id',
-                'address_id' => 'nullable | numeric | exists:addresses,id',
-                'description' => 'nullable | string',
-                'state' => 'nullable | numeric'
+                'user_id' => 'required|exists:users,id|numeric',
+                'order_type' => 'required|numeric',
+                'order_value' => 'nullable|numeric',
+                'receive_by_COD' => 'nullable|numeric',
+                'internal_product' => 'nullable|numeric',
+                'expenses' => 'nullable|numeric',
+                'diligence_expenses' => 'nullable|numeric',
+                'tax_total' => 'nullable|numeric',
+                'payment_method' => 'nullable|numeric',
+                'urgent_dispatch' => 'nullable|numeric',
+                'schedule_date' => 'required',
+                'schedule_time' => 'required|numeric|exists:pickup_hours,id',
+                'schedule_time_range' => 'required|string',
+                'insured_value' => 'nullable|numeric',
+                'money_to_collect' => 'nullable|numeric',
+                'percentage_to_collect' => 'nullable|numeric',
+                'branch_office' => 'nullable|numeric|exists:branch_offices,id',
+                'department_id' => 'nullable|numeric|exists:departments,id',
+                'address_id' => 'nullable|numeric|exists:addresses,id',
+                'description' => 'nullable|string',
+                'state' => 'nullable|numeric'
             ]
         );
     }
@@ -82,7 +82,7 @@ trait OrderTrait
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . 'Error al crear orden');
+            return $this->respond(500, [], $e->getMessage() , 'Error al crear orden');
         }
     }
 
