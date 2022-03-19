@@ -18,10 +18,7 @@ trait PickupHourTrait
         return Validator::make(
             $request->all(),
             [
-                'day' => ['required',
-                    'numeric',
-                    Rule::unique('pickup_hours', 'day_id')->ignore($id)->where('deleted_at', 'NULL')
-                ],
+                'day' => 'required|numeric',
                 'from' => 'required|regex:/(\d+\:\d+)/',
                 'to' => 'required|regex:/(\d+\:\d+)/ |after:from'
             ]
