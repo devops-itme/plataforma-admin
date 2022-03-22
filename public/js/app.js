@@ -84709,6 +84709,7 @@ var Orders = /*#__PURE__*/function () {
       this.porDespacharPackaging();
       this.customerAddresses();
       this.loadPickupHours();
+      this.loadHoursInEditOrShow();
     }
   }, {
     key: "setInput",
@@ -86313,6 +86314,62 @@ var Orders = /*#__PURE__*/function () {
       day = new Date(day).getDay();
       return days[day];
     }
+  }, {
+    key: "loadHoursInEditOrShow",
+    value: function () {
+      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee27() {
+        var route, date_selector, response, days, day, day_data, schedule_time_range, i, element, text, option;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee27$(_context27) {
+          while (1) {
+            switch (_context27.prev = _context27.next) {
+              case 0:
+                route = window.location.pathname;
+
+                if (route.includes('ordenes') && route.includes('edit')) {
+                  _context27.next = 3;
+                  break;
+                }
+
+                return _context27.abrupt("return");
+
+              case 3:
+                date_selector = document.getElementById("schedule_date");
+                _context27.next = 6;
+                return this.requestPickupHours();
+
+              case 6:
+                response = _context27.sent;
+                days = response.data;
+                day = this.getDayReference(date_selector.value);
+                day_data = days[day];
+
+                if (day_data) {
+                  schedule_time_range = document.getElementById("schedule_time_range");
+                  schedule_time_range.selectedIndex = 0;
+                  removeOptions(schedule_time_range);
+
+                  for (i = 0; i < day_data.length; i++) {
+                    element = day_data[i];
+                    text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time);
+                    option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
+                    schedule_time_range.insertAdjacentHTML('beforeend', option);
+                  }
+                }
+
+              case 11:
+              case "end":
+                return _context27.stop();
+            }
+          }
+        }, _callee27, this);
+      }));
+
+      function loadHoursInEditOrShow() {
+        return _loadHoursInEditOrShow.apply(this, arguments);
+      }
+
+      return loadHoursInEditOrShow;
+    }()
   }]);
 
   return Orders;

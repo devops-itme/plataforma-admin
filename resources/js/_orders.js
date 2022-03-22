@@ -30,6 +30,7 @@ export default class Orders {
         this.porDespacharPackaging();
         this.customerAddresses();
         this.loadPickupHours();
+        this.loadHoursInEditOrShow();
     }
 
     setInput() {
@@ -963,6 +964,29 @@ export default class Orders {
         return days[day];
     }
 
+    async loadHoursInEditOrShow(){
+        let route = window.location.pathname;
+        if(!(route.includes('ordenes') && route.includes('edit'))){
+            return;
+        }
+        let date_selector = document.getElementById("schedule_date");
+        let response = await this.requestPickupHours();
+        let days = response.data;
+        let day = this.getDayReference(date_selector.value);
+        let day_data = days[day];
 
+        if(day_data){
+            let schedule_time_range = document.getElementById("schedule_time_range");
+                schedule_time_range.selectedIndex = 0;
+                removeOptions(schedule_time_range);
+
+            for (let i = 0; i < day_data.length; i++) {
+                let element = day_data[i];
+                let text = formatAMPM(element.init_time)+" - "+formatAMPM(element.end_time)
+                let option = '<option value="'+text+'" id="'+element.id+'"> '+text+' </option>';
+                schedule_time_range.insertAdjacentHTML('beforeend', option);
+            }
+        }
+    }
 
 }
