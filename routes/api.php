@@ -27,7 +27,8 @@ Route::get('parameter_values', 'Api\ParameterValueController@getParameterValues'
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::get('customer/show', 'Api\CustomerController@show')->name('messenger.show');
+    Route::get('customer/show', 'Api\CustomerController@show')->name('customer.show');
+    Route::put('customer/update', 'Api\CustomerController@update')->name('customer.update');
 
     Route::get('address', 'Api\AddressController@index')->name('address');
     Route::post('address/store', 'Api\AddressController@store')->name('address.store');
