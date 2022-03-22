@@ -16,12 +16,12 @@ trait AddressTrait
     {
         return Validator::make(
             $request->all(),
-            [
-                'user_id' => 'required|exists:users,id',
+            [                
                 'address' => 'required|string',
                 'description' => 'required|string',
                 'lat' => 'required',
                 'lng' => 'required',
+                'user_id' => 'required|exists:users,id',
             ]
         );
     }
