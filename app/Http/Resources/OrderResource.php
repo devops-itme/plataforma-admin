@@ -32,7 +32,7 @@ class OrderResource extends JsonResource
                 'day' => $this->getScheduleTime->getDay->name ?? '',
                 'init_time' => $this->getScheduleTime->init_time ?? '',
                 'end_time' => $this->getScheduleTime->end_time ?? '',
-                'range' => $this->getScheduleTime->init_time . ' - ' . $this->getScheduleTime->end_time ?? '',
+                'range' => $this->getScheduleTime->init_time ?? '' . ' - ' . $this->getScheduleTime->end_time ?? '',
             ],
             "diffForHumans" => Carbon::parse($this->schedule_date)->diffForHumans(),
             "insured_value" => $this->insured_value,
