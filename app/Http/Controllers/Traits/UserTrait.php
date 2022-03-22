@@ -35,6 +35,7 @@ trait UserTrait
                 ],
                 'password' => [
                     'string',
+                    'min:6',
                     $action == 'create' ? 'confirmed' : 'nullable',
                     Rule::requiredIf($action == 'create')
                 ],
