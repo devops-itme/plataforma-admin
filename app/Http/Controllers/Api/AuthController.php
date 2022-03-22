@@ -213,15 +213,15 @@ class AuthController extends Controller
         $validator = $this->customerValidate($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
-        if (!is_null($request->address)) {
-            $validator = $this->AddressesValidate($request);
+        // if (!is_null($request->address)) {
+        $validator = $this->AddressesValidate($request);
 
-            if ($validator->fails()) {
-                return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
-            }
+        if ($validator->fails()) {
+            return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
         }
+        // }
 
         try {
             $saveUserResponse = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
