@@ -214,9 +214,7 @@ return [
         'order_type' => 'tipo de orden',
         'guide_id' => 'guiá',
         'messenger_user_id' => 'mensajero',
-
-
-
+        'tradename' => 'Marca comercial'
     ],
 
 ];
