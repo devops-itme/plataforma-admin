@@ -26,7 +26,7 @@ trait CustomerTrait
                 'handling' => 'nullable',
                 'COD_value' => 'nullable',
                 'business_name' => 'nullable|string',
-                'tradename' => 'nullable|string',
+                'tradename' => 'required|string',
                 'insured_value' => 'nullable',
                 'money_to_collect' => 'nullable',
                 'percentage_to_collect' => 'nullable'

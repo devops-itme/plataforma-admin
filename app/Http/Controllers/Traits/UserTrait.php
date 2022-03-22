@@ -30,7 +30,7 @@ trait UserTrait
                     Rule::unique('users', 'email')->ignore($id)->whereNull('deleted_at')
                 ],
                 'phone' => [
-                    'nullable', 'string',
+                    'required', 'string',
                     Rule::unique('users', 'phone')->ignore($id)->whereNull('deleted_at')
                 ],
                 'password' => [
