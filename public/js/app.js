@@ -87018,7 +87018,7 @@ var Permissions = /*#__PURE__*/function () {
                       var label = document.createElement("label");
                       label.className = "checkbox col-3 text-uppercase font-weight-bold mx-4";
                       label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
-                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && "disabled", "\n\n                         ").concat(permission_found && "checked", "\n                        > <span></span> ").concat(translated_actions[action.name], "\n\n                        ");
+                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && "disabled", "\n\n                         ").concat(permission_found && "checked", "\n                        > <span></span>").concat(!action_found ? '<s>' : '', " ").concat(translated_actions[action.name]).concat(!action_found ? '</s>' : '', "\n\n                        ");
                       checkContainer.childNodes[0].appendChild(label);
                     });
                     mainContainer.appendChild(checkContainer);
@@ -88143,8 +88143,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
