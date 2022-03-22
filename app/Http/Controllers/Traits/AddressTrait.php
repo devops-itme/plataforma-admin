@@ -17,7 +17,7 @@ trait AddressTrait
         return Validator::make(
             $request->all(),
             [
-                'user_id' => [Rule::requiredIf($action == 'create'), 'exists:users,id'],
+                'user_id' => [Rule::requiredIf($action != 'create'), 'exists:users,id'],
                 'address' => 'required|string',
                 'description' => 'required|string',
                 'lat' => 'required',
