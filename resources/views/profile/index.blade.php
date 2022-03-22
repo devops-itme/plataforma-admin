@@ -17,13 +17,13 @@
                     <div class="avatar">
                         <img src="https://cietalca.cl/intranet/wp-content/themes/cera/assets/images/avatars/user-avatar.png"
                             class="mb-7" alt="">
-                        <h5 class="title mb-7">Admin</h5>
+                        <h5 class="title mb-7">{{Auth::user()->name}}</h5>
                         <p class="description mb-2">
-                            @ Admin
+                            {{'@'.Auth::user()->name}}
                         </p>
                     </div>
                     <p class="description mb-1">
-                        Datos del Administrador
+                        Datos del {{Auth::user()->getRole->name}}
                     </p>
                     <form action="#" class="col-md-12">
                         <input type="file" name="foto" class="form-control mb-4">
