@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ActivityLog;
 use App\Address;
 use App\BranchOffice;
 use App\Customer;
@@ -9,17 +10,18 @@ use App\Department;
 use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
-use App\Order;
-use App\OrderLog;
-use App\ParameterValue;
-use App\User;
-use App\UserBranch;
+use App\Order, App\OrderLog, App\ParameterValue, App\User, App\UserBranch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
     use OrderTrait;
+
+    protected $activity_log;
+    public function __construct(){
+        $this->activity_log = new ActivityLog();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -92,6 +94,7 @@ class OrderController extends Controller
                     return redirect()->back()->with('danger', $assignGuide['message']);
                 }
             }
+            $this->activity_log->storeLog('Creación de orden', 'Creación de orden', 'App\Order', $response['data']->id, 'App\User', Auth::user()->id, '');
             return redirect()->route('orders.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -201,6 +204,7 @@ class OrderController extends Controller
                     return redirect()->back()->with('danger', $assignGuide['error']);
                 }
             }
+            $this->activity_log->storeLog('Actualización de orden', 'Actualización de orden', 'App\Order', $response['data']->id, 'App\User', Auth::user()->id, '');
             return redirect()->route('orders.index')->with('success', 'Orden actualizada exitosamente.');
         } else {
             return redirect()->back()->with('danger', $response['message']);

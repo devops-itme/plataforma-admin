@@ -16,7 +16,7 @@
 
 
         <div class="btn-group">
-            <a href="perfil" class="btn btn-primary">Admin</a>
+            <a href="perfil" class="btn btn-primary">{{Auth::user()->getRole->name}}</a>
             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="sr-only">Toggle Dropdown</span>

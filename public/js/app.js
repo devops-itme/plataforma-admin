@@ -86354,6 +86354,12 @@ var Orders = /*#__PURE__*/function () {
                     option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
                     schedule_time_range.insertAdjacentHTML('beforeend', option);
                   }
+
+                  schedule_time_range.addEventListener('change', function () {
+                    var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+                    var schedule_time = document.getElementById("schedule_time");
+                    schedule_time.value = id;
+                  });
                 }
 
               case 11:

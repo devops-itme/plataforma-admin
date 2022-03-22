@@ -10,5 +10,6 @@
     "departments" : "Departamentos",
     "orders" : "Ordenes",
     "parameters":"Parametros",
-    "record":"Historial"
+    "record":"Historial",
+    "profile":"Perfil"
 }
