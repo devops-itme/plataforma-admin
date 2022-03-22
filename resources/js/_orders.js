@@ -986,6 +986,11 @@ export default class Orders {
                 let option = '<option value="'+text+'" id="'+element.id+'"> '+text+' </option>';
                 schedule_time_range.insertAdjacentHTML('beforeend', option);
             }
+            schedule_time_range.addEventListener('change', () => {
+                let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+                let schedule_time = document.getElementById("schedule_time");
+                schedule_time.value = id;
+            })
         }
     }
 
