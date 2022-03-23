@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\UserTrait;
 use App\ParameterValue;
 use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -18,9 +19,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->getUser();
-        $users = $users['data']->whereIn('role',[1,2]);
-        return view('users.index', compact('users'));
+        $users = User::name(request()->name)
+            ->document(request()->document)
+            ->email(request()->email)
+            ->phone(request()->phone)
+            ->role(request()->role_id)
+            ->state(request()->state)
+            ->whereHas('getRole', function ($q) {
+                $q->whereNotIn('name', ['Cliente', 'Mensajero']);
+            })
+            ->paginate(10);
+
+        $roles = Role::where('state', 1)->whereNotIn('name', ['Cliente', 'Mensajero'])->get();
+
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
@@ -30,9 +42,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $document_types = ParameterValue::where('parameter_id', 1)->get();
-        $roles = Role::where('state', 1)->whereIn('id', [1, 2])->get();
-        return view('users.create', compact('document_types' , 'roles'));
+        $document_types = ParameterValue::whereHas('getParameter', function ($q) {
+            $q->where('name', 'document_type');
+        })->get();
+        $roles = Role::where('state', 1)->whereNotIn('name', ['Cliente', 'Mensajero'])->get();
+        return view('users.create', compact('document_types', 'roles'));
     }
 
     /**
@@ -45,12 +59,11 @@ class UserController extends Controller
     {
         $user = $this->saveUser($request);
 
-        if($user['state'] == 200){
+        if ($user['state'] == 200) {
             return redirect()->route('users.index')->with('success', 'Usuario registrado exitosamente.');
         } else {
             return redirect()->back()->withInput()->with('danger', $user['message']);
         }
-
     }
 
     /**
@@ -61,7 +74,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -92,7 +104,7 @@ class UserController extends Controller
             'user_id' => $id
         ]);
         $response = $this->updateUser($request, $id);
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return redirect()->route('users.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -105,10 +117,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $response = $this->deleteUser($id);
-        if($response['state'] == 200){
+        if ($request->response_format == 'json') {
+            return $response;
+        }
+        if ($response['state'] == 200) {
             return redirect()->route('users.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);

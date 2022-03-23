@@ -84,6 +84,11 @@ class User extends Model implements AuthenticatableContract
         if (!is_null($value))
             $query->where('phone', 'like', '%' . $value . '%');
     }
+    public function scopeRole($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('role', $value);
+    }
     public function scopeState($query, $value)
     {
         if (!is_null($value))
