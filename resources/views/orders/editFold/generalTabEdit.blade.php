@@ -64,17 +64,17 @@
     <div class="col-md-6 d-flex flex-row flex-wrap">
         <h5 class="my-4 font-weight-bold text-dark col-md-12">Seguro de mercancia</h5>
         <div class="form-group col-md-6">
-            <label>Valor asegurado: <span class="text-danger">*</span></label>
+            <label>Valor asegurado: </label>
             <input name="insured_value" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->insured_value}}" />
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
-            <label>A cobrar %: <span class="text-danger">*</span></label>
+            <label>A cobrar %: </label>
             <input name="percentage_to_collect" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->percentage_to_collect}}" />
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
-            <label>A cobrar $: <span class="text-danger">*</span></label>
+            <label>A cobrar $: </label>
             <input name="money_to_collect" type="number" class="form-control form-control-solid" placeholder="" value="{{$order->money_to_collect}}" />
             <span class="form-text text-muted"></span>
         </div>

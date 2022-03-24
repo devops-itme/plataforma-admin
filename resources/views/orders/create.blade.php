@@ -55,20 +55,20 @@
                         <input type="text" id="user_contact" class="form-control form-control-solid" readonly value="">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="customers">Departamento<span class="text-danger">*</span></label>
+                        <label for="customers">Departamento</label>
                         <select name="department_id" id="user_departments" class="form-control form-control-solid">
                             <option value="" selected disabled> Seleccione </option>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="customers">Sucursal<span class="text-danger">*</span></label>
+                        <label for="customers">Sucursal</label>
                         <select name="branch_office_id" id="user_branch_office" class="form-control form-control-solid">
                             <option value="" selected disabled> Seleccione </option>
                         </select>
                         {{-- <input type="text" id="user_branch_office" class="form-control form-control-solid" readonly value=""> --}}
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="customers">Tipo de documento<span class="text-danger">*</span></label>
+                        <label for="customers">Tipo de documento</label>
                         <input type="text" id="user_document_type" class="form-control form-control-solid" readonly value="">
                     </div>
                     {{-- <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
