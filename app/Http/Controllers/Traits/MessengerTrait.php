@@ -62,21 +62,20 @@ trait MessengerTrait
 
     public function saveMessenger($request)
     {
-
-
         $validator = $this->validationMessenger($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
+            return $this->respond(500, null,  $validator->errors(),  $validator->errors()->first());
         }
+
         try {
 
             request()->merge(['role' => 3, 'state' => 1]);
-            $user = $this->saveUser($request);
-            if ($user['state'] != 200) {
-                return redirect()->back()->withInput()->with('danger', $user['message']);
+            $userResponse = $this->saveUser($request);
+            if ($userResponse['state'] != 200) {
+                return $userResponse;
             }
-            $user = $user['data'];
+            $user = $userResponse['data'];
 
             $contract_file = null;
             if ($request->hasFile('contract')) {
@@ -94,9 +93,9 @@ trait MessengerTrait
                 'contract' => $contract_file,
                 'contract_type_id' => $request->contract_type_id
             ]);
-            return $this->respond(200, $messenger);
+            return $this->respond(200, $messenger, null, 'Mensajero creado con éxito');
         } catch (\Throwable $e) {
-            return $this->respond(500, [], $e->getMessage());
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear mensajero');
         }
     }
 

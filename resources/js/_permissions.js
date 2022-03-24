@@ -112,12 +112,11 @@ export default class Permissions {
 
                         label.innerHTML = `
                         <input class="" type="checkbox" value="${action.id}"
-                         name="${module.reference}[]" ${
-                            !action_found && "disabled"
-                        }
+                         name="${module.reference}[]" ${!action_found && "disabled"
+                            }
 
                          ${permission_found && "checked"}
-                        > <span></span> ${translated_actions[action.name]}
+                        > <span></span>${!action_found ? '<s>' : ''} ${translated_actions[action.name]}${!action_found ? '</s>' : ''}
 
                         `;
                         checkContainer.childNodes[0].appendChild(label);

@@ -20,7 +20,7 @@
             <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información basica de cliente</h5>
             <div class="form-group py-3 m-0 col-md-3">
                 <label>Tipo de persona</label>
-                <select class="form-control form-control-solid" id="slc_type">
+                <select class="form-control form-control-solid" id="slc_type" name="person_type">
                     <option disabled selected> Seleccione </option>
                     <option value="1">Persona natural</option>
                     <option value="2">Persona juridica</option>

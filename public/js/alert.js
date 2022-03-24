@@ -29,34 +29,41 @@ function confirmDelete(param) {
         }
     });
 }
-async function deleteResource(url, reload = false) {
+async function deleteResource(url, reload = false, row_id) {
+
     let result = await confirmation();
-    if (result == true) {
+
+    if (result) {
         let req = await fetch(url, {
-            method: "delete",
+            method: "DELETE",
             headers: {
                 "X-CSRF-TOKEN": document
                     .querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content"),
+                    .getAttribute("content") ?? '',
                 accept: "application/json",
             },
-        });
-        if (req.ok) {
-            correct("Eliminado!");
-            if (reload) {
-                window.location.reload();
-            }
-            return true;
-        } else {
+        })
+            .then(response => response.json());
+        console.log('req', req)
+        if (req.state != 200) {
             error("Error al eliminar");
             return false;
         }
+        await correct("Eliminado!");
+        if (reload) {
+            window.location.reload();
+        }
+        if (row_id !== 'null') {
+            table_row_id = document.getElementById(row_id);
+            table_row_id?.remove();
+        }
+        return true;
     }
 }
 
 function confirmation(
-    title = "¿Estas Seguro?",
-    text = "Se eliminara esto",
+    title = "¿Estás seguro?",
+    text = "Al eliminar esto se borrarán todos los registros.",
     icon = "info"
 ) {
     return swal({
@@ -70,10 +77,10 @@ function confirmation(
     });
 }
 
-function success(action = "realizar esta operacion", message = "") {
+function success(action = "realizar esta operación", message = "") {
     return swal({
         icon: "success",
-        title: "Exito al " + action,
+        title: "Éxito al " + action,
         text: message ? message : "",
         timer: 2300,
     });
@@ -108,13 +115,13 @@ function porDespacharPackagingAlert() {
 }
 
 function formatAMPM(data) {
-    let date = new Date('2022/03/18 '+data);
+    let date = new Date('2022/03/18 ' + data);
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
 }

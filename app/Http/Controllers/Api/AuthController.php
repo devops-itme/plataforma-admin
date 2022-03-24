@@ -216,7 +216,7 @@ class AuthController extends Controller
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         // if (!is_null($request->address)) {
-        $validator = $this->AddressesValidate($request);
+        $validator = $this->AddressesValidate($request, 'create');
 
         if ($validator->fails()) {
             return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());

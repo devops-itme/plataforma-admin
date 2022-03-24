@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Traits;
 
 use App\Address;
 use App\Http\Controllers\Traits\RestActions;
-use App\ParameterValue;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,12 +12,12 @@ trait AddressTrait
 {
     use RestActions;
 
-    public function addressesValidate($request)
+    public function addressesValidate($request, $action = null)
     {
         return Validator::make(
             $request->all(),
             [
-                'user_id' => 'required|exists:users,id',
+                'user_id' => [Rule::requiredIf($action != 'create'), 'exists:users,id'],
                 'address' => 'required|string',
                 'description' => 'required|string',
                 'lat' => 'required',

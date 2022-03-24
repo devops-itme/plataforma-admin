@@ -120,13 +120,13 @@
                                 <i class="far fa-info-circle"></i> Información
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{route('profile.index')}}">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a></li>
                                 <li><a class="dropdown-item" href="{{ route('users.index') }}">Usuarios</a></li>
                                 <li><a class="dropdown-item" href="{{ route('customers.index') }}">Clientes (Web)</a>
                                 </li>
                                 <li><a class="dropdown-item" href="{{ route('messengers.index') }}">Mensajeros</a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{route('plans.index')}}">Planes</a></li>
+                                <li><a class="dropdown-item" href="{{ route('plans.index') }}">Planes</a></li>
                             </ul>
                         </li>
 
@@ -187,13 +187,18 @@
                                 </li>
                             </ul>
                         </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link " href="{{ route('home') }}" id="navbarDropdownMenuLink"
                                 role="button" data-toggle="dropdown" aria-expanded="false"><i
                                     class="fas fa-shield"></i> Administración</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{ route('permits.index') }}">Permisos</a></li>
-                                <li><a class="dropdown-item" href="{{ route('statusMatrix.index') }}">Matriz de estados</a></li>
+                                @if (Auth::user()->id == 1)
+                                    <li><a class="dropdown-item" href="{{ route('permits.index') }}">Permisos</a>
+                                    </li>
+                                @endif
+                                <li><a class="dropdown-item" href="{{ route('statusMatrix.index') }}">Matriz de
+                                        estados</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -202,10 +207,12 @@
                                 Parámetros</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('zone.index') }}">Zonas</a></li>
-                                <li><a class="dropdown-item" href="{{ route('parameters.index') }}">Parametros</a></li>
+                                <li><a class="dropdown-item" href="{{ route('parameters.index') }}">Parametros</a>
+                                </li>
                                 <li><a class="dropdown-item" href="{{ route('hours.index') }}">Horas</a></li>
                             </ul>
                         </li>
+
                     </ul>
                 </div>
             </nav>

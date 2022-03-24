@@ -15,7 +15,8 @@
                         </div>
                         <hr>
                         <div class="col text-right">
-                            <button type="button" class="btn btn-primary btn-sm text-uppercase" data-toggle="modal"
+                            <button {{ Auth::user()->id != 1 ? 'disabled' : '' }} type="button"
+                                class="btn btn-primary btn-sm text-uppercase" data-toggle="modal"
                                 data-target="#createRolModal"><i class="fa fa-plus"></i>Agregar rol</button>
                             <button class="btn btn-primary btn-sm btn-filter"><i class="fa fa-filter"
                                     aria-hidden="true"></i></button>
@@ -40,17 +41,19 @@
                                             class="badge badge-{{ Config::get('const.states')[$role->state]['color'] }} text-uppercase">{{ Config::get('const.states')[$role->state]['name'] }}</span>
                                     </td>
                                     <td class="text-center">
-                                        <button name="btnEditRole" id="btnRole-{{ $role->id }}"
+                                        <button {{ Auth::user()->id != 1 ? 'disabled' : '' }}
+                                            name="btnEditRole" id="btnRole-{{ $role->id }}"
                                             class="btn btn-primary btn-sm btn-fab btn-icon" data-toggle="modal"
                                             data-target="#editRolModal" data-tooltip title="Editar">
                                             <i class="fa fa-pencil"></i>
                                         </button>
-                                        <button {{ $role->id == 1 ? 'disabled="disabled"' : '' }}
+                                        <button {{ $role->id == 1 || Auth::user()->id != 1 ? 'disabled' : '' }}
                                             class="btn btn-danger btn-sm btn-fab btn-icon" data-tooltip title="Eliminar"
                                             onclick="confirmDelete('/roles/'+{{ $role->id }})">
                                             <i class="fa fa-trash"></i>
                                         </button>
-                                        <button {{ $role->id == 1 ? 'disabled="disabled"' : '' }}
+                                        <button
+                                            {{ $role->id == 1 || Auth::user()->id != 1 ? 'disabled' : '' }}
                                             class="btn btn-info btn-sm btn-fab btn-icon configuration-btn" data-tooltip
                                             title="Configurar">
                                             <i class="fa fa-cog"></i>
@@ -85,7 +88,7 @@
                             <div class="col-12">
                                 <div class="card my-2">
                                     <div class="card-body" id="card-body">
-                                        
+
                                     </div>
                                 </div>
                             </div>

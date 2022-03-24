@@ -12,6 +12,7 @@ use App\Http\Controllers\Traits\UserTrait;
 use App\Http\Controllers\Traits\CustomerTrait;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Resources\CustomerResource;
 use App\Parameter;
 use App\User;
 use App\UserBranch;
@@ -35,6 +36,8 @@ class CustomerController extends Controller
             ->state(request()->state)
             ->latest()
             ->get();
+
+        // $customers = CustomerResource::collection($customers);
         return view('customers.index', compact('customers'));
     }
 
@@ -78,21 +81,26 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        if(is_null($request->name) && is_null($request->business_name)){
-            return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
+        if ($request->person_type == 1 && is_null($request->name)) {
+            return $this->respond(500,null,'validation fail', 'El campo nombre es requerido para las personas de tipo natural');
+            // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
+        }
+        if ($request->person_type == 2 && is_null($request->business_name)) {
+            return $this->respond(500,null,'validation fail', 'El campo nombre de empresa es requerido para las personas de tipo jurídica');
+            // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
         }
         $saveUserData = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
-        if($saveUserData['state'] != 200){
+        if ($saveUserData['state'] != 200) {
             // return redirect()->back()->with('danger', $saveUserData['message']);
             return json_encode([
                 'state' => 500,
                 'message' => $saveUserData['message']
             ]);
         }
-        if(!is_null($request->branchCheck)){
+        if (!is_null($request->branchCheck)) {
             $request->branchCheck = explode(',', $request->branchCheck);
             $assignBranches = $this->storeUserBranch($saveUserData['data']->id, $request->branchCheck);
-            if($assignBranches['state'] != 200){
+            if ($assignBranches['state'] != 200) {
                 // return redirect()->back()->with('danger', $assignBranches['message']);
                 return json_encode([
                     'state' => 500,
@@ -100,10 +108,10 @@ class CustomerController extends Controller
                 ]);
             }
         }
-        if(!is_null($request->departments)){
+        if (!is_null($request->departments)) {
             $request->departments = explode(',', $request->departments);
             $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
-            if($assignDepartment['state'] != 200){
+            if ($assignDepartment['state'] != 200) {
                 // return redirect()->back()->with('danger', $assignDepartment['message']);
                 return json_encode([
                     'state' => 500,
@@ -118,7 +126,7 @@ class CustomerController extends Controller
         //     }
         // }
         $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return json_encode([
                 'state' => 200,
                 'message' => $response['message']
@@ -186,16 +194,22 @@ class CustomerController extends Controller
     {
         $data = [];
         $type = 1;
-        if(!is_null($request->value)){
-            if(is_numeric($request->value)){
-                $data = User::where('document_number', 'like', '%'.$request->value.'%')->where('role', 4)->with('getCustomer')->get();
-                if(count($data) > 0){$type = 1;}
+        if (!is_null($request->value)) {
+            if (is_numeric($request->value)) {
+                $data = User::where('document_number', 'like', '%' . $request->value . '%')->where('role', 4)->with('getCustomer')->get();
+                if (count($data) > 0) {
+                    $type = 1;
+                }
             } else {
-                $data = Customer::where('tradename', 'like', '%'.$request->value.'%')->with('getUser')->get();
-                if(count($data) == 0){
-                    $data = User::where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$request->value.'%')->where('role', 4)->with('getCustomer')->get();
-                    if(count($data) > 0){$type = 1;}
-                } else {$type = 2;}
+                $data = Customer::where('tradename', 'like', '%' . $request->value . '%')->with('getUser')->get();
+                if (count($data) == 0) {
+                    $data = User::where(DB::raw('concat(name," ",last_name)'), 'like', '%' . $request->value . '%')->where('role', 4)->with('getCustomer')->get();
+                    if (count($data) > 0) {
+                        $type = 1;
+                    }
+                } else {
+                    $type = 2;
+                }
             }
         }
         return json_encode([
@@ -234,7 +248,7 @@ class CustomerController extends Controller
         $plans = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'plans');
         })->get();
-        return view('customers.edit', compact('customer','documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans'));
+        return view('customers.edit', compact('customer', 'documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans'));
     }
 
     /**
@@ -247,7 +261,7 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $response = $this->updateCustomer($request, $id);
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return redirect()->route('customers.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -263,7 +277,7 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         $response = $this->deleteCustomer($id);
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return redirect()->route('customers.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -295,7 +309,6 @@ class CustomerController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-
     }
 
     public function UserBankCreate($parent_id = null)
@@ -305,11 +318,11 @@ class CustomerController extends Controller
 
     public function UserBankStore(Request $request, $parent_id = null)
     {
-        if(is_null($request->password) && is_null($request->password_confirmation)){
+        if (is_null($request->password) && is_null($request->password_confirmation)) {
             $request->merge(['password' => 'Admin1234', 'password_confirmation' => 'Admin1234']);
         }
         $response = $this->saveUser($request->merge(['parent_id' => $parent_id ? $parent_id : null, 'role' => 4, 'state' => 1]));
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             // return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario registrado exitosamente');
             return json_encode([
                 'state' => 200,
@@ -352,7 +365,7 @@ class CustomerController extends Controller
     public function UserBankUpdate($parent_id, $id)
     {
         $response = $this->updateUser(request()->merge(['user_id' => $id]));
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             // return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario actualizado exitosamente');
             return json_encode([
                 'state' => 200,
@@ -375,14 +388,14 @@ class CustomerController extends Controller
             $user->delete();
             return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario eliminado exitosamente');
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'Error al eliminar usuario '.$e->getMessage());
+            return redirect()->back()->with('danger', 'Error al eliminar usuario ' . $e->getMessage());
         }
     }
 
     public function getBranchOffices($id)
     {
         $branchOffices = BranchOffice::where('user_id', $id)->get();
-        if(is_null($branchOffices)){
+        if (is_null($branchOffices)) {
             return "500";
         }
         return $branchOffices;

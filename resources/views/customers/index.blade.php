@@ -180,7 +180,7 @@
                 <thead>
                     <tr>
                         {{-- <th scope="col">#</th> --}}
-                        <th scope="col">Nombres</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Número de documento</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Teléfono</th>
@@ -194,7 +194,8 @@
                         @foreach ($customers as $customer)
                             <tr>
                                 {{-- <th scope="row">{{$customer->id}}</th> --}}
-                                <td>{{ !is_null($customer->getUser->name)? $customer->getUser->name . ' ' . $customer->getUser->last_name: $customer->business_name }}
+                                {{-- <td>{{$customer->display_name}}</td> --}}
+                                <td>{{ $customer->business_name ?? ($customer->getUser->name ?? '' . ' ' . $customer->getUser->last_name ?? '') }}
                                 </td>
                                 <td>{{ $customer->getUser->document_number }}</td>
                                 <td>{{ $customer->getUser->email }}</td>

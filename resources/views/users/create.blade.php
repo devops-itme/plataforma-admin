@@ -16,27 +16,18 @@
         @csrf
         <div class="card-body d-flex flex-row flex-wrap">
 
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                 <label>Nombres: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{old('name')}}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                 <label>Apellidos <span class="text-danger">*</span></label>
                 <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{old('last_name')}}" />
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                 <label>Email: <span class="text-danger">*</span></label>
                 <input type="email" class="form-control form-control-solid" placeholder="Email" name="email" value="{{old('email')}}" />
-                <span class="form-text text-muted"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label>Estado</label>
-                <select class="form-control form-control-solid" id="document_type" name="state">
-                    <option selected disabled>Seleccione</option>
-                    <option value="1">Activo</option>
-                    <option value="0">Inactivo</option>
-                </select>
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
@@ -45,7 +36,7 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
-                <label>Rol</label>
+                <label>Rol<span class="text-danger">*</span></label>
                 <select class="form-control form-control-solid" id="role_id" name="role" required>
                     <option selected disabled>Seleccione</option>
                     @foreach ($roles as $role )
@@ -65,7 +56,7 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
-                <label>Número de identificación: <span class="text-danger">*</span></label>
+                <label>Número de identificación:</label>
                 <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{old('document_number')}}" />
                 <span class="form-text text-muted"></span>
             </div>
