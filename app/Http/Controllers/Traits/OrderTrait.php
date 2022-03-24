@@ -19,7 +19,7 @@ trait OrderTrait
             $request->all(),
             [
                 'order_number' => [$action == 'create' ? 'confirmed' : 'nullable',
-                    Rule::requiredIf($action == 'create'), Rule::unique('orders', 'order_number')->ignore($id), 'string'],
+                    Rule::requiredIf($action == 'create'), Rule::unique('orders', 'order_number')->ignore($id)->whereNull('deleted_at'), 'string'],
                 'user_id' => 'required|exists:users,id|numeric',
                 'order_type' => 'required|numeric',
                 'order_value' => 'nullable|numeric',
