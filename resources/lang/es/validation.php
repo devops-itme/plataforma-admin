@@ -205,7 +205,7 @@ return [
         'description' => 'descripción ',
         'role_id' => 'rol',
         'user_id' => 'usuario',
-        'user' => 'usuario',
+        'user' => 'correo o número de teléfono',
         'role' => 'rol',
         'contact' => 'contacto',
         'lat' => 'latitud',
