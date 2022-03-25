@@ -39,7 +39,9 @@ trait UserTrait
                     $action == 'create' ? 'confirmed' : 'nullable',
                     Rule::requiredIf($action == 'create')
                 ],
-                'role' => 'required|numeric|exists:roles,id',
+                'role' => [
+                    Rule::requiredIf($action == 'create'), 'numeric', 'exists:roles,id'
+                ],
                 'state' => 'nullable|numeric',
             ]
         );
