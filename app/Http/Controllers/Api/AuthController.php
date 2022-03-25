@@ -104,7 +104,7 @@ class AuthController extends Controller
             $user->code_confirmed = 0;
             $user->update();
 
-            // send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
+            send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
             Mail::to($user->email)
                 ->send(new CodeMail($randomCode));
             return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
@@ -160,6 +160,7 @@ class AuthController extends Controller
             }
 
             $user = User::where($is_numeric ? 'phone' : 'email', $request->user)->first();
+            send_sms($user->phone, 'Su nueva contraseña es:' . $request->password);
             $user->password = Hash::make($request->password);
             $user->update();
 
@@ -191,7 +192,7 @@ class AuthController extends Controller
             $user->code_confirmed = 0;
             $user->update();
 
-            // send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
+            send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
             // Mail::to($user->email)
             //     ->send(new CodeMail($randomCode));
             return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
@@ -240,7 +241,7 @@ class AuthController extends Controller
                 $user->code = $randomCode;
                 $user->code_confirmed = 0;
                 $user->update();
-                // send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
+                send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
                 Mail::to($user->email)
                     ->send(new CodeMail($randomCode));
             }
