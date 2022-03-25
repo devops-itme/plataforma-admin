@@ -104,7 +104,7 @@ class AuthController extends Controller
             $user->code_confirmed = 0;
             $user->update();
 
-            send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
+            send_sms($user->phone, 'Su código de verificación es:' . $randomCode);
             Mail::to($user->email)
                 ->send(new CodeMail($randomCode));
             return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
@@ -192,7 +192,7 @@ class AuthController extends Controller
             $user->code_confirmed = 0;
             $user->update();
 
-            send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
+            send_sms($user->phone, 'Su código de verificación es:' . $randomCode);
             // Mail::to($user->email)
             //     ->send(new CodeMail($randomCode));
             return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
@@ -204,6 +204,7 @@ class AuthController extends Controller
     public function registerCustomer(Request $request)
     {
         $request->taxes = $request->taxes == 'on' ? 1 : 0;
+        $request->merge(['role' => 4]);
 
         $validator = $this->validateUser($request, 'create');
 
@@ -225,7 +226,7 @@ class AuthController extends Controller
         // }
 
         try {
-            $saveUserResponse = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
+            $saveUserResponse = $this->saveUser($request);
             $user_id = $saveUserResponse['data']->id;
 
             if (!is_null($request->address)) {
@@ -241,7 +242,7 @@ class AuthController extends Controller
                 $user->code = $randomCode;
                 $user->code_confirmed = 0;
                 $user->update();
-                send_sms($user->phone, 'Su código de verificación es:' . $randomCode );
+                send_sms($user->phone, 'Su código de verificación es:' . $randomCode);
                 Mail::to($user->email)
                     ->send(new CodeMail($randomCode));
             }
