@@ -117,7 +117,7 @@
                     <form action="">
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label>Numero de orden:</label>
+                                <label>Número de orden:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Orden_1"
                                     name="number" value="{{ request()->number }}" />
                                 <span class="form-text text-muted">Filtro numero</span>
