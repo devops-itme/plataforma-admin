@@ -42,7 +42,7 @@
                         @include('plans.listaPlanesTab')
                     </div>
                     <div class="tab-pane fade" id="paquetesPlan" role="tabpanel" aria-labelledby="paquetesPlan-tab">
-                        @include('plans.paquetesPlanTab')
+                        @include('plans.PaquetesPlanTab')
                     </div>
                     <div class="tab-pane fade" id="zonasPerm" role="tabpanel" aria-labelledby="zonasPerm-tab">
                         @include('plans.zonasPermTab')
