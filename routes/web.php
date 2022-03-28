@@ -145,7 +145,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');
     Route::get('/getPickupHours', 'Admin\PickupHourController@pickupHours');
 
+    Route::get('log', 'Admin\LogController@index')->name('log.index');
     Route::get('{page}','PageController@index')->name('page.index');
+
 });
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');

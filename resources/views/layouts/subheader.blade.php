@@ -196,6 +196,8 @@
                                 @if (Auth::user()->id == 1)
                                     <li><a class="dropdown-item" href="{{ route('permits.index') }}">Permisos</a>
                                     </li>
+                                    <li><a class="dropdown-item" href="{{ route('log.index') }}">Log de usuario</a>
+                                    </li>
                                 @endif
                                 <li><a class="dropdown-item" href="{{ route('statusMatrix.index') }}">Matriz de
                                         estados</a></li>

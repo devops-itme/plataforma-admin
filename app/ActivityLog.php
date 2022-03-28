@@ -19,6 +19,11 @@ class ActivityLog extends Model
         'properties'
     ];
 
+    public function getCauser()
+    {
+        return $this->belongsTo(User::class, 'causer_id');
+    }
+
     public function storeLog($log_name = null, $description = null, $subject_type = null, $subject_id = null, $causer_type = null, $causer_id = null, $properties = null )
     {
         try {
