@@ -49,7 +49,7 @@ async function deleteResource(url, reload = false, row_id) {
             error("Error al eliminar");
             return false;
         }
-        await correct("Eliminado!");
+        await correct("¡Eliminado!");
         if (reload) {
             window.location.reload();
         }
