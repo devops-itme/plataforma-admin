@@ -75,7 +75,7 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-4" id="birth_date">
-                <label>Fecha de nacimiento: <span class="text-danger">*</span></label>
+                <label>Fecha de nacimiento:</label>
                 <input type="date" class="form-control form-control-solid" placeholder="" name="birthday" value="{{ old('birthday') }}" />
                 <span class="form-text text-muted"></span>
             </div>

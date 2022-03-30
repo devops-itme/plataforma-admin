@@ -85,8 +85,8 @@ class CustomerController extends Controller
             return $this->respond(500,null,'validation fail', 'El campo Tipo de persona es requerido');
             // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
         }
-        if ($request->person_type == 1 && is_null($request->name)) {
-            return $this->respond(500,null,'validation fail', 'El campo nombre es requerido para las personas de tipo natural');
+        if ($request->person_type == 1 && is_null($request->name) || is_null($request->last_name)) {
+            return $this->respond(500, null, 'validation fail', ('El campo '.(is_null($request->name) ? 'Nombres' : 'Apellidos') . ' es requerido para las personas de tipo natural'));
             // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
         }
         if ($request->person_type == 2 && is_null($request->business_name)) {
