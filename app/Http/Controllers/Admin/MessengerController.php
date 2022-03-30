@@ -52,7 +52,7 @@ class MessengerController extends Controller
         if ($messenger['state'] == 200) {
             return redirect()->route('messengers.index')->with('success', 'Mensajero registrado exitosamente.');
         } else {
-            return redirect()->back()->withInput()->with('danger', $messenger['error']);
+            return redirect()->back()->withInput()->with('danger', $messenger['message']);
         }
     }
 
