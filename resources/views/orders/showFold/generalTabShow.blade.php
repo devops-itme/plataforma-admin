@@ -25,7 +25,10 @@
         </div>
         <div class="form-group col-md-6">
             <label>Hora de programación: <span class="text-danger">*</span></label>
-            <input name="order_num" type="time" class="form-control form-control-solid" value="{{$order->schedule_time}}" placeholder="" disabled/>
+            <select name="schedule_time_range" class="form-control form-control-solid" id="schedule_time_range" disabled>
+                <option>Seleccione </option>
+                <option selected value="{{$order->schedule_time_range}}">{{$order->schedule_time_range}}</option>
+            </select>
             <span class="form-text text-muted"></span>
         </div>
         <div class="form-group col-md-6">
