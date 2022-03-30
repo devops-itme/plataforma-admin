@@ -83466,15 +83466,17 @@ var Customers = /*#__PURE__*/function () {
 
                     if (data.length > 0) {
                       var _loop = function _loop(i) {
+                        var _data$i$name, _data$i$get_type$name, _data$i$get_zone$name, _data$i$contact;
+
                         var row = tbody.insertRow();
                         var nameCell = row.insertCell(0);
-                        nameCell.innerHTML = data[i].name;
+                        nameCell.innerHTML = (_data$i$name = data[i].name) !== null && _data$i$name !== void 0 ? _data$i$name : '';
                         var typeCell = row.insertCell(1);
-                        typeCell.innerHTML = data[i].get_type.name;
+                        typeCell.innerHTML = (_data$i$get_type$name = data[i].get_type.name) !== null && _data$i$get_type$name !== void 0 ? _data$i$get_type$name : '';
                         var zoneCell = row.insertCell(2);
-                        zoneCell.innerHTML = data[i].get_zone.name;
+                        zoneCell.innerHTML = (_data$i$get_zone$name = data[i].get_zone.name) !== null && _data$i$get_zone$name !== void 0 ? _data$i$get_zone$name : '';
                         var contactCell = row.insertCell(3);
-                        contactCell.innerHTML = data[i].contact;
+                        contactCell.innerHTML = (_data$i$contact = data[i].contact) !== null && _data$i$contact !== void 0 ? _data$i$contact : '';
                         var stateCell = row.insertCell(4);
 
                         if (data[i].state == 1) {
