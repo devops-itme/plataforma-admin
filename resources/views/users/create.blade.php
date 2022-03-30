@@ -18,12 +18,12 @@
 
             <div class="form-group col-md-4">
                 <label>Nombres: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{old('name')}}" />
+                <input type="text" class="form-control form-control-solid" placeholder="Nombres" name="name" value="{{old('name')}}" required />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-4">
                 <label>Apellidos <span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{old('last_name')}}" />
+                <input type="text" class="form-control form-control-solid" placeholder="Apellidos" name="last_name" value="{{old('last_name')}}" required />
             </div>
             <div class="form-group col-md-4">
                 <label>Email: <span class="text-danger">*</span></label>
