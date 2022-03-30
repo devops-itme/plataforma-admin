@@ -81,6 +81,10 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        if (is_null($request->person_type)) {
+            return $this->respond(500,null,'validation fail', 'El campo Tipo de persona es requerido');
+            // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
+        }
         if ($request->person_type == 1 && is_null($request->name)) {
             return $this->respond(500,null,'validation fail', 'El campo nombre es requerido para las personas de tipo natural');
             // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');

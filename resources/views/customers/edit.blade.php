@@ -93,7 +93,7 @@
                 <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{ $customer->getUser->document_number??''}}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group py-3 m-0 col-md-3" id="datebirth">
+            <div class="form-group py-3 m-0 col-md-3" id="birth_date">
                 <label>Fecha de nacimiento: <span class="text-danger">*</span></label>
                 <input type="date" class="form-control form-control-solid" placeholder="" name="birthday" value="{{ $customer->birthday }}" />
                 <span class="form-text text-muted"></span>

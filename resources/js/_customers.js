@@ -29,15 +29,15 @@ export default class Customers {
             let branchesCheck = document.getElementsByName('branchCheck');
             let departmentsCheck = document.getElementsByName("departments[]");
             let branchArr = [];
-            let deptsArr = [];
+            let departmentsArr = [];
             branchesCheck.forEach((e) => {
                 e.checked && branchArr.push(e.value);
             });
             departmentsCheck.forEach((e) => {
-                e.checked && deptsArr.push(e.value);
+                e.checked && departmentsArr.push(e.value);
             });
             formData.append('branchCheck', branchArr);
-            formData.append('departments', deptsArr);
+            formData.append('departments', departmentsArr);
             let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
@@ -84,7 +84,7 @@ export default class Customers {
         let option = document.getElementById("slc_type");
         let naturalCustomer = document.getElementById("naturalCustomer");
         let legalCustomer = document.getElementById("legalCustomer");
-        let datebirth = document.getElementById("datebirth");
+        let birth_date = document.getElementById("birth_date");
         let password = document.getElementById("passwordDiv");
         let r_password = document.getElementById("r_passwordDiv");
         if(option == null){
@@ -94,24 +94,24 @@ export default class Customers {
             if (typeSelected.value == 1) {
                 legalCustomer.className = 'd-none'
                 naturalCustomer.className = 'col-md-6 d-flex px-0';
-                datebirth.className = 'form-group py-3 m-0 col-md-4';
+                birth_date.className = 'form-group py-3 m-0 col-md-4';
             } else if (typeSelected.value == 2) {
                 naturalCustomer.className = 'd-none'
                 legalCustomer.className = 'col-md-3 d-flex px-0'
-                datebirth.className = 'form-group py-3 m-0 col-md-3';
+                birth_date.className = 'form-group py-3 m-0 col-md-3';
             }
         }
         option.addEventListener('change', (event) => {
             if (option.value == 1) {
                 legalCustomer.className = 'd-none';
                 naturalCustomer.className = 'col-md-6 d-flex px-0';
-                datebirth.className = 'form-group py-3 m-0 col-md-4';
+                birth_date.className = 'form-group py-3 m-0 col-md-4';
                 password.className = 'form-group py-3 m-0 col-md-4';
                 r_password.className = 'form-group py-3 m-0 col-md-4';
             } else if (option.value == 2) {
                 naturalCustomer.className = 'd-none';
                 legalCustomer.className = 'col-md-3 d-flex px-0';
-                datebirth.className = 'form-group py-3 m-0 col-md-3';
+                birth_date.className = 'form-group py-3 m-0 col-md-3';
                 password.className = 'form-group py-3 m-0 col-md-6';
                 r_password.className = 'form-group py-3 m-0 col-md-6';
             }

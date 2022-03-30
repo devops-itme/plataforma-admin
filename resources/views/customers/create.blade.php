@@ -19,7 +19,7 @@
         <div class="card-body d-flex flex-row flex-wrap">
             <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información basica de cliente</h5>
             <div class="form-group py-3 m-0 col-md-3">
-                <label>Tipo de persona</label>
+                <label>Tipo de persona <span class="text-danger">*</span></label>
                 <select class="form-control form-control-solid" id="slc_type" name="person_type">
                     <option disabled selected> Seleccione </option>
                     <option value="1">Persona natural</option>
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="form-group py-3 m-0 col-md-3">
-                <label>Nombre comercial <span class="text-danger">*</span></label>
+                <label>Marca comercial <span class="text-danger">*</span></label>
                 <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="text" name="tradename" value="{{ old('tradename') }}" />
             </div>
             <div class="form-group py-3 m-0 col-md-3">
@@ -70,11 +70,11 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group py-3 m-0 col-md-3">
-                <label>Número de identificación: <span class="text-danger">*</span></label>
+                <label>Número de identificación:</label>
                 <input type="text" class="form-control form-control-solid" placeholder="N° de identificación" name="document_number" value="{{ old('document_number') }}" />
                 <span class="form-text text-muted"></span>
             </div>
-            <div class="form-group py-3 m-0 col-md-4" id="datebirth">
+            <div class="form-group py-3 m-0 col-md-4" id="birth_date">
                 <label>Fecha de nacimiento: <span class="text-danger">*</span></label>
                 <input type="date" class="form-control form-control-solid" placeholder="" name="birthday" value="{{ old('birthday') }}" />
                 <span class="form-text text-muted"></span>

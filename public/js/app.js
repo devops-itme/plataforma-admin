@@ -83143,7 +83143,7 @@ var Customers = /*#__PURE__*/function () {
       }
 
       customerBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var formData, branchesCheck, departmentsCheck, branchArr, deptsArr, token, myHeaders, requestOptions, response;
+        var formData, branchesCheck, departmentsCheck, branchArr, departmentsArr, token, myHeaders, requestOptions, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -83152,15 +83152,15 @@ var Customers = /*#__PURE__*/function () {
                 branchesCheck = document.getElementsByName('branchCheck');
                 departmentsCheck = document.getElementsByName("departments[]");
                 branchArr = [];
-                deptsArr = [];
+                departmentsArr = [];
                 branchesCheck.forEach(function (e) {
                   e.checked && branchArr.push(e.value);
                 });
                 departmentsCheck.forEach(function (e) {
-                  e.checked && deptsArr.push(e.value);
+                  e.checked && departmentsArr.push(e.value);
                 });
                 formData.append('branchCheck', branchArr);
-                formData.append('departments', deptsArr);
+                formData.append('departments', departmentsArr);
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -83242,7 +83242,7 @@ var Customers = /*#__PURE__*/function () {
       var option = document.getElementById("slc_type");
       var naturalCustomer = document.getElementById("naturalCustomer");
       var legalCustomer = document.getElementById("legalCustomer");
-      var datebirth = document.getElementById("datebirth");
+      var birth_date = document.getElementById("birth_date");
       var password = document.getElementById("passwordDiv");
       var r_password = document.getElementById("r_passwordDiv");
 
@@ -83254,11 +83254,11 @@ var Customers = /*#__PURE__*/function () {
         if (typeSelected.value == 1) {
           legalCustomer.className = 'd-none';
           naturalCustomer.className = 'col-md-6 d-flex px-0';
-          datebirth.className = 'form-group py-3 m-0 col-md-4';
+          birth_date.className = 'form-group py-3 m-0 col-md-4';
         } else if (typeSelected.value == 2) {
           naturalCustomer.className = 'd-none';
           legalCustomer.className = 'col-md-3 d-flex px-0';
-          datebirth.className = 'form-group py-3 m-0 col-md-3';
+          birth_date.className = 'form-group py-3 m-0 col-md-3';
         }
       }
 
@@ -83266,13 +83266,13 @@ var Customers = /*#__PURE__*/function () {
         if (option.value == 1) {
           legalCustomer.className = 'd-none';
           naturalCustomer.className = 'col-md-6 d-flex px-0';
-          datebirth.className = 'form-group py-3 m-0 col-md-4';
+          birth_date.className = 'form-group py-3 m-0 col-md-4';
           password.className = 'form-group py-3 m-0 col-md-4';
           r_password.className = 'form-group py-3 m-0 col-md-4';
         } else if (option.value == 2) {
           naturalCustomer.className = 'd-none';
           legalCustomer.className = 'col-md-3 d-flex px-0';
-          datebirth.className = 'form-group py-3 m-0 col-md-3';
+          birth_date.className = 'form-group py-3 m-0 col-md-3';
           password.className = 'form-group py-3 m-0 col-md-6';
           r_password.className = 'form-group py-3 m-0 col-md-6';
         }
