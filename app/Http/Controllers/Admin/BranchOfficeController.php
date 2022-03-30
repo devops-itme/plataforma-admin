@@ -67,6 +67,9 @@ class BranchOfficeController extends Controller
             $request->merge(['branch_office_usage_mode' => null]);
             $request->merge(['branch_office_plan' => null]);
         }
+        if($request->branch_office_type == 'Seleccione'){
+            $request->merge(['branch_office_type' => null]);
+        }
         $response = $this->saveBranchOffice($request);
         if($response['state'] == 200){
             if($request->branch_office_department != 'Seleccione'){
