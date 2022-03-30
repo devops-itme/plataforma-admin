@@ -11,6 +11,7 @@ use App\Guide;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order, App\OrderLog, App\ParameterValue, App\User, App\UserBranch;
+use App\PickupHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
