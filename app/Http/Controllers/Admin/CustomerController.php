@@ -16,6 +16,7 @@ use App\Http\Resources\CustomerResource;
 use App\Parameter;
 use App\User;
 use App\UserBranch;
+use App\Zone;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
@@ -37,8 +38,9 @@ class CustomerController extends Controller
             ->latest()
             ->get();
 
+        $zones = Zone::get();
         // $customers = CustomerResource::collection($customers);
-        return view('customers.index', compact('customers'));
+        return view('customers.index', compact('customers', 'zones'));
     }
 
     /**
