@@ -28,17 +28,17 @@
                                 <h5 class="card-title">Notificacion 1</h5>
                                 <p class="card-text">With supporting text below as a natural lead-in to additional
                                     content.</p>
-                                <a href="#" class="btn btn-primary">Ver detalle</a>
+                                <a href="#" class="btn btn-primary d-block">Ver detalle</a>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-4"></div>
                                 <h5 class="card-title">Notificacion 2</h5>
                                 <p class="card-text">With supporting text below as a natural lead-in to additional
                                     content.</p>
-                                <a href="#" class="btn btn-primary">Ver detalle</a>
+                                <a href="#" class="btn btn-primary d-block">Ver detalle</a>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-4"></div>
                                 <h5 class="card-title">Notificacion 3</h5>
                                 <p class="card-text">With supporting text below as a natural lead-in to additional
                                     content.</p>
-                                <a href="#" class="btn btn-primary">Ver detalle</a>
+                                <a href="#" class="btn btn-primary d-block">Ver detalle</a>
                             </div>
                             <div class="card-footer text-muted text-center py-0 cursor-pointer">
                                 <a href="#" class="text-dark col-md-12">Ver todo</a>
