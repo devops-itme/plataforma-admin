@@ -52923,6 +52923,11 @@ button {
   font-smoothing: antialiased;
   content: "\25BC";
 }
+.dropdown .dropdown-toggle.btn:after {
+     content: "";
+
+} 
+.dropdown-toggle
 .dropdown-toggle.nav-link:before, .dropdown-toggle.btn:before {
   margin-right: 0.5rem /*rtl:ignore*/;
   font-family: Ki;
@@ -63384,7 +63389,7 @@ code {
   border-bottom: 1px solid #EBEDF3;
 }
 .separator.separator-border-2 {
-  border-bottom-width: 2px;
+  border-bottom-width: 2px ;
 }
 .separator.separator-border-3 {
   border-bottom-width: 3px;
@@ -80643,3 +80648,12 @@ body {
 .radios{
     width: 15px;
 }
+
+.dropdown-menu-width{
+    width: 300px;
+}
+ .rounded-pill{
+     margin-top: 5px;
+     margin-left: -15px;
+     font-size: 8px;
+ }

@@ -222,16 +222,16 @@ export default class Customers {
                     let row = tbody.insertRow();
 
                     let nameCell = row.insertCell(0);
-                    nameCell.innerHTML = data[i].name;
+                    nameCell.innerHTML = data[i].name??'';
 
                     let typeCell = row.insertCell(1);
-                    typeCell.innerHTML = data[i].get_type.name;
+                    typeCell.innerHTML = data[i].get_type.name??'';
 
                     let zoneCell = row.insertCell(2);
-                    zoneCell.innerHTML = data[i].get_zone.name;
+                    zoneCell.innerHTML = data[i].get_zone.name??'';
 
                     let contactCell = row.insertCell(3);
-                    contactCell.innerHTML = data[i].contact;
+                    contactCell.innerHTML = data[i].contact??'';
 
                     let stateCell = row.insertCell(4);
                     if(data[i].state == 1){

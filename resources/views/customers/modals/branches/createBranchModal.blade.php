@@ -36,11 +36,9 @@
                         <label>Zona de sucursal:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_zone" name="branch_office_zone">
                             <option selected disabled>Seleccione</option>
-                            <option value="1">Zona 1</option>
-                            <option value="2" >Zona 2</option>
-                            <option value="3" >Zona 3</option>
-                            <option value="4" >Zona 4</option>
-                            <option value="5" >Zona 5</option>
+                            @foreach ($zones as $item)
+                                <option value="{{$item->id}}" {{ request()->zone == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                            @endforeach
                             {{-- @foreach ($documents as $document)
                             <option value="{{ $document->id }}" {{ $document->id == old('branch_office_zone') ? 'selected' : '' }}>
                                 {{ $document->name }}

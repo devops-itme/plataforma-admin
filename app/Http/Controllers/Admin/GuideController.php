@@ -65,6 +65,7 @@ class GuideController extends Controller
         else{$request->merge(['sign' => 0]);}
         if($request->take_photo == 'on'){$request->merge(['take_photo' => 1]);}
         else{$request->merge(['take_photo' => 0]);}
+        if($request->zone == 'Seleccione'){$request->merge(['zone' => NULL]);}
         $request->merge(['return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0]);
         if($request->address_name){
             $address = Address::find($request->address_name);
@@ -136,11 +137,12 @@ class GuideController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->zone == 'Seleccione'){$request->merge(['zone' => NULL]);}
         if(!($request->state)){
             $request->merge(['state' => 31]);
         }
         $request->merge(['return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0]);
-        
+
         if($request->address_name){
             $address = Address::find($request->address_name);
             if(!is_null($address)){

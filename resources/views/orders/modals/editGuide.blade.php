@@ -40,7 +40,7 @@
                             <i class="fad fa-plus-circle text-info"></i>
                         </a>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-5">
                         <label for="district">Descripción <span class="text-danger">*</span></label>
                         <textarea name="guide_description" id="address_description_edit" class="form-control form-control-solid"></textarea>
                     </div>
@@ -107,6 +107,16 @@
                     <div class="form-group col-md-3">
                         <label>Contacto Factura: <span class="text-danger">*</span></label>
                         <input name="invoice_contact" id="invoice_contact_edit" type="text" class="form-control form-control-solid" placeholder="" />
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Zona: </label>
+                        <select name="zone" class="form-control form-control-solid" id="zone_edit">
+                            <option selected>Seleccione</option>
+                            @foreach ($zones as $item)
+                                <option value="{{$item->id}}" {{ request()->zone == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                            @endforeach
+                        </select>
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6 d-flex align-items-center">

@@ -83466,15 +83466,17 @@ var Customers = /*#__PURE__*/function () {
 
                     if (data.length > 0) {
                       var _loop = function _loop(i) {
+                        var _data$i$name, _data$i$get_type$name, _data$i$get_zone$name, _data$i$contact;
+
                         var row = tbody.insertRow();
                         var nameCell = row.insertCell(0);
-                        nameCell.innerHTML = data[i].name;
+                        nameCell.innerHTML = (_data$i$name = data[i].name) !== null && _data$i$name !== void 0 ? _data$i$name : '';
                         var typeCell = row.insertCell(1);
-                        typeCell.innerHTML = data[i].get_type.name;
+                        typeCell.innerHTML = (_data$i$get_type$name = data[i].get_type.name) !== null && _data$i$get_type$name !== void 0 ? _data$i$get_type$name : '';
                         var zoneCell = row.insertCell(2);
-                        zoneCell.innerHTML = data[i].get_zone.name;
+                        zoneCell.innerHTML = (_data$i$get_zone$name = data[i].get_zone.name) !== null && _data$i$get_zone$name !== void 0 ? _data$i$get_zone$name : '';
                         var contactCell = row.insertCell(3);
-                        contactCell.innerHTML = data[i].contact;
+                        contactCell.innerHTML = (_data$i$contact = data[i].contact) !== null && _data$i$contact !== void 0 ? _data$i$contact : '';
                         var stateCell = row.insertCell(4);
 
                         if (data[i].state == 1) {
@@ -85167,7 +85169,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
+        var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -85188,6 +85190,7 @@ var Orders = /*#__PURE__*/function () {
                 phone_contact = document.getElementById("phone_contact").value;
                 email_contact = document.getElementById("email_contact").value;
                 invoice_contact = document.getElementById("invoice_contact").value;
+                zone = document.getElementById("zone_id").value;
                 same_day_delivery = document.getElementById("same_day_delivery").value;
                 sign = document.getElementById("sign").value;
                 take_photo = document.getElementById("take_photo").value; // let customer_address = document.getElementById("customer_address").value;
@@ -85233,14 +85236,15 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('phone_contact', phone_contact);
                 formData.append('email_contact', email_contact);
                 formData.append('invoice_contact', invoice_contact);
+                formData.append('zone', zone);
                 formData.append('same_day_delivery', same_day_delivery);
                 formData.append('sign', sign);
                 formData.append('take_photo', take_photo); // formData.append('customer_address',customer_address);
 
-                _context7.next = 45;
+                _context7.next = 47;
                 return _this5.sendGuideData(formData);
 
-              case 45:
+              case 47:
                 response = _context7.sent;
 
                 if (response.state == 200) {
@@ -85254,7 +85258,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 47:
+              case 49:
               case "end":
                 return _context7.stop();
             }
@@ -85464,7 +85468,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, boxes;
+          var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zones, same_day_delivery, sign, take_photo, boxes;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
@@ -85497,6 +85501,10 @@ var Orders = /*#__PURE__*/function () {
                   phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
                   email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
                   invoice_contact = document.getElementById("invoice_contact_edit").value = data.invoice_contact;
+                  zones = document.getElementById("zone_edit");
+                  [].forEach.call(zones, function (key) {
+                    key.value == data.zone ? key.selected = true : key.selected = false;
+                  });
                   same_day_delivery = document.getElementById("same_day_delivery_edit");
                   data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
                   sign = document.getElementById("sign_edit");
@@ -85509,7 +85517,7 @@ var Orders = /*#__PURE__*/function () {
 
                   _this7.addbox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
 
-                case 28:
+                case 30:
                 case "end":
                   return _context11.stop();
               }
@@ -85569,7 +85577,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
+        var branch_off_edit, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -85589,6 +85597,7 @@ var Orders = /*#__PURE__*/function () {
                 phone_contact = document.getElementById("phone_contact_edit").value;
                 email_contact = document.getElementById("email_contact_edit").value;
                 invoice_contact = document.getElementById("invoice_contact_edit").value;
+                zone = document.getElementById("zone_edit").value;
                 same_day_delivery = document.getElementById("same_day_delivery_edit");
                 same_day_delivery.checked == true ? same_day_delivery = 1 : same_day_delivery = 0;
                 sign = document.getElementById("sign_edit");
@@ -85639,6 +85648,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("sign", sign);
                 formData.append("take_photo", take_photo);
                 formData.append("invoice_contact", invoice_contact);
+                formData.append("zone", zone);
                 formData.append("customer_address", customer_address);
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
@@ -85653,10 +85663,10 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context13.next = 57;
+                _context13.next = 59;
                 return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
 
-              case 57:
+              case 59:
                 response = _context13.sent;
 
                 if (response.state == 200) {
@@ -85670,7 +85680,7 @@ var Orders = /*#__PURE__*/function () {
                   console.log('Error: ' + response.error);
                 }
 
-              case 59:
+              case 61:
               case "end":
                 return _context13.stop();
             }

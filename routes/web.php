@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');
 
+
         //CUSTOMER
         Route::resource('/clientes', 'Admin\CustomerController')->except('store')->names('customers');
         Route::post('/clientes/store', 'Admin\CustomerController@store')->name('customers.store');
@@ -125,6 +126,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('zonas', function () {
         return view('zones.index');
     })->name('zone.index');
+
+    // Route::get('users', function () {
+    //     return view('users.detail');
+    // })->name('detail.show');
 
     Route::resource('perfil', 'Admin\ProfileController')->names('profile');
     // Route::get('perfil', function () {
