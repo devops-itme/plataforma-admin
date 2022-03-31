@@ -195,9 +195,9 @@
                                 {{-- <td>{{$customer->display_name}}</td> --}}
                                 <td>{{ $customer->business_name ?? ($customer->getUser->name ?? '' . ' ' . $customer->getUser->last_name ?? '') }}
                                 </td>
-                                <td>{{ $customer->getUser->document_number }}</td>
-                                <td>{{ $customer->getUser->email }}</td>
-                                <td>{{ $customer->getUser->phone }}</td>
+                                <td>{{ $customer->getUser->document_number??'' }}</td>
+                                <td>{{ $customer->getUser->email??'' }}</td>
+                                <td>{{ $customer->getUser->phone??'' }}</td>
                                 <td>{{ $customer->getZone->name??'' }}</td>
                                 @if ($customer->state == 1)
                                     <td>
