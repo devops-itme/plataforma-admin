@@ -139,7 +139,6 @@ class OrderController extends Controller
                         'state' => 31
                     ]);
 
-                    $request->merge(['description' => $request->address_description]);
                     $validator = $this->AddressesValidate($request);
 
                     if ($validator->fails()) {
