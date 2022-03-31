@@ -45,7 +45,7 @@ class User extends Model implements AuthenticatableContract
 
     public function getRole()
     {
-        return $this->belongsTo(Role::class, 'role')->select(['id', 'name']);
+        return $this->belongsTo(Role::class, 'role')->select(['id', 'name', 'deleted_at', 'state']);
     }
 
     public function getParent()

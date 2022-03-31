@@ -104,8 +104,14 @@
                                         name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                                         placeholder="Correo">
                                     @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    <input type="hidden" name="active" class="@error('active') is-invalid @enderror">
+                                    @error('active')
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                            <strong>{{$message}}</strong>
                                         </span>
                                     @enderror
                                 </div>

@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Order, App\OrderLog, App\ParameterValue, App\User, App\UserBranch;
 use App\PickupHour;
+use App\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,8 +65,9 @@ class OrderController extends Controller
         $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'customer_document_type');
         })->get();
+        $zones = Zone::get();
 
-        return view('orders.create', compact('customers','order_type','transport_type','payment_method', 'customer_document_type'));
+        return view('orders.create', compact('customers','order_type','transport_type','payment_method', 'customer_document_type', 'zones'));
     }
 
     /**
@@ -175,8 +177,9 @@ class OrderController extends Controller
         $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         })->get();
+        $zones = Zone::get();
 
-        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses'));
+        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones'));
     }
 
     /**

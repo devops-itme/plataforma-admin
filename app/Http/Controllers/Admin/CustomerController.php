@@ -16,6 +16,7 @@ use App\Http\Resources\CustomerResource;
 use App\Parameter;
 use App\User;
 use App\UserBranch;
+use App\Zone;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
@@ -37,8 +38,9 @@ class CustomerController extends Controller
             ->latest()
             ->get();
 
+        $zones = Zone::get();
         // $customers = CustomerResource::collection($customers);
-        return view('customers.index', compact('customers'));
+        return view('customers.index', compact('customers', 'zones'));
     }
 
     /**
@@ -70,7 +72,9 @@ class CustomerController extends Controller
         $plans = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'plans');
         })->get();
-        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans'));
+
+        $zones = Zone::get();
+        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans', 'zones'));
     }
 
     /**
@@ -252,7 +256,8 @@ class CustomerController extends Controller
         $plans = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'plans');
         })->get();
-        return view('customers.edit', compact('customer', 'documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans'));
+        $zones = Zone::get();
+        return view('customers.edit', compact('customer', 'documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans', 'zones'));
     }
 
     /**
