@@ -198,7 +198,7 @@
                                 <td>{{ $customer->getUser->document_number }}</td>
                                 <td>{{ $customer->getUser->email }}</td>
                                 <td>{{ $customer->getUser->phone }}</td>
-                                <td>{{ $customer->getZone->name }}</td>
+                                <td>{{ $customer->getZone->name??'' }}</td>
                                 @if ($customer->state == 1)
                                     <td>
                                         <span class="label label-inline label-light-success font-weight-bold">
