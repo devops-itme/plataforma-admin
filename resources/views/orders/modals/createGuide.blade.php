@@ -42,7 +42,7 @@
                     </div>
                     {{-- <input name="lat" id="lat" type="hidden" class="form-control form-control-solid" placeholder=""/>
                     <input name="lng" id="lng" type="hidden" class="form-control form-control-solid" placeholder=""/> --}}
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-5">
                         <label for="district">Descripción <span class="text-danger">*</span></label>
                         <textarea name="guide_description" id="guide_description" class="form-control form-control-solid"></textarea>
                     </div>
@@ -110,6 +110,15 @@
                         <label>Contacto Factura: <span class="text-danger">*</span></label>
                         <input name="invoice_contact" id="invoice_contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Zona: </label>
+                        <select name="zone_id" class="form-control form-control-solid" id="zone_id">
+                            <option selected disabled>Seleccione</option>
+                            @foreach ($zones as $item)
+                                <option value="{{$item->id}}" {{ request()->zone == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     {{-- <div class="form-group col-md-3">
                         <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>

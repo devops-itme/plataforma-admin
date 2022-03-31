@@ -351,6 +351,7 @@ export default class Orders {
             let phone_contact = document.getElementById("phone_contact").value;
             let email_contact = document.getElementById("email_contact").value;
             let invoice_contact = document.getElementById("invoice_contact").value;
+            let zone = document.getElementById("zone_id").value;
             let same_day_delivery = document.getElementById("same_day_delivery").value;
             let sign = document.getElementById("sign").value;
             let take_photo = document.getElementById("take_photo").value;
@@ -394,6 +395,7 @@ export default class Orders {
             formData.append('phone_contact',phone_contact);
             formData.append('email_contact',email_contact);
             formData.append('invoice_contact',invoice_contact);
+            formData.append('zone',zone);
             formData.append('same_day_delivery',same_day_delivery);
             formData.append('sign',sign);
             formData.append('take_photo',take_photo);
@@ -550,6 +552,10 @@ export default class Orders {
                 let phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
                 let email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
                 let invoice_contact = document.getElementById("invoice_contact_edit").value = data.invoice_contact;
+                let zones = document.getElementById("zone_edit");
+                [].forEach.call(zones, key => {
+                    key.value == data.zone ? key.selected=true : key.selected=false;
+                });
                 let same_day_delivery = document.getElementById("same_day_delivery_edit");
                 data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
                 let sign = document.getElementById("sign_edit");
@@ -598,6 +604,7 @@ export default class Orders {
             let phone_contact = document.getElementById("phone_contact_edit").value;
             let email_contact = document.getElementById("email_contact_edit").value;
             let invoice_contact = document.getElementById("invoice_contact_edit").value;
+            let zone = document.getElementById("zone_edit").value;
             let same_day_delivery = document.getElementById("same_day_delivery_edit");
             same_day_delivery.checked == true ? same_day_delivery = 1 : same_day_delivery = 0;
             let sign = document.getElementById("sign_edit");
@@ -648,6 +655,7 @@ export default class Orders {
             formData.append("sign", sign);
             formData.append("take_photo", take_photo);
             formData.append("invoice_contact", invoice_contact);
+            formData.append("zone", zone);
             formData.append("customer_address", customer_address);
 
             let token = document
