@@ -264,6 +264,9 @@
                     @endif
                 </tbody>
             </table>
+            <div class="col-md-12 d-flex align-items-center justify-content-end">
+                {{$customers->links()}}
+            </div>
             @include('customers.modals.branches.selectBranchOffice')
 
             <!--end: Datatable-->
