@@ -38,7 +38,7 @@ class OrderController extends Controller
             ->state(request()->state)
             ->with('getStatusMatrix')->whereHas('getStatusMatrix', function($query) {
                 $query->where('name','!=', 'ENTREGADO');
-            })->get();
+            })->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
@@ -135,7 +135,8 @@ class OrderController extends Controller
         $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         })->get();
-        return view('orders.showFold.show', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses'));
+        $zones = Zone::get();
+        return view('orders.showFold.show', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses', 'zones'));
     }
 
 

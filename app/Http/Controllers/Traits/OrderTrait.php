@@ -39,6 +39,10 @@ trait OrderTrait
                 'branch_office' => 'nullable|numeric|exists:branch_offices,id',
                 'department_id' => 'nullable|numeric|exists:departments,id',
                 'address_id' => 'nullable|numeric|exists:addresses,id',
+                'address_name' => 'nullable',
+                'address_lat' => 'nullable',
+                'address_lng' => 'nullable',
+                'address_description' => 'nullable',
                 'description' => 'nullable|string',
                 'state' => 'nullable|numeric'
             ]

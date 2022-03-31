@@ -195,10 +195,10 @@
                                 {{-- <td>{{$customer->display_name}}</td> --}}
                                 <td>{{ $customer->business_name ?? ($customer->getUser->name ?? '' . ' ' . $customer->getUser->last_name ?? '') }}
                                 </td>
-                                <td>{{ $customer->getUser->document_number }}</td>
-                                <td>{{ $customer->getUser->email }}</td>
-                                <td>{{ $customer->getUser->phone }}</td>
-                                <td>{{ $customer->getZone->name }}</td>
+                                <td>{{ $customer->getUser->document_number??'' }}</td>
+                                <td>{{ $customer->getUser->email??'' }}</td>
+                                <td>{{ $customer->getUser->phone??'' }}</td>
+                                <td>{{ $customer->getZone->name??'' }}</td>
                                 @if ($customer->state == 1)
                                     <td>
                                         <span class="label label-inline label-light-success font-weight-bold">
@@ -264,6 +264,9 @@
                     @endif
                 </tbody>
             </table>
+            <div class="col-md-12 d-flex align-items-center justify-content-end">
+                {{$customers->links()}}
+            </div>
             @include('customers.modals.branches.selectBranchOffice')
 
             <!--end: Datatable-->

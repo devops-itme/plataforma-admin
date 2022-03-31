@@ -36,7 +36,7 @@ class CustomerController extends Controller
             ->zone(request()->zone)
             ->state(request()->state)
             ->latest()
-            ->get();
+            ->paginate(10);
 
         $zones = Zone::get();
         // $customers = CustomerResource::collection($customers);
