@@ -74,6 +74,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $user = $this->showUser($id);
+        $user = $user['data'];
+        $roles = Role::where('state', 1)->whereIn('id', [1, 2])->get();
+        $document_types = ParameterValue::where('parameter_id', 1)->get();
+        return view('users.detail', compact('user', 'roles', 'document_types'));
     }
 
     /**
