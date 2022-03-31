@@ -131,13 +131,13 @@ class OrderController extends Controller
                         'phone_contact' => $guide['phone_contact'],
                         'email_contact' => $guide['email_contact'],
                         'return_last_destination' => $guide['return_last_destination'],
-                        'address_name' => $address->name ?? $guide['address_name'],
-                        'address_lat' => $address->lat ?? $guide['address_lat'],
-                        'address_lng' => $address->lng ?? $guide['address_lng'],
+                        'address_name' => $address->name ?? $guide['address'],
+                        'address_lat' => $address->lat ?? $guide['lat'],
+                        'address_lng' => $address->lng ?? $guide['lng'],
                         'address_description' => $address->description ?? $guide['address_description'],
                         'state' => 31
                     ]);
-                    
+
                     $request->merge(['description' => $request->address_description]);
                     $validator = $this->AddressesValidate($request);
 
