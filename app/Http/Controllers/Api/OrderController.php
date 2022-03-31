@@ -93,7 +93,7 @@ class OrderController extends Controller
                     }
                 } else if ($request->add_address_favorite === 'true') {
                     $user_id = Auth::user()->id;
-                    $request->merge(['user_id' => $user_id, 'address_description' => $request->pickup_address_description]);
+                    $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
                     $saveAddressResponse = $this->saveAddress($request);
                     if ($saveAddressResponse['state'] != 200) {
                         return $saveAddressResponse;
@@ -131,13 +131,14 @@ class OrderController extends Controller
                         'phone_contact' => $guide['phone_contact'],
                         'email_contact' => $guide['email_contact'],
                         'return_last_destination' => $guide['return_last_destination'],
-                        'address_name' => $address->name ?? $guide['delivery_address_name'],
-                        'address_lat' => $address->lat ?? $guide['delivery_address_lat'],
-                        'address_lng' => $address->lng ?? $guide['delivery_address_lng'],
-                        'address_description' => $address->description ?? $guide['delivery_address_description'],
+                        'address_name' => $address->name ?? $guide['address_name'],
+                        'address_lat' => $address->lat ?? $guide['address_lat'],
+                        'address_lng' => $address->lng ?? $guide['address_lng'],
+                        'address_description' => $address->description ?? $guide['address_description'],
                         'state' => 31
                     ]);
-
+                    
+                    $request->merge(['description' => $request->address_description]);
                     $validator = $this->AddressesValidate($request);
 
                     if ($validator->fails()) {
@@ -146,7 +147,7 @@ class OrderController extends Controller
 
                     if ($guide['add_address_favorite'] === 'true') {
                         $user_id = Auth::user()->id;
-                        $request->merge(['user_id' => $user_id, 'address_description' => $guide['delivery_address_description']]);
+                        $request->merge(['user_id' => $user_id]);
                         $saveAddressResponse = $this->saveAddress($request);
                         if ($saveAddressResponse['state'] != 200) {
                             return $saveAddressResponse;
