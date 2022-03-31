@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Address;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\AddressTrait;
 use App\Http\Controllers\Traits\GuideTrait;
 use App\Http\Controllers\Traits\OrderTrait;
 use App\Http\Resources\OrderResource;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    use OrderTrait, GuideTrait;
+    use OrderTrait, GuideTrait, AddressTrait;
 
     public function respond($state, $data = [], $error = null, $message = '')
     {
@@ -84,6 +85,20 @@ class OrderController extends Controller
 
         try {
             $transactionResponse = DB::transaction(function () use ($request) {
+
+                if (!is_null($request->address_id)) {
+                    $address = Address::find($request->address_id);
+                    if (is_null($address)) {
+                        return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                    }
+                } else if ($request->add_address_favorite === 'true') {
+                    $user_id = Auth::user()->id;
+                    $request->merge(['user_id' => $user_id, 'address_description' => $request->pickup_address_description]);
+                    $saveAddressResponse = $this->saveAddress($request);
+                    if ($saveAddressResponse['state'] != 200) {
+                        return $saveAddressResponse;
+                    }
+                }
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {

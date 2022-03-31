@@ -208,7 +208,7 @@
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
 
-                                    <a href="#" {{-- href="{{ route('users.show', $user->id) }}" --}} class="btn btn-icon btn-light-primary btn-sm mr-2"
+                                    <a href="{{ route('users.show', $user->id) }}" class="btn btn-icon btn-light-primary btn-sm mr-2"
                                         data-tooltip title="Detalle">
                                         <i class="far fa-folder-open"></i>
                                     </a>

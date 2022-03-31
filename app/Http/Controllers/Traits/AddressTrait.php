@@ -52,7 +52,8 @@ trait AddressTrait
         }
         try {
             request()->merge([
-                'name' => $request->address
+                'name' => $request->address,
+                'description' => $request->description ?? $request->address_description
             ]);
             $address = Address::create($request->all());
             return $this->respond(200, $address, null, 'Dirección creado exitosamente');
