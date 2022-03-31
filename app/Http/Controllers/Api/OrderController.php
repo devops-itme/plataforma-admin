@@ -135,6 +135,7 @@ class OrderController extends Controller
                         'address_lat' => $address->lat ?? $guide['lat'],
                         'address_lng' => $address->lng ?? $guide['lng'],
                         'address_description' => $address->description ?? $guide['address_description'],
+                        'description' => $address->description ?? $guide['address_description'],
                         'state' => 31
                     ]);
 
