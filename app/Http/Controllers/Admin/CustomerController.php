@@ -178,7 +178,8 @@ class CustomerController extends Controller
         $plans = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'plans');
         })->get();
-        return view('customers.show', compact('customer', 'documents', 'payment_method', 'payment_period', 'branch_office_type', 'use_mode', 'plans'));
+        $zones = Zone::get();
+        return view('customers.show', compact('customer', 'documents', 'payment_method', 'payment_period', 'branch_office_type', 'use_mode', 'plans', 'zones'));
     }
 
     public function customerData($id)
