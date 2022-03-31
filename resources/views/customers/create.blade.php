@@ -115,11 +115,9 @@
                                     <label for="exampleSelect1">Zona <span class="text-danger">*</span></label>
                                     <select class="form-control form-control-solid" id="zone" name="zone">
                                         <option selected disabled> Seleccione </option>
-                                        <option value="1" {{ old('zone') == 1 ? 'seletced' : '' }}>Zona 1</option>
-                                        <option value="2" {{ old('zone') == 2 ? 'seletced' : '' }}>Zona 2</option>
-                                        <option value="3" {{ old('zone') == 3 ? 'seletced' : '' }}>Zona 3</option>
-                                        <option value="4" {{ old('zone') == 4 ? 'seletced' : '' }}>Zona 4</option>
-                                        <option value="5" {{ old('zone') == 5 ? 'seletced' : '' }}>Zona 5</option>
+                                        @foreach ($zones as $item)
+                                            <option value="{{$item->id}}" {{ old('zone') == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4 py-3 m-0">
