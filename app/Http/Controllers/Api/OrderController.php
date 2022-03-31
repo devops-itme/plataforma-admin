@@ -98,6 +98,12 @@ class OrderController extends Controller
                     if ($saveAddressResponse['state'] != 200) {
                         return $saveAddressResponse;
                     }
+                } else {
+                    $validator = $this->AddressesValidate($request);
+
+                    if ($validator->fails()) {
+                        return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
+                    }
                 }
 
                 $storeOderResponse = $this->storeOrder($request);
@@ -110,10 +116,12 @@ class OrderController extends Controller
                 $guides = $request->guides;
 
                 foreach ($guides as $guide) {
-
-                    $address = Address::find($guide['address_id']);
-                    if (is_null($address)) {
-                        return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                    $address;
+                    if (!is_null($guide['address_id'])) {
+                        $address = Address::find($guide['address_id']);
+                        if (is_null($address)) {
+                            return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                        }
                     }
 
                     $request->merge([
@@ -123,12 +131,28 @@ class OrderController extends Controller
                         'phone_contact' => $guide['phone_contact'],
                         'email_contact' => $guide['email_contact'],
                         'return_last_destination' => $guide['return_last_destination'],
-                        'address_name' => $address->name,
-                        'address_lat' => $address->lat,
-                        'address_lng' => $address->lng,
-                        'address_description' => $address->description,
+                        'address_name' => $address->name ?? $guide['delivery_address_name'],
+                        'address_lat' => $address->lat ?? $guide['delivery_address_lat'],
+                        'address_lng' => $address->lng ?? $guide['delivery_address_lng'],
+                        'address_description' => $address->description ?? $guide['delivery_address_description'],
                         'state' => 31
                     ]);
+
+                    $validator = $this->AddressesValidate($request);
+
+                    if ($validator->fails()) {
+                        return $this->respond(500, [],  $validator->errors(),  $validator->errors()->first());
+                    }
+
+                    if ($guide['add_address_favorite'] === 'true') {
+                        $user_id = Auth::user()->id;
+                        $request->merge(['user_id' => $user_id, 'address_description' => $guide['delivery_address_description']]);
+                        $saveAddressResponse = $this->saveAddress($request);
+                        if ($saveAddressResponse['state'] != 200) {
+                            return $saveAddressResponse;
+                        }
+                    }
+
                     $storeGuideResponse = $this->storeGuide($request);
                     if ($storeGuideResponse['state'] != 200) {
                         return $storeGuideResponse;
