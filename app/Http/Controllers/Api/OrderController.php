@@ -85,6 +85,8 @@ class OrderController extends Controller
 
         try {
             $transactionResponse = DB::transaction(function () use ($request) {
+                $user_id = Auth::user()->id;
+                $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
 
                 if (!is_null($request->address_id)) {
                     $address = Address::find($request->address_id);
@@ -92,20 +94,19 @@ class OrderController extends Controller
                         return $this->respond(500, null, 'not found', 'Dirección no encontrada');
                     }
                 } else if ($request->add_address_favorite === 'true') {
-                    $user_id = Auth::user()->id;
-                    $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
                     $saveAddressResponse = $this->saveAddress($request);
                     if ($saveAddressResponse['state'] != 200) {
                         return $saveAddressResponse;
                     }
                 } else {
                     $validator = $this->AddressesValidate($request);
-
                     if ($validator->fails()) {
                         return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
                     }
                 }
 
+                $request->merge([ 'description' => $request->order_description]);
+                
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
                     return $storeOderResponse;
@@ -146,8 +147,6 @@ class OrderController extends Controller
                     }
 
                     if ($guide['add_address_favorite'] === 'true') {
-                        $user_id = Auth::user()->id;
-                        $request->merge(['user_id' => $user_id]);
                         $saveAddressResponse = $this->saveAddress($request);
                         if ($saveAddressResponse['state'] != 200) {
                             return $saveAddressResponse;
