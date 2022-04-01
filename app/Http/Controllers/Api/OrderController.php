@@ -93,7 +93,7 @@ class OrderController extends Controller
                     if (is_null($address)) {
                         return $this->respond(500, null, 'not found', 'Dirección no encontrada');
                     }
-                } else if ((bool)$request->add_address_favorite === 'true') {
+                } else if ((bool)$request->add_address_favorite) {
                     $saveAddressResponse = $this->saveAddress($request);
                     if ($saveAddressResponse['state'] != 200) {
                         return $saveAddressResponse;
@@ -151,7 +151,7 @@ class OrderController extends Controller
                         }
                     }
 
-                    if ((bool)$guide['add_address_favorite'] === 'true' && is_null($guide['address_id'])) {
+                    if ((bool)$guide['add_address_favorite'] && is_null($guide['address_id'])) {
                         $saveAddressResponse = $this->saveAddress($request);
                         if ($saveAddressResponse['state'] != 200) {
                             return $saveAddressResponse;
