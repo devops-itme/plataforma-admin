@@ -149,7 +149,7 @@ class OrderController extends Controller
                         }
                     }
 
-                    if ($guide['add_address_favorite'] === 'true') {
+                    if ($guide['add_address_favorite'] === 'true' && is_null($guide['address_id'])) {
                         $saveAddressResponse = $this->saveAddress($request);
                         if ($saveAddressResponse['state'] != 200) {
                             return $saveAddressResponse;
@@ -165,7 +165,7 @@ class OrderController extends Controller
             });
             return $transactionResponse;
         } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage() . $e->getLine(), 'Error del servidor');
+            return $this->respond(500, null, $e->getMessage(). '. Line: ' . $e->getLine(), 'Error del servidor');
         }
     }
 
