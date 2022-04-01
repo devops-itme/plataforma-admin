@@ -98,6 +98,8 @@ class OrderController extends Controller
                     if ($saveAddressResponse['state'] != 200) {
                         return $saveAddressResponse;
                     }
+                    $address_id = $saveAddressResponse['data']->id ?? '';
+                    $request->merge(['address_id' => $address_id]);
                 } else {
                     $validator = $this->AddressesValidate($request);
                     if ($validator->fails()) {
