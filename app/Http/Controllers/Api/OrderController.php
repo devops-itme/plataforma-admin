@@ -85,20 +85,29 @@ class OrderController extends Controller
 
         try {
             $transactionResponse = DB::transaction(function () use ($request) {
+                $user_id = Auth::user()->id;
+                $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
 
                 if (!is_null($request->address_id)) {
                     $address = Address::find($request->address_id);
                     if (is_null($address)) {
                         return $this->respond(500, null, 'not found', 'Dirección no encontrada');
                     }
-                } else if ($request->add_address_favorite === 'true') {
-                    $user_id = Auth::user()->id;
-                    $request->merge(['user_id' => $user_id, 'address_description' => $request->pickup_address_description]);
+                } else if ((bool)$request->add_address_favorite) {
                     $saveAddressResponse = $this->saveAddress($request);
                     if ($saveAddressResponse['state'] != 200) {
                         return $saveAddressResponse;
                     }
+                    $address_id = $saveAddressResponse['data']->id ?? '';
+                    $request->merge(['address_id' => $address_id]);
+                } else {
+                    $validator = $this->AddressesValidate($request);
+                    if ($validator->fails()) {
+                        return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
+                    }
                 }
+
+                $request->merge(['description' => $request->order_description]);
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -110,10 +119,12 @@ class OrderController extends Controller
                 $guides = $request->guides;
 
                 foreach ($guides as $guide) {
-
-                    $address = Address::find($guide['address_id']);
-                    if (is_null($address)) {
-                        return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                    $address;
+                    if (!is_null($guide['address_id'])) {
+                        $address = Address::find($guide['address_id']);
+                        if (is_null($address)) {
+                            return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                        }
                     }
 
                     $request->merge([
@@ -123,12 +134,30 @@ class OrderController extends Controller
                         'phone_contact' => $guide['phone_contact'],
                         'email_contact' => $guide['email_contact'],
                         'return_last_destination' => $guide['return_last_destination'],
-                        'address_name' => $address->name,
-                        'address_lat' => $address->lat,
-                        'address_lng' => $address->lng,
-                        'address_description' => $address->description,
+                        'address_name' => $address->name ?? $guide['address'],
+                        'address_lat' => $address->lat ?? $guide['lat'],
+                        'address_lng' => $address->lng ?? $guide['lng'],
+                        'address_description' => $address->description ?? $guide['address_description'],
+                        'description' => $address->description ?? $guide['address_description'],
                         'state' => 31
                     ]);
+
+
+                    if (is_null($guide['address_id'])) {
+                        $validator = $this->AddressesValidate($request);
+
+                        if ($validator->fails()) {
+                            return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
+                        }
+                    }
+
+                    if ((bool)$guide['add_address_favorite'] && is_null($guide['address_id'])) {
+                        $saveAddressResponse = $this->saveAddress($request);
+                        if ($saveAddressResponse['state'] != 200) {
+                            return $saveAddressResponse;
+                        }
+                    }
+
                     $storeGuideResponse = $this->storeGuide($request);
                     if ($storeGuideResponse['state'] != 200) {
                         return $storeGuideResponse;
@@ -138,7 +167,7 @@ class OrderController extends Controller
             });
             return $transactionResponse;
         } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage() . $e->getLine(), 'Error del servidor');
+            return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
         }
     }
 

@@ -24,7 +24,7 @@ class GuideController extends Controller
     }
 
     protected $messengerRelationships = [
-        'getRoute', 'getRoute.getMessenger', 'getRoute.getMessenger.getMessenger',
+        'getRoute', 'getRoute.getMessenger', 'getRoute.getMessenger.getMessenger', 'getTransportType'
     ];
 
     public function index(Request $request)
