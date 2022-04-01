@@ -84652,6 +84652,116 @@ var Messengers = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/_notifications.js":
+/*!****************************************!*\
+  !*** ./resources/js/_notifications.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Notifications; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var notificaciones = [{
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion "
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}, {
+  id: 1,
+  title: "Encabezado",
+  description: "Descripcion de notificacion"
+}];
+
+var Notifications = /*#__PURE__*/function () {
+  function Notifications() {
+    _classCallCheck(this, Notifications);
+  }
+
+  _createClass(Notifications, [{
+    key: "initialize",
+    value: function initialize() {
+      this.buildNotificationList(notificaciones);
+    }
+  }, {
+    key: "buildNotificationList",
+    value: function buildNotificationList(params) {
+      var notificationList = document.getElementById("notificationList");
+
+      if (notificationList == null) {
+        return;
+      }
+
+      var arraySlice = params.slice(0, 4);
+      var cardContainer = document.createElement("div");
+      cardContainer.classList = "card-body";
+      var content = "";
+      arraySlice.map(function (e) {
+        content += "\n\n                            <div class=\"notificacion1\">\n                                <h5 class=\"card-title\">".concat(e.title, "</h5>\n                                <p class=\"card-text\">").concat(e.description, "</p>\n                                <a href=\"#\" class=\"btn btn-primary d-block\">Ver detalle</a>\n                            </div>\n                            <div class=\"separator separator-dashed separator-border-2 col-md-12 my-4\"></div>\n\n            ");
+      });
+      content += "\n                                <div class=\" text-center text-uppercase py-0 cursor-pointer\">\n                            <a href=\"#\" class=\"text-dark col-md-12\">Ver todo</a>\n                        </div>\n        ";
+      cardContainer.innerHTML = content;
+      notificationList.appendChild(cardContainer);
+      console.log(arraySlice);
+    }
+  }]);
+
+  return Notifications;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/_orders.js":
 /*!*********************************!*\
   !*** ./resources/js/_orders.js ***!
@@ -87364,9 +87474,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_parameters */ "./resources/js/_parameters.js");
 /* harmony import */ var _hours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_hours */ "./resources/js/_hours.js");
 /* harmony import */ var _plans__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_plans */ "./resources/js/_plans.js");
+/* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -87396,6 +87508,7 @@ var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
 var parameters = new _parameters__WEBPACK_IMPORTED_MODULE_8__["default"]();
 var hours = new _hours__WEBPACK_IMPORTED_MODULE_9__["default"]();
 var plans = new _plans__WEBPACK_IMPORTED_MODULE_10__["default"]();
+var notifications = new _notifications__WEBPACK_IMPORTED_MODULE_11__["default"]();
 var app = new Vue({
   el: '#app'
 });
@@ -87412,6 +87525,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   parameters.initialize();
   hours.initialize();
   plans.initialize();
+  notifications.initialize();
 });
 
 /***/ }),
@@ -88153,8 +88267,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Documents\Proyectos_DevelopApp\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Documents\Proyectos_DevelopApp\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

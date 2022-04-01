@@ -13,6 +13,7 @@ import BranchOffices from './_branchOffice';
 import Parameters from './_parameters';
 import Hours from './_hours';
 import Plans from './_plans';
+import Notifications from './_notifications';
 
 //Vue Components
 Vue.component('deliveries-ondemand', require('./components/deliveries/deliveriesOndemand.vue').default);
@@ -33,7 +34,7 @@ let branchOffice = new BranchOffices();
 let parameters = new Parameters();
 let hours = new Hours();
 let plans = new Plans();
-
+let notifications = new Notifications();
 const app = new Vue({
     el: '#app'
 });
@@ -51,4 +52,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
     parameters.initialize();
     hours.initialize();
     plans.initialize();
+    notifications.initialize();
 });

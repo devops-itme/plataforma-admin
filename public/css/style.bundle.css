@@ -52926,7 +52926,7 @@ button {
 .dropdown .dropdown-toggle.btn:after {
      content: "";
 
-} 
+}
 .dropdown-toggle
 .dropdown-toggle.nav-link:before, .dropdown-toggle.btn:before {
   margin-right: 0.5rem /*rtl:ignore*/;
@@ -80647,10 +80647,12 @@ body {
     }
 .radios{
     width: 15px;
+
 }
 
 .dropdown-menu-width{
     width: 400px;
+    height: 450px;
 }
  .rounded-pill{
      margin-top: 5px;

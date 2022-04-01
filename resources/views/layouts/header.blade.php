@@ -15,38 +15,20 @@
         </div>
 
         <div class="dropdown ml-auto ">
-                <a class="btn dropdown-toggle px-0 mr-3" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fas fa-bell text-white"></i>
-                    <span class="badge rounded-pill text-white bg-danger position-absolute top-0">1</span>
-                </a>
+            <a class="btn dropdown-toggle px-0 mr-3" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fas fa-bell text-white"></i>
+                <span class="badge rounded-pill text-white bg-danger position-absolute top-0">1</span>
+            </a>
 
-                <div class="dropdown-menu dropdown-menu-width mr-37" aria-labelledby="dropdownMenuLink">
-                    <div class="col-sm-12 scroll scroll-pull max-h-300px">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Notificacion 1</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                                <a href="#" class="btn btn-primary d-block">Ver detalle</a>
-                                <div class="separator separator-dashed separator-border-2 col-md-12 my-4"></div>
-                                <h5 class="card-title">Notificacion 2</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                                <a href="#" class="btn btn-primary d-block">Ver detalle</a>
-                                <div class="separator separator-dashed separator-border-2 col-md-12 my-4"></div>
-                                <h5 class="card-title">Notificacion 3</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                                <a href="#" class="btn btn-primary d-block">Ver detalle</a>
-                            </div>
-                            <div class="card-footer text-muted text-center py-0 cursor-pointer">
-                                <a href="#" class="text-dark col-md-12">Ver todo</a>
-                            </div>
-                        </div>
+            <div class="dropdown-menu dropdown-menu-width mr-37" aria-labelledby="dropdownMenuLink">
+                <div class="col-sm-12 scroll scroll-pull max-h-450px">
+                    <div class="card" id="notificationList">
+
                     </div>
                 </div>
             </div>
+        </div>
         <div class="btn-group">
             <a href="perfil" class="btn btn-primary">{{ Auth::user()->getRole->name }}</a>
             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
