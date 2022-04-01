@@ -105,8 +105,8 @@ class OrderController extends Controller
                     }
                 }
 
-                $request->merge([ 'description' => $request->order_description]);
-                
+                $request->merge(['description' => $request->order_description]);
+
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
                     return $storeOderResponse;
@@ -140,10 +140,13 @@ class OrderController extends Controller
                         'state' => 31
                     ]);
 
-                    $validator = $this->AddressesValidate($request);
 
-                    if ($validator->fails()) {
-                        return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
+                    if (is_null($guide['address_id'])) {
+                        $validator = $this->AddressesValidate($request);
+
+                        if ($validator->fails()) {
+                            return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
+                        }
                     }
 
                     if ($guide['add_address_favorite'] === 'true') {
