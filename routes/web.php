@@ -133,7 +133,7 @@ Route::group(['middleware' => 'auth'], function () {
 
      Route::get('todasnotificaciones', function () {
          return view('notifications.seeAll');
-     })->name('todas notificaciones.index');
+     })->name('todasnotificaciones.index');
 
     Route::resource('perfil', 'Admin\ProfileController')->names('profile');
     // Route::get('perfil', function () {

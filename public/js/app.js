@@ -84746,9 +84746,9 @@ var Notifications = /*#__PURE__*/function () {
       cardContainer.classList = "card-body";
       var content = "";
       arraySlice.map(function (e) {
-        content += "\n\n                            <div class=\"notificacion1\">\n                                <h5 class=\"card-title\">".concat(e.title, "</h5>\n                                <p class=\"card-text\">").concat(e.description, "</p>\n                                <a href=\"/notificaciones\" class=\"btn btn-primary d-block\">Ver detalle</a>\n                            </div>\n                            <div class=\"separator separator-dashed separator-border-2 col-md-12 my-4\"></div>\n\n            ");
+        content += "\n\n            <div class=\"notificacion1\">\n                        <h5 class=\"card-title\">".concat(e.title, "</h5>\n                        <p class=\"card-text\">").concat(e.description, "</p>\n                    <a href=\"/notificaciones\" class=\"btn btn-primary d-block\">Ver detalle</a>\n                </div>\n            <div class=\"separator separator-dashed separator-border-2 col-md-12 my-4\"></div>\n\n            ");
       });
-      content += "\n                                <div class=\" text-center text-uppercase py-0 cursor-pointer\">\n                            <a href=\"#\" class=\"text-dark col-md-12\">Ver todo</a>\n                        </div>\n        ";
+      content += "\n            <div class=\" text-center text-uppercase py-0 cursor-pointer\">\n                <a href=\"/todasnotificaciones\" class=\"text-dark col-md-12\">Ver todo</a>\n            </div>\n        ";
       cardContainer.innerHTML = content;
       notificationList.appendChild(cardContainer);
       console.log(arraySlice);
@@ -88267,8 +88267,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Documents\Proyectos_DevelopApp\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Documents\Proyectos_DevelopApp\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
