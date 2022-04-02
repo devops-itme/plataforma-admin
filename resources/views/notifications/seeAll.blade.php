@@ -19,8 +19,7 @@
                     </span>Filtro
                 </button>
 
-                <!--end::Button-->
-                <!--begin::Dropdown-->
+
                 <div class="dropdown dropdown-inline mr-2">
 
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -139,7 +138,7 @@
 
                 </tbody>
             </table>
-            <!--end: Datatable-->
+            
         </div>
     </div>
 @endsection
