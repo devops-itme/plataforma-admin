@@ -84746,7 +84746,7 @@ var Notifications = /*#__PURE__*/function () {
       cardContainer.classList = "card-body";
       var content = "";
       arraySlice.map(function (e) {
-        content += "\n\n                            <div class=\"notificacion1\">\n                                <h5 class=\"card-title\">".concat(e.title, "</h5>\n                                <p class=\"card-text\">").concat(e.description, "</p>\n                                <a href=\"#\" class=\"btn btn-primary d-block\">Ver detalle</a>\n                            </div>\n                            <div class=\"separator separator-dashed separator-border-2 col-md-12 my-4\"></div>\n\n            ");
+        content += "\n\n                            <div class=\"notificacion1\">\n                                <h5 class=\"card-title\">".concat(e.title, "</h5>\n                                <p class=\"card-text\">").concat(e.description, "</p>\n                                <a href=\"/notificaciones\" class=\"btn btn-primary d-block\">Ver detalle</a>\n                            </div>\n                            <div class=\"separator separator-dashed separator-border-2 col-md-12 my-4\"></div>\n\n            ");
       });
       content += "\n                                <div class=\" text-center text-uppercase py-0 cursor-pointer\">\n                            <a href=\"#\" class=\"text-dark col-md-12\">Ver todo</a>\n                        </div>\n        ";
       cardContainer.innerHTML = content;

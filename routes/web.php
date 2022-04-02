@@ -127,9 +127,13 @@ Route::group(['middleware' => 'auth'], function () {
         return view('zones.index');
     })->name('zone.index');
 
-    // Route::get('users', function () {
-    //     return view('users.detail');
-    // })->name('detail.show');
+    Route::get('notificaciones', function () {
+        return view('notifications.index');
+    })->name('notificaciones.index');
+
+     Route::get('todasnotificaciones', function () {
+         return view('notifications.seeAll');
+     })->name('todas notificaciones.index');
 
     Route::resource('perfil', 'Admin\ProfileController')->names('profile');
     // Route::get('perfil', function () {
