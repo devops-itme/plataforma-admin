@@ -57,6 +57,18 @@ class RateController extends Controller
         $package_types = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'package_type');
         })->get();
-        return view('rates.edit', compact('rate', 'package_types'));
+        $zones = Zone::get();
+
+        return view('rates.edit', compact('rate', 'package_types', 'zones'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $special_rate_value = $request->special_rate == 'on' ? 1 : 0;
+        $request->merge(['special_rate' => $special_rate_value]);
+        $rateResponse = $this->updateRate($request, $id);
+        $status = $rateResponse['state'] == 200 ? 'success' : 'danger';
+
+        return redirect()->back()->with($status, $rateResponse['message']);
     }
 }
