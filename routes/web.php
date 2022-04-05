@@ -135,6 +135,11 @@ Route::group(['middleware' => 'auth'], function () {
          return view('notifications.seeAll');
      })->name('todasnotificaciones.index');
 
+
+     Route::get('tarifario', function () {
+         return view('tarifario.index');
+     })->name('tarifario.index');
+
     Route::resource('perfil', 'Admin\ProfileController')->names('profile');
     // Route::get('perfil', function () {
 

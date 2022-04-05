@@ -205,13 +205,13 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button"
-                                data-toggle="dropdown" aria-expanded="false"><i class="fas fa-globe"></i>
-                                Parámetros</a>
+                                data-toggle="dropdown" aria-expanded="false"><i class="fas fa-globe"></i> Configuraciones</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('zone.index') }}">Zonas</a></li>
                                 <li><a class="dropdown-item" href="{{ route('parameters.index') }}">Parametros</a>
                                 </li>
                                 <li><a class="dropdown-item" href="{{ route('hours.index') }}">Horas</a></li>
+                                <li><a class="dropdown-item" href="{{ route('tarifario.index') }}">Tarifario</a></li>
                             </ul>
                         </li>
 
