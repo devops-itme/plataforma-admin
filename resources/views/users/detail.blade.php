@@ -12,7 +12,7 @@
             </h3>
         </div>
         @include('layouts.alerts')
-        <!--begin::Form-->
+
         <form action="" method="post">
 
             <div class="card-body d-flex flex-row flex-wrap">
