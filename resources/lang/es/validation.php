@@ -227,8 +227,8 @@ return [
         'diligence_expenses' => 'Gastos de diligencia',
         'internal_product' => 'Producto interno',
         'tax_total' => 'Total tax',
-        'vehicle_type_id' => 'Tipo de vehiculo',
-        'payment_method' => 'Metodo de pago',
+        'vehicle_type_id' => 'Tipo de vehículo',
+        'payment_method' => 'Método de pago',
         'schedule_date' => 'Fecha de programación',
         'schedule_time_range' => 'Hora de programación',
         'schedule_time' => 'Hora de programación',
@@ -251,7 +251,14 @@ return [
         'invoice_contact' => 'Factura contacto',
         'same_day_delivery' => 'Some day delivery',
         'sign' => 'firmar',
-        'take_photo' => 'Tomar foto'
+        'take_photo' => 'Tomar foto',
+        'neighborhood_id' => 'Barrio',
+        'package_type' => 'Tipo de paquete',
+        'estimated_time' => 'Tiempo estimado',
+        'extra_for_weight' => 'Libra adicional por peso',
+        'extra_per_size' => 'Libra adicional por tamaño',
+        'percentage_immediate_delivery' => 'Porcentaje entrega inmediata',
+        'special_rate' => 'Tarifa especial',
     ],
 
 ];

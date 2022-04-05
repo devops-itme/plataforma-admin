@@ -17,6 +17,7 @@ trait RatesTrait
             $request->all(),
             [
                 // 'zone_id' => 'required|exists:zones,id',
+                // 'neighborhood_id' => 'required|exists:neighborhoods,id',
                 'package_type' => 'required|exists:parameter_values,id',
                 'estimated_time' => 'required|string',
                 'extra_for_weight' => 'required|numeric',
@@ -39,6 +40,7 @@ trait RatesTrait
         try {
             $rate = Rate::create([
                 'zone_id' => $request->zone_id,
+                'neighborhood_id' => $request->neighborhood_id,
                 'package_type' => $request->package_type,
                 'estimated_time' => $request->estimated_time,
                 'extra_for_weight' => $request->extra_for_weight,
