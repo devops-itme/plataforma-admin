@@ -17,6 +17,8 @@ class CreateRatesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('zone_id')->nullable();
             // $table->foreign('zone_id')->references('id')->on('zones');
+            $table->unsignedBigInteger('neighborhood_id')->nullable();
+            // $table->foreign('neighborhood_id')->references('id')->on('neighborhoods');
             $table->unsignedBigInteger('package_type')->nullable();
             // $table->foreign('package_type')->references('id')->on('parameter_values');
             $table->string('estimated_time')->nullable();
