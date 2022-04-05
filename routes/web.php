@@ -136,7 +136,7 @@ Route::group(['middleware' => 'auth'], function () {
      })->name('todasnotificaciones.index');
 
      Route::get('listado', function () {
-         return view('tarifario.listado');
+         return view('tarifario.list');
      })->name('listado.index');
 
      Route::get('crear', function () {
