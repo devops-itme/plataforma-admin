@@ -135,10 +135,13 @@ Route::group(['middleware' => 'auth'], function () {
          return view('notifications.seeAll');
      })->name('todasnotificaciones.index');
 
+     Route::get('listado', function () {
+         return view('tarifario.listado');
+     })->name('listado.index');
 
-     Route::get('tarifario', function () {
-         return view('tarifario.index');
-     })->name('tarifario.index');
+     Route::get('crear', function () {
+         return view('tarifario.create');
+     })->name('crear.index');
 
     Route::resource('tarifas', 'Admin\RateController')->names('rates');
 

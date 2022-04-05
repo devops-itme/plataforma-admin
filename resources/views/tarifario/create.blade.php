@@ -5,7 +5,6 @@
 @section('content')
     @include('layouts.breadCrumbs')
 
-
     <div class="card card-custom">
         <div class="card-header">
             <h3 class="card-title">
@@ -61,12 +60,10 @@
 
                 <div class="form-group col-md-3 py-3 mt-10">
                     <label class="checkbox">
-                        <input type="checkbox" name="return_last_destination"/>
+                        <input type="checkbox" name="return_last_destination" />
                         <span class="mr-2"></span>Tarifa especial
                     </label>
                 </div>
-
-
             </div>
 
             <div class="card-footer d-flex justify-content-end">
@@ -74,7 +71,6 @@
                 <button type="reset" class="btn btn-secondary">Limpiar</button>
             </div>
         </form>
-        <!--end::Form-->
     </div>
 @endsection
 
