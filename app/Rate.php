@@ -25,10 +25,12 @@ class Rate extends Model
     {
         return $this->belongsTo(Zone::class, 'zone_id');
     }
+
     public function getNeighborhood()
     {
         return $this->belongsTo(Neighborhood::class, 'neighborhood_id');
     }
+    
     public function getPackageType()
     {
         return $this->belongsTo(ParameterValue::class, 'package_type');
