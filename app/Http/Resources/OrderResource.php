@@ -41,9 +41,10 @@ class OrderResource extends JsonResource
             "app_status" => $this->app_status,
             "address" => [
                 "id" => $this->getAddress->id ?? '',
-                "name" => $this->getAddress->name ?? '',
-                "lat" => $this->getAddress->lat ?? '',
-                "lng" => $this->getAddress->lng ?? '',
+                "name" => $this->getAddress->name ?? ( $this->address_name ?? ''),
+                "lat" => $this->getAddress->lat ?? ( $this->address_lat ?? ''),
+                "lng" => $this->getAddress->lng ?? ( $this->address_lng ?? ''),
+                "description" => $this->getAddress->description ?? ( $this->address_description ?? ''),
             ],
             "user" => [
                 "id" => $this->getUser->id ?? '',
