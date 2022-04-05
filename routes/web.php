@@ -143,6 +143,14 @@ Route::group(['middleware' => 'auth'], function () {
          return view('tarifario.create');
      })->name('crear.index');
 
+     Route::get('editar', function () {
+         return view('tarifario.edit');
+     })->name('editar.index');
+
+     Route::get('detalle', function () {
+         return view('tarifario.detail');
+     })->name('detalle.index');
+
     Route::resource('tarifas', 'Admin\RateController')->names('rates');
 
     Route::resource('perfil', 'Admin\ProfileController')->names('profile');
