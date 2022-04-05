@@ -5,10 +5,10 @@
 @section('content')
     @include('layouts.breadCrumbs')
 
-<div class="card card-custom">
+    <div class="card card-custom">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
-                <h2 class="card-label h1">Listado
+                <h2 class="card-label h1">Tarifas
                 </h2>
             </div>
             <div class="card-toolbar">
@@ -91,7 +91,7 @@
 
                 </div>
 
-                <a href="{{ route('crear.index') }}" class="btn btn-primary font-weight-bolder" data-tooltip
+                <a href="{{ route('rates.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip
                     title="CREAR">
                     <span class="svg-icon svg-icon-md">
                         <i class="fas fa-plus"></i>
@@ -105,46 +105,47 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">Nombres</th>
-                        <th scope="col">Número de documento</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Rol</th>
+                        <th scope="col">id</th>
+                        <th scope="col">Tipo de tarifa</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-
-                    <tr>
-                        <th>Pedro Navaja</th>
-                        <td>123456789</td>
-                        <td>navaja@gmail.com</td>
-                        <td>30257777</td>
-                        <td>Lacra</td>
-                        <td>
-                            <span class="label label-inline label-light-success font-weight-bold">
-                                Activo
-                            </span>
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                <a href="{{ route('detalle.index') }}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
-                                    <i class="far fa-folder-open"></i>
-                                </a>
-                                <a href="{{ route('editar.index') }}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-
+                    @foreach ($rates as $rate)
+                        <tr>
+                            <th>{{ $rate->id }}</th>
+                            <th>{{ $rate->package_type }}</th>
+                            <td>
+                                @if ($rate->state == 1)
+                                    <span class="label label-inline label-light-success font-weight-bold">
+                                        Activo
+                                    </span>
+                                @else
+                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                        Inactivo
+                                    </span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                                    <a href="{{ route('rates.show', $rate->id) }}"
+                                        class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
+                                        <i class="far fa-folder-open"></i>
+                                    </a>
+                                    <a href="{{ route('rates.edit', $rate->id) }}"
+                                        class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
         </div>
     </div>
-
 @endsection
 
 {{-- Styles Section --}}

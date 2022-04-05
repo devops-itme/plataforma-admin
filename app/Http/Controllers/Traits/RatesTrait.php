@@ -19,11 +19,11 @@ trait RatesTrait
                 // 'zone_id' => 'required|exists:zones,id',
                 // 'neighborhood_id' => 'required|exists:neighborhoods,id',
                 'package_type' => 'required|exists:parameter_values,id',
-                'estimated_time' => 'required|string',
+                'estimated_time' => 'required|numeric',
                 'extra_for_weight' => 'required|numeric',
                 'extra_per_size' => 'required|numeric',
                 'percentage_immediate_delivery' => 'required|numeric',
-                'special_rate' => 'required|numeric',
+                'special_rate' => 'nullable|numeric',
                 'state' => 'nullable|numeric',
             ]
         );
@@ -46,7 +46,7 @@ trait RatesTrait
                 'extra_for_weight' => $request->extra_for_weight,
                 'extra_per_size' => $request->extra_per_size,
                 'percentage_immediate_delivery' => $request->percentage_immediate_delivery,
-                'special_rate' => $request->special_rate,
+                'special_rate' => $request->special_rate ?? 0,
                 'state' => $request->state ?? 1
             ]);
 
