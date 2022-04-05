@@ -18,7 +18,7 @@
             <div class="card-body d-flex flex-row flex-wrap">
 
                 <div class="form-group col-md-4">
-                    <label>Tipo de paquete:</label>
+                    <label>Tipo de paquete: <span class="text-danger">*</span></label>
                     <select class="form-control form-control-solid" id="" name="" required>
                         <option selected disabled>Seleccione</option>
                         <option>Paquete chileno</option>
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label>Zona:</label>
+                    <label>Zona: <span class="text-danger">*</span></label>
                     <select class="form-control form-control-solid" name="" required>
                         <option selected disabled>Seleccione</option>
                         <option>Norte</option>
@@ -36,36 +36,35 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label>Tiempo estimado:</label>
+                    <label>Tiempo estimado: <span class="text-danger">*</span></label>
                     <input type="text" class="form-control form-control-solid" placeholder="Estime el tiempo" name=""
                         value="" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
-                    <label>Libra adicional por peso:</label>
+                    <label>Libra adicional por peso: <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid" placeholder="Cantidad de Libra adicional"
                         name="" value="" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
-                    <label>Libra adicional por tamaño(Vol.)</label>
+                    <label>Libra adicional por tamaño(Vol.) <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid"
                         placeholder="Cantidad de Libra adicional x Tamaño" name="" value="" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
-                    <label>% Por entrega inmediata</label>
+                    <label>% Por entrega inmediata <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid" placeholder="Porcentaje x entrega" name=""
                         value="" />
                 </div>
 
-                <div class="form-group col-md-3 py-3 mt-10">
+                <div class="form-group row col-md-3 py-3 mt-10">
                     <label class="checkbox">
                         <input type="checkbox" name="return_last_destination"/>
                         <span class="mr-2"></span>Tarifa especial
-                    </label>
+                    </label> <span class="text-danger">*</span>
                 </div>
-
 
             </div>
 
