@@ -48,4 +48,13 @@ class RateController extends Controller
         }
         return redirect()->route('rates.index')->with('success', $rateResponse['message']);
     }
+
+    public function edit($id)
+    {
+        $rate = Rate::find($id);
+        $package_types = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'package_type');
+        })->get();
+        return view('rates.edit', compact('rate', 'package_types'));
+    }
 }

@@ -133,7 +133,7 @@
                                         class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
                                         <i class="far fa-folder-open"></i>
                                     </a>
-                                    <a href="{{ route('editar.index') }}"
+                                    <a href="{{ route('rates.edit', $rate->id) }}"
                                         class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
