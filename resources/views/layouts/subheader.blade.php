@@ -211,7 +211,7 @@
                                 <li><a class="dropdown-item" href="{{ route('parameters.index') }}">Parametros</a>
                                 </li>
                                 <li><a class="dropdown-item" href="{{ route('hours.index') }}">Horas</a></li>
-                                <li><a class="dropdown-item" href="{{ route('listado.index') }}">Tarifario</a></li>
+                                <li><a class="dropdown-item" href="{{ route('rates.index') }}">Tarifario</a></li>
                             </ul>
                         </li>
 
