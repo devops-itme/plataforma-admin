@@ -129,10 +129,10 @@
                         </td>
                         <td>
                             <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                <a href="" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
+                                <a href="{{ route('detalle.index') }}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
                                     <i class="far fa-folder-open"></i>
                                 </a>
-                                <a href="" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
+                                <a href="{{ route('editar.index') }}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </div>
