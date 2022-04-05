@@ -15,69 +15,38 @@
         @include('layouts.alerts')
 
         <form action="{{ route('rates.store') }}" method="POST">
-            @csrf
+           
             <div class="card-body d-flex flex-row flex-wrap">
 
-                <div class="form-group col-md-3">
-                    <label>Tipo de paquete: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" id="" name="package_type" required>
-                        <option selected disabled>Seleccione tipo de paquete</option>
-
-                    </select>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label>Zona: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="zone_id" required>
-                        <option selected disabled>Seleccione zona</option>
-
-                    </select>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label>Barrio: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="neighborhood_id" required>
-                        <option selected disabled>Seleccione</option>
-                        <option value="1">Norte</option>
-                        <option value="2">Sur</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label>Tiempo estimado: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Estime el tiempo"
-                        name="estimated_time" value="" />
-                </div>
-
-                <div class="form-group col-md-3 py-3">
-                    <label>Libra adicional por peso: <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-solid" placeholder="Cantidad de Libra adicional"
-                        name="extra_for_weight" value="" />
-                </div>
-
-                <div class="form-group col-md-3 py-3">
-                    <label>Libra adicional por tamaño(Vol.) <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-solid"
-                        placeholder="Cantidad de Libra adicional x Tamaño" name="extra_per_size" value="" />
-                </div>
-
-                <div class="form-group col-md-3 py-3">
-                    <label>% Por entrega inmediata <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-solid" placeholder="Porcentaje x entrega"
-                        name="percentage_immediate_delivery" value="" />
-                </div>
-
-                <div class="form-group row col-md-3 py-3 mt-10">
-                    <label class="checkbox">
-                        <input type="checkbox" name="return_last_destination" />
-                        <span class="mr-2"></span>Tarifa especial
-                    </label> <span class="text-danger">*</span>
-                </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Nombres:</div>
+                        <div class="line-height-xl">Pedro Navaja</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Numero de Documento:</div>
+                        <div class="line-height-xl">123456789</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Correo</div>
+                        <div class="line-height-xl">navaja@gmail.com</div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Teléfono</div>
+                        <div class="line-height-xl">30257777</div>
+                    </div>
+                    <div class="col-md-6 mt-7">
+                        <div class="font-weight-bolder mb-3">Rol</div>
+                        <div class="line-height-xl">Lacra</div>
+                    </div>
+                    <div class="col-md-6 mt-7">
+                        <div class="font-weight-bolder mb-3">Estado</div>
+                        <div class="line-height-xl">Activo</div>
+                    </div>
             </div>
 
             <div class="card-footer d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary mr-2">Guardar</button>
-                <button type="reset" class="btn btn-secondary">Limpiar</button>
+                <button type="reset" class="btn btn-secondary"><a href="{{ route('listado.index') }}"
+                        class="text-muted">Volver</a></button>
             </div>
         </form>
     </div>
