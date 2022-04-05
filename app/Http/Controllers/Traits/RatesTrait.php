@@ -19,7 +19,7 @@ trait RatesTrait
                 // 'zone_id' => 'required|exists:zones,id',
                 // 'neighborhood_id' => 'required|exists:neighborhoods,id',
                 'package_type' => 'required|exists:parameter_values,id',
-                'estimated_time' => 'required|string',
+                'estimated_time' => 'required|numeric',
                 'extra_for_weight' => 'required|numeric',
                 'extra_per_size' => 'required|numeric',
                 'percentage_immediate_delivery' => 'required|numeric',

@@ -23,7 +23,8 @@
                     <select class="form-control form-control-solid" id="" name="package_type" required>
                         <option selected disabled>Seleccione tipo de paquete</option>
                         @foreach ($package_types as $package_type)
-                            <option value="{{ $package_type->id }}">{{ $package_type->name }}</option>
+                            <option {{ old('package_type') == $package_type->id ? 'selected ' : '' }}
+                                value="{{ $package_type->id }}">{{ $package_type->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -33,47 +34,46 @@
                     <select class="form-control form-control-solid" name="zone_id" required>
                         <option selected disabled>Seleccione zona</option>
                         @foreach ($zones as $zone)
-                            <option value="{{ $zone->id }}">{{ $zone->name }}</option>
+                            <option {{ old('zone_id') == $zone->id ? 'selected ' : '' }} value="{{ $zone->id }}">
+                                {{ $zone->name }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Barrio: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="neighborhood_id" required>
+                    <select class="form-control form-control-solid" name="neighborhood_id" disabled required>
                         <option selected disabled>Seleccione</option>
-                        <option value="1">Norte</option>
-                        <option value="2">Sur</option>
                     </select>
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label>Tiempo estimado: <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control form-control-solid" placeholder="Estime el tiempo"
-                        name="estimated_time" value="" />
+                    <label>Tiempo estimado(en horas): <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control form-control-solid" placeholder="Estime el tiempo"
+                        name="estimated_time" value="{{old('estimated_time')}}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>Libra adicional por peso: <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid" placeholder="Cantidad de Libra adicional"
-                        name="extra_for_weight" value="" />
+                        name="extra_for_weight" value="{{old('extra_for_weight')}}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>Libra adicional por tamaño(Vol.) <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid"
-                        placeholder="Cantidad de Libra adicional x Tamaño" name="extra_per_size" value="" />
+                        placeholder="Cantidad de Libra adicional x Tamaño" name="extra_per_size" value="{{old('extra_per_size')}}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>% Por entrega inmediata <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid" placeholder="Porcentaje x entrega"
-                        name="percentage_immediate_delivery" value="" />
+                        name="percentage_immediate_delivery" value="{{old('percentage_immediate_delivery')}}" />
                 </div>
-
+                
                 <div class="form-group row col-md-3 py-3 mt-10">
                     <label class="checkbox">
-                        <input type="checkbox" name="return_last_destination" />
+                        <input type="checkbox" name="special_rate" {{old('special_rate') === 'on' ? 'checked' : ''}}  />
                         <span class="mr-2"></span>Tarifa especial
                     </label> <span class="text-danger">*</span>
                 </div>
