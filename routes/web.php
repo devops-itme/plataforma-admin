@@ -140,6 +140,8 @@ Route::group(['middleware' => 'auth'], function () {
          return view('tarifario.index');
      })->name('tarifario.index');
 
+    Route::resource('tarifas', 'Admin\RateController')->names('rates');
+
     Route::resource('perfil', 'Admin\ProfileController')->names('profile');
     // Route::get('perfil', function () {
 

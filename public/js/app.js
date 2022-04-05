@@ -83162,6 +83162,7 @@ var Customers = /*#__PURE__*/function () {
                 formData.append('branchCheck', branchArr);
                 formData.append('departments', departmentsArr);
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                console.log(token);
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -83174,10 +83175,10 @@ var Customers = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context.next = 20;
+                _context.next = 21;
                 return _this.storeCustomer(requestOptions);
 
-              case 20:
+              case 21:
                 response = _context.sent;
                 console.log(response);
 
@@ -83189,7 +83190,7 @@ var Customers = /*#__PURE__*/function () {
                   console.log(response.error);
                 }
 
-              case 23:
+              case 24:
               case "end":
                 return _context.stop();
             }

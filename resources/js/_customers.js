@@ -41,6 +41,7 @@ export default class Customers {
             let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
+                console.log(token)
             let myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");

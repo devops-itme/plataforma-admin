@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Http\Controllers\Traits;
+
+use App\Http\Controllers\Traits\RestActions;
+use App\Rate;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
+trait RatesTrait
+{
+    use RestActions;
+
+    public function validateRate($request)
+    {
+        return Validator::make(
+            $request->all(),
+            [
+                // 'zone_id' => 'required|exists:zones,id',
+                'package_type' => 'required|exists:parameter_values,id',
+                'estimated_time' => 'required|string',
+                'extra_for_weight' => 'required|numeric',
+                'extra_per_size' => 'required|numeric',
+                'percentage_immediate_delivery' => 'required|numeric',
+                'special_rate' => 'required|numeric',
+                'state' => 'nullable|numeric',
+            ]
+        );
+    }
+
+    public function saveRate($request)
+    {
+        $validator = $this->validateRate($request);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+
+        try {
+            $rate = Rate::create([
+                'zone_id' => $request->zone_id,
+                'package_type' => $request->package_type,
+                'estimated_time' => $request->estimated_time,
+                'extra_for_weight' => $request->extra_for_weight,
+                'extra_per_size' => $request->extra_per_size,
+                'percentage_immediate_delivery' => $request->percentage_immediate_delivery,
+                'special_rate' => $request->special_rate,
+                'state' => $request->state ?? 1
+            ]);
+
+            return $this->respond(200, $rate, null, 'Tarifa creado exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear tarifa');
+        }
+    }
+}
