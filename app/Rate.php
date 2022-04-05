@@ -14,6 +14,7 @@ class Rate extends Model
         'neighborhood_id',
         'package_type',
         'estimated_time',
+        'base_value',
         'extra_for_weight',
         'extra_per_size',
         'percentage_immediate_delivery',
@@ -30,9 +31,37 @@ class Rate extends Model
     {
         return $this->belongsTo(Neighborhood::class, 'neighborhood_id');
     }
-    
+
     public function getPackageType()
     {
         return $this->belongsTo(ParameterValue::class, 'package_type');
+    }
+
+    public function calculateRate($rate_id, $lbs, $vol, $immediate_delivery = false)
+    {
+        $calculated = null;
+        $rate = $this::where('id', $rate_id)->first();
+        $calculated = $rate->base_value;
+        switch ($rate->getPackageType->name) {
+            case 'Tipo A':
+                if($lbs > 50){
+                    $calculated += $lbs > $vol ? $rate->extra_for_weight * $lbs : $rate->extra_per_size * $vol;
+                }
+                break;
+            case 'Tipo B':
+                if($lbs > 66){
+                    $calculated += $lbs > $vol ? $rate->extra_for_weight * $lbs : $rate->extra_per_size * $vol;
+                }
+                break;
+            default:
+                $calculated = 0;
+                break;
+        }
+
+        if($immediate_delivery){
+            $calculated += ($calculated * $rate->percentage_immediate_delivery / 100);
+        }
+
+        return $calculated;
     }
 }

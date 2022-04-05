@@ -15,6 +15,8 @@ class RateController extends Controller
 
     public function index()
     {
+        // $model = new Rate();
+        // return $model->calculateRate(1, 75, 79);
         $rates = Rate::paginate(10);
 
         return view('rates.index', compact('rates'));

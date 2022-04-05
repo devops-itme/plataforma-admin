@@ -107,6 +107,7 @@
                     <tr>
                         <th scope="col">id</th>
                         <th scope="col">Tipo de tarifa</th>
+                        <th scope="col">Zona</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                     </tr>
@@ -115,7 +116,8 @@
                     @foreach ($rates as $rate)
                         <tr>
                             <th>{{ $rate->id }}</th>
-                            <th>{{ $rate->package_type }}</th>
+                            <th>{{ $rate->getPackageType->name }}</th>
+                            <th>{{ $rate->getZone->name }}</th>
                             <td>
                                 @if ($rate->state == 1)
                                     <span class="label label-inline label-light-success font-weight-bold">
