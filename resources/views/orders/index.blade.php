@@ -22,7 +22,7 @@
                 </button>
                 <!--end::Button filter-->
                 <!--begin::Dropdown-->
-                <div class="dropdown dropdown-inline mr-2">
+                {{-- <div class="dropdown dropdown-inline mr-2">
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="svg-icon svg-icon-md">
@@ -92,7 +92,7 @@
                         <!--end::Navigation-->
                     </div>
                     <!--end::Dropdown Menu-->
-                </div>
+                </div> --}}
                 <!--end::Dropdown-->
                 <!--begin::Button-->
 

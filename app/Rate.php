@@ -37,6 +37,37 @@ class Rate extends Model
         return $this->belongsTo(ParameterValue::class, 'package_type');
     }
 
+    public function scopePackageType($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('package_type',  $value);
+    }
+
+    public function scopeBaseValue($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('base_value',  $value);
+    }
+
+    public function scopeZone($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('zone_id',  $value);
+    }
+
+    public function scopeNeighborhood($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('neighborhood_id',  $value);
+    }
+
+    public function scopeState($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('state', $value);
+    }
+
+
     public function calculateRate($rate_id, $lbs, $vol, $immediate_delivery = false)
     {
         $calculated = null;
@@ -44,12 +75,12 @@ class Rate extends Model
         $calculated = $rate->base_value;
         switch ($rate->getPackageType->name) {
             case 'Tipo A':
-                if($lbs > 50){
+                if ($lbs > 50) {
                     $calculated += $lbs > $vol ? $rate->extra_for_weight * $lbs : $rate->extra_per_size * $vol;
                 }
                 break;
             case 'Tipo B':
-                if($lbs > 66){
+                if ($lbs > 66) {
                     $calculated += $lbs > $vol ? $rate->extra_for_weight * $lbs : $rate->extra_per_size * $vol;
                 }
                 break;
@@ -58,7 +89,7 @@ class Rate extends Model
                 break;
         }
 
-        if($immediate_delivery){
+        if ($immediate_delivery) {
             $calculated += ($calculated * $rate->percentage_immediate_delivery / 100);
         }
 
