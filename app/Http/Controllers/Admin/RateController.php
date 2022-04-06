@@ -24,7 +24,7 @@ class RateController extends Controller
             ->zone(request()->zone_id)
             ->neighborhood(request()->neighborhood_id)
             ->state(request()->state)
-            ->paginate(15);
+            ->paginate(12);
 
         $package_types = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'package_type');
