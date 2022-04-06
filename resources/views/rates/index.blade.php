@@ -19,7 +19,7 @@
                     </span>Filtro
                 </button>
 
-                <div class="dropdown dropdown-inline mr-2">
+                {{-- <div class="dropdown dropdown-inline mr-2">
 
                     {{-- <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -89,7 +89,7 @@
 
                     </div>
 
-                </div>
+                </div> --}}
 
                 <a href="{{ route('rates.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip
                     title="CREAR">
