@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RatesTrait;
+use App\Neighborhood;
 use App\ParameterValue;
 use App\Rate;
 use App\Zone;
@@ -17,14 +18,28 @@ class RateController extends Controller
     {
         // $model = new Rate();
         // return $model->calculateRate(1, 75, 79);
-        $rates = Rate::paginate(10);
+        $rates = Rate::packageType(request()->package_type)
+            ->baseValue(request()->base_value)
+            ->packageType(request()->package_type)
+            ->zone(request()->zone_id)
+            ->neighborhood(request()->neighborhood_id)
+            ->state(request()->state)
+            ->paginate(15);
 
-        return view('rates.index', compact('rates'));
+        $package_types = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'package_type');
+        })->get();
+
+        $zones = Zone::get();
+
+        $neighborhoods = Neighborhood::get();
+
+        return view('rates.index', compact('rates', 'package_types', 'zones', 'neighborhoods'));
     }
 
     public function show($id)
     {
-        $rate = Rate::find($id);
+        return $rate = Rate::find($id);
         return view('rates.detail', compact('rate'));
     }
 
