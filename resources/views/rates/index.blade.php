@@ -195,7 +195,7 @@
                         </tr>
                     @endif
                     @foreach ($rates as $rate)
-                        <tr>
+                        <tr id="rate-id-{{ $rate->id }}">
                             <th>{{ $rate->id }}</th>
                             <th>{{ $rate->getPackageType->name }}</th>
                             <th>${{ $rate->base_value }}</th>
@@ -222,6 +222,11 @@
                                         class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
+                                    <a onclick="deleteResource('/tarifas/'+{{ $rate->id }}+'?response_format=json',false,'rate-id-'+{{ $rate->id }})"
+                                        role_id="button" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
+                                        title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -229,7 +234,7 @@
                 </tbody>
             </table>
             <div class="col-md-12 d-flex align-items-center justify-content-end">
-                {{$rates->links()}}
+                {{ $rates->links() }}
             </div>
         </div>
     </div>

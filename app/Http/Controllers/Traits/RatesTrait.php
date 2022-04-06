@@ -89,4 +89,18 @@ trait RatesTrait
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar tarifa');
         }
     }
+
+    public function deleteRate($id)
+    {
+        try {
+            $rate = Rate::find($id);
+            if (is_null($rate)) {
+                return $this->respond(500, [], 'rate not found', 'No se encontró la tarifa');
+            }
+            $rate->delete();
+            return $this->respond(200, $rate, null, 'Tarifa eliminada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar tarifa');
+        }
+    }
 }

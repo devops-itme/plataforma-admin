@@ -86,4 +86,14 @@ class RateController extends Controller
 
         return redirect()->back()->with($status, $rateResponse['message']);
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $rateResponse = $this->deleteRate($id);
+        if ($request->response_format == 'json') {
+            return $rateResponse;
+        }
+        $status = $rateResponse['state'] == 200 ? 'success' : 'danger';
+        return redirect()->back()->with($status, $rateResponse['message']);
+    }
 }
