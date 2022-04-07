@@ -24,6 +24,7 @@ Route::post('customer/signIn', 'Api\AuthController@registerCustomer');
 
 //Parameter values
 Route::get('parameter_values', 'Api\ParameterValueController@getParameterValues');
+Route::get('status_matrix', 'Api\ParameterValueController@getStatusMatrix');
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
