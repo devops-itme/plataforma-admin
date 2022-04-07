@@ -17,7 +17,7 @@ class CreateNeighborhoodsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('corregimiento_id');
             $table->foreign('corregimiento_id')->references('id')->on('corregimientos');
-            $table->unsignedBigInteger('zone_id');
+            $table->unsignedBigInteger('zone_id')->nullable();
             $table->foreign('zone_id')->references('id')->on('zones');
             $table->string('name')->nullable();
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}")->nullable();
