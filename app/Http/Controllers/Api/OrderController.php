@@ -190,4 +190,23 @@ class OrderController extends Controller
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
     }
+
+    public function changeStatus(Request $request)
+    {
+        try {
+            $order = Order::where('id', $request->order_id)->first();
+            if (is_null($order)) {
+                return $this->respond(500, null, 'not found', 'No se encontró la orden');
+            }
+            $changes = ['state' => $request->state];
+            if ($order->update($changes)) {
+                $order = $order->with($this->messengerRelationships)->get();
+                $order = OrderResource::collection($order)[0];
+                return $this->respond(200, $order, null, 'Estado de la orden cambiado');
+            }
+            //code...
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
 }

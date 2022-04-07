@@ -38,7 +38,7 @@
                                 </g>
                             </svg>
                         </span>Exportar
-                    </button> --}}
+                    </button>
 
                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
 
@@ -89,14 +89,13 @@
 
                     </div>
 
-                </div> --}}
+                </div>--}}
 
                 <a href="{{ route('rates.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip
                     title="CREAR">
-                    <span class="svg-icon svg-icon-md">
+                    <span class="">
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
-
             </div>
         </div>
         <div class="card-body">
