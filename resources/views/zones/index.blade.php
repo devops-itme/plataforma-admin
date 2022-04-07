@@ -16,28 +16,19 @@
                         <div class="form-group mb-0">
                             <select class="form-control">
                                 <option>Seleccione</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+
                             </select>
                         </div>
                         <div class="form-group mb-0">
                             <select class="form-control">
                                 <option>Seleccione</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+
                             </select>
                         </div>
                         <div class="form-group mb-0">
                             <select class="form-control">
                                 <option>Seleccione</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+
                             </select>
                         </div>
                         <a href="#" class="btn btn-light-primary font-weight-bold"><i class="fad fa-filter"></i>
@@ -71,60 +62,58 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="zone-list" role="tabpanel"
-                            aria-labelledby="zone-list">
+                        @include('layouts.alerts')
+                        <div class="tab-pane fade show active" id="zone-list" role="tabpanel" aria-labelledby="zone-list">
                             <h6 class="my-2 font-weight-bold text-dark">Lista de zonas</h6>
                             <div class="list-group">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                  1. Zona 1
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">2. Zona 2</a>
-                                <a href="#" class="list-group-item list-group-item-action">3. Zona 3</a>
-                                <a href="#" class="list-group-item list-group-item-action">4. Zona 4</a>
-                                <a href="#" class="list-group-item list-group-item-action">5. Zona 5</a>
-                              </div>
+                                @foreach ($zones as $zone)
+                                    <a href="#" class="list-group-item list-group-item-action">{{ $zone->name ?? '' }}</a>
+                                @endforeach
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="addition" role="tabpanel" aria-labelledby="addition">
-                            <div class="form-group py-3 m-0 col-md-12">
-                                <label>Nombre: </label>
-                                <input type="text" class="form-control" placeholder="Nombre de zona" />
-                                <span class="form-text text-muted"></span>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <select class="form-control">
-                                    <option>Seleccione</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <select class="form-control">
-                                    <option>Seleccione</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <select class="form-control">
-                                    <option>Seleccione</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                            <div class="form-group py-3 m-0 col-md-12">
-                                <label class="font-weight-bolder">Puntos: </label>
-                                <span>Malambo, Soledad city...</span>
-                                <span class="form-text text-muted"></span>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-end">
-                                <a href="#" class="btn btn-light-primary font-weight-bold mr-2">Guardar</a>
-                            </div>
+                            <form action="{{ route('zones.store') }}" method="POST">
+                                @csrf
+                                <div class="form-group py-3 m-0 col-md-12">
+                                    <label>Nombre: </label>
+                                    <input type="text" class="form-control" name="name" placeholder="Nombre de zona" />
+                                    <span class="form-text text-muted"></span>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <select class="form-control" id="select-country" name="country">
+                                        <option selected disabled>Seleccione pais</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <select class="form-control" id="select-province" name="province">
+                                        <option>Seleccione provincia</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <select class="form-control" id="select-district" name="district">
+                                        <option>Seleccione distrito</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <select class="form-control" id="select-corregimiento" name="corregimiento">
+                                        <option>Seleccione corregimiento</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <select multiple class="form-control" id="select-neighborhood" name="neighborhood[]">
+                                        <option>Seleccione barrio</option>
+                                    </select>
+                                </div>
+                                {{-- <div class="form-group py-3 m-0 col-md-12">
+                                    <label class="font-weight-bolder">Puntos: </label>
+                                    <span>Malambo, Soledad city...</span>
+                                    <span class="form-text text-muted"></span>
+                                </div> --}}
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <button type="submit"
+                                        class="btn btn-light-primary font-weight-bold mr-2">Guardar</button>
+                                </div>
+                            </form>
                         </div>
                         <div class="tab-pane fade" id="zone-edit" role="tabpanel" aria-labelledby="zone-edit">
                             ...

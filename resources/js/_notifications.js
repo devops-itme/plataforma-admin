@@ -46,6 +46,5 @@ export default class Notifications {
         `;
         cardContainer.innerHTML = content;
         notificationList.appendChild(cardContainer);
-        console.log(arraySlice);
     }
 }

@@ -1,6 +1,7 @@
 export default class Zones {
     initialize() {
         this.initMap();
+        this.getCountries();
     }
 
     initMap() {
@@ -40,5 +41,138 @@ export default class Zones {
         });
 
         myPolygon.setMap(map);
+
+        console.log(myPolygon.setPath());
     }
+
+    async getCountries() {
+        let select = document.getElementById("select-country");
+        if (select == null) {
+            return;
+        }
+
+        let response = await requestPlaces('country');
+        if (response.state != 200) {
+            return;
+        }
+
+        let countries = response.data;
+        countries.map(country => {
+            let option = document.createElement("option");
+            option.text = country.name;
+            option.value = country.id;
+            select.appendChild(option);
+        });
+        select.addEventListener('change', function () {
+            getProvinces(select.value);
+        });
+    }
+}
+
+const requestPlaces = async (place, id = '') => {
+    let response = {
+        'state': 500
+    };
+    await fetch(`getPlaces?place_type=${place}&place_id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            response = data
+        })
+        .catch(e => console.log(e));
+    return response;
+}
+
+const getProvinces = async (id) => {
+    let select = document.getElementById("select-province");
+    if (select == null) {
+        return;
+    }
+    select.innerHTML = `<option selected disabled>Seleccione provincia</option>`;
+
+    let response = await requestPlaces('province', id);
+    if (response.state != 200) {
+        return;
+    }
+
+    let provinces = response.data;
+    provinces.map(province => {
+        let option = document.createElement("option");
+        option.text = province.name;
+        option.value = province.id;
+        select.appendChild(option);
+    });
+    select.addEventListener('change', function () {
+        getDistricts(select.value);
+    });
+}
+
+const getDistricts = async (id) => {
+    let select = document.getElementById("select-district");
+    if (select == null) {
+        return;
+    }
+    select.innerHTML = `<option selected disabled>Seleccione distrito</option>`;
+
+    let response = await requestPlaces('district', id);
+    if (response.state != 200) {
+        return;
+    }
+
+    let districts = response.data;
+    districts.map(district => {
+        let option = document.createElement("option");
+        option.text = district.name;
+        option.value = district.id;
+        select.appendChild(option);
+    });
+
+    select.addEventListener('change', function () {
+        getCorregimientos(select.value);
+    });
+}
+
+const getCorregimientos = async (id) => {
+    let select = document.getElementById("select-corregimiento");
+    if (select == null) {
+        return;
+    }
+    select.innerHTML = `<option selected disabled>Seleccione corregimientos</option>`;
+
+    let response = await requestPlaces('corregimiento', id);
+    if (response.state != 200) {
+        return;
+    }
+
+    let corregimientos = response.data;
+    corregimientos.map(corregimiento => {
+        let option = document.createElement("option");
+        option.text = corregimiento.name;
+        option.value = corregimiento.id;
+        select.appendChild(option);
+    });
+
+    select.addEventListener('change', function () {
+        getNeighborhoods(select.value);
+    });
+}
+
+const getNeighborhoods = async (id) => {
+    let select = document.getElementById("select-neighborhood");
+    if (select == null) {
+        return;
+    }
+    select.innerHTML = `<option selected disabled>Seleccione barrio</option>`;
+
+    let response = await requestPlaces('neighborhood', id);
+    if (response.state != 200) {
+        return;
+    }
+
+    let neighborhoods = response.data;
+    neighborhoods.map(neighborhood => {
+        let option = document.createElement("option");
+        option.text = neighborhood.name;
+        option.value = neighborhood.id;
+        select.appendChild(option);
+    });
 }

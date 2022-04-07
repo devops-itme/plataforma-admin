@@ -16,7 +16,10 @@ class StatusMatrixSeeder extends Seeder
     {
         $system_status = Config::get('const.system_status');
         foreach ($system_status as $key => $values) {
-            $scope = ParameterValue::where('name', $key)->first();
+            $scope = ParameterValue::where('name', $key)
+                ->whereHas('getParameter', function ($q) {
+                    $q->where('name', 'scopes');
+                })->first();
             foreach ($values as $value) {
                 StatusMatrix::create([
                     'name' => $value,
