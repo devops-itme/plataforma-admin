@@ -1,4 +1,4 @@
-<div class="footer bg-white p-4 d-flex flex-lg-column" id="kt_footer">
+<div class="footer bg-white p-4 d-flex flex-lg-column" id="">
     {{-- Container --}}
     <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
         {{-- Copyright --}}
