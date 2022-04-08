@@ -31,7 +31,7 @@
 
                 <div class="form-group col-md-3">
                     <label>Zona: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="zone_id" required>
+                    <select class="form-control form-control-solid" name="zone_id" id="select-zone" required>
                         <option selected disabled>Seleccione zona</option>
                         @foreach ($zones as $zone)
                             <option {{ old('zone_id') == $zone->id ? 'selected ' : '' }} value="{{ $zone->id }}">
@@ -42,7 +42,7 @@
 
                 <div class="form-group col-md-3">
                     <label>Barrio: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="neighborhood_id" disabled required>
+                    <select class="form-control form-control-solid" name="neighborhood_id" id="select-neighborhood" required>
                         <option selected disabled>Seleccione</option>
                     </select>
                 </div>

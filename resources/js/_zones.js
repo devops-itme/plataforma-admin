@@ -1,3 +1,34 @@
+import { requestPlaces } from './_requests';
+
+let map;
+let infoWindow;
+
+function showArrays(event) {
+    // Since this polygon has only one path, we can call getPath() to return the
+    // MVCArray of LatLngs.
+    const polygon = this;
+    const vertices = polygon.getPath();
+    let contentString =
+        "<b>Bermuda Triangle polygon</b><br>" +
+        "Clicked location: <br>" +
+        event.latLng.lat() +
+        "," +
+        event.latLng.lng() +
+        "<br>";
+
+    // Iterate over the vertices.
+    for (let i = 0; i < vertices.getLength(); i++) {
+        const xy = vertices.getAt(i);
+
+        contentString +=
+            "<br>" + "Coordinate " + i + ":<br>" + xy.lat() + "," + xy.lng();
+    }
+
+    // Replace the info window's content and position.
+    infoWindow.setContent(contentString);
+    infoWindow.setPosition(event.latLng);
+    infoWindow.open(map);
+}
 export default class Zones {
     initialize() {
         this.initMap();
@@ -5,6 +36,7 @@ export default class Zones {
     }
 
     initMap() {
+        infoWindow = new google.maps.InfoWindow();
         // The location of panama 8.689078613386496, -81.13166771577085
         const panama = { lat: 8.689, lng: -81.131 };
         let mapTemplate = document.getElementById("map");
@@ -12,7 +44,7 @@ export default class Zones {
             return;
         }
         // The map, centered at panama
-        const map = new google.maps.Map(mapTemplate, {
+        map = new google.maps.Map(mapTemplate, {
             zoom: 7,
             center: panama,
             mapTypeId: google.maps.MapTypeId.RoadMap
@@ -37,12 +69,11 @@ export default class Zones {
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillColor: '#FF0000',
-            fillOpacity: 0.35
+            fillOpacity: 0.35,
         });
 
         myPolygon.setMap(map);
-
-        console.log(myPolygon.setPath());
+        myPolygon.addListener("dragend", showArrays);
     }
 
     async getCountries() {
@@ -67,19 +98,6 @@ export default class Zones {
             getProvinces(select.value);
         });
     }
-}
-
-const requestPlaces = async (place, id = '') => {
-    let response = {
-        'state': 500
-    };
-    await fetch(`getPlaces?place_type=${place}&place_id=${id}`)
-        .then(response => response.json())
-        .then(data => {
-            response = data
-        })
-        .catch(e => console.log(e));
-    return response;
 }
 
 const getProvinces = async (id) => {

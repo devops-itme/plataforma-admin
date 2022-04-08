@@ -36,6 +36,9 @@ class PlaceController extends Controller
                 case 'neighborhood':
                     $place = Neighborhood::corregimiento($place_id)->get();
                     break;
+                case 'zone_neighborhoods':
+                    $place = Neighborhood::zone($place_id)->get();
+                    break;
                 default:
                     break;
             }
