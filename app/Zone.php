@@ -55,6 +55,30 @@ class Zone extends Model
         }
     }
 
+    public function updateZone($request, $id)
+    {
+        $validator = $this->validateZone($request);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+
+        try {
+            $zone = Zone::find($id);
+            if (is_null($zone)) {
+                return $this->respond(500, [], 'zone not found', 'No se encontró la zona');
+            }
+            $zone->update([
+                'name' => $request->name,
+                'state' => $request->state ?? 1
+            ]);
+
+            return $this->respond(200, $zone, null, 'Zona actualizada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar zona');
+        }
+    }
+
     public function deleteZone($id)
     {
         try {

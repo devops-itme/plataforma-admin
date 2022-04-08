@@ -1,4 +1,4 @@
-import { requestPlaces } from './_requests';
+import { requestPlaces, requestZone } from './_requests';
 
 let map;
 let infoWindow;
@@ -32,8 +32,9 @@ function showArrays(event) {
 
 export default class Zones {
     initialize() {
-        this.initMap();
+        // this.initMap();
         this.getCountries();
+        this.formHandler();
     }
 
     initMap() {
@@ -99,9 +100,66 @@ export default class Zones {
             getProvinces(select.value);
         });
     }
+
+    formHandler() {
+        let editBtn = document.getElementsByClassName("edit-btn");
+        if (editBtn == null) {
+            return;
+        }
+
+        [].forEach.call(editBtn, function (btn) {
+            btn.addEventListener('click', async () => {
+                let info_label = document.getElementById("info-label");
+                if (info_label == null) {
+                    return;
+                }
+                info_label.innerText = 'Actualizar'
+
+                let zone_form = document.getElementById("zone-form");
+                if (zone_form == null) {
+                    return;
+                }
+
+                let input_name = document.getElementById("input-name");
+                if (input_name == null) {
+                    return;
+                }
+
+                let select_country = document.getElementById("select-country");
+                if (select_country == null) {
+                    return;
+                }
+
+                let response = await requestZone(btn?.id);
+                if (response?.state != 200) {
+                    return;
+                }
+
+                let zone = response.data;
+
+                zone_form.setAttribute('action', `zonas/${zone.id}`);
+                let put = document.createElement('input');
+                put.type = 'hidden'; put.name = '_method'; put.value = 'PUT';
+                zone_form.appendChild(put);
+
+                input_name.value = zone.name;
+                let country = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province.get_country;
+                let province = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province;
+                let district = zone.get_neighborhoods[0].get_corregimiento.get_district;
+                let corregimiento = zone.get_neighborhoods[0].get_corregimiento;
+                let neighborhoods = zone.get_neighborhoods;
+
+                select_country.value = country.id;
+                getProvinces(country.id, province.id);
+                getDistricts(province.id, district.id);
+                getCorregimientos(district.id, corregimiento.id);
+                getNeighborhoods(corregimiento.id, neighborhoods);
+            });
+        });
+    }
 }
 
-const getProvinces = async (id) => {
+const getProvinces = async (id, selected = false) => {
     let select = document.getElementById("select-province");
     if (select == null) {
         return;
@@ -120,12 +178,17 @@ const getProvinces = async (id) => {
         option.value = province.id;
         select.appendChild(option);
     });
+
+    if (selected) {
+        select.value = selected;
+    }
+
     select.addEventListener('change', function () {
         getDistricts(select.value);
     });
 }
 
-const getDistricts = async (id) => {
+const getDistricts = async (id, selected = false) => {
     let select = document.getElementById("select-district");
     if (select == null) {
         return;
@@ -145,12 +208,16 @@ const getDistricts = async (id) => {
         select.appendChild(option);
     });
 
+    if (selected) {
+        select.value = selected;
+    }
+
     select.addEventListener('change', function () {
         getCorregimientos(select.value);
     });
 }
 
-const getCorregimientos = async (id) => {
+const getCorregimientos = async (id, selected = false) => {
     let select = document.getElementById("select-corregimiento");
     if (select == null) {
         return;
@@ -170,17 +237,21 @@ const getCorregimientos = async (id) => {
         select.appendChild(option);
     });
 
+    if (selected) {
+        select.value = selected;
+    }
+
     select.addEventListener('change', function () {
         getNeighborhoods(select.value);
     });
 }
 
-const getNeighborhoods = async (id) => {
+const getNeighborhoods = async (id, selected = []) => {
     let select = document.getElementById("select-neighborhood");
     if (select == null) {
         return;
     }
-    select.innerHTML = `<option selected disabled>Seleccione barrio</option>`;
+    select.innerHTML = `<option disabled>Seleccione barrio</option>`;
 
     let response = await requestPlaces('neighborhood', id);
     if (response.state != 200) {
@@ -189,9 +260,11 @@ const getNeighborhoods = async (id) => {
 
     let neighborhoods = response.data;
     neighborhoods.map(neighborhood => {
+        const found = selected.find(element => element.id == neighborhood.id);
         let option = document.createElement("option");
         option.text = neighborhood.name;
         option.value = neighborhood.id;
+        option.selected = found ? true : false;
         select.appendChild(option);
     });
 }

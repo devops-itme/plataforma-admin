@@ -45,16 +45,16 @@
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label">Adicionar</h3>
+                        <h3 class="card-label" id="info-label">Adicionar</h3>
                     </div>
                 </div>
                 <div class="card-body">
                     @include('layouts.alerts')
-                    <form action="{{ route('zones.store') }}" method="POST">
+                    <form action="{{ route('zones.store') }}" id="zone-form" method="POST">
                         @csrf
                         <div class="form-group py-3 m-0 col-md-12">
                             <label>Nombre: </label>
-                            <input type="text" class="form-control" name="name" placeholder="Nombre de zona" />
+                            <input type="text" class="form-control" id="input-name" name="name" placeholder="Nombre de zona" />
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="form-group col-md-12">
@@ -123,15 +123,13 @@
                                     <td>{{ $zone->name }}</td>
                                     <td>
                                         <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
-                                                title="Detalle">
-                                                <i class="far fa-folder-open"></i>
-                                            </a>
-                                            <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip
+
+                                            <button id="{{ $zone->id }}" class="edit-btn btn btn-icon btn-light-success btn-sm mr-2" data-tooltip
                                                 title="Editar">
                                                 <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a  onclick="deleteResource('/zonas/'+{{ $zone->id }}+'?response_format=json',false,'zone-id-'+{{ $zone->id }})" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
+                                            </button>
+                                            <a onclick="deleteResource('/zonas/'+{{ $zone->id }}+'?response_format=json',false,'zone-id-'+{{ $zone->id }})"
+                                                class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
                                                 title="Eliminar">
                                                 <i class="fas fa-trash"></i>
                                             </a>
@@ -142,7 +140,7 @@
                         </tbody>
                     </table>
                     <div class="col-md-12 d-flex align-items-center justify-content-end">
-                        {{$zones->links()}}
+                        {{ $zones->links() }}
                     </div>
                 </div>
 
