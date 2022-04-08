@@ -87379,18 +87379,19 @@ var Plans = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/js/_zones.js":
+/***/ "./resources/js/_rates.js":
 /*!********************************!*\
-  !*** ./resources/js/_zones.js ***!
+  !*** ./resources/js/_rates.js ***!
   \********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Zones; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Rates; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_requests */ "./resources/js/_requests.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -87403,6 +87404,299 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+
+
+var Rates = /*#__PURE__*/function () {
+  function Rates() {
+    _classCallCheck(this, Rates);
+  }
+
+  _createClass(Rates, [{
+    key: "initialize",
+    value: function initialize() {
+      this.getZone();
+    }
+  }, {
+    key: "getZone",
+    value: function () {
+      var _getZone = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var select;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                select = document.getElementById("select-zone");
+
+                if (!(select == null)) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 3:
+                select.addEventListener('change', function () {
+                  getNeighborhoods(select.value);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function getZone() {
+        return _getZone.apply(this, arguments);
+      }
+
+      return getZone;
+    }()
+  }]);
+
+  return Rates;
+}();
+
+
+
+var getNeighborhoods = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+    var select, response, neighborhoods;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            select = document.getElementById("select-neighborhood");
+
+            if (!(select == null)) {
+              _context2.next = 3;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 3:
+            select.innerHTML = "<option selected disabled>Seleccione barrio</option>";
+            console.log('zone_neighborhoods', id);
+            _context2.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZoneNeighborhoods"])(id);
+
+          case 7:
+            response = _context2.sent;
+
+            if (!(response.state != 200)) {
+              _context2.next = 10;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 10:
+            neighborhoods = response.data;
+            neighborhoods.map(function (neighborhood) {
+              var option = document.createElement("option");
+              option.text = neighborhood.name;
+              option.value = neighborhood.id;
+              select.appendChild(option);
+            });
+
+          case 12:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function getNeighborhoods(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./resources/js/_requests.js":
+/*!***********************************!*\
+  !*** ./resources/js/_requests.js ***!
+  \***********************************/
+/*! exports provided: requestPlaces, requestZoneNeighborhoods, requestZone */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestPlaces", function() { return requestPlaces; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestZoneNeighborhoods", function() { return requestZoneNeighborhoods; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestZone", function() { return requestZone; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var requestPlaces = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(place) {
+    var id,
+        response,
+        _args = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            id = _args.length > 1 && _args[1] !== undefined ? _args[1] : '';
+            response = {
+              'state': 500
+            };
+            _context.next = 4;
+            return fetch("getPlaces?place_type=".concat(place, "&place_id=").concat(id)).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              return console.log(e);
+            });
+
+          case 4:
+            return _context.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestPlaces(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+var requestZoneNeighborhoods = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    var id,
+        response,
+        _args2 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            id = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : '';
+            response = {
+              'state': 500
+            };
+            _context2.next = 4;
+            return fetch("/getZoneNeighborhoods/".concat(id)).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              return console.log(e);
+            });
+
+          case 4:
+            return _context2.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function requestZoneNeighborhoods() {
+    return _ref2.apply(this, arguments);
+  };
+}();
+var requestZone = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+    var id,
+        response,
+        _args3 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            id = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : '';
+            response = {
+              'state': 500
+            };
+            _context3.next = 4;
+            return fetch("/zonas/".concat(id, "/edit")).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              return console.log(e);
+            });
+
+          case 4:
+            return _context3.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+
+  return function requestZone() {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./resources/js/_zones.js":
+/*!********************************!*\
+  !*** ./resources/js/_zones.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Zones; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_requests */ "./resources/js/_requests.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+var map;
+var infoWindow;
+
+function showArrays(event) {
+  // Since this polygon has only one path, we can call getPath() to return the
+  // MVCArray of LatLngs.
+  var polygon = this;
+  var vertices = polygon.getPath();
+  var contentString = "<b>Bermuda Triangle polygon</b><br>" + "Clicked location: <br>" + event.latLng.lat() + "," + event.latLng.lng() + "<br>"; // Iterate over the vertices.
+
+  for (var i = 0; i < vertices.getLength(); i++) {
+    var xy = vertices.getAt(i);
+    contentString += "<br>" + "Coordinate " + i + ":<br>" + xy.lat() + "," + xy.lng();
+  } // Replace the info window's content and position.
+
+
+  infoWindow.setContent(contentString);
+  infoWindow.setPosition(event.latLng);
+  infoWindow.open(map);
+}
+
 var Zones = /*#__PURE__*/function () {
   function Zones() {
     _classCallCheck(this, Zones);
@@ -87411,13 +87705,15 @@ var Zones = /*#__PURE__*/function () {
   _createClass(Zones, [{
     key: "initialize",
     value: function initialize() {
-      this.initMap();
+      // this.initMap();
       this.getCountries();
+      this.formHandler();
     }
   }, {
     key: "initMap",
     value: function initMap() {
-      // The location of panama 8.689078613386496, -81.13166771577085
+      infoWindow = new google.maps.InfoWindow(); // The location of panama 8.689078613386496, -81.13166771577085
+
       var panama = {
         lat: 8.689,
         lng: -81.131
@@ -87429,7 +87725,7 @@ var Zones = /*#__PURE__*/function () {
       } // The map, centered at panama
 
 
-      var map = new google.maps.Map(mapTemplate, {
+      map = new google.maps.Map(mapTemplate, {
         zoom: 7,
         center: panama,
         mapTypeId: google.maps.MapTypeId.RoadMap
@@ -87453,7 +87749,7 @@ var Zones = /*#__PURE__*/function () {
         fillOpacity: 0.35
       });
       myPolygon.setMap(map);
-      console.log(myPolygon.setPath());
+      myPolygon.addListener("dragend", showArrays);
     }
   }, {
     key: "getCountries",
@@ -87475,7 +87771,7 @@ var Zones = /*#__PURE__*/function () {
 
               case 3:
                 _context.next = 5;
-                return requestPlaces('country');
+                return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('country');
 
               case 5:
                 response = _context.sent;
@@ -87513,6 +87809,105 @@ var Zones = /*#__PURE__*/function () {
 
       return getCountries;
     }()
+  }, {
+    key: "formHandler",
+    value: function formHandler() {
+      var editBtn = document.getElementsByClassName("edit-btn");
+
+      if (editBtn == null) {
+        return;
+      }
+
+      [].forEach.call(editBtn, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          var info_label, zone_form, input_name, select_country, response, zone, put, country, province, district, corregimiento, neighborhoods;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  info_label = document.getElementById("info-label");
+
+                  if (!(info_label == null)) {
+                    _context2.next = 3;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 3:
+                  info_label.innerText = 'Actualizar';
+                  zone_form = document.getElementById("zone-form");
+
+                  if (!(zone_form == null)) {
+                    _context2.next = 7;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 7:
+                  input_name = document.getElementById("input-name");
+
+                  if (!(input_name == null)) {
+                    _context2.next = 10;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 10:
+                  select_country = document.getElementById("select-country");
+
+                  if (!(select_country == null)) {
+                    _context2.next = 13;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 13:
+                  _context2.next = 15;
+                  return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZone"])(btn === null || btn === void 0 ? void 0 : btn.id);
+
+                case 15:
+                  response = _context2.sent;
+
+                  if (!((response === null || response === void 0 ? void 0 : response.state) != 200)) {
+                    _context2.next = 18;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 18:
+                  zone = response.data;
+                  zone_form.setAttribute('action', "zonas/".concat(zone.id));
+                  put = document.createElement('input');
+                  put.type = 'hidden';
+                  put.name = '_method';
+                  put.value = 'PUT';
+                  zone_form.appendChild(put);
+                  input_name.value = zone.name;
+                  country = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province.get_country;
+                  province = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province;
+                  district = zone.get_neighborhoods[0].get_corregimiento.get_district;
+                  corregimiento = zone.get_neighborhoods[0].get_corregimiento;
+                  neighborhoods = zone.get_neighborhoods;
+                  select_country.value = country.id;
+                  getProvinces(country.id, province.id);
+                  getDistricts(province.id, district.id);
+                  getCorregimientos(district.id, corregimiento.id);
+                  getNeighborhoods(corregimiento.id, neighborhoods);
+
+                case 36:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        })));
+      });
+    }
   }]);
 
   return Zones;
@@ -87520,76 +87915,43 @@ var Zones = /*#__PURE__*/function () {
 
 
 
-var requestPlaces = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(place) {
-    var id,
-        response,
-        _args2 = arguments;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            id = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : '';
-            response = {
-              'state': 500
-            };
-            _context2.next = 4;
-            return fetch("getPlaces?place_type=".concat(place, "&place_id=").concat(id)).then(function (response) {
-              return response.json();
-            }).then(function (data) {
-              response = data;
-            })["catch"](function (e) {
-              return console.log(e);
-            });
-
-          case 4:
-            return _context2.abrupt("return", response);
-
-          case 5:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-
-  return function requestPlaces(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
 var getProvinces = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
-    var select, response, provinces;
+    var selected,
+        select,
+        response,
+        provinces,
+        _args3 = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
+            selected = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : false;
             select = document.getElementById("select-province");
 
             if (!(select == null)) {
-              _context3.next = 3;
+              _context3.next = 4;
               break;
             }
 
             return _context3.abrupt("return");
 
-          case 3:
+          case 4:
             select.innerHTML = "<option selected disabled>Seleccione provincia</option>";
-            _context3.next = 6;
-            return requestPlaces('province', id);
+            _context3.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('province', id);
 
-          case 6:
+          case 7:
             response = _context3.sent;
 
             if (!(response.state != 200)) {
-              _context3.next = 9;
+              _context3.next = 10;
               break;
             }
 
             return _context3.abrupt("return");
 
-          case 9:
+          case 10:
             provinces = response.data;
             provinces.map(function (province) {
               var option = document.createElement("option");
@@ -87597,11 +87959,16 @@ var getProvinces = /*#__PURE__*/function () {
               option.value = province.id;
               select.appendChild(option);
             });
+
+            if (selected) {
+              select.value = selected;
+            }
+
             select.addEventListener('change', function () {
               getDistricts(select.value);
             });
 
-          case 12:
+          case 14:
           case "end":
             return _context3.stop();
         }
@@ -87609,43 +87976,48 @@ var getProvinces = /*#__PURE__*/function () {
     }, _callee3);
   }));
 
-  return function getProvinces(_x2) {
+  return function getProvinces(_x) {
     return _ref2.apply(this, arguments);
   };
 }();
 
 var getDistricts = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
-    var select, response, districts;
+    var selected,
+        select,
+        response,
+        districts,
+        _args4 = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
+            selected = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : false;
             select = document.getElementById("select-district");
 
             if (!(select == null)) {
-              _context4.next = 3;
+              _context4.next = 4;
               break;
             }
 
             return _context4.abrupt("return");
 
-          case 3:
+          case 4:
             select.innerHTML = "<option selected disabled>Seleccione distrito</option>";
-            _context4.next = 6;
-            return requestPlaces('district', id);
+            _context4.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('district', id);
 
-          case 6:
+          case 7:
             response = _context4.sent;
 
             if (!(response.state != 200)) {
-              _context4.next = 9;
+              _context4.next = 10;
               break;
             }
 
             return _context4.abrupt("return");
 
-          case 9:
+          case 10:
             districts = response.data;
             districts.map(function (district) {
               var option = document.createElement("option");
@@ -87653,11 +88025,16 @@ var getDistricts = /*#__PURE__*/function () {
               option.value = district.id;
               select.appendChild(option);
             });
+
+            if (selected) {
+              select.value = selected;
+            }
+
             select.addEventListener('change', function () {
               getCorregimientos(select.value);
             });
 
-          case 12:
+          case 14:
           case "end":
             return _context4.stop();
         }
@@ -87665,43 +88042,48 @@ var getDistricts = /*#__PURE__*/function () {
     }, _callee4);
   }));
 
-  return function getDistricts(_x3) {
+  return function getDistricts(_x2) {
     return _ref3.apply(this, arguments);
   };
 }();
 
 var getCorregimientos = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(id) {
-    var select, response, corregimientos;
+    var selected,
+        select,
+        response,
+        corregimientos,
+        _args5 = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
+            selected = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : false;
             select = document.getElementById("select-corregimiento");
 
             if (!(select == null)) {
-              _context5.next = 3;
+              _context5.next = 4;
               break;
             }
 
             return _context5.abrupt("return");
 
-          case 3:
+          case 4:
             select.innerHTML = "<option selected disabled>Seleccione corregimientos</option>";
-            _context5.next = 6;
-            return requestPlaces('corregimiento', id);
+            _context5.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('corregimiento', id);
 
-          case 6:
+          case 7:
             response = _context5.sent;
 
             if (!(response.state != 200)) {
-              _context5.next = 9;
+              _context5.next = 10;
               break;
             }
 
             return _context5.abrupt("return");
 
-          case 9:
+          case 10:
             corregimientos = response.data;
             corregimientos.map(function (corregimiento) {
               var option = document.createElement("option");
@@ -87709,11 +88091,16 @@ var getCorregimientos = /*#__PURE__*/function () {
               option.value = corregimiento.id;
               select.appendChild(option);
             });
+
+            if (selected) {
+              select.value = selected;
+            }
+
             select.addEventListener('change', function () {
               getNeighborhoods(select.value);
             });
 
-          case 12:
+          case 14:
           case "end":
             return _context5.stop();
         }
@@ -87721,52 +88108,61 @@ var getCorregimientos = /*#__PURE__*/function () {
     }, _callee5);
   }));
 
-  return function getCorregimientos(_x4) {
+  return function getCorregimientos(_x3) {
     return _ref4.apply(this, arguments);
   };
 }();
 
 var getNeighborhoods = /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
-    var select, response, neighborhoods;
+    var selected,
+        select,
+        response,
+        neighborhoods,
+        _args6 = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
+            selected = _args6.length > 1 && _args6[1] !== undefined ? _args6[1] : [];
             select = document.getElementById("select-neighborhood");
 
             if (!(select == null)) {
-              _context6.next = 3;
+              _context6.next = 4;
               break;
             }
 
             return _context6.abrupt("return");
 
-          case 3:
-            select.innerHTML = "<option selected disabled>Seleccione barrio</option>";
-            _context6.next = 6;
-            return requestPlaces('neighborhood', id);
+          case 4:
+            select.innerHTML = "<option disabled>Seleccione barrio</option>";
+            _context6.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('neighborhood', id);
 
-          case 6:
+          case 7:
             response = _context6.sent;
 
             if (!(response.state != 200)) {
-              _context6.next = 9;
+              _context6.next = 10;
               break;
             }
 
             return _context6.abrupt("return");
 
-          case 9:
+          case 10:
             neighborhoods = response.data;
             neighborhoods.map(function (neighborhood) {
+              var found = selected.find(function (element) {
+                return element.id == neighborhood.id;
+              });
               var option = document.createElement("option");
               option.text = neighborhood.name;
               option.value = neighborhood.id;
+              option.selected = found ? true : false;
               select.appendChild(option);
             });
 
-          case 11:
+          case 12:
           case "end":
             return _context6.stop();
         }
@@ -87774,7 +88170,7 @@ var getNeighborhoods = /*#__PURE__*/function () {
     }, _callee6);
   }));
 
-  return function getNeighborhoods(_x5) {
+  return function getNeighborhoods(_x4) {
     return _ref5.apply(this, arguments);
   };
 }();
@@ -87802,9 +88198,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_hours */ "./resources/js/_hours.js");
 /* harmony import */ var _plans__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_plans */ "./resources/js/_plans.js");
 /* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
+/* harmony import */ var _rates__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_rates */ "./resources/js/_rates.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -87831,6 +88229,7 @@ var orders = new _orders__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var general = new _general__WEBPACK_IMPORTED_MODULE_4__["default"]();
 var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_5__["default"]();
 var zones = new _zones__WEBPACK_IMPORTED_MODULE_6__["default"]();
+var rates = new _rates__WEBPACK_IMPORTED_MODULE_12__["default"]();
 var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
 var parameters = new _parameters__WEBPACK_IMPORTED_MODULE_8__["default"]();
 var hours = new _hours__WEBPACK_IMPORTED_MODULE_9__["default"]();
@@ -87848,6 +88247,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   general.initialize();
   permissions.initialize();
   zones.initialize();
+  rates.initialize();
   branchOffice.initialize();
   parameters.initialize();
   hours.initialize();

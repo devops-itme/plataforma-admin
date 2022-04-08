@@ -32,7 +32,7 @@
 
                 <div class="form-group col-md-3">
                     <label>Zona: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="zone_id" required>
+                    <select class="form-control form-control-solid" id="select-zone" name="zone_id" required>
                         <option selected disabled>Seleccione zona</option>
                         @foreach ($zones as $zone)
                             <option {{ $rate->zone_id == $zone->id ? 'selected ' : '' }} value="{{ $zone->id }}">
@@ -43,8 +43,12 @@
 
                 <div class="form-group col-md-3">
                     <label>Barrio: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="neighborhood_id" disabled required>
-                        <option selected disabled>Seleccione</option>
+                    <select class="form-control form-control-solid" id="select-neighborhood" name="neighborhood_id" required>
+                        <option selected disabled>Seleccione Barrio</option>
+                        @foreach ($neighborhoods as $neighborhood)
+                            <option {{ $rate->neighborhood_id == $neighborhood->id ? 'selected ' : '' }} value="{{ $neighborhood->id }}">
+                                {{ $neighborhood->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -81,7 +85,7 @@
 
                 <div class="form-group col-md-3">
                     <label>Estado: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="zone_id" required>
+                    <select class="form-control form-control-solid" name="state" required>
                         <option selected disabled>Seleccione</option>
 
                         <option {{ $rate->state == 1 ? 'selected ' : '' }} value="1">

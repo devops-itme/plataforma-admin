@@ -123,7 +123,7 @@
                         </div>
                         <div class="form-group py-3 m-0 col-md-3">
                             <label for="exampleSelect1">Zona: </label>
-                            <select class="form-control form-control-solid" id="zone" name="zone_id">
+                            <select class="form-control form-control-solid" id="select-zone" name="zone_id">
                                 <option selected disabled> Seleccione </option>
                                 @foreach ($zones as $zone)
                                     <option value="{{ $zone->id }}"
@@ -136,7 +136,7 @@
                         </div>
                         <div class="form-group py-3 m-0 col-md-3">
                             <label for="exampleSelect1">Barrio: </label>
-                            <select class="form-control form-control-solid" id="neighborhood" name="neighborhood_id">
+                            <select class="form-control form-control-solid" id="select-neighborhood" name="neighborhood_id">
                                 <option selected disabled> Seleccione </option>
                                 @foreach ($neighborhoods as $neighborhood)
                                     <option value="{{ $neighborhood->id }}"
@@ -199,7 +199,7 @@
                             <th>{{ $rate->getPackageType->name }}</th>
                             <th>${{ $rate->base_value }}</th>
                             <th>{{ $rate->getZone->name }}</th>
-                            <th>{{ $rate->getZone->name }}</th>
+                            <th>{{ $rate->getNeighborhood->name }}</th>
                             <td>
                                 @if ($rate->state == 1)
                                     <span class="label label-inline label-light-success font-weight-bold">

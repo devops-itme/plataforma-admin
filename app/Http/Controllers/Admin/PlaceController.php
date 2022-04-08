@@ -36,10 +36,23 @@ class PlaceController extends Controller
                 case 'neighborhood':
                     $place = Neighborhood::corregimiento($place_id)->get();
                     break;
+                case 'zone_neighborhoods':
+                    $place = Neighborhood::zone($place_id)->get();
+                    break;
                 default:
                     break;
             }
             return $this->respond(200, $place, null, 'Lugares');
+        } catch (\Throwable $th) {
+            return $this->respond(200, null, $th->getMessage(), 'Error de servidor');;
+        }
+    }
+
+    public function getZoneNeighborhoods($id)
+    {
+        try {
+            $place = Neighborhood::zone($id)->get();
+            return $this->respond(200, $place, null, 'Barrios de la zona');
         } catch (\Throwable $th) {
             return $this->respond(200, null, $th->getMessage(), 'Error de servidor');;
         }

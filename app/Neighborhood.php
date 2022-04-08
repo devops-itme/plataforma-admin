@@ -33,4 +33,10 @@ class Neighborhood extends Model
         if (!is_null($value))
             $query->where('corregimiento_id', $value);
     }
+
+    public function scopeZone($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('zone_id', $value);
+    }
 }
