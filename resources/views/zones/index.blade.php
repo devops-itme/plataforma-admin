@@ -118,7 +118,7 @@
                         </thead>
                         <tbody>
                             @foreach ($zones as $zone)
-                                <tr>
+                                <tr id="zone-id-{{ $zone->id }}">
                                     <th>{{ $zone->name }}</th>
                                     <td>{{ $zone->name }}</td>
                                     <td>
@@ -131,7 +131,7 @@
                                                 title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
+                                            <a  onclick="deleteResource('/zonas/'+{{ $zone->id }}+'?response_format=json',false,'zone-id-'+{{ $zone->id }})" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
                                                 title="Eliminar">
                                                 <i class="fas fa-trash"></i>
                                             </a>

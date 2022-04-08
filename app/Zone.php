@@ -5,6 +5,7 @@ namespace App;
 use App\Http\Controllers\Traits\RestActions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -21,7 +22,7 @@ class Zone extends Model
     public function getNeighborhoods()
     {
         return $this->hasMany(Neighborhood::class, 'zone_id');
-    } 
+    }
 
     public function validateZone($request)
     {
@@ -43,14 +44,41 @@ class Zone extends Model
         }
 
         try {
-            $user = $this::create([
+            $zone = $this::create([
                 'name' => $request->name,
                 'state' => $request->state ?? 1
             ]);
 
-            return $this->respond(200, $user, null, 'Zona creada exitosamente');
+            return $this->respond(200, $zone, null, 'Zona creada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al crear zona');
+        }
+    }
+
+    public function deleteZone($id)
+    {
+        try {
+            $transactionResponse = DB::transaction(function () use ($id) {
+                $zone = $this::find($id);
+                if (is_null($zone)) {
+                    return $this->respond(500, [], 'zone not found', 'No se encontró la zona');
+                }
+                $neighborhoods = Neighborhood::where('zone_id', $id)->get();
+                foreach ($neighborhoods as $neighborhood) {
+                    $deleted = $neighborhood->update(['zone_id' => null]);
+                    if (!$deleted) {
+                        return $this->respond(500, [], 'neighborhood not unlinked', 'No se desvincularon los barrios de la zona');
+                    }
+                }
+
+                if (!$zone->delete()) {
+                    return $this->respond(500, [], 'zone not deleted', 'No se elimino la zona');
+                };
+                return $this->respond(200, $zone, null, 'Zona eliminada exitosamente');
+            });
+            return $transactionResponse;
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar zona');
         }
     }
 }

@@ -29,6 +29,7 @@ function showArrays(event) {
     infoWindow.setPosition(event.latLng);
     infoWindow.open(map);
 }
+
 export default class Zones {
     initialize() {
         this.initMap();
