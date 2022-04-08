@@ -14,7 +14,7 @@ class ZoneController extends Controller
     use RestActions;
     public function index()
     {
-        $zones = Zone::get();
+        $zones = Zone::paginate(5);
         return view('zones.index', compact('zones'));
     }
 

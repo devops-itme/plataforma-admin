@@ -117,28 +117,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>Tangamandapio</th>
-                                <td>Ciudad perdida</td>
-                                <td>
-                                    <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                        <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
-                                            title="Detalle">
-                                            <i class="far fa-folder-open"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip
-                                            title="Editar">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
-                                            title="Eliminar">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                            @foreach ($zones as $zone)
+                                <tr>
+                                    <th>{{ $zone->name }}</th>
+                                    <td>{{ $zone->name }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
+                                                title="Detalle">
+                                                <i class="far fa-folder-open"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip
+                                                title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
+                                                title="Eliminar">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                    <div class="col-md-12 d-flex align-items-center justify-content-end">
+                        {{$zones->links()}}
+                    </div>
                 </div>
 
             </div>
