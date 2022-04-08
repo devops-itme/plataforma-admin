@@ -39,7 +39,7 @@ class RateController extends Controller
 
     public function show($id)
     {
-        return $rate = Rate::find($id);
+        $rate = Rate::find($id);
         return view('rates.detail', compact('rate'));
     }
 
@@ -73,8 +73,9 @@ class RateController extends Controller
             $query->where('name', 'package_type');
         })->get();
         $zones = Zone::get();
+        $neighborhoods = Neighborhood::where('zone_id', $rate->zone_id)->get();
 
-        return view('rates.edit', compact('rate', 'package_types', 'zones'));
+        return view('rates.edit', compact('rate', 'package_types', 'zones', 'neighborhoods'));
     }
 
     public function update(Request $request, $id)

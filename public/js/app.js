@@ -87414,13 +87414,13 @@ var Rates = /*#__PURE__*/function () {
   _createClass(Rates, [{
     key: "initialize",
     value: function initialize() {
-      this.getNeighborhoods();
+      this.getZone();
     }
   }, {
-    key: "getNeighborhoods",
+    key: "getZone",
     value: function () {
-      var _getNeighborhoods2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var select, response;
+      var _getZone = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var select;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -87435,17 +87435,11 @@ var Rates = /*#__PURE__*/function () {
                 return _context.abrupt("return");
 
               case 3:
-                _context.next = 5;
-                return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('zone_neighborhoods');
-
-              case 5:
-                response = _context.sent;
-                console.log(response);
                 select.addEventListener('change', function () {
-                  _getNeighborhoods(select.value);
+                  getNeighborhoods(select.value);
                 });
 
-              case 8:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -87453,11 +87447,11 @@ var Rates = /*#__PURE__*/function () {
         }, _callee);
       }));
 
-      function getNeighborhoods() {
-        return _getNeighborhoods2.apply(this, arguments);
+      function getZone() {
+        return _getZone.apply(this, arguments);
       }
 
-      return getNeighborhoods;
+      return getZone;
     }()
   }]);
 
@@ -87466,7 +87460,7 @@ var Rates = /*#__PURE__*/function () {
 
 
 
-var _getNeighborhoods = /*#__PURE__*/function () {
+var getNeighborhoods = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
     var select, response, neighborhoods;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
@@ -87484,20 +87478,21 @@ var _getNeighborhoods = /*#__PURE__*/function () {
 
           case 3:
             select.innerHTML = "<option selected disabled>Seleccione barrio</option>";
-            _context2.next = 6;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('zone_neighborhoods', id);
+            console.log('zone_neighborhoods', id);
+            _context2.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZoneNeighborhoods"])(id);
 
-          case 6:
+          case 7:
             response = _context2.sent;
 
             if (!(response.state != 200)) {
-              _context2.next = 9;
+              _context2.next = 10;
               break;
             }
 
             return _context2.abrupt("return");
 
-          case 9:
+          case 10:
             neighborhoods = response.data;
             neighborhoods.map(function (neighborhood) {
               var option = document.createElement("option");
@@ -87506,7 +87501,7 @@ var _getNeighborhoods = /*#__PURE__*/function () {
               select.appendChild(option);
             });
 
-          case 11:
+          case 12:
           case "end":
             return _context2.stop();
         }
@@ -87514,7 +87509,7 @@ var _getNeighborhoods = /*#__PURE__*/function () {
     }, _callee2);
   }));
 
-  return function _getNeighborhoods(_x) {
+  return function getNeighborhoods(_x) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -87525,12 +87520,13 @@ var _getNeighborhoods = /*#__PURE__*/function () {
 /*!***********************************!*\
   !*** ./resources/js/_requests.js ***!
   \***********************************/
-/*! exports provided: requestPlaces */
+/*! exports provided: requestPlaces, requestZoneNeighborhoods */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestPlaces", function() { return requestPlaces; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestZoneNeighborhoods", function() { return requestZoneNeighborhoods; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -87554,7 +87550,7 @@ var requestPlaces = /*#__PURE__*/function () {
             };
             _context.next = 4;
             return fetch("getPlaces?place_type=".concat(place, "&place_id=").concat(id)).then(function (response) {
-              return response;
+              return response.json();
             }).then(function (data) {
               response = data;
             })["catch"](function (e) {
@@ -87574,6 +87570,43 @@ var requestPlaces = /*#__PURE__*/function () {
 
   return function requestPlaces(_x) {
     return _ref.apply(this, arguments);
+  };
+}();
+var requestZoneNeighborhoods = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    var id,
+        response,
+        _args2 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            id = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : '';
+            response = {
+              'state': 500
+            };
+            _context2.next = 4;
+            return fetch("/getZoneNeighborhoods/".concat(id)).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              return console.log(e);
+            });
+
+          case 4:
+            return _context2.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function requestZoneNeighborhoods() {
+    return _ref2.apply(this, arguments);
   };
 }();
 

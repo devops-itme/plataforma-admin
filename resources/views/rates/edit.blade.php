@@ -43,8 +43,12 @@
 
                 <div class="form-group col-md-3">
                     <label>Barrio: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="neighborhood_id" disabled required>
-                        <option selected disabled>Seleccione</option>
+                    <select class="form-control form-control-solid" name="neighborhood_id" required>
+                        <option selected disabled>Seleccione Barrio</option>
+                        @foreach ($neighborhoods as $neighborhood)
+                            <option {{ $rate->neighborhood_id == $neighborhood->id ? 'selected ' : '' }} value="{{ $neighborhood->id }}">
+                                {{ $neighborhood->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 

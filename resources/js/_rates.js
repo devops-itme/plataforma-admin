@@ -1,16 +1,15 @@
-import { requestPlaces } from './_requests';
+import { requestZoneNeighborhoods } from './_requests';
 export default class Rates {
     initialize() {
-        this.getNeighborhoods();
+        this.getZone();
     }
 
-    async getNeighborhoods() {
+    async getZone() {
         let select = document.getElementById("select-zone");
         if (select == null) {
             return;
         }
-        let response = await requestPlaces('zone_neighborhoods');
-        console.log(response)
+       
         select.addEventListener('change', function () {
             getNeighborhoods(select.value);
         });
@@ -23,9 +22,9 @@ const getNeighborhoods = async (id) => {
         return;
     }
     select.innerHTML = `<option selected disabled>Seleccione barrio</option>`;
-    
-    let response = await requestPlaces('zone_neighborhoods', id);
-   
+    console.log('zone_neighborhoods', id)
+    let response = await requestZoneNeighborhoods(id);
+
     if (response.state != 200) {
         return;
     }

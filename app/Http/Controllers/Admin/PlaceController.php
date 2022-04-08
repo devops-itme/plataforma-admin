@@ -47,4 +47,14 @@ class PlaceController extends Controller
             return $this->respond(200, null, $th->getMessage(), 'Error de servidor');;
         }
     }
+
+    public function getZoneNeighborhoods($id)
+    {
+        try {
+            $place = Neighborhood::zone($id)->get();
+            return $this->respond(200, $place, null, 'Barrios de la zona');
+        } catch (\Throwable $th) {
+            return $this->respond(200, null, $th->getMessage(), 'Error de servidor');;
+        }
+    }
 }
