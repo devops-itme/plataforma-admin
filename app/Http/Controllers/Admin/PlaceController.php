@@ -14,6 +14,14 @@ use Illuminate\Http\Request;
 class PlaceController extends Controller
 {
     use RestActions;
+
+    protected $neighborhoodRelationships = [
+        'getCorregimiento',
+        'getCorregimiento.getDistrict',
+        'getCorregimiento.getDistrict.getProvince',
+        'getCorregimiento.getDistrict.getProvince.getCountry',
+    ];
+
     public function getPlaces(Request $request)
     {
         try {
@@ -51,7 +59,7 @@ class PlaceController extends Controller
     public function getZoneNeighborhoods($id)
     {
         try {
-            $place = Neighborhood::zone($id)->get();
+            $place = Neighborhood::zone($id)->with($this->neighborhoodRelationships)->get();
             return $this->respond(200, $place, null, 'Barrios de la zona');
         } catch (\Throwable $th) {
             return $this->respond(200, null, $th->getMessage(), 'Error de servidor');;

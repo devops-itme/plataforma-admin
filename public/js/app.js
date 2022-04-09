@@ -87477,7 +87477,7 @@ var getNeighborhoods = /*#__PURE__*/function () {
             return _context2.abrupt("return");
 
           case 3:
-            select.innerHTML = "<option selected disabled>Seleccione barrio</option>";
+            select.innerHTML = "<option selected disabled>Seleccione</option>";
             console.log('zone_neighborhoods', id);
             _context2.next = 7;
             return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZoneNeighborhoods"])(id);
@@ -87495,8 +87495,11 @@ var getNeighborhoods = /*#__PURE__*/function () {
           case 10:
             neighborhoods = response.data;
             neighborhoods.map(function (neighborhood) {
+              var _neighborhood$name, _neighborhood$get_cor, _neighborhood$get_cor2, _neighborhood$get_cor3, _neighborhood$get_cor4;
+
               var option = document.createElement("option");
-              option.text = neighborhood.name;
+              console.log(neighborhood);
+              option.text = ((_neighborhood$name = neighborhood.name) !== null && _neighborhood$name !== void 0 ? _neighborhood$name : '') + '; ' + ((_neighborhood$get_cor = neighborhood.get_corregimiento.name) !== null && _neighborhood$get_cor !== void 0 ? _neighborhood$get_cor : '') + '; ' + ((_neighborhood$get_cor2 = neighborhood.get_corregimiento.get_district.name) !== null && _neighborhood$get_cor2 !== void 0 ? _neighborhood$get_cor2 : '') + '; ' + ((_neighborhood$get_cor3 = neighborhood.get_corregimiento.get_district.get_province.name) !== null && _neighborhood$get_cor3 !== void 0 ? _neighborhood$get_cor3 : '') + '; ' + ((_neighborhood$get_cor4 = neighborhood.get_corregimiento.get_district.get_province.get_country.name) !== null && _neighborhood$get_cor4 !== void 0 ? _neighborhood$get_cor4 : '');
               option.value = neighborhood.id;
               select.appendChild(option);
             });
