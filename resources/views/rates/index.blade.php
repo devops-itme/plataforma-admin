@@ -195,11 +195,11 @@
                     @endif
                     @foreach ($rates as $rate)
                         <tr id="rate-id-{{ $rate->id }}">
-                            <th>{{ $rate->id }}</th>
-                            <th>{{ $rate->getPackageType->name }}</th>
-                            <th>${{ $rate->base_value }}</th>
-                            <th>{{ $rate->getZone->name }}</th>
-                            <th>{{ $rate->getNeighborhood->name }}</th>
+                            <th>{{ $rate->id ?? '' }}</th>
+                            <th>{{ $rate->getPackageType->name ?? '' }}</th>
+                            <th>${{ $rate->base_value ?? '' }}</th>
+                            <th>{{ $rate->getZone->name ?? '' }}</th>
+                            <th>{{ $rate->getNeighborhood->name ?? '' }}</th>
                             <td>
                                 @if ($rate->state == 1)
                                     <span class="label label-inline label-light-success font-weight-bold">

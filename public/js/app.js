@@ -87705,7 +87705,7 @@ var Zones = /*#__PURE__*/function () {
   _createClass(Zones, [{
     key: "initialize",
     value: function initialize() {
-      // this.initMap();
+      this.initMap();
       this.getCountries();
       this.formHandler();
     }

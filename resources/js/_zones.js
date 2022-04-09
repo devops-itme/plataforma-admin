@@ -32,7 +32,7 @@ function showArrays(event) {
 
 export default class Zones {
     initialize() {
-        // this.initMap();
+        this.initMap();
         this.getCountries();
         this.formHandler();
     }

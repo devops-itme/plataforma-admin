@@ -24,6 +24,34 @@ class Zone extends Model
         return $this->hasMany(Neighborhood::class, 'zone_id');
     }
 
+    public function scopeName($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('name', 'like', '%' . $value . '%');
+    }
+
+    public function scopeCountry($query, $value)
+    {
+        if (!is_null($value))
+            $query->whereHas('getNeighborhoods', function ($query) use ($value) {
+                $query->whereHas('getCorregimiento', function ($query) use ($value) {
+                    $query->whereHas('getDistrict', function ($query) use ($value) {
+                        $query->whereHas('getProvince', function ($query) use ($value) {
+                            $query->whereHas('getCountry', function ($query) use ($value) {
+                                $query->where('id', $value);
+                            });
+                        });
+                    });
+                });
+            });
+    }
+
+    public function scopeState($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('state', $value);
+    }
+
     public function validateZone($request)
     {
         return Validator::make(

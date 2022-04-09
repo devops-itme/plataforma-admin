@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
 use App\Neighborhood;
@@ -23,8 +24,14 @@ class ZoneController extends Controller
 
     public function index()
     {
-        $zones = Zone::paginate(5);
-        return view('zones.index', compact('zones'));
+        $countries = Country::get();
+
+        $zones = Zone::name(request()->name)
+            ->country(request()->country)
+            ->state(request()->state)
+            ->paginate(5);
+
+        return view('zones.index', compact('zones', 'countries'));
     }
 
     public function edit($id)
