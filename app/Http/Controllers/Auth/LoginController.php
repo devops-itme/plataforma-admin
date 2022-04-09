@@ -61,7 +61,7 @@ class LoginController extends Controller
 
         $user = User::where($field, $request->email)->first();
 
-        $active = $user->getRole->state == 1 && $user->getRole->deleted_at == NULL;
+        $active = ($user->getRole->state ?? false) == 1 && $user->getRole->deleted_at == NULL;
 
         if(!$active){
             $request->validate([
