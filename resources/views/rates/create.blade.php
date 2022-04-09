@@ -81,7 +81,7 @@
                     <label class="checkbox">
                         <input type="checkbox" name="special_rate" {{old('special_rate') === 'on' ? 'checked' : ''}}  />
                         <span class="mr-2"></span>Tarifa especial
-                    </label> <span class="text-danger">*</span>
+                    </label>
                 </div>
             </div>
 
