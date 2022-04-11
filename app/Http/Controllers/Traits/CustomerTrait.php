@@ -17,8 +17,8 @@ trait CustomerTrait
             [
                 'birthday' => 'nullable|date|before:today',
                 'zone' => 'nullable',
-                'contact' => 'required|string',
-                'payment_period' => 'required',
+                'contact' => 'nullable|string',
+                'payment_period' => 'nullable',
                 'credit' => 'nullable|integer',
                 'taxes' => 'nullable',
                 'receive_emails' => 'nullable',

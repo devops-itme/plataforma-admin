@@ -121,11 +121,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4 py-3 m-0">
-                                    <label for="exampleTextarea">Contacto <span class="text-danger">*</span></label>
+                                    <label for="exampleTextarea">Contacto</label>
                                     <textarea class="form-control form-control-solid" id="exampleTextarea" rows="1" name="contact">{{ old('contact') }}</textarea>
                                 </div>
                                 <div class="form-group col-md-4 my-3">
-                                    <label for="payment_pediod">Periodo de pago <span class="text-danger">*</span></label>
+                                    <label for="payment_pediod">Periodo de pago</label>
                                     <select class="form-control form-control-solid px-2 placeholder-dark-75" id="payment_period" name="payment_period">
                                         <option value="" selected disabled> Seleccione </option>
                                         @foreach ($payment_period as $item)
