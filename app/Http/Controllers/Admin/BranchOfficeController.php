@@ -71,9 +71,9 @@ class BranchOfficeController extends Controller
             $request->merge(['branch_office_type' => null]);
         }
         $response = $this->saveBranchOffice($request);
-        
+
         if($response['state'] == 200){
-            if($request->branch_office_department){
+            if($request->branch_office_department != ''){
                 $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
                 if($saveBranchDept){
                     $userDept = UserDeparment::where('department_id', $saveBranchDept['data']->department_id)->first();
@@ -87,7 +87,7 @@ class BranchOfficeController extends Controller
                         }
                     }
                 }
-                
+
                 if($saveBranchDept['state'] != 200){
                     return json_encode([
                         'state' => 500,
