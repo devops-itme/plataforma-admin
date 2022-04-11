@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Nombres:</div>
-                        <div class="line-height-xl">{{$customer->getUser->name??'No registra'." ".$customer->getUser->last_name??'No registra'}}</div>
+                        <div class="line-height-xl">{{(($customer->getUser->name??'')." ".($customer->getUser->last_name??'')) ?? 'No registra'}}</div>
                     </div>
                     <div class="col-md-2">
                         <div class="font-weight-bolder mb-3">Email:</div>
