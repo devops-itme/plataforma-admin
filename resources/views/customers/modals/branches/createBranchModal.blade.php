@@ -18,7 +18,7 @@
                     <div class="form-group col-md-3">
                         <label>Tipo de sucursal<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_type" name="branch_office_type">
-                            <option selected disabled>Seleccione</option>
+                            <option selected disabled value="">Seleccione</option>
                             @foreach ($branch_office_type as $item)
                             <option value="{{ $item->id }}" {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
                                 {{ $item->name }}
