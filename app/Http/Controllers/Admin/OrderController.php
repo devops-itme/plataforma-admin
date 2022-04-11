@@ -136,7 +136,7 @@ class OrderController extends Controller
             $query->where('user_id', $user_id);
         })->get();
         $zones = Zone::get();
-        return view('orders.showFold.show', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses', 'zones'));
+        return view('orders.show.index', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses', 'zones'));
     }
 
 
@@ -180,7 +180,7 @@ class OrderController extends Controller
         })->get();
         $zones = Zone::get();
 
-        return view('orders.editFold.edit', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones'));
+        return view('orders.edit.index', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones'));
     }
 
     /**

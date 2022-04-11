@@ -290,10 +290,6 @@ return [
             'NO ENTREGADO AUSENTE',
             'OTROS'
         ],
-        // 'payment_method' => [
-        //     'Cheque',
-        //     'Efectivo'
-        // ],
         'days' => [
             'Domingo',
             'Lunes',
@@ -302,6 +298,10 @@ return [
             'Jueves',
             'Viernes',
             'Sábado',
+        ],
+        'package_type' => [
+            'Tipo A',
+            'Tipo B'
         ],
     ],
     'system_status' => [

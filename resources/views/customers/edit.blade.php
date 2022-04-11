@@ -10,20 +10,6 @@
         <h3 class="card-title">
             Editar cliente
         </h3>
-        {{-- <div class="w-50"></div>
-        <div class="w-30 mt-2 d-flex justify-content-center align-items-center">
-            @if($customer->getUser->role == 4)
-                <a href="{{route('bankUsers.index', $customer->getUser->id)}}" class="btn btn-icon btn-light-warning btn-sm mr-2" data-tooltip title="Usuarios">
-                    <i class="fad fa-users-class"></i>
-                </a>
-            @endif
-            <a href="{{route('branchOffices.index', $customer->user_id)}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Sucursales">
-                <i class="fad fa-building"></i>
-            </a>
-            <a href="{{route('departments.index', ['user_id' => $customer->getUser->id])}}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Departamentos">
-                <i class="fad fa-warehouse"></i>
-            </a>
-        </div> --}}
     </div>
     @include('layouts.alerts')
     @include('customers.modals.branches.editBranchModal')
@@ -128,14 +114,12 @@
                             <div class="col-md-8 d-flex flex-row flex-wrap border-right">
                                 <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de cliente</h5>
                                 <div class="form-group col-md-4 py-3 m-0">
-                                    <label for="exampleSelect1">Zona <span class="text-danger">*</span></label>
+                                    <label for="exampleSelect1">Zona</label>
                                     <select class="form-control form-control-solid" id="zone" name="zone">
                                         <option selected disabled> Seleccione </option>
-                                        <option value="1" {{ $customer->zone_id == 1 ? 'selected' : '' }}>Zona 1</option>
-                                        <option value="2" {{ $customer->zone_id == 2 ? 'selected' : '' }}>Zona 2</option>
-                                        <option value="3" {{ $customer->zone_id == 3 ? 'selected' : '' }}>Zona 3</option>
-                                        <option value="4" {{ $customer->zone_id == 4 ? 'selected' : '' }}>Zona 4</option>
-                                        <option value="5" {{ $customer->zone_id == 5 ? 'selected' : '' }}>Zona 5</option>
+                                        @foreach ($zones as $item)
+                                            <option value="{{$item->id}}" {{ $customer->zone_id == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4 py-3 m-0">
@@ -282,24 +266,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-md-6 d-flex flex-row flex-wrap">
-                                            <h5 class="my-4 font-weight-bold text-dark col-md-12">Seguro de mercancia</h5>
-                                            <div class="form-group col-md-6">
-                                                <label>Valor asegurado: <span class="text-danger">*</span></label>
-                                                <input name="insured_value" type="number" class="form-control form-control-solid" placeholder="">
-                                                <span class="form-text text-muted"></span>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>A cobrar %: <span class="text-danger">*</span></label>
-                                                <input name="percentage_receivable" type="number" class="form-control form-control-solid" placeholder="">
-                                                <span class="form-text text-muted"></span>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>A cobrar $: <span class="text-danger">*</span></label>
-                                                <input name="value_receivable" type="number" class="form-control form-control-solid" placeholder="">
-                                                <span class="form-text text-muted"></span>
-                                            </div>
-                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -376,10 +342,5 @@
     </form>
     <!--end::Form-->
 </div>
-
-@endsection
-
-{{-- Styles Section --}}
-@section('styles')
 
 @endsection

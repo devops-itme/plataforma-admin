@@ -24,7 +24,7 @@ class GuideController extends Controller
     }
 
     protected $messengerRelationships = [
-        'getRoute', 'getRoute.getMessenger', 'getRoute.getMessenger.getMessenger',
+        'getRoute', 'getRoute.getMessenger', 'getRoute.getMessenger.getMessenger', 'getTransportType'
     ];
 
     public function index(Request $request)
@@ -56,6 +56,23 @@ class GuideController extends Controller
             $updates = ['app_status' => 1];
             if ($guide->update($updates)) {
                 return $this->respond(200, $guide, null, 'Guía marcada como leída');
+            }
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
+
+    public function changeStatus(Request $request)
+    {
+        try {
+            $guide = Guide::where('id', $request->guide_id)
+                ->with($this->messengerRelationships)->first();
+            if (is_null($guide)) {
+                return $this->respond(500, null, 'not found', 'No se encontró la guía');
+            }
+            if ($guide->update($request->all())) {
+                $guide = GuideResource::collection([$guide]);
+                return $this->respond(200, $guide->first(), null, 'Estado de la guía cambiado');
             }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');

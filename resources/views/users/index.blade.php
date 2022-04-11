@@ -21,7 +21,7 @@
                 </button>
                 <!--end::Button-->
                 <!--begin::Dropdown-->
-                <div class="dropdown dropdown-inline mr-2">
+                {{-- <div class="dropdown dropdown-inline mr-2">
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="svg-icon svg-icon-md">
@@ -91,7 +91,7 @@
                         <!--end::Navigation-->
                     </div>
                     <!--end::Dropdown Menu-->
-                </div>
+                </div> --}}
                 <!--end::Dropdown-->
                 <!--begin::Button-->
                 <a href="{{ route('users.create') }}" class="btn btn-primary font-weight-bolder" data-tooltip
@@ -144,7 +144,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <span class="form-text text-muted">Filtro estado</span>
+                                <span class="form-text text-muted">Filtro de rol</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-2">
                                 <label for="exampleSelect1">Estado: </label>

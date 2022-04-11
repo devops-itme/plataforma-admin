@@ -35,12 +35,6 @@
                     <div class="form-group col-md-3">
                         <label for="customers">Cliente <span class="text-danger">*</span></label>
                         <button type="button" class="btn btn-primary btn-block bg-white text-dark" data-toggle="modal" data-target="#detailCustomer" id="btnDetailCustomer"> Buscar cliente </button>
-                        {{-- <select name="user_id" class="form-control" id="slc-Customers">
-                            <option selected disabled>Seleccione Cliente</option>
-                            @foreach ($customers as $customer)
-                                <option value="{{$customer->user_id}}">{{!is_null($customer->business_name) ? $customer->business_name : $customer->getUser->name." ".$customer->getUser->last_name}}</option>
-                            @endforeach
-                        </select> --}}
                     </div>
                     <div class="form-group col-md-3">
                         <label for="customers">Codigo<span class="text-danger">*</span></label>
@@ -71,15 +65,6 @@
                         <label for="customers">Tipo de documento</label>
                         <input type="text" id="user_document_type" class="form-control form-control-solid" readonly value="">
                     </div>
-                    {{-- <div class="form-group col-md-3 d-flex align-items-center flex-row pt-6">
-                        <button type="button" class="btn btn-icon btn-light-success btn-sm mr-2" id="btn-customerData">
-                            <i class="fad fa-eye"></i>
-                        </button>
-
-                        <a href="{{ route('customers.create') }}" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                            <i class="fad fa-plus"></i>
-                        </a>
-                    </div> --}}
                    </div>
                 </div>
                 <div class="col-md-6">

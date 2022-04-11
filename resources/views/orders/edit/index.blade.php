@@ -150,10 +150,10 @@
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
-                            @include('orders.editFold.generalTabEdit')
+                            @include('orders.edit.generalTabEdit')
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            @include('orders.editFold.guideTabEdit')
+                            @include('orders.edit.guideTabEdit')
                         </div>
                     </div>
                 </div>

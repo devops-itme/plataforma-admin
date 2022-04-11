@@ -18,22 +18,12 @@
                             <option disabled> Seleccione </option>
                         </select>
                     </div>
-                    {{-- <div class="form-group col-md-3">
-                        <label>Despacho: <span class="text-danger">*</span></label>
-                        <input name="office" type="number" class="form-control form-control-solid" placeholder="" id="dispatched_edit"/>
-                        <span class="form-text text-muted"></span>
-                    </div> --}}
+               
                     <div class="form-group col-md-3">
                         <label for="address">Dirección destino <span class="text-danger">*</span></label>
                         <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
                             <option disabled selected>Seleccione </option>
                         </select>
-                        {{-- <input name="address" id="address" type="text" class="form-control form-control-solid" placeholder=""/> --}}
-                        {{-- <select name="address" class="form-control form-control-solid" id="address">
-                            <option selected disabled>Seleccione dirección</option>
-                            <option>Dirección 1</option>
-                            <option>Dirección 2</option>
-                        </select> --}}
                     </div>
                     <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
                         <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
@@ -157,100 +147,7 @@
                             </li>
                         </ul>
                         <div class="tab-content min-h-100px " id="myTabContent">
-                            {{-- <div class="table-responsive tab-pane fade show active" id="cajas" role="tabpanel"
-                                aria-labelledby="cajas-tab">
-                                <div class="row font-weight-bold border bg-gray-200 mt-4 text-center">
-                                    <div class="col-1 border-right">#</div>
-                                    <div class="col-1 border-right">Peso</div>
-                                    <div class="col-1 border-right">Largo</div>
-                                    <div class="col-1 border-right">Ancho</div>
-                                    <div class="col-1 border-right">Alto</div>
-                                    <div class="col-2 border-right">Peso_Vol</div>
-                                    <div class="col-3 border-right">Comentarios</div>
-                                    <div class="col-2">
-                                        <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2 add-box-btn"
-                                            id="add-box-btn" data-tooltip title="Agregar">
-                                            <i class="fad fa-plus-circle"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div id="box-container">
-                                    <div class="row border mt-0 text-center box-register" id="0">
-                                        <div class="col-1 py-4 border-right"><input type="number" name="id[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="weight[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="long[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="broad[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="high[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="vol_weight[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-4 py-4 border-right"><input type="text" name="description[]"
-                                                class="form-control" placeholder="comertarios"></div>
-                                        <div class="col-1 py-4">
-                                            <div class="d-flex flex-row flex-wrap justify-content-center">
-                                                <a href="#"
-                                                    class="btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn"
-                                                    id="0" data-tooltip title="Borrar">
-                                                    <i class="fad fa-minus-circle"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <table class="table table-sm align-items-center table-flush tab-pane fade show active" id="cajas"
-                                    role="tabpanel">
-                                    <thead class="row font-weight-bold border bg-gray-200 mt-4 text-center">
-                                        <tr>
-                                            <th scope="col" class="col-1 border-right">#</th>
-                                            <th scope="col" class="col-1 border-right">Peso</th>
-                                            <th scope="col" class="col-1 border-right">Largo</th>
-                                            <th scope="col" class="col-1 border-right">Ancho</th>
-                                            <th scope="col" class="col-1 border-right">Alto</th>
-                                            <th scope="col" class="col-1 border-right">Peso_Vol</th>
-                                            <th scope="col" class="col-2 border-right">Comentarios</th>
-                                            <th scope="col" class="col-1">
-                                                <div class="d-flex flex-row flex-wrap justify-content-center">
-                                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-1 add-box-btn"
-                                                        id="add-box-btn" data-tooltip title="Agregar">
-                                                        <i class="fad fa-plus-circle"></i>
-                                                    </a>
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="box-container">
-                                        <tr class="row border mt-0 text-center box-register">
-                                            <td class="col-1 py-4 border-right"><input type="number" name="id[]"
-                                                    class="form-control" min="0" value="0"></td>
-                                            <td class="col-1 py-4 border-right"><input type="number" name="weight[]"
-                                                    class="form-control" min="0" value="0"></td>
-                                            <td class="col-1 py-4 border-right"><input type="number" name="long[]"
-                                                    class="form-control" min="0" value="0"></td>
-                                            <td class="col-1 py-4 border-right"><input type="number" name="broad[]"
-                                                    class="form-control" min="0" value="0"></td>
-                                            <td class="col-1 py-4 border-right"><input type="number" name="high[]"
-                                                    class="form-control" min="0" value="0"></td>
-                                            <td class="col-1 py-4 border-right"><input type="number"
-                                                    name="vol_weight[]" class="form-control" min="0" value="0"></td>
-                                            <td class="col-3 py-4 border-right"><input type="text" name="description[]"
-                                                    class="form-control" placeholder="comertarios"></td>
-                                            <td class="col-2 py-4">
-                                                <div class="d-flex flex-row flex-wrap justify-content-center">
-                                                    <a href="#"
-                                                        class="btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn"
-                                                        id="0" data-tooltip title="Borrar">
-                                                        <i class="fad fa-minus-circle"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> --}}
+                
                             <div class="table-responsive tab-pane fade show active col-md-12 " id="cajas" role="tabpanel"
                                 aria-labelledby="cajas-tab">
                                   <div class="row font-weight-bold border  mt-4 text-center bg-gray-200">
@@ -269,31 +166,7 @@
                                     </div>
                                 </div>
                                  <div id="box-container-edit" name="box-container">
-                                    {{-- <div class="row border mt-0 text-center box-register" id="0">
-                                        <div class="col-1 py-4 border-right"><input type="number" name="id[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="weight[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="long[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="broad[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="high[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-1 py-4 border-right"><input type="number" name="vol_weight[]"
-                                                class="form-control" min="0" value="0"></div>
-                                        <div class="col-4 py-4 border-right"><input type="text" name="description[]"
-                                                class="form-control" placeholder="comertarios"></div>
-                                        <div class="col-1 py-4">
-                                            <div class="d-flex flex-row flex-wrap justify-content-center">
-                                                <a href="#"
-                                                    class="btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn"
-                                                    id="0" data-tooltip title="Borrar">
-                                                    <i class="fad fa-minus-circle"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div> --}}
+                                    
                                 </div>
 
                             </div>
@@ -394,7 +267,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="modal-footer">

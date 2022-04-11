@@ -92,7 +92,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         //DOCUMENTOS DE GUIÁS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
-
     });
     //Status matrix
     Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');
@@ -123,13 +122,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
     Route::get('despachos-packing', 'Admin\DeliveryController@indexPacking')->name('deliveryPacking.index');
 
-    Route::get('zonas', function () {
-        return view('zones.index');
-    })->name('zone.index');
+    Route::get('getPlaces', 'Admin\PlaceController@getPlaces');
+    Route::get('getZoneNeighborhoods/{id}', 'Admin\PlaceController@getZoneNeighborhoods');
+    Route::resource('zonas', 'Admin\ZoneController')->names('zones');
+    // Route::get('zonas', function () {
+    //     return view('zones.index');
+    // })->name('zone.index');
 
-    // Route::get('users', function () {
-    //     return view('users.detail');
-    // })->name('detail.show');
+    Route::get('notificaciones', function () {
+        return view('notifications.index');
+    })->name('notificaciones.index');
+
+    Route::get('todasnotificaciones', function () {
+        return view('notifications.seeAll');
+    })->name('todasnotificaciones.index');
+
+    Route::get('ordenes-listado', function () {
+        return view('orders.list');
+    })->name('Ordenes.Listado.index');
+
+    Route::resource('tarifas', 'Admin\RateController')->names('rates');
 
     Route::resource('perfil', 'Admin\ProfileController')->names('profile');
     // Route::get('perfil', function () {
@@ -151,8 +163,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/getPickupHours', 'Admin\PickupHourController@pickupHours');
 
     Route::get('log', 'Admin\LogController@index')->name('log.index');
-    Route::get('{page}','PageController@index')->name('page.index');
-
+    Route::get('{page}', 'PageController@index')->name('page.index');
 });
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
@@ -167,5 +178,3 @@ Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serv
 Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
 //CHAT
 Route::resource('chat', 'Admin\ChatController')->names('chats');
-
-

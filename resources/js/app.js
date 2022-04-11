@@ -13,6 +13,8 @@ import BranchOffices from './_branchOffice';
 import Parameters from './_parameters';
 import Hours from './_hours';
 import Plans from './_plans';
+import Notifications from './_notifications';
+import Rates from './_rates';
 
 //Vue Components
 Vue.component('deliveries-ondemand', require('./components/deliveries/deliveriesOndemand.vue').default);
@@ -29,11 +31,12 @@ let orders = new Orders();
 let general = new General();
 let permissions = new Permissions();
 let zones = new Zones();
+let rates = new Rates();
 let branchOffice = new BranchOffices();
 let parameters = new Parameters();
 let hours = new Hours();
 let plans = new Plans();
-
+let notifications = new Notifications();
 const app = new Vue({
     el: '#app'
 });
@@ -47,8 +50,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     general.initialize();
     permissions.initialize();
     zones.initialize();
+    rates.initialize();
     branchOffice.initialize();
     parameters.initialize();
     hours.initialize();
     plans.initialize();
+    notifications.initialize();
 });

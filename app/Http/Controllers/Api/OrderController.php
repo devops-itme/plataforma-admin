@@ -119,7 +119,7 @@ class OrderController extends Controller
                 $guides = $request->guides;
 
                 foreach ($guides as $guide) {
-                    $address;
+                    $address = null;
                     if (!is_null($guide['address_id'])) {
                         $address = Address::find($guide['address_id']);
                         if (is_null($address)) {
@@ -139,6 +139,7 @@ class OrderController extends Controller
                         'address_lng' => $address->lng ?? $guide['lng'],
                         'address_description' => $address->description ?? $guide['address_description'],
                         'description' => $address->description ?? $guide['address_description'],
+                        "transport_type" => $guide['transport_type'] ?? '',
                         'state' => 31
                     ]);
 

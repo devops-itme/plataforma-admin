@@ -41,6 +41,7 @@ export default class Customers {
             let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
+                console.log(token)
             let myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -123,6 +124,7 @@ export default class Customers {
         if(btnSendData == null){
             return;
         }
+   
         btnSendData.addEventListener('click', async () => {
             let branch_office_name = document.getElementById("branch_office_name"),
                 branch_office_type = document.getElementById("branch_office_type"),
@@ -142,6 +144,8 @@ export default class Customers {
                 branch_office_default = document.getElementById("branch_office_default"),
                 branch_office_department = document.getElementById("branch_office_department");
 
+            let user_id = document.getElementById("customer_id")?.value;
+
             let formData = new FormData();
             formData.append('branch_office_name', branch_office_name.value);
             formData.append('branch_office_type', branch_office_type.value);
@@ -160,7 +164,13 @@ export default class Customers {
             formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
             formData.append('branch_office_default', branch_office_default.value);
             formData.append('branch_office_department', branch_office_department.value);
+            if(user_id != null){
+                formData.append('user_id',user_id);
+                console.log('user_id',user_id);
+            }
+            
             let response = await this.sendBranchOfficeData(formData);
+            console.log(response)
             if(response['state'] == 200){
                 correct('Sucursal creada de manera exitosa');
                 branch_office_name.value = '';
