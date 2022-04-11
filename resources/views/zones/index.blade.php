@@ -4,57 +4,30 @@
 {{-- Content --}}
 @section('content')
     <div class="d-flex flex-row flex-wrap">
-        <div class="col-md-8">
+        <div class="col-md-8 scroll scroll-pull max-h-550px">
             <div class="card card-custom gutter-b">
-                <div class="card-header">
-                    <div class="card-title">
-                        <h3 class="card-label">
-                            Zonas
-                        </h3>
-                    </div>
-                    <div class="card-toolbar col-8 justify-content-around">
-                        <div class="form-group mb-0">
-                            <select class="form-control">
-                                <option>Seleccione</option>
 
-                            </select>
-                        </div>
-                        <div class="form-group mb-0">
-                            <select class="form-control">
-                                <option>Seleccione</option>
-
-                            </select>
-                        </div>
-                        <div class="form-group mb-0">
-                            <select class="form-control">
-                                <option>Seleccione</option>
-
-                            </select>
-                        </div>
-                        <a href="#" class="btn btn-light-primary font-weight-bold"><i class="fad fa-filter"></i>
-                            Filtrar</a>
-                    </div>
-                </div>
                 <div class="card-body">
                     <h3>My Google Maps Demo</h3>
-                    <div id="map" style="height: 400px; width: 100%;"></div>
+                    <div id="map" style="height: 420px; width: 100%;"></div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 scroll scroll-pull max-h-550px">
+        <div class="col-md-4 scroll scroll-pull max-h-500px">
             <div class="card card-custom">
                 <div class="card-header card-header-tabs-line">
                     <div class="card-title">
-                        <h3 class="card-label">Adicionar</h3>
+                        <h3 class="card-label" id="info-label">Adicionar</h3>
                     </div>
                 </div>
                 <div class="card-body">
                     @include('layouts.alerts')
-                    <form action="{{ route('zones.store') }}" method="POST">
+                    <form action="{{ route('zones.store') }}" id="zone-form" method="POST">
                         @csrf
                         <div class="form-group py-3 m-0 col-md-12">
                             <label>Nombre: </label>
-                            <input type="text" class="form-control" name="name" placeholder="Nombre de zona" />
+                            <input type="text" class="form-control" id="input-name" name="name"
+                                placeholder="Nombre de zona" />
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="form-group col-md-12">
@@ -82,11 +55,7 @@
                                 <option>Seleccione barrio</option>
                             </select>
                         </div>
-                        {{-- <div class="form-group py-3 m-0 col-md-12">
-                                    <label class="font-weight-bolder">Puntos: </label>
-                                    <span>Malambo, Soledad city...</span>
-                                    <span class="form-text text-muted"></span>
-                                </div> --}}
+                     
                         <div class="d-flex align-items-center justify-content-end">
                             <button type="submit" class="btn btn-light-primary font-weight-bold mr-2">Guardar</button>
                         </div>
@@ -106,32 +75,93 @@
                             Lista de zonas
                         </h3>
                     </div>
+                    <div class="card-toolbar">
+                        <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+                            <span class="svg-icon svg-icon-md">
+                                <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                            </span>Filtro
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
+
+                    <div class="mb-1">
+                        <div class="form-filter" style="display:none">
+                            <form action="{{ route('zones.index') }}">
+                                <div class="row align-items-center">
+                                    <div class="form-group py-3 m-0 col-md-4">
+                                        <label>Nombre:</label>
+                                        <input type="text" class="form-control form-control-solid" placeholder="Nombre"
+                                            name="name" value="{{ request()->name }}" />
+                                        <span class="form-text text-muted">Filtro nombre</span>
+                                    </div>
+                                    
+                                    <div class="form-group py-3 m-0 col-md-3">
+                                        <label for="exampleSelect1">Pais: </label>
+                                        <select class="form-control form-control-solid" id="country" name="country_id">
+                                            <option selected disabled> Seleccione </option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}"
+                                                    {{ request()->country_id != '' && request()->country_id == $country->id ? 'selected' : '' }}>
+                                                    {{ $country->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <span class="form-text text-muted">Filtro pais</span>
+                                    </div>
+                                    <div class="form-group py-3 m-0 col-md-2">
+                                        <label for="exampleSelect1">Estado: </label>
+                                        <select class="form-control form-control-solid" id="zone" name="state">
+                                            <option selected disabled> Seleccione </option>
+                                            <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo
+                                            </option>
+                                            <option value="0"
+                                                {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>
+                                                Inactivo
+                                            </option>
+                                        </select>
+                                        <span class="form-text text-muted">Filtro estado</span>
+                                    </div>
+                                    <div class=" row form-group py-6 m-0 col-md-3">
+                                        <div class="col-md-6">
+                                            <button type="submit"
+                                                class="btn btn-light-primary px-6 font-weight-bold btn-block">
+                                                Filtrar</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="{{ route('zones.index') }}"
+                                                class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <table class="table table-sm">
                         <thead>
                             <tr>
                                 <th scope="col">Nombre de la zona</th>
                                 <th scope="col">Nombre del país</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($zones as $zone)
-                                <tr>
+                                <tr id="zone-id-{{ $zone->id }}">
                                     <th>{{ $zone->name }}</th>
                                     <td>{{ $zone->name }}</td>
+                                    <td>{{ $zone->state == 1 ? 'Activo' : 'Inactivo' }}</td>
                                     <td>
                                         <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                            <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
-                                                title="Detalle">
-                                                <i class="far fa-folder-open"></i>
-                                            </a>
-                                            <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip
+
+                                            <button id="{{ $zone->id }}"
+                                                class="edit-btn btn btn-icon btn-light-success btn-sm mr-2" data-tooltip
                                                 title="Editar">
                                                 <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
+                                            </button>
+                                            <a onclick="deleteResource('/zonas/'+{{ $zone->id }}+'?response_format=json',false,'zone-id-'+{{ $zone->id }})"
+                                                class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
                                                 title="Eliminar">
                                                 <i class="fas fa-trash"></i>
                                             </a>
@@ -142,7 +172,7 @@
                         </tbody>
                     </table>
                     <div class="col-md-12 d-flex align-items-center justify-content-end">
-                        {{$zones->links()}}
+                        {{ $zones->links() }}
                     </div>
                 </div>
 

@@ -20,8 +20,8 @@ trait AddressTrait
                 'user_id' => [Rule::requiredIf($action != 'create'), 'exists:users,id'],
                 'address' => 'required|string',
                 'description' => 'required|string',
-                'lat' => 'required',
-                'lng' => 'required',
+                'lat' => 'nullable',
+                'lng' => 'nullable',
             ]
         );
     }

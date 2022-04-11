@@ -13,8 +13,8 @@
                 </a>
             </div>
         </div>
-
-        <div class="dropdown ml-auto ">
+        {{--notification--}}
+        {{-- <div class="dropdown ml-auto ">
             <a class="btn dropdown-toggle px-0 mr-3" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                 aria-expanded="false">
                 <i class="fas fa-bell text-white"></i>
@@ -28,7 +28,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+        {{--notification--}}
         <div class="btn-group">
             <a href="perfil" class="btn btn-primary">{{ Auth::user()->getRole->name }}</a>
             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"

@@ -28,9 +28,9 @@ class CreateOrdersTable extends Migration
             $table->double('tax_total')->nullable();
             $table->integer('payment_method')->nullable();
             $table->integer('urgent_dispatch')->nullable();
-            $table->date('schedule_date');
-            $table->integer('schedule_time');
-            $table->string('schedule_time_range');
+            $table->date('schedule_date')->nullable();
+            $table->integer('schedule_time')->nullable();
+            $table->string('schedule_time_range')->nullable();
             $table->double('insured_value')->nullable();
             $table->double('money_to_collect')->nullable();
             $table->double('percentage_to_collect')->nullable()->comment('Porcentaje de seguro');

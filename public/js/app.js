@@ -83291,12 +83291,15 @@ var Customers = /*#__PURE__*/function () {
       }
 
       btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_plan, branch_office_usage_mode, branch_office_default, branch_office_department, formData, response, modal;
+        var _document$getElementB;
+
+        var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_plan, branch_office_usage_mode, branch_office_default, branch_office_department, user_id, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 branch_office_name = document.getElementById("branch_office_name"), branch_office_type = document.getElementById("branch_office_type"), branch_office_description = document.getElementById("branch_office_description"), branch_office_zone = document.getElementById("branch_office_zone"), branch_office_address = document.getElementById("branch_office_address"), branch_office_lat = document.getElementById("branch_office_lat"), branch_office_lng = document.getElementById("branch_office_lng"), branch_office_email = document.getElementById("branch_office_email"), branch_office_contact = document.getElementById("branch_office_contact"), branch_office_document_type = document.getElementById("branch_office_document_type"), branch_office_document_number = document.getElementById("branch_office_document_number"), branch_office_payment_method = document.getElementById("branch_office_payment_method"), branch_office_phone = document.getElementById("branch_office_phone"), branch_office_plan = document.getElementById("branch_office_plan"), branch_office_usage_mode = document.getElementById("branch_office_usage_mode"), branch_office_default = document.getElementById("branch_office_default"), branch_office_department = document.getElementById("branch_office_department");
+                user_id = (_document$getElementB = document.getElementById("customer_id")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.value;
                 formData = new FormData();
                 formData.append('branch_office_name', branch_office_name.value);
                 formData.append('branch_office_type', branch_office_type.value);
@@ -83315,11 +83318,18 @@ var Customers = /*#__PURE__*/function () {
                 formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
                 formData.append('branch_office_default', branch_office_default.value);
                 formData.append('branch_office_department', branch_office_department.value);
-                _context3.next = 21;
+
+                if (user_id != null) {
+                  formData.append('user_id', user_id);
+                  console.log('user_id', user_id);
+                }
+
+                _context3.next = 23;
                 return _this2.sendBranchOfficeData(formData);
 
-              case 21:
+              case 23:
                 response = _context3.sent;
+                console.log(response);
 
                 if (response['state'] == 200) {
                   correct('Sucursal creada de manera exitosa');
@@ -83348,7 +83358,7 @@ var Customers = /*#__PURE__*/function () {
                   console.log('Error ocurrido: ' + response['error']);
                 }
 
-              case 23:
+              case 26:
               case "end":
                 return _context3.stop();
             }
@@ -83399,7 +83409,7 @@ var Customers = /*#__PURE__*/function () {
     key: "listBranchOffices",
     value: function () {
       var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var _document$getElementB;
+        var _document$getElementB2;
 
         var tbody, get_customer_id, route, customer_id, assignedBranchOffices;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -83417,7 +83427,7 @@ var Customers = /*#__PURE__*/function () {
 
               case 3:
                 tbody.innerHTML = '';
-                get_customer_id = (_document$getElementB = document.getElementById("customer_id")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.value;
+                get_customer_id = (_document$getElementB2 = document.getElementById("customer_id")) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.value;
                 route = window.location.pathname.split('/');
                 customer_id = route.includes('edit') || typeof parseInt(route[2]) == 'number' ? get_customer_id : null;
 
@@ -87478,7 +87488,7 @@ var getNeighborhoods = /*#__PURE__*/function () {
             return _context2.abrupt("return");
 
           case 3:
-            select.innerHTML = "<option selected disabled>Seleccione barrio</option>";
+            select.innerHTML = "<option selected disabled>Seleccione</option>";
             console.log('zone_neighborhoods', id);
             _context2.next = 7;
             return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZoneNeighborhoods"])(id);
@@ -87496,8 +87506,11 @@ var getNeighborhoods = /*#__PURE__*/function () {
           case 10:
             neighborhoods = response.data;
             neighborhoods.map(function (neighborhood) {
+              var _neighborhood$name, _neighborhood$get_cor, _neighborhood$get_cor2, _neighborhood$get_cor3, _neighborhood$get_cor4;
+
               var option = document.createElement("option");
-              option.text = neighborhood.name;
+              console.log(neighborhood);
+              option.text = ((_neighborhood$name = neighborhood.name) !== null && _neighborhood$name !== void 0 ? _neighborhood$name : '') + '; ' + ((_neighborhood$get_cor = neighborhood.get_corregimiento.name) !== null && _neighborhood$get_cor !== void 0 ? _neighborhood$get_cor : '') + '; ' + ((_neighborhood$get_cor2 = neighborhood.get_corregimiento.get_district.name) !== null && _neighborhood$get_cor2 !== void 0 ? _neighborhood$get_cor2 : '') + '; ' + ((_neighborhood$get_cor3 = neighborhood.get_corregimiento.get_district.get_province.name) !== null && _neighborhood$get_cor3 !== void 0 ? _neighborhood$get_cor3 : '') + '; ' + ((_neighborhood$get_cor4 = neighborhood.get_corregimiento.get_district.get_province.get_country.name) !== null && _neighborhood$get_cor4 !== void 0 ? _neighborhood$get_cor4 : '');
               option.value = neighborhood.id;
               select.appendChild(option);
             });
@@ -87521,13 +87534,14 @@ var getNeighborhoods = /*#__PURE__*/function () {
 /*!***********************************!*\
   !*** ./resources/js/_requests.js ***!
   \***********************************/
-/*! exports provided: requestPlaces, requestZoneNeighborhoods */
+/*! exports provided: requestPlaces, requestZoneNeighborhoods, requestZone */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestPlaces", function() { return requestPlaces; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestZoneNeighborhoods", function() { return requestZoneNeighborhoods; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestZone", function() { return requestZone; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -87610,6 +87624,43 @@ var requestZoneNeighborhoods = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
+var requestZone = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+    var id,
+        response,
+        _args3 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            id = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : '';
+            response = {
+              'state': 500
+            };
+            _context3.next = 4;
+            return fetch("/zonas/".concat(id, "/edit")).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              return console.log(e);
+            });
+
+          case 4:
+            return _context3.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+
+  return function requestZone() {
+    return _ref3.apply(this, arguments);
+  };
+}();
 
 /***/ }),
 
@@ -87670,6 +87721,7 @@ var Zones = /*#__PURE__*/function () {
     value: function initialize() {
       this.initMap();
       this.getCountries();
+      this.formHandler();
     }
   }, {
     key: "initMap",
@@ -87771,6 +87823,105 @@ var Zones = /*#__PURE__*/function () {
 
       return getCountries;
     }()
+  }, {
+    key: "formHandler",
+    value: function formHandler() {
+      var editBtn = document.getElementsByClassName("edit-btn");
+
+      if (editBtn == null) {
+        return;
+      }
+
+      [].forEach.call(editBtn, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          var info_label, zone_form, input_name, select_country, response, zone, put, country, province, district, corregimiento, neighborhoods;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  info_label = document.getElementById("info-label");
+
+                  if (!(info_label == null)) {
+                    _context2.next = 3;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 3:
+                  info_label.innerText = 'Actualizar';
+                  zone_form = document.getElementById("zone-form");
+
+                  if (!(zone_form == null)) {
+                    _context2.next = 7;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 7:
+                  input_name = document.getElementById("input-name");
+
+                  if (!(input_name == null)) {
+                    _context2.next = 10;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 10:
+                  select_country = document.getElementById("select-country");
+
+                  if (!(select_country == null)) {
+                    _context2.next = 13;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 13:
+                  _context2.next = 15;
+                  return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZone"])(btn === null || btn === void 0 ? void 0 : btn.id);
+
+                case 15:
+                  response = _context2.sent;
+
+                  if (!((response === null || response === void 0 ? void 0 : response.state) != 200)) {
+                    _context2.next = 18;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 18:
+                  zone = response.data;
+                  zone_form.setAttribute('action', "zonas/".concat(zone.id));
+                  put = document.createElement('input');
+                  put.type = 'hidden';
+                  put.name = '_method';
+                  put.value = 'PUT';
+                  zone_form.appendChild(put);
+                  input_name.value = zone.name;
+                  country = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province.get_country;
+                  province = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province;
+                  district = zone.get_neighborhoods[0].get_corregimiento.get_district;
+                  corregimiento = zone.get_neighborhoods[0].get_corregimiento;
+                  neighborhoods = zone.get_neighborhoods;
+                  select_country.value = country.id;
+                  getProvinces(country.id, province.id);
+                  getDistricts(province.id, district.id);
+                  getCorregimientos(district.id, corregimiento.id);
+                  getNeighborhoods(corregimiento.id, neighborhoods);
+
+                case 36:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        })));
+      });
+    }
   }]);
 
   return Zones;
@@ -87779,37 +87930,42 @@ var Zones = /*#__PURE__*/function () {
 
 
 var getProvinces = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-    var select, response, provinces;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
+    var selected,
+        select,
+        response,
+        provinces,
+        _args3 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
+            selected = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : false;
             select = document.getElementById("select-province");
 
             if (!(select == null)) {
-              _context2.next = 3;
+              _context3.next = 4;
               break;
             }
 
-            return _context2.abrupt("return");
+            return _context3.abrupt("return");
 
-          case 3:
+          case 4:
             select.innerHTML = "<option selected disabled>Seleccione provincia</option>";
-            _context2.next = 6;
+            _context3.next = 7;
             return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('province', id);
 
-          case 6:
-            response = _context2.sent;
+          case 7:
+            response = _context3.sent;
 
             if (!(response.state != 200)) {
-              _context2.next = 9;
+              _context3.next = 10;
               break;
             }
 
-            return _context2.abrupt("return");
+            return _context3.abrupt("return");
 
-          case 9:
+          case 10:
             provinces = response.data;
             provinces.map(function (province) {
               var option = document.createElement("option");
@@ -87817,67 +87973,16 @@ var getProvinces = /*#__PURE__*/function () {
               option.value = province.id;
               select.appendChild(option);
             });
+
+            if (selected) {
+              select.value = selected;
+            }
+
             select.addEventListener('change', function () {
               getDistricts(select.value);
             });
 
-          case 12:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-
-  return function getProvinces(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-var getDistricts = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
-    var select, response, districts;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            select = document.getElementById("select-district");
-
-            if (!(select == null)) {
-              _context3.next = 3;
-              break;
-            }
-
-            return _context3.abrupt("return");
-
-          case 3:
-            select.innerHTML = "<option selected disabled>Seleccione distrito</option>";
-            _context3.next = 6;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('district', id);
-
-          case 6:
-            response = _context3.sent;
-
-            if (!(response.state != 200)) {
-              _context3.next = 9;
-              break;
-            }
-
-            return _context3.abrupt("return");
-
-          case 9:
-            districts = response.data;
-            districts.map(function (district) {
-              var option = document.createElement("option");
-              option.text = district.name;
-              option.value = district.id;
-              select.appendChild(option);
-            });
-            select.addEventListener('change', function () {
-              getCorregimientos(select.value);
-            });
-
-          case 12:
+          case 14:
           case "end":
             return _context3.stop();
         }
@@ -87885,55 +87990,65 @@ var getDistricts = /*#__PURE__*/function () {
     }, _callee3);
   }));
 
-  return function getDistricts(_x2) {
+  return function getProvinces(_x) {
     return _ref2.apply(this, arguments);
   };
 }();
 
-var getCorregimientos = /*#__PURE__*/function () {
+var getDistricts = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
-    var select, response, corregimientos;
+    var selected,
+        select,
+        response,
+        districts,
+        _args4 = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            select = document.getElementById("select-corregimiento");
+            selected = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : false;
+            select = document.getElementById("select-district");
 
             if (!(select == null)) {
-              _context4.next = 3;
+              _context4.next = 4;
               break;
             }
 
             return _context4.abrupt("return");
 
-          case 3:
-            select.innerHTML = "<option selected disabled>Seleccione corregimientos</option>";
-            _context4.next = 6;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('corregimiento', id);
+          case 4:
+            select.innerHTML = "<option selected disabled>Seleccione distrito</option>";
+            _context4.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('district', id);
 
-          case 6:
+          case 7:
             response = _context4.sent;
 
             if (!(response.state != 200)) {
-              _context4.next = 9;
+              _context4.next = 10;
               break;
             }
 
             return _context4.abrupt("return");
 
-          case 9:
-            corregimientos = response.data;
-            corregimientos.map(function (corregimiento) {
+          case 10:
+            districts = response.data;
+            districts.map(function (district) {
               var option = document.createElement("option");
-              option.text = corregimiento.name;
-              option.value = corregimiento.id;
+              option.text = district.name;
+              option.value = district.id;
               select.appendChild(option);
             });
+
+            if (selected) {
+              select.value = selected;
+            }
+
             select.addEventListener('change', function () {
-              getNeighborhoods(select.value);
+              getCorregimientos(select.value);
             });
 
-          case 12:
+          case 14:
           case "end":
             return _context4.stop();
         }
@@ -87941,52 +88056,65 @@ var getCorregimientos = /*#__PURE__*/function () {
     }, _callee4);
   }));
 
-  return function getCorregimientos(_x3) {
+  return function getDistricts(_x2) {
     return _ref3.apply(this, arguments);
   };
 }();
 
-var getNeighborhoods = /*#__PURE__*/function () {
+var getCorregimientos = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(id) {
-    var select, response, neighborhoods;
+    var selected,
+        select,
+        response,
+        corregimientos,
+        _args5 = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            select = document.getElementById("select-neighborhood");
+            selected = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : false;
+            select = document.getElementById("select-corregimiento");
 
             if (!(select == null)) {
-              _context5.next = 3;
+              _context5.next = 4;
               break;
             }
 
             return _context5.abrupt("return");
 
-          case 3:
-            select.innerHTML = "<option selected disabled>Seleccione barrio</option>";
-            _context5.next = 6;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('neighborhood', id);
+          case 4:
+            select.innerHTML = "<option selected disabled>Seleccione corregimientos</option>";
+            _context5.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('corregimiento', id);
 
-          case 6:
+          case 7:
             response = _context5.sent;
 
             if (!(response.state != 200)) {
-              _context5.next = 9;
+              _context5.next = 10;
               break;
             }
 
             return _context5.abrupt("return");
 
-          case 9:
-            neighborhoods = response.data;
-            neighborhoods.map(function (neighborhood) {
+          case 10:
+            corregimientos = response.data;
+            corregimientos.map(function (corregimiento) {
               var option = document.createElement("option");
-              option.text = neighborhood.name;
-              option.value = neighborhood.id;
+              option.text = corregimiento.name;
+              option.value = corregimiento.id;
               select.appendChild(option);
             });
 
-          case 11:
+            if (selected) {
+              select.value = selected;
+            }
+
+            select.addEventListener('change', function () {
+              getNeighborhoods(select.value);
+            });
+
+          case 14:
           case "end":
             return _context5.stop();
         }
@@ -87994,8 +88122,70 @@ var getNeighborhoods = /*#__PURE__*/function () {
     }, _callee5);
   }));
 
-  return function getNeighborhoods(_x4) {
+  return function getCorregimientos(_x3) {
     return _ref4.apply(this, arguments);
+  };
+}();
+
+var getNeighborhoods = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
+    var selected,
+        select,
+        response,
+        neighborhoods,
+        _args6 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            selected = _args6.length > 1 && _args6[1] !== undefined ? _args6[1] : [];
+            select = document.getElementById("select-neighborhood");
+
+            if (!(select == null)) {
+              _context6.next = 4;
+              break;
+            }
+
+            return _context6.abrupt("return");
+
+          case 4:
+            select.innerHTML = "<option disabled>Seleccione barrio</option>";
+            _context6.next = 7;
+            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('neighborhood', id);
+
+          case 7:
+            response = _context6.sent;
+
+            if (!(response.state != 200)) {
+              _context6.next = 10;
+              break;
+            }
+
+            return _context6.abrupt("return");
+
+          case 10:
+            neighborhoods = response.data;
+            neighborhoods.map(function (neighborhood) {
+              var found = selected.find(function (element) {
+                return element.id == neighborhood.id;
+              });
+              var option = document.createElement("option");
+              option.text = neighborhood.name;
+              option.value = neighborhood.id;
+              option.selected = found ? true : false;
+              select.appendChild(option);
+            });
+
+          case 12:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+
+  return function getNeighborhoods(_x4) {
+    return _ref5.apply(this, arguments);
   };
 }();
 

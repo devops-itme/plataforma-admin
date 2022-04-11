@@ -144,7 +144,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <span class="form-text text-muted">Filtro estado</span>
+                                <span class="form-text text-muted">Filtro de rol</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-2">
                                 <label for="exampleSelect1">Estado: </label>

@@ -16,8 +16,8 @@ trait RatesTrait
         return Validator::make(
             $request->all(),
             [
-                // 'zone_id' => 'required|exists:zones,id',
-                // 'neighborhood_id' => 'required|exists:neighborhoods,id',
+                'zone_id' => 'required|exists:zones,id',
+                'neighborhood_id' => 'required|exists:neighborhoods,id',
                 'package_type' => 'required|exists:parameter_values,id',
                 'estimated_time' => 'required|numeric',
                 'base_value' => 'required|numeric',

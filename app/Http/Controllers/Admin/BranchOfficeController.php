@@ -71,13 +71,14 @@ class BranchOfficeController extends Controller
             $request->merge(['branch_office_type' => null]);
         }
         $response = $this->saveBranchOffice($request);
+        
         if($response['state'] == 200){
-            if($request->branch_office_department != 'Seleccione'){
+            if($request->branch_office_department){
                 $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
                 if($saveBranchDept){
                     $userDept = UserDeparment::where('department_id', $saveBranchDept['data']->department_id)->first();
                     if($userDept){
-                        $saveUserBranch = $this->storeUserBranch($userDept->user_id, $response['data']->id);
+                        $saveUserBranch = $this->storeUserBranch($userDept->user_id , $response['data']->id);
                         if($saveUserBranch['state'] != 200){
                             return json_encode([
                                 'state' => 500,
@@ -86,6 +87,7 @@ class BranchOfficeController extends Controller
                         }
                     }
                 }
+                
                 if($saveBranchDept['state'] != 200){
                     return json_encode([
                         'state' => 500,
@@ -93,7 +95,15 @@ class BranchOfficeController extends Controller
                     ]);
                 }
             }
-            // return redirect()->route('branchOffices.index', $user_id)->with('success', $response['message']);
+            if($response['data']->user_id){
+                $saveUserBranch = $this->storeUserBranch($response['data']->user_id, $response['data']->id);
+                if($saveUserBranch['state'] != 200){
+                    return json_encode([
+                        'state' => 500,
+                        'error' => $saveUserBranch['error']
+                    ]);
+                }
+            }
             return json_encode([
                 'state' => 200,
                 'data' => $response['data']

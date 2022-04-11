@@ -28,20 +28,13 @@
                         <select name="customer_address" class="form-control form-control-solid" id="address">
                             <option disabled selected>Seleccione </option>
                         </select>
-                        {{-- <input name="address" id="address" type="text" class="form-control form-control-solid" placeholder=""/> --}}
-                        {{-- <select name="address" class="form-control form-control-solid" id="address">
-                            <option selected disabled>Seleccione dirección</option>
-                            <option>Dirección 1</option>
-                            <option>Dirección 2</option>
-                        </select> --}}
                     </div>
                     <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
                         <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
                             <i class="fad fa-plus-circle text-info"></i>
                         </a>
                     </div>
-                    {{-- <input name="lat" id="lat" type="hidden" class="form-control form-control-solid" placeholder=""/>
-                    <input name="lng" id="lng" type="hidden" class="form-control form-control-solid" placeholder=""/> --}}
+                   
                     <div class="form-group col-md-5">
                         <label for="district">Descripción <span class="text-danger">*</span></label>
                         <textarea name="guide_description" id="guide_description" class="form-control form-control-solid"></textarea>
@@ -86,15 +79,6 @@
                         <input name="contact" id="contact" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
-                    {{-- <div class="form-group col-md-3">
-                        <label>Contacto telefono: <span class="text-danger">*</span></label>
-                        <select name="phone_contact" class="form-control form-control-solid mr-2" id="phone_contact">
-                            <option selected disabled>Seleccione zip</option>
-                            <option>507:panama</option>
-                            <option>57:colombia</option>
-                        </select>
-                        <span class="form-text text-muted"></span>
-                    </div> --}}
                     <div class="form-group col-md-3 pt-2">
                         <label>Teléfono contacto <span class="text-danger">*</span> </label>
                         <input name="phone_contact" type="tel" id="phone_contact" class="form-control form-control-solid" placeholder="" />
@@ -120,17 +104,6 @@
                             @endforeach
                         </select>
                     </div>
-                    {{-- <div class="form-group col-md-3">
-                        <label for="customer_address">Dirección cliente <span class="text-danger">*</span></label>
-                        <select name="customer_address" class="form-control form-control-solid" id="customer_address">
-                            <option disabled selected>Seleccione </option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
-                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
-                            <i class="fad fa-plus-circle text-info"></i>
-                        </a>
-                    </div> --}}
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">

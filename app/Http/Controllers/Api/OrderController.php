@@ -119,7 +119,7 @@ class OrderController extends Controller
                 $guides = $request->guides;
 
                 foreach ($guides as $guide) {
-                    $address;
+                    $address = null;
                     if (!is_null($guide['address_id'])) {
                         $address = Address::find($guide['address_id']);
                         if (is_null($address)) {

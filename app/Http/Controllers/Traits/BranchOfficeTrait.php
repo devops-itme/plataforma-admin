@@ -69,7 +69,7 @@ trait BranchOfficeTrait
                 'phone' => $request->branch_office_phone,
                 'plan' => $request->branch_office_plan,
                 'usage_mode' => $request->branch_office_usage_mode,
-                // 'user_id' => $request->user_id
+                'user_id' => $request->user_id ?? NULL
             ]);
             return $this->respond(200, $branchOffice, null, 'Sucursal creada exitosamente');
         } catch (\Exception $e) {
