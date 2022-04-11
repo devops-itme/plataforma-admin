@@ -31,7 +31,7 @@ trait BranchOfficeTrait
                 'branch_office_document_number' => 'required|numeric',
                 'branch_office_default' => 'nullable',
                 'branch_office_payment_method' => 'required|numeric',
-                'branch_office_phone' => 'required|phone',
+                'branch_office_phone' => 'required|string',
                 'branch_office_plan' => 'nullable',
                 'branch_office_usage_mode' => 'nullable',
                 'user_id' => 'nullable|exists:users,id',
