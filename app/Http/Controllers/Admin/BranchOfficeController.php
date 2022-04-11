@@ -111,7 +111,7 @@ class BranchOfficeController extends Controller
         } else {
             return json_encode([
                 'state' => 500,
-                'error' => $response['error']
+                'error' => $response['message']
             ]);
         }
     }
