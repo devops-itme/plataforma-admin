@@ -112,7 +112,7 @@
                             <div class="col-md-8 d-flex flex-row flex-wrap border-right">
                                 <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de cliente</h5>
                                 <div class="form-group col-md-4 py-3 m-0">
-                                    <label for="exampleSelect1">Zona <span class="text-danger">*</span></label>
+                                    <label for="exampleSelect1">Zona</label>
                                     <select class="form-control form-control-solid" id="zone" name="zone">
                                         <option selected disabled> Seleccione </option>
                                         @foreach ($zones as $item)
