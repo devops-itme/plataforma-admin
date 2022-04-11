@@ -35,7 +35,7 @@
                     <div class="form-group col-md-3">
                         <label>Zona de sucursal:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_zone" name="branch_office_zone">
-                            <option selected disabled>Seleccione</option>
+                            <option selected disabled value="">Seleccione</option>
                             @foreach ($zones as $item)
                                 <option value="{{$item->id}}" {{ request()->zone == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
                             @endforeach
@@ -67,7 +67,7 @@
                     <div class="form-group col-md-3">
                         <label>Tipo de documento sucursal:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_document_type" name="branch_office_document_type">
-                            <option selected disabled>Seleccione</option>
+                            <option selected disabled value="">Seleccione</option>
                             @foreach ($documents as $document)
                             <option value="{{ $document->id }}" {{ $document->id == old('branch_office_document_type') ? 'selected' : '' }}>
                                 {{ $document->name }}
@@ -91,7 +91,7 @@
                     <div class="form-group col-md-3">
                         <label>Metodo de pago:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_payment_method" name="branch_office_payment_method">
-                            <option selected disabled>Seleccione</option>
+                            <option selected disabled value="">Seleccione</option>
                             @foreach ($payment_method as $item)
                             <option value="{{ $item->id }}" {{ $item->id == old('branch_office_document_type') ? 'selected' : '' }}>
                                 {{ $item->name }}
@@ -108,7 +108,7 @@
                     <div class="d-none" id="slcPlan">
                         <label>Planes:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_plan">
-                            <option selected disabled>Seleccione</option>
+                            <option selected disabled value="">Seleccione</option>
                             @foreach ($plans as $plan)
                             <option value="{{ $plan->id }}" {{ $plan->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
                                 {{ $plan->name }}
@@ -120,7 +120,7 @@
                     <div class="d-none" id="useMode">
                         <label>Modo de uso:<span class="text-danger">*</span></label>
                         <select class="form-control form-control-solid" id="branch_office_usage_mode" name="branch_office_usage_mode">
-                            <option selected disabled>Seleccione</option>
+                            <option selected disabled value="">Seleccione</option>
                             @foreach ($use_mode as $item)
                             <option value="{{ $item->id }}" {{ $item->id == old('branch_office_usage_mode') ? 'selected' : '' }}>
                                 {{ $item->name }}
