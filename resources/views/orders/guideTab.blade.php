@@ -18,7 +18,8 @@
                             <i class="fas fa-plus"></i>
                         </span>Crear
                     </a>
-                    <a href="#" class="btn btn-success btn-sm font-weight-bolder" data-toggle="modal" data-target="#modalImport" data-tooltip title="IMPORTAR">
+                    <a href="#" class="btn btn-success btn-sm font-weight-bolder" data-toggle="modal"
+                        data-target="#modalImport" data-tooltip title="IMPORTAR">
                         <span class="svg-icon svg-icon-md">
                             <i class="fad fa-upload"></i>
                         </span>Importar
@@ -28,40 +29,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">---</th>
-            <td>---</td>
-            <td>---</td>
-            <td>---</td>
-            <td>---</td>
-            <td>---</td>
-            <td>
-                <span class="label label-inline label-light-success font-weight-bold">
-                    Activo
-                </span>
-                {{-- <span class="label label-inline label-light-danger font-weight-bold">
-                            Inactivo
-                        </span> --}}
-            </td>
-            <td>
-                <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row" data-tooltip title="Detalle">
-                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2">
-                        <i class="far fa-folder-open"></i>
-                    </a>
-                    <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-toggle="modal"
-                        data-target="#modalEdit" data-tooltip title="Editar">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="#" role="button" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
     </tbody>
 </table>
 <!--end: Datatable-->
 
 @include('orders.modals.createGuide')
 @include('orders.modals.editGuide')
-
