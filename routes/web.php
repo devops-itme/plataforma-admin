@@ -137,6 +137,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('notifications.seeAll');
     })->name('todasnotificaciones.index');
 
+    Route::get('ordenes-listado', function () {
+        return view('orders.list');
+    })->name('Ordenes.Listado.index');
+
     Route::resource('tarifas', 'Admin\RateController')->names('rates');
 
     Route::resource('perfil', 'Admin\ProfileController')->names('profile');
