@@ -1003,3 +1003,5 @@ export default class Orders {
     }
 
 }
+
+$("#tabListOrders").DataTable();

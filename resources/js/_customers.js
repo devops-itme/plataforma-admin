@@ -124,7 +124,7 @@ export default class Customers {
         if(btnSendData == null){
             return;
         }
-   
+
         btnSendData.addEventListener('click', async () => {
             let branch_office_name = document.getElementById("branch_office_name"),
                 branch_office_type = document.getElementById("branch_office_type"),
@@ -168,9 +168,8 @@ export default class Customers {
                 formData.append('user_id',user_id);
                 console.log('user_id',user_id);
             }
-            
+
             let response = await this.sendBranchOfficeData(formData);
-            console.log(response)
             if(response['state'] == 200){
                 correct('Sucursal creada de manera exitosa');
                 branch_office_name.value = '';
@@ -193,7 +192,7 @@ export default class Customers {
                 modal.click();
                 this.listBranchOffices();
             } else {
-                error("Error al crear sucursal");
+                error(response['error']);
                 console.log('Error ocurrido: '+response['error']);
             }
         });

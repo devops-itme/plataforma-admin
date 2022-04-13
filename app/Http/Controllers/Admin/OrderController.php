@@ -21,7 +21,8 @@ class OrderController extends Controller
     use OrderTrait;
 
     protected $activity_log;
-    public function __construct(){
+    public function __construct()
+    {
         $this->activity_log = new ActivityLog();
     }
     /**
@@ -36,8 +37,8 @@ class OrderController extends Controller
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->state(request()->state)
-            ->with('getStatusMatrix')->whereHas('getStatusMatrix', function($query) {
-                $query->where('name','!=', 'ENTREGADO');
+            ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
+                $query->where('name', '!=', 'ENTREGADO');
             })->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
@@ -67,7 +68,7 @@ class OrderController extends Controller
         })->get();
         $zones = Zone::get();
 
-        return view('orders.create', compact('customers','order_type','transport_type','payment_method', 'customer_document_type', 'zones'));
+        return view('orders.create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones'));
     }
 
     /**
@@ -86,7 +87,8 @@ class OrderController extends Controller
         } else {
             $request->merge(['urgent_dispatch' => 0]);
         }
-        $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order,
+        $request->merge([
+            'state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order,
             'creator_user_id' => Auth::user()->id,
         ]);
         $response = $this->storeOrder($request);
@@ -97,7 +99,16 @@ class OrderController extends Controller
                     return redirect()->back()->with('danger', $assignGuide['message']);
                 }
             }
-            $this->activity_log->storeLog('Creación de orden', 'Creación de orden', 'App\Order', $response['data']->id, 'App\User', Auth::user()->id, '');
+            $order = $response['data'];
+            $this->activity_log->storeLog(
+                'Creación de orden',
+                'Creación de orden ' . ($order->order_number ?? '') . ' de tipo ' . ($order->getOrderType->name ?? ''),
+                'App\Order',
+                $order->id,
+                'App\User',
+                Auth::user()->id,
+                ''
+            );
             return redirect()->route('orders.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -113,7 +124,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('getUser')->find($id);
-        $user_id = $order->getUser->id??NULL;
+        $user_id = $order->getUser->id ?? NULL;
         $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'customer_document_type');
         })->get();
@@ -238,14 +249,14 @@ class OrderController extends Controller
     public function ordersForDelivery($type)
     {
         try {
-            $matriz_id = $type != 5 ?  $matriz_id = [$type]: $matriz_id = [5, 6];
+            $matriz_id = $type != 5 ?  $matriz_id = [$type] : $matriz_id = [5, 6];
 
 
-            $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query)  {
+            $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query) {
                 $query->where('name', 'Ondemand');
             })->whereIn('status_matrix_id', $matriz_id)
-            ->with(['getUser.getCustomer', 'getUser.getDocumentType', 'getGuides.getRoute.getMessenger', 'getPaymentMethod', 'getDepartment', 'getBranchOffice', 'getGuides.getAddress'])
-            ->get();
+                ->with(['getUser.getCustomer', 'getUser.getDocumentType', 'getGuides.getRoute.getMessenger', 'getPaymentMethod', 'getDepartment', 'getBranchOffice', 'getGuides.getAddress'])
+                ->get();
 
             // $orders = Order::where('order_type', 1)->wh  ere('state', $type)->with(['getUser','getGuides'])->get();
             return $this->respond(200, $orders, null, 'Lista de ordenes');
@@ -290,8 +301,9 @@ class OrderController extends Controller
             ]);
         }
     }
-    public function record(){
-        $orders = Order::with('getStatusMatrix')->whereHas('getStatusMatrix', function($query) {
+    public function record()
+    {
+        $orders = Order::with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
             $query->where('name', 'ENTREGADO');
         })->number(request()->number)
             ->order_type(request()->order_type)

@@ -83329,7 +83329,6 @@ var Customers = /*#__PURE__*/function () {
 
               case 23:
                 response = _context3.sent;
-                console.log(response);
 
                 if (response['state'] == 200) {
                   correct('Sucursal creada de manera exitosa');
@@ -83354,11 +83353,11 @@ var Customers = /*#__PURE__*/function () {
 
                   _this2.listBranchOffices();
                 } else {
-                  error("Error al crear sucursal");
+                  error(response['error']);
                   console.log('Error ocurrido: ' + response['error']);
                 }
 
-              case 26:
+              case 25:
               case "end":
                 return _context3.stop();
             }
@@ -86512,6 +86511,7 @@ var Orders = /*#__PURE__*/function () {
 }();
 
 
+$("#tabListOrders").DataTable();
 
 /***/ }),
 
@@ -89007,8 +89007,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

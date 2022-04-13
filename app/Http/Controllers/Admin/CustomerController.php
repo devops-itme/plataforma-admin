@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ActivityLog;
 use App\BranchOffice;
 use App\Customer;
 use App\Department;
@@ -17,11 +18,29 @@ use App\Parameter;
 use App\User;
 use App\UserBranch;
 use App\Zone;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
-    use CustomerTrait;
+    use CustomerTrait, BranchOfficeTrait;
+
+    protected $activity_log;
+    public function __construct()
+    {
+        $this->activity_log = new ActivityLog();
+    }
+
+    public function respond($state, $data = [], $error = null, $message = '')
+    {
+        return [
+            'state' => $state, //response status
+            'data' => $data, //response data
+            'error' => $error, //bug for developer
+            'message' => $message //user message
+        ];
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -135,16 +154,19 @@ class CustomerController extends Controller
         // }
         $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
         if ($response['state'] == 200) {
-            return json_encode([
-                'state' => 200,
-                'message' => $response['message']
-            ]);
-        } else {
-            return json_encode([
-                'state' => 500,
-                'message' => $response['message']
-            ]);
-        }
+            $customer = $response['data'];
+            $this->activity_log->storeLog(
+                'Creación de cliente',
+                'Creación de cliente con id #' . ($customer->id ?? '') ,
+                'App\Customer',
+                $customer->id,
+                'App\User',
+                Auth::user()->id,
+                ''
+            );
+        } 
+            return $response;
+        
     }
 
     /**

@@ -16,9 +16,9 @@ trait CustomerTrait
             $request->all(),
             [
                 'birthday' => 'nullable|date|before:today',
-                'zone' => 'required',
-                'contact' => 'required|string',
-                'payment_period' => 'required',
+                'zone' => 'nullable',
+                'contact' => 'nullable|string',
+                'payment_period' => 'nullable',
                 'credit' => 'nullable|integer',
                 'taxes' => 'nullable',
                 'receive_emails' => 'nullable',
