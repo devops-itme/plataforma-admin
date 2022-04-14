@@ -2,6 +2,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import Users from '../../app/Modules/UserModule/views/js/_users';
 import Messengers from './_messengers';
 import Addresses from './_addresses';
 import Customers from './_customers';
@@ -24,6 +25,7 @@ Vue.component('status-matrix', require('./components/statusMatrix/statusMatrix.v
 Vue.component('deliveries', require('./components/deliveries/deliveries.vue').default);
 Vue.component('modal', require('./components/modal.vue').default);
 
+let users = new Users();
 let messengers = new Messengers();
 let addresses = new Addresses();
 let customers = new Customers();
@@ -43,6 +45,7 @@ const app = new Vue({
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // bootstrapSelect.initialize();
+    users.initialize();
     orders.initialize();
     messengers.initialize();
     addresses.initialize();
