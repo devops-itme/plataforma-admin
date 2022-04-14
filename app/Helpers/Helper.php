@@ -45,3 +45,10 @@ if (!function_exists('send_sms')) {
         return $response;
     }
 }
+
+if(!function_exists('format_hour')){
+    function format_hour($date)
+    {
+        return \Carbon\Carbon::parse($date)->format('g:i A');
+    }
+}
