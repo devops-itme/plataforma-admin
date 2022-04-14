@@ -21,6 +21,7 @@ class Order extends Model
         'expenses',
         'diligence_expenses',
         'tax_total',
+        'vehicle_type_id',
         'payment_method',
         'urgent_dispatch',
         'schedule_date',

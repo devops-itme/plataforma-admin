@@ -4,7 +4,7 @@
         <div class="form-group col-md-6">
             <label for="trans_type">Tipo de transporte <span class="text-danger">*</span></label>
             <select name="vehicle_type_id" class="form-control form-control-solid" id="trans_type">
-                <option selected disabled>Seleccione tipo de transporte</option>
+                <option selected disabled value="">Seleccione tipo de transporte</option>
                 @foreach ($transport_type as $item)
                     <option value="{{ $item->id }}" {{ $item->id == old('trans_type') ? 'selected' : '' }} >{{$item->name}}</option>
                 @endforeach

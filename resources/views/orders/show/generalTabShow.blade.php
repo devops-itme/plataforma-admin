@@ -6,7 +6,7 @@
             <select name="trans_type" class="form-control form-control-solid" id="trans_type" disabled>
                 <option>Seleccione tipo de transporte</option>
                 @foreach ($transport_type as $item)
-                    <option value="{{ $item->id }}" {{ (count($order->getGuides) > 0 ) ? ($order->getGuides[0]->transport_type == 2 ? 'selected' : '') : ''}} >{{$item->name}}</option>
+                <option value="{{ $item->id }}" {{$order->vehicle_type_id == $item->id ? 'selected' : ''}} >{{$item->name}}</option>
                 @endforeach
             </select>
         </div>
