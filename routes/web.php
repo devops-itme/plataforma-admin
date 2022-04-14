@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role'], function () {
         //USER
-        Route::resource('usuarios', 'Admin\UserController')->names('users');
+        // Route::resource('usuarios', 'Admin\UserController')->names('users');
         Route::resource('usuarios', 'UserModule\Controllers\UserController')->names('users');
 
 
@@ -79,7 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('sucursales/{parent_id}/{id}', 'Admin\BranchOfficeController@destroy')->name('branchOffices.delete');
 
         //MESSEGERS
-        Route::resource('mensajeros', 'Admin\MessengerController')->names('messengers');
+        // Route::resource('mensajeros', 'MessengerController@index')->names('messengers');
+        Route::resource('mensajeros', 'MessengerModule\Controllers\MessengerController')->names('messengers');
 
         //BANK DEPARTMENTS
         Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
