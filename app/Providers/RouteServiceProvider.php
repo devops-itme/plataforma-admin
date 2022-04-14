@@ -97,8 +97,9 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
             ->group(function () {
-                base_path('app/Modules/UserModule/routes/web.php');
+                require(base_path('app/Modules/UserModule/routes/web.php'));
                 require(base_path('app/Modules/CustomerModule/routes/web.php'));
+                require(base_path('app/Modules/ZoneModule/routes/web.php'));
             });
     }
 
