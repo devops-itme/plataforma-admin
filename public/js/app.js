@@ -86,6 +86,47 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./app/Modules/UserModule/views/js/_users.js":
+/*!***************************************************!*\
+  !*** ./app/Modules/UserModule/views/js/_users.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Users; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Users = /*#__PURE__*/function () {
+  function Users() {
+    _classCallCheck(this, Users);
+  }
+
+  _createClass(Users, [{
+    key: "initialize",
+    value: function initialize() {
+      this.test();
+    }
+  }, {
+    key: "test",
+    value: function test() {
+      Vue.component('example-component', __webpack_require__(/*! ../../../../../resources/js/components/exampleComponent.vue */ "./resources/js/components/exampleComponent.vue")["default"]);
+      console.log('----------------------------------------------UserModule test----------------------------------------------');
+    }
+  }]);
+
+  return Users;
+}();
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/regenerator/index.js":
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
@@ -88210,22 +88251,24 @@ var getNeighborhoods = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
-/* harmony import */ var _addresses__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_addresses */ "./resources/js/_addresses.js");
-/* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
-/* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
-/* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
-/* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_permissions */ "./resources/js/_permissions.js");
-/* harmony import */ var _zones__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_zones */ "./resources/js/_zones.js");
-/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
-/* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_parameters */ "./resources/js/_parameters.js");
-/* harmony import */ var _hours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_hours */ "./resources/js/_hours.js");
-/* harmony import */ var _plans__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_plans */ "./resources/js/_plans.js");
-/* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
-/* harmony import */ var _rates__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_rates */ "./resources/js/_rates.js");
+/* harmony import */ var _app_Modules_UserModule_views_js_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../app/Modules/UserModule/views/js/_users */ "./app/Modules/UserModule/views/js/_users.js");
+/* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
+/* harmony import */ var _addresses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_addresses */ "./resources/js/_addresses.js");
+/* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
+/* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
+/* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
+/* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_permissions */ "./resources/js/_permissions.js");
+/* harmony import */ var _zones__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_zones */ "./resources/js/_zones.js");
+/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
+/* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_parameters */ "./resources/js/_parameters.js");
+/* harmony import */ var _hours__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_hours */ "./resources/js/_hours.js");
+/* harmony import */ var _plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_plans */ "./resources/js/_plans.js");
+/* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
+/* harmony import */ var _rates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./_rates */ "./resources/js/_rates.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -88246,24 +88289,26 @@ Vue.component('department-tab', __webpack_require__(/*! ./components/department/
 Vue.component('status-matrix', __webpack_require__(/*! ./components/statusMatrix/statusMatrix.vue */ "./resources/js/components/statusMatrix/statusMatrix.vue")["default"]);
 Vue.component('deliveries', __webpack_require__(/*! ./components/deliveries/deliveries.vue */ "./resources/js/components/deliveries/deliveries.vue")["default"]);
 Vue.component('modal', __webpack_require__(/*! ./components/modal.vue */ "./resources/js/components/modal.vue")["default"]);
-var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_0__["default"]();
-var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_1__["default"]();
-var customers = new _customers__WEBPACK_IMPORTED_MODULE_2__["default"]();
-var orders = new _orders__WEBPACK_IMPORTED_MODULE_3__["default"]();
-var general = new _general__WEBPACK_IMPORTED_MODULE_4__["default"]();
-var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_5__["default"]();
-var zones = new _zones__WEBPACK_IMPORTED_MODULE_6__["default"]();
-var rates = new _rates__WEBPACK_IMPORTED_MODULE_12__["default"]();
-var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
-var parameters = new _parameters__WEBPACK_IMPORTED_MODULE_8__["default"]();
-var hours = new _hours__WEBPACK_IMPORTED_MODULE_9__["default"]();
-var plans = new _plans__WEBPACK_IMPORTED_MODULE_10__["default"]();
-var notifications = new _notifications__WEBPACK_IMPORTED_MODULE_11__["default"]();
+var users = new _app_Modules_UserModule_views_js_users__WEBPACK_IMPORTED_MODULE_0__["default"]();
+var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_1__["default"]();
+var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_2__["default"]();
+var customers = new _customers__WEBPACK_IMPORTED_MODULE_3__["default"]();
+var orders = new _orders__WEBPACK_IMPORTED_MODULE_4__["default"]();
+var general = new _general__WEBPACK_IMPORTED_MODULE_5__["default"]();
+var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_6__["default"]();
+var zones = new _zones__WEBPACK_IMPORTED_MODULE_7__["default"]();
+var rates = new _rates__WEBPACK_IMPORTED_MODULE_13__["default"]();
+var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_8__["default"]();
+var parameters = new _parameters__WEBPACK_IMPORTED_MODULE_9__["default"]();
+var hours = new _hours__WEBPACK_IMPORTED_MODULE_10__["default"]();
+var plans = new _plans__WEBPACK_IMPORTED_MODULE_11__["default"]();
+var notifications = new _notifications__WEBPACK_IMPORTED_MODULE_12__["default"]();
 var app = new Vue({
   el: '#app'
 });
 document.addEventListener("DOMContentLoaded", function (event) {
   // bootstrapSelect.initialize();
+  users.initialize();
   orders.initialize();
   messengers.initialize();
   addresses.initialize();
@@ -89018,8 +89063,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
