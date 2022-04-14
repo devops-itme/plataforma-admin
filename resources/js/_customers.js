@@ -285,8 +285,8 @@ export default class Customers {
                     //Div
                     const buttonsDiv = document.createElement("div");
                     buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                    // console.log(location.pathname.split('/')[2]);
-                    if(!(typeof(parseInt(location.pathname.split('/')[2])) == 'number' && !location.pathname.includes('edit')) || location.pathname.includes('create')){
+
+                    if(!(typeof(parseInt(location.pathname.split('/')[2])) == 'number' && location.pathname.includes('edit')) || location.pathname.includes('create')){
                         buttonsDiv.appendChild(branchCheck);
                     }
                     buttonsDiv.appendChild(branchEdit);
