@@ -85455,7 +85455,7 @@ var Orders = /*#__PURE__*/function () {
 
                 if (data.length > 0) {
                   [].forEach.call(data, function (key) {
-                    var _key$get_state;
+                    var _key$get_state, _key$order_id;
 
                     var row = tbody.insertRow();
                     var idCell = row.insertCell(0);
@@ -85481,7 +85481,8 @@ var Orders = /*#__PURE__*/function () {
                     guideCheck.setAttribute('type', 'checkbox');
                     guideCheck.setAttribute('name', 'guideCheck[]');
                     guideCheck.setAttribute('value', key.id);
-                    key.order_id != null ? guideCheck.checked = true : ''; //EDIT
+                    var check = guideCheck.checked = true;
+                    (_key$order_id = key.order_id) !== null && _key$order_id !== void 0 ? _key$order_id : check; //EDIT
 
                     var guideEdit = document.createElement("button");
                     guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
