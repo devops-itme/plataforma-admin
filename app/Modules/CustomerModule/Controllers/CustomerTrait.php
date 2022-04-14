@@ -2,8 +2,8 @@
 
 namespace App\Modules\CustomerModule\Controllers;
 
+use App\Modules\CustomerModule\Customer;
 use Illuminate\Support\Facades\Validator;
-use App\Customer;
 use App\Modules\UserModule\Controllers\UserTrait;
 
 trait CustomerTrait

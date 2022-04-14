@@ -4,13 +4,13 @@ namespace App\Modules\CustomerModule\Controllers;
 
 use App\ActivityLog;
 use App\BranchOffice;
-use App\Customer;
 use App\Department;
 use App\Http\Controllers\Controller;
 use App\ParameterValue;
 use Illuminate\Http\Request;
 use App\Modules\CustomerModule\Controllers\CustomerTrait;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
+use App\Modules\CustomerModule\Customer;
 use App\User;
 use App\Zone;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +21,7 @@ class CustomerController extends Controller
     use CustomerTrait, BranchOfficeTrait;
 
     protected $activity_log;
+    protected $path = 'CustomerModule.views.customers.';
     public function __construct()
     {
         $this->activity_log = new ActivityLog();
@@ -51,10 +52,9 @@ class CustomerController extends Controller
             ->state(request()->state)
             ->latest()
             ->paginate(10);
-
         $zones = Zone::get();
         // $customers = CustomerResource::collection($customers);
-        return view('app.Modules.CustomerModule.views.customers.index', compact('customers', 'zones'));
+        return view($this->path . 'index', compact('customers', 'zones'));
     }
 
     /**
@@ -88,7 +88,7 @@ class CustomerController extends Controller
         })->get();
 
         $zones = Zone::get();
-        return view('customers.create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans', 'zones'));
+        return view($this->path . 'create', compact('documents','payment_period','payment_method','branch_office_type','use_mode','plans','zones'));
     }
 
     /**
@@ -196,7 +196,7 @@ class CustomerController extends Controller
             $query->where('name', 'plans');
         })->get();
         $zones = Zone::get();
-        return view('customers.show', compact('customer', 'documents', 'payment_method', 'payment_period', 'branch_office_type', 'use_mode', 'plans', 'zones'));
+        return view($this->path . 'show', compact('customer', 'documents', 'payment_method', 'payment_period', 'branch_office_type', 'use_mode', 'plans', 'zones'));
     }
 
     public function customerData($id)
@@ -275,7 +275,7 @@ class CustomerController extends Controller
             $query->where('name', 'plans');
         })->get();
         $zones = Zone::get();
-        return view('customers.edit', compact('customer', 'documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans', 'zones'));
+        return view($this->path . 'edit', compact('customer', 'documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans', 'zones'));
     }
 
     /**
