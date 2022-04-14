@@ -11,7 +11,7 @@ import General from './_general';
 import Permissions from './_permissions';
 import Zones from './_zones';
 import BranchOffices from './_branchOffice';
-import Parameters from './_parameters';
+import Parameters from '../../app/Modules/ParametersModule/views/js/_parameters';
 import Hours from './_hours';
 import Plans from './_plans';
 import Notifications from './_notifications';

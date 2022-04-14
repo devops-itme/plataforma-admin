@@ -86,6 +86,482 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./app/Modules/ParametersModule/views/js/_parameters.js":
+/*!**************************************************************!*\
+  !*** ./app/Modules/ParametersModule/views/js/_parameters.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Parameters; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Parameters = /*#__PURE__*/function () {
+  function Parameters() {
+    _classCallCheck(this, Parameters);
+
+    this.id = '';
+  }
+
+  _createClass(Parameters, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadParameterValues();
+    }
+  }, {
+    key: "loadParameterValues",
+    value: function loadParameterValues() {
+      var _this = this;
+
+      var buttons = document.getElementsByName('btnShowParameters');
+
+      if (buttons == null) {
+        return;
+      }
+
+      [].forEach.call(buttons, function (btn) {
+        _this.id = '';
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var btnOpenModalCreate;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _this.id = btn['id'];
+                  btnOpenModalCreate = document.getElementById("divCreateParameter");
+                  btnOpenModalCreate.className = 'col d-flex align-items-top justify-content-end';
+                  _context.next = 5;
+                  return _this.renderParameterTable(_this.id);
+
+                case 5:
+                  _this.storeParameterValue(_this.id);
+
+                  _this.editParameterValue();
+
+                  return _context.abrupt("return");
+
+                case 8:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        })));
+      });
+    }
+  }, {
+    key: "requestParameterValues",
+    value: function () {
+      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/parametros/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function requestParameterValues(_x) {
+        return _requestParameterValues.apply(this, arguments);
+      }
+
+      return requestParameterValues;
+    }()
+  }, {
+    key: "renderParameterTable",
+    value: function () {
+      var _renderParameterTable = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
+        var tbody, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                tbody = document.querySelector("#parameterValueTable tbody");
+                tbody.innerHTML = '';
+                _context3.next = 4;
+                return this.requestParameterValues(id);
+
+              case 4:
+                response = _context3.sent;
+                data = response.data;
+                [].forEach.call(data, function (key) {
+                  var _key$description;
+
+                  var row = tbody.insertRow();
+                  var nameCell = row.insertCell(0);
+                  nameCell.innerHTML = key.name;
+                  var descriptionCell = row.insertCell(1);
+                  descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
+                  var stateCell = row.insertCell(2);
+
+                  if (key.state == 1) {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                            Activo\
+                                        </span>';
+                  } else {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                            Inactivo\
+                                        </span>';
+                  }
+
+                  var selectCell = row.insertCell(3);
+                  var editBtn = document.createElement("button");
+                  editBtn.setAttribute('name', 'btnEditParameter');
+                  editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                  editBtn.setAttribute('data-toggle', 'modal');
+                  editBtn.setAttribute('data-target', '#modalEditParameter');
+                  editBtn.setAttribute('id', +key.id);
+                  editBtn.setAttribute('type', 'button');
+                  editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                  var deleteBtn = document.createElement("button");
+
+                  deleteBtn.onclick = function () {
+                    confirmDelete('parametros/delete/' + key.id);
+                  };
+
+                  deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                  deleteBtn.setAttribute('type', 'button');
+                  deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                  var buttonsDiv = document.createElement("div");
+                  buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+
+                  if (key.editable == 0) {
+                    editBtn.setAttribute('disabled', true);
+                    deleteBtn.setAttribute('disabled', true);
+                  }
+
+                  buttonsDiv.appendChild(editBtn);
+                  buttonsDiv.appendChild(deleteBtn);
+                  selectCell.appendChild(buttonsDiv);
+                  tbody.appendChild(row);
+                });
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function renderParameterTable(_x2) {
+        return _renderParameterTable.apply(this, arguments);
+      }
+
+      return renderParameterTable;
+    }()
+  }, {
+    key: "storeParameterValue",
+    value: function storeParameterValue() {
+      var _this2 = this;
+
+      var btnStore = document.getElementById("btnStoreParameter");
+
+      if (btnStore == null) {
+        return;
+      }
+
+      btnStore.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var form, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                form = document.getElementById("formCreateParameter");
+
+                if (!(form == null)) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                return _context4.abrupt("return");
+
+              case 3:
+                formData = new FormData(form);
+                formData.append('parameter_id', _this2.id);
+                _context4.next = 7;
+                return _this2.requestStoreParameterValue(formData);
+
+              case 7:
+                response = _context4.sent;
+
+                if (response.state == 200) {
+                  success(response.message);
+                  modal = document.getElementById("modalCreateParameter");
+                  modal.click();
+                  location.reload(); // this.renderParameterTable(this.id);
+                } else {
+                  error(response.message);
+                }
+
+              case 9:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      })));
+    }
+  }, {
+    key: "requestStoreParameterValue",
+    value: function () {
+      var _requestStoreParameterValue = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context5.next = 3;
+                return fetch("/parametros", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context5.sent;
+                return _context5.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function requestStoreParameterValue(_x3) {
+        return _requestStoreParameterValue.apply(this, arguments);
+      }
+
+      return requestStoreParameterValue;
+    }()
+  }, {
+    key: "editParameterValue",
+    value: function editParameterValue() {
+      var _this3 = this;
+
+      var allEditBtns = document.getElementsByName('btnEditParameter');
+
+      if (allEditBtns == null) {
+        return;
+      }
+
+      allEditBtns.forEach(function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+          var response, data, name, description, state;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.next = 2;
+                  return _this3.requestParameterData(btn['id']);
+
+                case 2:
+                  response = _context6.sent;
+                  data = response.data;
+                  name = document.getElementById("parameter_name");
+                  name.value = data.name;
+                  description = document.getElementById("parameter_description");
+                  description.value = data.description;
+                  state = document.getElementById("parameter_state_edit");
+                  data.state == 1 ? state.checked = true : '';
+
+                  _this3.updateParameterValue(btn['id']);
+
+                case 11:
+                case "end":
+                  return _context6.stop();
+              }
+            }
+          }, _callee6);
+        })));
+      });
+    }
+  }, {
+    key: "requestParameterData",
+    value: function () {
+      var _requestParameterData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context7.next = 3;
+                return fetch("parametros/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context7.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function requestParameterData(_x4) {
+        return _requestParameterData.apply(this, arguments);
+      }
+
+      return requestParameterData;
+    }()
+  }, {
+    key: "updateParameterValue",
+    value: function updateParameterValue(id) {
+      var _this4 = this;
+
+      var form = document.getElementById('formUpdateParameter');
+
+      if (form == null) {
+        return;
+      }
+
+      var btnUpdate = document.getElementById("btnUpdateParameter");
+
+      if (btnUpdate == null) {
+        return;
+      }
+
+      btnUpdate.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var formData, token, myHeaders, requestOptions, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                formData = new FormData(form);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context8.next = 12;
+                return _this4.requestUpdateParameter(id, requestOptions);
+
+              case 12:
+                response = _context8.sent;
+
+                if (response.state == 200) {
+                  success(response.message);
+                  modal = document.getElementById("modalEditParameter");
+                  modal.click();
+                  location.reload();
+                } else {
+                  error(response.message);
+                }
+
+              case 14:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      })));
+    }
+  }, {
+    key: "requestUpdateParameter",
+    value: function () {
+      var _requestUpdateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context9.next = 3;
+                return fetch("parametros/" + id, requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context9.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      function requestUpdateParameter(_x5, _x6) {
+        return _requestUpdateParameter.apply(this, arguments);
+      }
+
+      return requestUpdateParameter;
+    }()
+  }]);
+
+  return Parameters;
+}();
+
+
+
+/***/ }),
+
 /***/ "./app/Modules/UserModule/views/js/_users.js":
 /*!***************************************************!*\
   !*** ./app/Modules/UserModule/views/js/_users.js ***!
@@ -86561,482 +87037,6 @@ $("#tabListOrders").DataTable();
 
 /***/ }),
 
-/***/ "./resources/js/_parameters.js":
-/*!*************************************!*\
-  !*** ./resources/js/_parameters.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Parameters; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Parameters = /*#__PURE__*/function () {
-  function Parameters() {
-    _classCallCheck(this, Parameters);
-
-    this.id = '';
-  }
-
-  _createClass(Parameters, [{
-    key: "initialize",
-    value: function initialize() {
-      this.loadParameterValues();
-    }
-  }, {
-    key: "loadParameterValues",
-    value: function loadParameterValues() {
-      var _this = this;
-
-      var buttons = document.getElementsByName('btnShowParameters');
-
-      if (buttons == null) {
-        return;
-      }
-
-      [].forEach.call(buttons, function (btn) {
-        _this.id = '';
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var btnOpenModalCreate;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  _this.id = btn['id'];
-                  btnOpenModalCreate = document.getElementById("divCreateParameter");
-                  btnOpenModalCreate.className = 'col d-flex align-items-top justify-content-end';
-                  _context.next = 5;
-                  return _this.renderParameterTable(_this.id);
-
-                case 5:
-                  _this.storeParameterValue(_this.id);
-
-                  _this.editParameterValue();
-
-                  return _context.abrupt("return");
-
-                case 8:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        })));
-      });
-    }
-  }, {
-    key: "requestParameterValues",
-    value: function () {
-      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context2.next = 3;
-                return fetch("/parametros/" + id).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context2.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function requestParameterValues(_x) {
-        return _requestParameterValues.apply(this, arguments);
-      }
-
-      return requestParameterValues;
-    }()
-  }, {
-    key: "renderParameterTable",
-    value: function () {
-      var _renderParameterTable = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
-        var tbody, response, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                tbody = document.querySelector("#parameterValueTable tbody");
-                tbody.innerHTML = '';
-                _context3.next = 4;
-                return this.requestParameterValues(id);
-
-              case 4:
-                response = _context3.sent;
-                data = response.data;
-                [].forEach.call(data, function (key) {
-                  var _key$description;
-
-                  var row = tbody.insertRow();
-                  var nameCell = row.insertCell(0);
-                  nameCell.innerHTML = key.name;
-                  var descriptionCell = row.insertCell(1);
-                  descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
-                  var stateCell = row.insertCell(2);
-
-                  if (key.state == 1) {
-                    stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
-                                            Activo\
-                                        </span>';
-                  } else {
-                    stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
-                                            Inactivo\
-                                        </span>';
-                  }
-
-                  var selectCell = row.insertCell(3);
-                  var editBtn = document.createElement("button");
-                  editBtn.setAttribute('name', 'btnEditParameter');
-                  editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
-                  editBtn.setAttribute('data-toggle', 'modal');
-                  editBtn.setAttribute('data-target', '#modalEditParameter');
-                  editBtn.setAttribute('id', +key.id);
-                  editBtn.setAttribute('type', 'button');
-                  editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-                  var deleteBtn = document.createElement("button");
-
-                  deleteBtn.onclick = function () {
-                    confirmDelete('parametros/delete/' + key.id);
-                  };
-
-                  deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                  deleteBtn.setAttribute('type', 'button');
-                  deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-                  var buttonsDiv = document.createElement("div");
-                  buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-
-                  if (key.editable == 0) {
-                    editBtn.setAttribute('disabled', true);
-                    deleteBtn.setAttribute('disabled', true);
-                  }
-
-                  buttonsDiv.appendChild(editBtn);
-                  buttonsDiv.appendChild(deleteBtn);
-                  selectCell.appendChild(buttonsDiv);
-                  tbody.appendChild(row);
-                });
-
-              case 7:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function renderParameterTable(_x2) {
-        return _renderParameterTable.apply(this, arguments);
-      }
-
-      return renderParameterTable;
-    }()
-  }, {
-    key: "storeParameterValue",
-    value: function storeParameterValue() {
-      var _this2 = this;
-
-      var btnStore = document.getElementById("btnStoreParameter");
-
-      if (btnStore == null) {
-        return;
-      }
-
-      btnStore.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var form, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                form = document.getElementById("formCreateParameter");
-
-                if (!(form == null)) {
-                  _context4.next = 3;
-                  break;
-                }
-
-                return _context4.abrupt("return");
-
-              case 3:
-                formData = new FormData(form);
-                formData.append('parameter_id', _this2.id);
-                _context4.next = 7;
-                return _this2.requestStoreParameterValue(formData);
-
-              case 7:
-                response = _context4.sent;
-
-                if (response.state == 200) {
-                  success(response.message);
-                  modal = document.getElementById("modalCreateParameter");
-                  modal.click();
-                  location.reload(); // this.renderParameterTable(this.id);
-                } else {
-                  error(response.message);
-                }
-
-              case 9:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      })));
-    }
-  }, {
-    key: "requestStoreParameterValue",
-    value: function () {
-      var _requestStoreParameterValue = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(formData) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context5.next = 3;
-                return fetch("/parametros", {
-                  headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  },
-                  method: 'POST',
-                  body: formData
-                });
-
-              case 3:
-                response = _context5.sent;
-                return _context5.abrupt("return", response.json());
-
-              case 5:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }));
-
-      function requestStoreParameterValue(_x3) {
-        return _requestStoreParameterValue.apply(this, arguments);
-      }
-
-      return requestStoreParameterValue;
-    }()
-  }, {
-    key: "editParameterValue",
-    value: function editParameterValue() {
-      var _this3 = this;
-
-      var allEditBtns = document.getElementsByName('btnEditParameter');
-
-      if (allEditBtns == null) {
-        return;
-      }
-
-      allEditBtns.forEach(function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-          var response, data, name, description, state;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-            while (1) {
-              switch (_context6.prev = _context6.next) {
-                case 0:
-                  _context6.next = 2;
-                  return _this3.requestParameterData(btn['id']);
-
-                case 2:
-                  response = _context6.sent;
-                  data = response.data;
-                  name = document.getElementById("parameter_name");
-                  name.value = data.name;
-                  description = document.getElementById("parameter_description");
-                  description.value = data.description;
-                  state = document.getElementById("parameter_state_edit");
-                  data.state == 1 ? state.checked = true : '';
-
-                  _this3.updateParameterValue(btn['id']);
-
-                case 11:
-                case "end":
-                  return _context6.stop();
-              }
-            }
-          }, _callee6);
-        })));
-      });
-    }
-  }, {
-    key: "requestParameterData",
-    value: function () {
-      var _requestParameterData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context7.next = 3;
-                return fetch("parametros/" + id + "/edit").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context7.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }));
-
-      function requestParameterData(_x4) {
-        return _requestParameterData.apply(this, arguments);
-      }
-
-      return requestParameterData;
-    }()
-  }, {
-    key: "updateParameterValue",
-    value: function updateParameterValue(id) {
-      var _this4 = this;
-
-      var form = document.getElementById('formUpdateParameter');
-
-      if (form == null) {
-        return;
-      }
-
-      var btnUpdate = document.getElementById("btnUpdateParameter");
-
-      if (btnUpdate == null) {
-        return;
-      }
-
-      btnUpdate.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        var formData, token, myHeaders, requestOptions, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                formData = new FormData(form);
-                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                myHeaders = new Headers();
-                myHeaders.append("Accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                myHeaders.append('Content-Type', "application/json");
-                myHeaders.append('Content-Type', "multipart/form-data");
-                myHeaders.append("X-CSRF-TOKEN", token);
-                requestOptions = {
-                  method: "PUT",
-                  headers: myHeaders,
-                  body: JSON.stringify(Object.fromEntries(formData))
-                };
-                _context8.next = 12;
-                return _this4.requestUpdateParameter(id, requestOptions);
-
-              case 12:
-                response = _context8.sent;
-
-                if (response.state == 200) {
-                  success(response.message);
-                  modal = document.getElementById("modalEditParameter");
-                  modal.click();
-                  location.reload();
-                } else {
-                  error(response.message);
-                }
-
-              case 14:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      })));
-    }
-  }, {
-    key: "requestUpdateParameter",
-    value: function () {
-      var _requestUpdateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(id, requestOptions) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context9.next = 3;
-                return fetch("parametros/" + id, requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context9.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context9.stop();
-            }
-          }
-        }, _callee9);
-      }));
-
-      function requestUpdateParameter(_x5, _x6) {
-        return _requestUpdateParameter.apply(this, arguments);
-      }
-
-      return requestUpdateParameter;
-    }()
-  }]);
-
-  return Parameters;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/_permissions.js":
 /*!**************************************!*\
   !*** ./resources/js/_permissions.js ***!
@@ -88260,7 +88260,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_permissions */ "./resources/js/_permissions.js");
 /* harmony import */ var _zones__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_zones */ "./resources/js/_zones.js");
 /* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
-/* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_parameters */ "./resources/js/_parameters.js");
+/* harmony import */ var _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../app/Modules/ParametersModule/views/js/_parameters */ "./app/Modules/ParametersModule/views/js/_parameters.js");
 /* harmony import */ var _hours__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_hours */ "./resources/js/_hours.js");
 /* harmony import */ var _plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_plans */ "./resources/js/_plans.js");
 /* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
@@ -88299,7 +88299,7 @@ var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_6__["default"]();
 var zones = new _zones__WEBPACK_IMPORTED_MODULE_7__["default"]();
 var rates = new _rates__WEBPACK_IMPORTED_MODULE_13__["default"]();
 var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_8__["default"]();
-var parameters = new _parameters__WEBPACK_IMPORTED_MODULE_9__["default"]();
+var parameters = new _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__["default"]();
 var hours = new _hours__WEBPACK_IMPORTED_MODULE_10__["default"]();
 var plans = new _plans__WEBPACK_IMPORTED_MODULE_11__["default"]();
 var notifications = new _notifications__WEBPACK_IMPORTED_MODULE_12__["default"]();
@@ -89063,8 +89063,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\mods\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\mods\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -43,9 +43,10 @@ Route::group(['middleware' => 'auth'], function () {
     //update order state
     Route::post('/despacho/orden/estado', 'Admin\DeliveryController@updateStateOrders');
 
-    Route::resource('parametros', 'Admin\ParameterController')->except('destroy')->names('parameters');
-    Route::delete('parametros/delete/{id}', 'Admin\ParameterController@destroy')->name('parameters.destroy');
-
+    // Route::resource('parametros', 'Admin\ParameterController')->except('destroy')->names('parameters');
+    // Route::delete('parametros/delete/{id}', 'Admin\ParameterController@destroy')->name('parameters.destroy');
+    Route::resource('parametros', 'ParametersModule\Controllers\ParameterController')->except('destroy')->names('parameters');
+    Route::delete('parametros/delete/{id}', 'ParametersModule\Controllers\ParameterController@destroy')->name('parameters.destroy');
     Route::group(['middleware' => 'role'], function () {
         //USER
         Route::resource('usuarios', 'Admin\UserController')->names('users');

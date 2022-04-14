@@ -98,6 +98,7 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace)
             ->group(function () {
                 require(base_path('app/Modules/UserModule/routes/web.php'));
+                require(base_path('app/Modules/ParametersModule/routes/web.php'));
             });
     }
 
