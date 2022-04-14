@@ -53,8 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 
         //CUSTOMER
-        Route::resource('/clientes', 'Admin\CustomerController')->except('store')->names('customers');
-        Route::post('/clientes/store', 'Admin\CustomerController@store')->name('customers.store');
+        Route::resource('/clientes', 'CustomerModule\Controllers\CustomerController')->except('store')->names('customers');
+        Route::post('/clientes/store', 'CustomerModule\Controllers\CustomerController@store')->name('customers.store');
+        // Route::resource('/clientes', 'Admin\CustomerController')->except('store')->names('customers');
+        // Route::post('/clientes/store', 'Admin\CustomerController@store')->name('customers.store');
         //Obtener sucursales
         Route::get('/sucursales_cliente/{id}', 'Admin\CustomerController@getBranchOffices')->name('branchOffices.index');
         //BANKS

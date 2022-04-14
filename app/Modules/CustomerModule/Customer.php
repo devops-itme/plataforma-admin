@@ -1,7 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Modules\CustomerModule;
 
+use App\Modules\UserModule\User;
+use App\ParameterValue;
+use App\Zone;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +43,11 @@ class Customer extends Model
     public function getZone()
     {
         return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    public function getPaymentPeriod()
+    {
+        return $this->belongsTo(ParameterValue::class, 'payment_period');
     }
 
     //Scopes
