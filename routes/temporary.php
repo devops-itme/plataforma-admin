@@ -13,6 +13,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         //MESSENGERS
         Route::resource('mensajeros', 'MessengerModule\Controllers\MessengerController')->names('messengers');
+
+        //DEPARTMENT
+        Route::resource('departamentos', 'DepartmentModule\Controllers\DepartmentController')->names('departments');
+
     });
     Route::resource('zonas', 'ZoneModule\Controllers\ZoneController')->names('zones');
     Route::get('getPlaces', 'ZoneModule\Controllers\PlaceController@getPlaces');

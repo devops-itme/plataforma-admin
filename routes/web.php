@@ -86,7 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('mensajeros', 'MessengerModule\Controllers\MessengerController')->names('messengers');
 
         //BANK DEPARTMENTS
-        Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
+        // Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
+        Route::resource('departamentos', 'DepartmentModule\Controllers\DepartmentController')->names('departments');
 
         //ORDENES
         // Route::get('ordenes/historial', function () {
