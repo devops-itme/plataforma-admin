@@ -124,12 +124,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
     Route::get('despachos-packing', 'Admin\DeliveryController@indexPacking')->name('deliveryPacking.index');
 
-    Route::get('getPlaces', 'Admin\PlaceController@getPlaces');
-    Route::get('getZoneNeighborhoods/{id}', 'Admin\PlaceController@getZoneNeighborhoods');
-    Route::resource('zonas', 'Admin\ZoneController')->names('zones');
-    // Route::get('zonas', function () {
-    //     return view('zones.index');
-    // })->name('zone.index');
+    // Route::get('getPlaces', 'Admin\PlaceController@getPlaces');
+    // Route::get('getZoneNeighborhoods/{id}', 'Admin\PlaceController@getZoneNeighborhoods');
+    // Route::resource('zonas', 'Admin\ZoneController')->names('zones');
+    Route::resource('zonas', 'ZoneModule\Controllers\ZoneController')->names('zones');
+    Route::get('getPlaces', 'ZoneModule\Controllers\PlaceController@getPlaces');
+    Route::get('getZoneNeighborhoods/{id}', 'ZoneModule\Controllers\PlaceController@getZoneNeighborhoods');
 
     Route::get('notificaciones', function () {
         return view('notifications.index');
