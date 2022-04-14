@@ -11,5 +11,20 @@
     "orders" : "Ordenes",
     "parameters":"Parametros",
     "record":"Historial",
-    "profile":"Perfil"
+    "profile":"Perfil",
+    "document_type":"Tipo de documento",
+    "action":"Acción",
+    "permissions":"Permisos",
+    "branch_office_types":"Tipos de sucursales",
+    "contract_type":"Tipos de contrato",
+    "payment_period":"Periodos de pago",
+    "payment_method":"Métodos de pago",
+    "use_mode":"Modos de uso",
+    "order_states":"Estados de orden",
+    "transport_type":"Tipos de transporte",
+    "plans":"Planes",
+    "customer_document_type":"Tipos de documento",
+    "scopes":"Alcances (Scope)",
+    "issues":"Temas (Issues)",
+    "days":"Días"
 }

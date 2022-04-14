@@ -79,6 +79,10 @@ export default class Parameters {
 
             const buttonsDiv = document.createElement("div");
             buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+            if(key.editable == 0){
+                editBtn.setAttribute('disabled', true);
+                deleteBtn.setAttribute('disabled', true);
+            }
             buttonsDiv.appendChild(editBtn);
             buttonsDiv.appendChild(deleteBtn);
             selectCell.appendChild(buttonsDiv);

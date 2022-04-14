@@ -86692,6 +86692,12 @@ var Parameters = /*#__PURE__*/function () {
                   deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
                   var buttonsDiv = document.createElement("div");
                   buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+
+                  if (key.editable == 0) {
+                    editBtn.setAttribute('disabled', true);
+                    deleteBtn.setAttribute('disabled', true);
+                  }
+
                   buttonsDiv.appendChild(editBtn);
                   buttonsDiv.appendChild(deleteBtn);
                   selectCell.appendChild(buttonsDiv);
