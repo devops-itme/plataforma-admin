@@ -8,6 +8,7 @@ use App\BranchOffice;
 use App\DepartmentBranch;
 use App\UserBranch;
 use App\UserDeparment;
+use Illuminate\Validation\Rule;
 
 trait BranchOfficeTrait
 {
@@ -32,8 +33,12 @@ trait BranchOfficeTrait
                 'branch_office_default' => 'nullable',
                 'branch_office_payment_method' => 'required|numeric',
                 'branch_office_phone' => 'required|string',
-                'branch_office_plan' => 'nullable',
-                'branch_office_usage_mode' => 'nullable',
+                'branch_office_plan' => [
+                    Rule::requiredIf($request->branch_office_payment_method != 25), 'numeric'
+                ],
+                'branch_office_usage_mode' => [
+                    Rule::requiredIf($request->branch_office_payment_method != 25), 'numeric'
+                ],
                 'user_id' => 'nullable|exists:users,id',
             ]
         );

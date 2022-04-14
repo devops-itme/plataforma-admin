@@ -83041,7 +83041,7 @@ var BranchOffices = /*#__PURE__*/function () {
       }
 
       option.addEventListener('change', function () {
-        if (option.value == 24) {
+        if (option.value == 25) {
           useMode.className = 'd-none';
           slcPlan.className = 'd-none';
         } else {

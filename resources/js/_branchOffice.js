@@ -11,7 +11,7 @@ export default class BranchOffices {
             return;
         }
         option.addEventListener('change', () => {
-            if(option.value == 24){
+            if(option.value == 25){
                 useMode.className = 'd-none';
                 slcPlan.className = 'd-none';
             } else {
