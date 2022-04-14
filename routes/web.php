@@ -49,13 +49,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('parametros/delete/{id}', 'ParametersModule\Controllers\ParameterController@destroy')->name('parameters.destroy');
     Route::group(['middleware' => 'role'], function () {
         //USER
-        Route::resource('usuarios', 'Admin\UserController')->names('users');
+        // Route::resource('usuarios', 'Admin\UserController')->names('users');
         Route::resource('usuarios', 'UserModule\Controllers\UserController')->names('users');
 
 
         //CUSTOMER
-        Route::resource('/clientes', 'Admin\CustomerController')->except('store')->names('customers');
-        Route::post('/clientes/store', 'Admin\CustomerController@store')->name('customers.store');
+        Route::resource('/clientes', 'CustomerModule\Controllers\CustomerController')->except('store')->names('customers');
+        Route::post('/clientes/store', 'CustomerModule\Controllers\CustomerController@store')->name('customers.store');
+        // Route::resource('/clientes', 'Admin\CustomerController')->except('store')->names('customers');
+        // Route::post('/clientes/store', 'Admin\CustomerController@store')->name('customers.store');
         //Obtener sucursales
         Route::get('/sucursales_cliente/{id}', 'Admin\CustomerController@getBranchOffices')->name('branchOffices.index');
         //BANKS
@@ -80,7 +82,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('sucursales/{parent_id}/{id}', 'Admin\BranchOfficeController@destroy')->name('branchOffices.delete');
 
         //MESSEGERS
-        Route::resource('mensajeros', 'Admin\MessengerController')->names('messengers');
+        // Route::resource('mensajeros', 'MessengerController@index')->names('messengers');
+        Route::resource('mensajeros', 'MessengerModule\Controllers\MessengerController')->names('messengers');
 
         //BANK DEPARTMENTS
         Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
@@ -124,12 +127,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
     Route::get('despachos-packing', 'Admin\DeliveryController@indexPacking')->name('deliveryPacking.index');
 
-    Route::get('getPlaces', 'Admin\PlaceController@getPlaces');
-    Route::get('getZoneNeighborhoods/{id}', 'Admin\PlaceController@getZoneNeighborhoods');
-    Route::resource('zonas', 'Admin\ZoneController')->names('zones');
-    // Route::get('zonas', function () {
-    //     return view('zones.index');
-    // })->name('zone.index');
+    // Route::get('getPlaces', 'Admin\PlaceController@getPlaces');
+    // Route::get('getZoneNeighborhoods/{id}', 'Admin\PlaceController@getZoneNeighborhoods');
+    // Route::resource('zonas', 'Admin\ZoneController')->names('zones');
+    Route::resource('zonas', 'ZoneModule\Controllers\ZoneController')->names('zones');
+    Route::get('getPlaces', 'ZoneModule\Controllers\PlaceController@getPlaces');
+    Route::get('getZoneNeighborhoods/{id}', 'ZoneModule\Controllers\PlaceController@getZoneNeighborhoods');
 
     Route::get('notificaciones', function () {
         return view('notifications.index');

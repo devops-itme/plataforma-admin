@@ -9,7 +9,7 @@ import Customers from './_customers';
 import Orders from './_orders';
 import General from './_general';
 import Permissions from './_permissions';
-import Zones from './_zones';
+import Zones from '../../app/Modules/ZoneModule/views/js/_zones';
 import BranchOffices from './_branchOffice';
 import Parameters from '../../app/Modules/ParametersModule/views/js/_parameters';
 import Hours from './_hours';

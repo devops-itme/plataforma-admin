@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Traits;
+namespace App\Modules\CustomerModule\Controllers;
 
+use App\Modules\CustomerModule\Customer;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Traits\RestActions;
-use App\Customer;
+use App\Modules\UserModule\Controllers\UserTrait;
 
 trait CustomerTrait
 {

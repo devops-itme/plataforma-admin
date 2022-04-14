@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 
 trait BranchOfficeTrait
 {
-    use UserTrait;
+    // use UserTrait;
 
     public function branchOfficeValidate($request)
     {

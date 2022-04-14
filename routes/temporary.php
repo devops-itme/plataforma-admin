@@ -4,9 +4,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role'], function () {
-        //USER
+
         Route::resource('usuarios', 'UserModule\Controllers\UserController')->names('users');
+
+        //CUSTOMER
+        Route::resource('/clientes', 'CustomerModule\Controllers\CustomerController')->except('store')->names('customers');
+        Route::post('/clientes/store', 'CustomerModule\Controllers\CustomerController@store')->name('customers.store');
+
+        //MESSENGERS
+        Route::resource('mensajeros', 'MessengerModule\Controllers\MessengerController')->names('messengers');
     });
+    Route::resource('zonas', 'ZoneModule\Controllers\ZoneController')->names('zones');
+    Route::get('getPlaces', 'ZoneModule\Controllers\PlaceController@getPlaces');
+    Route::get('getZoneNeighborhoods/{id}', 'ZoneModule\Controllers\PlaceController@getZoneNeighborhoods');
+    //Parameters
     Route::resource('parametros', 'ParametersModule\Controllers\ParameterController')->except('destroy')->names('parameters');
     Route::delete('parametros/delete/{id}', 'ParametersModule\Controllers\ParameterController@destroy')->name('parameters.destroy');
 });

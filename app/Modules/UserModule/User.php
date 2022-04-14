@@ -2,6 +2,8 @@
 
 namespace App\Modules\UserModule;
 
+use App\Address;
+use App\ParameterValue;
 use App\Role;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
