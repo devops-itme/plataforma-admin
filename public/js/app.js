@@ -85455,23 +85455,23 @@ var Orders = /*#__PURE__*/function () {
 
                 if (data.length > 0) {
                   [].forEach.call(data, function (key) {
-                    var _key$get_state, _key$order_id;
+                    var _key$id, _key$contact, _key$phone_contact, _key$email_contact, _key$rate, _key$get_state, _key$order_id;
 
                     var row = tbody.insertRow();
                     var idCell = row.insertCell(0);
-                    idCell.innerHTML = key.id;
+                    idCell.innerHTML = (_key$id = key.id) !== null && _key$id !== void 0 ? _key$id : '';
                     var contactCell = row.insertCell(1);
-                    contactCell.innerHTML = key.contact;
+                    contactCell.innerHTML = (_key$contact = key.contact) !== null && _key$contact !== void 0 ? _key$contact : '';
                     var phoneCell = row.insertCell(2);
-                    phoneCell.innerHTML = key.phone_contact;
+                    phoneCell.innerHTML = (_key$phone_contact = key.phone_contact) !== null && _key$phone_contact !== void 0 ? _key$phone_contact : '';
                     var emailCell = row.insertCell(3);
-                    emailCell.innerHTML = key.email_contact;
+                    emailCell.innerHTML = (_key$email_contact = key.email_contact) !== null && _key$email_contact !== void 0 ? _key$email_contact : '';
                     var dateCell = row.insertCell(4);
                     var allDate = new Date(key.created_at.split(' ')[0]);
                     var month = allDate.getMonth();
                     dateCell.innerHTML = allDate.getDate() + "-" + _this6.months(month) + "-" + allDate.getFullYear();
                     var rateCell = row.insertCell(5);
-                    rateCell.innerHTML = key.rate;
+                    rateCell.innerHTML = (_key$rate = key.rate) !== null && _key$rate !== void 0 ? _key$rate : '';
                     var stateCell = row.insertCell(6);
                     stateCell.innerHTML = (_key$get_state = key.get_state) === null || _key$get_state === void 0 ? void 0 : _key$get_state.name;
                     var selectCell = row.insertCell(7); //CHECK

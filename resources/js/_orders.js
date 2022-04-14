@@ -442,16 +442,16 @@ export default class Orders {
                 let row = tbody.insertRow();
 
                 let idCell = row.insertCell(0);
-                idCell.innerHTML = key.id;
+                idCell.innerHTML = key.id??'';
 
                 let contactCell = row.insertCell(1);
-                contactCell.innerHTML = key.contact;
+                contactCell.innerHTML = key.contact??'';
 
                 let phoneCell = row.insertCell(2);
-                phoneCell.innerHTML = key.phone_contact;
+                phoneCell.innerHTML = key.phone_contact??'';
 
                 let emailCell = row.insertCell(3);
-                emailCell.innerHTML = key.email_contact;
+                emailCell.innerHTML = key.email_contact??'';
 
                 let dateCell = row.insertCell(4);
                 let allDate = new Date((key.created_at).split(' ')[0]);
@@ -459,7 +459,7 @@ export default class Orders {
                 dateCell.innerHTML = allDate.getDate()+"-"+this.months(month)+"-"+allDate.getFullYear();
 
                 let rateCell = row.insertCell(5);
-                rateCell.innerHTML = key.rate;
+                rateCell.innerHTML = key.rate??'';
 
                 let stateCell = row.insertCell(6);
                 stateCell.innerHTML = key.get_state?.name;
