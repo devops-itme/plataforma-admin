@@ -3,11 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['middleware' => 'role'], function () {
-
-        Route::resource('usuarios', 'UserModule\Controllers\UserController')->names('users');
-    });
-    Route::resource('zonas', 'ZoneModule\Controllers\ZoneController')->names('zones');
+    // Route::group(['middleware' => 'role'], function () {
     Route::get('getPlaces', 'ZoneModule\Controllers\PlaceController@getPlaces');
     Route::get('getZoneNeighborhoods/{id}', 'ZoneModule\Controllers\PlaceController@getZoneNeighborhoods');
+    Route::resource('zonas', 'ZoneModule\Controllers\ZoneController')->names('zones');
+    // });
 });
