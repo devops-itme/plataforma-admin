@@ -7,7 +7,7 @@ use App\Http\Controllers\RestActions;
 use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
 use App\ParameterValue;
 use App\User;
-use App\UserDeparment;
+use App\UserDepartment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,7 +33,7 @@ trait DepartmentTrait
             // dd( is_numeric($user_id));
             $departments = Department::get();
             if(is_numeric(Request()->user_id)){
-                $allAssignedDepartments = UserDeparment::where('user_id', $user_id )->get('department_id');
+                $allAssignedDepartments = UserDepartment::where('user_id', $user_id )->get('department_id');
                 $departments_id = $allAssignedDepartments->map(function ($item, $key) {
                     return $item->department_id;
                 });
@@ -41,7 +41,7 @@ trait DepartmentTrait
 
             }else{
 
-                $allAssignedDepartments = UserDeparment::get('department_id');
+                $allAssignedDepartments = UserDepartment::get('department_id');
                 $departments_id = $allAssignedDepartments->map(function ($item, $key) {
                     return $item->department_id;
                 });
@@ -73,7 +73,7 @@ trait DepartmentTrait
 
             $department = Department::create($request->all());
 
-            if(isset($request->user_id)) UserDeparment::create(['department_id'=>$department->id, 'user_id'=>$user_id]);
+            if(isset($request->user_id)) UserDepartment::create(['department_id'=>$department->id, 'user_id'=>$user_id]);
 
 
             return $this->respond(200, $department, null, 'Departamento creado exitosamente');

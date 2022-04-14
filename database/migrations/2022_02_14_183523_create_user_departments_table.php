@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserDeparmentsTable extends Migration
+class CreateUserDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserDeparmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_deparments', function (Blueprint $table) {
+        Schema::create('user_departments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
@@ -31,6 +31,6 @@ class CreateUserDeparmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_deparments');
+        Schema::dropIfExists('user_departments');
     }
 }

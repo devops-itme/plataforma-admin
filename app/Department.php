@@ -25,7 +25,7 @@ class Department extends Model
 
     public function getDepartmentUser()
     {
-        return $this->hasMany(UserDeparment::class, 'department_id');
+        return $this->hasMany(UserDepartment::class, 'department_id');
     }
 
     //SCOPES

@@ -3,7 +3,7 @@
 namespace App\Modules\DepartmentModule;
 
 use App\BranchOffice;
-use App\UserDeparment;
+use App\UserDepartment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,7 +27,7 @@ class Department extends Model
 
     public function getDepartmentUser()
     {
-        return $this->hasMany(UserDeparment::class, 'department_id');
+        return $this->hasMany(UserDepartment::class, 'department_id');
     }
 
     //SCOPES

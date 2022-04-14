@@ -7,7 +7,7 @@ use App\Http\Controllers\Traits\RestActions;
 use App\BranchOffice;
 use App\DepartmentBranch;
 use App\UserBranch;
-use App\UserDeparment;
+use App\UserDepartment;
 use Illuminate\Validation\Rule;
 
 trait BranchOfficeTrait
@@ -163,7 +163,7 @@ trait BranchOfficeTrait
     {
         try {
             foreach ($departments as $key) {
-                UserDeparment::create([
+                UserDepartment::create([
                     'user_id' => $user_id,
                     'department_id' => $key
                 ]);

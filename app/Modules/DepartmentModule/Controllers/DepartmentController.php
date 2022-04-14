@@ -5,7 +5,7 @@ namespace App\Modules\DepartmentModule\Controllers;
 use App\Modules\DepartmentModule\Department;
 use App\Http\Controllers\Controller;
 use App\Modules\DepartmentModule\Controllers\DepartmentTrait;
-use App\UserDeparment;
+use App\UserDepartment;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -112,7 +112,7 @@ class DepartmentController extends Controller
 
     public function UnassignedDepts()
     {
-        $assignedDepts = UserDeparment::get('department_id');
+        $assignedDepts = UserDepartment::get('department_id');
         $ids = [];
         foreach ($assignedDepts as $key) {
             array_push($ids, $key->department_id);

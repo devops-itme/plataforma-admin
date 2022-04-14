@@ -5,10 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserDeparment extends Model
+class UserDepartment extends Model
 {
     use SoftDeletes;
-    protected $table = 'user_deparments';
+    protected $table = 'user_departments';
     protected $fillable = [
         'department_id',
         'user_id'

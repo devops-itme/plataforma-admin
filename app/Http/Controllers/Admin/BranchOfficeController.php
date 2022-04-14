@@ -10,7 +10,7 @@ use App\Parameter;
 use App\ParameterValue;
 use App\User;
 use App\UserBranch;
-use App\UserDeparment;
+use App\UserDepartment;
 
 class BranchOfficeController extends Controller
 {
@@ -76,7 +76,7 @@ class BranchOfficeController extends Controller
             if($request->branch_office_department != ''){
                 $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
                 if($saveBranchDept){
-                    $userDept = UserDeparment::where('department_id', $saveBranchDept['data']->department_id)->first();
+                    $userDept = UserDepartment::where('department_id', $saveBranchDept['data']->department_id)->first();
                     if($userDept){
                         $saveUserBranch = $this->storeUserBranch($userDept->user_id , $response['data']->id);
                         if($saveUserBranch['state'] != 200){
@@ -175,7 +175,7 @@ class BranchOfficeController extends Controller
             if($request->branch_office_department != 'Seleccione'){
                 $saveBranchDept = $this->storeBranchDepartment($response['data']->id, $request->branch_office_department);
                 if($saveBranchDept){
-                    $userDept = UserDeparment::where('department_id', $saveBranchDept['data']->department_id)->first();
+                    $userDept = UserDepartment::where('department_id', $saveBranchDept['data']->department_id)->first();
                     if($userDept){
                         $saveUserBranch = $this->storeUserBranch($userDept->user_id, $response['data']->id);
                         if($saveUserBranch['state'] != 200){
