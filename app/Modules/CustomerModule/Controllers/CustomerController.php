@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Modules\CustomerModule\Controllers;
 
 use App\ActivityLog;
 use App\BranchOffice;
@@ -9,14 +9,9 @@ use App\Department;
 use App\Http\Controllers\Controller;
 use App\ParameterValue;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Traits\UserTrait;
-use App\Http\Controllers\Traits\CustomerTrait;
+use App\Modules\CustomerModule\Controllers\CustomerTrait;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
-use App\Http\Controllers\Traits\RestActions;
-use App\Http\Resources\CustomerResource;
-use App\Parameter;
 use App\User;
-use App\UserBranch;
 use App\Zone;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +35,7 @@ class CustomerController extends Controller
             'message' => $message //user message
         ];
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +54,7 @@ class CustomerController extends Controller
 
         $zones = Zone::get();
         // $customers = CustomerResource::collection($customers);
-        return view('customers.index', compact('customers', 'zones'));
+        return view('app.Modules.CustomerModule.views.customers.index', compact('customers', 'zones'));
     }
 
     /**
@@ -164,9 +159,9 @@ class CustomerController extends Controller
                 Auth::user()->id,
                 ''
             );
-        } 
+        }
             return $response;
-        
+
     }
 
     /**
