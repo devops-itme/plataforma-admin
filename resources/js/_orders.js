@@ -748,13 +748,17 @@ export default class Orders {
         let data = response.data;
 
         [].forEach.call(slcAddresses, slcAddress => {
-            slcAddress.selectedIndex = 0;
-            removeOptions(slcAddress);
+            if(!(typeof(parseInt(location.pathname.split('/')[2])) == 'number' && location.pathname.includes('edit'))){
+                if(!slcAddress.id != 'order_customer_address'){
+                    slcAddress.selectedIndex = 0;
+                    removeOptions(slcAddress);
 
-            for (var i = 0; i < data.length; i++) {
-                let element = data[i];
-                let optAddress = '<option value="'+element.id+'" name="'+element.name+'"> '+element.name+' </option>';
-                slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                    for (var i = 0; i < data.length; i++) {
+                        let element = data[i];
+                        let optAddress = '<option value="'+element.id+'" name="'+element.name+'"> '+element.name+' </option>';
+                        slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                    }
+                }
             }
         });
     }

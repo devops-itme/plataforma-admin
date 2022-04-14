@@ -34,7 +34,7 @@
         <input type="hidden" name="schedule_time" id="schedule_time">
         <div class="form-group col-md-6">
             <label for="address">Dirección origen <span class="text-danger">*</span></label>
-            <select name="customer_address" class="form-control form-control-solid" id="address">
+            <select name="customer_address" class="form-control form-control-solid" id="order_customer_address">
                 <option disabled selected>Seleccione </option>
                 @foreach ($customer_addresses as $address)
                     <option value="{{$address->id}}" {{$address->id == $order->address_id ? 'selected' : ''}}> {{$address->name}} </option>

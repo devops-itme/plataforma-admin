@@ -85977,13 +85977,17 @@ var Orders = /*#__PURE__*/function () {
               case 11:
                 data = response.data;
                 [].forEach.call(slcAddresses, function (slcAddress) {
-                  slcAddress.selectedIndex = 0;
-                  removeOptions(slcAddress);
+                  if (!(typeof parseInt(location.pathname.split('/')[2]) == 'number' && location.pathname.includes('edit'))) {
+                    if (!slcAddress.id != 'order_customer_address') {
+                      slcAddress.selectedIndex = 0;
+                      removeOptions(slcAddress);
 
-                  for (var i = 0; i < data.length; i++) {
-                    var element = data[i];
-                    var optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + ' </option>';
-                    slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                      for (var i = 0; i < data.length; i++) {
+                        var element = data[i];
+                        var optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + ' </option>';
+                        slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                      }
+                    }
                   }
                 });
 
