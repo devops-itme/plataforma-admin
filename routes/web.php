@@ -174,8 +174,11 @@ Route::group(['middleware' => 'auth'], function () {
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 // Route::get('admin/order', 'Admin\OrderController@historial');
+
 //ADDRESSES
-Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
+// Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
+Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->names('addresses');
+
 //REPORTS
 Route::resource('reportes', 'Admin\ReportController')->names('reports');
 //SERVICE TYPES
