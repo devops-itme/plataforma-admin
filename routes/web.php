@@ -171,9 +171,12 @@ Route::group(['middleware' => 'auth'], function () {
     //Matriz de estados del despacho lógica
     Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
 
-    Route::resource('horas', 'Admin\PickupHourController')->except('delete')->names('hours');
-    Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');
-    Route::get('/getPickupHours', 'Admin\PickupHourController@pickupHours');
+    // Route::resource('horas', 'Admin\PickupHourController')->except('delete')->names('hours');
+    // Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');
+    // Route::get('/getPickupHours', 'Admin\PickupHourController@pickupHours');
+    Route::resource('horas', 'PickupHourModule\Controllers\PickupHourController')->except('delete')->names('hours');
+    Route::delete('horas/{id}', 'PickupHourModule\Controllers\PickupHourController@destroy')->name('hours.delete');
+    Route::get('/getPickupHours', 'PickupHourModule\Controllers\PickupHourController@pickupHours');
 
     // Route::get('log', 'Admin\LogController@index')->name('log.index');
     Route::get('log', 'ActivityLogModule\Controllers\LogController@index')->name('log.index');

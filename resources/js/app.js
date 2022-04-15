@@ -12,7 +12,7 @@ import Permissions from './_permissions';
 import Zones from '../../app/Modules/ZoneModule/views/js/_zones';
 import BranchOffices from './_branchOffice';
 import Parameters from '../../app/Modules/ParametersModule/views/js/_parameters';
-import Hours from './_hours';
+import Hours from '../../app/Modules/PickupHourModule/views/js/_hours';
 import Plans from './_plans';
 import Notifications from './_notifications';
 import Rates from './_rates';

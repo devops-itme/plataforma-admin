@@ -562,6 +562,127 @@ var Parameters = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./app/Modules/PickupHourModule/views/js/_hours.js":
+/*!*********************************************************!*\
+  !*** ./app/Modules/PickupHourModule/views/js/_hours.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Hours; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Hours = /*#__PURE__*/function () {
+  function Hours() {
+    _classCallCheck(this, Hours);
+  }
+
+  _createClass(Hours, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadHourData();
+    }
+  }, {
+    key: "loadHourData",
+    value: function loadHourData() {
+      var _this = this;
+
+      var buttons = document.getElementsByName('editHour');
+
+      if (buttons == null) {
+        return;
+      }
+
+      [].forEach.call(buttons, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var id, response, data, form;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  id = btn.id;
+                  _context.next = 3;
+                  return _this.requestHourPickedData(id);
+
+                case 3:
+                  response = _context.sent;
+                  data = response.data;
+                  form = document.getElementById("formUpdateHour");
+                  form.setAttribute('action', 'horas/' + id + '');
+                  document.getElementById('day_edit').value = data.day_id;
+                  document.getElementById('from_edit').value = data.init_time;
+                  document.getElementById('to_edit').value = data.end_time;
+
+                case 10:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        })));
+      });
+    }
+  }, {
+    key: "requestHourPickedData",
+    value: function () {
+      var _requestHourPickedData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/horas/" + id + '/edit').then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function requestHourPickedData(_x) {
+        return _requestHourPickedData.apply(this, arguments);
+      }
+
+      return requestHourPickedData;
+    }()
+  }]);
+
+  return Hours;
+}();
+
+
+
+/***/ }),
+
 /***/ "./app/Modules/UserModule/views/js/_users.js":
 /*!***************************************************!*\
   !*** ./app/Modules/UserModule/views/js/_users.js ***!
@@ -85471,127 +85592,6 @@ var General = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/js/_hours.js":
-/*!********************************!*\
-  !*** ./resources/js/_hours.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Hours; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Hours = /*#__PURE__*/function () {
-  function Hours() {
-    _classCallCheck(this, Hours);
-  }
-
-  _createClass(Hours, [{
-    key: "initialize",
-    value: function initialize() {
-      this.loadHourData();
-    }
-  }, {
-    key: "loadHourData",
-    value: function loadHourData() {
-      var _this = this;
-
-      var buttons = document.getElementsByName('editHour');
-
-      if (buttons == null) {
-        return;
-      }
-
-      [].forEach.call(buttons, function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var id, response, data, form;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  id = btn.id;
-                  _context.next = 3;
-                  return _this.requestHourPickedData(id);
-
-                case 3:
-                  response = _context.sent;
-                  data = response.data;
-                  form = document.getElementById("formUpdateHour");
-                  form.setAttribute('action', 'horas/' + id + '');
-                  document.getElementById('day_edit').value = data.day_id;
-                  document.getElementById('from_edit').value = data.init_time;
-                  document.getElementById('to_edit').value = data.end_time;
-
-                case 10:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        })));
-      });
-    }
-  }, {
-    key: "requestHourPickedData",
-    value: function () {
-      var _requestHourPickedData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context2.next = 3;
-                return fetch("/horas/" + id + '/edit').then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context2.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function requestHourPickedData(_x) {
-        return _requestHourPickedData.apply(this, arguments);
-      }
-
-      return requestHourPickedData;
-    }()
-  }]);
-
-  return Hours;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/_messengers.js":
 /*!*************************************!*\
   !*** ./resources/js/_messengers.js ***!
@@ -88262,7 +88262,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_Modules_ZoneModule_views_js_zones__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../app/Modules/ZoneModule/views/js/_zones */ "./app/Modules/ZoneModule/views/js/_zones.js");
 /* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
 /* harmony import */ var _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../app/Modules/ParametersModule/views/js/_parameters */ "./app/Modules/ParametersModule/views/js/_parameters.js");
-/* harmony import */ var _hours__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_hours */ "./resources/js/_hours.js");
+/* harmony import */ var _app_Modules_PickupHourModule_views_js_hours__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../app/Modules/PickupHourModule/views/js/_hours */ "./app/Modules/PickupHourModule/views/js/_hours.js");
 /* harmony import */ var _plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_plans */ "./resources/js/_plans.js");
 /* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
 /* harmony import */ var _rates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./_rates */ "./resources/js/_rates.js");
@@ -88301,7 +88301,7 @@ var zones = new _app_Modules_ZoneModule_views_js_zones__WEBPACK_IMPORTED_MODULE_
 var rates = new _rates__WEBPACK_IMPORTED_MODULE_13__["default"]();
 var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_8__["default"]();
 var parameters = new _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__["default"]();
-var hours = new _hours__WEBPACK_IMPORTED_MODULE_10__["default"]();
+var hours = new _app_Modules_PickupHourModule_views_js_hours__WEBPACK_IMPORTED_MODULE_10__["default"]();
 var plans = new _plans__WEBPACK_IMPORTED_MODULE_11__["default"]();
 var notifications = new _notifications__WEBPACK_IMPORTED_MODULE_12__["default"]();
 var app = new Vue({
@@ -89064,8 +89064,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\mods\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Multientrega\mods\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

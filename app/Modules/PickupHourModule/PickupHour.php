@@ -2,6 +2,7 @@
 
 namespace App\Modules\PickupHourModule;
 
+use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
