@@ -164,7 +164,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('tarifas', 'Admin\RateController')->names('rates');
 
-    Route::resource('perfil', 'Admin\ProfileController')->names('profile');
+    // Route::resource('perfil', 'Admin\ProfileController')->names('profile');
+    Route::resource('perfil', 'UserModule\Controllers\ProfileController')->names('profile');
     // Route::get('perfil', function () {
 
     // })->name('profile');
