@@ -2,6 +2,8 @@
 
 namespace App\Modules\StatusMatrixModule;
 
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\StatusDescriptorModule\StatusDescriptor;
 use Illuminate\Database\Eloquent\Model;
 
 class StatusMatrix extends Model

@@ -2,6 +2,8 @@
 
 namespace App\Modules\StatusDescriptorModule;
 
+use App\Modules\RoleModule\Role;
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
 
 class StatusDescriptor extends Model
