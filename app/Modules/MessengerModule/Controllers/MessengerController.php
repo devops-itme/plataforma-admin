@@ -36,7 +36,7 @@ class MessengerController extends Controller
             $query->where('name', 'contract_type');
         })->get();
         $document_type = ParameterValue::where('parameter_id', 1)->get();
-        return view('messengers.create', compact('document_type', 'contract_type'));
+        return view($this->path . 'create', compact('document_type', 'contract_type'));
     }
 
     /**
@@ -67,7 +67,7 @@ class MessengerController extends Controller
         $messenger = $this->showMessenger($id);
         $messenger = $messenger['data'];
 
-        return view('messengers.show', compact('messenger'));
+        return view($this->path.'show', compact('messenger'));
     }
 
     /**
@@ -84,7 +84,7 @@ class MessengerController extends Controller
         $contract_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'contract_type');
         })->get();
-        return view('messengers.edit', compact('messenger', 'document_type', 'contract_type'));
+        return view($this->path . 'edit', compact('messenger', 'document_type', 'contract_type'));
     }
 
     /**
