@@ -3,10 +3,8 @@
 namespace App\Modules\StatusMatrixModule\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Role;
+use App\Modules\RoleModule\Role;
 use App\Modules\StatusMatrixModule\StatusMatrix;
-use Illuminate\Http\Request;
-
 class StatusMatrixController extends Controller
 {
 

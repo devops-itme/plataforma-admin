@@ -3,7 +3,7 @@
 namespace App\Modules\ZoneModule;
 
 use App\Http\Controllers\Traits\RestActions;
-use App\Neighborhood;
+use App\Modules\NeighborhoodModule\Neighborhood;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;

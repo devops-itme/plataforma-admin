@@ -2,6 +2,8 @@
 
 namespace App\Modules\RouteModule;
 
+use App\Modules\GuideModule\Guide;
+use App\Modules\UserModule\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

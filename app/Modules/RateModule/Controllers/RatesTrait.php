@@ -3,9 +3,8 @@
 namespace App\Modules\RateModule\Controllers;
 
 use App\Http\Controllers\Traits\RestActions;
-use App\Rate;
+use App\Modules\RateModule\Rate;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 trait RatesTrait
 {

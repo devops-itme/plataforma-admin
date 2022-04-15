@@ -4,6 +4,7 @@ namespace App\Modules\BranchOfficeModule;
 
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\UserModule\User;
+use App\Modules\DepartmentBranchModule\DepartmentBranch;
 use App\Modules\ZoneModule\Zone;
 use App\Modules\UserBranchModule\UserBranch;
 use Illuminate\Database\Eloquent\Model;

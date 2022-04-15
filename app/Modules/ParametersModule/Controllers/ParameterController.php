@@ -5,7 +5,7 @@ namespace App\Modules\ParametersModule\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\ParametersModule\Controllers\ParametersTrait;
 use App\Modules\ParametersModule\Parameter;
-use App\ParameterValue;
+use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Http\Request;
 
 class ParameterController extends Controller

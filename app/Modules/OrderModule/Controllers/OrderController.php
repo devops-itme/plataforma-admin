@@ -256,7 +256,7 @@ class OrderController extends Controller
             $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query) {
                 $query->where('name', 'Ondemand');
             })->whereIn('status_matrix_id', $matriz_id)
-                ->with(['getUser.getCustomer', 'getUser.getDocumentType', 'getGuides.getRoute.getMessenger', 'getPaymentMethod', 'getDepartment', 'getBranchOffice', 'getGuides.getAddress'])
+                ->with(['getUser.getCustomer', 'getUser.getDocumentType', 'getGuides.getRoute.getMessenger', 'getPaymentMethod', 'getDepartment', 'getUser.getBranchOffice', 'getGuides.getAddress'])
                 ->get();
 
             // $orders = Order::where('order_type', 1)->wh  ere('state', $type)->with(['getUser','getGuides'])->get();

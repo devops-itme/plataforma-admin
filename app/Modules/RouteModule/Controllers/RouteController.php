@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Modules\MyServiceModule\Controllers;
+namespace App\Modules\RouteModule\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\MyServiceModule\Controllers\MyServiceTrait;
+use App\Modules\RouteModule\Route;
+use App\Modules\RouteModule\Controllers\RouteTrait;
 use Illuminate\Http\Request;
 
-class MyServiceController extends Controller
+class RouteController extends Controller
 {
-    use MyServiceTrait;
+    use RouteTrait;
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +17,8 @@ class MyServiceController extends Controller
      */
     public function index()
     {
-        $myServices = $this->getMyServices();
-        $myServices = $myServices['data'];
-        return $this->respond(200, $myServices, null, 'Lista de servicios');
+        $routes = Route::get();
+        return json_encode($routes);
     }
 
     /**
@@ -39,11 +39,15 @@ class MyServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->saveMyService($request);
+        $response = $this->storeRoute($request);
         if($response['state'] == 200){
-            return $this->respond(200, $response['data'], null, $response['message']);
+            return json_encode([
+                'state' => $response['state'],
+                'data' => $response['data'],
+                'message' => 'Ruta creada exitosamente'
+            ]);
         } else {
-            return $this->respond(500, null, $response['error'], $response['message']);
+            return json_encode($response['error']);
         }
     }
 
@@ -55,9 +59,8 @@ class MyServiceController extends Controller
      */
     public function show($id)
     {
-        $myService = $this->showMyService($id);
-        $myService = $myService['data'];
-        return $this->respond(200, $myService, null);
+        $route = Route::with(['getMessenger', 'getGuide'])->find($id);
+        return json_encode($route);
     }
 
     /**
@@ -68,7 +71,8 @@ class MyServiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $route = Route::find($id);
+        return json_encode($route);
     }
 
     /**
@@ -80,11 +84,15 @@ class MyServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->updateMyService($request, $id);
+        $response = $this->updateRoute($request->merge(['route_id' => $id]));
         if($response['state'] == 200){
-            return $this->respond(200, $response['data'], null, $response['message']);
+            return json_encode([
+                'state' => $response['state'],
+                'data' => $response['data'],
+                'message' => 'Ruta actualizada exitosamente'
+            ]);
         } else {
-            return $this->respond(500, null, $response['error'], $response['message']);
+            return json_encode($response['message']);
         }
     }
 
@@ -96,11 +104,14 @@ class MyServiceController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->deleteMyService($id);
+        $response = $this->deleteRoute($id);
         if($response['state'] == 200){
-            return $this->respond(200, $response['data'], null, $response['message']);
+            return json_encode([
+                'state' => $response['state'],
+                'message' => 'Eliminación exitosa'
+            ]);
         } else {
-            return $this->respond(500, null, $response['error'], $response['message']);
+            return json_encode($response['message']);
         }
     }
 }

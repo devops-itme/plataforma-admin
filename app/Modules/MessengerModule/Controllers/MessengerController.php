@@ -5,7 +5,7 @@ namespace App\Modules\MessengerModule\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\MessengerModule\Controllers\MessengerTrait;
 use App\Modules\MessengerModule\Messenger;
-use App\ParameterValue;
+use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Http\Request;
 
 class MessengerController extends Controller

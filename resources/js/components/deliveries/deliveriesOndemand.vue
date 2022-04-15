@@ -87,7 +87,6 @@ export default {
             this.currentTab = type_id;
             let response = await this.requestOrders();
             this.orders = response.data;
-            console.log(this.orders)
             // this.data = this.orders;
             this.activeIndex = null;
             this.showData = "";
@@ -225,7 +224,6 @@ export default {
                 await fetch(`/despacho/orden/estado`, requestOptions)
                     .then((response) => response.json())
                     .then(function (data) {
-                        console.log(data)
                         if (data.state == 500) {
                             return error(data.message);
                         }

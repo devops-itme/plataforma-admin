@@ -2,6 +2,11 @@
 
 namespace App\Modules\GuideModule;
 
+use App\Modules\AddressModule\Address;
+use App\Modules\BranchOfficeModule\BranchOffice;
+use App\Modules\OrderModule\Order;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\RouteModule\Route;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
