@@ -2,6 +2,8 @@
 
 namespace App\Modules\ProvinceModule;
 
+use App\Modules\CountryModule\Country;
+use App\Modules\DistrictModule\District;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
