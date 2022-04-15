@@ -2,11 +2,11 @@
 
 namespace App\Modules\ZoneModule\Controllers;
 
-use App\Country;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
-use App\Neighborhood;
-use App\Zone;
+use App\Modules\CountryModule\Country;
+use App\Modules\NeighborhoodModule\Neighborhood;
+use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

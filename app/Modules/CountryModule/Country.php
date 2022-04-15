@@ -2,6 +2,7 @@
 
 namespace App\Modules\CountryModule;
 
+use App\Modules\ProvinceModule\Province;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

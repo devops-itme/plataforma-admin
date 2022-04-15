@@ -2,6 +2,8 @@
 
 namespace App\Modules\DistrictModule;
 
+use App\Modules\CorregimientoModule\Corregimiento;
+use App\Modules\ProvinceModule\Province;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,7 +26,7 @@ class District extends Model
 
     public function getCorregimientos()
     {
-        return $this->hasMany(District::class, 'district_id');
+        return $this->hasMany(Corregimiento::class, 'district_id');
     } 
 
     public function scopeProvince($query, $value)
