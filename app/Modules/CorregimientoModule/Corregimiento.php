@@ -2,6 +2,8 @@
 
 namespace App\Modules\CorregimientoModule;
 
+use App\Modules\DistrictModule\District;
+use App\Modules\NeighborhoodModule\Neighborhood;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

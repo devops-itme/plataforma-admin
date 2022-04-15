@@ -106,10 +106,15 @@ class RouteServiceProvider extends ServiceProvider
                 require(base_path('app/Modules/DepartmentModule/routes/web.php'));
                 require(base_path('app/Modules/ActivityLogModule/routes/web.php'));
                 require(base_path('app/Modules/RateModule/routes/web.php'));
+                require(base_path('app/Modules/MyServiceModule/routes/web.php'));
                 require(base_path('app/Modules/StatusMatrixModule/routes/web.php'));
                 require(base_path('app/Modules/StatusDescriptorModule/routes/web.php'));
                 require(base_path('app/Modules/OrderModule/routes/web.php'));
                 require(base_path('app/Modules/RouteModule/routes/web.php'));
+                require(base_path('app/Modules/RoleModule/routes/web.php'));
+                require(base_path('app/Modules/PermissionModule/routes/web.php'));
+                require(base_path('app/Modules/PickupHourModule/routes/web.php'));
+                require(base_path('app/Modules/ServiceTypeModule/routes/web.php'));
             });
     }
 

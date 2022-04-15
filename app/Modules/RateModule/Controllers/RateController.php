@@ -3,11 +3,11 @@
 namespace App\Modules\RateModule\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\NeighborhoodModule\Neighborhood;
+use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RateModule\Controllers\RatesTrait;
-use App\Neighborhood;
-use App\ParameterValue;
-use App\Rate;
-use App\Zone;
+use App\Modules\RateModule\Rate;
+use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 
 class RateController extends Controller

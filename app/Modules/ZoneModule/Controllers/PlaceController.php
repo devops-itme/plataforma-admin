@@ -2,13 +2,15 @@
 
 namespace App\Modules\ZoneModule\Controllers;
 
-use App\Corregimiento;
-use App\Country;
-use App\District;
+
+
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
-use App\Neighborhood;
-use App\Province;
+use App\Modules\CorregimientoModule\Corregimiento;
+use App\Modules\CountryModule\Country;
+use App\Modules\DistrictModule\District;
+use App\Modules\NeighborhoodModule\Neighborhood;
+use App\Modules\ProvinceModule\Province;
 use Illuminate\Http\Request;
 
 class PlaceController extends Controller

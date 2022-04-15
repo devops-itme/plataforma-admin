@@ -168,10 +168,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     // })->name('profile');
 
-    Route::resource('permisos', 'Admin\PermissionController')->names('permits');
-    Route::resource('roles', 'Admin\RoleController')->names('roles');
+    // Route::resource('permisos', 'Admin\PermissionController')->names('permits');
+    // Route::resource('roles', 'Admin\RoleController')->names('roles');
     // Route::post('roles/store', 'Admin\PermissionController@storeRole')->name('permits.role');
-    Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
+    // Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
+
+    Route::resource('permisos', 'PermissionModule\Controllers\PermissionController')->names('permits');
+    Route::resource('roles', 'RoleModule\Controllers\RoleController')->names('roles');
+    Route::get('permisos/getPermissions/{role_id}', 'PermissionModule\Controllers\PermissionController@getPermissions')->name('permits.getPermissions');
 
     Route::resource('planes', 'Admin\PlanController')->names('plans');
 
@@ -180,9 +184,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('despacho/matriz_estados', 'OrderModule\Controllers\DeliveryController@statusMatrix');
     // Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->names('addresses');
 
-    Route::resource('horas', 'Admin\PickupHourController')->except('delete')->names('hours');
-    Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');
-    Route::get('/getPickupHours', 'Admin\PickupHourController@pickupHours');
+    // Route::resource('horas', 'Admin\PickupHourController')->except('delete')->names('hours');
+    // Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');
+    // Route::get('/getPickupHours', 'Admin\PickupHourController@pickupHours');
+    Route::resource('horas', 'PickupHourModule\Controllers\PickupHourController')->except('delete')->names('hours');
+    Route::delete('horas/{id}', 'PickupHourModule\Controllers\PickupHourController@destroy')->name('hours.delete');
+    Route::get('/getPickupHours', 'PickupHourModule\Controllers\PickupHourController@pickupHours');
 
     // Route::get('log', 'Admin\LogController@index')->name('log.index');
     Route::get('log', 'ActivityLogModule\Controllers\LogController@index')->name('log.index');

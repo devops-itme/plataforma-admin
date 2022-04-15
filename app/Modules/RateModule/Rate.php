@@ -2,6 +2,9 @@
 
 namespace App\Modules\RateModule;
 
+use App\Modules\NeighborhoodModule\Neighborhood;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\ZoneModule\Zone;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
