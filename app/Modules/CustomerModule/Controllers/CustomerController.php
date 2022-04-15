@@ -6,9 +6,9 @@ namespace App\Modules\CustomerModule\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\CustomerModule\Controllers\CustomerTrait;
-use App\Http\Controllers\Traits\BranchOfficeTrait;
 use App\Modules\ActivityLogModule\ActivityLog;
 use App\Modules\BranchOfficeModule\BranchOffice;
+use App\Modules\BranchOfficeModule\Controllers\BranchOfficeTrait as BranchOfficeTrait;
 use App\Modules\CustomerModule\Customer;
 use App\Modules\DepartmentModule\Department;
 use App\Modules\ParameterValueModule\ParameterValue;
@@ -112,57 +112,60 @@ class CustomerController extends Controller
             return $this->respond(500,null,'validation fail', 'El campo nombre de empresa es requerido para las personas de tipo jurídica');
             // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
         }
-        $saveUserData = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
-        if ($saveUserData['state'] != 200) {
-            // return redirect()->back()->with('danger', $saveUserData['message']);
-            return json_encode([
-                'state' => 500,
-                'message' => $saveUserData['message']
-            ]);
-        }
-        if (!is_null($request->branchCheck)) {
-            $request->branchCheck = explode(',', $request->branchCheck);
-            $assignBranches = $this->storeUserBranch($saveUserData['data']->id, $request->branchCheck);
-            if ($assignBranches['state'] != 200) {
-                // return redirect()->back()->with('danger', $assignBranches['message']);
-                return json_encode([
-                    'state' => 500,
-                    'message' => $assignBranches['message']
-                ]);
-            }
-        }
-        if (!is_null($request->departments)) {
-            $request->departments = explode(',', $request->departments);
-            $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
-            if ($assignDepartment['state'] != 200) {
-                // return redirect()->back()->with('danger', $assignDepartment['message']);
-                return json_encode([
-                    'state' => 500,
-                    'message' => $assignDepartment['message']
-                ]);
-            }
-        }
-        // if(!is_null($request->branch_office_name)){
-        //     $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));
-        //     if($saveBranchOfficeData['state'] != 200){
-        //         return redirect()->back()->with('danger', $saveBranchOfficeData['error']);
-        //     }
-        // }
-        $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
-        if ($response['state'] == 200) {
-            $customer = $response['data'];
-            $this->activity_log->storeLog(
-                'Creación de cliente',
-                'Creación de cliente con id #' . ($customer->id ?? '') ,
-                'App\Customer',
-                $customer->id,
-                'App\User',
-                Auth::user()->id,
-                ''
-            );
-        }
-            return $response;
+        $response = DB::transaction(function () use ($request){
 
+            $saveUserData = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
+            if ($saveUserData['state'] != 200) {
+                // return redirect()->back()->with('danger', $saveUserData['message']);
+                return json_encode([
+                    'state' => 500,
+                    'message' => $saveUserData['message']
+                ]);
+            }
+            if (!is_null($request->branchCheck)) {
+                $request->branchCheck = explode(',', $request->branchCheck);
+                $assignBranches = $this->storeUserBranch($saveUserData['data']->id, $request->branchCheck);
+                if ($assignBranches['state'] != 200) {
+                    // return redirect()->back()->with('danger', $assignBranches['message']);
+                    return json_encode([
+                        'state' => 500,
+                        'message' => $assignBranches['message']
+                    ]);
+                }
+            }
+            if (!is_null($request->departments)) {
+                $request->departments = explode(',', $request->departments);
+                $assignDepartment = $this->storeUserDepartment($saveUserData['data']->id, $request->departments);
+                if ($assignDepartment['state'] != 200) {
+                    // return redirect()->back()->with('danger', $assignDepartment['message']);
+                    return json_encode([
+                        'state' => 500,
+                        'message' => $assignDepartment['message']
+                    ]);
+                }
+            }
+            // if(!is_null($request->branch_office_name)){
+            //     $saveBranchOfficeData = $this->saveBranchOffice($request->merge(['user_id' => $saveUserData['data']->id]));
+            //     if($saveBranchOfficeData['state'] != 200){
+            //         return redirect()->back()->with('danger', $saveBranchOfficeData['error']);
+            //     }
+            // }
+            $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
+            if ($response['state'] == 200) {
+                $customer = $response['data'];
+                $this->activity_log->storeLog(
+                    'Creación de cliente',
+                    'Creación de cliente con id #' . ($customer->id ?? '') ,
+                    'App\Customer',
+                    $customer->id,
+                    'App\User',
+                    Auth::user()->id,
+                    ''
+                );
+            }
+            return $response;
+        });
+        return $response;
     }
 
     /**
