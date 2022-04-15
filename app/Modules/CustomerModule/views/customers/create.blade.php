@@ -11,8 +11,8 @@
         </h3>
     </div>
     @include('layouts.alerts')
-    @include('customers.modals.branches.editBranchModal')
-    @include('customers.modals.branches.createBranchModal')
+    @include('CustomerModule.views.customers.modals.branches.editBranchModal')
+    @include('CustomerModule.views.customers.modals.branches.createBranchModal')
     <!--begin::Form-->
     <form id="storeCustomerForm">
         @csrf

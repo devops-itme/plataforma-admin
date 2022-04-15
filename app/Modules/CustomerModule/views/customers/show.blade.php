@@ -262,8 +262,8 @@
     </div>
 </div>
 
-@include('customers.modals.branches.createBranchModal')
-@include('customers.modals.branches.editBranchModal')
+@include('CustomerModule.views.customers.modals.branches.editBranchModal')
+@include('CustomerModule.views.customers.modals.branches.createBranchModal')
 
 <!-- MODAL CREATE-->
 <div class="modal fade" id="formCreateAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

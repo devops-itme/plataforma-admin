@@ -12,10 +12,10 @@
         </h3>
     </div>
     @include('layouts.alerts')
-    @include('customers.modals.branches.editBranchModal')
-    @include('customers.modals.branches.createBranchModal')
-    @include('customers.modals.users.createUserModal')
-    @include('customers.modals.users.editUserModal')
+    @include('CustomerModule.views.customers.modals.branches.editBranchModal')
+    @include('CustomerModule.views.customers.modals.branches.createBranchModal')
+    @include('CustomerModule.views.customers.modals.users.createUserModal')
+    @include('CustomerModule.views.customers.modals.users.editUserModal')
     <!--begin::Form-->
     <form action="{{route('customers.update', $customer->id)}}" method="post">
         @csrf @method('PUT')
