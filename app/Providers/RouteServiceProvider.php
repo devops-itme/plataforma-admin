@@ -104,6 +104,7 @@ class RouteServiceProvider extends ServiceProvider
                 require(base_path('app/Modules/AddressModule/routes/web.php'));
                 require(base_path('app/Modules/MessengerModule/routes/web.php'));
                 require(base_path('app/Modules/DepartmentModule/routes/web.php'));
+                require(base_path('app/Modules/OrderModule/routes/web.php'));
             });
     }
 
