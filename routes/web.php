@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');
     // Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignOndemad')->name('orders.assign');
     Route::post('/ordenes/asignacion', 'OrderModule\Controllers\DeliveryController@assignOndemad')->name('orders.assign');
-    
+
     // Route::post('/quias/asignacion', 'Admin\DeliveryController@assignPacking')->name('guides.assign');
     Route::post('/quias/asignacion', 'OrderModule\Controllers\DeliveryController@assignPacking')->name('guides.assign');
     //update order state
@@ -69,13 +69,13 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
 
         //USER BANKS
-        Route::get('/usuario-banco/{parent_id}', 'Admin\CustomerController@UserBankIndex')->name('bankUsers.index');
-        Route::get('/usuario-banco/{parent_id}/create', 'Admin\CustomerController@UserBankCreate')->name('bankUsers.create');
-        Route::post('/usuario-banco/{parent_id}/store', 'Admin\CustomerController@UserBankStore')->name('bankUsers.store');
-        Route::get('/usuario-banco/{parent_id}/{id}', 'Admin\CustomerController@UserBankShow')->name('bankUsers.show');
-        Route::get('/usuario-banco/{parent_id}/{id}/edit', 'Admin\CustomerController@UserBankEdit')->name('bankUsers.edit');
-        Route::put('/usuario-banco/{parent_id}/{id}/update', 'Admin\CustomerController@UserBankUpdate')->name('bankUsers.update');
-        Route::delete('/usuario-banco/{parent_id}/{id}', 'Admin\CustomerController@UserBankDestroy')->name('bankUsers.delete');
+        Route::get('/usuario-banco/{parent_id}', 'CustomerModule\Controllers\CustomerController@UserBankIndex')->name('bankUsers.index');
+    Route::get('/usuario-banco/{parent_id}/create', 'CustomerModule\Controllers\CustomerController@UserBankCreate')->name('bankUsers.create');
+    Route::post('/usuario-banco/{parent_id}/store', 'CustomerModule\Controllers\CustomerController@UserBankStore')->name('bankUsers.store');
+    Route::get('/usuario-banco/{parent_id}/{id}', 'CustomerModule\Controllers\CustomerController@UserBankShow')->name('bankUsers.show');
+    Route::get('/usuario-banco/{parent_id}/{id}/edit', 'CustomerModule\Controllers\CustomerController@UserBankEdit')->name('bankUsers.edit');
+    Route::put('/usuario-banco/{parent_id}/{id}/update', 'CustomerModule\Controllers\CustomerController@UserBankUpdate')->name('bankUsers.update');
+    Route::delete('/usuario-banco/{parent_id}/{id}', 'CustomerModule\Controllers\CustomerController@UserBankDestroy')->name('bankUsers.delete');
 
         //BRANCH OFFICES
         Route::get('/sucursales/{parent_id}', 'BranchOfficeModule\Controllers\BranchOfficeController@index')->name('branchOffices.index');

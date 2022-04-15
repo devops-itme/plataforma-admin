@@ -63,11 +63,11 @@
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Contacto:</div>
-                        <div class="line-height-xl">{{$customer->contact}}</div>
+                        <div class="line-height-xl">{{$customer->contact??'No registra'}}</div>
                     </div>
                     <div class="col-md-2">
                         <div class="font-weight-bolder mb-3">Periodo de pago:</div>
-                        <div class="line-height-xl">{{$customer->getPaymentPeriod->name}}</div>
+                        <div class="line-height-xl">{{$customer->getPaymentPeriod->name??'No registra'}}</div>
                     </div>
                     <div class="col-md-2">
                         <div class="font-weight-bolder mb-3">Credito:</div>
