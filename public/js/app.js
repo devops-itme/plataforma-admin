@@ -3832,7 +3832,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 response = _context2.sent;
-                _this5.orders = response.data; // this.data = this.orders;
+                _this5.orders = response.data;
+                console.log(_this5.orders); // this.data = this.orders;
 
                 _this5.activeIndex = null;
                 _this5.showData = "";
@@ -3852,7 +3853,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this5.ordersQuantity = _this5.orders.length;
                 _this5.showMessengerData = [];
 
-              case 13:
+              case 14:
               case "end":
                 return _context2.stop();
             }
