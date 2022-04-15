@@ -8,12 +8,12 @@ import Addresses from './_addresses';
 import Customers from './_customers';
 import Orders from './_orders';
 import General from './_general';
-import Permissions from './_permissions';
+import Permissions from '../../app/Modules/PermissionModule/views/js/_permissions';
 import Zones from '../../app/Modules/ZoneModule/views/js/_zones';
 import BranchOffices from './_branchOffice';
 import Parameters from '../../app/Modules/ParametersModule/views/js/_parameters';
 import Hours from '../../app/Modules/PickupHourModule/views/js/_hours';
-import Plans from './_plans';
+import Plans from '../../app/Modules/PlanModule/views/js/_plans';
 import Notifications from './_notifications';
 import Rates from './_rates';
 

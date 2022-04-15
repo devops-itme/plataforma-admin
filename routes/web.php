@@ -161,12 +161,18 @@ Route::group(['middleware' => 'auth'], function () {
 
     // })->name('profile');
 
-    Route::resource('permisos', 'Admin\PermissionController')->names('permits');
-    Route::resource('roles', 'Admin\RoleController')->names('roles');
+    // Route::resource('permisos', 'Admin\PermissionController')->names('permits');
+    // Route::resource('roles', 'Admin\RoleController')->names('roles');
     // Route::post('roles/store', 'Admin\PermissionController@storeRole')->name('permits.role');
-    Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
+    // Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
 
-    Route::resource('planes', 'Admin\PlanController')->names('plans');
+    Route::resource('permisos', 'PermissionModule\Controllers\PermissionController')->names('permits');
+    Route::resource('roles', 'RoleModule\Controllers\RoleController')->names('roles');
+    Route::get('permisos/getPermissions/{role_id}', 'PermissionModule\Controllers\PermissionController@getPermissions')->name('permits.getPermissions');
+
+    // Route::resource('planes', 'Admin\PlanController')->names('plans');
+    Route::resource('planes', 'PlanModule\Controllers\PlanController')->names('plans');
+
 
     //Matriz de estados del despacho lógica
     Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
