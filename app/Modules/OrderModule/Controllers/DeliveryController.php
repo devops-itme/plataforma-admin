@@ -4,10 +4,11 @@ namespace App\Modules\OrderModule\Controllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Controllers\Traits\RouteTrait;
+
 use App\Modules\OrderLogModule\OrderLog;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\RouteModule\Controllers\RouteTrait;
 use App\Modules\StatusDescriptorModule\StatusDescriptor;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Builder;

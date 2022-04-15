@@ -4103,8 +4103,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return fetch("/despacho/orden/estado", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  console.log(data);
-
                   if (data.state == 500) {
                     return error(data.message);
                   }

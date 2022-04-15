@@ -188,9 +188,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('log', 'ActivityLogModule\Controllers\LogController@index')->name('log.index');
 
     Route::get('{page}', 'PageController@index')->name('page.index');
+    //RUTAS
+    // Route::resource('/rutas', 'Admin\RouteController')->names('routes');
+    Route::resource('/rutas', 'RouteModule\Controllers\RouteController')->names('routes');
 });
-//RUTAS
-Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 // Route::get('admin/order', 'Admin\OrderController@historial');
 
 //ADDRESSES
