@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Modules\MyServiceModule\Controllers;
+namespace App\Modules\PlanModule\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\MyServiceModule\Controllers\MyServiceTrait;
+use App\Modules\PlanModule\Controllers\PlansTrait;
+use App\Modules\PlanModule\Plan;
 use Illuminate\Http\Request;
 
-class MyServiceController extends Controller
+class PlanController extends Controller
 {
-    use MyServiceTrait;
+    use PlansTrait;
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +17,8 @@ class MyServiceController extends Controller
      */
     public function index()
     {
-        $myServices = $this->getMyServices();
-        $myServices = $myServices['data'];
-        return $this->respond(200, $myServices, null, 'Lista de servicios');
+        $plans = Plan::get();
+        return view('plans.index', compact('plans'));
     }
 
     /**
@@ -39,11 +39,12 @@ class MyServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->saveMyService($request);
+        $request->merge(['state' => 1]);
+        $response = $this->storePlans($request);
         if($response['state'] == 200){
-            return $this->respond(200, $response['data'], null, $response['message']);
+            return redirect()->route('plans.index')->with('success', $response['message']);
         } else {
-            return $this->respond(500, null, $response['error'], $response['message']);
+            return redirect()->back()->withInput()->with('danger', $response['error']);
         }
     }
 
@@ -55,9 +56,7 @@ class MyServiceController extends Controller
      */
     public function show($id)
     {
-        $myService = $this->showMyService($id);
-        $myService = $myService['data'];
-        return $this->respond(200, $myService, null);
+        //
     }
 
     /**
@@ -68,7 +67,12 @@ class MyServiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $plan = Plan::find($id);
+        if(!is_null($plan)){
+            return $this->respond(200, $plan, '', 'Plan encontrado');
+        } else {
+            return $this->respond(500, [], 'plan not found', 'No se encontró el plan');
+        }
     }
 
     /**
@@ -80,11 +84,12 @@ class MyServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->updateMyService($request, $id);
+        $request->merge(['state' => 1]);
+        $response = $this->updatePlans($id, $request);
         if($response['state'] == 200){
-            return $this->respond(200, $response['data'], null, $response['message']);
+            return redirect()->route('plans.index')->with('success', $response['message']);
         } else {
-            return $this->respond(500, null, $response['error'], $response['message']);
+            return redirect()->back()->withInput()->with('danger', $response['message']);
         }
     }
 
@@ -96,11 +101,11 @@ class MyServiceController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->deleteMyService($id);
+        $response = $this->deletePlan($id);
         if($response['state'] == 200){
-            return $this->respond(200, $response['data'], null, $response['message']);
+            return redirect()->route('planes')->with('success', $response['message']);
         } else {
-            return $this->respond(500, null, $response['error'], $response['message']);
+            return redirect()->back()->withInput()->with('danger', $response['message']);
         }
     }
 }

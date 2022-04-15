@@ -2,9 +2,9 @@
 
 namespace App\Modules\CustomerModule;
 
+use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\UserModule\User;
-use App\ParameterValue;
-use App\Zone;
+use App\Modules\ZoneModule\Zone;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;

@@ -5,7 +5,7 @@ namespace App\Modules\DepartmentModule\Controllers;
 use App\Modules\DepartmentModule\Department;
 use App\Http\Controllers\Controller;
 use App\Modules\DepartmentModule\Controllers\DepartmentTrait;
-use App\UserDepartment;
+use App\Modules\UserDepartmentModule\UserDepartment;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller

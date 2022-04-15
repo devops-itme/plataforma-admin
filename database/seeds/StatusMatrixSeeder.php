@@ -1,7 +1,7 @@
 <?php
 
-use App\ParameterValue;
-use App\StatusMatrix;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 

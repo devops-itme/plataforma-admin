@@ -3,9 +3,7 @@
 namespace App\Modules\ParametersModule\Controllers;
 
 use App\Http\Controllers\Traits\RestActions;
-use App\Modules\ParametersModule\Parameter;
-use App\ParameterValue;
-use Illuminate\Support\Facades\Hash;
+use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 

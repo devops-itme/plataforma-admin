@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Module;
-use App\ParameterValue;
-use App\Permission;
+use App\Modules\ModuleModule\Module;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\PermissionModule\Permission;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;

@@ -3,9 +3,9 @@
 namespace App\Modules\UserModule\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\RoleModule\Role;
 use App\Modules\UserModule\Controllers\UserTrait;
-use App\ParameterValue;
-use App\Role;
 use App\Modules\UserModule\User;
 use Illuminate\Http\Request;
 

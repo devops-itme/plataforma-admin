@@ -965,6 +965,128 @@ var Hours = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./app/Modules/PlanModule/views/js/_plans.js":
+/*!***************************************************!*\
+  !*** ./app/Modules/PlanModule/views/js/_plans.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Plans; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Plans = /*#__PURE__*/function () {
+  function Plans() {
+    _classCallCheck(this, Plans);
+  }
+
+  _createClass(Plans, [{
+    key: "initialize",
+    value: function initialize() {
+      this.editPlan();
+    }
+  }, {
+    key: "editPlan",
+    value: function editPlan() {
+      var _this = this;
+
+      var editButtons = document.getElementsByName('planEditBtn');
+
+      if (editButtons == null) {
+        return;
+      }
+
+      [].forEach.call(editButtons, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var id, response, data, name, description, form;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  id = btn.id;
+                  _context.next = 3;
+                  return _this.requestPlan(id);
+
+                case 3:
+                  response = _context.sent;
+                  data = response.data;
+                  name = document.getElementById("plan_name_edit");
+                  name.value = data.name;
+                  description = document.getElementById("plan_description_edit");
+                  description.value = data.description;
+                  form = document.getElementById("formUpdate");
+                  form.setAttribute('action', '/planes/' + id);
+
+                case 11:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        })));
+      });
+    }
+  }, {
+    key: "requestPlan",
+    value: function () {
+      var _requestPlan = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/planes/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function requestPlan(_x) {
+        return _requestPlan.apply(this, arguments);
+      }
+
+      return requestPlan;
+    }()
+  }]);
+
+  return Plans;
+}();
+
+
+
+/***/ }),
+
 /***/ "./app/Modules/UserModule/views/js/_users.js":
 /*!***************************************************!*\
   !*** ./app/Modules/UserModule/views/js/_users.js ***!
@@ -87844,128 +87966,6 @@ $("#tabListOrders").DataTable();
 
 /***/ }),
 
-/***/ "./resources/js/_plans.js":
-/*!********************************!*\
-  !*** ./resources/js/_plans.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Plans; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Plans = /*#__PURE__*/function () {
-  function Plans() {
-    _classCallCheck(this, Plans);
-  }
-
-  _createClass(Plans, [{
-    key: "initialize",
-    value: function initialize() {
-      this.editPlan();
-    }
-  }, {
-    key: "editPlan",
-    value: function editPlan() {
-      var _this = this;
-
-      var editButtons = document.getElementsByName('planEditBtn');
-
-      if (editButtons == null) {
-        return;
-      }
-
-      [].forEach.call(editButtons, function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var id, response, data, name, description, form;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  id = btn.id;
-                  _context.next = 3;
-                  return _this.requestPlan(id);
-
-                case 3:
-                  response = _context.sent;
-                  data = response.data;
-                  name = document.getElementById("plan_name_edit");
-                  name.value = data.name;
-                  description = document.getElementById("plan_description_edit");
-                  description.value = data.description;
-                  form = document.getElementById("formUpdate");
-                  form.setAttribute('action', '/planes/' + id);
-
-                case 11:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        })));
-      });
-    }
-  }, {
-    key: "requestPlan",
-    value: function () {
-      var _requestPlan = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context2.next = 3;
-                return fetch("/planes/" + id + "/edit").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context2.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function requestPlan(_x) {
-        return _requestPlan.apply(this, arguments);
-      }
-
-      return requestPlan;
-    }()
-  }]);
-
-  return Plans;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/_rates.js":
 /*!********************************!*\
   !*** ./resources/js/_rates.js ***!
@@ -88260,7 +88260,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
 /* harmony import */ var _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../app/Modules/ParametersModule/views/js/_parameters */ "./app/Modules/ParametersModule/views/js/_parameters.js");
 /* harmony import */ var _app_Modules_PickupHourModule_views_js_hours__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../app/Modules/PickupHourModule/views/js/_hours */ "./app/Modules/PickupHourModule/views/js/_hours.js");
-/* harmony import */ var _plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_plans */ "./resources/js/_plans.js");
+/* harmony import */ var _app_Modules_PlanModule_views_js_plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../app/Modules/PlanModule/views/js/_plans */ "./app/Modules/PlanModule/views/js/_plans.js");
 /* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
 /* harmony import */ var _rates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./_rates */ "./resources/js/_rates.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
@@ -88299,7 +88299,7 @@ var rates = new _rates__WEBPACK_IMPORTED_MODULE_13__["default"]();
 var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_8__["default"]();
 var parameters = new _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__["default"]();
 var hours = new _app_Modules_PickupHourModule_views_js_hours__WEBPACK_IMPORTED_MODULE_10__["default"]();
-var plans = new _plans__WEBPACK_IMPORTED_MODULE_11__["default"]();
+var plans = new _app_Modules_PlanModule_views_js_plans__WEBPACK_IMPORTED_MODULE_11__["default"]();
 var notifications = new _notifications__WEBPACK_IMPORTED_MODULE_12__["default"]();
 var app = new Vue({
   el: '#app'
