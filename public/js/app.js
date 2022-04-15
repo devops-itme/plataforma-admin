@@ -3705,7 +3705,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 55,
         text: "Entregas"
       }, {
-        value: 53,
+        value: 56,
         text: "Recogidas"
       }],
       showModal: false,
@@ -3768,8 +3768,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.tabs[2].href = "consultas"; //NAME TABS
 
                 _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
-                _this2.selected == 54 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
-                _this2.selected == 55 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
+                _this2.selected == 55 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
+                _this2.selected == 56 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
               case 13:
               case "end":
@@ -3827,7 +3827,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this3.statusMatrix(_this3.selected);
 
                 type == 55 && (type = 3);
-                type == 53 && (type = 7);
+                type == 56 && (type = 7);
                 _context2.next = 8;
                 return _this3.requestGuides(type);
 
