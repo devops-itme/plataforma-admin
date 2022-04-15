@@ -1,5 +1,6 @@
 {
     "customers" : "Clientes",
+    "rates": "Tarifas",
     "edit" : "Editar",
     "create" : "Crear",
     "show" : "Detalle",
