@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Modules\GuideModule\Controllers\Api;
 
-use App\Guide;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\GuideTrait;
-use App\Http\Controllers\Traits\RestActions;
 use App\Http\Resources\GuideResource;
+use App\Modules\GuideModule\Controllers\GuideTrait;
+use App\Modules\GuideModule\Guide;
 use Illuminate\Http\Request;
 
 class GuideController extends Controller
