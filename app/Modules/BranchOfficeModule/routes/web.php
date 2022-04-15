@@ -11,4 +11,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/sucursales/{parent_id}/{id}/edit', 'BranchOfficeModule\Controllers\BranchOfficeController@edit')->name('branchOffices.edit');
     Route::put('/sucursales/{parent_id}/{id}/update', 'BranchOfficeModule\Controllers\BranchOfficeController@update')->name('branchOffices.update');
     Route::delete('sucursales/{parent_id}/{id}', 'BranchOfficeModule\Controllers\BranchOfficeController@destroy')->name('branchOffices.delete');
+    Route::get('/allBranches', 'BranchOfficeModule\Controllers\BranchOfficeController@allBranches');
 });

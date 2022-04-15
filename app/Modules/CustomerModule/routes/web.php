@@ -15,5 +15,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/usuario-banco/{parent_id}/{id}/edit', 'CustomerModule\Controllers\CustomerController@UserBankEdit')->name('bankUsers.edit');
     Route::put('/usuario-banco/{parent_id}/{id}/update', 'CustomerModule\Controllers\CustomerController@UserBankUpdate')->name('bankUsers.update');
     Route::delete('/usuario-banco/{parent_id}/{id}', 'CustomerModule\Controllers\CustomerController@UserBankDestroy')->name('bankUsers.delete');
+
+    Route::get('/search_customers', 'CustomerModule\Controllers\CustomerController@search_customer');
+    Route::get('/customer_data/{id}', 'CustomerModule\Controllers\CustomerController@customerData');
 });
 

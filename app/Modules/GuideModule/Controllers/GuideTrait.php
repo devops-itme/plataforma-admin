@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Traits;
+namespace App\Modules\GuideModule\Controllers;
 
 use App\Box;
 use Illuminate\Support\Facades\Validator;

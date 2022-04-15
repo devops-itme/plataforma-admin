@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Modules\GuideModule\Controllers;
 
 use App\Address;
 use App\Guide;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\GuidanceDocsTrait;
-use App\Http\Controllers\Traits\GuideTrait;
+use App\Modules\GuideModule\Controllers\GuidanceDocsTrait;
 use App\Order;
-use App\ParameterValue;
 use Illuminate\Http\Request;
 
 class GuideController extends Controller

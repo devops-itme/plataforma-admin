@@ -25,20 +25,21 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/customer_data/{id}', 'Admin\CustomerController@customerData');
-    Route::get('/search_customers', 'Admin\CustomerController@search_customer');
+    Route::get('/customer_data/{id}', 'CustomerModule\Controllers\CustomerController@customerData');
+    Route::get('/search_customers', 'CustomerModule\Controllers\CustomerController@search_customer');
+
     Route::get('/unassigned_branch_offices', 'BranchOfficeModule\Controllers\BranchOfficeController@unassigned_branch_offices');
     // Route::get('/order_number', 'Admin\OrderController@orderNumber');
     Route::get('/order_number', 'OrderModule\Controllers\OrderController@orderNumber');
 
-    Route::get('/allBranches', 'Admin\BranchOfficeController@allBranches');
+    Route::get('/allBranches', 'BranchOfficeModule\Controllers\BranchOfficeController@allBranches');
 
     Route::get('unassigned_depts', 'Admin\DepartmentController@UnassignedDepts');
 
     Route::get('/customer_addresses/{id}', 'Admin\AddressController@customerAddresses');
     //GUIAS
-    Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
-    Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');
+    Route::resource('/guias', 'GuideModule\Controllers\GuideController')->names('guias')->except('store');
+    Route::post('/guias/store', 'GuideModule\Controllers\GuideController@store')->name('guide.store');
     // Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignOndemad')->name('orders.assign');
     Route::post('/ordenes/asignacion', 'OrderModule\Controllers\DeliveryController@assignOndemad')->name('orders.assign');
 

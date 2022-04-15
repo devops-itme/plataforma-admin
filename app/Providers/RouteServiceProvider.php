@@ -117,6 +117,7 @@ class RouteServiceProvider extends ServiceProvider
                 require(base_path('app/Modules/BranchOfficeModule/routes/web.php'));
                 require(base_path('app/Modules/PlanModule/routes/web.php'));
                 require(base_path('app/Modules/ServiceTypeModule/routes/web.php'));
+                require(base_path('app/Modules/GuideModule/routes/web.php'));
             });
     }
 

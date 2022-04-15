@@ -86623,7 +86623,7 @@ var Orders = /*#__PURE__*/function () {
                     departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
                   }
 
-                  document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
+                  document.getElementById("user_document_type").value = data[0]['get_document_type'] ? data[0]['get_document_type']['name'] : '';
                   modal = document.getElementById("detailCustomer");
                   modal.click();
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Traits;
+namespace App\Modules\GuideModule\Controllers;
 
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Traits\RestActions;
 use App\GuidanceDocument;
 
 trait GuidanceDocsTrait

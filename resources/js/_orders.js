@@ -295,7 +295,7 @@ export default class Orders {
                         let departmentOpt = '<option value="'+element.id+'"> '+element.name+' </option>';
                         departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
                     }
-                document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
+                document.getElementById("user_document_type").value = data[0]['get_document_type'] ? data[0]['get_document_type']['name'] : '';
 
                 let modal = document.getElementById("detailCustomer");
                 modal.click();
