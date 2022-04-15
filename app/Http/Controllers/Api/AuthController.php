@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\AddressTrait;
+use App\Modules\AddressModule\Controllers\AddressTrait;
 use App\Http\Controllers\Traits\UserTrait;
-use App\Http\Controllers\Traits\CustomerTrait;
+use App\Modules\CustomerModule\Controllers\CustomerTrait;
 use App\Mail\CodeMail;
 use App\Role;
 use App\User;
