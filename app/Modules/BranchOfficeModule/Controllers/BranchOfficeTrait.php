@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Traits;
+namespace App\Modules\BranchOfficeModule\Controllers;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
@@ -13,6 +13,7 @@ use Illuminate\Validation\Rule;
 trait BranchOfficeTrait
 {
     // use UserTrait;
+    use RestActions;
 
     public function branchOfficeValidate($request)
     {
@@ -34,10 +35,10 @@ trait BranchOfficeTrait
                 'branch_office_payment_method' => 'required|numeric',
                 'branch_office_phone' => 'required|string',
                 'branch_office_plan' => [
-                    Rule::requiredIf($request->branch_office_payment_method != 25), 'numeric'
+                    'nullable', Rule::requiredIf($request->branch_office_payment_method != 25), 'numeric'
                 ],
                 'branch_office_usage_mode' => [
-                    Rule::requiredIf($request->branch_office_payment_method != 25), 'numeric'
+                    'nullable', Rule::requiredIf($request->branch_office_payment_method != 25), 'numeric'
                 ],
                 'user_id' => 'nullable|exists:users,id',
             ]

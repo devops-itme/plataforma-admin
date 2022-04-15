@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Modules\BranchOfficeModule\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\BranchOfficeModule\Controllers\BranchOfficeTrait;
 use Illuminate\Http\Request;
 use App\BranchOffice;
-use App\Http\Controllers\Traits\BranchOfficeTrait;
+use App\Modules\UserBranchModule\UserBranch;
+use App\Modules\UserDepartmentModule\UserDepartment;
 use App\Parameter;
 use App\ParameterValue;
 use App\User;
-use App\UserBranch;
-use App\UserDepartment;
 
 class BranchOfficeController extends Controller
 {

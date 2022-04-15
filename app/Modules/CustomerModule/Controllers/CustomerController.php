@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\ParameterValue;
 use Illuminate\Http\Request;
 use App\Modules\CustomerModule\Controllers\CustomerTrait;
-use App\Http\Controllers\Traits\BranchOfficeTrait;
+use App\Modules\BranchOfficeModule\Controllers\BranchOfficeTrait;
 use App\Modules\CustomerModule\Customer;
 use App\User;
 use App\Zone;
