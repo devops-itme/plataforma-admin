@@ -129,6 +129,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(function () {
                 base_path('app/Modules/UserModule/routes/api.php');
                 require(base_path('app/Modules/CustomerModule/routes/api.php'));
+                require(base_path('app/Modules/OrderModule/routes/api.php'));
             });
     }
 }

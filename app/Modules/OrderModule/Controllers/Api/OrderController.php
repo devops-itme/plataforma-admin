@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Modules\OrderModule\Controllers\Api;
 
-use App\Address;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\AddressTrait;
-use App\Http\Controllers\Traits\GuideTrait;
-use App\Http\Controllers\Traits\OrderTrait;
+
 use App\Http\Resources\OrderResource;
-use App\Order;
-use App\ParameterValue;
-use App\StatusMatrix;
+use App\Modules\AddressModule\Address;
+use App\Modules\AddressModule\Controllers\AddressTrait;
+use App\Modules\GuideModule\Controllers\GuideTrait;
+use App\Modules\OrderModule\Controllers\OrderTrait;
+use App\Modules\OrderModule\Order;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
