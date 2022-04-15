@@ -105,7 +105,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
 
         //DOCUMENTOS DE GUIÁS
-        Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
+    Route::resource('/guias_doc', 'GuidanceDocumentModule\Controllers\GuidanceDocumentController')->names('guias_doc');
     });
     //Status matrix
     // Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');

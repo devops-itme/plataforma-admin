@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Modules\GuidanceDocumentModule\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\GuidanceDocsTrait;
 use Illuminate\Http\Request;
 
 class GuidanceDocumentController extends Controller

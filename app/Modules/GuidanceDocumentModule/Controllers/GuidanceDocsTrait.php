@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Modules\GuideModule\Controllers;
+namespace App\Modules\GuidanceDocumentModule\Controllers;
 
+use App\Modules\GuidanceDocumentModule\GuidanceDocument;
 use Illuminate\Support\Facades\Validator;
-use App\GuidanceDocument;
+use App\Modules\GuideModule\Controllers\GuideTrait;
 
 trait GuidanceDocsTrait
 {

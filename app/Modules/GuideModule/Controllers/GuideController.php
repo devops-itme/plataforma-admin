@@ -2,11 +2,11 @@
 
 namespace App\Modules\GuideModule\Controllers;
 
-use App\Address;
-use App\Guide;
 use App\Http\Controllers\Controller;
-use App\Modules\GuideModule\Controllers\GuidanceDocsTrait;
-use App\Order;
+use App\Modules\AddressModule\Address;
+use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
+use App\Modules\GuideModule\Guide;
+use App\Modules\OrderModule\Order;
 use Illuminate\Http\Request;
 
 class GuideController extends Controller
