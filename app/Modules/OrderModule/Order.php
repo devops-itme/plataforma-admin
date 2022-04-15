@@ -2,6 +2,13 @@
 
 namespace App\Modules\OrderModule;
 
+use App\Modules\OrderLogModule\OrderLog;
+use App\Modules\AddressModule\Address;
+use App\Modules\DepartmentModule\Department;
+use App\Modules\UserModule\User;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\PickupHourModule\PickupHour;
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;

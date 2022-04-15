@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Modules\AddressModule\Address;
+use App\Modules\UserModule\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;

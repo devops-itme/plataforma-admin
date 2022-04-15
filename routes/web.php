@@ -28,7 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/customer_data/{id}', 'Admin\CustomerController@customerData');
     Route::get('/search_customers', 'Admin\CustomerController@search_customer');
     Route::get('/unassigned_branch_offices', 'Admin\BranchOfficeController@unassigned_branch_offices');
-    Route::get('/order_number', 'Admin\OrderController@orderNumber');
+    // Route::get('/order_number', 'Admin\OrderController@orderNumber');
+    Route::get('/order_number', 'OrderModule\Controllers\OrderController@orderNumber');
 
     Route::get('/allBranches', 'Admin\BranchOfficeController@allBranches');
 
@@ -93,8 +94,10 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::get('ordenes/historial', function () {
         //     return view('orders.historial');
         // })->name('orders.record');
-        Route::get('/ordenes/historial', 'Admin\OrderController@record')->name('orders.record');
-        Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
+        // Route::get('/ordenes/historial', 'Admin\OrderController@record')->name('orders.record');
+        Route::get('/ordenes/historial', 'OrderModule\Controllers\OrderController@record')->name('orders.record');
+        // Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
+        Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
 
         //DOCUMENTOS DE GUIÁS
         Route::resource('/guias_doc', 'Admin\GuidanceDocumentController')->names('guias_doc');
@@ -111,7 +114,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::delete('descriptor-estado/{id}', 'Admin\StatusDescriptorController@destroy')->name('statusDescriptor.destroy');
 
     //Por despachar ondemand
-    Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');
+    // Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');
+    Route::post('pordespachar/ondemand/{id}', 'OrderModule\Controllers\OrderController@porDespacharOndemand');
     //Por despachar packaging
     Route::post('pordespachar/packaging/{id}', 'Admin\GuideController@porDespacharPackaging');
 
@@ -120,7 +124,8 @@ Route::group(['middleware' => 'auth'], function () {
     //Orders states
     Route::get('order_states', 'Admin\DeliveryController@orderStates');
     //Orders delivery
-    Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
+    // Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
+    Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
     //Orders Delivery Packing
     Route::get('orders_packing/{type}', 'Admin\GuideController@guidesForDeliveryPacking');
     //Messengers delivery
@@ -178,8 +183,11 @@ Route::group(['middleware' => 'auth'], function () {
 //RUTAS
 Route::resource('/rutas', 'Admin\RouteController')->names('routes');
 // Route::get('admin/order', 'Admin\OrderController@historial');
+
 //ADDRESSES
-Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
+// Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
+Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->names('addresses');
+
 //REPORTS
 Route::resource('reportes', 'Admin\ReportController')->names('reports');
 //SERVICE TYPES
