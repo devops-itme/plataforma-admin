@@ -87,7 +87,6 @@ export default {
             this.currentTab = type_id;
             let response = await this.requestOrders();
             this.orders = response.data;
-            console.log(this.orders)
             // this.data = this.orders;
             this.activeIndex = null;
             this.showData = "";

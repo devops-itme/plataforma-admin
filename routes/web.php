@@ -39,10 +39,14 @@ Route::group(['middleware' => 'auth'], function () {
     //GUIAS
     Route::resource('/guias', 'Admin\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'Admin\GuideController@store')->name('guide.store');
-    Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignOndemad')->name('orders.assign');
-    Route::post('/quias/asignacion', 'Admin\DeliveryController@assignPacking')->name('guides.assign');
+    // Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignOndemad')->name('orders.assign');
+    Route::post('/ordenes/asignacion', 'OrderModule\Controllers\DeliveryController@assignOndemad')->name('orders.assign');
+    
+    // Route::post('/quias/asignacion', 'Admin\DeliveryController@assignPacking')->name('guides.assign');
+    Route::post('/quias/asignacion', 'OrderModule\Controllers\DeliveryController@assignPacking')->name('guides.assign');
     //update order state
-    Route::post('/despacho/orden/estado', 'Admin\DeliveryController@updateStateOrders');
+    // Route::post('/despacho/orden/estado', 'Admin\DeliveryController@updateStateOrders');
+    Route::post('/despacho/orden/estado', 'OrderModule\Controllers\DeliveryController@updateStateOrders');
 
     // Route::resource('parametros', 'Admin\ParameterController')->except('destroy')->names('parameters');
     // Route::delete('parametros/delete/{id}', 'Admin\ParameterController@destroy')->name('parameters.destroy');
@@ -122,7 +126,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //Orders states
-    Route::get('order_states', 'Admin\DeliveryController@orderStates');
+    // Route::get('order_states', 'Admin\DeliveryController@orderStates');
+    Route::get('order_states', 'OrderModule\Controllers\DeliveryController@orderStates');
     //Orders delivery
     // Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
     Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
@@ -132,8 +137,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
 
 
-    Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
-    Route::get('despachos-packing', 'Admin\DeliveryController@indexPacking')->name('deliveryPacking.index');
+    // Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
+    Route::get('despachos', 'OrderModule\Controllers\DeliveryController@indexOndemand')->name('delivery.index');
+    // Route::get('despachos-packing', 'Admin\DeliveryController@indexPacking')->name('deliveryPacking.index');
+    Route::get('despachos-packing', 'OrderModule\Controllers\DeliveryController@indexPacking')->name('deliveryPacking.index');
 
     // Route::get('getPlaces', 'Admin\PlaceController@getPlaces');
     // Route::get('getZoneNeighborhoods/{id}', 'Admin\PlaceController@getZoneNeighborhoods');
@@ -169,7 +176,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('planes', 'Admin\PlanController')->names('plans');
 
     //Matriz de estados del despacho lógica
-    Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
+    // Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
+    Route::get('despacho/matriz_estados', 'OrderModule\Controllers\DeliveryController@statusMatrix');
+    // Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->names('addresses');
 
     Route::resource('horas', 'Admin\PickupHourController')->except('delete')->names('hours');
     Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');

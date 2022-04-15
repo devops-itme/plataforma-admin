@@ -3,6 +3,7 @@
 namespace App\Modules\UserModule;
 
 use App\Address;
+use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\CustomerModule\Customer;
 use App\ParameterValue;
 use App\Role;
