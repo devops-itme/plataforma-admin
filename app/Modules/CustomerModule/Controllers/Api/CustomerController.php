@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Modules\CustomerModule\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Modules\CustomerModule\Controllers\CustomerTrait;
-use App\Customer;
-use App\User;
+use App\Modules\CustomerModule\Customer;
+use App\Modules\UserModule\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-    use CustomerTrait;    
+    use CustomerTrait;
 
     public function show()
     {
