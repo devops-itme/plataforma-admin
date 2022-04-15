@@ -562,6 +562,288 @@ var Parameters = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./app/Modules/PermissionModule/views/js/_permissions.js":
+/*!***************************************************************!*\
+  !*** ./app/Modules/PermissionModule/views/js/_permissions.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Permissions; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var translated_actions = {
+  all: "Todo",
+  index: "Inicio",
+  create: "Vista crear",
+  store: "Crear",
+  show: "Detalle",
+  destroy: "Eliminar",
+  "delete": "Eliminar",
+  update: "Actualizar",
+  edit: "Vista editar",
+  assign: "Asignar",
+  "import": "Importar",
+  "export": "Exportar",
+  record: "Historial"
+};
+
+var requestPermissions = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(url) {
+    var response, token;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            response = {
+              state: 500
+            };
+            token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            _context.next = 4;
+            return fetch(url, {
+              method: "GET",
+              headers: {
+                "X-CSRF-TOKEN": token
+              }
+            }).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              console.log(e);
+            });
+
+          case 4:
+            return _context.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestPermissions(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var Permissions = /*#__PURE__*/function () {
+  function Permissions() {
+    _classCallCheck(this, Permissions);
+  }
+
+  _createClass(Permissions, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadPermissions();
+      this.roleData();
+    }
+  }, {
+    key: "loadPermissions",
+    value: function loadPermissions() {
+      var configurationBtn = document.getElementsByClassName("configuration-btn");
+      var permitsLbl = document.getElementById("permits-label");
+
+      if (configurationBtn == null) {
+        return;
+      }
+
+      [].forEach.call(configurationBtn, function (btn) {
+        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  row = btn.parentNode.parentNode;
+                  console.log(row);
+                  role_id = row.id;
+                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("role-name"));
+                  form = document.getElementById("permits-form");
+                  form.setAttribute("action", "/permisos/".concat(role_id));
+                  url = "/permisos/getPermissions/" + role_id;
+                  _context2.next = 9;
+                  return requestPermissions(url);
+
+                case 9:
+                  response = _context2.sent;
+
+                  if (!(response.state != 200)) {
+                    _context2.next = 12;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 12:
+                  data = response.data;
+                  modules = data.modules;
+                  actions = data.actions;
+                  permissions = data.permissions;
+                  cardBody = document.getElementById("card-body");
+                  cardBody.innerHTML = "";
+                  [].forEach.call(modules, function (module) {
+                    var _module$actions$split, _module$actions, _module_permissions$a, _module_permissions$a2;
+
+                    var module_actions = (_module$actions$split = module === null || module === void 0 ? void 0 : (_module$actions = module.actions) === null || _module$actions === void 0 ? void 0 : _module$actions.split(",")) !== null && _module$actions$split !== void 0 ? _module$actions$split : [];
+                    var module_permissions = permissions.find(function (element) {
+                      return element.module_id == module.id;
+                    });
+                    var allowed_actions = (_module_permissions$a = module_permissions === null || module_permissions === void 0 ? void 0 : (_module_permissions$a2 = module_permissions.actions) === null || _module_permissions$a2 === void 0 ? void 0 : _module_permissions$a2.split(",")) !== null && _module_permissions$a !== void 0 ? _module_permissions$a : [];
+                    var mainContainer = document.createElement("div");
+                    mainContainer.className = "row";
+                    var nameContainer = document.createElement("div");
+                    nameContainer.className = "col-3 align-self-center";
+                    nameContainer.innerHTML = "<h6 class=\"mb-0 text-muted font-weight-bold\">".concat(module.name, "</h6>");
+                    mainContainer.appendChild(nameContainer);
+                    var checkContainer = document.createElement("div");
+                    checkContainer.className = "col-9 align-self-center border-bottom my-5";
+                    checkContainer.innerHTML = "<div class=\"checkbox-inline\"></div>";
+                    [].forEach.call(actions, function (action) {
+                      var action_found = module_actions.find(function (element) {
+                        return element == action.id;
+                      });
+                      var permission_found = allowed_actions.find(function (element) {
+                        return element == action.id;
+                      });
+                      var label = document.createElement("label");
+                      label.className = "checkbox col-3 text-uppercase font-weight-bold mx-4";
+                      label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
+                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && "disabled", "\n\n                         ").concat(permission_found && "checked", "\n                        > <span></span>").concat(!action_found ? '<s>' : '', " ").concat(translated_actions[action.name]).concat(!action_found ? '</s>' : '', "\n\n                        ");
+                      checkContainer.childNodes[0].appendChild(label);
+                    });
+                    mainContainer.appendChild(checkContainer);
+                    cardBody.appendChild(mainContainer);
+                    var submitBtn = document.getElementById("submit-btn");
+                    submitBtn.className = "btn btn-primary btn-sm d-block";
+                  });
+
+                case 19:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        })));
+      });
+    }
+  }, {
+    key: "roleData",
+    value: function roleData() {
+      var _this = this;
+
+      var editButtons = document.getElementsByName("btnEditRole");
+
+      if (editButtons == null) {
+        return;
+      }
+
+      [].forEach.call(editButtons, function (item) {
+        item.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          var role_id, response, data, name, state, form;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  role_id = item["id"].split("-")[1];
+                  _context3.next = 3;
+                  return _this.requestRoleData(role_id);
+
+                case 3:
+                  response = _context3.sent;
+
+                  if (!(response.state != 200)) {
+                    _context3.next = 8;
+                    break;
+                  }
+
+                  alert("Error inesperado.");
+                  console.log(response.error);
+                  return _context3.abrupt("return");
+
+                case 8:
+                  data = response.data;
+                  name = document.getElementById("name_edit");
+                  name.value = data.name;
+                  state = document.getElementById("state_edit");
+                  [].forEach.call(state, function (opt) {
+                    opt.value == data.state ? opt.selected = true : "";
+                  });
+                  form = document.getElementById("formUpdateRole");
+                  form.setAttribute("action", "roles/" + data.id);
+
+                case 15:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        })));
+      });
+    }
+  }, {
+    key: "requestRoleData",
+    value: function () {
+      var _requestRoleData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                response = {
+                  state: 500
+                };
+                _context4.next = 3;
+                return fetch("/roles/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context4.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function requestRoleData(_x2) {
+        return _requestRoleData.apply(this, arguments);
+      }
+
+      return requestRoleData;
+    }()
+  }]);
+
+  return Permissions;
+}();
+
+
+
+/***/ }),
+
 /***/ "./app/Modules/UserModule/views/js/_users.js":
 /*!***************************************************!*\
   !*** ./app/Modules/UserModule/views/js/_users.js ***!
@@ -87564,288 +87846,6 @@ $("#tabListOrders").DataTable();
 
 /***/ }),
 
-/***/ "./resources/js/_permissions.js":
-/*!**************************************!*\
-  !*** ./resources/js/_permissions.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Permissions; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-var translated_actions = {
-  all: "Todo",
-  index: "Inicio",
-  create: "Vista crear",
-  store: "Crear",
-  show: "Detalle",
-  destroy: "Eliminar",
-  "delete": "Eliminar",
-  update: "Actualizar",
-  edit: "Vista editar",
-  assign: "Asignar",
-  "import": "Importar",
-  "export": "Exportar",
-  record: "Historial"
-};
-
-var requestPermissions = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(url) {
-    var response, token;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            response = {
-              state: 500
-            };
-            token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            _context.next = 4;
-            return fetch(url, {
-              method: "GET",
-              headers: {
-                "X-CSRF-TOKEN": token
-              }
-            }).then(function (response) {
-              return response.json();
-            }).then(function (data) {
-              response = data;
-            })["catch"](function (e) {
-              console.log(e);
-            });
-
-          case 4:
-            return _context.abrupt("return", response);
-
-          case 5:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function requestPermissions(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-var Permissions = /*#__PURE__*/function () {
-  function Permissions() {
-    _classCallCheck(this, Permissions);
-  }
-
-  _createClass(Permissions, [{
-    key: "initialize",
-    value: function initialize() {
-      this.loadPermissions();
-      this.roleData();
-    }
-  }, {
-    key: "loadPermissions",
-    value: function loadPermissions() {
-      var configurationBtn = document.getElementsByClassName("configuration-btn");
-      var permitsLbl = document.getElementById("permits-label");
-
-      if (configurationBtn == null) {
-        return;
-      }
-
-      [].forEach.call(configurationBtn, function (btn) {
-        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  row = btn.parentNode.parentNode;
-                  console.log(row);
-                  role_id = row.id;
-                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("role-name"));
-                  form = document.getElementById("permits-form");
-                  form.setAttribute("action", "/permisos/".concat(role_id));
-                  url = "/permisos/getPermissions/" + role_id;
-                  _context2.next = 9;
-                  return requestPermissions(url);
-
-                case 9:
-                  response = _context2.sent;
-
-                  if (!(response.state != 200)) {
-                    _context2.next = 12;
-                    break;
-                  }
-
-                  return _context2.abrupt("return");
-
-                case 12:
-                  data = response.data;
-                  modules = data.modules;
-                  actions = data.actions;
-                  permissions = data.permissions;
-                  cardBody = document.getElementById("card-body");
-                  cardBody.innerHTML = "";
-                  [].forEach.call(modules, function (module) {
-                    var _module$actions$split, _module$actions, _module_permissions$a, _module_permissions$a2;
-
-                    var module_actions = (_module$actions$split = module === null || module === void 0 ? void 0 : (_module$actions = module.actions) === null || _module$actions === void 0 ? void 0 : _module$actions.split(",")) !== null && _module$actions$split !== void 0 ? _module$actions$split : [];
-                    var module_permissions = permissions.find(function (element) {
-                      return element.module_id == module.id;
-                    });
-                    var allowed_actions = (_module_permissions$a = module_permissions === null || module_permissions === void 0 ? void 0 : (_module_permissions$a2 = module_permissions.actions) === null || _module_permissions$a2 === void 0 ? void 0 : _module_permissions$a2.split(",")) !== null && _module_permissions$a !== void 0 ? _module_permissions$a : [];
-                    var mainContainer = document.createElement("div");
-                    mainContainer.className = "row";
-                    var nameContainer = document.createElement("div");
-                    nameContainer.className = "col-3 align-self-center";
-                    nameContainer.innerHTML = "<h6 class=\"mb-0 text-muted font-weight-bold\">".concat(module.name, "</h6>");
-                    mainContainer.appendChild(nameContainer);
-                    var checkContainer = document.createElement("div");
-                    checkContainer.className = "col-9 align-self-center border-bottom my-5";
-                    checkContainer.innerHTML = "<div class=\"checkbox-inline\"></div>";
-                    [].forEach.call(actions, function (action) {
-                      var action_found = module_actions.find(function (element) {
-                        return element == action.id;
-                      });
-                      var permission_found = allowed_actions.find(function (element) {
-                        return element == action.id;
-                      });
-                      var label = document.createElement("label");
-                      label.className = "checkbox col-3 text-uppercase font-weight-bold mx-4";
-                      label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
-                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && "disabled", "\n\n                         ").concat(permission_found && "checked", "\n                        > <span></span>").concat(!action_found ? '<s>' : '', " ").concat(translated_actions[action.name]).concat(!action_found ? '</s>' : '', "\n\n                        ");
-                      checkContainer.childNodes[0].appendChild(label);
-                    });
-                    mainContainer.appendChild(checkContainer);
-                    cardBody.appendChild(mainContainer);
-                    var submitBtn = document.getElementById("submit-btn");
-                    submitBtn.className = "btn btn-primary btn-sm d-block";
-                  });
-
-                case 19:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        })));
-      });
-    }
-  }, {
-    key: "roleData",
-    value: function roleData() {
-      var _this = this;
-
-      var editButtons = document.getElementsByName("btnEditRole");
-
-      if (editButtons == null) {
-        return;
-      }
-
-      [].forEach.call(editButtons, function (item) {
-        item.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-          var role_id, response, data, name, state, form;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  role_id = item["id"].split("-")[1];
-                  _context3.next = 3;
-                  return _this.requestRoleData(role_id);
-
-                case 3:
-                  response = _context3.sent;
-
-                  if (!(response.state != 200)) {
-                    _context3.next = 8;
-                    break;
-                  }
-
-                  alert("Error inesperado.");
-                  console.log(response.error);
-                  return _context3.abrupt("return");
-
-                case 8:
-                  data = response.data;
-                  name = document.getElementById("name_edit");
-                  name.value = data.name;
-                  state = document.getElementById("state_edit");
-                  [].forEach.call(state, function (opt) {
-                    opt.value == data.state ? opt.selected = true : "";
-                  });
-                  form = document.getElementById("formUpdateRole");
-                  form.setAttribute("action", "roles/" + data.id);
-
-                case 15:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3);
-        })));
-      });
-    }
-  }, {
-    key: "requestRoleData",
-    value: function () {
-      var _requestRoleData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                response = {
-                  state: 500
-                };
-                _context4.next = 3;
-                return fetch("/roles/" + id + "/edit").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context4.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }));
-
-      function requestRoleData(_x2) {
-        return _requestRoleData.apply(this, arguments);
-      }
-
-      return requestRoleData;
-    }()
-  }]);
-
-  return Permissions;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/_plans.js":
 /*!********************************!*\
   !*** ./resources/js/_plans.js ***!
@@ -88257,7 +88257,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
 /* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
 /* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
-/* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_permissions */ "./resources/js/_permissions.js");
+/* harmony import */ var _app_Modules_PermissionModule_views_js_permissions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../app/Modules/PermissionModule/views/js/_permissions */ "./app/Modules/PermissionModule/views/js/_permissions.js");
 /* harmony import */ var _app_Modules_ZoneModule_views_js_zones__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../app/Modules/ZoneModule/views/js/_zones */ "./app/Modules/ZoneModule/views/js/_zones.js");
 /* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
 /* harmony import */ var _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../app/Modules/ParametersModule/views/js/_parameters */ "./app/Modules/ParametersModule/views/js/_parameters.js");
@@ -88295,7 +88295,7 @@ var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var customers = new _customers__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var orders = new _orders__WEBPACK_IMPORTED_MODULE_4__["default"]();
 var general = new _general__WEBPACK_IMPORTED_MODULE_5__["default"]();
-var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_6__["default"]();
+var permissions = new _app_Modules_PermissionModule_views_js_permissions__WEBPACK_IMPORTED_MODULE_6__["default"]();
 var zones = new _app_Modules_ZoneModule_views_js_zones__WEBPACK_IMPORTED_MODULE_7__["default"]();
 var rates = new _rates__WEBPACK_IMPORTED_MODULE_13__["default"]();
 var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_8__["default"]();
