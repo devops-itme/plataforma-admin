@@ -170,7 +170,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('roles', 'RoleModule\Controllers\RoleController')->names('roles');
     Route::get('permisos/getPermissions/{role_id}', 'PermissionModule\Controllers\PermissionController@getPermissions')->name('permits.getPermissions');
 
-    Route::resource('planes', 'Admin\PlanController')->names('plans');
+    // Route::resource('planes', 'Admin\PlanController')->names('plans');
+    Route::resource('planes', 'PlanModule\Controllers\PlanController')->names('plans');
+
 
     //Matriz de estados del despacho lógica
     Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
