@@ -1,4 +1,4 @@
-@include('orders.modals.createAddressModal')
+@include('OrderModule.views.html.modals.createAddressModal')
 <!--begin: Datatable-->
 <table class="table table-sm" id="guidesTable">
     <thead>
@@ -49,5 +49,5 @@
     </tbody>
 </table>
 <!--end: Datatable-->
-@include('orders.modals.createGuide')
-@include('orders.modals.editGuide')
+@include('OrderModule.views.html.modals.createGuide')
+@include('OrderModule.views.html.modals.editGuide')
