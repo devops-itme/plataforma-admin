@@ -5,11 +5,8 @@ namespace App\Modules\StatusDescriptorModule\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
 use App\Modules\StatusDescriptorModule\Controllers\StatusDescriptorTrait;
-use App\Role;
 use App\Modules\StatusDescriptorModule\StatusDescriptor;
-use App\StatusMatrix;
 use Illuminate\Http\Request;
-use Symfony\Component\Console\Descriptor\Descriptor;
 
 class StatusDescriptorController extends Controller
 {

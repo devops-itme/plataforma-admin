@@ -1,7 +1,7 @@
 <?php
 
-use App\Parameter;
-use App\ParameterValue;
+use App\Modules\ParametersModule\Parameter;
+use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 

@@ -1,7 +1,7 @@
 <?php
 
-use App\Messenger;
-use App\User;
+use App\Modules\MessengerModule\Messenger;
+use App\Modules\UserModule\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 

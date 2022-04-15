@@ -4,7 +4,7 @@ namespace App\Modules\DepartmentModule\Controllers;
 
 use App\Modules\DepartmentModule\Department;
 use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
-use App\UserDepartment;
+use App\Modules\UserDepartmentModule\UserDepartment;
 use Illuminate\Support\Facades\Validator;
 
 

@@ -2,17 +2,18 @@
 
 namespace App\Modules\CustomerModule\Controllers;
 
-use App\ActivityLog;
-use App\BranchOffice;
-use App\Department;
+
 use App\Http\Controllers\Controller;
-use App\ParameterValue;
 use Illuminate\Http\Request;
 use App\Modules\CustomerModule\Controllers\CustomerTrait;
 use App\Http\Controllers\Traits\BranchOfficeTrait;
+use App\Modules\ActivityLogModule\ActivityLog;
+use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\CustomerModule\Customer;
-use App\User;
-use App\Zone;
+use App\Modules\DepartmentModule\Department;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\UserModule\User;
+use App\Modules\ZoneModule\Zone;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 

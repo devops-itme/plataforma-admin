@@ -2,10 +2,12 @@
 
 namespace App\Modules\UserModule;
 
-use App\Address;
+use App\Modules\AddressModule\Address;
+use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\CustomerModule\Customer;
-use App\ParameterValue;
-use App\Role;
+use App\Modules\MessengerModule\Messenger;
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\RoleModule\Role;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Sanctum\HasApiTokens;

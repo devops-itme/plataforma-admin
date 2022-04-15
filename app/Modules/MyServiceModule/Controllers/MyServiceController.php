@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Modules\MyServiceModule\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MyServiceTrait;
+use App\Modules\MyServiceModule\Controllers\MyServiceTrait;
 use Illuminate\Http\Request;
 
 class MyServiceController extends Controller

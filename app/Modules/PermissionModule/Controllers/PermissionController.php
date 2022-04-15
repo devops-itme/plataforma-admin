@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
 use App\Modules\ModuleModule\Module;
 use App\Modules\ParametersModule\Parameter;
-use App\ParameterValue;
+use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\PermissionModule\Permission;
 use App\Modules\RoleModule\Role;
 use Illuminate\Http\Request;

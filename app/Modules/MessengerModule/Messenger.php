@@ -2,8 +2,8 @@
 
 namespace App\Modules\MessengerModule;
 
+use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\UserModule\User;
-use App\ParameterValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;

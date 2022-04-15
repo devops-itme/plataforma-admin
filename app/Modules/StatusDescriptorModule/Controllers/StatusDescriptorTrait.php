@@ -2,14 +2,13 @@
 
 namespace App\Modules\StatusDescriptorModule\Controllers;
 
-use App\Http\Controllers\Traits\RestActions as TraitsRestActions;
+use App\Http\Controllers\Traits\RestActions;
 use App\Modules\StatusDescriptorModule\StatusDescriptor;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 trait StatusDescriptorTrait
 {
-    use TraitsRestActions;
+    use RestActions;
 
 
     public function validateStatusDescriptor($request, $action = null, $id = null)
