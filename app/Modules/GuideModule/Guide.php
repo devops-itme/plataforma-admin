@@ -59,11 +59,6 @@ class Guide extends Model
         return $this->hasOne(Route::class, 'guide_id');
     }
 
-    public function getAddress()
-    {
-        return $this->belongsTo(Address::class, 'customer_address');
-    }
-
     public function getTransportType()
     {
         return $this->belongsTo(ParameterValue::class, 'transport_type');
