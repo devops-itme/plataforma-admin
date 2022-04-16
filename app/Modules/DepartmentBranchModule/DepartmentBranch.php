@@ -2,6 +2,8 @@
 
 namespace App\Modules\DepartmentBranchModule;
 
+use App\Modules\BranchOfficeModule\BranchOffice;
+use App\Modules\DepartmentModule\Department;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
