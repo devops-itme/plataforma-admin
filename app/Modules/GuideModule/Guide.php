@@ -9,10 +9,12 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RouteModule\Route;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class Guide extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
 
     protected $table = 'guides';
     protected $fillable = [
@@ -48,6 +50,19 @@ class Guide extends Model
         'additional_email',
         'additional_phone',
     ];
+
+    /* Logs Config */
+    protected static $logFillable = true;
+    protected static $submitEmptyLogs = false;
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->log_name = __($eventName);
+        if ($activity->causer) {
+            $activity->description = "Se ha " . __($eventName) . " la guiá " . $activity->subject->fullName;
+        }
+    }
+    /*End logs config */
 
     public function getOrder()
     {

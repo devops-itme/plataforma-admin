@@ -2,10 +2,9 @@
 
 namespace App\Modules\GuideModule\Controllers;
 
-use App\Box;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
-use App\Guide;
+use App\Modules\GuideModule\Guide;
 use Illuminate\Validation\Rule;
 
 trait GuideTrait

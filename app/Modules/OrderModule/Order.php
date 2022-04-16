@@ -14,10 +14,13 @@ use App\Modules\UserModule\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class Order extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
+    
     protected $table = 'orders';
     protected $fillable = [
         'order_number',
@@ -56,6 +59,19 @@ class Order extends Model
         'app_status',
         'status_matrix_id'
     ];
+
+    /* Logs Config */
+    protected static $logFillable = true;
+    protected static $submitEmptyLogs = false;
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->log_name = __($eventName);
+        if ($activity->causer) {
+            $activity->description = "Se ha " . __($eventName) . " la orden " . $activity->subject->fullName;
+        }
+    }
+    /*End logs config */
 
     public function getUser()
     {

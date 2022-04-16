@@ -9,10 +9,13 @@ use App\Modules\ZoneModule\Zone;
 use App\Modules\UserBranchModule\UserBranch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class BranchOffice extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
+
     protected $table = 'branch_offices';
     protected $fillable = [
         'name',
@@ -35,6 +38,18 @@ class BranchOffice extends Model
         'state'
     ];
 
+    /* Logs Config */
+    protected static $logFillable = true;
+    protected static $submitEmptyLogs = false;
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->log_name = __($eventName);
+        if ($activity->causer) {
+            $activity->description = "Se ha " . __($eventName) . " la sucursal " . $activity->subject->fullName;
+        }
+    }
+    /*End logs config */
 
     //Bank departments
     public function getDepartment()

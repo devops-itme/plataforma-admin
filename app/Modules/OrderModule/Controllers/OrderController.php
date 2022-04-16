@@ -20,11 +20,6 @@ class OrderController extends Controller
 {
     use OrderTrait;
 
-    protected $activity_log;
-    public function __construct()
-    {
-        $this->activity_log = new ActivityLog();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -100,16 +95,7 @@ class OrderController extends Controller
                     return redirect()->back()->with('danger', $assignGuide['message']);
                 }
             }
-            $order = $response['data'];
-            $this->activity_log->storeLog(
-                'Creación de orden',
-                'Creación de orden ' . ($order->order_number ?? '') . ' de tipo ' . ($order->getOrderType->name ?? ''),
-                'App\Order',
-                $order->id,
-                'App\User',
-                Auth::user()->id,
-                ''
-            );
+            
             return redirect()->route('orders.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -221,7 +207,6 @@ class OrderController extends Controller
                     return redirect()->back()->with('danger', $assignGuide['error']);
                 }
             }
-            $this->activity_log->storeLog('Actualización de orden', 'Actualización de orden', 'App\Order', $response['data']->id, 'App\User', Auth::user()->id, '');
             return redirect()->route('orders.index')->with('success', 'Orden actualizada exitosamente.');
         } else {
             return redirect()->back()->with('danger', $response['message']);

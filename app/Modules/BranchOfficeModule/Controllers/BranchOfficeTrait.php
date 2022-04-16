@@ -4,10 +4,10 @@ namespace App\Modules\BranchOfficeModule\Controllers;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
-use App\BranchOffice;
-use App\DepartmentBranch;
-use App\UserBranch;
-use App\UserDepartment;
+use App\Modules\BranchOfficeModule\BranchOffice;
+use App\Modules\DepartmentBranchModule\DepartmentBranch;
+use App\Modules\UserBranchModule\UserBranch;
+use App\Modules\UserDepartmentModule\UserDepartment;
 use Illuminate\Validation\Rule;
 
 trait BranchOfficeTrait
