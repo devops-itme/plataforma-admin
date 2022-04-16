@@ -1087,6 +1087,144 @@ var Plans = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./app/Modules/RateModule/views/js/_rates.js":
+/*!***************************************************!*\
+  !*** ./app/Modules/RateModule/views/js/_rates.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Rates; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _resources_js_requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../resources/js/_requests */ "./resources/js/_requests.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+var Rates = /*#__PURE__*/function () {
+  function Rates() {
+    _classCallCheck(this, Rates);
+  }
+
+  _createClass(Rates, [{
+    key: "initialize",
+    value: function initialize() {
+      this.getZone();
+    }
+  }, {
+    key: "getZone",
+    value: function () {
+      var _getZone = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var select;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                select = document.getElementById("select-zone");
+
+                if (!(select == null)) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 3:
+                select.addEventListener('change', function () {
+                  getNeighborhoods(select.value);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function getZone() {
+        return _getZone.apply(this, arguments);
+      }
+
+      return getZone;
+    }()
+  }]);
+
+  return Rates;
+}();
+
+
+
+var getNeighborhoods = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+    var select, response, neighborhoods;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            select = document.getElementById("select-neighborhood");
+
+            if (!(select == null)) {
+              _context2.next = 3;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 3:
+            select.innerHTML = "<option selected disabled>Seleccione</option>";
+            _context2.next = 6;
+            return Object(_resources_js_requests__WEBPACK_IMPORTED_MODULE_1__["requestZoneNeighborhoods"])(id);
+
+          case 6:
+            response = _context2.sent;
+
+            if (!(response.state != 200)) {
+              _context2.next = 9;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 9:
+            neighborhoods = response.data;
+            neighborhoods.map(function (neighborhood) {
+              var _neighborhood$name, _neighborhood$get_cor, _neighborhood$get_cor2, _neighborhood$get_cor3, _neighborhood$get_cor4;
+
+              var option = document.createElement("option");
+              option.text = ((_neighborhood$name = neighborhood.name) !== null && _neighborhood$name !== void 0 ? _neighborhood$name : '') + '; ' + ((_neighborhood$get_cor = neighborhood.get_corregimiento.name) !== null && _neighborhood$get_cor !== void 0 ? _neighborhood$get_cor : '') + '; ' + ((_neighborhood$get_cor2 = neighborhood.get_corregimiento.get_district.name) !== null && _neighborhood$get_cor2 !== void 0 ? _neighborhood$get_cor2 : '') + '; ' + ((_neighborhood$get_cor3 = neighborhood.get_corregimiento.get_district.get_province.name) !== null && _neighborhood$get_cor3 !== void 0 ? _neighborhood$get_cor3 : '') + '; ' + ((_neighborhood$get_cor4 = neighborhood.get_corregimiento.get_district.get_province.get_country.name) !== null && _neighborhood$get_cor4 !== void 0 ? _neighborhood$get_cor4 : '');
+              option.value = neighborhood.id;
+              select.appendChild(option);
+            });
+
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function getNeighborhoods(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
 /***/ "./app/Modules/UserModule/views/js/_users.js":
 /*!***************************************************!*\
   !*** ./app/Modules/UserModule/views/js/_users.js ***!
@@ -87969,146 +88107,6 @@ $("#tabListOrders").DataTable();
 
 /***/ }),
 
-/***/ "./resources/js/_rates.js":
-/*!********************************!*\
-  !*** ./resources/js/_rates.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Rates; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_requests */ "./resources/js/_requests.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-var Rates = /*#__PURE__*/function () {
-  function Rates() {
-    _classCallCheck(this, Rates);
-  }
-
-  _createClass(Rates, [{
-    key: "initialize",
-    value: function initialize() {
-      this.getZone();
-    }
-  }, {
-    key: "getZone",
-    value: function () {
-      var _getZone = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var select;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                select = document.getElementById("select-zone");
-
-                if (!(select == null)) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 3:
-                select.addEventListener('change', function () {
-                  getNeighborhoods(select.value);
-                });
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function getZone() {
-        return _getZone.apply(this, arguments);
-      }
-
-      return getZone;
-    }()
-  }]);
-
-  return Rates;
-}();
-
-
-
-var getNeighborhoods = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-    var select, response, neighborhoods;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            select = document.getElementById("select-neighborhood");
-
-            if (!(select == null)) {
-              _context2.next = 3;
-              break;
-            }
-
-            return _context2.abrupt("return");
-
-          case 3:
-            select.innerHTML = "<option selected disabled>Seleccione</option>";
-            console.log('zone_neighborhoods', id);
-            _context2.next = 7;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZoneNeighborhoods"])(id);
-
-          case 7:
-            response = _context2.sent;
-
-            if (!(response.state != 200)) {
-              _context2.next = 10;
-              break;
-            }
-
-            return _context2.abrupt("return");
-
-          case 10:
-            neighborhoods = response.data;
-            neighborhoods.map(function (neighborhood) {
-              var _neighborhood$name, _neighborhood$get_cor, _neighborhood$get_cor2, _neighborhood$get_cor3, _neighborhood$get_cor4;
-
-              var option = document.createElement("option");
-              console.log(neighborhood);
-              option.text = ((_neighborhood$name = neighborhood.name) !== null && _neighborhood$name !== void 0 ? _neighborhood$name : '') + '; ' + ((_neighborhood$get_cor = neighborhood.get_corregimiento.name) !== null && _neighborhood$get_cor !== void 0 ? _neighborhood$get_cor : '') + '; ' + ((_neighborhood$get_cor2 = neighborhood.get_corregimiento.get_district.name) !== null && _neighborhood$get_cor2 !== void 0 ? _neighborhood$get_cor2 : '') + '; ' + ((_neighborhood$get_cor3 = neighborhood.get_corregimiento.get_district.get_province.name) !== null && _neighborhood$get_cor3 !== void 0 ? _neighborhood$get_cor3 : '') + '; ' + ((_neighborhood$get_cor4 = neighborhood.get_corregimiento.get_district.get_province.get_country.name) !== null && _neighborhood$get_cor4 !== void 0 ? _neighborhood$get_cor4 : '');
-              option.value = neighborhood.id;
-              select.appendChild(option);
-            });
-
-          case 12:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-
-  return function getNeighborhoods(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-/***/ }),
-
 /***/ "./resources/js/_requests.js":
 /*!***********************************!*\
   !*** ./resources/js/_requests.js ***!
@@ -88265,7 +88263,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_Modules_PickupHourModule_views_js_hours__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../app/Modules/PickupHourModule/views/js/_hours */ "./app/Modules/PickupHourModule/views/js/_hours.js");
 /* harmony import */ var _app_Modules_PlanModule_views_js_plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../app/Modules/PlanModule/views/js/_plans */ "./app/Modules/PlanModule/views/js/_plans.js");
 /* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
-/* harmony import */ var _rates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./_rates */ "./resources/js/_rates.js");
+/* harmony import */ var _app_Modules_RateModule_views_js_rates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../app/Modules/RateModule/views/js/_rates */ "./app/Modules/RateModule/views/js/_rates.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -88298,7 +88296,7 @@ var orders = new _orders__WEBPACK_IMPORTED_MODULE_4__["default"]();
 var general = new _general__WEBPACK_IMPORTED_MODULE_5__["default"]();
 var permissions = new _app_Modules_PermissionModule_views_js_permissions__WEBPACK_IMPORTED_MODULE_6__["default"]();
 var zones = new _app_Modules_ZoneModule_views_js_zones__WEBPACK_IMPORTED_MODULE_7__["default"]();
-var rates = new _rates__WEBPACK_IMPORTED_MODULE_13__["default"]();
+var rates = new _app_Modules_RateModule_views_js_rates__WEBPACK_IMPORTED_MODULE_13__["default"]();
 var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_8__["default"]();
 var parameters = new _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__["default"]();
 var hours = new _app_Modules_PickupHourModule_views_js_hours__WEBPACK_IMPORTED_MODULE_10__["default"]();

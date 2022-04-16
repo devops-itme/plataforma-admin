@@ -1,4 +1,4 @@
-import { requestZoneNeighborhoods } from './_requests';
+import { requestZoneNeighborhoods } from '../../../../../resources/js/_requests';
 export default class Rates {
     initialize() {
         this.getZone();
@@ -22,7 +22,7 @@ const getNeighborhoods = async (id) => {
         return;
     }
     select.innerHTML = `<option selected disabled>Seleccione</option>`;
-    console.log('zone_neighborhoods', id)
+
     let response = await requestZoneNeighborhoods(id);
 
     if (response.state != 200) {
@@ -32,7 +32,7 @@ const getNeighborhoods = async (id) => {
     let neighborhoods = response.data;
     neighborhoods.map(neighborhood => {
         let option = document.createElement("option");
-        console.log(neighborhood)
+        
         option.text = ((neighborhood.name ?? '') + '; ' +
             (neighborhood.get_corregimiento.name ?? '') + '; ' +
             (neighborhood.get_corregimiento.get_district.name ?? '') + '; ' +
