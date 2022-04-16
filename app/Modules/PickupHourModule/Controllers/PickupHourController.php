@@ -3,7 +3,7 @@
 namespace App\Modules\PickupHourModule\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\PickupHourTrait;
+use App\Modules\PickupHourModule\Controllers\PickupHourTrait;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\PickupHourModule\PickupHour;
 use Illuminate\Http\Request;

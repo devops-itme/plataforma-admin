@@ -129,10 +129,14 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->moduleNamespace)
             ->group(function () {
-                base_path('app/Modules/UserModule/routes/api.php');
+                require(base_path('app/Modules/UserModule/routes/api.php'));
                 require(base_path('app/Modules/CustomerModule/routes/api.php'));
                 require(base_path('app/Modules/OrderModule/routes/api.php'));
                 require(base_path('app/Modules/GuideModule/routes/api.php'));
+                require(base_path('app/Modules/AddressModule/routes/api.php'));
+                require(base_path('app/Modules/MessengerModule/routes/api.php'));
+                require(base_path('app/Modules/ParameterValueModule/routes/api.php'));
+                require(base_path('app/Modules/PickupHourModule/routes/api.php'));
             });
     }
 }
