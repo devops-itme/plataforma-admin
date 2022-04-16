@@ -1737,6 +1737,121 @@ var Customers = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./app/Modules/MessengerModule/views/js/_messengers.js":
+/*!*************************************************************!*\
+  !*** ./app/Modules/MessengerModule/views/js/_messengers.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Messengers; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Messengers = /*#__PURE__*/function () {
+  function Messengers() {
+    _classCallCheck(this, Messengers);
+  }
+
+  _createClass(Messengers, [{
+    key: "initialize",
+    value: function initialize() {// this.createMessengers();
+    } // //CREATE MESSENGER
+    // createMessengers() {
+    //     let formCreateMessenger = document.getElementById(
+    //         "formCreateMessenger"
+    //     );
+    //     if (formCreateMessenger == null) {
+    //         return;
+    //     }
+    //     formCreateMessenger.addEventListener("submit", function (e) {
+    //         e.preventDefault();
+    //         let token = document
+    //             .querySelector('meta[name="csrf-token"]')
+    //             .getAttribute("content");
+    //         let myHeaders = new Headers();
+    //         myHeaders.append("accept", "application/json");
+    //         myHeaders.append("Access-Control-Allow-Origin", "*");
+    //         myHeaders.append("X-CSRF-TOKEN", token);
+    //         let requestOptions = {
+    //             method: "POST",
+    //             headers: myHeaders,
+    //             body: new FormData(formCreateMessenger),
+    //         };
+    //         fetch("/mensajeros", requestOptions)
+    //             .then((response) => response.json())
+    //             .then(function (data) {
+    //                 if (data.state == 500) {
+    //                     alert(data.message);
+    //                 }
+    //                 if (data.state == 200) {
+    //                     alert(data.message);
+    //                 }
+    //                 if (data.errors) {
+    //                     alert(data.errors);
+    //                 }
+    //             })
+    //             .catch((err) => console.warn(err));
+    //     });
+    // }
+    // //DELETE MESSENGER
+    // deleteMessenger() {
+    //     let deleteMessenger = document.getElementById("deleteMessenger");
+    //     deleteMessenger.addEventListener("submit", function (e) {
+    //         e.preventDefault();
+    //     });
+    // }
+    // // UPDATE MESSENGER
+    // updateMessenger() {
+    //     let formUpdateMessenger = document.getElementById("formUpdateMessenger");
+    //     if (formUpdateMessenger == null) {
+    //         return;
+    //     }
+    //     formUpdateMessenger.addEventListener("submit", function (e) {
+    //         e.preventDefault();
+    //         let token = document
+    //             .querySelector('meta[name="csrf-token"]')
+    //             .getAttribute("content");
+    //         let myHeaders = new Headers();
+    //         myHeaders.append("accept", "application/json");
+    //         myHeaders.append("Access-Control-Allow-Origin", "*");
+    //         myHeaders.append("X-CSRF-TOKEN", token);
+    //         let requestOptions = {
+    //             method: "PUT",
+    //             headers: myHeaders,
+    //             body: new FormData(formUpdateMessenger),
+    //         };
+    //         fetch("/mensajeros", requestOptions)
+    //             .then((response) => response.json())
+    //             .then(function (data) {
+    //                 if (data.state == 500) {
+    //                     alert(data.message);
+    //                 }
+    //                 if (data.state == 200) {
+    //                     alert(data.message);
+    //                 }
+    //                 if (data.errors) {
+    //                     alert(data.errors);
+    //                 }
+    //             })
+    //             .catch((err) => console.warn(err));
+    //     });
+    // }
+
+  }]);
+
+  return Messengers;
+}();
+
+
+
+/***/ }),
+
 /***/ "./app/Modules/OrderModule/views/js/_orders.js":
 /*!*****************************************************!*\
   !*** ./app/Modules/OrderModule/views/js/_orders.js ***!
@@ -87878,121 +87993,6 @@ var General = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/js/_messengers.js":
-/*!*************************************!*\
-  !*** ./resources/js/_messengers.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Messengers; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Messengers = /*#__PURE__*/function () {
-  function Messengers() {
-    _classCallCheck(this, Messengers);
-  }
-
-  _createClass(Messengers, [{
-    key: "initialize",
-    value: function initialize() {// this.createMessengers();
-    } // //CREATE MESSENGER
-    // createMessengers() {
-    //     let formCreateMessenger = document.getElementById(
-    //         "formCreateMessenger"
-    //     );
-    //     if (formCreateMessenger == null) {
-    //         return;
-    //     }
-    //     formCreateMessenger.addEventListener("submit", function (e) {
-    //         e.preventDefault();
-    //         let token = document
-    //             .querySelector('meta[name="csrf-token"]')
-    //             .getAttribute("content");
-    //         let myHeaders = new Headers();
-    //         myHeaders.append("accept", "application/json");
-    //         myHeaders.append("Access-Control-Allow-Origin", "*");
-    //         myHeaders.append("X-CSRF-TOKEN", token);
-    //         let requestOptions = {
-    //             method: "POST",
-    //             headers: myHeaders,
-    //             body: new FormData(formCreateMessenger),
-    //         };
-    //         fetch("/mensajeros", requestOptions)
-    //             .then((response) => response.json())
-    //             .then(function (data) {
-    //                 if (data.state == 500) {
-    //                     alert(data.message);
-    //                 }
-    //                 if (data.state == 200) {
-    //                     alert(data.message);
-    //                 }
-    //                 if (data.errors) {
-    //                     alert(data.errors);
-    //                 }
-    //             })
-    //             .catch((err) => console.warn(err));
-    //     });
-    // }
-    // //DELETE MESSENGER
-    // deleteMessenger() {
-    //     let deleteMessenger = document.getElementById("deleteMessenger");
-    //     deleteMessenger.addEventListener("submit", function (e) {
-    //         e.preventDefault();
-    //     });
-    // }
-    // // UPDATE MESSENGER
-    // updateMessenger() {
-    //     let formUpdateMessenger = document.getElementById("formUpdateMessenger");
-    //     if (formUpdateMessenger == null) {
-    //         return;
-    //     }
-    //     formUpdateMessenger.addEventListener("submit", function (e) {
-    //         e.preventDefault();
-    //         let token = document
-    //             .querySelector('meta[name="csrf-token"]')
-    //             .getAttribute("content");
-    //         let myHeaders = new Headers();
-    //         myHeaders.append("accept", "application/json");
-    //         myHeaders.append("Access-Control-Allow-Origin", "*");
-    //         myHeaders.append("X-CSRF-TOKEN", token);
-    //         let requestOptions = {
-    //             method: "PUT",
-    //             headers: myHeaders,
-    //             body: new FormData(formUpdateMessenger),
-    //         };
-    //         fetch("/mensajeros", requestOptions)
-    //             .then((response) => response.json())
-    //             .then(function (data) {
-    //                 if (data.state == 500) {
-    //                     alert(data.message);
-    //                 }
-    //                 if (data.state == 200) {
-    //                     alert(data.message);
-    //                 }
-    //                 if (data.errors) {
-    //                     alert(data.errors);
-    //                 }
-    //             })
-    //             .catch((err) => console.warn(err));
-    //     });
-    // }
-
-  }]);
-
-  return Messengers;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/_notifications.js":
 /*!****************************************!*\
   !*** ./resources/js/_notifications.js ***!
@@ -88246,7 +88246,7 @@ var requestZone = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_Modules_UserModule_views_js_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../app/Modules/UserModule/views/js/_users */ "./app/Modules/UserModule/views/js/_users.js");
-/* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
+/* harmony import */ var _app_Modules_MessengerModule_views_js_messengers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../app/Modules/MessengerModule/views/js/_messengers */ "./app/Modules/MessengerModule/views/js/_messengers.js");
 /* harmony import */ var _app_Modules_AddressModule_views_js_addresses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app/Modules/AddressModule/views/js/_addresses */ "./app/Modules/AddressModule/views/js/_addresses.js");
 /* harmony import */ var _app_Modules_CustomerModule_views_js_customers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../app/Modules/CustomerModule/views/js/_customers */ "./app/Modules/CustomerModule/views/js/_customers.js");
 /* harmony import */ var _app_Modules_OrderModule_views_js_orders__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../app/Modules/OrderModule/views/js/_orders */ "./app/Modules/OrderModule/views/js/_orders.js");
@@ -88284,7 +88284,7 @@ Vue.component('status-matrix', __webpack_require__(/*! ./components/statusMatrix
 Vue.component('deliveries', __webpack_require__(/*! ./components/deliveries/deliveries.vue */ "./resources/js/components/deliveries/deliveries.vue")["default"]);
 Vue.component('modal', __webpack_require__(/*! ./components/modal.vue */ "./resources/js/components/modal.vue")["default"]);
 var users = new _app_Modules_UserModule_views_js_users__WEBPACK_IMPORTED_MODULE_0__["default"]();
-var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_1__["default"]();
+var messengers = new _app_Modules_MessengerModule_views_js_messengers__WEBPACK_IMPORTED_MODULE_1__["default"]();
 var addresses = new _app_Modules_AddressModule_views_js_addresses__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var customers = new _app_Modules_CustomerModule_views_js_customers__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var orders = new _app_Modules_OrderModule_views_js_orders__WEBPACK_IMPORTED_MODULE_4__["default"]();

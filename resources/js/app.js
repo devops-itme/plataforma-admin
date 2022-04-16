@@ -3,7 +3,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import Users from '../../app/Modules/UserModule/views/js/_users';
-import Messengers from './_messengers';
+import Messengers from '../../app/Modules/MessengerModule/views/js/_messengers';
 import Addresses from '../../app/Modules/AddressModule/views/js/_addresses';
 import Customers from '../../app/Modules/CustomerModule/views/js/_customers';
 import Orders from '../../app/Modules/OrderModule/views/js/_orders';
