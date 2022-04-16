@@ -10,7 +10,7 @@
     "branchOffices" : "Sucursales",
     "departments" : "Departamentos",
     "orders" : "Ordenes",
-    "parameters":"Parametros",
+    "parameters":"Parámetros",
     "record":"Historial",
     "profile":"Perfil",
     "document_type":"Tipo de documento",
@@ -27,5 +27,6 @@
     "customer_document_type":"Tipos de documento",
     "scopes":"Alcances (Scope)",
     "issues":"Temas (Issues)",
-    "days":"Días"
+    "days":"Días",
+    "created": "creado"
 }
