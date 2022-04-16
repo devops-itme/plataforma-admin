@@ -13,7 +13,7 @@
             <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}, {'urgent_row': order.urgent_dispatch === 1  && index != activeIndex}]"
                 @click="rowClick(order,index)">
                 <td v-text="`${order.user_id}-${ order.order_number }`"></td>
-                <td v-text=order.get_user.name></td>
+                <td v-text=order?.get_user?.name??(order?.get_user?.get_customer?.business_name??(order?.get_user?.get_customer?.tradename??'---'))></td>
                 <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
                 <td v-text="`$${rowTotal(order.get_guides)}`"></td>
                 <td v-text="`${ order.get_guides[0]?.address_description}`"></td>

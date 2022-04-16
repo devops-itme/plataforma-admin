@@ -4,6 +4,7 @@ namespace App\Modules\OrderModule;
 
 use App\Modules\OrderLogModule\OrderLog;
 use App\Modules\AddressModule\Address;
+use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\DepartmentModule\Department;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ParameterValueModule\ParameterValue;
@@ -106,11 +107,6 @@ class Order extends Model
         return $this->belongsTo(Department::class, 'department_id');
     }
 
-    public function getOrder()
-    {
-        return $this->belongsTo(Order::class, 'branch_office');
-    }
-
     public function getScheduleTime()
     {
         return $this->belongsTo(PickupHour::class, 'schedule_time');
@@ -120,6 +116,12 @@ class Order extends Model
     {
         return $this->hasMany(OrderLog::class, 'order_id');
     }
+
+    public function getBranchOffice()
+    {
+        return $this->belongsTo(BranchOffice::class, 'branch_office');
+    }
+
 
 
     //SCOPES
