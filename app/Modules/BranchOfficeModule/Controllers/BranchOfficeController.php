@@ -3,14 +3,14 @@
 namespace App\Modules\BranchOfficeModule\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\BranchOfficeModule\Controllers\BranchOfficeTrait;
+use App\Modules\ParametersModule\Parameter;
+use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Http\Request;
-use App\BranchOffice;
 use App\Modules\UserBranchModule\UserBranch;
 use App\Modules\UserDepartmentModule\UserDepartment;
-use App\Parameter;
-use App\ParameterValue;
-use App\User;
+use App\Modules\UserModule\User;
 
 class BranchOfficeController extends Controller
 {
