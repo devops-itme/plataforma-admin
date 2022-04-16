@@ -176,7 +176,7 @@ var Parameters = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context2.next = 3;
-                return fetch("/parametros/" + id).then(function (response) {
+                return fetch("/valor-parametros/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -250,7 +250,7 @@ var Parameters = /*#__PURE__*/function () {
                   var deleteBtn = document.createElement("button");
 
                   deleteBtn.onclick = function () {
-                    confirmDelete('parametros/delete/' + key.id);
+                    confirmDelete('valor-parametros/' + key.id);
                   };
 
                   deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
@@ -349,7 +349,7 @@ var Parameters = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context5.next = 3;
-                return fetch("/parametros", {
+                return fetch("/valor-parametros", {
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   },
@@ -430,7 +430,7 @@ var Parameters = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context7.next = 3;
-                return fetch("parametros/" + id + "/edit").then(function (response) {
+                return fetch("valor-parametros/" + id + "/edit").then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;
@@ -528,7 +528,7 @@ var Parameters = /*#__PURE__*/function () {
                   'state': 500
                 };
                 _context9.next = 3;
-                return fetch("parametros/" + id, requestOptions).then(function (response) {
+                return fetch("valor-parametros/" + id, requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   response = data;

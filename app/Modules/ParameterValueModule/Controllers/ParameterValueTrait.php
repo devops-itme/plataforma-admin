@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\ParametersModule\Controllers;
+namespace App\Modules\ParameterValueModule\Controllers;
 
 use App\Http\Controllers\Traits\RestActions;
 use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-trait ParametersTrait
+trait ParameterValueTrait
 {
     use RestActions;
 
@@ -26,7 +26,7 @@ trait ParametersTrait
         );
     }
 
-    public function storeParameter($request)
+    public function storeParameterValue($request)
     {
         $validator = $this->validateParameter($request, 'create');
         if ($validator->fails()) {
@@ -40,13 +40,13 @@ trait ParametersTrait
                 'state' => 1
             ]);
 
-            return $this->respond(200, $parameter, null, 'Parametro creado exitosamente');
+            return $this->respond(200, $parameter, null, 'Parámetro creado exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al crear parametro');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear parámetro');
         }
     }
 
-    public function updateParameter($id, $request)
+    public function updateParameterValue($id, $request)
     {
         $validator = $this->validateParameter($request, 'update', $id);
         if ($validator->fails()) {
@@ -55,7 +55,7 @@ trait ParametersTrait
         try {
             $parameter = ParameterValue::find($id);
             if(is_null($parameter)){
-                return $this->respond(500, [], 'user not found', 'No se encontró el parametro');
+                return $this->respond(500, [], 'user not found', 'No se encontró el parámetro');
             }
             $parameter->update([
                 'name' => $request->name,
@@ -63,23 +63,23 @@ trait ParametersTrait
                 'state' => $request->state
             ]);
 
-            return $this->respond(200, $parameter, null, 'Parametro actualizado exitosamente');
+            return $this->respond(200, $parameter, null, 'parámetro actualizado exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al crear parametro');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear parámetro');
         }
     }
 
-    public function deleteParameter($id)
+    public function deleteParameterValue($id)
     {
         try {
             $parameter = ParameterValue::find($id);
             if (is_null($parameter)) {
-                return $this->respond(500, [], 'user not found', 'No se encontró el parametro');
+                return $this->respond(500, [], 'user not found', 'No se encontró el parámetro');
             }
             $parameter->delete();
-            return $this->respond(200, $parameter, null, 'Parametro eliminado exitosamente');
+            return $this->respond(200, $parameter, null, 'Parámetro eliminado exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar parametro');
+            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar parámetro');
         }
     }
 }
