@@ -15,7 +15,7 @@ import Parameters from '../../app/Modules/ParametersModule/views/js/_parameters'
 import Hours from '../../app/Modules/PickupHourModule/views/js/_hours';
 import Plans from '../../app/Modules/PlanModule/views/js/_plans';
 import Notifications from './_notifications';
-import Rates from './_rates';
+import Rates from '../../app/Modules/RateModule/views/js/_rates';
 
 //Vue Components
 Vue.component('deliveries-ondemand', require('./components/deliveries/deliveriesOndemand.vue').default);
