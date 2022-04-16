@@ -5958,7 +5958,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   id = _this3.statusDescriptors.findIndex(function (item) {
                     return item.id == descriptor.id;
                   });
-                  console.log(descriptor);
 
                   if (id == -1) {
                     _this3.statusDescriptors.push(descriptor); // location.reload();

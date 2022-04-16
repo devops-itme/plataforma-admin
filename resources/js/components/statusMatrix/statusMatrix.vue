@@ -193,7 +193,6 @@ export default {
             let descriptor = response.data;
             if(response.state == 200){
                 let id = this.statusDescriptors.findIndex((item) =>  item.id == descriptor.id);
-                 console.log(descriptor);
                 if(id == -1){
                     this.statusDescriptors.push(descriptor);
                     // location.reload();
