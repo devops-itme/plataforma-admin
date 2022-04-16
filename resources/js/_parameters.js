@@ -29,7 +29,7 @@ export default class Parameters {
         let response = {
             'state': 500
         };
-        await fetch("/parametros/"+id)
+        await fetch("/valor-parametros/"+id)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -156,7 +156,7 @@ export default class Parameters {
         let response = {
             'state': 500
         };
-        await fetch("parametros/"+id+"/edit")
+        await fetch("valor-parametros/"+id+"/edit")
             .then(response => response.json())
             .then(data => {
                 response = data
