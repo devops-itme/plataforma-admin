@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group py-3 m-0 col-md-5">
                     <label>Cliente:</label>
-                    <input type="text" class="form-control" v-if="showData" disabled v-bind:value="`${showData.get_user?.name} ${showData.get_user?.last_name}`" />
+                    <input type="text" class="form-control" v-if="showData" disabled v-bind:value=showData?.get_user?.name??(showData?.get_user?.get_customer?.business_name??(showData?.get_user?.get_customer?.tradename??'---')) />
                     <span class="form-text text-muted"></span>
                 </div>
             </div>

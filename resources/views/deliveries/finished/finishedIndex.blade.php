@@ -29,9 +29,9 @@
                 <div class="col-md-7">
                     <p class="mb-0">
                         <span class="font-weight-bolder mb-3">Cantidad: </span>
-                        <span class="line-height-xl">7</span>,
+                        <span class="line-height-xl" v-text="`${new Intl.NumberFormat().format(ordersQuantity)}`"></span>,
                         <span class="font-weight-bolder mb-3">Valor: </span>
-                        <span class="line-height-xl">$120.00</span>
+                        <span class="line-height-xl" v-text="`${'$'+new Intl.NumberFormat().format(ordersTotalValue)}`"></span>
                     </p>
                 </div>
             </div>
