@@ -18,5 +18,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/search_customers', 'CustomerModule\Controllers\CustomerController@search_customer');
     Route::get('/customer_data/{id}', 'CustomerModule\Controllers\CustomerController@customerData');
+    Route::get('/sucursales_cliente/{id}', 'CustomerModule\Controllers\CustomerController@getBranchOffices')->name('branchOffices.index');
 });
 

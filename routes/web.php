@@ -34,9 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/allBranches', 'BranchOfficeModule\Controllers\BranchOfficeController@allBranches');
 
-    Route::get('unassigned_depts', 'Admin\DepartmentController@UnassignedDepts');
+    Route::get('unassigned_depts', 'DepartmentModule\Controllers\DepartmentController@UnassignedDepts');
 
-    Route::get('/customer_addresses/{id}', 'Admin\AddressController@customerAddresses');
+    Route::get('/customer_addresses/{id}', 'AddressModule\Controllers\AddressController@customerAddresses');
     //GUIAS
     Route::resource('/guias', 'GuideModule\Controllers\GuideController')->names('guias')->except('store');
     Route::post('/guias/store', 'GuideModule\Controllers\GuideController@store')->name('guide.store');
@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::resource('/clientes', 'Admin\CustomerController')->except('store')->names('customers');
         // Route::post('/clientes/store', 'Admin\CustomerController@store')->name('customers.store');
         //Obtener sucursales
-        Route::get('/sucursales_cliente/{id}', 'Admin\CustomerController@getBranchOffices')->name('branchOffices.index');
+        Route::get('/sucursales_cliente/{id}', 'CustomerModule\Controllers\CustomerController@getBranchOffices')->name('branchOffices.index');
         //BANKS
         // Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
 
@@ -122,7 +122,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');
     Route::post('pordespachar/ondemand/{id}', 'OrderModule\Controllers\OrderController@porDespacharOndemand');
     //Por despachar packaging
-    // Route::post('pordespachar/packaging/{id}', 'Admin\GuideController@porDespacharPackaging');
     Route::post('pordespachar/packaging/{id}', 'GuideModule\Controllers\GuideController@porDespacharPackaging');
 
 
@@ -134,7 +133,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
     Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
     //Orders Delivery Packing
-    // Route::get('orders_packing/{type}', 'Admin\GuideController@guidesForDeliveryPacking');
     Route::get('orders_packing/{type}', 'GuideModule\Controllers\GuideController@guidesForDeliveryPacking');
     //Messengers delivery
     // Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
@@ -214,9 +212,3 @@ Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->n
 
 //REPORTS
 Route::resource('reportes', 'Admin\ReportController')->names('reports'); //DELETE REPORTS
-//SERVICE TYPES
-Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceTypes');
-//SERVICES
-Route::resource('mis-servicios', 'Admin\MyServiceController')->names('myServices');
-//CHAT
-Route::resource('chat', 'Admin\ChatController')->names('chats');

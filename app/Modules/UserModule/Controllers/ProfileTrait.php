@@ -21,7 +21,7 @@ trait ProfileTrait
                 'name' => [Rule::requiredIf($type == 1), 'string'],
                 'last_name' => [Rule::requiredIf($type == 1), 'string'],
                 'document_type' => 'nullable|numeric',
-                'document_number' => ['nullable', 'numeric', Rule::unique('users', 'document_number')->ignore('id'), Rule::requiredIf($type == 1)],
+                'document_number' => ['nullable', 'numeric', Rule::unique('users', 'document_number')->ignore($id), Rule::requiredIf($type == 1)],
                 'email' => ['email', Rule::unique('users', 'email')->ignore($id), Rule::requiredIf($type == 1)],
                 'phone' => ['nullable', 'string', Rule::unique('users', 'phone')->ignore($id), Rule::requiredIf($type == 1)],
                 'password' => [Rule::requiredIf($type == 2), 'string'],
@@ -32,7 +32,7 @@ trait ProfileTrait
 
     public function updateGeneralData($request)
     {
-        $validator = $this->validateProfile($request, 'create', 1, Auth::user()->id);
+        $validator = $this->validateProfile($request, 'update', 1, Auth::user()->id);
         if ($validator->fails()) {
             return $this->respond(500, $validator->errors(), 'validation error', $validator->errors()->first());
         }
