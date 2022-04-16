@@ -44,7 +44,7 @@
                             <div class="col-md-6">
                                 <h4 class="card-title">Descripción - Matriz</h4>
                             </div>
-                            <div class="col-md-6" v-if="statusDescriptors != null">
+                            <div class="col-md-6" v-if="selectedStatusMatrixId != null">
                                 <a
                                     href="#"
                                     class="btn btn-primary btn-sm font-weight-bolder"
@@ -167,7 +167,7 @@ export default {
     props: ['matrix', 'roles'],
     data() {
         return {
-            statusDescriptors: null,
+            statusDescriptors: [],
             selectedStatusMatrixId: null,
             showModal:false,
             methodValue: 'POST',
@@ -193,8 +193,10 @@ export default {
             let descriptor = response.data;
             if(response.state == 200){
                 let id = this.statusDescriptors.findIndex((item) =>  item.id == descriptor.id);
+                 console.log(descriptor);
                 if(id == -1){
-                    this.statusDescriptors.push({ ...descriptor });
+                    this.statusDescriptors.push(descriptor);
+                    // location.reload();
                 }else{
                     this.statusDescriptors[id].description=descriptor.description
                     this.statusDescriptors[id].role_id=descriptor.role_id

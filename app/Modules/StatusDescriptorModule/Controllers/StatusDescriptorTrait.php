@@ -38,6 +38,9 @@ trait StatusDescriptorTrait
                 'description' => $request->description,
                 'status_matrix_id' => $id,
             ]);
+
+            $statusDescriptor->load('getRole');
+
             return $this->respond(200, $statusDescriptor, null, 'Descriptor creado o actualizado  exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage() . 'Error al crear o actualizar el descriptor');
