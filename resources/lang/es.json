@@ -28,5 +28,7 @@
     "scopes":"Alcances (Scope)",
     "issues":"Temas (Issues)",
     "days":"Días",
-    "created": "creado"
+    "created": "creado",
+    "updated": "actualizado",
+    "deleted": "eliminado"
 }
