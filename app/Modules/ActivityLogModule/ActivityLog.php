@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ActivityLog extends Model
 {
-    use SoftDeletes;
-    protected $table = 'activity_logs';
+    // use SoftDeletes;
+    protected $table = 'activity_log';
     protected $fillable = [
         'log_name',
         'description',

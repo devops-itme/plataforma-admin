@@ -6,7 +6,6 @@ namespace App\Modules\CustomerModule\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Modules\CustomerModule\Controllers\CustomerTrait;
-use App\Modules\ActivityLogModule\ActivityLog;
 use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\BranchOfficeModule\Controllers\BranchOfficeTrait as BranchOfficeTrait;
 use App\Modules\CustomerModule\Customer;
@@ -14,7 +13,6 @@ use App\Modules\DepartmentModule\Department;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\UserModule\User;
 use App\Modules\ZoneModule\Zone;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
@@ -23,10 +21,6 @@ class CustomerController extends Controller
 
     protected $activity_log;
     protected $path = 'CustomerModule.views.customers.';
-    public function __construct()
-    {
-        $this->activity_log = new ActivityLog();
-    }
 
     public function respond($state, $data = [], $error = null, $message = '')
     {
@@ -151,18 +145,6 @@ class CustomerController extends Controller
             //     }
             // }
             $response = $this->saveCustomer($request->merge(['user_id' => $saveUserData['data']->id]));
-            if ($response['state'] == 200) {
-                $customer = $response['data'];
-                $this->activity_log->storeLog(
-                    'Creación de cliente',
-                    'Creación de cliente con id #' . ($customer->id ?? '') ,
-                    'App\Customer',
-                    $customer->id,
-                    'App\User',
-                    Auth::user()->id,
-                    ''
-                );
-            }
             return $response;
         });
         return $response;

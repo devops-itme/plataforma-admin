@@ -14,10 +14,12 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class User extends Model implements AuthenticatableContract
 {
-    use Authenticatable, HasApiTokens, SoftDeletes;
+    use Authenticatable, HasApiTokens, SoftDeletes, LogsActivity;
 
     protected $table = 'users';
 
@@ -33,6 +35,19 @@ class User extends Model implements AuthenticatableContract
         'role',
         'state'
     ];
+
+    /* Logs Config */
+    protected static $logFillable = true;
+    protected static $submitEmptyLogs = false;
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->log_name = __($eventName);
+        if ($activity->causer) {
+            $activity->description = "Se ha " . __($eventName) . " el usuario " . $activity->subject->fullName;
+        }
+    }
+    /*End logs config */
 
     public function getCustomer()
     {

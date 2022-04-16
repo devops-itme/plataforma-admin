@@ -10,7 +10,8 @@ use App\Modules\DepartmentModule\Department;
 use App\Modules\GuideModule\Guide;
 use App\Http\Controllers\Controller;
 use App\Modules\OrderModule\Controllers\OrderTrait;
-use App\Modules\OrderModule\Order, App\OrderLog, App\ParameterValue, App\User, App\UserBranch;
+use App\Modules\OrderModule\Order;
+use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\PickupHourModule\PickupHour;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
@@ -20,11 +21,6 @@ class OrderController extends Controller
 {
     use OrderTrait;
 
-    protected $activity_log;
-    public function __construct()
-    {
-        $this->activity_log = new ActivityLog();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -100,16 +96,7 @@ class OrderController extends Controller
                     return redirect()->back()->with('danger', $assignGuide['message']);
                 }
             }
-            $order = $response['data'];
-            $this->activity_log->storeLog(
-                'Creación de orden',
-                'Creación de orden ' . ($order->order_number ?? '') . ' de tipo ' . ($order->getOrderType->name ?? ''),
-                'App\Order',
-                $order->id,
-                'App\User',
-                Auth::user()->id,
-                ''
-            );
+            
             return redirect()->route('orders.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -221,7 +208,6 @@ class OrderController extends Controller
                     return redirect()->back()->with('danger', $assignGuide['error']);
                 }
             }
-            $this->activity_log->storeLog('Actualización de orden', 'Actualización de orden', 'App\Order', $response['data']->id, 'App\User', Auth::user()->id, '');
             return redirect()->route('orders.index')->with('success', 'Orden actualizada exitosamente.');
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -256,7 +242,7 @@ class OrderController extends Controller
             $orders = Order::with('getOrderType')->whereHas('getOrderType', function ($query) {
                 $query->where('name', 'Ondemand');
             })->whereIn('status_matrix_id', $matriz_id)
-                ->with(['getUser.getCustomer', 'getUser.getDocumentType', 'getGuides.getRoute.getMessenger', 'getPaymentMethod', 'getDepartment', 'getUser.getBranchOffice', 'getGuides.getAddress'])
+                ->with(['getUser.getCustomer', 'getUser.getDocumentType', 'getGuides.getRoute.getMessenger', 'getPaymentMethod', 'getDepartment', 'getBranchOffice', 'getGuides'])
                 ->get();
 
             // $orders = Order::where('order_type', 1)->wh  ere('state', $type)->with(['getUser','getGuides'])->get();

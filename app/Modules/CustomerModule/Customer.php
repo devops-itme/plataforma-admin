@@ -8,10 +8,12 @@ use App\Modules\ZoneModule\Zone;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class Customer extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
 
     protected $table = 'customers';
 
@@ -34,6 +36,19 @@ class Customer extends Model
         'percentage_to_collect',
         'state'
     ];
+
+    /* Logs Config */
+    protected static $logFillable = true;
+    protected static $submitEmptyLogs = false;
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->log_name = __($eventName);
+        if ($activity->causer) {
+            $activity->description = "Se ha " . __($eventName) . " el cliente " . $activity->subject->fullName;
+        }
+    }
+    /*End logs config */
 
     public function getUser()
     {

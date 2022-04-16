@@ -7,10 +7,13 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class Rate extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
+
     protected $table = 'rates';
     protected $fillable = [
         'zone_id',
@@ -24,6 +27,19 @@ class Rate extends Model
         'special_rate',
         'state'
     ];
+
+     /* Logs Config */
+     protected static $logFillable = true;
+     protected static $submitEmptyLogs = false;
+ 
+     public function tapActivity(Activity $activity, string $eventName)
+     {
+         $activity->log_name = __($eventName);
+         if ($activity->causer) {
+             $activity->description = "Se ha " . __($eventName) . " la tarifa " . $activity->subject->fullName;
+         }
+     }
+     /*End logs config */
 
     public function getZone()
     {

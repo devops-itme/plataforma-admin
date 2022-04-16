@@ -3,7 +3,7 @@
 namespace App\Modules\ChatModule\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\ChatTrait;
+use App\Modules\ChatModule\Controllers\ChatTrait;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller

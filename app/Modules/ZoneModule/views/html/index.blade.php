@@ -55,7 +55,7 @@
                                 <option>Seleccione barrio</option>
                             </select>
                         </div>
-                     
+
                         <div class="d-flex align-items-center justify-content-end">
                             <button type="submit" class="btn btn-light-primary font-weight-bold mr-2">Guardar</button>
                         </div>
@@ -95,7 +95,7 @@
                                             name="name" value="{{ request()->name }}" />
                                         <span class="form-text text-muted">Filtro nombre</span>
                                     </div>
-                                    
+
                                     <div class="form-group py-3 m-0 col-md-3">
                                         <label for="exampleSelect1">Pais: </label>
                                         <select class="form-control form-control-solid" id="country" name="country_id">
@@ -150,7 +150,7 @@
                             @foreach ($zones as $zone)
                                 <tr id="zone-id-{{ $zone->id }}">
                                     <th>{{ $zone->name }}</th>
-                                    <td>{{ $zone->name }}</td>
+                                    <td>{{ $zone->getNeighborhoods[0]->getCorregimiento->getDistrict->getProvince->getCountry->name?? ''}}</td>
                                     <td>{{ $zone->state == 1 ? 'Activo' : 'Inactivo' }}</td>
                                     <td>
                                         <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">

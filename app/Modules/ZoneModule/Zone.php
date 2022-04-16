@@ -8,17 +8,31 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 
 class Zone extends Model
 {
-    use SoftDeletes, RestActions;
+    use SoftDeletes, RestActions, LogsActivity;
 
     protected $table = 'zones';
     protected $fillable = [
         'name',
         'state'
     ];
+
+    /* Logs Config */
+    protected static $logFillable = true;
+    protected static $submitEmptyLogs = false;
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->log_name = __($eventName);
+        if ($activity->causer) {
+            $activity->description = "Se ha " . __($eventName) . " la zona " . $activity->subject->fullName;
+        }
+    }
+    /*End logs config */
 
     public function getNeighborhoods()
     {

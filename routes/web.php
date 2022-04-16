@@ -36,6 +36,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('unassigned_depts', 'DepartmentModule\Controllers\DepartmentController@UnassignedDepts');
 
+<<<<<<< HEAD
+=======
+    // Route::get('/customer_addresses/{id}', 'Admin\AddressController@customerAddresses');
+>>>>>>> 469c1b60f2913f20989c66e0316aa88fb8431949
     Route::get('/customer_addresses/{id}', 'AddressModule\Controllers\AddressController@customerAddresses');
     //GUIAS
     Route::resource('/guias', 'GuideModule\Controllers\GuideController')->names('guias')->except('store');
@@ -122,6 +126,10 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');
     Route::post('pordespachar/ondemand/{id}', 'OrderModule\Controllers\OrderController@porDespacharOndemand');
     //Por despachar packaging
+<<<<<<< HEAD
+=======
+    // Route::post('pordespachar/packaging/{id}', 'Admin\GuideController@porDespacharPackaging');
+>>>>>>> 469c1b60f2913f20989c66e0316aa88fb8431949
     Route::post('pordespachar/packaging/{id}', 'GuideModule\Controllers\GuideController@porDespacharPackaging');
 
 
@@ -133,9 +141,14 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
     Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
     //Orders Delivery Packing
+<<<<<<< HEAD
+=======
+    // Route::get('orders_packing/{type}', 'Admin\GuideController@guidesForDeliveryPacking');
+>>>>>>> 469c1b60f2913f20989c66e0316aa88fb8431949
     Route::get('orders_packing/{type}', 'GuideModule\Controllers\GuideController@guidesForDeliveryPacking');
     //Messengers delivery
-    Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
+    // Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
+    Route::get('messengers_delivery', 'MessengerModule\Controllers\MessengerController@messengersForDelivery');
 
 
     // Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
@@ -162,9 +175,11 @@ Route::group(['middleware' => 'auth'], function () {
         return view('orders.list');
     })->name('Ordenes.Listado.index');
 
-    Route::resource('tarifas', 'Admin\RateController')->names('rates');
+    // Route::resource('tarifas', 'Admin\RateController')->names('rates');
+    Route::resource('tarifas', 'RateModule\Controllers\RateController')->names('rates');
 
-    Route::resource('perfil', 'Admin\ProfileController')->names('profile');
+    // Route::resource('perfil', 'Admin\ProfileController')->names('profile');
+    Route::resource('perfil', 'UserModule\Controllers\ProfileController')->names('profile');
     // Route::get('perfil', function () {
 
     // })->name('profile');
@@ -190,8 +205,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::resource('horas', 'Admin\PickupHourController')->except('delete')->names('hours');
     // Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');
     // Route::get('/getPickupHours', 'Admin\PickupHourController@pickupHours');
-    Route::resource('horas', 'PickupHourModule\Controllers\PickupHourController')->except('delete')->names('hours');
-    Route::delete('horas/{id}', 'PickupHourModule\Controllers\PickupHourController@destroy')->name('hours.delete');
+    Route::resource('horas', 'PickupHourModule\Controllers\PickupHourController')->names('hours');
     Route::get('/getPickupHours', 'PickupHourModule\Controllers\PickupHourController@pickupHours');
 
     // Route::get('log', 'Admin\LogController@index')->name('log.index');
@@ -209,7 +223,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->names('addresses');
 
 //REPORTS
-Route::resource('reportes', 'Admin\ReportController')->names('reports');
+Route::resource('reportes', 'Admin\ReportController')->names('reports'); //DELETE REPORTS
 //SERVICE TYPES
 Route::resource('tipo-de-servicios', 'Admin\ServiceTypeController')->names('serviceTypes');
 //SERVICES

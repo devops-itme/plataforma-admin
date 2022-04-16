@@ -29,7 +29,7 @@ export default class Parameters {
         let response = {
             'state': 500
         };
-        await fetch("/parametros/"+id)
+        await fetch("/valor-parametros/"+id)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -72,7 +72,7 @@ export default class Parameters {
             editBtn.innerHTML = '<i class="fas fa-edit"></i>';
 
             const deleteBtn = document.createElement("button");
-            deleteBtn.onclick = function(){confirmDelete('parametros/delete/'+key.id)};
+            deleteBtn.onclick = function(){confirmDelete('valor-parametros/'+key.id)};
             deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
             deleteBtn.setAttribute('type', 'button');
             deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -121,7 +121,7 @@ export default class Parameters {
             'state': 500
         };
 
-        response = await fetch("/parametros", {
+        response = await fetch("/valor-parametros", {
             headers:{
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -156,7 +156,7 @@ export default class Parameters {
         let response = {
             'state': 500
         };
-        await fetch("parametros/"+id+"/edit")
+        await fetch("valor-parametros/"+id+"/edit")
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -209,7 +209,7 @@ export default class Parameters {
         let response = {
             'state': 500
         };
-        await fetch("parametros/"+id, requestOptions)
+        await fetch("valor-parametros/"+id, requestOptions)
             .then((response) => response.json())
             .then(data => {
                 response = data

@@ -59,12 +59,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $this->saveUser($request);
+        $response = $this->saveUser($request);
 
-        if ($user['state'] == 200) {
+        if ($response['state'] == 200) {
             return redirect()->route('users.index')->with('success', 'Usuario registrado exitosamente.');
         } else {
-            return redirect()->back()->withInput()->with('danger', $user['message']);
+            return redirect()->back()->withInput()->with('danger', $response['message']);
         }
     }
 

@@ -28,7 +28,7 @@ class ZoneController extends Controller
     {
         $countries = Country::get();
 
-        $zones = Zone::name(request()->name)
+        $zones = Zone::with('getNeighborhoods.getCorregimiento.getDistrict.getProvince.getCountry')->name(request()->name)
             ->country(request()->country)
             ->state(request()->state)
             ->paginate(5);

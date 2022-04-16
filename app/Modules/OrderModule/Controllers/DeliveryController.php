@@ -19,14 +19,15 @@ class DeliveryController extends Controller
 {
     use RouteTrait;
 
+    protected $path = 'OrderModule.views.html.';
     public function indexOndemand()
     {
-        return view('deliveries.index');
+        return view($this->path .'deliveries.index');
     }
 
     public function indexPacking()
     {
-        return view('deliveriesPacking.index');
+        return view($this->path.'deliveriesPacking.index');
     }
 
     public function assignOndemad(Request $request)
