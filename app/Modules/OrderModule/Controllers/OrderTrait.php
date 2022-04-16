@@ -28,7 +28,7 @@ trait OrderTrait
                 'expenses' => 'nullable|numeric',
                 'diligence_expenses' => 'nullable|numeric',
                 'tax_total' => 'nullable|numeric',
-                'vehicle_type_id' => 'required|numeric',
+                'vehicle_type_id' => 'nullable|numeric',
                 'payment_method' => 'required|numeric',
                 'urgent_dispatch' => 'nullable|numeric',
                 'schedule_date' => 'nullable',
