@@ -35,3 +35,4 @@
 
 @include('OrderModule.views.html.modals.createGuide')
 @include('OrderModule.views.html.modals.editGuide')
+@include('OrderModule.views.html.modals.importGuidesModal')

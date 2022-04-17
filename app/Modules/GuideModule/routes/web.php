@@ -9,4 +9,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('orders_packing/{type}', 'GuideModule\Controllers\GuideController@guidesForDeliveryPacking');
 
     Route::post('pordespachar/packaging/{id}', 'GuideModule\Controllers\GuideController@porDespacharPackaging');
+
+    Route::post('guias/import', 'GuideModule\Controllers\GuideController@importGuide')->name('guide.import');
 });

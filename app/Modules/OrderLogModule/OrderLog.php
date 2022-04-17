@@ -2,6 +2,7 @@
 
 namespace App\Modules\OrderLogModule;
 
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

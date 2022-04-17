@@ -2,11 +2,11 @@
 
 namespace App\Imports;
 
-use App\Guide;
+use App\Modules\GuideModule\Guide;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class GuidesImport implements ToModel, WithHeadingRow,
+class GuidesImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -17,7 +17,6 @@ class GuidesImport implements ToModel, WithHeadingRow,
     {
         if($row){
             return new Guide([
-                'customer_document_type' => $row['TipoDocumento'],
                 'order_id' => $row['OrdenID'],
                 'address_name' => $row['Direccion'],
                 'concept' => $row['Concepto'],

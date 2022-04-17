@@ -146,7 +146,6 @@
         <!--end::Form-->
     </div>
     @include('OrderModule.views.html.detailCustomer')
-    @include('OrderModule.views.html.modals.importGuidesModal')
 
 @endsection
 
