@@ -162,10 +162,10 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
-                        @include('orders.show.generalTabShow')
+                        @include('OrderModule.views.html.show.generalTabShow')
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        @include('orders.show.guideTabShow')
+                        @include('OrderModule.views.html.show.guideTabShow')
                     </div>
                 </div>
             </div>

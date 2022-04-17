@@ -87,6 +87,6 @@
             </div>
         </div>
     </div>
-    @include('parameters.editParameterModal')
-    @include('parameters.createParameterValueModal')
+    @include('ParametersModule.views.html.editParameterModal')
+    @include('ParametersModule.views.html.createParameterValueModal')
 @endsection

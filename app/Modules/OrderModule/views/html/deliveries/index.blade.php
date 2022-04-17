@@ -35,13 +35,13 @@
                         <div class="tab-content h-500px">
                             <div class="tab-pane fade show active tabcontent" id="pordespachar" role="tabpanel"
                                 aria-labelledby="kt_tab_pane_2">
-                                @include('deliveries.byShipment.shipmentIndex')
+                                @include('OrderModule.views.html.deliveries.byShipment.shipmentIndex')
                             </div>
                             <div class="tab-pane fade tabcontent" id="despachados" role="tabpanel" aria-labelledby="kt_tab_pane_2">
-                                @include('deliveries.shipmented.shipmentedIndex')
+                                @include('OrderModule.views.html.deliveries.shipmented.shipmentedIndex')
                             </div>
                             <div class="tab-pane fade tabcontent" id="completados" role="tabpanel" aria-labelledby="kt_tab_pane_3">
-                                @include('deliveries.finished.finishedIndex')
+                                @include('OrderModule.views.html.deliveries.finished.finishedIndex')
                             </div>
                         </div>
                     </div>

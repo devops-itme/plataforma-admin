@@ -129,10 +129,10 @@
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
-                            @include('orders.generalTab')
+                            @include('OrderModule.views.html.generalTab')
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            @include('orders.guideTab')
+                            @include('OrderModule.views.html.guideTab')
                         </div>
                     </div>
                 </div>
@@ -145,8 +145,8 @@
         </form>
         <!--end::Form-->
     </div>
-    @include('orders.detailCustomer')
-    @include('orders.modals.importGuidesModal')
+    @include('OrderModule.views.html.detailCustomer')
+    @include('OrderModule.views.html.modals.importGuidesModal')
 
 @endsection
 
