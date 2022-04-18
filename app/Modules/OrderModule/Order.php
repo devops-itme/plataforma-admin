@@ -178,7 +178,6 @@ class Order extends Model
             return $query->whereIn('status_matrix_id', $statusArr);
         }
     }
-
     public function scopeMessengerOrders($query, $messenger_user_id)
     {
         if (!is_null($messenger_user_id)) {

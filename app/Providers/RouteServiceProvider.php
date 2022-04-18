@@ -137,6 +137,7 @@ class RouteServiceProvider extends ServiceProvider
                 require(base_path('app/Modules/MessengerModule/routes/api.php'));
                 require(base_path('app/Modules/ParameterValueModule/routes/api.php'));
                 require(base_path('app/Modules/PickupHourModule/routes/api.php'));
+                require(base_path('app/Modules/ZoneModule/routes/api.php'));
             });
     }
 }
