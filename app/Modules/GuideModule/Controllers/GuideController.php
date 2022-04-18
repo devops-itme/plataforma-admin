@@ -3,11 +3,15 @@
 namespace App\Modules\GuideModule\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Imports\GuidesImport;
 use App\Modules\AddressModule\Address;
 use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
 use App\Modules\GuideModule\Guide;
 use App\Modules\OrderModule\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class GuideController extends Controller
 {
@@ -225,6 +229,29 @@ class GuideController extends Controller
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }
+    }
+
+    public function importGuide(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'order_id' => 'nullable',
+            'file' => 'required | mimes:xlsx',
+
+        ]);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+        $order_id = $request->order_id;
+
+        if($request->hasFile('file')){
+           $file_import = $request->file('file');
+           Excel::import(new GuidesImport($order_id), $file_import);
+        return $this->respond(200,  [], null, 'Importación de guías completada');
+        }
+        return $this->respond(500,  [], '', 'Error al importar archivo');
+
+
     }
 
 }
