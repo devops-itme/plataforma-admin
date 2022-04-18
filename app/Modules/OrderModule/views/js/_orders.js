@@ -1026,7 +1026,7 @@ export default class Orders {
             headers: myHeaders,
             body: formData,
         };
-        
+
         response = await fetch(`/guias/import`, requestOptions)
         return response.json();
     }
@@ -1044,10 +1044,10 @@ export default class Orders {
             if(!file.files[0]){
                return error('Debe cargar el archivo para proceder con la importación')
             }
-    
+
             formData.append('file', file.files[0]);
-            formData.append('order_id', order_id);  
-           
+            formData.append('order_id', order_id);
+
             let response = await this.sendImportModalData(formData);
             if(response.state == 200){
                 correct(response.message);
@@ -1059,29 +1059,29 @@ export default class Orders {
         });
     }
 
-
 }
 
-    $("#tabListOrders").DataTable({
-        info: false,
-        language: {
-            lengthMenu:
-                "Mostrar " +
-                `<select>
-                        <option value = '10'>10</option>
-                        <option value = '15'>15</option>
-                        <option value = '50'>50</option>
-                        <option value = '100'>100</option>
-                    <select>` +
-                " registros",
-            zeroRecords: "Nada encontrado",
-            infoEmpty: "No records available",
-            infoFiltered: "(filtered from _MAX_ total records)",
-            search: "Buscar:",
-            paginate: {
-                next: "Siguiente",
-                previous: "Anterior",
-            },
-        },
-    });
 
+
+// $("#tabListOrders").DataTable({
+//     info: false,
+//     language: {
+//         lengthMenu:
+//             "Mostrar " +
+//             `<select>
+//                         <option value = '10'>10</option>
+//                         <option value = '15'>15</option>
+//                         <option value = '50'>50</option>
+//                         <option value = '100'>100</option>
+//                     <select>` +
+//             " registros",
+//         zeroRecords: "Nada encontrado",
+//         infoEmpty: "No records available",
+//         infoFiltered: "(filtered from _MAX_ total records)",
+//         search: "Buscar:",
+//         paginate: {
+//             next: "Siguiente",
+//             previous: "Anterior",
+//         },
+//     },
+// });
