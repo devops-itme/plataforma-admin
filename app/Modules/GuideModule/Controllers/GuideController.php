@@ -236,20 +236,21 @@ class GuideController extends Controller
         $validator = Validator::make($request->all(), [
             'order_id' => 'nullable',
             'file' => 'required | mimes:xlsx',
-            
+
         ]);
 
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
-     
+        $order_id = $request->order_id;
+
         if($request->hasFile('file')){
            $file_import = $request->file('file');
-           Excel::import(new GuidesImport, $file_import);
+           Excel::import(new GuidesImport($order_id), $file_import);
         return $this->respond(200,  [], null, 'Importación de guías completada');
         }
         return $this->respond(500,  [], '', 'Error al importar archivo');
-       
+
 
     }
 

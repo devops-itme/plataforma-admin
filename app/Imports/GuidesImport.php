@@ -8,6 +8,11 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class GuidesImport implements ToModel, WithHeadingRow
 {
+
+    public function __construct(int $order_id)
+    {
+        $this->order_id = $order_id;
+    }
     /**
     * @param array $row
     *
@@ -17,12 +22,12 @@ class GuidesImport implements ToModel, WithHeadingRow
     {
         if($row){
             return new Guide([
-                'order_id' => $row['OrdenID'],
-                'address_name' => $row['Direccion'],
-                'concept' => $row['Concepto'],
-                'contact' => $row['Contacto'],
-                'phone_contact' => $row['ContactoTelefono'],
-                'email_contact' => $row['ContactoEmail']
+                'order_id' => $this->order_id,
+                'address_name' => $row['direccion'],
+                'concept' => $row['concepto'],
+                'contact' => $row['contacto'],
+                'phone_contact' => $row['contactotelefono'],
+                'email_contact' => $row['contactoemail']
             ]);
         }
     }

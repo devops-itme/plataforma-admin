@@ -3613,8 +3613,7 @@ var Orders = /*#__PURE__*/function () {
                   method: "POST",
                   headers: myHeaders,
                   body: formData
-                }; // delete requestOptions.headers['Content-Type'];
-
+                };
                 _context28.next = 9;
                 return fetch("/guias/import", requestOptions);
 
@@ -3665,10 +3664,6 @@ var Orders = /*#__PURE__*/function () {
                 return _context29.abrupt("return", error('Debe cargar el archivo para proceder con la importación'));
 
               case 5:
-                // let formData = JSON.stringify({
-                //     order_id: order_id,
-                //     file: file.files[0],
-                // });
                 formData.append('file', file.files[0]);
                 formData.append('order_id', order_id);
                 _context29.next = 9;
@@ -3678,9 +3673,8 @@ var Orders = /*#__PURE__*/function () {
                 response = _context29.sent;
 
                 if (response.state == 200) {
-                  correct(response.message); // let modal = document.getElementById("modalImport");
-                  // modal.click();
-                  // this.listGuides();
+                  correct(response.message);
+                  location.reload();
                 } else {
                   error('Error al importar guías.');
                   console.log('Error: ' + response.error);
