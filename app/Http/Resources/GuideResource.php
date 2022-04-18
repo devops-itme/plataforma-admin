@@ -44,6 +44,12 @@ class GuideResource extends JsonResource
             "app_status" => $this->app_status,
             "boxes" => $this->boxes,
             "status_matrix_id" => $this->status_matrix_id,
+            "status_matrix" => [
+                'id' => $this->getStatusMatrix->id,
+                'name' => $this->getStatusMatrix->name,
+                'scope_id' => $this->getStatusMatrix->scope_id,
+                'updated_at' => $this->getStatusMatrix->updated_at,
+            ],
             'created_at' => $this->created_at,
             "transport" => [
                 "id" => $this->getTransportType->id ?? '',
