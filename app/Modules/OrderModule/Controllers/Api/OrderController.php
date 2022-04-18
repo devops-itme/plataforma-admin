@@ -75,6 +75,17 @@ class OrderController extends Controller
         }
     }
 
+    public function show($order_id)
+    {
+        try {
+            $order = Order::find($order_id);
+            $order = OrderResource::collection([$order])[0];
+            return $this->respond(200, $order, null, 'Detalle de la orden');
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
+
     public function store(Request $request)
     {
         if (Auth()->user()->role != 1) {
