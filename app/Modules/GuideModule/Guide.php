@@ -7,6 +7,7 @@ use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RouteModule\Route;
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -72,6 +73,11 @@ class Guide extends Model
     public function getRoute()
     {
         return $this->hasOne(Route::class, 'guide_id');
+    }
+    
+    public function getStatusMatrix()
+    {
+        return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
     }
 
     public function getTransportType()

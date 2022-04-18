@@ -18,8 +18,10 @@ trait OrderTrait
         return Validator::make(
             $request->all(),
             [
-                'order_number' => [$action == 'create' ? 'confirmed' : 'nullable',
-                    Rule::requiredIf($action == 'create'), Rule::unique('orders', 'order_number')->ignore($id)->whereNull('deleted_at'), 'string'],
+                'order_number' => [
+                    $action == 'create' ? 'confirmed' : 'nullable',
+                    Rule::requiredIf($action == 'create'), Rule::unique('orders', 'order_number')->ignore($id)->whereNull('deleted_at'), 'string'
+                ],
                 'user_id' => 'required|exists:users,id|numeric',
                 'order_type' => 'required|numeric',
                 'order_value' => 'nullable|numeric',
@@ -39,7 +41,7 @@ trait OrderTrait
                 'percentage_to_collect' => 'nullable|numeric',
                 'branch_office' => 'nullable|numeric|exists:branch_offices,id',
                 'department_id' => 'nullable|numeric|exists:departments,id',
-                'address_id' => 'required|numeric|exists:addresses,id',
+                'address_id' => 'nullable|numeric|exists:addresses,id',
                 'address_name' => 'nullable',
                 'address_lat' => 'nullable',
                 'address_lng' => 'nullable',
@@ -92,7 +94,7 @@ trait OrderTrait
             ]);
             return $this->respond(200, $order, null, 'Orden creada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() , 'Error al crear orden');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear orden');
         }
     }
 
