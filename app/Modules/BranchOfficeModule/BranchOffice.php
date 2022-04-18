@@ -90,31 +90,38 @@ class BranchOffice extends Model
     public function scopeName($query, $value)
     {
         if (!is_null($value))
-            $query->where('name', 'like', '%'.$value.'%');
+            $query->where('name', 'like', '%' . $value . '%');
     }
     public function scopeDescription($query, $value)
     {
         if (!is_null($value))
-            $query->where('description', 'like', '%'.$value.'%');
+            $query->where('description', 'like', '%' . $value . '%');
     }
     public function scopeAddress($query, $value)
     {
         if (!is_null($value))
-            $query->where('address', 'like', '%'.$value.'%');
+            $query->where('address', 'like', '%' . $value . '%');
     }
     public function scopeEmail($query, $value)
     {
         if (!is_null($value))
-            $query->where('email', 'like', '%'.$value.'%');
+            $query->where('email', 'like', '%' . $value . '%');
     }
     public function scopePhone($query, $value)
     {
         if (!is_null($value))
-            $query->where('phone', 'like', '%'.$value.'%');
+            $query->where('phone', 'like', '%' . $value . '%');
     }
     public function scopeDefault($query, $value)
     {
         if (!is_null($value))
             $query->where('default', $value);
+    }
+    public function scopeWhereUserId($query, $value)
+    {
+        if (!is_null($value))
+            $query->whereHas('getBranchUser', function ($query) use ($value) {
+                $query->where('user_id', $value);
+            });
     }
 }
