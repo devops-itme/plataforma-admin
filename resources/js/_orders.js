@@ -1009,7 +1009,7 @@ export default class Orders {
         language: {
             lengthMenu:
                 "Mostrar " +
-                `<select class="custom-select">
+                `<select">
                         <option value = '10'>10</option>
                         <option value = '15'>15</option>
                         <option value = '50'>50</option>
