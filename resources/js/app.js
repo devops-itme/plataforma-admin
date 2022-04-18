@@ -2,19 +2,20 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import Messengers from './_messengers';
-import Addresses from './_addresses';
-import Customers from './_customers';
-import Orders from './_orders';
+import Users from '../../app/Modules/UserModule/views/js/_users';
+import Messengers from '../../app/Modules/MessengerModule/views/js/_messengers';
+import Addresses from '../../app/Modules/AddressModule/views/js/_addresses';
+import Customers from '../../app/Modules/CustomerModule/views/js/_customers';
+import Orders from '../../app/Modules/OrderModule/views/js/_orders';
 import General from './_general';
-import Permissions from './_permissions';
-import Zones from './_zones';
-import BranchOffices from './_branchOffice';
-import Parameters from './_parameters';
-import Hours from './_hours';
-import Plans from './_plans';
+import Permissions from '../../app/Modules/PermissionModule/views/js/_permissions';
+import Zones from '../../app/Modules/ZoneModule/views/js/_zones';
+import BranchOffices from '../../app/Modules/BranchOfficeModule/views/js/_branchOffice';
+import Parameters from '../../app/Modules/ParametersModule/views/js/_parameters';
+import Hours from '../../app/Modules/PickupHourModule/views/js/_hours';
+import Plans from '../../app/Modules/PlanModule/views/js/_plans';
 import Notifications from './_notifications';
-import Rates from './_rates';
+import Rates from '../../app/Modules/RateModule/views/js/_rates';
 
 //Vue Components
 Vue.component('deliveries-ondemand', require('./components/deliveries/deliveriesOndemand.vue').default);
@@ -24,6 +25,7 @@ Vue.component('status-matrix', require('./components/statusMatrix/statusMatrix.v
 Vue.component('deliveries', require('./components/deliveries/deliveries.vue').default);
 Vue.component('modal', require('./components/modal.vue').default);
 
+let users = new Users();
 let messengers = new Messengers();
 let addresses = new Addresses();
 let customers = new Customers();
@@ -43,6 +45,7 @@ const app = new Vue({
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // bootstrapSelect.initialize();
+    users.initialize();
     orders.initialize();
     messengers.initialize();
     addresses.initialize();

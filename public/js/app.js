@@ -86,6 +86,5338 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./app/Modules/AddressModule/views/js/_addresses.js":
+/*!**********************************************************!*\
+  !*** ./app/Modules/AddressModule/views/js/_addresses.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Addresses; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Addresses = /*#__PURE__*/function () {
+  function Addresses() {
+    _classCallCheck(this, Addresses);
+
+    _defineProperty(this, "getAddresses", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _address$getElementBy;
+
+      var address, $table, $template, $fragment, user_id, res, message;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              address = document, $table = address.querySelector(".address_table"), $template = (_address$getElementBy = address.getElementById("address-template")) === null || _address$getElementBy === void 0 ? void 0 : _address$getElementBy.content, $fragment = address.createDocumentFragment();
+              user_id = $table === null || $table === void 0 ? void 0 : $table.id;
+              $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").replaceChildren($fragment);
+              _context.prev = 3;
+              _context.next = 6;
+              return fetch("/direcciones?user_id=+".concat(user_id)).then(function (response) {
+                return response.json();
+              }).then(function (data) {
+                data.data.forEach(function (element) {
+                  $template.getElementById("description").textContent = element.description;
+                  $template.getElementById("name").textContent = element.name;
+                  $template.getElementById("state").textContent = element.state;
+                  $template.querySelector(".edit").dataset.id = element.id;
+                  $template.querySelector(".edit").dataset.description = element.description;
+                  $template.querySelector(".edit").dataset.name = element.name;
+                  $template.querySelector(".edit").dataset.lat = element.lat;
+                  $template.querySelector(".edit").dataset.lng = element.lng;
+                  $template.querySelector(".delete").dataset.id = element.id;
+                  var $clone = address.importNode($template, true); // populate_with_new_rows(address);
+                  // old_tbody.parentNode.replaceChild(address, old_tbody)
+
+                  // populate_with_new_rows(address);
+                  // old_tbody.parentNode.replaceChild(address, old_tbody)
+                  $fragment.appendChild($clone);
+                });
+              });
+
+            case 6:
+              res = _context.sent;
+              //    let response = await this.deleteAddress(address);
+              $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").appendChild($fragment);
+              _context.next = 14;
+              break;
+
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](3);
+              message = _context.t0.statusText || "Ocurrió un error";
+              $table === null || $table === void 0 ? void 0 : $table.insertAdjacentHTML("afterend", "<p><b>Error ".concat(_context.t0.status, ": ").concat(message, "</b></p>"));
+
+            case 14:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[3, 10]]);
+    })));
+  }
+
+  _createClass(Addresses, [{
+    key: "initialize",
+    value: function initialize() {
+      this.autocompleteAddress(); // this.createAddress();
+      // this.getAddresses();
+      // this.deleteAddress();
+    }
+  }, {
+    key: "autocompleteAddress",
+    value: function autocompleteAddress() {
+      //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
+      var directionCity2 = document.getElementsByName("address");
+      directionCity2.forEach(function callback(directionCity2, index) {
+        google.maps.event.addDomListener(window, "load", function () {
+          var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
+            bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
+            types: ["geocode"]
+          });
+          autocompleteCity2.addListener("place_changed", function () {
+            var place = autocompleteCity2.getPlace();
+            document.getElementsByName("address")[index].value = place.formatted_address;
+            document.getElementsByName("lat")[index].value = place.geometry.location.lat();
+            document.getElementsByName("lng")[index].value = place.geometry.location.lng();
+          });
+        });
+      });
+    }
+  }, {
+    key: "createAddress",
+    value: //CREATE ADDRESS
+    function createAddress() {
+      var _this = this;
+
+      var formCreateAddress = document.getElementById("formCreateAddress");
+
+      if (formCreateAddress == null) {
+        return;
+      }
+
+      formCreateAddress.style.display = "none";
+      formCreateAddress.addEventListener("submit", /*#__PURE__*/function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
+          var token, myHeaders, formData, requestOptions, response;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  e.preventDefault();
+                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                  myHeaders = new Headers();
+                  myHeaders.append("accept", "application/json");
+                  myHeaders.append("Access-Control-Allow-Origin", "*");
+                  myHeaders.append("Content-Type", "application/json");
+                  myHeaders.append("X-CSRF-TOKEN", token);
+                  formData = JSON.stringify({
+                    user_id: e.target.user_id.value,
+                    name: e.target.address.value,
+                    lat: e.target.lat.value,
+                    lng: e.target.lng.value,
+                    description: e.target.description.value
+                  });
+                  requestOptions = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: formData
+                  };
+                  _context2.next = 11;
+                  return _this.requestCreateAddress(requestOptions);
+
+                case 11:
+                  response = _context2.sent;
+
+                  if (response.state != 200) {
+                    console.log(formCreateAddress);
+                  }
+
+                  _this.getAddresses();
+
+                case 14:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        }));
+
+        return function (_x) {
+          return _ref2.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
+    key: "requestCreateAddress",
+    value: function () {
+      var _requestCreateAddress = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                response = {
+                  data: 500
+                };
+                _context3.next = 3;
+                return fetch("/direcciones", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
+
+              case 3:
+                return _context3.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function requestCreateAddress(_x2) {
+        return _requestCreateAddress.apply(this, arguments);
+      }
+
+      return requestCreateAddress;
+    }()
+  }, {
+    key: "deleteAddress",
+    value: function deleteAddress() {
+      var deleteAddress = document.getElementsByClassName("delete");
+
+      if (deleteAddress == null) {
+        return;
+      }
+
+      [].forEach.call(deleteAddress, function (btn) {
+        btn.addEventListener("click", function () {
+          console.log(btn);
+          var address = btn.dataset.id;
+          console.log(address);
+          Swal.fire({
+            title: "Eliminar esta dirección!",
+            text: "¿Seguro que quieres continuar?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Confirmar",
+            cancelButtonText: "Cancelar"
+          }).then(function (result) {
+            if (!result.value) {
+              return;
+            }
+
+            var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var url = "/direcciones/" + address.id;
+            console.log(url);
+            fetch(url, {
+              method: "DELETE",
+              headers: {
+                "X-CSRF-TOKEN": token
+              }
+            }).then(function () {
+              Swal.fire({
+                title: "Categoria de Producto eliminada",
+                icon: "success",
+                confirmButtonText: "Ok"
+              });
+              address.remove();
+            })["catch"](function () {
+              Swal.fire({
+                title: "Ups!",
+                text: "Ha ocurrido un error. Intentalo mas tarde",
+                icon: "error",
+                confirmButtonText: "Ok"
+              });
+            });
+          });
+        });
+      });
+    }
+  }]);
+
+  return Addresses;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/BranchOfficeModule/views/js/_branchOffice.js":
+/*!******************************************************************!*\
+  !*** ./app/Modules/BranchOfficeModule/views/js/_branchOffice.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BranchOffices; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var BranchOffices = /*#__PURE__*/function () {
+  function BranchOffices() {
+    _classCallCheck(this, BranchOffices);
+  }
+
+  _createClass(BranchOffices, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadPlanFields();
+      this.autocompleteAddress();
+    }
+  }, {
+    key: "loadPlanFields",
+    value: function loadPlanFields() {
+      var option = document.getElementById("branch_office_payment_method");
+      var useMode = document.getElementById("useMode");
+      var slcPlan = document.getElementById("slcPlan");
+
+      if (option == null) {
+        return;
+      }
+
+      option.addEventListener('change', function () {
+        if (option.value == 25) {
+          useMode.className = 'd-none';
+          slcPlan.className = 'd-none';
+        } else {
+          useMode.className = 'form-group col-md-3';
+          slcPlan.className = 'form-group col-md-3';
+        }
+      });
+    }
+  }, {
+    key: "autocompleteAddress",
+    value: function autocompleteAddress() {
+      var directionCity = document.getElementById("branch_office_address");
+
+      if (directionCity == null) {
+        return;
+      }
+
+      google.maps.event.addDomListener(window, "load", function () {
+        var autocompleteCity = new google.maps.places.Autocomplete(directionCity, {
+          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
+          types: ["geocode"]
+        });
+        autocompleteCity.addListener("place_changed", function () {
+          var place = autocompleteCity.getPlace();
+          document.getElementById("branch_office_address").value = place.formatted_address;
+          document.getElementById("branch_office_lat").value = place.geometry.location.lat();
+          document.getElementById("branch_office_lng").value = place.geometry.location.lng();
+        });
+      });
+    }
+  }]);
+
+  return BranchOffices;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/CustomerModule/views/js/_customers.js":
+/*!***********************************************************!*\
+  !*** ./app/Modules/CustomerModule/views/js/_customers.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Customers; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Customers = /*#__PURE__*/function () {
+  function Customers() {
+    _classCallCheck(this, Customers);
+
+    this.branchId = '';
+    this.userId = '';
+  }
+
+  _createClass(Customers, [{
+    key: "initialize",
+    value: function initialize() {
+      this.customerFeatures();
+      this.saveCustomer();
+      this.saveBranchOffices();
+      this.listBranchOffices();
+      this.updateBranchOffice();
+      this.saveUser();
+      this.listUsers();
+      this.updateUser();
+    }
+  }, {
+    key: "saveCustomer",
+    value: function saveCustomer() {
+      var _this = this;
+
+      var customerForm = document.getElementById("storeCustomerForm");
+
+      if (customerForm == null) {
+        return;
+      }
+
+      var customerBtn = document.getElementById("storeCustomerBtn");
+
+      if (customerBtn == null) {
+        return;
+      }
+
+      customerBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData, branchesCheck, departmentsCheck, branchArr, departmentsArr, token, myHeaders, requestOptions, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData(storeCustomerForm);
+                branchesCheck = document.getElementsByName('branchCheck');
+                departmentsCheck = document.getElementsByName("departments[]");
+                branchArr = [];
+                departmentsArr = [];
+                branchesCheck.forEach(function (e) {
+                  e.checked && branchArr.push(e.value);
+                });
+                departmentsCheck.forEach(function (e) {
+                  e.checked && departmentsArr.push(e.value);
+                });
+                formData.append('branchCheck', branchArr);
+                formData.append('departments', departmentsArr);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                console.log(token);
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context.next = 21;
+                return _this.storeCustomer(requestOptions);
+
+              case 21:
+                response = _context.sent;
+                console.log(response);
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  window.location.replace("/clientes");
+                } else {
+                  error(response.message);
+                  console.log(response.error);
+                }
+
+              case 24:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+    }
+  }, {
+    key: "storeCustomer",
+    value: function () {
+      var _storeCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/clientes/store", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function storeCustomer(_x) {
+        return _storeCustomer.apply(this, arguments);
+      }
+
+      return storeCustomer;
+    }()
+  }, {
+    key: "customerFeatures",
+    value: function customerFeatures() {
+      var typeSelected = document.getElementById("customer_type_edit");
+      var option = document.getElementById("slc_type");
+      var naturalCustomer = document.getElementById("naturalCustomer");
+      var legalCustomer = document.getElementById("legalCustomer");
+      var birth_date = document.getElementById("birth_date");
+      var password = document.getElementById("passwordDiv");
+      var r_password = document.getElementById("r_passwordDiv");
+
+      if (option == null) {
+        return;
+      }
+
+      if (typeSelected != null) {
+        if (typeSelected.value == 1) {
+          legalCustomer.className = 'd-none';
+          naturalCustomer.className = 'col-md-6 d-flex px-0';
+          birth_date.className = 'form-group py-3 m-0 col-md-4';
+        } else if (typeSelected.value == 2) {
+          naturalCustomer.className = 'd-none';
+          legalCustomer.className = 'col-md-3 d-flex px-0';
+          birth_date.className = 'form-group py-3 m-0 col-md-3';
+        }
+      }
+
+      option.addEventListener('change', function (event) {
+        if (option.value == 1) {
+          legalCustomer.className = 'd-none';
+          naturalCustomer.className = 'col-md-6 d-flex px-0';
+          birth_date.className = 'form-group py-3 m-0 col-md-4';
+          password.className = 'form-group py-3 m-0 col-md-4';
+          r_password.className = 'form-group py-3 m-0 col-md-4';
+        } else if (option.value == 2) {
+          naturalCustomer.className = 'd-none';
+          legalCustomer.className = 'col-md-3 d-flex px-0';
+          birth_date.className = 'form-group py-3 m-0 col-md-3';
+          password.className = 'form-group py-3 m-0 col-md-6';
+          r_password.className = 'form-group py-3 m-0 col-md-6';
+        }
+      });
+    }
+  }, {
+    key: "saveBranchOffices",
+    value: function saveBranchOffices() {
+      var _this2 = this;
+
+      var btnSendData = document.getElementById("saveBranchOffice");
+
+      if (btnSendData == null) {
+        return;
+      }
+
+      btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _document$getElementB;
+
+        var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_plan, branch_office_usage_mode, branch_office_default, branch_office_department, user_id, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                branch_office_name = document.getElementById("branch_office_name"), branch_office_type = document.getElementById("branch_office_type"), branch_office_description = document.getElementById("branch_office_description"), branch_office_zone = document.getElementById("branch_office_zone"), branch_office_address = document.getElementById("branch_office_address"), branch_office_lat = document.getElementById("branch_office_lat"), branch_office_lng = document.getElementById("branch_office_lng"), branch_office_email = document.getElementById("branch_office_email"), branch_office_contact = document.getElementById("branch_office_contact"), branch_office_document_type = document.getElementById("branch_office_document_type"), branch_office_document_number = document.getElementById("branch_office_document_number"), branch_office_payment_method = document.getElementById("branch_office_payment_method"), branch_office_phone = document.getElementById("branch_office_phone"), branch_office_plan = document.getElementById("branch_office_plan"), branch_office_usage_mode = document.getElementById("branch_office_usage_mode"), branch_office_default = document.getElementById("branch_office_default"), branch_office_department = document.getElementById("branch_office_department");
+                user_id = (_document$getElementB = document.getElementById("customer_id")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.value;
+                formData = new FormData();
+                formData.append('branch_office_name', branch_office_name.value);
+                formData.append('branch_office_type', branch_office_type.value);
+                formData.append('branch_office_description', branch_office_description.value);
+                formData.append('branch_office_zone', branch_office_zone.value);
+                formData.append('branch_office_address', branch_office_address.value);
+                formData.append('branch_office_lat', branch_office_lat.value);
+                formData.append('branch_office_lng', branch_office_lng.value);
+                formData.append('branch_office_email', branch_office_email.value);
+                formData.append('branch_office_contact', branch_office_contact.value);
+                formData.append('branch_office_document_type', branch_office_document_type.value);
+                formData.append('branch_office_document_number', branch_office_document_number.value);
+                formData.append('branch_office_payment_method', branch_office_payment_method.value);
+                formData.append('branch_office_phone', branch_office_phone.value);
+                formData.append('branch_office_plan', branch_office_plan.value);
+                formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
+                formData.append('branch_office_default', branch_office_default.value);
+                formData.append('branch_office_department', branch_office_department.value);
+
+                if (user_id != null) {
+                  formData.append('user_id', user_id);
+                  console.log('user_id', user_id);
+                }
+
+                _context3.next = 23;
+                return _this2.sendBranchOfficeData(formData);
+
+              case 23:
+                response = _context3.sent;
+
+                if (response['state'] == 200) {
+                  correct('Sucursal creada de manera exitosa');
+                  branch_office_name.value = '';
+                  branch_office_type.value = '';
+                  branch_office_description.value = '';
+                  branch_office_zone.selectedIndex = 0;
+                  branch_office_address.value = '';
+                  branch_office_lat.value = '';
+                  branch_office_lng.value = '';
+                  branch_office_email.value = '';
+                  branch_office_contact.value = '';
+                  branch_office_document_type.selectedIndex = 0;
+                  branch_office_document_number.value = '';
+                  branch_office_payment_method.value = '';
+                  branch_office_phone.value = '';
+                  branch_office_usage_mode.value = '';
+                  branch_office_default.checked = false;
+                  branch_office_department.selectedIndex = 0;
+                  modal = document.getElementById("modalCreate");
+                  modal.click();
+
+                  _this2.listBranchOffices();
+                } else {
+                  error(response['error']);
+                  console.log('Error ocurrido: ' + response['error']);
+                }
+
+              case 25:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      })));
+    }
+  }, {
+    key: "sendBranchOfficeData",
+    value: function () {
+      var _sendBranchOfficeData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context4.next = 3;
+                return fetch("/sucursales/null/store", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context4.sent;
+                return _context4.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function sendBranchOfficeData(_x2) {
+        return _sendBranchOfficeData.apply(this, arguments);
+      }
+
+      return sendBranchOfficeData;
+    }()
+  }, {
+    key: "listBranchOffices",
+    value: function () {
+      var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var _document$getElementB2;
+
+        var tbody, get_customer_id, route, customer_id, assignedBranchOffices;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                tbody = document.querySelector("#branch_offices_table tbody");
+
+                if (!(tbody == null)) {
+                  _context5.next = 3;
+                  break;
+                }
+
+                return _context5.abrupt("return");
+
+              case 3:
+                tbody.innerHTML = '';
+                get_customer_id = (_document$getElementB2 = document.getElementById("customer_id")) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.value;
+                route = window.location.pathname.split('/');
+                customer_id = route.includes('edit') || typeof parseInt(route[2]) == 'number' ? get_customer_id : null;
+
+                if (!route.includes('edit')) {
+                  _context5.next = 13;
+                  break;
+                }
+
+                _context5.next = 10;
+                return this.requestBranchOffices(customer_id);
+
+              case 10:
+                _context5.t0 = _context5.sent;
+                _context5.next = 23;
+                break;
+
+              case 13:
+                if (!(typeof parseInt(route[2]) == 'number')) {
+                  _context5.next = 19;
+                  break;
+                }
+
+                _context5.next = 16;
+                return this.requestBranchOffices(customer_id);
+
+              case 16:
+                _context5.t1 = _context5.sent;
+                _context5.next = 22;
+                break;
+
+              case 19:
+                _context5.next = 21;
+                return this.requestBranchOffices(customer_id);
+
+              case 21:
+                _context5.t1 = _context5.sent;
+
+              case 22:
+                _context5.t0 = _context5.t1;
+
+              case 23:
+                assignedBranchOffices = _context5.t0;
+
+                if (assignedBranchOffices.state == 200) {
+                  (function () {
+                    var data = assignedBranchOffices.data;
+
+                    if (data.length > 0) {
+                      var _loop = function _loop(i) {
+                        var _data$i$name, _data$i$get_type$name, _data$i$get_zone$name, _data$i$contact;
+
+                        var row = tbody.insertRow();
+                        var nameCell = row.insertCell(0);
+                        nameCell.innerHTML = (_data$i$name = data[i].name) !== null && _data$i$name !== void 0 ? _data$i$name : '';
+                        var typeCell = row.insertCell(1);
+                        typeCell.innerHTML = (_data$i$get_type$name = data[i].get_type.name) !== null && _data$i$get_type$name !== void 0 ? _data$i$get_type$name : '';
+                        var zoneCell = row.insertCell(2);
+                        zoneCell.innerHTML = (_data$i$get_zone$name = data[i].get_zone.name) !== null && _data$i$get_zone$name !== void 0 ? _data$i$get_zone$name : '';
+                        var contactCell = row.insertCell(3);
+                        contactCell.innerHTML = (_data$i$contact = data[i].contact) !== null && _data$i$contact !== void 0 ? _data$i$contact : '';
+                        var stateCell = row.insertCell(4);
+
+                        if (data[i].state == 1) {
+                          stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                                    Activo\
+                                                </span>';
+                        } else {
+                          stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                    Inactivo\
+                                                </span>';
+                        }
+
+                        var selectCell = row.insertCell(5);
+                        var branchCheck = document.createElement("input");
+                        branchCheck.setAttribute('class', 'checkbox-inline mt-3');
+                        branchCheck.setAttribute('type', 'checkbox');
+                        branchCheck.setAttribute('name', 'branchCheck');
+                        branchCheck.setAttribute('value', data[i].id);
+                        branchCheck.checked = true; // //Show button
+                        // const showBranch = document.createElement("button");
+                        // showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
+                        // showBranch.setAttribute('type', 'button');
+                        // showBranch.innerHTML = '<i class="far fa-folder-open"></i>';
+                        //Edit button
+
+                        var branchEdit = document.createElement("button");
+                        branchEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
+                        branchEdit.setAttribute('data-toggle', 'modal');
+                        branchEdit.setAttribute('data-target', '#modalEdit');
+                        branchEdit.setAttribute('id', 'branch-' + data[i].id);
+                        branchEdit.setAttribute('type', 'button');
+                        branchEdit.setAttribute('title', 'Editar');
+                        branchEdit.setAttribute('data-tooltip', '');
+                        branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
+
+                        var branchDelete = document.createElement("button");
+
+                        branchDelete.onclick = function () {
+                          confirmDelete('/sucursales/null/' + data[i].id);
+                        };
+
+                        branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                        branchDelete.setAttribute('type', 'button');
+                        branchDelete.setAttribute('title', 'Eliminar');
+                        branchDelete.setAttribute('data-tooltip', '');
+                        branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                        var buttonsDiv = document.createElement("div");
+                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+
+                        if (!(typeof parseInt(location.pathname.split('/')[2]) == 'number' && location.pathname.includes('edit')) || location.pathname.includes('create')) {
+                          buttonsDiv.appendChild(branchCheck);
+                        }
+
+                        buttonsDiv.appendChild(branchEdit);
+                        buttonsDiv.appendChild(branchDelete);
+                        selectCell.appendChild(buttonsDiv);
+                        tbody.appendChild(row);
+                      };
+
+                      for (var i = 0; i < data.length; i++) {
+                        _loop(i);
+                      }
+                    }
+                  })();
+                }
+
+                this.editBranches();
+                this.listDepartments();
+
+              case 27:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function listBranchOffices() {
+        return _listBranchOffices.apply(this, arguments);
+      }
+
+      return listBranchOffices;
+    }()
+  }, {
+    key: "requestBranchOffices",
+    value: function () {
+      var _requestBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var customer_id,
+            response,
+            _args6 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                customer_id = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : null;
+                response = {
+                  'state': 500
+                };
+                _context6.next = 4;
+                return fetch("/unassigned_branch_offices?customer=" + customer_id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 4:
+                return _context6.abrupt("return", response);
+
+              case 5:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }));
+
+      function requestBranchOffices() {
+        return _requestBranchOffices.apply(this, arguments);
+      }
+
+      return requestBranchOffices;
+    }()
+  }, {
+    key: "editBranches",
+    value: function editBranches() {
+      var _this3 = this;
+
+      var branches = document.getElementsByClassName("btnEdit");
+
+      if (branches == null) {
+        return;
+      }
+
+      [].forEach.call(branches, function (branch) {
+        branch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+          var response, data, slcBranchType, slcZone, slcDocumentType, slcPaymentMethod, inpDefault, dpts, plans;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+            while (1) {
+              switch (_context7.prev = _context7.next) {
+                case 0:
+                  _this3.branchId = branch['id'].split('-')[1];
+                  _context7.next = 3;
+                  return _this3.requestBranchToEdit(_this3.branchId);
+
+                case 3:
+                  response = _context7.sent;
+                  data = response.data[0];
+                  document.getElementById("branch_office_name_edit").value = data.name;
+                  slcBranchType = document.getElementById("branch_office_type_edit");
+                  [].forEach.call(slcBranchType, function (key) {
+                    if (key.value == data.type) {
+                      key.setAttribute('selected', 'selected');
+                    }
+                  });
+                  document.getElementById("branch_office_description_edit").value = data.description;
+                  slcZone = document.getElementById("branch_office_zone_edit");
+                  [].forEach.call(slcZone, function (key) {
+                    if (key.value == data.zone_id) {
+                      key.setAttribute('selected', 'selected');
+                    }
+                  });
+                  document.getElementById("branch_office_address_edit").value = data.address;
+                  document.getElementById("branch_office_lat_edit").value = data.lat;
+                  document.getElementById("branch_office_lng_edit").value = data.lng;
+                  document.getElementById("branch_office_email_edit").value = data.email;
+                  document.getElementById("branch_office_contact_edit").value = data.contact;
+                  slcDocumentType = document.getElementById("branch_office_document_type_edit");
+                  [].forEach.call(slcDocumentType, function (key) {
+                    if (key.value == data.document_type) {
+                      key.setAttribute('selected', 'selected');
+                    }
+                  });
+                  document.getElementById("branch_office_document_number_edit").value = data.document_number;
+                  slcPaymentMethod = document.getElementById("branch_office_payment_method_edit");
+                  [].forEach.call(slcPaymentMethod, function (key) {
+                    if (key.value == data.payment_method) {
+                      if (key.value != 24) {
+                        document.getElementById("slcPlanEdit").className = 'form-group col-md-3';
+                        document.getElementById("useModeEdit").className = 'form-group col-md-3';
+                      } else {
+                        document.getElementById("slcPlanEdit").className = 'd-none';
+                        document.getElementById("useModeEdit").className = 'd-none';
+                      }
+
+                      key.setAttribute('selected', 'selected');
+                    }
+                  });
+                  document.getElementById("branch_office_phone_edit").value = data.phone;
+                  inpDefault = document.getElementsByName("branch_office_default_edit");
+                  [].forEach.call(inpDefault, function (key) {
+                    if (key.value == data["default"]) {
+                      key.setAttribute('checked', 'checked');
+                    }
+                  });
+                  dpts = document.getElementById("branch_office_department_edit");
+                  [].forEach.call(dpts, function (dpt) {
+                    if (data.get_department != null) {
+                      if (dpt.value == data.get_department.department_id) {
+                        dpt.selected = true;
+                      }
+                    } else {
+                      dpt.value == 'Seleccione' ? dpt.selected = true : '';
+                    }
+                  });
+                  plans = document.getElementById("branch_office_plan_edit");
+                  [].forEach.call(plans, function (key) {
+                    if (key.value == data.plan) {
+                      key.setAttribute('checked', 'true');
+                    }
+                  });
+
+                case 28:
+                case "end":
+                  return _context7.stop();
+              }
+            }
+          }, _callee7);
+        })));
+      });
+    }
+  }, {
+    key: "requestBranchToEdit",
+    value: function () {
+      var _requestBranchToEdit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context8.next = 3;
+                return fetch("/sucursales/null/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context8.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function requestBranchToEdit(_x3) {
+        return _requestBranchToEdit.apply(this, arguments);
+      }
+
+      return requestBranchToEdit;
+    }()
+  }, {
+    key: "updateBranchOffice",
+    value: function updateBranchOffice() {
+      var _this4 = this;
+
+      var formUpdateBranch = document.getElementById("formUpdate");
+      var btnSubmit = document.getElementById("updateBranchOffice");
+
+      if (formUpdateBranch == null) {
+        return;
+      }
+
+      if (btnSubmit == null) {
+        return;
+      }
+
+      btnSubmit.addEventListener('click', /*#__PURE__*/function () {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(e) {
+          var formData, token, myHeaders, requestOptions, response, modal;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+            while (1) {
+              switch (_context9.prev = _context9.next) {
+                case 0:
+                  e.preventDefault();
+                  formData = new FormData(formUpdateBranch);
+                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                  myHeaders = new Headers();
+                  myHeaders.append("Accept", "application/json");
+                  myHeaders.append("Access-Control-Allow-Origin", "*");
+                  myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                  myHeaders.append('Content-Type', "application/json");
+                  myHeaders.append('Content-Type', "multipart/form-data");
+                  myHeaders.append("X-CSRF-TOKEN", token);
+                  requestOptions = {
+                    method: "PUT",
+                    headers: myHeaders,
+                    body: JSON.stringify(Object.fromEntries(formData))
+                  };
+                  _context9.next = 13;
+                  return _this4.sendDataToUpdate(_this4.branchId, requestOptions);
+
+                case 13:
+                  response = _context9.sent;
+
+                  if (response.state == 200) {
+                    alert(response.message);
+                    modal = document.getElementById("modalEdit");
+                    modal.click();
+
+                    _this4.listBranchOffices();
+                  } else {
+                    alert('Ha ocurrido un error al actualizar la sucursal.');
+                    console.log('Error ' + response.error);
+                  }
+
+                case 15:
+                case "end":
+                  return _context9.stop();
+              }
+            }
+          }, _callee9);
+        }));
+
+        return function (_x4) {
+          return _ref4.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
+    key: "sendDataToUpdate",
+    value: function () {
+      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context10.next = 3;
+                return fetch("/sucursales/" + null + "/" + id + "/update", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context10.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }));
+
+      function sendDataToUpdate(_x5, _x6) {
+        return _sendDataToUpdate.apply(this, arguments);
+      }
+
+      return sendDataToUpdate;
+    }()
+  }, {
+    key: "listDepartments",
+    value: function () {
+      var _listDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+        var slcDepartments, departments, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                slcDepartments = document.getElementsByName("branch_office_department");
+
+                if (!(slcDepartments == null)) {
+                  _context11.next = 3;
+                  break;
+                }
+
+                return _context11.abrupt("return");
+
+              case 3:
+                _context11.next = 5;
+                return this.requestDepartments();
+
+              case 5:
+                departments = _context11.sent;
+                data = departments.data;
+                [].forEach.call(slcDepartments, function (slcDept) {
+                  slcDept.selectedIndex = "0";
+                  removeOptions(slcDept);
+
+                  for (var i = 0; i < data.length; i++) {
+                    var element = data[i];
+                    var department = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    slcDept.insertAdjacentHTML('beforeend', department);
+                  }
+                });
+
+              case 8:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this);
+      }));
+
+      function listDepartments() {
+        return _listDepartments.apply(this, arguments);
+      }
+
+      return listDepartments;
+    }()
+  }, {
+    key: "requestDepartments",
+    value: function () {
+      var _requestDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context12.next = 3;
+                return fetch("/unassigned_depts").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context12.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }));
+
+      function requestDepartments() {
+        return _requestDepartments.apply(this, arguments);
+      }
+
+      return requestDepartments;
+    }()
+  }, {
+    key: "saveUser",
+    value: function saveUser() {
+      var _this5 = this;
+
+      var btnSubmit = document.getElementById("saveUser");
+
+      if (btnSubmit == null) {
+        return;
+      }
+
+      btnSubmit.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        var parent_id, name, last_name, email, phone, password, password_confirm, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                parent_id = document.getElementById("customer_id").value, name = document.getElementById("user_name").value, last_name = document.getElementById("user_last_name").value, email = document.getElementById("user_email").value, phone = document.getElementById("user_phone").value, password = document.getElementById("user_password").value, password_confirm = document.getElementById("user_password_confirm").value;
+                formData = new FormData();
+                formData.append('name', name);
+                formData.append('last_name', last_name);
+                formData.append('email', email);
+                formData.append('phone', phone);
+                formData.append('password', password);
+                formData.append('password_confirmation', password_confirm);
+                _context13.next = 10;
+                return _this5.storeUserData(parent_id, formData);
+
+              case 10:
+                response = _context13.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalCreateUser");
+                  modal.click();
+
+                  _this5.listUsers();
+                } else {
+                  error(response.error);
+                  console.log('Error: ' + response.error);
+                }
+
+              case 12:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      })));
+    }
+  }, {
+    key: "storeUserData",
+    value: function () {
+      var _storeUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(parent_id, formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context14.next = 3;
+                return fetch("/usuario-banco/" + parent_id + "/store", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context14.sent;
+                return _context14.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14);
+      }));
+
+      function storeUserData(_x7, _x8) {
+        return _storeUserData.apply(this, arguments);
+      }
+
+      return storeUserData;
+    }()
+  }, {
+    key: "listUsers",
+    value: function () {
+      var _listUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+        var tbody, parent_id, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+          while (1) {
+            switch (_context15.prev = _context15.next) {
+              case 0:
+                tbody = document.querySelector("#users_table tbody");
+
+                if (!(tbody == null)) {
+                  _context15.next = 3;
+                  break;
+                }
+
+                return _context15.abrupt("return");
+
+              case 3:
+                parent_id = document.getElementById("customer_id").value;
+
+                if (!(parent_id == null)) {
+                  _context15.next = 6;
+                  break;
+                }
+
+                return _context15.abrupt("return");
+
+              case 6:
+                tbody.innerHTML = '';
+                _context15.next = 9;
+                return this.requestUsers(parent_id);
+
+              case 9:
+                response = _context15.sent;
+
+                if (response.state == 200) {
+                  data = response.data;
+
+                  if (data.length > 0) {
+                    [].forEach.call(data, function (key) {
+                      var row = tbody.insertRow();
+                      var nameCell = row.insertCell(0);
+                      nameCell.innerHTML = key.name;
+                      var lastNameCell = row.insertCell(1);
+                      lastNameCell.innerHTML = key.last_name;
+                      var emailCell = row.insertCell(2);
+                      emailCell.innerHTML = key.email;
+                      var phoneCell = row.insertCell(3);
+                      phoneCell.innerHTML = key.phone;
+                      var stateCell = row.insertCell(4);
+
+                      if (key.state == 1) {
+                        stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                                    Activo\
+                                                </span>';
+                      } else {
+                        stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                                    Inactivo\
+                                                </span>';
+                      }
+
+                      var selectCell = row.insertCell(5);
+                      var userEdit = document.createElement("button");
+                      userEdit.setAttribute('name', 'btnEditUser');
+                      userEdit.setAttribute('class', 'btn btnEditUser btn-icon btn-light-success btn-sm mr-2');
+                      userEdit.setAttribute('data-toggle', 'modal');
+                      userEdit.setAttribute('data-target', '#modalEditUser');
+                      userEdit.setAttribute('id', 'branch-' + key.id);
+                      userEdit.setAttribute('type', 'button');
+                      userEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
+
+                      var userDelete = document.createElement("button");
+
+                      userDelete.onclick = function () {
+                        confirmDelete('/usuario-banco/' + parent_id + '/' + key.id);
+                      };
+
+                      userDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                      userDelete.setAttribute('type', 'button');
+                      userDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                      var buttonsDiv = document.createElement("div");
+                      buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                      buttonsDiv.appendChild(userEdit);
+                      buttonsDiv.appendChild(userDelete);
+                      selectCell.appendChild(buttonsDiv);
+                      tbody.appendChild(row);
+                    });
+                    this.editUser();
+                  }
+                }
+
+              case 11:
+              case "end":
+                return _context15.stop();
+            }
+          }
+        }, _callee15, this);
+      }));
+
+      function listUsers() {
+        return _listUsers.apply(this, arguments);
+      }
+
+      return listUsers;
+    }()
+  }, {
+    key: "requestUsers",
+    value: function () {
+      var _requestUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(parent_id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context16.next = 3;
+                return fetch("/usuario-banco/" + parent_id + "").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context16.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16);
+      }));
+
+      function requestUsers(_x9) {
+        return _requestUsers.apply(this, arguments);
+      }
+
+      return requestUsers;
+    }()
+  }, {
+    key: "editUser",
+    value: function editUser() {
+      var _this6 = this;
+
+      var users = document.getElementsByName("btnEditUser");
+
+      if (users == null) {
+        return;
+      }
+
+      var parent_id = document.getElementById("customer_id").value;
+
+      if (parent_id == null) {
+        return;
+      }
+
+      [].forEach.call(users, function (key) {
+        key.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+          var user_id, response, data;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+            while (1) {
+              switch (_context17.prev = _context17.next) {
+                case 0:
+                  user_id = key['id'].split('-')[1];
+                  _this6.userId = user_id;
+                  _context17.next = 4;
+                  return _this6.requestUserData(parent_id, user_id);
+
+                case 4:
+                  response = _context17.sent;
+                  data = response.data;
+                  document.getElementById("user_name_edit").value = data.name;
+                  document.getElementById("user_last_name_edit").value = data.last_name;
+                  document.getElementById("user_email_edit").value = data.email;
+                  document.getElementById("user_phone_edit").value = data.phone;
+
+                case 10:
+                case "end":
+                  return _context17.stop();
+              }
+            }
+          }, _callee17);
+        })));
+      });
+    }
+  }, {
+    key: "requestUserData",
+    value: function () {
+      var _requestUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(parent_id, id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context18.next = 3;
+                return fetch("/usuario-banco/" + parent_id + "/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context18.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18);
+      }));
+
+      function requestUserData(_x10, _x11) {
+        return _requestUserData.apply(this, arguments);
+      }
+
+      return requestUserData;
+    }()
+  }, {
+    key: "updateUser",
+    value: function updateUser() {
+      var _this7 = this;
+
+      var updateBtn = document.getElementById("updateUser");
+
+      if (updateBtn == null) {
+        return;
+      }
+
+      updateBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+        var parent_id, name, last_name, email, phone, password, password_confirm, formData, token, myHeaders, requestOptions, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                parent_id = document.getElementById("customer_id").value;
+                name = document.getElementById("user_name_edit").value;
+                last_name = document.getElementById("user_last_name_edit").value;
+                email = document.getElementById("user_email_edit").value;
+                phone = document.getElementById("user_phone_edit").value;
+                password = document.getElementById("user_password_edit").value;
+                password_confirm = document.getElementById("user_password_confirm_edit").value;
+                formData = new FormData();
+                formData.append('name', name);
+                formData.append('last_name', last_name);
+                formData.append('email', email);
+                formData.append('phone', phone);
+                formData.append('password', password);
+                formData.append('password_confirmation', password_confirm);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context19.next = 25;
+                return _this7.sendUserDataToUpdate(parent_id, _this7.userId, requestOptions);
+
+              case 25:
+                response = _context19.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalEditUser");
+                  modal.click();
+
+                  _this7.listUsers();
+                } else {
+                  error(response.error); // console.log('Error: '+response.error);
+                }
+
+              case 27:
+              case "end":
+                return _context19.stop();
+            }
+          }
+        }, _callee19);
+      })));
+    }
+  }, {
+    key: "sendUserDataToUpdate",
+    value: function () {
+      var _sendUserDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(parent_id, id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+          while (1) {
+            switch (_context20.prev = _context20.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context20.next = 3;
+                return fetch('/usuario-banco/' + parent_id + '/' + id + '/update', requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context20.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context20.stop();
+            }
+          }
+        }, _callee20);
+      }));
+
+      function sendUserDataToUpdate(_x12, _x13, _x14) {
+        return _sendUserDataToUpdate.apply(this, arguments);
+      }
+
+      return sendUserDataToUpdate;
+    }()
+  }]);
+
+  return Customers;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/MessengerModule/views/js/_messengers.js":
+/*!*************************************************************!*\
+  !*** ./app/Modules/MessengerModule/views/js/_messengers.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Messengers; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Messengers = /*#__PURE__*/function () {
+  function Messengers() {
+    _classCallCheck(this, Messengers);
+  }
+
+  _createClass(Messengers, [{
+    key: "initialize",
+    value: function initialize() {// this.createMessengers();
+    } // //CREATE MESSENGER
+    // createMessengers() {
+    //     let formCreateMessenger = document.getElementById(
+    //         "formCreateMessenger"
+    //     );
+    //     if (formCreateMessenger == null) {
+    //         return;
+    //     }
+    //     formCreateMessenger.addEventListener("submit", function (e) {
+    //         e.preventDefault();
+    //         let token = document
+    //             .querySelector('meta[name="csrf-token"]')
+    //             .getAttribute("content");
+    //         let myHeaders = new Headers();
+    //         myHeaders.append("accept", "application/json");
+    //         myHeaders.append("Access-Control-Allow-Origin", "*");
+    //         myHeaders.append("X-CSRF-TOKEN", token);
+    //         let requestOptions = {
+    //             method: "POST",
+    //             headers: myHeaders,
+    //             body: new FormData(formCreateMessenger),
+    //         };
+    //         fetch("/mensajeros", requestOptions)
+    //             .then((response) => response.json())
+    //             .then(function (data) {
+    //                 if (data.state == 500) {
+    //                     alert(data.message);
+    //                 }
+    //                 if (data.state == 200) {
+    //                     alert(data.message);
+    //                 }
+    //                 if (data.errors) {
+    //                     alert(data.errors);
+    //                 }
+    //             })
+    //             .catch((err) => console.warn(err));
+    //     });
+    // }
+    // //DELETE MESSENGER
+    // deleteMessenger() {
+    //     let deleteMessenger = document.getElementById("deleteMessenger");
+    //     deleteMessenger.addEventListener("submit", function (e) {
+    //         e.preventDefault();
+    //     });
+    // }
+    // // UPDATE MESSENGER
+    // updateMessenger() {
+    //     let formUpdateMessenger = document.getElementById("formUpdateMessenger");
+    //     if (formUpdateMessenger == null) {
+    //         return;
+    //     }
+    //     formUpdateMessenger.addEventListener("submit", function (e) {
+    //         e.preventDefault();
+    //         let token = document
+    //             .querySelector('meta[name="csrf-token"]')
+    //             .getAttribute("content");
+    //         let myHeaders = new Headers();
+    //         myHeaders.append("accept", "application/json");
+    //         myHeaders.append("Access-Control-Allow-Origin", "*");
+    //         myHeaders.append("X-CSRF-TOKEN", token);
+    //         let requestOptions = {
+    //             method: "PUT",
+    //             headers: myHeaders,
+    //             body: new FormData(formUpdateMessenger),
+    //         };
+    //         fetch("/mensajeros", requestOptions)
+    //             .then((response) => response.json())
+    //             .then(function (data) {
+    //                 if (data.state == 500) {
+    //                     alert(data.message);
+    //                 }
+    //                 if (data.state == 200) {
+    //                     alert(data.message);
+    //                 }
+    //                 if (data.errors) {
+    //                     alert(data.errors);
+    //                 }
+    //             })
+    //             .catch((err) => console.warn(err));
+    //     });
+    // }
+
+  }]);
+
+  return Messengers;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/_orders.js":
+/*!*****************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/_orders.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Orders; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var count = 0;
+var boxes = [{
+  number: 0,
+  weight: 0,
+  "long": 0,
+  broad: 0,
+  high: 0,
+  vol_weight: 0,
+  description: ''
+}];
+
+var Orders = /*#__PURE__*/function () {
+  function Orders() {
+    _classCallCheck(this, Orders);
+
+    this.guideId = '';
+    this.boxes = boxes;
+  }
+
+  _createClass(Orders, [{
+    key: "initialize",
+    value: function initialize() {
+      this.instantiateBoxes();
+      this.addbox();
+      this.loadBranches();
+      this.loadCustomerModal();
+      this.removeBox();
+      this.loadOrderNumber();
+      this.saveGuides();
+      this.createAddress();
+      this.listGuides();
+      this.porDespacharOndemand();
+      this.porDespacharPackaging();
+      this.customerAddresses();
+      this.loadPickupHours();
+      this.loadHoursInEditOrShow();
+      this.importModal();
+    }
+  }, {
+    key: "setInput",
+    value: function setInput() {
+      var inputs = ['number[]', 'weight[]', 'long[]', 'broad[]', 'high[]', 'vol_weight[]', 'description[]'];
+      [].forEach.call(inputs, function (input) {
+        var elements = document.getElementsByName(input);
+
+        if (elements == null) {
+          return;
+        }
+
+        [].forEach.call(elements, function (el) {
+          el.addEventListener('keyup', function () {
+            var parent = el.parentNode.parentNode.parentNode; // console.log('parent', parent);
+
+            var children = el.parentNode.parentNode; // console.log("children", children);
+
+            var index = Array.prototype.indexOf.call(parent.children, children); // console.log('index', index);
+
+            var name = input.replace('[]', ''); // console.log('name', name);
+            // console.log('el', el.value);
+
+            boxes[index][name] = el.value;
+          });
+        });
+      });
+    }
+  }, {
+    key: "instantiateBoxes",
+    value: function instantiateBoxes() {
+      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'box-container';
+      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
+      var boxContainer = document.getElementById(container);
+
+      if (boxContainer == null) {
+        return;
+      }
+
+      boxContainer.innerHTML = "";
+      [].forEach.call(boxes, function (box) {
+        var row = document.createElement("tr");
+        row.className = "row border mt-0 text-center box-register col-md-13 \"";
+        var numberCell = document.createElement("td");
+        numberCell.className = "col-1 py-4 border-right";
+        numberCell.innerHTML = "<input type=\"number\" name=\"id[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.number, "\">");
+        row.appendChild(numberCell);
+        var weightCell = document.createElement("td");
+        weightCell.className = "col-1 py-4 border-right";
+        weightCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.weight, "\">");
+        row.appendChild(weightCell);
+        var longCell = document.createElement("td");
+        longCell.className = "col-1 py-4 border-right";
+        longCell.innerHTML = "<input type=\"number\" name=\"long[]\" class=\"form-control\" min=\"0\" value=\"".concat(box["long"], "\">");
+        row.appendChild(longCell);
+        var broadCell = document.createElement("td");
+        broadCell.className = "col-1 py-4 border-right";
+        broadCell.innerHTML = "<input type=\"number\" name=\"broad[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.broad, "\">");
+        row.appendChild(broadCell);
+        var highCell = document.createElement("td");
+        highCell.className = "col-1 py-4 border-right";
+        highCell.innerHTML = "<input type=\"number\" name=\"high[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.high, "\">");
+        row.appendChild(highCell);
+        var volWeightCell = document.createElement("td");
+        volWeightCell.className = "col-1 py-4 border-right";
+        volWeightCell.innerHTML = "<input type=\"number\" name=\"vol_weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.vol_weight, "\">");
+        row.appendChild(volWeightCell);
+        var descriptionCell = document.createElement("td");
+        descriptionCell.className = "col-2 py-4 border-right";
+        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comentarios\" value=\"".concat(box.description, "\">");
+        row.appendChild(descriptionCell);
+        var btnCell = document.createElement("td");
+        btnCell.className = "col-1 py-4";
+        btnCell.innerHTML = " <div class=\"d-flex flex-row flex-wrap justify-content-center\"></div>";
+        var removeBoxBtn = document.createElement("a");
+        removeBoxBtn.className = 'btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn';
+        removeBoxBtn.id = "remove-box-btn";
+        removeBoxBtn.title = 'Borrar';
+        removeBoxBtn.setAttribute('data-tooltip', '');
+        removeBoxBtn.innerHTML = "<i class=\"fad fa-minus-circle\"></i>";
+        btnCell.children[0].appendChild(removeBoxBtn);
+        row.appendChild(btnCell);
+        boxContainer.appendChild(row);
+      });
+      this.setInput();
+      this.removeBox();
+    }
+  }, {
+    key: "addbox",
+    value: function addbox() {
+      var _this = this;
+
+      var button = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'add-box-btn';
+      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
+      var container = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'box-container';
+      var addBoxBtn = document.getElementById(button);
+
+      if (addBoxBtn == null) {
+        return;
+      }
+
+      addBoxBtn.addEventListener('click', function () {
+        boxes.push({
+          number: 0,
+          weight: 0,
+          "long": 0,
+          broad: 0,
+          high: 0,
+          vol_weight: 0,
+          description: ''
+        });
+
+        _this.instantiateBoxes(container, boxes);
+      });
+    }
+  }, {
+    key: "removeBox",
+    value: function removeBox() {
+      var removeBoxBtn = document.getElementsByClassName("remove-box-btn");
+
+      if (removeBoxBtn == null) {
+        return;
+      }
+
+      [].forEach.call(removeBoxBtn, function (btn) {
+        btn.addEventListener('click', function () {
+          var box = btn.parentNode.parentNode.parentNode;
+          var parent = box.parentNode;
+          var index = Array.prototype.indexOf.call(parent.children, box);
+          boxes.splice(index, 1);
+          box.remove();
+        });
+      });
+    }
+  }, {
+    key: "loadCustomerModal",
+    value: function loadCustomerModal() {
+      var _this2 = this;
+
+      var btnDetailCustomer = document.getElementById("btnDetailCustomer");
+
+      if (btnDetailCustomer == null) {
+        return;
+      }
+
+      btnDetailCustomer.addEventListener('click', function () {
+        _this2.searchCustomerData();
+      });
+    }
+  }, {
+    key: "requestSearchCustomer",
+    value: function () {
+      var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(query) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context.next = 3;
+                return fetch("/search_customers?value=" + query).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function requestSearchCustomer(_x) {
+        return _requestSearchCustomer.apply(this, arguments);
+      }
+
+      return requestSearchCustomer;
+    }()
+  }, {
+    key: "searchCustomerData",
+    value: function searchCustomerData() {
+      var _this3 = this;
+
+      var btnSearch = document.getElementById("btnSearch");
+
+      if (btnSearch == null) {
+        return;
+      }
+
+      btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var tbody, inputValue, response, data, type, row, cell, i, _row, idCell, phoneCell, tradenameCell, selectCell, userCheck;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                tbody = document.querySelector("#table_customers tbody");
+                tbody.innerHTML = '';
+                inputValue = document.getElementById("search_customer").value;
+                tbody.innerHTML = '';
+                _context2.next = 6;
+                return _this3.requestSearchCustomer(inputValue);
+
+              case 6:
+                response = _context2.sent;
+                data = response.data;
+                type = response.type;
+
+                if (response.state != 200 || data.length == 0) {
+                  row = tbody.insertRow(0);
+                  cell = row.insertCell(0);
+                  cell.innerHTML = "No se encontraron registros";
+                  cell.colSpan = 3;
+                  cell.setAttribute('class', 'text-center font-weight-bold');
+                }
+
+                if (data.length > 0) {
+                  for (i = 0; i < data.length; i++) {
+                    _row = tbody.insertRow(i);
+                    idCell = _row.insertCell(0);
+                    idCell.innerHTML = type == 1 ? data[i].id : data[i].get_user.id;
+                    phoneCell = _row.insertCell(1);
+                    phoneCell.innerHTML = type == 1 ? data[i].phone : data[i].get_user.phone;
+                    tradenameCell = _row.insertCell(2);
+
+                    if (type == 1) {
+                      tradenameCell.innerHTML = data[i].name != null ? data[i].name + " " + data[i].last_name : data[i].get_customer.tradename;
+                    } else {
+                      tradenameCell.innerHTML = data[i].name != null ? data[i].name + " " + data[i].last_name : data[i].tradename;
+                    }
+
+                    selectCell = _row.insertCell(3);
+                    userCheck = document.createElement("input");
+                    userCheck.setAttribute('class', 'btn btn-success customerCheck');
+                    userCheck.setAttribute('type', 'radio');
+                    userCheck.setAttribute('name', 'customerCheck');
+                    userCheck.setAttribute('id', 'customerCheck');
+                    userCheck.setAttribute('value', type == 1 ? data[i].id : data[i].get_user.id);
+                    selectCell.appendChild(userCheck);
+                    tbody.appendChild(_row);
+                  }
+                }
+
+                _this3.selectCustomer();
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      })));
+    }
+  }, {
+    key: "requestSelectedCustomerData",
+    value: function () {
+      var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(query) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context3.next = 3;
+                return fetch("/customer_data/" + query).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context3.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function requestSelectedCustomerData(_x2) {
+        return _requestSelectedCustomerData.apply(this, arguments);
+      }
+
+      return requestSelectedCustomerData;
+    }()
+  }, {
+    key: "selectCustomer",
+    value: function selectCustomer() {
+      var _this4 = this;
+
+      var allCustomerChecks = document.getElementsByClassName("customerCheck");
+
+      var _loop = function _loop(i) {
+        allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var response, data, branches, branchSlc, _i, element, branchOpt, departments, departmentSlc, _i2, _element, departmentOpt, modal;
+
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.next = 2;
+                  return _this4.requestSelectedCustomerData(allCustomerChecks[i].value);
+
+                case 2:
+                  response = _context4.sent;
+                  data = response.data;
+                  document.getElementById("user_code").value = data[0]['id'];
+                  document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
+                  document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
+                  branches = data[1];
+                  branchSlc = document.getElementById("user_branch_office");
+                  branchSlc.selectedIndex = 0;
+                  removeOptions(branchSlc);
+
+                  for (_i = 0; _i < branches.length; _i++) {
+                    element = branches[_i];
+                    branchOpt = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    branchSlc.insertAdjacentHTML('beforeend', branchOpt);
+                  }
+
+                  departments = data[2];
+                  departmentSlc = document.getElementById("user_departments");
+                  departmentSlc.selectedIndex = 0;
+                  removeOptions(departmentSlc);
+
+                  for (_i2 = 0; _i2 < departments.length; _i2++) {
+                    _element = departments[_i2];
+                    departmentOpt = '<option value="' + _element.id + '"> ' + _element.name + ' </option>';
+                    departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
+                  }
+
+                  document.getElementById("user_document_type").value = data[0]['get_document_type'] ? data[0]['get_document_type']['name'] : '';
+                  modal = document.getElementById("detailCustomer");
+                  modal.click();
+
+                  if (document.getElementById("user_code").value != null) {
+                    _this4.customerAddresses(document.getElementById("user_code").value);
+                  }
+
+                case 21:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        })));
+      };
+
+      for (var i = 0; i < allCustomerChecks.length; i++) {
+        _loop(i);
+      }
+    }
+  }, {
+    key: "requestOrderNumber",
+    value: function () {
+      var _requestOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context5.next = 3;
+                return fetch("/order_number").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context5.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function requestOrderNumber() {
+        return _requestOrderNumber.apply(this, arguments);
+      }
+
+      return requestOrderNumber;
+    }()
+  }, {
+    key: "loadOrderNumber",
+    value: function () {
+      var _loadOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var orderNumber, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                orderNumber = document.getElementById("order_number");
+
+                if (!(orderNumber == null)) {
+                  _context6.next = 3;
+                  break;
+                }
+
+                return _context6.abrupt("return");
+
+              case 3:
+                _context6.next = 5;
+                return this.requestOrderNumber();
+
+              case 5:
+                response = _context6.sent;
+                orderNumber.setAttribute('value', response.data);
+
+              case 7:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function loadOrderNumber() {
+        return _loadOrderNumber.apply(this, arguments);
+      }
+
+      return loadOrderNumber;
+    }()
+  }, {
+    key: "saveGuides",
+    value: function saveGuides() {
+      var _this5 = this;
+
+      var btnStoreGuide = document.getElementById("btnStoreGuide");
+
+      if (btnStoreGuide == null) {
+        return;
+      }
+
+      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                branch_office = document.getElementById("branch_off").value;
+                transport_type = document.getElementById("trans_type").value; // let dispatched = document.getElementById("dispatched").value;
+
+                address_name = document.getElementById("address").value; // let address_lat = document.getElementById("lat").value;
+                // let address_lng = document.getElementById("lng").value;
+
+                guide_description = document.getElementById("guide_description").value;
+                concept = document.getElementById("concept").value;
+                rate = document.getElementById("rate").value;
+                value = document.getElementById("value").value;
+                corp_value = document.getElementById("corp_value").value;
+                customer_document_type = document.getElementById("customer_document_type").value;
+                contact = document.getElementById("contact").value;
+                phone_contact = document.getElementById("phone_contact").value;
+                email_contact = document.getElementById("email_contact").value;
+                invoice_contact = document.getElementById("invoice_contact").value;
+                zone = document.getElementById("zone_id").value;
+                same_day_delivery = document.getElementById("same_day_delivery").value;
+                sign = document.getElementById("sign").value;
+                take_photo = document.getElementById("take_photo").value; // let customer_address = document.getElementById("customer_address").value;
+                //Boxes
+
+                ids = document.getElementsByName('id[]');
+                weights = document.getElementsByName('weight[]');
+                longs = document.getElementsByName('long[]');
+                broads = document.getElementsByName('broad[]');
+                highs = document.getElementsByName('high[]');
+                vol_weights = document.getElementsByName('vol_weight[]');
+                descriptions = document.getElementsByName('description[]');
+                boxArr = [];
+
+                for (i = 0; i < ids.length; i++) {
+                  individualBoxArr = {
+                    'number': ids[i].value,
+                    'weight': weights[i].value,
+                    'long': longs[i].value,
+                    'broad': broads[i].value,
+                    'high': highs[i].value,
+                    'vol_weight': vol_weights[i].value,
+                    'description': descriptions[i].value
+                  };
+                  boxArr.push(individualBoxArr);
+                }
+
+                formData = new FormData();
+                formData.append('boxes', JSON.stringify(boxArr));
+                formData.append('branch_office', branch_office);
+                formData.append('transport_type', transport_type); // formData.append('dispatched',dispatched);
+
+                formData.append('address_name', address_name); // formData.append('address_lat',address_lat);
+                // formData.append('address_lng',address_lng);
+
+                formData.append('guide_description', guide_description);
+                formData.append('concept', concept);
+                formData.append('rate', rate);
+                formData.append('value', value);
+                formData.append('corp_value', corp_value);
+                formData.append('customer_document_type', customer_document_type);
+                formData.append('contact', contact);
+                formData.append('phone_contact', phone_contact);
+                formData.append('email_contact', email_contact);
+                formData.append('invoice_contact', invoice_contact);
+                formData.append('zone', zone);
+                formData.append('same_day_delivery', same_day_delivery);
+                formData.append('sign', sign);
+                formData.append('take_photo', take_photo); // formData.append('customer_address',customer_address);
+
+                _context7.next = 47;
+                return _this5.sendGuideData(formData);
+
+              case 47:
+                response = _context7.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalCreate");
+                  modal.click();
+
+                  _this5.listGuides();
+                } else {
+                  error('Error al crear la guía.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 49:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      })));
+    }
+  }, {
+    key: "sendGuideData",
+    value: function () {
+      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context8.next = 3;
+                return fetch("/guias/store", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context8.sent;
+                return _context8.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function sendGuideData(_x3) {
+        return _sendGuideData.apply(this, arguments);
+      }
+
+      return sendGuideData;
+    }()
+  }, {
+    key: "listGuides",
+    value: function () {
+      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        var _this6 = this;
+
+        var tbody, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                tbody = document.querySelector("#guidesTable tbody");
+
+                if (!(tbody == null)) {
+                  _context9.next = 3;
+                  break;
+                }
+
+                return _context9.abrupt("return");
+
+              case 3:
+                tbody.innerHTML = '';
+                _context9.next = 6;
+                return this.requestGuides();
+
+              case 6:
+                response = _context9.sent;
+                data = response.data;
+
+                if (data.length > 0) {
+                  [].forEach.call(data, function (key) {
+                    var _key$id, _key$contact, _key$phone_contact, _key$email_contact, _key$rate, _key$get_state, _key$order_id;
+
+                    var row = tbody.insertRow();
+                    var idCell = row.insertCell(0);
+                    idCell.innerHTML = (_key$id = key.id) !== null && _key$id !== void 0 ? _key$id : '';
+                    var contactCell = row.insertCell(1);
+                    contactCell.innerHTML = (_key$contact = key.contact) !== null && _key$contact !== void 0 ? _key$contact : '';
+                    var phoneCell = row.insertCell(2);
+                    phoneCell.innerHTML = (_key$phone_contact = key.phone_contact) !== null && _key$phone_contact !== void 0 ? _key$phone_contact : '';
+                    var emailCell = row.insertCell(3);
+                    emailCell.innerHTML = (_key$email_contact = key.email_contact) !== null && _key$email_contact !== void 0 ? _key$email_contact : '';
+                    var dateCell = row.insertCell(4);
+                    var allDate = new Date(key.created_at.split(' ')[0]);
+                    var month = allDate.getMonth();
+                    dateCell.innerHTML = allDate.getDate() + "-" + _this6.months(month) + "-" + allDate.getFullYear();
+                    var rateCell = row.insertCell(5);
+                    rateCell.innerHTML = (_key$rate = key.rate) !== null && _key$rate !== void 0 ? _key$rate : '';
+                    var stateCell = row.insertCell(6);
+                    stateCell.innerHTML = (_key$get_state = key.get_state) === null || _key$get_state === void 0 ? void 0 : _key$get_state.name;
+                    var selectCell = row.insertCell(7); //CHECK
+
+                    var guideCheck = document.createElement("input");
+                    guideCheck.setAttribute('class', 'checkbox-inline mt-3');
+                    guideCheck.setAttribute('type', 'checkbox');
+                    guideCheck.setAttribute('name', 'guideCheck[]');
+                    guideCheck.setAttribute('value', key.id);
+                    var check = guideCheck.checked = true;
+                    (_key$order_id = key.order_id) !== null && _key$order_id !== void 0 ? _key$order_id : check; //EDIT
+
+                    var guideEdit = document.createElement("button");
+                    guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
+                    guideEdit.setAttribute('data-toggle', 'modal');
+                    guideEdit.setAttribute('data-target', '#modalEdit');
+                    guideEdit.setAttribute('id', 'guide-' + key.id);
+                    guideEdit.setAttribute('type', 'button');
+                    guideEdit.innerHTML = '<i class="fas fa-edit"></i>'; //DELETE
+
+                    var guideDelete = document.createElement("button");
+
+                    guideDelete.onclick = function () {
+                      deleteResource('/guias/' + key.id);
+                    };
+
+                    guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                    guideDelete.setAttribute('type', 'button');
+                    guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
+
+                    var buttonsDiv = document.createElement("div");
+                    buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                    buttonsDiv.appendChild(guideCheck);
+                    buttonsDiv.appendChild(guideEdit);
+                    buttonsDiv.appendChild(guideDelete);
+                    selectCell.appendChild(buttonsDiv);
+                    tbody.appendChild(row);
+                  });
+                }
+
+                this.editGuide();
+
+              case 10:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function listGuides() {
+        return _listGuides.apply(this, arguments);
+      }
+
+      return listGuides;
+    }()
+  }, {
+    key: "requestGuides",
+    value: function () {
+      var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        var orderNumber, path, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                orderNumber = document.getElementsByName("order_number")[0];
+
+                if (orderNumber == null) {
+                  orderNumber = null;
+                } else {
+                  orderNumber = orderNumber.value;
+                }
+
+                path = window.location.pathname.split('/');
+                response = {
+                  'state': 500
+                };
+                _context10.next = 6;
+                return fetch("/guias?order=" + orderNumber + "&path=" + path).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 6:
+                return _context10.abrupt("return", response);
+
+              case 7:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }));
+
+      function requestGuides() {
+        return _requestGuides.apply(this, arguments);
+      }
+
+      return requestGuides;
+    }()
+  }, {
+    key: "editGuide",
+    value: function editGuide() {
+      var _this7 = this;
+
+      var guides = document.getElementsByClassName("btnEditGuide");
+
+      if (guides == null) {
+        return;
+      }
+
+      [].forEach.call(guides, function (guide) {
+        guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+          var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zones, same_day_delivery, sign, take_photo, boxes;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+            while (1) {
+              switch (_context11.prev = _context11.next) {
+                case 0:
+                  _this7.guideId = guide['id'].split('-')[1];
+                  _context11.next = 3;
+                  return _this7.requestGuide(_this7.guideId);
+
+                case 3:
+                  response = _context11.sent;
+                  data = response.data;
+                  branch_office = document.getElementById("branch_off_edit");
+                  branch_office.value = data.branch_office;
+                  customer_address = document.getElementById('customer_address_edit').options;
+                  [].forEach.call(customer_address, function (key) {
+                    key.text == data.address_name ? key.selected = true : key.selected = false;
+                  }); // customer_address.value = data.customer_address;
+                  // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
+                  // let address_name = document.getElementById("address_edit").value = data.address_name;
+                  // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
+                  // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
+
+                  guide_description = document.getElementById("address_description_edit").value = data.guide_description;
+                  concept = document.getElementById("concept_edit").value = data.concept;
+                  rate = document.getElementById("rate_edit").value = data.rate;
+                  value = document.getElementById("value_edit").value = data.value;
+                  corp_value = document.getElementById("corp_value_edit").value = data.corp_value;
+                  customer_document_type = document.getElementById("customer_document_type_edit").value = data.customer_document_type;
+                  contact = document.getElementById("contact_edit").value = data.contact;
+                  phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
+                  email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
+                  invoice_contact = document.getElementById("invoice_contact_edit").value = data.invoice_contact;
+                  zones = document.getElementById("zone_edit");
+                  [].forEach.call(zones, function (key) {
+                    key.value == data.zone ? key.selected = true : key.selected = false;
+                  });
+                  same_day_delivery = document.getElementById("same_day_delivery_edit");
+                  data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
+                  sign = document.getElementById("sign_edit");
+                  data.sign == 1 ? sign.checked = true : '';
+                  take_photo = document.getElementById("take_photo_edit");
+                  data.take_photo == 1 ? take_photo.checked = true : '';
+                  boxes = JSON.parse(data.boxes);
+
+                  _this7.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this7.boxes);
+
+                  _this7.addbox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
+
+                case 30:
+                case "end":
+                  return _context11.stop();
+              }
+            }
+          }, _callee11);
+        })));
+      });
+      this.updateGuide();
+    }
+  }, {
+    key: "requestGuide",
+    value: function () {
+      var _requestGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context12.next = 3;
+                return fetch("/guias/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context12.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }));
+
+      function requestGuide(_x4) {
+        return _requestGuide.apply(this, arguments);
+      }
+
+      return requestGuide;
+    }()
+  }, {
+    key: "updateGuide",
+    value: function updateGuide() {
+      var _this8 = this;
+
+      var btnUpdateGuide = document.getElementById("btnUpdateGuide");
+
+      if (btnUpdateGuide == null) {
+        return;
+      }
+
+      btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        var branch_off_edit, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                branch_off_edit = document.getElementById("branch_off_edit").value; // let dispatched = document.getElementById("dispatched_edit").value;
+
+                address_name = document.getElementById("customer_address_edit").value; // let address_lat = document.getElementById("lat_edit").value;
+                // let address_lng = document.getElementById("lng_edit").value;
+
+                guide_description = document.getElementById("address_description_edit").value;
+                concept = document.getElementById("concept_edit").value;
+                rate = document.getElementById("rate_edit").value;
+                value = document.getElementById("value_edit").value;
+                corp_value = document.getElementById("corp_value_edit").value;
+                customer_document_type = document.getElementById("customer_document_type_edit").value;
+                contact = document.getElementById("contact_edit").value;
+                phone_contact = document.getElementById("phone_contact_edit").value;
+                email_contact = document.getElementById("email_contact_edit").value;
+                invoice_contact = document.getElementById("invoice_contact_edit").value;
+                zone = document.getElementById("zone_edit").value;
+                same_day_delivery = document.getElementById("same_day_delivery_edit");
+                same_day_delivery.checked == true ? same_day_delivery = 1 : same_day_delivery = 0;
+                sign = document.getElementById("sign_edit");
+                sign.checked == true ? sign = 1 : sign = 0;
+                take_photo = document.getElementById("take_photo_edit");
+                take_photo.checked == true ? take_photo = 1 : take_photo = 0;
+                customer_address = document.getElementById("customer_address_edit").value; //Boxes
+
+                ids = document.getElementsByName('id[]');
+                weights = document.getElementsByName('weight[]');
+                longs = document.getElementsByName('long[]');
+                broads = document.getElementsByName('broad[]');
+                highs = document.getElementsByName('high[]');
+                vol_weights = document.getElementsByName('vol_weight[]');
+                descriptions = document.getElementsByName('description[]');
+                boxArr = [];
+
+                for (i = 1; i < ids.length; i++) {
+                  individualBoxArr = {
+                    'number': ids[i].value,
+                    'weight': weights[i].value,
+                    'long': longs[i].value,
+                    'broad': broads[i].value,
+                    'high': highs[i].value,
+                    'vol_weight': vol_weights[i].value,
+                    'description': descriptions[i].value
+                  };
+                  boxArr.push(individualBoxArr);
+                }
+
+                formData = new FormData();
+                formData.append('boxes', JSON.stringify(boxArr));
+                formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
+
+                formData.append("address_name", address_name); // formData.append("address_lat", address_lat);
+                // formData.append("address_lng", address_lng);
+
+                formData.append("guide_description", guide_description);
+                formData.append("concept", concept);
+                formData.append("rate", rate);
+                formData.append("value", value);
+                formData.append("corp_value", corp_value);
+                formData.append("customer_document_type", customer_document_type);
+                formData.append("contact", contact);
+                formData.append("phone_contact", phone_contact);
+                formData.append("email_contact", email_contact);
+                formData.append("same_day_delivery", same_day_delivery);
+                formData.append("sign", sign);
+                formData.append("take_photo", take_photo);
+                formData.append("invoice_contact", invoice_contact);
+                formData.append("zone", zone);
+                formData.append("customer_address", customer_address);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context13.next = 59;
+                return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
+
+              case 59:
+                response = _context13.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalEdit");
+                  modal.click();
+
+                  _this8.listGuides();
+                } else {
+                  error('Error al crear la guía.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 61:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      })));
+    }
+  }, {
+    key: "sendDataToUpdate",
+    value: function () {
+      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context14.next = 3;
+                return fetch("/guias/" + id, requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context14.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context14.stop();
+            }
+          }
+        }, _callee14);
+      }));
+
+      function sendDataToUpdate(_x5, _x6) {
+        return _sendDataToUpdate.apply(this, arguments);
+      }
+
+      return sendDataToUpdate;
+    }()
+  }, {
+    key: "loadBranches",
+    value: function loadBranches() {
+      var _this9 = this;
+
+      var branchesSlc = document.getElementsByName("branch_office");
+
+      if (branchesSlc == null) {
+        return;
+      }
+
+      [].forEach.call(branchesSlc, /*#__PURE__*/function () {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(branch) {
+          var response, data, i, element, branchOffice;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+            while (1) {
+              switch (_context15.prev = _context15.next) {
+                case 0:
+                  branch.selectedIndex = 0;
+                  removeOptions(branch);
+                  _context15.next = 4;
+                  return _this9.requestBranches();
+
+                case 4:
+                  response = _context15.sent;
+                  data = response.data;
+
+                  for (i = 0; i < data.length; i++) {
+                    element = data[i];
+                    branchOffice = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    branch.insertAdjacentHTML('beforeend', branchOffice);
+                  }
+
+                case 7:
+                case "end":
+                  return _context15.stop();
+              }
+            }
+          }, _callee15);
+        }));
+
+        return function (_x7) {
+          return _ref6.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
+    key: "requestBranches",
+    value: function () {
+      var _requestBranches = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context16.next = 3;
+                return fetch("/allBranches").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context16.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16);
+      }));
+
+      function requestBranches() {
+        return _requestBranches.apply(this, arguments);
+      }
+
+      return requestBranches;
+    }()
+  }, {
+    key: "customerAddresses",
+    value: function () {
+      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+        var customerId,
+            slcAddresses,
+            response,
+            data,
+            _args17 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+          while (1) {
+            switch (_context17.prev = _context17.next) {
+              case 0:
+                customerId = _args17.length > 0 && _args17[0] !== undefined ? _args17[0] : null;
+                slcAddresses = document.getElementsByName("customer_address");
+
+                if (!(customerId == '')) {
+                  _context17.next = 4;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 4:
+                if (!(slcAddresses == null)) {
+                  _context17.next = 6;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 6:
+                _context17.next = 8;
+                return this.requestCustomerAddresses(customerId);
+
+              case 8:
+                response = _context17.sent;
+
+                if (!(response == null)) {
+                  _context17.next = 11;
+                  break;
+                }
+
+                return _context17.abrupt("return");
+
+              case 11:
+                data = response.data;
+                [].forEach.call(slcAddresses, function (slcAddress) {
+                  if (!(typeof parseInt(location.pathname.split('/')[2]) == 'number' && location.pathname.includes('edit'))) {
+                    if (!slcAddress.id != 'order_customer_address') {
+                      slcAddress.selectedIndex = 0;
+                      removeOptions(slcAddress);
+
+                      for (var i = 0; i < data.length; i++) {
+                        var element = data[i];
+                        var optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + ' </option>';
+                        slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                      }
+                    }
+                  }
+                });
+
+              case 13:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17, this);
+      }));
+
+      function customerAddresses() {
+        return _customerAddresses.apply(this, arguments);
+      }
+
+      return customerAddresses;
+    }()
+  }, {
+    key: "requestCustomerAddresses",
+    value: function () {
+      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
+        var id,
+            route,
+            response,
+            _args18 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+          while (1) {
+            switch (_context18.prev = _context18.next) {
+              case 0:
+                id = _args18.length > 0 && _args18[0] !== undefined ? _args18[0] : null;
+                route = window.location.pathname.split('/');
+
+                if (!(document.getElementById("user_code") == null)) {
+                  _context18.next = 4;
+                  break;
+                }
+
+                return _context18.abrupt("return");
+
+              case 4:
+                route.includes('edit') ? id = document.getElementById("user_code").value : '';
+                response = {
+                  'state': 500
+                };
+                _context18.next = 8;
+                return fetch("/customer_addresses/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 8:
+                return _context18.abrupt("return", response);
+
+              case 9:
+              case "end":
+                return _context18.stop();
+            }
+          }
+        }, _callee18);
+      }));
+
+      function requestCustomerAddresses() {
+        return _requestCustomerAddresses.apply(this, arguments);
+      }
+
+      return requestCustomerAddresses;
+    }()
+  }, {
+    key: "createAddress",
+    value: function createAddress() {
+      var _this10 = this;
+
+      var btnSaveAddress = document.getElementById("saveAddress");
+
+      if (btnSaveAddress == null) {
+        return;
+      }
+
+      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+        var formData, description, address, lat, lng, user_id, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+          while (1) {
+            switch (_context19.prev = _context19.next) {
+              case 0:
+                formData = new FormData();
+                description = document.getElementById("add_description").value;
+                address = document.getElementById("add_name").value;
+                lat = document.getElementById("add_lat").value;
+                lng = document.getElementById("add_lng").value;
+                user_id = document.getElementById("user_code").value;
+                formData.append('user_id', user_id);
+                formData.append('address', address);
+                formData.append('lat', lat);
+                formData.append('lng', lng);
+                formData.append('description', description);
+                formData.append('requestByJs', 1);
+                _context19.next = 14;
+                return _this10.sendAddressData(formData);
+
+              case 14:
+                response = _context19.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  modal = document.getElementById("modalCreateAddress");
+                  modal.click();
+
+                  _this10.listGuides();
+
+                  _this10.customerAddresses(document.getElementById("user_code").value);
+                } else {
+                  error('Error al crear la guía.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 16:
+              case "end":
+                return _context19.stop();
+            }
+          }
+        }, _callee19);
+      })));
+    }
+  }, {
+    key: "sendAddressData",
+    value: function () {
+      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+          while (1) {
+            switch (_context20.prev = _context20.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context20.next = 3;
+                return fetch("/direcciones", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context20.sent;
+                return _context20.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context20.stop();
+            }
+          }
+        }, _callee20);
+      }));
+
+      function sendAddressData(_x8) {
+        return _sendAddressData.apply(this, arguments);
+      }
+
+      return sendAddressData;
+    }()
+  }, {
+    key: "months",
+    value: function months(month) {
+      var months = {
+        0: 'Enero',
+        1: 'Febrero',
+        2: 'Marzo',
+        3: 'Abril',
+        4: 'Mayo',
+        5: 'Junio',
+        6: 'Julio',
+        7: 'Agosto',
+        8: 'Septiembre',
+        9: 'Octubre',
+        10: 'Noviembre',
+        11: 'Diciembre'
+      };
+      return months[month];
+    }
+  }, {
+    key: "porDespacharOndemand",
+    value: function () {
+      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22() {
+        var button;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
+          while (1) {
+            switch (_context22.prev = _context22.next) {
+              case 0:
+                button = document.getElementById('porDespacharOndemand');
+
+                if (!(button == null)) {
+                  _context22.next = 3;
+                  break;
+                }
+
+                return _context22.abrupt("return");
+
+              case 3:
+                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21() {
+                  var order_id, result, req;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
+                    while (1) {
+                      switch (_context21.prev = _context21.next) {
+                        case 0:
+                          order_id = button.value;
+                          _context21.next = 3;
+                          return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
+
+                        case 3:
+                          result = _context21.sent;
+
+                          if (!(result == true)) {
+                            _context21.next = 9;
+                            break;
+                          }
+
+                          _context21.next = 7;
+                          return fetch("/pordespachar/ondemand/".concat(order_id), {
+                            method: "POST",
+                            headers: {
+                              "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                              accept: "application/json"
+                            }
+                          });
+
+                        case 7:
+                          req = _context21.sent;
+
+                          if (req.ok) {
+                            correct("Estado actualizado!");
+                            window.location.reload();
+                          } else {
+                            error("Error al actualizar estado");
+                          }
+
+                        case 9:
+                        case "end":
+                          return _context21.stop();
+                      }
+                    }
+                  }, _callee21);
+                })));
+
+              case 4:
+              case "end":
+                return _context22.stop();
+            }
+          }
+        }, _callee22);
+      }));
+
+      function porDespacharOndemand() {
+        return _porDespacharOndemand.apply(this, arguments);
+      }
+
+      return porDespacharOndemand;
+    }()
+  }, {
+    key: "porDespacharPackaging",
+    value: function () {
+      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
+        var button;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
+          while (1) {
+            switch (_context24.prev = _context24.next) {
+              case 0:
+                button = document.getElementById('porDespacharPackaging');
+
+                if (!(button == null)) {
+                  _context24.next = 3;
+                  break;
+                }
+
+                return _context24.abrupt("return");
+
+              case 3:
+                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23() {
+                  var order_id, result, formData, token, myHeaders, requestOptions, data, req;
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
+                    while (1) {
+                      switch (_context23.prev = _context23.next) {
+                        case 0:
+                          order_id = button.value;
+                          _context23.next = 3;
+                          return porDespacharPackagingAlert();
+
+                        case 3:
+                          result = _context23.sent;
+
+                          if (!(result == 3 || result == 7)) {
+                            _context23.next = 18;
+                            break;
+                          }
+
+                          formData = new FormData();
+                          formData.append('type', result);
+                          token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                          myHeaders = new Headers();
+                          myHeaders.append("accept", "application/json");
+                          myHeaders.append("Access-Control-Allow-Origin", "*");
+                          myHeaders.append("X-CSRF-TOKEN", token);
+                          requestOptions = {
+                            method: "POST",
+                            headers: myHeaders,
+                            body: formData
+                          };
+                          data = {
+                            type: result
+                          };
+                          _context23.next = 16;
+                          return fetch("/pordespachar/packaging/".concat(order_id), requestOptions);
+
+                        case 16:
+                          req = _context23.sent;
+
+                          if (req.ok) {
+                            correct("Estado actualizado!");
+                            window.location.reload();
+                          } else {
+                            error("Error al actualizar estado");
+                          }
+
+                        case 18:
+                        case "end":
+                          return _context23.stop();
+                      }
+                    }
+                  }, _callee23);
+                })));
+
+              case 4:
+              case "end":
+                return _context24.stop();
+            }
+          }
+        }, _callee24);
+      }));
+
+      function porDespacharPackaging() {
+        return _porDespacharPackaging.apply(this, arguments);
+      }
+
+      return porDespacharPackaging;
+    }()
+  }, {
+    key: "loadPickupHours",
+    value: function () {
+      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25() {
+        var _this11 = this;
+
+        var date_selector, response, days;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
+          while (1) {
+            switch (_context25.prev = _context25.next) {
+              case 0:
+                date_selector = document.getElementById("schedule_date");
+
+                if (!(date_selector == null)) {
+                  _context25.next = 3;
+                  break;
+                }
+
+                return _context25.abrupt("return");
+
+              case 3:
+                _context25.next = 5;
+                return this.requestPickupHours();
+
+              case 5:
+                response = _context25.sent;
+                days = response.data;
+                date_selector.addEventListener('change', function () {
+                  var day = _this11.getDayReference(date_selector.value);
+
+                  var day_data = days[day];
+                  var schedule_time_range = document.getElementById("schedule_time_range");
+                  schedule_time_range.selectedIndex = 0;
+                  removeOptions(schedule_time_range);
+
+                  if (day_data) {
+                    for (var i = 0; i < day_data.length; i++) {
+                      var element = day_data[i];
+                      var text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time);
+                      var option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
+                      schedule_time_range.insertAdjacentHTML('beforeend', option);
+                    }
+
+                    schedule_time_range.addEventListener('change', function () {
+                      var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+                      var schedule_time = document.getElementById("schedule_time");
+                      schedule_time.value = id;
+                    });
+                  }
+                });
+
+              case 8:
+              case "end":
+                return _context25.stop();
+            }
+          }
+        }, _callee25, this);
+      }));
+
+      function loadPickupHours() {
+        return _loadPickupHours.apply(this, arguments);
+      }
+
+      return loadPickupHours;
+    }()
+  }, {
+    key: "requestPickupHours",
+    value: function () {
+      var _requestPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
+          while (1) {
+            switch (_context26.prev = _context26.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context26.next = 3;
+                return fetch("/getPickupHours").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context26.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context26.stop();
+            }
+          }
+        }, _callee26);
+      }));
+
+      function requestPickupHours() {
+        return _requestPickupHours.apply(this, arguments);
+      }
+
+      return requestPickupHours;
+    }()
+  }, {
+    key: "getDayReference",
+    value: function getDayReference(day) {
+      var days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+      day = new Date(day).getDay();
+      return days[day];
+    }
+  }, {
+    key: "loadHoursInEditOrShow",
+    value: function () {
+      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee27() {
+        var route, date_selector, response, days, day, day_data, schedule_time_range, i, element, text, option;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee27$(_context27) {
+          while (1) {
+            switch (_context27.prev = _context27.next) {
+              case 0:
+                route = window.location.pathname;
+
+                if (route.includes('ordenes') && route.includes('edit')) {
+                  _context27.next = 3;
+                  break;
+                }
+
+                return _context27.abrupt("return");
+
+              case 3:
+                date_selector = document.getElementById("schedule_date");
+                _context27.next = 6;
+                return this.requestPickupHours();
+
+              case 6:
+                response = _context27.sent;
+                days = response.data;
+                day = this.getDayReference(date_selector.value);
+                day_data = days[day];
+
+                if (day_data) {
+                  schedule_time_range = document.getElementById("schedule_time_range");
+                  schedule_time_range.selectedIndex = 0;
+                  removeOptions(schedule_time_range);
+
+                  for (i = 0; i < day_data.length; i++) {
+                    element = day_data[i];
+                    text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time);
+                    option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
+                    schedule_time_range.insertAdjacentHTML('beforeend', option);
+                  }
+
+                  schedule_time_range.addEventListener('change', function () {
+                    var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+                    var schedule_time = document.getElementById("schedule_time");
+                    schedule_time.value = id;
+                  });
+                }
+
+              case 11:
+              case "end":
+                return _context27.stop();
+            }
+          }
+        }, _callee27, this);
+      }));
+
+      function loadHoursInEditOrShow() {
+        return _loadHoursInEditOrShow.apply(this, arguments);
+      }
+
+      return loadHoursInEditOrShow;
+    }()
+  }, {
+    key: "sendImportModalData",
+    value: function () {
+      var _sendImportModalData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee28(formData) {
+        var response, token, myHeaders, requestOptions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee28$(_context28) {
+          while (1) {
+            switch (_context28.prev = _context28.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: formData
+                };
+                _context28.next = 9;
+                return fetch("/guias/import", requestOptions);
+
+              case 9:
+                response = _context28.sent;
+                return _context28.abrupt("return", response.json());
+
+              case 11:
+              case "end":
+                return _context28.stop();
+            }
+          }
+        }, _callee28);
+      }));
+
+      function sendImportModalData(_x9) {
+        return _sendImportModalData.apply(this, arguments);
+      }
+
+      return sendImportModalData;
+    }()
+  }, {
+    key: "importModal",
+    value: function importModal() {
+      var _this12 = this;
+
+      var btnImportGuide = document.getElementById("btnImportGuide");
+
+      if (btnImportGuide == null) {
+        return;
+      }
+
+      btnImportGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee29() {
+        var formData, file, order_id, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee29$(_context29) {
+          while (1) {
+            switch (_context29.prev = _context29.next) {
+              case 0:
+                formData = new FormData();
+                file = document.getElementById("file_import_guide");
+                order_id = document.getElementById("order_id").value;
+
+                if (file.files[0]) {
+                  _context29.next = 5;
+                  break;
+                }
+
+                return _context29.abrupt("return", error('Debe cargar el archivo para proceder con la importación'));
+
+              case 5:
+                formData.append('file', file.files[0]);
+                formData.append('order_id', order_id);
+                _context29.next = 9;
+                return _this12.sendImportModalData(formData);
+
+              case 9:
+                response = _context29.sent;
+
+                if (response.state == 200) {
+                  correct(response.message);
+                  location.reload();
+                } else {
+                  error('Error al importar guías.');
+                  console.log('Error: ' + response.error);
+                }
+
+              case 11:
+              case "end":
+                return _context29.stop();
+            }
+          }
+        }, _callee29);
+      })));
+    }
+  }]);
+
+  return Orders;
+}();
+
+
+$("#tabListOrders").DataTable({
+  info: false,
+  language: {
+    lengthMenu: "Mostrar " + "<select>\n                        <option value = '10'>10</option>\n                        <option value = '15'>15</option>\n                        <option value = '50'>50</option>\n                        <option value = '100'>100</option>\n                    <select>" + " registros",
+    zeroRecords: "Nada encontrado",
+    infoEmpty: "No records available",
+    infoFiltered: "(filtered from _MAX_ total records)",
+    search: "Buscar:",
+    paginate: {
+      next: "Siguiente",
+      previous: "Anterior"
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./app/Modules/ParametersModule/views/js/_parameters.js":
+/*!**************************************************************!*\
+  !*** ./app/Modules/ParametersModule/views/js/_parameters.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Parameters; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Parameters = /*#__PURE__*/function () {
+  function Parameters() {
+    _classCallCheck(this, Parameters);
+
+    this.id = '';
+  }
+
+  _createClass(Parameters, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadParameterValues();
+    }
+  }, {
+    key: "loadParameterValues",
+    value: function loadParameterValues() {
+      var _this = this;
+
+      var buttons = document.getElementsByName('btnShowParameters');
+
+      if (buttons == null) {
+        return;
+      }
+
+      [].forEach.call(buttons, function (btn) {
+        _this.id = '';
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var btnOpenModalCreate;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _this.id = btn['id'];
+                  btnOpenModalCreate = document.getElementById("divCreateParameter");
+                  btnOpenModalCreate.className = 'col d-flex align-items-top justify-content-end';
+                  _context.next = 5;
+                  return _this.renderParameterTable(_this.id);
+
+                case 5:
+                  _this.storeParameterValue(_this.id);
+
+                  _this.editParameterValue();
+
+                  return _context.abrupt("return");
+
+                case 8:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        })));
+      });
+    }
+  }, {
+    key: "requestParameterValues",
+    value: function () {
+      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/valor-parametros/" + id).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function requestParameterValues(_x) {
+        return _requestParameterValues.apply(this, arguments);
+      }
+
+      return requestParameterValues;
+    }()
+  }, {
+    key: "renderParameterTable",
+    value: function () {
+      var _renderParameterTable = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
+        var tbody, response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                tbody = document.querySelector("#parameterValueTable tbody");
+                tbody.innerHTML = '';
+                _context3.next = 4;
+                return this.requestParameterValues(id);
+
+              case 4:
+                response = _context3.sent;
+                data = response.data;
+                [].forEach.call(data, function (key) {
+                  var _key$description;
+
+                  var row = tbody.insertRow();
+                  var nameCell = row.insertCell(0);
+                  nameCell.innerHTML = key.name;
+                  var descriptionCell = row.insertCell(1);
+                  descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
+                  var stateCell = row.insertCell(2);
+
+                  if (key.state == 1) {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
+                                            Activo\
+                                        </span>';
+                  } else {
+                    stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
+                                            Inactivo\
+                                        </span>';
+                  }
+
+                  var selectCell = row.insertCell(3);
+                  var editBtn = document.createElement("button");
+                  editBtn.setAttribute('name', 'btnEditParameter');
+                  editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
+                  editBtn.setAttribute('data-toggle', 'modal');
+                  editBtn.setAttribute('data-target', '#modalEditParameter');
+                  editBtn.setAttribute('id', +key.id);
+                  editBtn.setAttribute('type', 'button');
+                  editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                  var deleteBtn = document.createElement("button");
+
+                  deleteBtn.onclick = function () {
+                    confirmDelete('valor-parametros/' + key.id);
+                  };
+
+                  deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
+                  deleteBtn.setAttribute('type', 'button');
+                  deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                  var buttonsDiv = document.createElement("div");
+                  buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+
+                  if (key.editable == 0) {
+                    editBtn.setAttribute('disabled', true);
+                    deleteBtn.setAttribute('disabled', true);
+                  }
+
+                  buttonsDiv.appendChild(editBtn);
+                  buttonsDiv.appendChild(deleteBtn);
+                  selectCell.appendChild(buttonsDiv);
+                  tbody.appendChild(row);
+                });
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function renderParameterTable(_x2) {
+        return _renderParameterTable.apply(this, arguments);
+      }
+
+      return renderParameterTable;
+    }()
+  }, {
+    key: "storeParameterValue",
+    value: function storeParameterValue() {
+      var _this2 = this;
+
+      var btnStore = document.getElementById("btnStoreParameter");
+
+      if (btnStore == null) {
+        return;
+      }
+
+      btnStore.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var form, formData, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                form = document.getElementById("formCreateParameter");
+
+                if (!(form == null)) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                return _context4.abrupt("return");
+
+              case 3:
+                formData = new FormData(form);
+                formData.append('parameter_id', _this2.id);
+                _context4.next = 7;
+                return _this2.requestStoreParameterValue(formData);
+
+              case 7:
+                response = _context4.sent;
+
+                if (response.state == 200) {
+                  success(response.message);
+                  modal = document.getElementById("modalCreateParameter");
+                  modal.click();
+                  location.reload(); // this.renderParameterTable(this.id);
+                } else {
+                  error(response.message);
+                }
+
+              case 9:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      })));
+    }
+  }, {
+    key: "requestStoreParameterValue",
+    value: function () {
+      var _requestStoreParameterValue = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(formData) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context5.next = 3;
+                return fetch("/valor-parametros", {
+                  headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  method: 'POST',
+                  body: formData
+                });
+
+              case 3:
+                response = _context5.sent;
+                return _context5.abrupt("return", response.json());
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
+      function requestStoreParameterValue(_x3) {
+        return _requestStoreParameterValue.apply(this, arguments);
+      }
+
+      return requestStoreParameterValue;
+    }()
+  }, {
+    key: "editParameterValue",
+    value: function editParameterValue() {
+      var _this3 = this;
+
+      var allEditBtns = document.getElementsByName('btnEditParameter');
+
+      if (allEditBtns == null) {
+        return;
+      }
+
+      allEditBtns.forEach(function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+          var response, data, name, description, state;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+            while (1) {
+              switch (_context6.prev = _context6.next) {
+                case 0:
+                  _context6.next = 2;
+                  return _this3.requestParameterData(btn['id']);
+
+                case 2:
+                  response = _context6.sent;
+                  data = response.data;
+                  name = document.getElementById("parameter_name");
+                  name.value = data.name;
+                  description = document.getElementById("parameter_description");
+                  description.value = data.description;
+                  state = document.getElementById("parameter_state_edit");
+                  data.state == 1 ? state.checked = true : '';
+
+                  _this3.updateParameterValue(btn['id']);
+
+                case 11:
+                case "end":
+                  return _context6.stop();
+              }
+            }
+          }, _callee6);
+        })));
+      });
+    }
+  }, {
+    key: "requestParameterData",
+    value: function () {
+      var _requestParameterData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context7.next = 3;
+                return fetch("valor-parametros/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context7.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function requestParameterData(_x4) {
+        return _requestParameterData.apply(this, arguments);
+      }
+
+      return requestParameterData;
+    }()
+  }, {
+    key: "updateParameterValue",
+    value: function updateParameterValue(id) {
+      var _this4 = this;
+
+      var form = document.getElementById('formUpdateParameter');
+
+      if (form == null) {
+        return;
+      }
+
+      var btnUpdate = document.getElementById("btnUpdateParameter");
+
+      if (btnUpdate == null) {
+        return;
+      }
+
+      btnUpdate.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var formData, token, myHeaders, requestOptions, response, modal;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                formData = new FormData(form);
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(Object.fromEntries(formData))
+                };
+                _context8.next = 12;
+                return _this4.requestUpdateParameter(id, requestOptions);
+
+              case 12:
+                response = _context8.sent;
+
+                if (response.state == 200) {
+                  success(response.message);
+                  modal = document.getElementById("modalEditParameter");
+                  modal.click();
+                  location.reload();
+                } else {
+                  error(response.message);
+                }
+
+              case 14:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      })));
+    }
+  }, {
+    key: "requestUpdateParameter",
+    value: function () {
+      var _requestUpdateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(id, requestOptions) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context9.next = 3;
+                return fetch("valor-parametros/" + id, requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context9.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }));
+
+      function requestUpdateParameter(_x5, _x6) {
+        return _requestUpdateParameter.apply(this, arguments);
+      }
+
+      return requestUpdateParameter;
+    }()
+  }]);
+
+  return Parameters;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/PermissionModule/views/js/_permissions.js":
+/*!***************************************************************!*\
+  !*** ./app/Modules/PermissionModule/views/js/_permissions.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Permissions; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var translated_actions = {
+  all: "Todo",
+  index: "Inicio",
+  create: "Vista crear",
+  store: "Crear",
+  show: "Detalle",
+  destroy: "Eliminar",
+  "delete": "Eliminar",
+  update: "Actualizar",
+  edit: "Vista editar",
+  assign: "Asignar",
+  "import": "Importar",
+  "export": "Exportar",
+  record: "Historial"
+};
+
+var requestPermissions = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(url) {
+    var response, token;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            response = {
+              state: 500
+            };
+            token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            _context.next = 4;
+            return fetch(url, {
+              method: "GET",
+              headers: {
+                "X-CSRF-TOKEN": token
+              }
+            }).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              console.log(e);
+            });
+
+          case 4:
+            return _context.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestPermissions(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var Permissions = /*#__PURE__*/function () {
+  function Permissions() {
+    _classCallCheck(this, Permissions);
+  }
+
+  _createClass(Permissions, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadPermissions();
+      this.roleData();
+    }
+  }, {
+    key: "loadPermissions",
+    value: function loadPermissions() {
+      var configurationBtn = document.getElementsByClassName("configuration-btn");
+      var permitsLbl = document.getElementById("permits-label");
+
+      if (configurationBtn == null) {
+        return;
+      }
+
+      [].forEach.call(configurationBtn, function (btn) {
+        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  row = btn.parentNode.parentNode;
+                  console.log(row);
+                  role_id = row.id;
+                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("role-name"));
+                  form = document.getElementById("permits-form");
+                  form.setAttribute("action", "/permisos/".concat(role_id));
+                  url = "/permisos/getPermissions/" + role_id;
+                  _context2.next = 9;
+                  return requestPermissions(url);
+
+                case 9:
+                  response = _context2.sent;
+
+                  if (!(response.state != 200)) {
+                    _context2.next = 12;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 12:
+                  data = response.data;
+                  modules = data.modules;
+                  actions = data.actions;
+                  permissions = data.permissions;
+                  cardBody = document.getElementById("card-body");
+                  cardBody.innerHTML = "";
+                  [].forEach.call(modules, function (module) {
+                    var _module$actions$split, _module$actions, _module_permissions$a, _module_permissions$a2;
+
+                    var module_actions = (_module$actions$split = module === null || module === void 0 ? void 0 : (_module$actions = module.actions) === null || _module$actions === void 0 ? void 0 : _module$actions.split(",")) !== null && _module$actions$split !== void 0 ? _module$actions$split : [];
+                    var module_permissions = permissions.find(function (element) {
+                      return element.module_id == module.id;
+                    });
+                    var allowed_actions = (_module_permissions$a = module_permissions === null || module_permissions === void 0 ? void 0 : (_module_permissions$a2 = module_permissions.actions) === null || _module_permissions$a2 === void 0 ? void 0 : _module_permissions$a2.split(",")) !== null && _module_permissions$a !== void 0 ? _module_permissions$a : [];
+                    var mainContainer = document.createElement("div");
+                    mainContainer.className = "row";
+                    var nameContainer = document.createElement("div");
+                    nameContainer.className = "col-3 align-self-center";
+                    nameContainer.innerHTML = "<h6 class=\"mb-0 text-muted font-weight-bold\">".concat(module.name, "</h6>");
+                    mainContainer.appendChild(nameContainer);
+                    var checkContainer = document.createElement("div");
+                    checkContainer.className = "col-9 align-self-center border-bottom my-5";
+                    checkContainer.innerHTML = "<div class=\"checkbox-inline\"></div>";
+                    [].forEach.call(actions, function (action) {
+                      var action_found = module_actions.find(function (element) {
+                        return element == action.id;
+                      });
+                      var permission_found = allowed_actions.find(function (element) {
+                        return element == action.id;
+                      });
+                      var label = document.createElement("label");
+                      label.className = "checkbox col-3 text-uppercase font-weight-bold mx-4";
+                      label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
+                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && "disabled", "\n\n                         ").concat(permission_found && "checked", "\n                        > <span></span>").concat(!action_found ? '<s>' : '', " ").concat(translated_actions[action.name]).concat(!action_found ? '</s>' : '', "\n\n                        ");
+                      checkContainer.childNodes[0].appendChild(label);
+                    });
+                    mainContainer.appendChild(checkContainer);
+                    cardBody.appendChild(mainContainer);
+                    var submitBtn = document.getElementById("submit-btn");
+                    submitBtn.className = "btn btn-primary btn-sm d-block";
+                  });
+
+                case 19:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        })));
+      });
+    }
+  }, {
+    key: "roleData",
+    value: function roleData() {
+      var _this = this;
+
+      var editButtons = document.getElementsByName("btnEditRole");
+
+      if (editButtons == null) {
+        return;
+      }
+
+      [].forEach.call(editButtons, function (item) {
+        item.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          var role_id, response, data, name, state, form;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  role_id = item["id"].split("-")[1];
+                  _context3.next = 3;
+                  return _this.requestRoleData(role_id);
+
+                case 3:
+                  response = _context3.sent;
+
+                  if (!(response.state != 200)) {
+                    _context3.next = 8;
+                    break;
+                  }
+
+                  alert("Error inesperado.");
+                  console.log(response.error);
+                  return _context3.abrupt("return");
+
+                case 8:
+                  data = response.data;
+                  name = document.getElementById("name_edit");
+                  name.value = data.name;
+                  state = document.getElementById("state_edit");
+                  [].forEach.call(state, function (opt) {
+                    opt.value == data.state ? opt.selected = true : "";
+                  });
+                  form = document.getElementById("formUpdateRole");
+                  form.setAttribute("action", "roles/" + data.id);
+
+                case 15:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        })));
+      });
+    }
+  }, {
+    key: "requestRoleData",
+    value: function () {
+      var _requestRoleData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                response = {
+                  state: 500
+                };
+                _context4.next = 3;
+                return fetch("/roles/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context4.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function requestRoleData(_x2) {
+        return _requestRoleData.apply(this, arguments);
+      }
+
+      return requestRoleData;
+    }()
+  }]);
+
+  return Permissions;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/PickupHourModule/views/js/_hours.js":
+/*!*********************************************************!*\
+  !*** ./app/Modules/PickupHourModule/views/js/_hours.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Hours; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Hours = /*#__PURE__*/function () {
+  function Hours() {
+    _classCallCheck(this, Hours);
+  }
+
+  _createClass(Hours, [{
+    key: "initialize",
+    value: function initialize() {
+      this.loadHourData();
+    }
+  }, {
+    key: "loadHourData",
+    value: function loadHourData() {
+      var _this = this;
+
+      var buttons = document.getElementsByName('editHour');
+
+      if (buttons == null) {
+        return;
+      }
+
+      [].forEach.call(buttons, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var id, response, data, form;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  id = btn.id;
+                  _context.next = 3;
+                  return _this.requestHourPickedData(id);
+
+                case 3:
+                  response = _context.sent;
+                  data = response.data;
+                  form = document.getElementById("formUpdateHour");
+                  form.setAttribute('action', 'horas/' + id + '');
+                  document.getElementById('day_edit').value = data.day_id;
+                  document.getElementById('from_edit').value = data.init_time;
+                  document.getElementById('to_edit').value = data.end_time;
+
+                case 10:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        })));
+      });
+    }
+  }, {
+    key: "requestHourPickedData",
+    value: function () {
+      var _requestHourPickedData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/horas/" + id + '/edit').then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function requestHourPickedData(_x) {
+        return _requestHourPickedData.apply(this, arguments);
+      }
+
+      return requestHourPickedData;
+    }()
+  }]);
+
+  return Hours;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/PlanModule/views/js/_plans.js":
+/*!***************************************************!*\
+  !*** ./app/Modules/PlanModule/views/js/_plans.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Plans; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Plans = /*#__PURE__*/function () {
+  function Plans() {
+    _classCallCheck(this, Plans);
+  }
+
+  _createClass(Plans, [{
+    key: "initialize",
+    value: function initialize() {
+      this.editPlan();
+    }
+  }, {
+    key: "editPlan",
+    value: function editPlan() {
+      var _this = this;
+
+      var editButtons = document.getElementsByName('planEditBtn');
+
+      if (editButtons == null) {
+        return;
+      }
+
+      [].forEach.call(editButtons, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var id, response, data, name, description, form;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  id = btn.id;
+                  _context.next = 3;
+                  return _this.requestPlan(id);
+
+                case 3:
+                  response = _context.sent;
+                  data = response.data;
+                  name = document.getElementById("plan_name_edit");
+                  name.value = data.name;
+                  description = document.getElementById("plan_description_edit");
+                  description.value = data.description;
+                  form = document.getElementById("formUpdate");
+                  form.setAttribute('action', '/planes/' + id);
+
+                case 11:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        })));
+      });
+    }
+  }, {
+    key: "requestPlan",
+    value: function () {
+      var _requestPlan = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("/planes/" + id + "/edit").then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function requestPlan(_x) {
+        return _requestPlan.apply(this, arguments);
+      }
+
+      return requestPlan;
+    }()
+  }]);
+
+  return Plans;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/RateModule/views/js/_rates.js":
+/*!***************************************************!*\
+  !*** ./app/Modules/RateModule/views/js/_rates.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Rates; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _resources_js_requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../resources/js/_requests */ "./resources/js/_requests.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+var Rates = /*#__PURE__*/function () {
+  function Rates() {
+    _classCallCheck(this, Rates);
+  }
+
+  _createClass(Rates, [{
+    key: "initialize",
+    value: function initialize() {
+      this.getZone();
+    }
+  }, {
+    key: "getZone",
+    value: function () {
+      var _getZone = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var select;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                select = document.getElementById("select-zone");
+
+                if (!(select == null)) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 3:
+                select.addEventListener('change', function () {
+                  getNeighborhoods(select.value);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function getZone() {
+        return _getZone.apply(this, arguments);
+      }
+
+      return getZone;
+    }()
+  }]);
+
+  return Rates;
+}();
+
+
+
+var getNeighborhoods = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+    var select, response, neighborhoods;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            select = document.getElementById("select-neighborhood");
+
+            if (!(select == null)) {
+              _context2.next = 3;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 3:
+            select.innerHTML = "<option selected disabled>Seleccione</option>";
+            _context2.next = 6;
+            return Object(_resources_js_requests__WEBPACK_IMPORTED_MODULE_1__["requestZoneNeighborhoods"])(id);
+
+          case 6:
+            response = _context2.sent;
+
+            if (!(response.state != 200)) {
+              _context2.next = 9;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 9:
+            neighborhoods = response.data;
+            neighborhoods.map(function (neighborhood) {
+              var _neighborhood$name, _neighborhood$get_cor, _neighborhood$get_cor2, _neighborhood$get_cor3, _neighborhood$get_cor4;
+
+              var option = document.createElement("option");
+              option.text = ((_neighborhood$name = neighborhood.name) !== null && _neighborhood$name !== void 0 ? _neighborhood$name : '') + '; ' + ((_neighborhood$get_cor = neighborhood.get_corregimiento.name) !== null && _neighborhood$get_cor !== void 0 ? _neighborhood$get_cor : '') + '; ' + ((_neighborhood$get_cor2 = neighborhood.get_corregimiento.get_district.name) !== null && _neighborhood$get_cor2 !== void 0 ? _neighborhood$get_cor2 : '') + '; ' + ((_neighborhood$get_cor3 = neighborhood.get_corregimiento.get_district.get_province.name) !== null && _neighborhood$get_cor3 !== void 0 ? _neighborhood$get_cor3 : '') + '; ' + ((_neighborhood$get_cor4 = neighborhood.get_corregimiento.get_district.get_province.get_country.name) !== null && _neighborhood$get_cor4 !== void 0 ? _neighborhood$get_cor4 : '');
+              option.value = neighborhood.id;
+              select.appendChild(option);
+            });
+
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function getNeighborhoods(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./app/Modules/UserModule/views/js/_users.js":
+/*!***************************************************!*\
+  !*** ./app/Modules/UserModule/views/js/_users.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Users; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Users = /*#__PURE__*/function () {
+  function Users() {
+    _classCallCheck(this, Users);
+  }
+
+  _createClass(Users, [{
+    key: "initialize",
+    value: function initialize() {
+      this.test();
+    }
+  }, {
+    key: "test",
+    value: function test() {
+      Vue.component('example-component', __webpack_require__(/*! ../../../../../resources/js/components/exampleComponent.vue */ "./resources/js/components/exampleComponent.vue")["default"]);
+      console.log('----------------------------------------------UserModule test----------------------------------------------');
+    }
+  }]);
+
+  return Users;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/ZoneModule/views/js/_zones.js":
+/*!***************************************************!*\
+  !*** ./app/Modules/ZoneModule/views/js/_zones.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Zones; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _resources_js_requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../resources/js/_requests */ "./resources/js/_requests.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+var map;
+var infoWindow;
+
+function showArrays(event) {
+  // Since this polygon has only one path, we can call getPath() to return the
+  // MVCArray of LatLngs.
+  var polygon = this;
+  var vertices = polygon.getPath();
+  var contentString = "<b>Bermuda Triangle polygon</b><br>" + "Clicked location: <br>" + event.latLng.lat() + "," + event.latLng.lng() + "<br>"; // Iterate over the vertices.
+
+  for (var i = 0; i < vertices.getLength(); i++) {
+    var xy = vertices.getAt(i);
+    contentString += "<br>" + "Coordinate " + i + ":<br>" + xy.lat() + "," + xy.lng();
+  } // Replace the info window's content and position.
+
+
+  infoWindow.setContent(contentString);
+  infoWindow.setPosition(event.latLng);
+  infoWindow.open(map);
+}
+
+var Zones = /*#__PURE__*/function () {
+  function Zones() {
+    _classCallCheck(this, Zones);
+  }
+
+  _createClass(Zones, [{
+    key: "initialize",
+    value: function initialize() {
+      this.initMap();
+      this.getCountries();
+      this.formHandler();
+    }
+  }, {
+    key: "initMap",
+    value: function initMap() {
+      infoWindow = new google.maps.InfoWindow(); // The location of panama 8.689078613386496, -81.13166771577085
+
+      var panama = {
+        lat: 8.689,
+        lng: -81.131
+      };
+      var mapTemplate = document.getElementById("map");
+
+      if (mapTemplate == null) {
+        return;
+      } // The map, centered at panama
+
+
+      map = new google.maps.Map(mapTemplate, {
+        zoom: 7,
+        center: panama,
+        mapTypeId: google.maps.MapTypeId.RoadMap
+      }); // The marker, positioned at Uluru
+      // const marker = new google.maps.Marker({
+      //     position: panama,
+      //     map: map,
+      // });
+
+      var triangleCoords = [new google.maps.LatLng(8.827520901431855, -82.07374528457048), new google.maps.LatLng(8.281601970995954, -81.7386623009158) // new google.maps.LatLng(8.71351334406503, -81.26075706193294)
+      ];
+      var myPolygon = new google.maps.Polygon({
+        paths: triangleCoords,
+        draggable: true,
+        // turn off if it gets annoying
+        editable: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35
+      });
+      myPolygon.setMap(map);
+      myPolygon.addListener("dragend", showArrays);
+    }
+  }, {
+    key: "getCountries",
+    value: function () {
+      var _getCountries = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var select, response, countries;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                select = document.getElementById("select-country");
+
+                if (!(select == null)) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 3:
+                _context.next = 5;
+                return Object(_resources_js_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('country');
+
+              case 5:
+                response = _context.sent;
+
+                if (!(response.state != 200)) {
+                  _context.next = 8;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 8:
+                countries = response.data;
+                countries.map(function (country) {
+                  var option = document.createElement("option");
+                  option.text = country.name;
+                  option.value = country.id;
+                  select.appendChild(option);
+                });
+                select.addEventListener('change', function () {
+                  getProvinces(select.value);
+                });
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function getCountries() {
+        return _getCountries.apply(this, arguments);
+      }
+
+      return getCountries;
+    }()
+  }, {
+    key: "formHandler",
+    value: function formHandler() {
+      var editBtn = document.getElementsByClassName("edit-btn");
+
+      if (editBtn == null) {
+        return;
+      }
+
+      [].forEach.call(editBtn, function (btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          var info_label, zone_form, input_name, select_country, response, zone, put, country, province, district, corregimiento, neighborhoods;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  info_label = document.getElementById("info-label");
+
+                  if (!(info_label == null)) {
+                    _context2.next = 3;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 3:
+                  info_label.innerText = 'Actualizar';
+                  zone_form = document.getElementById("zone-form");
+
+                  if (!(zone_form == null)) {
+                    _context2.next = 7;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 7:
+                  input_name = document.getElementById("input-name");
+
+                  if (!(input_name == null)) {
+                    _context2.next = 10;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 10:
+                  select_country = document.getElementById("select-country");
+
+                  if (!(select_country == null)) {
+                    _context2.next = 13;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 13:
+                  _context2.next = 15;
+                  return Object(_resources_js_requests__WEBPACK_IMPORTED_MODULE_1__["requestZone"])(btn === null || btn === void 0 ? void 0 : btn.id);
+
+                case 15:
+                  response = _context2.sent;
+
+                  if (!((response === null || response === void 0 ? void 0 : response.state) != 200)) {
+                    _context2.next = 18;
+                    break;
+                  }
+
+                  return _context2.abrupt("return");
+
+                case 18:
+                  zone = response.data;
+                  zone_form.setAttribute('action', "zonas/".concat(zone.id));
+                  put = document.createElement('input');
+                  put.type = 'hidden';
+                  put.name = '_method';
+                  put.value = 'PUT';
+                  zone_form.appendChild(put);
+                  input_name.value = zone.name;
+                  country = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province.get_country;
+                  province = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province;
+                  district = zone.get_neighborhoods[0].get_corregimiento.get_district;
+                  corregimiento = zone.get_neighborhoods[0].get_corregimiento;
+                  neighborhoods = zone.get_neighborhoods;
+                  select_country.value = country.id;
+                  getProvinces(country.id, province.id);
+                  getDistricts(province.id, district.id);
+                  getCorregimientos(district.id, corregimiento.id);
+                  getNeighborhoods(corregimiento.id, neighborhoods);
+
+                case 36:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        })));
+      });
+    }
+  }]);
+
+  return Zones;
+}();
+
+
+
+var getProvinces = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
+    var selected,
+        select,
+        response,
+        provinces,
+        _args3 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            selected = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : false;
+            select = document.getElementById("select-province");
+
+            if (!(select == null)) {
+              _context3.next = 4;
+              break;
+            }
+
+            return _context3.abrupt("return");
+
+          case 4:
+            select.innerHTML = "<option selected disabled>Seleccione provincia</option>";
+            _context3.next = 7;
+            return Object(_resources_js_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('province', id);
+
+          case 7:
+            response = _context3.sent;
+
+            if (!(response.state != 200)) {
+              _context3.next = 10;
+              break;
+            }
+
+            return _context3.abrupt("return");
+
+          case 10:
+            provinces = response.data;
+            provinces.map(function (province) {
+              var option = document.createElement("option");
+              option.text = province.name;
+              option.value = province.id;
+              select.appendChild(option);
+            });
+
+            if (selected) {
+              select.value = selected;
+            }
+
+            select.addEventListener('change', function () {
+              getDistricts(select.value);
+            });
+
+          case 14:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+
+  return function getProvinces(_x) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+var getDistricts = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
+    var selected,
+        select,
+        response,
+        districts,
+        _args4 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            selected = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : false;
+            select = document.getElementById("select-district");
+
+            if (!(select == null)) {
+              _context4.next = 4;
+              break;
+            }
+
+            return _context4.abrupt("return");
+
+          case 4:
+            select.innerHTML = "<option selected disabled>Seleccione distrito</option>";
+            _context4.next = 7;
+            return Object(_resources_js_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('district', id);
+
+          case 7:
+            response = _context4.sent;
+
+            if (!(response.state != 200)) {
+              _context4.next = 10;
+              break;
+            }
+
+            return _context4.abrupt("return");
+
+          case 10:
+            districts = response.data;
+            districts.map(function (district) {
+              var option = document.createElement("option");
+              option.text = district.name;
+              option.value = district.id;
+              select.appendChild(option);
+            });
+
+            if (selected) {
+              select.value = selected;
+            }
+
+            select.addEventListener('change', function () {
+              getCorregimientos(select.value);
+            });
+
+          case 14:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+
+  return function getDistricts(_x2) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+var getCorregimientos = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(id) {
+    var selected,
+        select,
+        response,
+        corregimientos,
+        _args5 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            selected = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : false;
+            select = document.getElementById("select-corregimiento");
+
+            if (!(select == null)) {
+              _context5.next = 4;
+              break;
+            }
+
+            return _context5.abrupt("return");
+
+          case 4:
+            select.innerHTML = "<option selected disabled>Seleccione corregimientos</option>";
+            _context5.next = 7;
+            return Object(_resources_js_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('corregimiento', id);
+
+          case 7:
+            response = _context5.sent;
+
+            if (!(response.state != 200)) {
+              _context5.next = 10;
+              break;
+            }
+
+            return _context5.abrupt("return");
+
+          case 10:
+            corregimientos = response.data;
+            corregimientos.map(function (corregimiento) {
+              var option = document.createElement("option");
+              option.text = corregimiento.name;
+              option.value = corregimiento.id;
+              select.appendChild(option);
+            });
+
+            if (selected) {
+              select.value = selected;
+            }
+
+            select.addEventListener('change', function () {
+              getNeighborhoods(select.value);
+            });
+
+          case 14:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+
+  return function getCorregimientos(_x3) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+
+var getNeighborhoods = /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
+    var selected,
+        select,
+        response,
+        neighborhoods,
+        _args6 = arguments;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            selected = _args6.length > 1 && _args6[1] !== undefined ? _args6[1] : [];
+            select = document.getElementById("select-neighborhood");
+
+            if (!(select == null)) {
+              _context6.next = 4;
+              break;
+            }
+
+            return _context6.abrupt("return");
+
+          case 4:
+            select.innerHTML = "<option disabled>Seleccione barrio</option>";
+            _context6.next = 7;
+            return Object(_resources_js_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('neighborhood', id);
+
+          case 7:
+            response = _context6.sent;
+
+            if (!(response.state != 200)) {
+              _context6.next = 10;
+              break;
+            }
+
+            return _context6.abrupt("return");
+
+          case 10:
+            neighborhoods = response.data;
+            neighborhoods.map(function (neighborhood) {
+              var found = selected.find(function (element) {
+                return element.id == neighborhood.id;
+              });
+              var option = document.createElement("option");
+              option.text = neighborhood.name;
+              option.value = neighborhood.id;
+              option.selected = found ? true : false;
+              select.appendChild(option);
+            });
+
+          case 12:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+
+  return function getNeighborhoods(_x4) {
+    return _ref5.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/regenerator/index.js":
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
@@ -2258,7 +7590,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         value: 55,
         text: "Entregas"
       }, {
-        value: 53,
+        value: 56,
         text: "Recogidas"
       }],
       showModal: false,
@@ -2321,7 +7653,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.tabs[2].href = "consultas"; //NAME TABS
 
                 _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
-                _this2.selected == 54 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
+                _this2.selected == 56 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
                 _this2.selected == 55 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
               case 13:
@@ -2333,19 +7665,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getGuide: function getGuide(data) {
-      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route2, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_order4;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4;
 
       this.showGuide = data;
       this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
       this.showDataGuide.client = (_data$get_order2 = data.get_order) === null || _data$get_order2 === void 0 ? void 0 : _data$get_order2.get_user.name;
-      this.showDataGuide.posting = data.id;
+      this.showDataGuide.posting = data === null || data === void 0 ? void 0 : data.id;
       this.showDataGuide.dispatched = data.dispatched;
       this.showDataGuide.ref_client = (_data$get_order3 = data.get_order) === null || _data$get_order3 === void 0 ? void 0 : _data$get_order3.get_user.document_number;
       this.showDataGuide.programming = data.get_order.schedule_date;
       this.showDataGuide.transport = (_data$get_transport_t = data.get_transport_type) === null || _data$get_transport_t === void 0 ? void 0 : _data$get_transport_t.name;
-      this.showDataGuide.movil = ((_data$get_route = data.get_route) === null || _data$get_route === void 0 ? void 0 : _data$get_route.get_messenger.name) + ' ' + ((_data$get_route2 = data.get_route) === null || _data$get_route2 === void 0 ? void 0 : _data$get_route2.get_messenger.last_name);
-      this.showDataGuide.client_depto = ((_data$get_branch_offi = data.get_branch_office) === null || _data$get_branch_offi === void 0 ? void 0 : (_data$get_branch_offi2 = _data$get_branch_offi.get_department) === null || _data$get_branch_offi2 === void 0 ? void 0 : _data$get_branch_offi2.get_department.id) + ':' + ((_data$get_branch_offi3 = data.get_branch_office) === null || _data$get_branch_offi3 === void 0 ? void 0 : (_data$get_branch_offi4 = _data$get_branch_offi3.get_department) === null || _data$get_branch_offi4 === void 0 ? void 0 : _data$get_branch_offi4.get_department.name);
-      this.showDataGuide.client_branch_office = ((_data$get_branch_offi5 = data.get_branch_office) === null || _data$get_branch_offi5 === void 0 ? void 0 : _data$get_branch_offi5.id) + ': ' + ((_data$get_branch_offi6 = data.get_branch_office) === null || _data$get_branch_offi6 === void 0 ? void 0 : _data$get_branch_offi6.name);
+      this.showDataGuide.movil = data.get_route && ((_data$get_route = data.get_route) === null || _data$get_route === void 0 ? void 0 : (_data$get_route$get_m = _data$get_route.get_messenger) === null || _data$get_route$get_m === void 0 ? void 0 : _data$get_route$get_m.name) + ' ' + ((_data$get_route2 = data.get_route) === null || _data$get_route2 === void 0 ? void 0 : (_data$get_route2$get_ = _data$get_route2.get_messenger) === null || _data$get_route2$get_ === void 0 ? void 0 : _data$get_route2$get_.last_name);
+      this.showDataGuide.client_depto = ((_data$get_branch_offi = data.get_branch_office) === null || _data$get_branch_offi === void 0 ? void 0 : (_data$get_branch_offi2 = _data$get_branch_offi.get_department) === null || _data$get_branch_offi2 === void 0 ? void 0 : (_data$get_branch_offi3 = _data$get_branch_offi2.get_department) === null || _data$get_branch_offi3 === void 0 ? void 0 : _data$get_branch_offi3.id) + ':' + ((_data$get_branch_offi4 = data.get_branch_office) === null || _data$get_branch_offi4 === void 0 ? void 0 : (_data$get_branch_offi5 = _data$get_branch_offi4.get_department) === null || _data$get_branch_offi5 === void 0 ? void 0 : (_data$get_branch_offi6 = _data$get_branch_offi5.get_department) === null || _data$get_branch_offi6 === void 0 ? void 0 : _data$get_branch_offi6.name);
+      this.showDataGuide.client_branch_office = ((_data$get_branch_offi7 = data.get_branch_office) === null || _data$get_branch_offi7 === void 0 ? void 0 : _data$get_branch_offi7.id) + ': ' + ((_data$get_branch_offi8 = data.get_branch_office) === null || _data$get_branch_offi8 === void 0 ? void 0 : _data$get_branch_offi8.name);
       this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.concept = data.concept;
       this.showDataGuide.direction = data.address_name;
@@ -2380,7 +7712,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this3.statusMatrix(_this3.selected);
 
                 type == 55 && (type = 3);
-                type == 53 && (type = 7);
+                type == 56 && (type = 7);
                 _context2.next = 8;
                 return _this3.requestGuides(type);
 
@@ -3059,8 +8391,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return fetch("/despacho/orden/estado", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  console.log(data);
-
                   if (data.state == 500) {
                     return error(data.message);
                   }
@@ -3358,6 +8688,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {},
   methods: {
     rowClick: function rowClick(data) {
+      // console.log(data)
       this.$emit("getGuide", data);
     },
     formatDate: function formatDate(date) {
@@ -4152,12 +9483,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _modal_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modal.vue */ "./resources/js/components/modal.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4334,7 +9659,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: ['matrix', 'roles'],
   data: function data() {
     return {
-      statusDescriptors: null,
+      statusDescriptors: [],
       selectedStatusMatrixId: null,
       showModal: false,
       methodValue: 'POST',
@@ -4398,7 +9723,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
 
                   if (id == -1) {
-                    _this3.statusDescriptors.push(_objectSpread({}, descriptor));
+                    _this3.statusDescriptors.push(descriptor); // location.reload();
+
                   } else {
                     _this3.statusDescriptors[id].description = descriptor.description;
                     _this3.statusDescriptors[id].role_id = descriptor.role_id;
@@ -63643,20 +68969,22 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-12 mb-2" }, [
-                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-                    _vm._v("Movil:"),
-                  ]),
-                  _vm._v(" "),
-                  _vm.showDataGuide
-                    ? _c("div", {
-                        staticClass: "line-height-xl",
-                        domProps: {
-                          textContent: _vm._s(_vm.showDataGuide.movil),
-                        },
-                      })
-                    : _vm._e(),
-                ]),
+                _vm.showDataGuide.movil
+                  ? _c("div", { staticClass: "col-md-12 mb-2" }, [
+                      _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                        _vm._v("Movil:"),
+                      ]),
+                      _vm._v(" "),
+                      _vm.showDataGuide
+                        ? _c("div", {
+                            staticClass: "line-height-xl",
+                            domProps: {
+                              textContent: _vm._s(_vm.showDataGuide.movil),
+                            },
+                          })
+                        : _vm._e(),
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("div", {
                   staticClass:
@@ -65781,7 +71109,7 @@ var render = function () {
               _c("div", { staticClass: "row" }, [
                 _vm._m(2),
                 _vm._v(" "),
-                _vm.statusDescriptors != null
+                _vm.selectedStatusMatrixId != null
                   ? _c("div", { staticClass: "col-md-6" }, [
                       _c(
                         "a",
@@ -82724,1658 +88052,6 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/_addresses.js":
-/*!************************************!*\
-  !*** ./resources/js/_addresses.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Addresses; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Addresses = /*#__PURE__*/function () {
-  function Addresses() {
-    _classCallCheck(this, Addresses);
-
-    _defineProperty(this, "getAddresses", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var _address$getElementBy;
-
-      var address, $table, $template, $fragment, user_id, res, message;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              address = document, $table = address.querySelector(".address_table"), $template = (_address$getElementBy = address.getElementById("address-template")) === null || _address$getElementBy === void 0 ? void 0 : _address$getElementBy.content, $fragment = address.createDocumentFragment();
-              user_id = $table === null || $table === void 0 ? void 0 : $table.id;
-              $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").replaceChildren($fragment);
-              _context.prev = 3;
-              _context.next = 6;
-              return fetch("/direcciones?user_id=+".concat(user_id)).then(function (response) {
-                return response.json();
-              }).then(function (data) {
-                data.data.forEach(function (element) {
-                  $template.getElementById("description").textContent = element.description;
-                  $template.getElementById("name").textContent = element.name;
-                  $template.getElementById("state").textContent = element.state;
-                  $template.querySelector(".edit").dataset.id = element.id;
-                  $template.querySelector(".edit").dataset.description = element.description;
-                  $template.querySelector(".edit").dataset.name = element.name;
-                  $template.querySelector(".edit").dataset.lat = element.lat;
-                  $template.querySelector(".edit").dataset.lng = element.lng;
-                  $template.querySelector(".delete").dataset.id = element.id;
-                  var $clone = address.importNode($template, true); // populate_with_new_rows(address);
-                  // old_tbody.parentNode.replaceChild(address, old_tbody)
-
-                  // populate_with_new_rows(address);
-                  // old_tbody.parentNode.replaceChild(address, old_tbody)
-                  $fragment.appendChild($clone);
-                });
-              });
-
-            case 6:
-              res = _context.sent;
-              //    let response = await this.deleteAddress(address);
-              $table === null || $table === void 0 ? void 0 : $table.querySelector("tbody").appendChild($fragment);
-              _context.next = 14;
-              break;
-
-            case 10:
-              _context.prev = 10;
-              _context.t0 = _context["catch"](3);
-              message = _context.t0.statusText || "Ocurrió un error";
-              $table === null || $table === void 0 ? void 0 : $table.insertAdjacentHTML("afterend", "<p><b>Error ".concat(_context.t0.status, ": ").concat(message, "</b></p>"));
-
-            case 14:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[3, 10]]);
-    })));
-  }
-
-  _createClass(Addresses, [{
-    key: "initialize",
-    value: function initialize() {
-      this.autocompleteAddress(); // this.createAddress();
-      // this.getAddresses();
-      // this.deleteAddress();
-    }
-  }, {
-    key: "autocompleteAddress",
-    value: function autocompleteAddress() {
-      //AUTOCOMPLETE CLIENT ADDRESS CREATE/EDIT
-      var directionCity2 = document.getElementsByName("address");
-      directionCity2.forEach(function callback(directionCity2, index) {
-        google.maps.event.addDomListener(window, "load", function () {
-          var autocompleteCity2 = new google.maps.places.Autocomplete(directionCity2, {
-            bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
-            types: ["geocode"]
-          });
-          autocompleteCity2.addListener("place_changed", function () {
-            var place = autocompleteCity2.getPlace();
-            document.getElementsByName("address")[index].value = place.formatted_address;
-            document.getElementsByName("lat")[index].value = place.geometry.location.lat();
-            document.getElementsByName("lng")[index].value = place.geometry.location.lng();
-          });
-        });
-      });
-    }
-  }, {
-    key: "createAddress",
-    value: //CREATE ADDRESS
-    function createAddress() {
-      var _this = this;
-
-      var formCreateAddress = document.getElementById("formCreateAddress");
-
-      if (formCreateAddress == null) {
-        return;
-      }
-
-      formCreateAddress.style.display = "none";
-      formCreateAddress.addEventListener("submit", /*#__PURE__*/function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
-          var token, myHeaders, formData, requestOptions, response;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  e.preventDefault();
-                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                  myHeaders = new Headers();
-                  myHeaders.append("accept", "application/json");
-                  myHeaders.append("Access-Control-Allow-Origin", "*");
-                  myHeaders.append("Content-Type", "application/json");
-                  myHeaders.append("X-CSRF-TOKEN", token);
-                  formData = JSON.stringify({
-                    user_id: e.target.user_id.value,
-                    name: e.target.address.value,
-                    lat: e.target.lat.value,
-                    lng: e.target.lng.value,
-                    description: e.target.description.value
-                  });
-                  requestOptions = {
-                    method: "POST",
-                    headers: myHeaders,
-                    body: formData
-                  };
-                  _context2.next = 11;
-                  return _this.requestCreateAddress(requestOptions);
-
-                case 11:
-                  response = _context2.sent;
-
-                  if (response.state != 200) {
-                    console.log(formCreateAddress);
-                  }
-
-                  _this.getAddresses();
-
-                case 14:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        }));
-
-        return function (_x) {
-          return _ref2.apply(this, arguments);
-        };
-      }());
-    }
-  }, {
-    key: "requestCreateAddress",
-    value: function () {
-      var _requestCreateAddress = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(requestOptions) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                response = {
-                  data: 500
-                };
-                _context3.next = 3;
-                return fetch("/direcciones", requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (err) {
-                  return console.warn(err);
-                });
-
-              case 3:
-                return _context3.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }));
-
-      function requestCreateAddress(_x2) {
-        return _requestCreateAddress.apply(this, arguments);
-      }
-
-      return requestCreateAddress;
-    }()
-  }, {
-    key: "deleteAddress",
-    value: function deleteAddress() {
-      var deleteAddress = document.getElementsByClassName("delete");
-
-      if (deleteAddress == null) {
-        return;
-      }
-
-      [].forEach.call(deleteAddress, function (btn) {
-        btn.addEventListener("click", function () {
-          console.log(btn);
-          var address = btn.dataset.id;
-          console.log(address);
-          Swal.fire({
-            title: "Eliminar esta dirección!",
-            text: "¿Seguro que quieres continuar?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Confirmar",
-            cancelButtonText: "Cancelar"
-          }).then(function (result) {
-            if (!result.value) {
-              return;
-            }
-
-            var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            var url = "/direcciones/" + address.id;
-            console.log(url);
-            fetch(url, {
-              method: "DELETE",
-              headers: {
-                "X-CSRF-TOKEN": token
-              }
-            }).then(function () {
-              Swal.fire({
-                title: "Categoria de Producto eliminada",
-                icon: "success",
-                confirmButtonText: "Ok"
-              });
-              address.remove();
-            })["catch"](function () {
-              Swal.fire({
-                title: "Ups!",
-                text: "Ha ocurrido un error. Intentalo mas tarde",
-                icon: "error",
-                confirmButtonText: "Ok"
-              });
-            });
-          });
-        });
-      });
-    }
-  }]);
-
-  return Addresses;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/_branchOffice.js":
-/*!***************************************!*\
-  !*** ./resources/js/_branchOffice.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BranchOffices; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var BranchOffices = /*#__PURE__*/function () {
-  function BranchOffices() {
-    _classCallCheck(this, BranchOffices);
-  }
-
-  _createClass(BranchOffices, [{
-    key: "initialize",
-    value: function initialize() {
-      this.loadPlanFields();
-      this.autocompleteAddress();
-    }
-  }, {
-    key: "loadPlanFields",
-    value: function loadPlanFields() {
-      var option = document.getElementById("branch_office_payment_method");
-      var useMode = document.getElementById("useMode");
-      var slcPlan = document.getElementById("slcPlan");
-
-      if (option == null) {
-        return;
-      }
-
-      option.addEventListener('change', function () {
-        if (option.value == 24) {
-          useMode.className = 'd-none';
-          slcPlan.className = 'd-none';
-        } else {
-          useMode.className = 'form-group col-md-3';
-          slcPlan.className = 'form-group col-md-3';
-        }
-      });
-    }
-  }, {
-    key: "autocompleteAddress",
-    value: function autocompleteAddress() {
-      var directionCity = document.getElementById("branch_office_address");
-
-      if (directionCity == null) {
-        return;
-      }
-
-      google.maps.event.addDomListener(window, "load", function () {
-        var autocompleteCity = new google.maps.places.Autocomplete(directionCity, {
-          bounds: new google.maps.LatLngBounds(new google.maps.LatLng(40.416775, -3.70379)),
-          types: ["geocode"]
-        });
-        autocompleteCity.addListener("place_changed", function () {
-          var place = autocompleteCity.getPlace();
-          document.getElementById("branch_office_address").value = place.formatted_address;
-          document.getElementById("branch_office_lat").value = place.geometry.location.lat();
-          document.getElementById("branch_office_lng").value = place.geometry.location.lng();
-        });
-      });
-    }
-  }]);
-
-  return BranchOffices;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/_customers.js":
-/*!************************************!*\
-  !*** ./resources/js/_customers.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Customers; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Customers = /*#__PURE__*/function () {
-  function Customers() {
-    _classCallCheck(this, Customers);
-
-    this.branchId = '';
-    this.userId = '';
-  }
-
-  _createClass(Customers, [{
-    key: "initialize",
-    value: function initialize() {
-      this.customerFeatures();
-      this.saveCustomer();
-      this.saveBranchOffices();
-      this.listBranchOffices();
-      this.updateBranchOffice();
-      this.saveUser();
-      this.listUsers();
-      this.updateUser();
-    }
-  }, {
-    key: "saveCustomer",
-    value: function saveCustomer() {
-      var _this = this;
-
-      var customerForm = document.getElementById("storeCustomerForm");
-
-      if (customerForm == null) {
-        return;
-      }
-
-      var customerBtn = document.getElementById("storeCustomerBtn");
-
-      if (customerBtn == null) {
-        return;
-      }
-
-      customerBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var formData, branchesCheck, departmentsCheck, branchArr, departmentsArr, token, myHeaders, requestOptions, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                formData = new FormData(storeCustomerForm);
-                branchesCheck = document.getElementsByName('branchCheck');
-                departmentsCheck = document.getElementsByName("departments[]");
-                branchArr = [];
-                departmentsArr = [];
-                branchesCheck.forEach(function (e) {
-                  e.checked && branchArr.push(e.value);
-                });
-                departmentsCheck.forEach(function (e) {
-                  e.checked && departmentsArr.push(e.value);
-                });
-                formData.append('branchCheck', branchArr);
-                formData.append('departments', departmentsArr);
-                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                console.log(token);
-                myHeaders = new Headers();
-                myHeaders.append("Accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                myHeaders.append('Content-Type', "application/json");
-                myHeaders.append('Content-Type', "multipart/form-data");
-                myHeaders.append("X-CSRF-TOKEN", token);
-                requestOptions = {
-                  method: "POST",
-                  headers: myHeaders,
-                  body: JSON.stringify(Object.fromEntries(formData))
-                };
-                _context.next = 21;
-                return _this.storeCustomer(requestOptions);
-
-              case 21:
-                response = _context.sent;
-                console.log(response);
-
-                if (response.state == 200) {
-                  correct(response.message);
-                  window.location.replace("/clientes");
-                } else {
-                  error(response.message);
-                  console.log(response.error);
-                }
-
-              case 24:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      })));
-    }
-  }, {
-    key: "storeCustomer",
-    value: function () {
-      var _storeCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(requestOptions) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context2.next = 3;
-                return fetch("/clientes/store", requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context2.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function storeCustomer(_x) {
-        return _storeCustomer.apply(this, arguments);
-      }
-
-      return storeCustomer;
-    }()
-  }, {
-    key: "customerFeatures",
-    value: function customerFeatures() {
-      var typeSelected = document.getElementById("customer_type_edit");
-      var option = document.getElementById("slc_type");
-      var naturalCustomer = document.getElementById("naturalCustomer");
-      var legalCustomer = document.getElementById("legalCustomer");
-      var birth_date = document.getElementById("birth_date");
-      var password = document.getElementById("passwordDiv");
-      var r_password = document.getElementById("r_passwordDiv");
-
-      if (option == null) {
-        return;
-      }
-
-      if (typeSelected != null) {
-        if (typeSelected.value == 1) {
-          legalCustomer.className = 'd-none';
-          naturalCustomer.className = 'col-md-6 d-flex px-0';
-          birth_date.className = 'form-group py-3 m-0 col-md-4';
-        } else if (typeSelected.value == 2) {
-          naturalCustomer.className = 'd-none';
-          legalCustomer.className = 'col-md-3 d-flex px-0';
-          birth_date.className = 'form-group py-3 m-0 col-md-3';
-        }
-      }
-
-      option.addEventListener('change', function (event) {
-        if (option.value == 1) {
-          legalCustomer.className = 'd-none';
-          naturalCustomer.className = 'col-md-6 d-flex px-0';
-          birth_date.className = 'form-group py-3 m-0 col-md-4';
-          password.className = 'form-group py-3 m-0 col-md-4';
-          r_password.className = 'form-group py-3 m-0 col-md-4';
-        } else if (option.value == 2) {
-          naturalCustomer.className = 'd-none';
-          legalCustomer.className = 'col-md-3 d-flex px-0';
-          birth_date.className = 'form-group py-3 m-0 col-md-3';
-          password.className = 'form-group py-3 m-0 col-md-6';
-          r_password.className = 'form-group py-3 m-0 col-md-6';
-        }
-      });
-    }
-  }, {
-    key: "saveBranchOffices",
-    value: function saveBranchOffices() {
-      var _this2 = this;
-
-      var btnSendData = document.getElementById("saveBranchOffice");
-
-      if (btnSendData == null) {
-        return;
-      }
-
-      btnSendData.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var _document$getElementB;
-
-        var branch_office_name, branch_office_type, branch_office_description, branch_office_zone, branch_office_address, branch_office_lat, branch_office_lng, branch_office_email, branch_office_contact, branch_office_document_type, branch_office_document_number, branch_office_payment_method, branch_office_phone, branch_office_plan, branch_office_usage_mode, branch_office_default, branch_office_department, user_id, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                branch_office_name = document.getElementById("branch_office_name"), branch_office_type = document.getElementById("branch_office_type"), branch_office_description = document.getElementById("branch_office_description"), branch_office_zone = document.getElementById("branch_office_zone"), branch_office_address = document.getElementById("branch_office_address"), branch_office_lat = document.getElementById("branch_office_lat"), branch_office_lng = document.getElementById("branch_office_lng"), branch_office_email = document.getElementById("branch_office_email"), branch_office_contact = document.getElementById("branch_office_contact"), branch_office_document_type = document.getElementById("branch_office_document_type"), branch_office_document_number = document.getElementById("branch_office_document_number"), branch_office_payment_method = document.getElementById("branch_office_payment_method"), branch_office_phone = document.getElementById("branch_office_phone"), branch_office_plan = document.getElementById("branch_office_plan"), branch_office_usage_mode = document.getElementById("branch_office_usage_mode"), branch_office_default = document.getElementById("branch_office_default"), branch_office_department = document.getElementById("branch_office_department");
-                user_id = (_document$getElementB = document.getElementById("customer_id")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.value;
-                formData = new FormData();
-                formData.append('branch_office_name', branch_office_name.value);
-                formData.append('branch_office_type', branch_office_type.value);
-                formData.append('branch_office_description', branch_office_description.value);
-                formData.append('branch_office_zone', branch_office_zone.value);
-                formData.append('branch_office_address', branch_office_address.value);
-                formData.append('branch_office_lat', branch_office_lat.value);
-                formData.append('branch_office_lng', branch_office_lng.value);
-                formData.append('branch_office_email', branch_office_email.value);
-                formData.append('branch_office_contact', branch_office_contact.value);
-                formData.append('branch_office_document_type', branch_office_document_type.value);
-                formData.append('branch_office_document_number', branch_office_document_number.value);
-                formData.append('branch_office_payment_method', branch_office_payment_method.value);
-                formData.append('branch_office_phone', branch_office_phone.value);
-                formData.append('branch_office_plan', branch_office_plan.value);
-                formData.append('branch_office_usage_mode', branch_office_usage_mode.value);
-                formData.append('branch_office_default', branch_office_default.value);
-                formData.append('branch_office_department', branch_office_department.value);
-
-                if (user_id != null) {
-                  formData.append('user_id', user_id);
-                  console.log('user_id', user_id);
-                }
-
-                _context3.next = 23;
-                return _this2.sendBranchOfficeData(formData);
-
-              case 23:
-                response = _context3.sent;
-                console.log(response);
-
-                if (response['state'] == 200) {
-                  correct('Sucursal creada de manera exitosa');
-                  branch_office_name.value = '';
-                  branch_office_type.value = '';
-                  branch_office_description.value = '';
-                  branch_office_zone.selectedIndex = 0;
-                  branch_office_address.value = '';
-                  branch_office_lat.value = '';
-                  branch_office_lng.value = '';
-                  branch_office_email.value = '';
-                  branch_office_contact.value = '';
-                  branch_office_document_type.selectedIndex = 0;
-                  branch_office_document_number.value = '';
-                  branch_office_payment_method.value = '';
-                  branch_office_phone.value = '';
-                  branch_office_usage_mode.value = '';
-                  branch_office_default.checked = false;
-                  branch_office_department.selectedIndex = 0;
-                  modal = document.getElementById("modalCreate");
-                  modal.click();
-
-                  _this2.listBranchOffices();
-                } else {
-                  error("Error al crear sucursal");
-                  console.log('Error ocurrido: ' + response['error']);
-                }
-
-              case 26:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      })));
-    }
-  }, {
-    key: "sendBranchOfficeData",
-    value: function () {
-      var _sendBranchOfficeData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(formData) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context4.next = 3;
-                return fetch("/sucursales/null/store", {
-                  headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  },
-                  method: 'POST',
-                  body: formData
-                });
-
-              case 3:
-                response = _context4.sent;
-                return _context4.abrupt("return", response.json());
-
-              case 5:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }));
-
-      function sendBranchOfficeData(_x2) {
-        return _sendBranchOfficeData.apply(this, arguments);
-      }
-
-      return sendBranchOfficeData;
-    }()
-  }, {
-    key: "listBranchOffices",
-    value: function () {
-      var _listBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var _document$getElementB2;
-
-        var tbody, get_customer_id, route, customer_id, assignedBranchOffices;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                tbody = document.querySelector("#branch_offices_table tbody");
-
-                if (!(tbody == null)) {
-                  _context5.next = 3;
-                  break;
-                }
-
-                return _context5.abrupt("return");
-
-              case 3:
-                tbody.innerHTML = '';
-                get_customer_id = (_document$getElementB2 = document.getElementById("customer_id")) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.value;
-                route = window.location.pathname.split('/');
-                customer_id = route.includes('edit') || typeof parseInt(route[2]) == 'number' ? get_customer_id : null;
-
-                if (!route.includes('edit')) {
-                  _context5.next = 13;
-                  break;
-                }
-
-                _context5.next = 10;
-                return this.requestBranchOffices(customer_id);
-
-              case 10:
-                _context5.t0 = _context5.sent;
-                _context5.next = 23;
-                break;
-
-              case 13:
-                if (!(typeof parseInt(route[2]) == 'number')) {
-                  _context5.next = 19;
-                  break;
-                }
-
-                _context5.next = 16;
-                return this.requestBranchOffices(customer_id);
-
-              case 16:
-                _context5.t1 = _context5.sent;
-                _context5.next = 22;
-                break;
-
-              case 19:
-                _context5.next = 21;
-                return this.requestBranchOffices(customer_id);
-
-              case 21:
-                _context5.t1 = _context5.sent;
-
-              case 22:
-                _context5.t0 = _context5.t1;
-
-              case 23:
-                assignedBranchOffices = _context5.t0;
-
-                if (assignedBranchOffices.state == 200) {
-                  (function () {
-                    var data = assignedBranchOffices.data;
-
-                    if (data.length > 0) {
-                      var _loop = function _loop(i) {
-                        var _data$i$name, _data$i$get_type$name, _data$i$get_zone$name, _data$i$contact;
-
-                        var row = tbody.insertRow();
-                        var nameCell = row.insertCell(0);
-                        nameCell.innerHTML = (_data$i$name = data[i].name) !== null && _data$i$name !== void 0 ? _data$i$name : '';
-                        var typeCell = row.insertCell(1);
-                        typeCell.innerHTML = (_data$i$get_type$name = data[i].get_type.name) !== null && _data$i$get_type$name !== void 0 ? _data$i$get_type$name : '';
-                        var zoneCell = row.insertCell(2);
-                        zoneCell.innerHTML = (_data$i$get_zone$name = data[i].get_zone.name) !== null && _data$i$get_zone$name !== void 0 ? _data$i$get_zone$name : '';
-                        var contactCell = row.insertCell(3);
-                        contactCell.innerHTML = (_data$i$contact = data[i].contact) !== null && _data$i$contact !== void 0 ? _data$i$contact : '';
-                        var stateCell = row.insertCell(4);
-
-                        if (data[i].state == 1) {
-                          stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
-                                                    Activo\
-                                                </span>';
-                        } else {
-                          stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
-                                                    Inactivo\
-                                                </span>';
-                        }
-
-                        var selectCell = row.insertCell(5);
-                        var branchCheck = document.createElement("input");
-                        branchCheck.setAttribute('class', 'checkbox-inline mt-3');
-                        branchCheck.setAttribute('type', 'checkbox');
-                        branchCheck.setAttribute('name', 'branchCheck');
-                        branchCheck.setAttribute('value', data[i].id);
-                        branchCheck.checked = true; // //Show button
-                        // const showBranch = document.createElement("button");
-                        // showBranch.setAttribute('class', 'btn btn-icon btn-light-primary btn-sm mr-2');
-                        // showBranch.setAttribute('type', 'button');
-                        // showBranch.innerHTML = '<i class="far fa-folder-open"></i>';
-                        //Edit button
-
-                        var branchEdit = document.createElement("button");
-                        branchEdit.setAttribute('class', 'btn btnEdit btn-icon btn-light-success btn-sm mr-2');
-                        branchEdit.setAttribute('data-toggle', 'modal');
-                        branchEdit.setAttribute('data-target', '#modalEdit');
-                        branchEdit.setAttribute('id', 'branch-' + data[i].id);
-                        branchEdit.setAttribute('type', 'button');
-                        branchEdit.setAttribute('title', 'Editar');
-                        branchEdit.setAttribute('data-tooltip', '');
-                        branchEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
-
-                        var branchDelete = document.createElement("button");
-
-                        branchDelete.onclick = function () {
-                          confirmDelete('/sucursales/null/' + data[i].id);
-                        };
-
-                        branchDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                        branchDelete.setAttribute('type', 'button');
-                        branchDelete.setAttribute('title', 'Eliminar');
-                        branchDelete.setAttribute('data-tooltip', '');
-                        branchDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
-
-                        var buttonsDiv = document.createElement("div");
-                        buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row'); // console.log(location.pathname.split('/')[2]);
-
-                        if (!(typeof parseInt(location.pathname.split('/')[2]) == 'number' && !location.pathname.includes('edit')) || location.pathname.includes('create')) {
-                          buttonsDiv.appendChild(branchCheck);
-                        }
-
-                        buttonsDiv.appendChild(branchEdit);
-                        buttonsDiv.appendChild(branchDelete);
-                        selectCell.appendChild(buttonsDiv);
-                        tbody.appendChild(row);
-                      };
-
-                      for (var i = 0; i < data.length; i++) {
-                        _loop(i);
-                      }
-                    }
-                  })();
-                }
-
-                this.editBranches();
-                this.listDepartments();
-
-              case 27:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, this);
-      }));
-
-      function listBranchOffices() {
-        return _listBranchOffices.apply(this, arguments);
-      }
-
-      return listBranchOffices;
-    }()
-  }, {
-    key: "requestBranchOffices",
-    value: function () {
-      var _requestBranchOffices = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var customer_id,
-            response,
-            _args6 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                customer_id = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : null;
-                response = {
-                  'state': 500
-                };
-                _context6.next = 4;
-                return fetch("/unassigned_branch_offices?customer=" + customer_id).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 4:
-                return _context6.abrupt("return", response);
-
-              case 5:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }));
-
-      function requestBranchOffices() {
-        return _requestBranchOffices.apply(this, arguments);
-      }
-
-      return requestBranchOffices;
-    }()
-  }, {
-    key: "editBranches",
-    value: function editBranches() {
-      var _this3 = this;
-
-      var branches = document.getElementsByClassName("btnEdit");
-
-      if (branches == null) {
-        return;
-      }
-
-      [].forEach.call(branches, function (branch) {
-        branch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-          var response, data, slcBranchType, slcZone, slcDocumentType, slcPaymentMethod, inpDefault, dpts, plans;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-            while (1) {
-              switch (_context7.prev = _context7.next) {
-                case 0:
-                  _this3.branchId = branch['id'].split('-')[1];
-                  _context7.next = 3;
-                  return _this3.requestBranchToEdit(_this3.branchId);
-
-                case 3:
-                  response = _context7.sent;
-                  data = response.data[0];
-                  document.getElementById("branch_office_name_edit").value = data.name;
-                  slcBranchType = document.getElementById("branch_office_type_edit");
-                  [].forEach.call(slcBranchType, function (key) {
-                    if (key.value == data.type) {
-                      key.setAttribute('selected', 'selected');
-                    }
-                  });
-                  document.getElementById("branch_office_description_edit").value = data.description;
-                  slcZone = document.getElementById("branch_office_zone_edit");
-                  [].forEach.call(slcZone, function (key) {
-                    if (key.value == data.zone_id) {
-                      key.setAttribute('selected', 'selected');
-                    }
-                  });
-                  document.getElementById("branch_office_address_edit").value = data.address;
-                  document.getElementById("branch_office_lat_edit").value = data.lat;
-                  document.getElementById("branch_office_lng_edit").value = data.lng;
-                  document.getElementById("branch_office_email_edit").value = data.email;
-                  document.getElementById("branch_office_contact_edit").value = data.contact;
-                  slcDocumentType = document.getElementById("branch_office_document_type_edit");
-                  [].forEach.call(slcDocumentType, function (key) {
-                    if (key.value == data.document_type) {
-                      key.setAttribute('selected', 'selected');
-                    }
-                  });
-                  document.getElementById("branch_office_document_number_edit").value = data.document_number;
-                  slcPaymentMethod = document.getElementById("branch_office_payment_method_edit");
-                  [].forEach.call(slcPaymentMethod, function (key) {
-                    if (key.value == data.payment_method) {
-                      if (key.value != 24) {
-                        document.getElementById("slcPlanEdit").className = 'form-group col-md-3';
-                        document.getElementById("useModeEdit").className = 'form-group col-md-3';
-                      } else {
-                        document.getElementById("slcPlanEdit").className = 'd-none';
-                        document.getElementById("useModeEdit").className = 'd-none';
-                      }
-
-                      key.setAttribute('selected', 'selected');
-                    }
-                  });
-                  document.getElementById("branch_office_phone_edit").value = data.phone;
-                  inpDefault = document.getElementsByName("branch_office_default_edit");
-                  [].forEach.call(inpDefault, function (key) {
-                    if (key.value == data["default"]) {
-                      key.setAttribute('checked', 'checked');
-                    }
-                  });
-                  dpts = document.getElementById("branch_office_department_edit");
-                  [].forEach.call(dpts, function (dpt) {
-                    if (data.get_department != null) {
-                      if (dpt.value == data.get_department.department_id) {
-                        dpt.selected = true;
-                      }
-                    } else {
-                      dpt.value == 'Seleccione' ? dpt.selected = true : '';
-                    }
-                  });
-                  plans = document.getElementById("branch_office_plan_edit");
-                  [].forEach.call(plans, function (key) {
-                    if (key.value == data.plan) {
-                      key.setAttribute('checked', 'true');
-                    }
-                  });
-
-                case 28:
-                case "end":
-                  return _context7.stop();
-              }
-            }
-          }, _callee7);
-        })));
-      });
-    }
-  }, {
-    key: "requestBranchToEdit",
-    value: function () {
-      var _requestBranchToEdit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context8.next = 3;
-                return fetch("/sucursales/null/" + id).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context8.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }));
-
-      function requestBranchToEdit(_x3) {
-        return _requestBranchToEdit.apply(this, arguments);
-      }
-
-      return requestBranchToEdit;
-    }()
-  }, {
-    key: "updateBranchOffice",
-    value: function updateBranchOffice() {
-      var _this4 = this;
-
-      var formUpdateBranch = document.getElementById("formUpdate");
-      var btnSubmit = document.getElementById("updateBranchOffice");
-
-      if (formUpdateBranch == null) {
-        return;
-      }
-
-      if (btnSubmit == null) {
-        return;
-      }
-
-      btnSubmit.addEventListener('click', /*#__PURE__*/function () {
-        var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(e) {
-          var formData, token, myHeaders, requestOptions, response, modal;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-            while (1) {
-              switch (_context9.prev = _context9.next) {
-                case 0:
-                  e.preventDefault();
-                  formData = new FormData(formUpdateBranch);
-                  token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                  myHeaders = new Headers();
-                  myHeaders.append("Accept", "application/json");
-                  myHeaders.append("Access-Control-Allow-Origin", "*");
-                  myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                  myHeaders.append('Content-Type', "application/json");
-                  myHeaders.append('Content-Type', "multipart/form-data");
-                  myHeaders.append("X-CSRF-TOKEN", token);
-                  requestOptions = {
-                    method: "PUT",
-                    headers: myHeaders,
-                    body: JSON.stringify(Object.fromEntries(formData))
-                  };
-                  _context9.next = 13;
-                  return _this4.sendDataToUpdate(_this4.branchId, requestOptions);
-
-                case 13:
-                  response = _context9.sent;
-
-                  if (response.state == 200) {
-                    alert(response.message);
-                    modal = document.getElementById("modalEdit");
-                    modal.click();
-
-                    _this4.listBranchOffices();
-                  } else {
-                    alert('Ha ocurrido un error al actualizar la sucursal.');
-                    console.log('Error ' + response.error);
-                  }
-
-                case 15:
-                case "end":
-                  return _context9.stop();
-              }
-            }
-          }, _callee9);
-        }));
-
-        return function (_x4) {
-          return _ref4.apply(this, arguments);
-        };
-      }());
-    }
-  }, {
-    key: "sendDataToUpdate",
-    value: function () {
-      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(id, requestOptions) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context10.next = 3;
-                return fetch("/sucursales/" + null + "/" + id + "/update", requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context10.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context10.stop();
-            }
-          }
-        }, _callee10);
-      }));
-
-      function sendDataToUpdate(_x5, _x6) {
-        return _sendDataToUpdate.apply(this, arguments);
-      }
-
-      return sendDataToUpdate;
-    }()
-  }, {
-    key: "listDepartments",
-    value: function () {
-      var _listDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-        var slcDepartments, departments, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
-          while (1) {
-            switch (_context11.prev = _context11.next) {
-              case 0:
-                slcDepartments = document.getElementsByName("branch_office_department");
-
-                if (!(slcDepartments == null)) {
-                  _context11.next = 3;
-                  break;
-                }
-
-                return _context11.abrupt("return");
-
-              case 3:
-                _context11.next = 5;
-                return this.requestDepartments();
-
-              case 5:
-                departments = _context11.sent;
-                data = departments.data;
-                [].forEach.call(slcDepartments, function (slcDept) {
-                  slcDept.selectedIndex = "0";
-                  removeOptions(slcDept);
-
-                  for (var i = 0; i < data.length; i++) {
-                    var element = data[i];
-                    var department = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                    slcDept.insertAdjacentHTML('beforeend', department);
-                  }
-                });
-
-              case 8:
-              case "end":
-                return _context11.stop();
-            }
-          }
-        }, _callee11, this);
-      }));
-
-      function listDepartments() {
-        return _listDepartments.apply(this, arguments);
-      }
-
-      return listDepartments;
-    }()
-  }, {
-    key: "requestDepartments",
-    value: function () {
-      var _requestDepartments = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
-          while (1) {
-            switch (_context12.prev = _context12.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context12.next = 3;
-                return fetch("/unassigned_depts").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context12.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context12.stop();
-            }
-          }
-        }, _callee12);
-      }));
-
-      function requestDepartments() {
-        return _requestDepartments.apply(this, arguments);
-      }
-
-      return requestDepartments;
-    }()
-  }, {
-    key: "saveUser",
-    value: function saveUser() {
-      var _this5 = this;
-
-      var btnSubmit = document.getElementById("saveUser");
-
-      if (btnSubmit == null) {
-        return;
-      }
-
-      btnSubmit.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var parent_id, name, last_name, email, phone, password, password_confirm, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
-          while (1) {
-            switch (_context13.prev = _context13.next) {
-              case 0:
-                parent_id = document.getElementById("customer_id").value, name = document.getElementById("user_name").value, last_name = document.getElementById("user_last_name").value, email = document.getElementById("user_email").value, phone = document.getElementById("user_phone").value, password = document.getElementById("user_password").value, password_confirm = document.getElementById("user_password_confirm").value;
-                formData = new FormData();
-                formData.append('name', name);
-                formData.append('last_name', last_name);
-                formData.append('email', email);
-                formData.append('phone', phone);
-                formData.append('password', password);
-                formData.append('password_confirmation', password_confirm);
-                _context13.next = 10;
-                return _this5.storeUserData(parent_id, formData);
-
-              case 10:
-                response = _context13.sent;
-
-                if (response.state == 200) {
-                  correct(response.message);
-                  modal = document.getElementById("modalCreateUser");
-                  modal.click();
-
-                  _this5.listUsers();
-                } else {
-                  error(response.error);
-                  console.log('Error: ' + response.error);
-                }
-
-              case 12:
-              case "end":
-                return _context13.stop();
-            }
-          }
-        }, _callee13);
-      })));
-    }
-  }, {
-    key: "storeUserData",
-    value: function () {
-      var _storeUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(parent_id, formData) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
-          while (1) {
-            switch (_context14.prev = _context14.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context14.next = 3;
-                return fetch("/usuario-banco/" + parent_id + "/store", {
-                  headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  },
-                  method: 'POST',
-                  body: formData
-                });
-
-              case 3:
-                response = _context14.sent;
-                return _context14.abrupt("return", response.json());
-
-              case 5:
-              case "end":
-                return _context14.stop();
-            }
-          }
-        }, _callee14);
-      }));
-
-      function storeUserData(_x7, _x8) {
-        return _storeUserData.apply(this, arguments);
-      }
-
-      return storeUserData;
-    }()
-  }, {
-    key: "listUsers",
-    value: function () {
-      var _listUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
-        var tbody, parent_id, response, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
-          while (1) {
-            switch (_context15.prev = _context15.next) {
-              case 0:
-                tbody = document.querySelector("#users_table tbody");
-
-                if (!(tbody == null)) {
-                  _context15.next = 3;
-                  break;
-                }
-
-                return _context15.abrupt("return");
-
-              case 3:
-                parent_id = document.getElementById("customer_id").value;
-
-                if (!(parent_id == null)) {
-                  _context15.next = 6;
-                  break;
-                }
-
-                return _context15.abrupt("return");
-
-              case 6:
-                tbody.innerHTML = '';
-                _context15.next = 9;
-                return this.requestUsers(parent_id);
-
-              case 9:
-                response = _context15.sent;
-
-                if (response.state == 200) {
-                  data = response.data;
-
-                  if (data.length > 0) {
-                    [].forEach.call(data, function (key) {
-                      var row = tbody.insertRow();
-                      var nameCell = row.insertCell(0);
-                      nameCell.innerHTML = key.name;
-                      var lastNameCell = row.insertCell(1);
-                      lastNameCell.innerHTML = key.last_name;
-                      var emailCell = row.insertCell(2);
-                      emailCell.innerHTML = key.email;
-                      var phoneCell = row.insertCell(3);
-                      phoneCell.innerHTML = key.phone;
-                      var stateCell = row.insertCell(4);
-
-                      if (key.state == 1) {
-                        stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
-                                                    Activo\
-                                                </span>';
-                      } else {
-                        stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
-                                                    Inactivo\
-                                                </span>';
-                      }
-
-                      var selectCell = row.insertCell(5);
-                      var userEdit = document.createElement("button");
-                      userEdit.setAttribute('name', 'btnEditUser');
-                      userEdit.setAttribute('class', 'btn btnEditUser btn-icon btn-light-success btn-sm mr-2');
-                      userEdit.setAttribute('data-toggle', 'modal');
-                      userEdit.setAttribute('data-target', '#modalEditUser');
-                      userEdit.setAttribute('id', 'branch-' + key.id);
-                      userEdit.setAttribute('type', 'button');
-                      userEdit.innerHTML = '<i class="fas fa-edit"></i>'; //Delete button
-
-                      var userDelete = document.createElement("button");
-
-                      userDelete.onclick = function () {
-                        confirmDelete('/usuario-banco/' + parent_id + '/' + key.id);
-                      };
-
-                      userDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                      userDelete.setAttribute('type', 'button');
-                      userDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
-
-                      var buttonsDiv = document.createElement("div");
-                      buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                      buttonsDiv.appendChild(userEdit);
-                      buttonsDiv.appendChild(userDelete);
-                      selectCell.appendChild(buttonsDiv);
-                      tbody.appendChild(row);
-                    });
-                    this.editUser();
-                  }
-                }
-
-              case 11:
-              case "end":
-                return _context15.stop();
-            }
-          }
-        }, _callee15, this);
-      }));
-
-      function listUsers() {
-        return _listUsers.apply(this, arguments);
-      }
-
-      return listUsers;
-    }()
-  }, {
-    key: "requestUsers",
-    value: function () {
-      var _requestUsers = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(parent_id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
-          while (1) {
-            switch (_context16.prev = _context16.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context16.next = 3;
-                return fetch("/usuario-banco/" + parent_id + "").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context16.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context16.stop();
-            }
-          }
-        }, _callee16);
-      }));
-
-      function requestUsers(_x9) {
-        return _requestUsers.apply(this, arguments);
-      }
-
-      return requestUsers;
-    }()
-  }, {
-    key: "editUser",
-    value: function editUser() {
-      var _this6 = this;
-
-      var users = document.getElementsByName("btnEditUser");
-
-      if (users == null) {
-        return;
-      }
-
-      var parent_id = document.getElementById("customer_id").value;
-
-      if (parent_id == null) {
-        return;
-      }
-
-      [].forEach.call(users, function (key) {
-        key.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
-          var user_id, response, data;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
-            while (1) {
-              switch (_context17.prev = _context17.next) {
-                case 0:
-                  user_id = key['id'].split('-')[1];
-                  _this6.userId = user_id;
-                  _context17.next = 4;
-                  return _this6.requestUserData(parent_id, user_id);
-
-                case 4:
-                  response = _context17.sent;
-                  data = response.data;
-                  document.getElementById("user_name_edit").value = data.name;
-                  document.getElementById("user_last_name_edit").value = data.last_name;
-                  document.getElementById("user_email_edit").value = data.email;
-                  document.getElementById("user_phone_edit").value = data.phone;
-
-                case 10:
-                case "end":
-                  return _context17.stop();
-              }
-            }
-          }, _callee17);
-        })));
-      });
-    }
-  }, {
-    key: "requestUserData",
-    value: function () {
-      var _requestUserData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(parent_id, id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
-          while (1) {
-            switch (_context18.prev = _context18.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context18.next = 3;
-                return fetch("/usuario-banco/" + parent_id + "/" + id + "/edit").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context18.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context18.stop();
-            }
-          }
-        }, _callee18);
-      }));
-
-      function requestUserData(_x10, _x11) {
-        return _requestUserData.apply(this, arguments);
-      }
-
-      return requestUserData;
-    }()
-  }, {
-    key: "updateUser",
-    value: function updateUser() {
-      var _this7 = this;
-
-      var updateBtn = document.getElementById("updateUser");
-
-      if (updateBtn == null) {
-        return;
-      }
-
-      updateBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
-        var parent_id, name, last_name, email, phone, password, password_confirm, formData, token, myHeaders, requestOptions, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
-          while (1) {
-            switch (_context19.prev = _context19.next) {
-              case 0:
-                parent_id = document.getElementById("customer_id").value;
-                name = document.getElementById("user_name_edit").value;
-                last_name = document.getElementById("user_last_name_edit").value;
-                email = document.getElementById("user_email_edit").value;
-                phone = document.getElementById("user_phone_edit").value;
-                password = document.getElementById("user_password_edit").value;
-                password_confirm = document.getElementById("user_password_confirm_edit").value;
-                formData = new FormData();
-                formData.append('name', name);
-                formData.append('last_name', last_name);
-                formData.append('email', email);
-                formData.append('phone', phone);
-                formData.append('password', password);
-                formData.append('password_confirmation', password_confirm);
-                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                myHeaders = new Headers();
-                myHeaders.append("Accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                myHeaders.append('Content-Type', "application/json");
-                myHeaders.append('Content-Type', "multipart/form-data");
-                myHeaders.append("X-CSRF-TOKEN", token);
-                requestOptions = {
-                  method: "PUT",
-                  headers: myHeaders,
-                  body: JSON.stringify(Object.fromEntries(formData))
-                };
-                _context19.next = 25;
-                return _this7.sendUserDataToUpdate(parent_id, _this7.userId, requestOptions);
-
-              case 25:
-                response = _context19.sent;
-
-                if (response.state == 200) {
-                  correct(response.message);
-                  modal = document.getElementById("modalEditUser");
-                  modal.click();
-
-                  _this7.listUsers();
-                } else {
-                  error(response.error); // console.log('Error: '+response.error);
-                }
-
-              case 27:
-              case "end":
-                return _context19.stop();
-            }
-          }
-        }, _callee19);
-      })));
-    }
-  }, {
-    key: "sendUserDataToUpdate",
-    value: function () {
-      var _sendUserDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(parent_id, id, requestOptions) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
-          while (1) {
-            switch (_context20.prev = _context20.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context20.next = 3;
-                return fetch('/usuario-banco/' + parent_id + '/' + id + '/update', requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context20.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context20.stop();
-            }
-          }
-        }, _callee20);
-      }));
-
-      function sendUserDataToUpdate(_x12, _x13, _x14) {
-        return _sendUserDataToUpdate.apply(this, arguments);
-      }
-
-      return sendUserDataToUpdate;
-    }()
-  }]);
-
-  return Customers;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/_general.js":
 /*!**********************************!*\
   !*** ./resources/js/_general.js ***!
@@ -84421,242 +88097,6 @@ var General = /*#__PURE__*/function () {
   }]);
 
   return General;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/_hours.js":
-/*!********************************!*\
-  !*** ./resources/js/_hours.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Hours; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Hours = /*#__PURE__*/function () {
-  function Hours() {
-    _classCallCheck(this, Hours);
-  }
-
-  _createClass(Hours, [{
-    key: "initialize",
-    value: function initialize() {
-      this.loadHourData();
-    }
-  }, {
-    key: "loadHourData",
-    value: function loadHourData() {
-      var _this = this;
-
-      var buttons = document.getElementsByName('editHour');
-
-      if (buttons == null) {
-        return;
-      }
-
-      [].forEach.call(buttons, function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var id, response, data, form;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  id = btn.id;
-                  _context.next = 3;
-                  return _this.requestHourPickedData(id);
-
-                case 3:
-                  response = _context.sent;
-                  data = response.data;
-                  form = document.getElementById("formUpdateHour");
-                  form.setAttribute('action', 'horas/' + id + '');
-                  document.getElementById('day_edit').value = data.day_id;
-                  document.getElementById('from_edit').value = data.init_time;
-                  document.getElementById('to_edit').value = data.end_time;
-
-                case 10:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        })));
-      });
-    }
-  }, {
-    key: "requestHourPickedData",
-    value: function () {
-      var _requestHourPickedData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context2.next = 3;
-                return fetch("/horas/" + id + '/edit').then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context2.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function requestHourPickedData(_x) {
-        return _requestHourPickedData.apply(this, arguments);
-      }
-
-      return requestHourPickedData;
-    }()
-  }]);
-
-  return Hours;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/_messengers.js":
-/*!*************************************!*\
-  !*** ./resources/js/_messengers.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Messengers; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Messengers = /*#__PURE__*/function () {
-  function Messengers() {
-    _classCallCheck(this, Messengers);
-  }
-
-  _createClass(Messengers, [{
-    key: "initialize",
-    value: function initialize() {// this.createMessengers();
-    } // //CREATE MESSENGER
-    // createMessengers() {
-    //     let formCreateMessenger = document.getElementById(
-    //         "formCreateMessenger"
-    //     );
-    //     if (formCreateMessenger == null) {
-    //         return;
-    //     }
-    //     formCreateMessenger.addEventListener("submit", function (e) {
-    //         e.preventDefault();
-    //         let token = document
-    //             .querySelector('meta[name="csrf-token"]')
-    //             .getAttribute("content");
-    //         let myHeaders = new Headers();
-    //         myHeaders.append("accept", "application/json");
-    //         myHeaders.append("Access-Control-Allow-Origin", "*");
-    //         myHeaders.append("X-CSRF-TOKEN", token);
-    //         let requestOptions = {
-    //             method: "POST",
-    //             headers: myHeaders,
-    //             body: new FormData(formCreateMessenger),
-    //         };
-    //         fetch("/mensajeros", requestOptions)
-    //             .then((response) => response.json())
-    //             .then(function (data) {
-    //                 if (data.state == 500) {
-    //                     alert(data.message);
-    //                 }
-    //                 if (data.state == 200) {
-    //                     alert(data.message);
-    //                 }
-    //                 if (data.errors) {
-    //                     alert(data.errors);
-    //                 }
-    //             })
-    //             .catch((err) => console.warn(err));
-    //     });
-    // }
-    // //DELETE MESSENGER
-    // deleteMessenger() {
-    //     let deleteMessenger = document.getElementById("deleteMessenger");
-    //     deleteMessenger.addEventListener("submit", function (e) {
-    //         e.preventDefault();
-    //     });
-    // }
-    // // UPDATE MESSENGER
-    // updateMessenger() {
-    //     let formUpdateMessenger = document.getElementById("formUpdateMessenger");
-    //     if (formUpdateMessenger == null) {
-    //         return;
-    //     }
-    //     formUpdateMessenger.addEventListener("submit", function (e) {
-    //         e.preventDefault();
-    //         let token = document
-    //             .querySelector('meta[name="csrf-token"]')
-    //             .getAttribute("content");
-    //         let myHeaders = new Headers();
-    //         myHeaders.append("accept", "application/json");
-    //         myHeaders.append("Access-Control-Allow-Origin", "*");
-    //         myHeaders.append("X-CSRF-TOKEN", token);
-    //         let requestOptions = {
-    //             method: "PUT",
-    //             headers: myHeaders,
-    //             body: new FormData(formUpdateMessenger),
-    //         };
-    //         fetch("/mensajeros", requestOptions)
-    //             .then((response) => response.json())
-    //             .then(function (data) {
-    //                 if (data.state == 500) {
-    //                     alert(data.message);
-    //                 }
-    //                 if (data.state == 200) {
-    //                     alert(data.message);
-    //                 }
-    //                 if (data.errors) {
-    //                     alert(data.errors);
-    //                 }
-    //             })
-    //             .catch((err) => console.warn(err));
-    //     });
-    // }
-
-  }]);
-
-  return Messengers;
 }();
 
 
@@ -84769,2777 +88209,6 @@ var Notifications = /*#__PURE__*/function () {
 }();
 
 
-
-/***/ }),
-
-/***/ "./resources/js/_orders.js":
-/*!*********************************!*\
-  !*** ./resources/js/_orders.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Orders; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var count = 0;
-var boxes = [{
-  number: 0,
-  weight: 0,
-  "long": 0,
-  broad: 0,
-  high: 0,
-  vol_weight: 0,
-  description: ''
-}];
-
-var Orders = /*#__PURE__*/function () {
-  function Orders() {
-    _classCallCheck(this, Orders);
-
-    this.guideId = '';
-    this.boxes = boxes;
-  }
-
-  _createClass(Orders, [{
-    key: "initialize",
-    value: function initialize() {
-      this.instantiateBoxes();
-      this.addbox();
-      this.loadBranches();
-      this.loadCustomerModal();
-      this.removeBox();
-      this.loadOrderNumber();
-      this.saveGuides();
-      this.createAddress();
-      this.listGuides();
-      this.porDespacharOndemand();
-      this.porDespacharPackaging();
-      this.customerAddresses();
-      this.loadPickupHours();
-      this.loadHoursInEditOrShow();
-    }
-  }, {
-    key: "setInput",
-    value: function setInput() {
-      var inputs = ['number[]', 'weight[]', 'long[]', 'broad[]', 'high[]', 'vol_weight[]', 'description[]'];
-      [].forEach.call(inputs, function (input) {
-        var elements = document.getElementsByName(input);
-
-        if (elements == null) {
-          return;
-        }
-
-        [].forEach.call(elements, function (el) {
-          el.addEventListener('keyup', function () {
-            var parent = el.parentNode.parentNode.parentNode; // console.log('parent', parent);
-
-            var children = el.parentNode.parentNode; // console.log("children", children);
-
-            var index = Array.prototype.indexOf.call(parent.children, children); // console.log('index', index);
-
-            var name = input.replace('[]', ''); // console.log('name', name);
-            // console.log('el', el.value);
-
-            boxes[index][name] = el.value;
-          });
-        });
-      });
-    }
-  }, {
-    key: "instantiateBoxes",
-    value: function instantiateBoxes() {
-      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'box-container';
-      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
-      var boxContainer = document.getElementById(container);
-
-      if (boxContainer == null) {
-        return;
-      }
-
-      boxContainer.innerHTML = "";
-      [].forEach.call(boxes, function (box) {
-        var row = document.createElement("tr");
-        row.className = "row border mt-0 text-center box-register col-md-13 \"";
-        var numberCell = document.createElement("td");
-        numberCell.className = "col-1 py-4 border-right";
-        numberCell.innerHTML = "<input type=\"number\" name=\"id[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.number, "\">");
-        row.appendChild(numberCell);
-        var weightCell = document.createElement("td");
-        weightCell.className = "col-1 py-4 border-right";
-        weightCell.innerHTML = "<input type=\"number\" name=\"weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.weight, "\">");
-        row.appendChild(weightCell);
-        var longCell = document.createElement("td");
-        longCell.className = "col-1 py-4 border-right";
-        longCell.innerHTML = "<input type=\"number\" name=\"long[]\" class=\"form-control\" min=\"0\" value=\"".concat(box["long"], "\">");
-        row.appendChild(longCell);
-        var broadCell = document.createElement("td");
-        broadCell.className = "col-1 py-4 border-right";
-        broadCell.innerHTML = "<input type=\"number\" name=\"broad[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.broad, "\">");
-        row.appendChild(broadCell);
-        var highCell = document.createElement("td");
-        highCell.className = "col-1 py-4 border-right";
-        highCell.innerHTML = "<input type=\"number\" name=\"high[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.high, "\">");
-        row.appendChild(highCell);
-        var volWeightCell = document.createElement("td");
-        volWeightCell.className = "col-1 py-4 border-right";
-        volWeightCell.innerHTML = "<input type=\"number\" name=\"vol_weight[]\" class=\"form-control\" min=\"0\" value=\"".concat(box.vol_weight, "\">");
-        row.appendChild(volWeightCell);
-        var descriptionCell = document.createElement("td");
-        descriptionCell.className = "col-2 py-4 border-right";
-        descriptionCell.innerHTML = "<input type=\"text\" name=\"description[]\" class=\"form-control\" placeholder=\"comentarios\" value=\"".concat(box.description, "\">");
-        row.appendChild(descriptionCell);
-        var btnCell = document.createElement("td");
-        btnCell.className = "col-1 py-4";
-        btnCell.innerHTML = " <div class=\"d-flex flex-row flex-wrap justify-content-center\"></div>";
-        var removeBoxBtn = document.createElement("a");
-        removeBoxBtn.className = 'btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn';
-        removeBoxBtn.id = "remove-box-btn";
-        removeBoxBtn.title = 'Borrar';
-        removeBoxBtn.setAttribute('data-tooltip', '');
-        removeBoxBtn.innerHTML = "<i class=\"fad fa-minus-circle\"></i>";
-        btnCell.children[0].appendChild(removeBoxBtn);
-        row.appendChild(btnCell);
-        boxContainer.appendChild(row);
-      });
-      this.setInput();
-      this.removeBox();
-    }
-  }, {
-    key: "addbox",
-    value: function addbox() {
-      var _this = this;
-
-      var button = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'add-box-btn';
-      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
-      var container = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'box-container';
-      var addBoxBtn = document.getElementById(button);
-
-      if (addBoxBtn == null) {
-        return;
-      }
-
-      addBoxBtn.addEventListener('click', function () {
-        boxes.push({
-          number: 0,
-          weight: 0,
-          "long": 0,
-          broad: 0,
-          high: 0,
-          vol_weight: 0,
-          description: ''
-        });
-
-        _this.instantiateBoxes(container, boxes);
-      });
-    }
-  }, {
-    key: "removeBox",
-    value: function removeBox() {
-      var removeBoxBtn = document.getElementsByClassName("remove-box-btn");
-
-      if (removeBoxBtn == null) {
-        return;
-      }
-
-      [].forEach.call(removeBoxBtn, function (btn) {
-        btn.addEventListener('click', function () {
-          var box = btn.parentNode.parentNode.parentNode;
-          var parent = box.parentNode;
-          var index = Array.prototype.indexOf.call(parent.children, box);
-          boxes.splice(index, 1);
-          box.remove();
-        });
-      });
-    }
-  }, {
-    key: "loadCustomerModal",
-    value: function loadCustomerModal() {
-      var _this2 = this;
-
-      var btnDetailCustomer = document.getElementById("btnDetailCustomer");
-
-      if (btnDetailCustomer == null) {
-        return;
-      }
-
-      btnDetailCustomer.addEventListener('click', function () {
-        _this2.searchCustomerData();
-      });
-    }
-  }, {
-    key: "requestSearchCustomer",
-    value: function () {
-      var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(query) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context.next = 3;
-                return fetch("/search_customers?value=" + query).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function requestSearchCustomer(_x) {
-        return _requestSearchCustomer.apply(this, arguments);
-      }
-
-      return requestSearchCustomer;
-    }()
-  }, {
-    key: "searchCustomerData",
-    value: function searchCustomerData() {
-      var _this3 = this;
-
-      var btnSearch = document.getElementById("btnSearch");
-
-      if (btnSearch == null) {
-        return;
-      }
-
-      btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var tbody, inputValue, response, data, type, row, cell, i, _row, idCell, phoneCell, tradenameCell, selectCell, userCheck;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                tbody = document.querySelector("#table_customers tbody");
-                tbody.innerHTML = '';
-                inputValue = document.getElementById("search_customer").value;
-                tbody.innerHTML = '';
-                _context2.next = 6;
-                return _this3.requestSearchCustomer(inputValue);
-
-              case 6:
-                response = _context2.sent;
-                data = response.data;
-                type = response.type;
-
-                if (response.state != 200 || data.length == 0) {
-                  row = tbody.insertRow(0);
-                  cell = row.insertCell(0);
-                  cell.innerHTML = "No se encontraron registros";
-                  cell.colSpan = 3;
-                  cell.setAttribute('class', 'text-center font-weight-bold');
-                }
-
-                if (data.length > 0) {
-                  for (i = 0; i < data.length; i++) {
-                    _row = tbody.insertRow(i);
-                    idCell = _row.insertCell(0);
-                    idCell.innerHTML = type == 1 ? data[i].id : data[i].get_user.id;
-                    phoneCell = _row.insertCell(1);
-                    phoneCell.innerHTML = type == 1 ? data[i].phone : data[i].get_user.phone;
-                    tradenameCell = _row.insertCell(2);
-
-                    if (type == 1) {
-                      tradenameCell.innerHTML = data[i].name != null ? data[i].name + " " + data[i].last_name : data[i].get_customer.tradename;
-                    } else {
-                      tradenameCell.innerHTML = data[i].name != null ? data[i].name + " " + data[i].last_name : data[i].tradename;
-                    }
-
-                    selectCell = _row.insertCell(3);
-                    userCheck = document.createElement("input");
-                    userCheck.setAttribute('class', 'btn btn-success customerCheck');
-                    userCheck.setAttribute('type', 'radio');
-                    userCheck.setAttribute('name', 'customerCheck');
-                    userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', type == 1 ? data[i].id : data[i].get_user.id);
-                    selectCell.appendChild(userCheck);
-                    tbody.appendChild(_row);
-                  }
-                }
-
-                _this3.selectCustomer();
-
-              case 12:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      })));
-    }
-  }, {
-    key: "requestSelectedCustomerData",
-    value: function () {
-      var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(query) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context3.next = 3;
-                return fetch("/customer_data/" + query).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context3.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }));
-
-      function requestSelectedCustomerData(_x2) {
-        return _requestSelectedCustomerData.apply(this, arguments);
-      }
-
-      return requestSelectedCustomerData;
-    }()
-  }, {
-    key: "selectCustomer",
-    value: function selectCustomer() {
-      var _this4 = this;
-
-      var allCustomerChecks = document.getElementsByClassName("customerCheck");
-
-      var _loop = function _loop(i) {
-        allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var response, data, branches, branchSlc, _i, element, branchOpt, departments, departmentSlc, _i2, _element, departmentOpt, modal;
-
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  _context4.next = 2;
-                  return _this4.requestSelectedCustomerData(allCustomerChecks[i].value);
-
-                case 2:
-                  response = _context4.sent;
-                  data = response.data;
-                  document.getElementById("user_code").value = data[0]['id'];
-                  document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
-                  document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
-                  branches = data[1];
-                  branchSlc = document.getElementById("user_branch_office");
-                  branchSlc.selectedIndex = 0;
-                  removeOptions(branchSlc);
-
-                  for (_i = 0; _i < branches.length; _i++) {
-                    element = branches[_i];
-                    branchOpt = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                    branchSlc.insertAdjacentHTML('beforeend', branchOpt);
-                  }
-
-                  departments = data[2];
-                  departmentSlc = document.getElementById("user_departments");
-                  departmentSlc.selectedIndex = 0;
-                  removeOptions(departmentSlc);
-
-                  for (_i2 = 0; _i2 < departments.length; _i2++) {
-                    _element = departments[_i2];
-                    departmentOpt = '<option value="' + _element.id + '"> ' + _element.name + ' </option>';
-                    departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
-                  }
-
-                  document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
-                  modal = document.getElementById("detailCustomer");
-                  modal.click();
-
-                  if (document.getElementById("user_code").value != null) {
-                    _this4.customerAddresses(document.getElementById("user_code").value);
-                  }
-
-                case 21:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4);
-        })));
-      };
-
-      for (var i = 0; i < allCustomerChecks.length; i++) {
-        _loop(i);
-      }
-    }
-  }, {
-    key: "requestOrderNumber",
-    value: function () {
-      var _requestOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context5.next = 3;
-                return fetch("/order_number").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context5.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }));
-
-      function requestOrderNumber() {
-        return _requestOrderNumber.apply(this, arguments);
-      }
-
-      return requestOrderNumber;
-    }()
-  }, {
-    key: "loadOrderNumber",
-    value: function () {
-      var _loadOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var orderNumber, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                orderNumber = document.getElementById("order_number");
-
-                if (!(orderNumber == null)) {
-                  _context6.next = 3;
-                  break;
-                }
-
-                return _context6.abrupt("return");
-
-              case 3:
-                _context6.next = 5;
-                return this.requestOrderNumber();
-
-              case 5:
-                response = _context6.sent;
-                orderNumber.setAttribute('value', response.data);
-
-              case 7:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, this);
-      }));
-
-      function loadOrderNumber() {
-        return _loadOrderNumber.apply(this, arguments);
-      }
-
-      return loadOrderNumber;
-    }()
-  }, {
-    key: "saveGuides",
-    value: function saveGuides() {
-      var _this5 = this;
-
-      var btnStoreGuide = document.getElementById("btnStoreGuide");
-
-      if (btnStoreGuide == null) {
-        return;
-      }
-
-      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                branch_office = document.getElementById("branch_off").value;
-                transport_type = document.getElementById("trans_type").value; // let dispatched = document.getElementById("dispatched").value;
-
-                address_name = document.getElementById("address").value; // let address_lat = document.getElementById("lat").value;
-                // let address_lng = document.getElementById("lng").value;
-
-                guide_description = document.getElementById("guide_description").value;
-                concept = document.getElementById("concept").value;
-                rate = document.getElementById("rate").value;
-                value = document.getElementById("value").value;
-                corp_value = document.getElementById("corp_value").value;
-                customer_document_type = document.getElementById("customer_document_type").value;
-                contact = document.getElementById("contact").value;
-                phone_contact = document.getElementById("phone_contact").value;
-                email_contact = document.getElementById("email_contact").value;
-                invoice_contact = document.getElementById("invoice_contact").value;
-                zone = document.getElementById("zone_id").value;
-                same_day_delivery = document.getElementById("same_day_delivery").value;
-                sign = document.getElementById("sign").value;
-                take_photo = document.getElementById("take_photo").value; // let customer_address = document.getElementById("customer_address").value;
-                //Boxes
-
-                ids = document.getElementsByName('id[]');
-                weights = document.getElementsByName('weight[]');
-                longs = document.getElementsByName('long[]');
-                broads = document.getElementsByName('broad[]');
-                highs = document.getElementsByName('high[]');
-                vol_weights = document.getElementsByName('vol_weight[]');
-                descriptions = document.getElementsByName('description[]');
-                boxArr = [];
-
-                for (i = 0; i < ids.length; i++) {
-                  individualBoxArr = {
-                    'number': ids[i].value,
-                    'weight': weights[i].value,
-                    'long': longs[i].value,
-                    'broad': broads[i].value,
-                    'high': highs[i].value,
-                    'vol_weight': vol_weights[i].value,
-                    'description': descriptions[i].value
-                  };
-                  boxArr.push(individualBoxArr);
-                }
-
-                formData = new FormData();
-                formData.append('boxes', JSON.stringify(boxArr));
-                formData.append('branch_office', branch_office);
-                formData.append('transport_type', transport_type); // formData.append('dispatched',dispatched);
-
-                formData.append('address_name', address_name); // formData.append('address_lat',address_lat);
-                // formData.append('address_lng',address_lng);
-
-                formData.append('guide_description', guide_description);
-                formData.append('concept', concept);
-                formData.append('rate', rate);
-                formData.append('value', value);
-                formData.append('corp_value', corp_value);
-                formData.append('customer_document_type', customer_document_type);
-                formData.append('contact', contact);
-                formData.append('phone_contact', phone_contact);
-                formData.append('email_contact', email_contact);
-                formData.append('invoice_contact', invoice_contact);
-                formData.append('zone', zone);
-                formData.append('same_day_delivery', same_day_delivery);
-                formData.append('sign', sign);
-                formData.append('take_photo', take_photo); // formData.append('customer_address',customer_address);
-
-                _context7.next = 47;
-                return _this5.sendGuideData(formData);
-
-              case 47:
-                response = _context7.sent;
-
-                if (response.state == 200) {
-                  correct(response.message);
-                  modal = document.getElementById("modalCreate");
-                  modal.click();
-
-                  _this5.listGuides();
-                } else {
-                  error('Error al crear la guía.');
-                  console.log('Error: ' + response.error);
-                }
-
-              case 49:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      })));
-    }
-  }, {
-    key: "sendGuideData",
-    value: function () {
-      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(formData) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context8.next = 3;
-                return fetch("/guias/store", {
-                  headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  },
-                  method: 'POST',
-                  body: formData
-                });
-
-              case 3:
-                response = _context8.sent;
-                return _context8.abrupt("return", response.json());
-
-              case 5:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      }));
-
-      function sendGuideData(_x3) {
-        return _sendGuideData.apply(this, arguments);
-      }
-
-      return sendGuideData;
-    }()
-  }, {
-    key: "listGuides",
-    value: function () {
-      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        var _this6 = this;
-
-        var tbody, response, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                tbody = document.querySelector("#guidesTable tbody");
-
-                if (!(tbody == null)) {
-                  _context9.next = 3;
-                  break;
-                }
-
-                return _context9.abrupt("return");
-
-              case 3:
-                tbody.innerHTML = '';
-                _context9.next = 6;
-                return this.requestGuides();
-
-              case 6:
-                response = _context9.sent;
-                data = response.data;
-
-                if (data.length > 0) {
-                  [].forEach.call(data, function (key) {
-                    var _key$get_state;
-
-                    var row = tbody.insertRow();
-                    var idCell = row.insertCell(0);
-                    idCell.innerHTML = key.id;
-                    var contactCell = row.insertCell(1);
-                    contactCell.innerHTML = key.contact;
-                    var phoneCell = row.insertCell(2);
-                    phoneCell.innerHTML = key.phone_contact;
-                    var emailCell = row.insertCell(3);
-                    emailCell.innerHTML = key.email_contact;
-                    var dateCell = row.insertCell(4);
-                    var allDate = new Date(key.created_at.split(' ')[0]);
-                    var month = allDate.getMonth();
-                    dateCell.innerHTML = allDate.getDate() + "-" + _this6.months(month) + "-" + allDate.getFullYear();
-                    var rateCell = row.insertCell(5);
-                    rateCell.innerHTML = key.rate;
-                    var stateCell = row.insertCell(6);
-                    stateCell.innerHTML = (_key$get_state = key.get_state) === null || _key$get_state === void 0 ? void 0 : _key$get_state.name;
-                    var selectCell = row.insertCell(7); //CHECK
-
-                    var guideCheck = document.createElement("input");
-                    guideCheck.setAttribute('class', 'checkbox-inline mt-3');
-                    guideCheck.setAttribute('type', 'checkbox');
-                    guideCheck.setAttribute('name', 'guideCheck[]');
-                    guideCheck.setAttribute('value', key.id);
-                    key.order_id != null ? guideCheck.checked = true : ''; //EDIT
-
-                    var guideEdit = document.createElement("button");
-                    guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
-                    guideEdit.setAttribute('data-toggle', 'modal');
-                    guideEdit.setAttribute('data-target', '#modalEdit');
-                    guideEdit.setAttribute('id', 'guide-' + key.id);
-                    guideEdit.setAttribute('type', 'button');
-                    guideEdit.innerHTML = '<i class="fas fa-edit"></i>'; //DELETE
-
-                    var guideDelete = document.createElement("button");
-
-                    guideDelete.onclick = function () {
-                      deleteResource('/guias/' + key.id);
-                    };
-
-                    guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                    guideDelete.setAttribute('type', 'button');
-                    guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
-
-                    var buttonsDiv = document.createElement("div");
-                    buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                    buttonsDiv.appendChild(guideCheck);
-                    buttonsDiv.appendChild(guideEdit);
-                    buttonsDiv.appendChild(guideDelete);
-                    selectCell.appendChild(buttonsDiv);
-                    tbody.appendChild(row);
-                  });
-                }
-
-                this.editGuide();
-
-              case 10:
-              case "end":
-                return _context9.stop();
-            }
-          }
-        }, _callee9, this);
-      }));
-
-      function listGuides() {
-        return _listGuides.apply(this, arguments);
-      }
-
-      return listGuides;
-    }()
-  }, {
-    key: "requestGuides",
-    value: function () {
-      var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var orderNumber, path, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                orderNumber = document.getElementsByName("order_number")[0];
-
-                if (orderNumber == null) {
-                  orderNumber = null;
-                } else {
-                  orderNumber = orderNumber.value;
-                }
-
-                path = window.location.pathname.split('/');
-                response = {
-                  'state': 500
-                };
-                _context10.next = 6;
-                return fetch("/guias?order=" + orderNumber + "&path=" + path).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 6:
-                return _context10.abrupt("return", response);
-
-              case 7:
-              case "end":
-                return _context10.stop();
-            }
-          }
-        }, _callee10);
-      }));
-
-      function requestGuides() {
-        return _requestGuides.apply(this, arguments);
-      }
-
-      return requestGuides;
-    }()
-  }, {
-    key: "editGuide",
-    value: function editGuide() {
-      var _this7 = this;
-
-      var guides = document.getElementsByClassName("btnEditGuide");
-
-      if (guides == null) {
-        return;
-      }
-
-      [].forEach.call(guides, function (guide) {
-        guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-          var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zones, same_day_delivery, sign, take_photo, boxes;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
-            while (1) {
-              switch (_context11.prev = _context11.next) {
-                case 0:
-                  _this7.guideId = guide['id'].split('-')[1];
-                  _context11.next = 3;
-                  return _this7.requestGuide(_this7.guideId);
-
-                case 3:
-                  response = _context11.sent;
-                  data = response.data;
-                  branch_office = document.getElementById("branch_off_edit");
-                  branch_office.value = data.branch_office;
-                  customer_address = document.getElementById('customer_address_edit').options;
-                  [].forEach.call(customer_address, function (key) {
-                    key.text == data.address_name ? key.selected = true : key.selected = false;
-                  }); // customer_address.value = data.customer_address;
-                  // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
-                  // let address_name = document.getElementById("address_edit").value = data.address_name;
-                  // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
-                  // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
-
-                  guide_description = document.getElementById("address_description_edit").value = data.guide_description;
-                  concept = document.getElementById("concept_edit").value = data.concept;
-                  rate = document.getElementById("rate_edit").value = data.rate;
-                  value = document.getElementById("value_edit").value = data.value;
-                  corp_value = document.getElementById("corp_value_edit").value = data.corp_value;
-                  customer_document_type = document.getElementById("customer_document_type_edit").value = data.customer_document_type;
-                  contact = document.getElementById("contact_edit").value = data.contact;
-                  phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
-                  email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
-                  invoice_contact = document.getElementById("invoice_contact_edit").value = data.invoice_contact;
-                  zones = document.getElementById("zone_edit");
-                  [].forEach.call(zones, function (key) {
-                    key.value == data.zone ? key.selected = true : key.selected = false;
-                  });
-                  same_day_delivery = document.getElementById("same_day_delivery_edit");
-                  data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
-                  sign = document.getElementById("sign_edit");
-                  data.sign == 1 ? sign.checked = true : '';
-                  take_photo = document.getElementById("take_photo_edit");
-                  data.take_photo == 1 ? take_photo.checked = true : '';
-                  boxes = JSON.parse(data.boxes);
-
-                  _this7.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this7.boxes);
-
-                  _this7.addbox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
-
-                case 30:
-                case "end":
-                  return _context11.stop();
-              }
-            }
-          }, _callee11);
-        })));
-      });
-      this.updateGuide();
-    }
-  }, {
-    key: "requestGuide",
-    value: function () {
-      var _requestGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
-          while (1) {
-            switch (_context12.prev = _context12.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context12.next = 3;
-                return fetch("/guias/" + id + "/edit").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context12.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context12.stop();
-            }
-          }
-        }, _callee12);
-      }));
-
-      function requestGuide(_x4) {
-        return _requestGuide.apply(this, arguments);
-      }
-
-      return requestGuide;
-    }()
-  }, {
-    key: "updateGuide",
-    value: function updateGuide() {
-      var _this8 = this;
-
-      var btnUpdateGuide = document.getElementById("btnUpdateGuide");
-
-      if (btnUpdateGuide == null) {
-        return;
-      }
-
-      btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var branch_off_edit, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
-          while (1) {
-            switch (_context13.prev = _context13.next) {
-              case 0:
-                branch_off_edit = document.getElementById("branch_off_edit").value; // let dispatched = document.getElementById("dispatched_edit").value;
-
-                address_name = document.getElementById("customer_address_edit").value; // let address_lat = document.getElementById("lat_edit").value;
-                // let address_lng = document.getElementById("lng_edit").value;
-
-                guide_description = document.getElementById("address_description_edit").value;
-                concept = document.getElementById("concept_edit").value;
-                rate = document.getElementById("rate_edit").value;
-                value = document.getElementById("value_edit").value;
-                corp_value = document.getElementById("corp_value_edit").value;
-                customer_document_type = document.getElementById("customer_document_type_edit").value;
-                contact = document.getElementById("contact_edit").value;
-                phone_contact = document.getElementById("phone_contact_edit").value;
-                email_contact = document.getElementById("email_contact_edit").value;
-                invoice_contact = document.getElementById("invoice_contact_edit").value;
-                zone = document.getElementById("zone_edit").value;
-                same_day_delivery = document.getElementById("same_day_delivery_edit");
-                same_day_delivery.checked == true ? same_day_delivery = 1 : same_day_delivery = 0;
-                sign = document.getElementById("sign_edit");
-                sign.checked == true ? sign = 1 : sign = 0;
-                take_photo = document.getElementById("take_photo_edit");
-                take_photo.checked == true ? take_photo = 1 : take_photo = 0;
-                customer_address = document.getElementById("customer_address_edit").value; //Boxes
-
-                ids = document.getElementsByName('id[]');
-                weights = document.getElementsByName('weight[]');
-                longs = document.getElementsByName('long[]');
-                broads = document.getElementsByName('broad[]');
-                highs = document.getElementsByName('high[]');
-                vol_weights = document.getElementsByName('vol_weight[]');
-                descriptions = document.getElementsByName('description[]');
-                boxArr = [];
-
-                for (i = 1; i < ids.length; i++) {
-                  individualBoxArr = {
-                    'number': ids[i].value,
-                    'weight': weights[i].value,
-                    'long': longs[i].value,
-                    'broad': broads[i].value,
-                    'high': highs[i].value,
-                    'vol_weight': vol_weights[i].value,
-                    'description': descriptions[i].value
-                  };
-                  boxArr.push(individualBoxArr);
-                }
-
-                formData = new FormData();
-                formData.append('boxes', JSON.stringify(boxArr));
-                formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
-
-                formData.append("address_name", address_name); // formData.append("address_lat", address_lat);
-                // formData.append("address_lng", address_lng);
-
-                formData.append("guide_description", guide_description);
-                formData.append("concept", concept);
-                formData.append("rate", rate);
-                formData.append("value", value);
-                formData.append("corp_value", corp_value);
-                formData.append("customer_document_type", customer_document_type);
-                formData.append("contact", contact);
-                formData.append("phone_contact", phone_contact);
-                formData.append("email_contact", email_contact);
-                formData.append("same_day_delivery", same_day_delivery);
-                formData.append("sign", sign);
-                formData.append("take_photo", take_photo);
-                formData.append("invoice_contact", invoice_contact);
-                formData.append("zone", zone);
-                formData.append("customer_address", customer_address);
-                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                myHeaders = new Headers();
-                myHeaders.append("Accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                myHeaders.append('Content-Type', "application/json");
-                myHeaders.append('Content-Type', "multipart/form-data");
-                myHeaders.append("X-CSRF-TOKEN", token);
-                requestOptions = {
-                  method: "PUT",
-                  headers: myHeaders,
-                  body: JSON.stringify(Object.fromEntries(formData))
-                };
-                _context13.next = 59;
-                return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
-
-              case 59:
-                response = _context13.sent;
-
-                if (response.state == 200) {
-                  correct(response.message);
-                  modal = document.getElementById("modalEdit");
-                  modal.click();
-
-                  _this8.listGuides();
-                } else {
-                  error('Error al crear la guía.');
-                  console.log('Error: ' + response.error);
-                }
-
-              case 61:
-              case "end":
-                return _context13.stop();
-            }
-          }
-        }, _callee13);
-      })));
-    }
-  }, {
-    key: "sendDataToUpdate",
-    value: function () {
-      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(id, requestOptions) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
-          while (1) {
-            switch (_context14.prev = _context14.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context14.next = 3;
-                return fetch("/guias/" + id, requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context14.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context14.stop();
-            }
-          }
-        }, _callee14);
-      }));
-
-      function sendDataToUpdate(_x5, _x6) {
-        return _sendDataToUpdate.apply(this, arguments);
-      }
-
-      return sendDataToUpdate;
-    }()
-  }, {
-    key: "loadBranches",
-    value: function loadBranches() {
-      var _this9 = this;
-
-      var branchesSlc = document.getElementsByName("branch_office");
-
-      if (branchesSlc == null) {
-        return;
-      }
-
-      [].forEach.call(branchesSlc, /*#__PURE__*/function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(branch) {
-          var response, data, i, element, branchOffice;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
-            while (1) {
-              switch (_context15.prev = _context15.next) {
-                case 0:
-                  branch.selectedIndex = 0;
-                  removeOptions(branch);
-                  _context15.next = 4;
-                  return _this9.requestBranches();
-
-                case 4:
-                  response = _context15.sent;
-                  data = response.data;
-
-                  for (i = 0; i < data.length; i++) {
-                    element = data[i];
-                    branchOffice = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                    branch.insertAdjacentHTML('beforeend', branchOffice);
-                  }
-
-                case 7:
-                case "end":
-                  return _context15.stop();
-              }
-            }
-          }, _callee15);
-        }));
-
-        return function (_x7) {
-          return _ref6.apply(this, arguments);
-        };
-      }());
-    }
-  }, {
-    key: "requestBranches",
-    value: function () {
-      var _requestBranches = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
-          while (1) {
-            switch (_context16.prev = _context16.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context16.next = 3;
-                return fetch("/allBranches").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context16.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context16.stop();
-            }
-          }
-        }, _callee16);
-      }));
-
-      function requestBranches() {
-        return _requestBranches.apply(this, arguments);
-      }
-
-      return requestBranches;
-    }()
-  }, {
-    key: "customerAddresses",
-    value: function () {
-      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
-        var customerId,
-            slcAddresses,
-            response,
-            data,
-            _args17 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
-          while (1) {
-            switch (_context17.prev = _context17.next) {
-              case 0:
-                customerId = _args17.length > 0 && _args17[0] !== undefined ? _args17[0] : null;
-                slcAddresses = document.getElementsByName("customer_address");
-
-                if (!(customerId == '')) {
-                  _context17.next = 4;
-                  break;
-                }
-
-                return _context17.abrupt("return");
-
-              case 4:
-                if (!(slcAddresses == null)) {
-                  _context17.next = 6;
-                  break;
-                }
-
-                return _context17.abrupt("return");
-
-              case 6:
-                _context17.next = 8;
-                return this.requestCustomerAddresses(customerId);
-
-              case 8:
-                response = _context17.sent;
-
-                if (!(response == null)) {
-                  _context17.next = 11;
-                  break;
-                }
-
-                return _context17.abrupt("return");
-
-              case 11:
-                data = response.data;
-                [].forEach.call(slcAddresses, function (slcAddress) {
-                  slcAddress.selectedIndex = 0;
-                  removeOptions(slcAddress);
-
-                  for (var i = 0; i < data.length; i++) {
-                    var element = data[i];
-                    var optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + ' </option>';
-                    slcAddress.insertAdjacentHTML('beforeend', optAddress);
-                  }
-                });
-
-              case 13:
-              case "end":
-                return _context17.stop();
-            }
-          }
-        }, _callee17, this);
-      }));
-
-      function customerAddresses() {
-        return _customerAddresses.apply(this, arguments);
-      }
-
-      return customerAddresses;
-    }()
-  }, {
-    key: "requestCustomerAddresses",
-    value: function () {
-      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
-        var id,
-            route,
-            response,
-            _args18 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
-          while (1) {
-            switch (_context18.prev = _context18.next) {
-              case 0:
-                id = _args18.length > 0 && _args18[0] !== undefined ? _args18[0] : null;
-                route = window.location.pathname.split('/');
-
-                if (!(document.getElementById("user_code") == null)) {
-                  _context18.next = 4;
-                  break;
-                }
-
-                return _context18.abrupt("return");
-
-              case 4:
-                route.includes('edit') ? id = document.getElementById("user_code").value : '';
-                response = {
-                  'state': 500
-                };
-                _context18.next = 8;
-                return fetch("/customer_addresses/" + id).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 8:
-                return _context18.abrupt("return", response);
-
-              case 9:
-              case "end":
-                return _context18.stop();
-            }
-          }
-        }, _callee18);
-      }));
-
-      function requestCustomerAddresses() {
-        return _requestCustomerAddresses.apply(this, arguments);
-      }
-
-      return requestCustomerAddresses;
-    }()
-  }, {
-    key: "createAddress",
-    value: function createAddress() {
-      var _this10 = this;
-
-      var btnSaveAddress = document.getElementById("saveAddress");
-
-      if (btnSaveAddress == null) {
-        return;
-      }
-
-      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
-        var formData, description, address, lat, lng, user_id, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
-          while (1) {
-            switch (_context19.prev = _context19.next) {
-              case 0:
-                formData = new FormData();
-                description = document.getElementById("add_description").value;
-                address = document.getElementById("add_name").value;
-                lat = document.getElementById("add_lat").value;
-                lng = document.getElementById("add_lng").value;
-                user_id = document.getElementById("user_code").value;
-                formData.append('user_id', user_id);
-                formData.append('address', address);
-                formData.append('lat', lat);
-                formData.append('lng', lng);
-                formData.append('description', description);
-                formData.append('requestByJs', 1);
-                _context19.next = 14;
-                return _this10.sendAddressData(formData);
-
-              case 14:
-                response = _context19.sent;
-
-                if (response.state == 200) {
-                  correct(response.message);
-                  modal = document.getElementById("modalCreateAddress");
-                  modal.click();
-
-                  _this10.listGuides();
-
-                  _this10.customerAddresses(document.getElementById("user_code").value);
-                } else {
-                  error('Error al crear la guía.');
-                  console.log('Error: ' + response.error);
-                }
-
-              case 16:
-              case "end":
-                return _context19.stop();
-            }
-          }
-        }, _callee19);
-      })));
-    }
-  }, {
-    key: "sendAddressData",
-    value: function () {
-      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(formData) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
-          while (1) {
-            switch (_context20.prev = _context20.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context20.next = 3;
-                return fetch("/direcciones", {
-                  headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  },
-                  method: 'POST',
-                  body: formData
-                });
-
-              case 3:
-                response = _context20.sent;
-                return _context20.abrupt("return", response.json());
-
-              case 5:
-              case "end":
-                return _context20.stop();
-            }
-          }
-        }, _callee20);
-      }));
-
-      function sendAddressData(_x8) {
-        return _sendAddressData.apply(this, arguments);
-      }
-
-      return sendAddressData;
-    }()
-  }, {
-    key: "months",
-    value: function months(month) {
-      var months = {
-        0: 'Enero',
-        1: 'Febrero',
-        2: 'Marzo',
-        3: 'Abril',
-        4: 'Mayo',
-        5: 'Junio',
-        6: 'Julio',
-        7: 'Agosto',
-        8: 'Septiembre',
-        9: 'Octubre',
-        10: 'Noviembre',
-        11: 'Diciembre'
-      };
-      return months[month];
-    }
-  }, {
-    key: "porDespacharOndemand",
-    value: function () {
-      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22() {
-        var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
-          while (1) {
-            switch (_context22.prev = _context22.next) {
-              case 0:
-                button = document.getElementById('porDespacharOndemand');
-
-                if (!(button == null)) {
-                  _context22.next = 3;
-                  break;
-                }
-
-                return _context22.abrupt("return");
-
-              case 3:
-                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21() {
-                  var order_id, result, req;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
-                    while (1) {
-                      switch (_context21.prev = _context21.next) {
-                        case 0:
-                          order_id = button.value;
-                          _context21.next = 3;
-                          return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
-
-                        case 3:
-                          result = _context21.sent;
-
-                          if (!(result == true)) {
-                            _context21.next = 9;
-                            break;
-                          }
-
-                          _context21.next = 7;
-                          return fetch("/pordespachar/ondemand/".concat(order_id), {
-                            method: "POST",
-                            headers: {
-                              "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-                              accept: "application/json"
-                            }
-                          });
-
-                        case 7:
-                          req = _context21.sent;
-
-                          if (req.ok) {
-                            correct("Estado actualizado!");
-                            window.location.reload();
-                          } else {
-                            error("Error al actualizar estado");
-                          }
-
-                        case 9:
-                        case "end":
-                          return _context21.stop();
-                      }
-                    }
-                  }, _callee21);
-                })));
-
-              case 4:
-              case "end":
-                return _context22.stop();
-            }
-          }
-        }, _callee22);
-      }));
-
-      function porDespacharOndemand() {
-        return _porDespacharOndemand.apply(this, arguments);
-      }
-
-      return porDespacharOndemand;
-    }()
-  }, {
-    key: "porDespacharPackaging",
-    value: function () {
-      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
-        var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
-          while (1) {
-            switch (_context24.prev = _context24.next) {
-              case 0:
-                button = document.getElementById('porDespacharPackaging');
-
-                if (!(button == null)) {
-                  _context24.next = 3;
-                  break;
-                }
-
-                return _context24.abrupt("return");
-
-              case 3:
-                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23() {
-                  var order_id, result, formData, token, myHeaders, requestOptions, data, req;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
-                    while (1) {
-                      switch (_context23.prev = _context23.next) {
-                        case 0:
-                          order_id = button.value;
-                          _context23.next = 3;
-                          return porDespacharPackagingAlert();
-
-                        case 3:
-                          result = _context23.sent;
-
-                          if (!(result == 3 || result == 7)) {
-                            _context23.next = 18;
-                            break;
-                          }
-
-                          formData = new FormData();
-                          formData.append('type', result);
-                          token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                          myHeaders = new Headers();
-                          myHeaders.append("accept", "application/json");
-                          myHeaders.append("Access-Control-Allow-Origin", "*");
-                          myHeaders.append("X-CSRF-TOKEN", token);
-                          requestOptions = {
-                            method: "POST",
-                            headers: myHeaders,
-                            body: formData
-                          };
-                          data = {
-                            type: result
-                          };
-                          _context23.next = 16;
-                          return fetch("/pordespachar/packaging/".concat(order_id), requestOptions);
-
-                        case 16:
-                          req = _context23.sent;
-
-                          if (req.ok) {
-                            correct("Estado actualizado!");
-                            window.location.reload();
-                          } else {
-                            error("Error al actualizar estado");
-                          }
-
-                        case 18:
-                        case "end":
-                          return _context23.stop();
-                      }
-                    }
-                  }, _callee23);
-                })));
-
-              case 4:
-              case "end":
-                return _context24.stop();
-            }
-          }
-        }, _callee24);
-      }));
-
-      function porDespacharPackaging() {
-        return _porDespacharPackaging.apply(this, arguments);
-      }
-
-      return porDespacharPackaging;
-    }()
-  }, {
-    key: "loadPickupHours",
-    value: function () {
-      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25() {
-        var _this11 = this;
-
-        var date_selector, response, days;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
-          while (1) {
-            switch (_context25.prev = _context25.next) {
-              case 0:
-                date_selector = document.getElementById("schedule_date");
-
-                if (!(date_selector == null)) {
-                  _context25.next = 3;
-                  break;
-                }
-
-                return _context25.abrupt("return");
-
-              case 3:
-                _context25.next = 5;
-                return this.requestPickupHours();
-
-              case 5:
-                response = _context25.sent;
-                days = response.data;
-                date_selector.addEventListener('change', function () {
-                  var day = _this11.getDayReference(date_selector.value);
-
-                  var day_data = days[day];
-                  var schedule_time_range = document.getElementById("schedule_time_range");
-                  schedule_time_range.selectedIndex = 0;
-                  removeOptions(schedule_time_range);
-
-                  if (day_data) {
-                    for (var i = 0; i < day_data.length; i++) {
-                      var element = day_data[i];
-                      var text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time);
-                      var option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
-                      schedule_time_range.insertAdjacentHTML('beforeend', option);
-                    }
-
-                    schedule_time_range.addEventListener('change', function () {
-                      var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
-                      var schedule_time = document.getElementById("schedule_time");
-                      schedule_time.value = id;
-                    });
-                  }
-                });
-
-              case 8:
-              case "end":
-                return _context25.stop();
-            }
-          }
-        }, _callee25, this);
-      }));
-
-      function loadPickupHours() {
-        return _loadPickupHours.apply(this, arguments);
-      }
-
-      return loadPickupHours;
-    }()
-  }, {
-    key: "requestPickupHours",
-    value: function () {
-      var _requestPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
-          while (1) {
-            switch (_context26.prev = _context26.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context26.next = 3;
-                return fetch("/getPickupHours").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context26.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context26.stop();
-            }
-          }
-        }, _callee26);
-      }));
-
-      function requestPickupHours() {
-        return _requestPickupHours.apply(this, arguments);
-      }
-
-      return requestPickupHours;
-    }()
-  }, {
-    key: "getDayReference",
-    value: function getDayReference(day) {
-      var days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-      day = new Date(day).getDay();
-      return days[day];
-    }
-  }, {
-    key: "loadHoursInEditOrShow",
-    value: function () {
-      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee27() {
-        var route, date_selector, response, days, day, day_data, schedule_time_range, i, element, text, option;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee27$(_context27) {
-          while (1) {
-            switch (_context27.prev = _context27.next) {
-              case 0:
-                route = window.location.pathname;
-
-                if (route.includes('ordenes') && route.includes('edit')) {
-                  _context27.next = 3;
-                  break;
-                }
-
-                return _context27.abrupt("return");
-
-              case 3:
-                date_selector = document.getElementById("schedule_date");
-                _context27.next = 6;
-                return this.requestPickupHours();
-
-              case 6:
-                response = _context27.sent;
-                days = response.data;
-                day = this.getDayReference(date_selector.value);
-                day_data = days[day];
-
-                if (day_data) {
-                  schedule_time_range = document.getElementById("schedule_time_range");
-                  schedule_time_range.selectedIndex = 0;
-                  removeOptions(schedule_time_range);
-
-                  for (i = 0; i < day_data.length; i++) {
-                    element = day_data[i];
-                    text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time);
-                    option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
-                    schedule_time_range.insertAdjacentHTML('beforeend', option);
-                  }
-
-                  schedule_time_range.addEventListener('change', function () {
-                    var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
-                    var schedule_time = document.getElementById("schedule_time");
-                    schedule_time.value = id;
-                  });
-                }
-
-              case 11:
-              case "end":
-                return _context27.stop();
-            }
-          }
-        }, _callee27, this);
-      }));
-
-      function loadHoursInEditOrShow() {
-        return _loadHoursInEditOrShow.apply(this, arguments);
-      }
-
-      return loadHoursInEditOrShow;
-    }()
-  }]);
-
-  return Orders;
-}();
-
-
-$("#tabListOrders").DataTable({
-  info: false,
-  language: {
-    lengthMenu: "Mostrar " + "<select>\n                        <option value = '10'>10</option>\n                        <option value = '15'>15</option>\n                        <option value = '50'>50</option>\n                        <option value = '100'>100</option>\n                    <select>" + " registros",
-    zeroRecords: "Nada encontrado",
-    infoEmpty: "No records available",
-    infoFiltered: "(filtered from _MAX_ total records)",
-    search: "Buscar:",
-    paginate: {
-      next: "Siguiente",
-      previous: "Anterior"
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/_parameters.js":
-/*!*************************************!*\
-  !*** ./resources/js/_parameters.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Parameters; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Parameters = /*#__PURE__*/function () {
-  function Parameters() {
-    _classCallCheck(this, Parameters);
-
-    this.id = '';
-  }
-
-  _createClass(Parameters, [{
-    key: "initialize",
-    value: function initialize() {
-      this.loadParameterValues();
-    }
-  }, {
-    key: "loadParameterValues",
-    value: function loadParameterValues() {
-      var _this = this;
-
-      var buttons = document.getElementsByName('btnShowParameters');
-
-      if (buttons == null) {
-        return;
-      }
-
-      [].forEach.call(buttons, function (btn) {
-        _this.id = '';
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var btnOpenModalCreate;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  _this.id = btn['id'];
-                  btnOpenModalCreate = document.getElementById("divCreateParameter");
-                  btnOpenModalCreate.className = 'col d-flex align-items-top justify-content-end';
-                  _context.next = 5;
-                  return _this.renderParameterTable(_this.id);
-
-                case 5:
-                  _this.storeParameterValue(_this.id);
-
-                  _this.editParameterValue();
-
-                  return _context.abrupt("return");
-
-                case 8:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        })));
-      });
-    }
-  }, {
-    key: "requestParameterValues",
-    value: function () {
-      var _requestParameterValues = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context2.next = 3;
-                return fetch("/parametros/" + id).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context2.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function requestParameterValues(_x) {
-        return _requestParameterValues.apply(this, arguments);
-      }
-
-      return requestParameterValues;
-    }()
-  }, {
-    key: "renderParameterTable",
-    value: function () {
-      var _renderParameterTable = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
-        var tbody, response, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                tbody = document.querySelector("#parameterValueTable tbody");
-                tbody.innerHTML = '';
-                _context3.next = 4;
-                return this.requestParameterValues(id);
-
-              case 4:
-                response = _context3.sent;
-                data = response.data;
-                [].forEach.call(data, function (key) {
-                  var _key$description;
-
-                  var row = tbody.insertRow();
-                  var nameCell = row.insertCell(0);
-                  nameCell.innerHTML = key.name;
-                  var descriptionCell = row.insertCell(1);
-                  descriptionCell.innerHTML = (_key$description = key.description) !== null && _key$description !== void 0 ? _key$description : 'Sin descripción';
-                  var stateCell = row.insertCell(2);
-
-                  if (key.state == 1) {
-                    stateCell.innerHTML = '<span class="label label-inline label-light-success font-weight-bold">\
-                                            Activo\
-                                        </span>';
-                  } else {
-                    stateCell.innerHTML = '<span class="label label-inline label-light-danger font-weight-bold">\
-                                            Inactivo\
-                                        </span>';
-                  }
-
-                  var selectCell = row.insertCell(3);
-                  var editBtn = document.createElement("button");
-                  editBtn.setAttribute('name', 'btnEditParameter');
-                  editBtn.setAttribute('class', 'btn btn-icon btn-light-success btn-sm mr-2');
-                  editBtn.setAttribute('data-toggle', 'modal');
-                  editBtn.setAttribute('data-target', '#modalEditParameter');
-                  editBtn.setAttribute('id', +key.id);
-                  editBtn.setAttribute('type', 'button');
-                  editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-                  var deleteBtn = document.createElement("button");
-
-                  deleteBtn.onclick = function () {
-                    confirmDelete('parametros/delete/' + key.id);
-                  };
-
-                  deleteBtn.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                  deleteBtn.setAttribute('type', 'button');
-                  deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-                  var buttonsDiv = document.createElement("div");
-                  buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
-                  buttonsDiv.appendChild(editBtn);
-                  buttonsDiv.appendChild(deleteBtn);
-                  selectCell.appendChild(buttonsDiv);
-                  tbody.appendChild(row);
-                });
-
-              case 7:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function renderParameterTable(_x2) {
-        return _renderParameterTable.apply(this, arguments);
-      }
-
-      return renderParameterTable;
-    }()
-  }, {
-    key: "storeParameterValue",
-    value: function storeParameterValue() {
-      var _this2 = this;
-
-      var btnStore = document.getElementById("btnStoreParameter");
-
-      if (btnStore == null) {
-        return;
-      }
-
-      btnStore.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var form, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                form = document.getElementById("formCreateParameter");
-
-                if (!(form == null)) {
-                  _context4.next = 3;
-                  break;
-                }
-
-                return _context4.abrupt("return");
-
-              case 3:
-                formData = new FormData(form);
-                formData.append('parameter_id', _this2.id);
-                _context4.next = 7;
-                return _this2.requestStoreParameterValue(formData);
-
-              case 7:
-                response = _context4.sent;
-
-                if (response.state == 200) {
-                  success(response.message);
-                  modal = document.getElementById("modalCreateParameter");
-                  modal.click();
-                  location.reload(); // this.renderParameterTable(this.id);
-                } else {
-                  error(response.message);
-                }
-
-              case 9:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      })));
-    }
-  }, {
-    key: "requestStoreParameterValue",
-    value: function () {
-      var _requestStoreParameterValue = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(formData) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context5.next = 3;
-                return fetch("/parametros", {
-                  headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  },
-                  method: 'POST',
-                  body: formData
-                });
-
-              case 3:
-                response = _context5.sent;
-                return _context5.abrupt("return", response.json());
-
-              case 5:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }));
-
-      function requestStoreParameterValue(_x3) {
-        return _requestStoreParameterValue.apply(this, arguments);
-      }
-
-      return requestStoreParameterValue;
-    }()
-  }, {
-    key: "editParameterValue",
-    value: function editParameterValue() {
-      var _this3 = this;
-
-      var allEditBtns = document.getElementsByName('btnEditParameter');
-
-      if (allEditBtns == null) {
-        return;
-      }
-
-      allEditBtns.forEach(function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-          var response, data, name, description, state;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-            while (1) {
-              switch (_context6.prev = _context6.next) {
-                case 0:
-                  _context6.next = 2;
-                  return _this3.requestParameterData(btn['id']);
-
-                case 2:
-                  response = _context6.sent;
-                  data = response.data;
-                  name = document.getElementById("parameter_name");
-                  name.value = data.name;
-                  description = document.getElementById("parameter_description");
-                  description.value = data.description;
-                  state = document.getElementById("parameter_state_edit");
-                  data.state == 1 ? state.checked = true : '';
-
-                  _this3.updateParameterValue(btn['id']);
-
-                case 11:
-                case "end":
-                  return _context6.stop();
-              }
-            }
-          }, _callee6);
-        })));
-      });
-    }
-  }, {
-    key: "requestParameterData",
-    value: function () {
-      var _requestParameterData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context7.next = 3;
-                return fetch("parametros/" + id + "/edit").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context7.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7);
-      }));
-
-      function requestParameterData(_x4) {
-        return _requestParameterData.apply(this, arguments);
-      }
-
-      return requestParameterData;
-    }()
-  }, {
-    key: "updateParameterValue",
-    value: function updateParameterValue(id) {
-      var _this4 = this;
-
-      var form = document.getElementById('formUpdateParameter');
-
-      if (form == null) {
-        return;
-      }
-
-      var btnUpdate = document.getElementById("btnUpdateParameter");
-
-      if (btnUpdate == null) {
-        return;
-      }
-
-      btnUpdate.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        var formData, token, myHeaders, requestOptions, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                formData = new FormData(form);
-                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                myHeaders = new Headers();
-                myHeaders.append("Accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                myHeaders.append('Content-Type', "application/json");
-                myHeaders.append('Content-Type', "multipart/form-data");
-                myHeaders.append("X-CSRF-TOKEN", token);
-                requestOptions = {
-                  method: "PUT",
-                  headers: myHeaders,
-                  body: JSON.stringify(Object.fromEntries(formData))
-                };
-                _context8.next = 12;
-                return _this4.requestUpdateParameter(id, requestOptions);
-
-              case 12:
-                response = _context8.sent;
-
-                if (response.state == 200) {
-                  success(response.message);
-                  modal = document.getElementById("modalEditParameter");
-                  modal.click();
-                  location.reload();
-                } else {
-                  error(response.message);
-                }
-
-              case 14:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8);
-      })));
-    }
-  }, {
-    key: "requestUpdateParameter",
-    value: function () {
-      var _requestUpdateParameter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(id, requestOptions) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context9.next = 3;
-                return fetch("parametros/" + id, requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context9.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context9.stop();
-            }
-          }
-        }, _callee9);
-      }));
-
-      function requestUpdateParameter(_x5, _x6) {
-        return _requestUpdateParameter.apply(this, arguments);
-      }
-
-      return requestUpdateParameter;
-    }()
-  }]);
-
-  return Parameters;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/_permissions.js":
-/*!**************************************!*\
-  !*** ./resources/js/_permissions.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Permissions; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-var translated_actions = {
-  all: "Todo",
-  index: "Inicio",
-  create: "Vista crear",
-  store: "Crear",
-  show: "Detalle",
-  destroy: "Eliminar",
-  "delete": "Eliminar",
-  update: "Actualizar",
-  edit: "Vista editar",
-  assign: "Asignar",
-  "import": "Importar",
-  "export": "Exportar",
-  record: "Historial"
-};
-
-var requestPermissions = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(url) {
-    var response, token;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            response = {
-              state: 500
-            };
-            token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            _context.next = 4;
-            return fetch(url, {
-              method: "GET",
-              headers: {
-                "X-CSRF-TOKEN": token
-              }
-            }).then(function (response) {
-              return response.json();
-            }).then(function (data) {
-              response = data;
-            })["catch"](function (e) {
-              console.log(e);
-            });
-
-          case 4:
-            return _context.abrupt("return", response);
-
-          case 5:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function requestPermissions(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-var Permissions = /*#__PURE__*/function () {
-  function Permissions() {
-    _classCallCheck(this, Permissions);
-  }
-
-  _createClass(Permissions, [{
-    key: "initialize",
-    value: function initialize() {
-      this.loadPermissions();
-      this.roleData();
-    }
-  }, {
-    key: "loadPermissions",
-    value: function loadPermissions() {
-      var configurationBtn = document.getElementsByClassName("configuration-btn");
-      var permitsLbl = document.getElementById("permits-label");
-
-      if (configurationBtn == null) {
-        return;
-      }
-
-      [].forEach.call(configurationBtn, function (btn) {
-        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var row, role_id, form, url, response, data, modules, actions, permissions, cardBody;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  row = btn.parentNode.parentNode;
-                  console.log(row);
-                  role_id = row.id;
-                  permitsLbl.innerText = "Permisos - ".concat(row.getAttribute("role-name"));
-                  form = document.getElementById("permits-form");
-                  form.setAttribute("action", "/permisos/".concat(role_id));
-                  url = "/permisos/getPermissions/" + role_id;
-                  _context2.next = 9;
-                  return requestPermissions(url);
-
-                case 9:
-                  response = _context2.sent;
-
-                  if (!(response.state != 200)) {
-                    _context2.next = 12;
-                    break;
-                  }
-
-                  return _context2.abrupt("return");
-
-                case 12:
-                  data = response.data;
-                  modules = data.modules;
-                  actions = data.actions;
-                  permissions = data.permissions;
-                  cardBody = document.getElementById("card-body");
-                  cardBody.innerHTML = "";
-                  [].forEach.call(modules, function (module) {
-                    var _module$actions$split, _module$actions, _module_permissions$a, _module_permissions$a2;
-
-                    var module_actions = (_module$actions$split = module === null || module === void 0 ? void 0 : (_module$actions = module.actions) === null || _module$actions === void 0 ? void 0 : _module$actions.split(",")) !== null && _module$actions$split !== void 0 ? _module$actions$split : [];
-                    var module_permissions = permissions.find(function (element) {
-                      return element.module_id == module.id;
-                    });
-                    var allowed_actions = (_module_permissions$a = module_permissions === null || module_permissions === void 0 ? void 0 : (_module_permissions$a2 = module_permissions.actions) === null || _module_permissions$a2 === void 0 ? void 0 : _module_permissions$a2.split(",")) !== null && _module_permissions$a !== void 0 ? _module_permissions$a : [];
-                    var mainContainer = document.createElement("div");
-                    mainContainer.className = "row";
-                    var nameContainer = document.createElement("div");
-                    nameContainer.className = "col-3 align-self-center";
-                    nameContainer.innerHTML = "<h6 class=\"mb-0 text-muted font-weight-bold\">".concat(module.name, "</h6>");
-                    mainContainer.appendChild(nameContainer);
-                    var checkContainer = document.createElement("div");
-                    checkContainer.className = "col-9 align-self-center border-bottom my-5";
-                    checkContainer.innerHTML = "<div class=\"checkbox-inline\"></div>";
-                    [].forEach.call(actions, function (action) {
-                      var action_found = module_actions.find(function (element) {
-                        return element == action.id;
-                      });
-                      var permission_found = allowed_actions.find(function (element) {
-                        return element == action.id;
-                      });
-                      var label = document.createElement("label");
-                      label.className = "checkbox col-3 text-uppercase font-weight-bold mx-4";
-                      label.style = "\n                            font-size: 0.8571em;\n                            margin-bottom: 5px;\n                            color: #9A9A9A;\n                        ";
-                      label.innerHTML = "\n                        <input class=\"\" type=\"checkbox\" value=\"".concat(action.id, "\"\n                         name=\"").concat(module.reference, "[]\" ").concat(!action_found && "disabled", "\n\n                         ").concat(permission_found && "checked", "\n                        > <span></span>").concat(!action_found ? '<s>' : '', " ").concat(translated_actions[action.name]).concat(!action_found ? '</s>' : '', "\n\n                        ");
-                      checkContainer.childNodes[0].appendChild(label);
-                    });
-                    mainContainer.appendChild(checkContainer);
-                    cardBody.appendChild(mainContainer);
-                    var submitBtn = document.getElementById("submit-btn");
-                    submitBtn.className = "btn btn-primary btn-sm d-block";
-                  });
-
-                case 19:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        })));
-      });
-    }
-  }, {
-    key: "roleData",
-    value: function roleData() {
-      var _this = this;
-
-      var editButtons = document.getElementsByName("btnEditRole");
-
-      if (editButtons == null) {
-        return;
-      }
-
-      [].forEach.call(editButtons, function (item) {
-        item.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-          var role_id, response, data, name, state, form;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  role_id = item["id"].split("-")[1];
-                  _context3.next = 3;
-                  return _this.requestRoleData(role_id);
-
-                case 3:
-                  response = _context3.sent;
-
-                  if (!(response.state != 200)) {
-                    _context3.next = 8;
-                    break;
-                  }
-
-                  alert("Error inesperado.");
-                  console.log(response.error);
-                  return _context3.abrupt("return");
-
-                case 8:
-                  data = response.data;
-                  name = document.getElementById("name_edit");
-                  name.value = data.name;
-                  state = document.getElementById("state_edit");
-                  [].forEach.call(state, function (opt) {
-                    opt.value == data.state ? opt.selected = true : "";
-                  });
-                  form = document.getElementById("formUpdateRole");
-                  form.setAttribute("action", "roles/" + data.id);
-
-                case 15:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3);
-        })));
-      });
-    }
-  }, {
-    key: "requestRoleData",
-    value: function () {
-      var _requestRoleData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                response = {
-                  state: 500
-                };
-                _context4.next = 3;
-                return fetch("/roles/" + id + "/edit").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context4.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }));
-
-      function requestRoleData(_x2) {
-        return _requestRoleData.apply(this, arguments);
-      }
-
-      return requestRoleData;
-    }()
-  }]);
-
-  return Permissions;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/_plans.js":
-/*!********************************!*\
-  !*** ./resources/js/_plans.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Plans; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Plans = /*#__PURE__*/function () {
-  function Plans() {
-    _classCallCheck(this, Plans);
-  }
-
-  _createClass(Plans, [{
-    key: "initialize",
-    value: function initialize() {
-      this.editPlan();
-    }
-  }, {
-    key: "editPlan",
-    value: function editPlan() {
-      var _this = this;
-
-      var editButtons = document.getElementsByName('planEditBtn');
-
-      if (editButtons == null) {
-        return;
-      }
-
-      [].forEach.call(editButtons, function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var id, response, data, name, description, form;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  id = btn.id;
-                  _context.next = 3;
-                  return _this.requestPlan(id);
-
-                case 3:
-                  response = _context.sent;
-                  data = response.data;
-                  name = document.getElementById("plan_name_edit");
-                  name.value = data.name;
-                  description = document.getElementById("plan_description_edit");
-                  description.value = data.description;
-                  form = document.getElementById("formUpdate");
-                  form.setAttribute('action', '/planes/' + id);
-
-                case 11:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        })));
-      });
-    }
-  }, {
-    key: "requestPlan",
-    value: function () {
-      var _requestPlan = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context2.next = 3;
-                return fetch("/planes/" + id + "/edit").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log(e);
-                });
-
-              case 3:
-                return _context2.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function requestPlan(_x) {
-        return _requestPlan.apply(this, arguments);
-      }
-
-      return requestPlan;
-    }()
-  }]);
-
-  return Plans;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/_rates.js":
-/*!********************************!*\
-  !*** ./resources/js/_rates.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Rates; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_requests */ "./resources/js/_requests.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-
-var Rates = /*#__PURE__*/function () {
-  function Rates() {
-    _classCallCheck(this, Rates);
-  }
-
-  _createClass(Rates, [{
-    key: "initialize",
-    value: function initialize() {
-      this.getZone();
-    }
-  }, {
-    key: "getZone",
-    value: function () {
-      var _getZone = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var select;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                select = document.getElementById("select-zone");
-
-                if (!(select == null)) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 3:
-                select.addEventListener('change', function () {
-                  getNeighborhoods(select.value);
-                });
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function getZone() {
-        return _getZone.apply(this, arguments);
-      }
-
-      return getZone;
-    }()
-  }]);
-
-  return Rates;
-}();
-
-
-
-var getNeighborhoods = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-    var select, response, neighborhoods;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            select = document.getElementById("select-neighborhood");
-
-            if (!(select == null)) {
-              _context2.next = 3;
-              break;
-            }
-
-            return _context2.abrupt("return");
-
-          case 3:
-            select.innerHTML = "<option selected disabled>Seleccione</option>";
-            console.log('zone_neighborhoods', id);
-            _context2.next = 7;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZoneNeighborhoods"])(id);
-
-          case 7:
-            response = _context2.sent;
-
-            if (!(response.state != 200)) {
-              _context2.next = 10;
-              break;
-            }
-
-            return _context2.abrupt("return");
-
-          case 10:
-            neighborhoods = response.data;
-            neighborhoods.map(function (neighborhood) {
-              var _neighborhood$name, _neighborhood$get_cor, _neighborhood$get_cor2, _neighborhood$get_cor3, _neighborhood$get_cor4;
-
-              var option = document.createElement("option");
-              console.log(neighborhood);
-              option.text = ((_neighborhood$name = neighborhood.name) !== null && _neighborhood$name !== void 0 ? _neighborhood$name : '') + '; ' + ((_neighborhood$get_cor = neighborhood.get_corregimiento.name) !== null && _neighborhood$get_cor !== void 0 ? _neighborhood$get_cor : '') + '; ' + ((_neighborhood$get_cor2 = neighborhood.get_corregimiento.get_district.name) !== null && _neighborhood$get_cor2 !== void 0 ? _neighborhood$get_cor2 : '') + '; ' + ((_neighborhood$get_cor3 = neighborhood.get_corregimiento.get_district.get_province.name) !== null && _neighborhood$get_cor3 !== void 0 ? _neighborhood$get_cor3 : '') + '; ' + ((_neighborhood$get_cor4 = neighborhood.get_corregimiento.get_district.get_province.get_country.name) !== null && _neighborhood$get_cor4 !== void 0 ? _neighborhood$get_cor4 : '');
-              option.value = neighborhood.id;
-              select.appendChild(option);
-            });
-
-          case 12:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-
-  return function getNeighborhoods(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
 
 /***/ }),
 
@@ -87677,533 +88346,6 @@ var requestZone = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/js/_zones.js":
-/*!********************************!*\
-  !*** ./resources/js/_zones.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Zones; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _requests__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_requests */ "./resources/js/_requests.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
-var map;
-var infoWindow;
-
-function showArrays(event) {
-  // Since this polygon has only one path, we can call getPath() to return the
-  // MVCArray of LatLngs.
-  var polygon = this;
-  var vertices = polygon.getPath();
-  var contentString = "<b>Bermuda Triangle polygon</b><br>" + "Clicked location: <br>" + event.latLng.lat() + "," + event.latLng.lng() + "<br>"; // Iterate over the vertices.
-
-  for (var i = 0; i < vertices.getLength(); i++) {
-    var xy = vertices.getAt(i);
-    contentString += "<br>" + "Coordinate " + i + ":<br>" + xy.lat() + "," + xy.lng();
-  } // Replace the info window's content and position.
-
-
-  infoWindow.setContent(contentString);
-  infoWindow.setPosition(event.latLng);
-  infoWindow.open(map);
-}
-
-var Zones = /*#__PURE__*/function () {
-  function Zones() {
-    _classCallCheck(this, Zones);
-  }
-
-  _createClass(Zones, [{
-    key: "initialize",
-    value: function initialize() {
-      this.initMap();
-      this.getCountries();
-      this.formHandler();
-    }
-  }, {
-    key: "initMap",
-    value: function initMap() {
-      infoWindow = new google.maps.InfoWindow(); // The location of panama 8.689078613386496, -81.13166771577085
-
-      var panama = {
-        lat: 8.689,
-        lng: -81.131
-      };
-      var mapTemplate = document.getElementById("map");
-
-      if (mapTemplate == null) {
-        return;
-      } // The map, centered at panama
-
-
-      map = new google.maps.Map(mapTemplate, {
-        zoom: 7,
-        center: panama,
-        mapTypeId: google.maps.MapTypeId.RoadMap
-      }); // The marker, positioned at Uluru
-      // const marker = new google.maps.Marker({
-      //     position: panama,
-      //     map: map,
-      // });
-
-      var triangleCoords = [new google.maps.LatLng(8.827520901431855, -82.07374528457048), new google.maps.LatLng(8.281601970995954, -81.7386623009158) // new google.maps.LatLng(8.71351334406503, -81.26075706193294)
-      ];
-      var myPolygon = new google.maps.Polygon({
-        paths: triangleCoords,
-        draggable: true,
-        // turn off if it gets annoying
-        editable: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35
-      });
-      myPolygon.setMap(map);
-      myPolygon.addListener("dragend", showArrays);
-    }
-  }, {
-    key: "getCountries",
-    value: function () {
-      var _getCountries = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var select, response, countries;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                select = document.getElementById("select-country");
-
-                if (!(select == null)) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 3:
-                _context.next = 5;
-                return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('country');
-
-              case 5:
-                response = _context.sent;
-
-                if (!(response.state != 200)) {
-                  _context.next = 8;
-                  break;
-                }
-
-                return _context.abrupt("return");
-
-              case 8:
-                countries = response.data;
-                countries.map(function (country) {
-                  var option = document.createElement("option");
-                  option.text = country.name;
-                  option.value = country.id;
-                  select.appendChild(option);
-                });
-                select.addEventListener('change', function () {
-                  getProvinces(select.value);
-                });
-
-              case 11:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function getCountries() {
-        return _getCountries.apply(this, arguments);
-      }
-
-      return getCountries;
-    }()
-  }, {
-    key: "formHandler",
-    value: function formHandler() {
-      var editBtn = document.getElementsByClassName("edit-btn");
-
-      if (editBtn == null) {
-        return;
-      }
-
-      [].forEach.call(editBtn, function (btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var info_label, zone_form, input_name, select_country, response, zone, put, country, province, district, corregimiento, neighborhoods;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  info_label = document.getElementById("info-label");
-
-                  if (!(info_label == null)) {
-                    _context2.next = 3;
-                    break;
-                  }
-
-                  return _context2.abrupt("return");
-
-                case 3:
-                  info_label.innerText = 'Actualizar';
-                  zone_form = document.getElementById("zone-form");
-
-                  if (!(zone_form == null)) {
-                    _context2.next = 7;
-                    break;
-                  }
-
-                  return _context2.abrupt("return");
-
-                case 7:
-                  input_name = document.getElementById("input-name");
-
-                  if (!(input_name == null)) {
-                    _context2.next = 10;
-                    break;
-                  }
-
-                  return _context2.abrupt("return");
-
-                case 10:
-                  select_country = document.getElementById("select-country");
-
-                  if (!(select_country == null)) {
-                    _context2.next = 13;
-                    break;
-                  }
-
-                  return _context2.abrupt("return");
-
-                case 13:
-                  _context2.next = 15;
-                  return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestZone"])(btn === null || btn === void 0 ? void 0 : btn.id);
-
-                case 15:
-                  response = _context2.sent;
-
-                  if (!((response === null || response === void 0 ? void 0 : response.state) != 200)) {
-                    _context2.next = 18;
-                    break;
-                  }
-
-                  return _context2.abrupt("return");
-
-                case 18:
-                  zone = response.data;
-                  zone_form.setAttribute('action', "zonas/".concat(zone.id));
-                  put = document.createElement('input');
-                  put.type = 'hidden';
-                  put.name = '_method';
-                  put.value = 'PUT';
-                  zone_form.appendChild(put);
-                  input_name.value = zone.name;
-                  country = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province.get_country;
-                  province = zone.get_neighborhoods[0].get_corregimiento.get_district.get_province;
-                  district = zone.get_neighborhoods[0].get_corregimiento.get_district;
-                  corregimiento = zone.get_neighborhoods[0].get_corregimiento;
-                  neighborhoods = zone.get_neighborhoods;
-                  select_country.value = country.id;
-                  getProvinces(country.id, province.id);
-                  getDistricts(province.id, district.id);
-                  getCorregimientos(district.id, corregimiento.id);
-                  getNeighborhoods(corregimiento.id, neighborhoods);
-
-                case 36:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        })));
-      });
-    }
-  }]);
-
-  return Zones;
-}();
-
-
-
-var getProvinces = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
-    var selected,
-        select,
-        response,
-        provinces,
-        _args3 = arguments;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            selected = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : false;
-            select = document.getElementById("select-province");
-
-            if (!(select == null)) {
-              _context3.next = 4;
-              break;
-            }
-
-            return _context3.abrupt("return");
-
-          case 4:
-            select.innerHTML = "<option selected disabled>Seleccione provincia</option>";
-            _context3.next = 7;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('province', id);
-
-          case 7:
-            response = _context3.sent;
-
-            if (!(response.state != 200)) {
-              _context3.next = 10;
-              break;
-            }
-
-            return _context3.abrupt("return");
-
-          case 10:
-            provinces = response.data;
-            provinces.map(function (province) {
-              var option = document.createElement("option");
-              option.text = province.name;
-              option.value = province.id;
-              select.appendChild(option);
-            });
-
-            if (selected) {
-              select.value = selected;
-            }
-
-            select.addEventListener('change', function () {
-              getDistricts(select.value);
-            });
-
-          case 14:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3);
-  }));
-
-  return function getProvinces(_x) {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
-var getDistricts = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
-    var selected,
-        select,
-        response,
-        districts,
-        _args4 = arguments;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            selected = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : false;
-            select = document.getElementById("select-district");
-
-            if (!(select == null)) {
-              _context4.next = 4;
-              break;
-            }
-
-            return _context4.abrupt("return");
-
-          case 4:
-            select.innerHTML = "<option selected disabled>Seleccione distrito</option>";
-            _context4.next = 7;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('district', id);
-
-          case 7:
-            response = _context4.sent;
-
-            if (!(response.state != 200)) {
-              _context4.next = 10;
-              break;
-            }
-
-            return _context4.abrupt("return");
-
-          case 10:
-            districts = response.data;
-            districts.map(function (district) {
-              var option = document.createElement("option");
-              option.text = district.name;
-              option.value = district.id;
-              select.appendChild(option);
-            });
-
-            if (selected) {
-              select.value = selected;
-            }
-
-            select.addEventListener('change', function () {
-              getCorregimientos(select.value);
-            });
-
-          case 14:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4);
-  }));
-
-  return function getDistricts(_x2) {
-    return _ref3.apply(this, arguments);
-  };
-}();
-
-var getCorregimientos = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(id) {
-    var selected,
-        select,
-        response,
-        corregimientos,
-        _args5 = arguments;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            selected = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : false;
-            select = document.getElementById("select-corregimiento");
-
-            if (!(select == null)) {
-              _context5.next = 4;
-              break;
-            }
-
-            return _context5.abrupt("return");
-
-          case 4:
-            select.innerHTML = "<option selected disabled>Seleccione corregimientos</option>";
-            _context5.next = 7;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('corregimiento', id);
-
-          case 7:
-            response = _context5.sent;
-
-            if (!(response.state != 200)) {
-              _context5.next = 10;
-              break;
-            }
-
-            return _context5.abrupt("return");
-
-          case 10:
-            corregimientos = response.data;
-            corregimientos.map(function (corregimiento) {
-              var option = document.createElement("option");
-              option.text = corregimiento.name;
-              option.value = corregimiento.id;
-              select.appendChild(option);
-            });
-
-            if (selected) {
-              select.value = selected;
-            }
-
-            select.addEventListener('change', function () {
-              getNeighborhoods(select.value);
-            });
-
-          case 14:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5);
-  }));
-
-  return function getCorregimientos(_x3) {
-    return _ref4.apply(this, arguments);
-  };
-}();
-
-var getNeighborhoods = /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
-    var selected,
-        select,
-        response,
-        neighborhoods,
-        _args6 = arguments;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            selected = _args6.length > 1 && _args6[1] !== undefined ? _args6[1] : [];
-            select = document.getElementById("select-neighborhood");
-
-            if (!(select == null)) {
-              _context6.next = 4;
-              break;
-            }
-
-            return _context6.abrupt("return");
-
-          case 4:
-            select.innerHTML = "<option disabled>Seleccione barrio</option>";
-            _context6.next = 7;
-            return Object(_requests__WEBPACK_IMPORTED_MODULE_1__["requestPlaces"])('neighborhood', id);
-
-          case 7:
-            response = _context6.sent;
-
-            if (!(response.state != 200)) {
-              _context6.next = 10;
-              break;
-            }
-
-            return _context6.abrupt("return");
-
-          case 10:
-            neighborhoods = response.data;
-            neighborhoods.map(function (neighborhood) {
-              var found = selected.find(function (element) {
-                return element.id == neighborhood.id;
-              });
-              var option = document.createElement("option");
-              option.text = neighborhood.name;
-              option.value = neighborhood.id;
-              option.selected = found ? true : false;
-              select.appendChild(option);
-            });
-
-          case 12:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6);
-  }));
-
-  return function getNeighborhoods(_x4) {
-    return _ref5.apply(this, arguments);
-  };
-}();
-
-/***/ }),
-
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -88213,22 +88355,24 @@ var getNeighborhoods = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _messengers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_messengers */ "./resources/js/_messengers.js");
-/* harmony import */ var _addresses__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_addresses */ "./resources/js/_addresses.js");
-/* harmony import */ var _customers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_customers */ "./resources/js/_customers.js");
-/* harmony import */ var _orders__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_orders */ "./resources/js/_orders.js");
-/* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
-/* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_permissions */ "./resources/js/_permissions.js");
-/* harmony import */ var _zones__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./_zones */ "./resources/js/_zones.js");
-/* harmony import */ var _branchOffice__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_branchOffice */ "./resources/js/_branchOffice.js");
-/* harmony import */ var _parameters__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_parameters */ "./resources/js/_parameters.js");
-/* harmony import */ var _hours__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_hours */ "./resources/js/_hours.js");
-/* harmony import */ var _plans__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_plans */ "./resources/js/_plans.js");
-/* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
-/* harmony import */ var _rates__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_rates */ "./resources/js/_rates.js");
+/* harmony import */ var _app_Modules_UserModule_views_js_users__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../app/Modules/UserModule/views/js/_users */ "./app/Modules/UserModule/views/js/_users.js");
+/* harmony import */ var _app_Modules_MessengerModule_views_js_messengers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../app/Modules/MessengerModule/views/js/_messengers */ "./app/Modules/MessengerModule/views/js/_messengers.js");
+/* harmony import */ var _app_Modules_AddressModule_views_js_addresses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app/Modules/AddressModule/views/js/_addresses */ "./app/Modules/AddressModule/views/js/_addresses.js");
+/* harmony import */ var _app_Modules_CustomerModule_views_js_customers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../app/Modules/CustomerModule/views/js/_customers */ "./app/Modules/CustomerModule/views/js/_customers.js");
+/* harmony import */ var _app_Modules_OrderModule_views_js_orders__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../app/Modules/OrderModule/views/js/_orders */ "./app/Modules/OrderModule/views/js/_orders.js");
+/* harmony import */ var _general__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_general */ "./resources/js/_general.js");
+/* harmony import */ var _app_Modules_PermissionModule_views_js_permissions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../app/Modules/PermissionModule/views/js/_permissions */ "./app/Modules/PermissionModule/views/js/_permissions.js");
+/* harmony import */ var _app_Modules_ZoneModule_views_js_zones__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../app/Modules/ZoneModule/views/js/_zones */ "./app/Modules/ZoneModule/views/js/_zones.js");
+/* harmony import */ var _app_Modules_BranchOfficeModule_views_js_branchOffice__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../app/Modules/BranchOfficeModule/views/js/_branchOffice */ "./app/Modules/BranchOfficeModule/views/js/_branchOffice.js");
+/* harmony import */ var _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../app/Modules/ParametersModule/views/js/_parameters */ "./app/Modules/ParametersModule/views/js/_parameters.js");
+/* harmony import */ var _app_Modules_PickupHourModule_views_js_hours__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../app/Modules/PickupHourModule/views/js/_hours */ "./app/Modules/PickupHourModule/views/js/_hours.js");
+/* harmony import */ var _app_Modules_PlanModule_views_js_plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../app/Modules/PlanModule/views/js/_plans */ "./app/Modules/PlanModule/views/js/_plans.js");
+/* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
+/* harmony import */ var _app_Modules_RateModule_views_js_rates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../app/Modules/RateModule/views/js/_rates */ "./app/Modules/RateModule/views/js/_rates.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -88249,24 +88393,26 @@ Vue.component('department-tab', __webpack_require__(/*! ./components/department/
 Vue.component('status-matrix', __webpack_require__(/*! ./components/statusMatrix/statusMatrix.vue */ "./resources/js/components/statusMatrix/statusMatrix.vue")["default"]);
 Vue.component('deliveries', __webpack_require__(/*! ./components/deliveries/deliveries.vue */ "./resources/js/components/deliveries/deliveries.vue")["default"]);
 Vue.component('modal', __webpack_require__(/*! ./components/modal.vue */ "./resources/js/components/modal.vue")["default"]);
-var messengers = new _messengers__WEBPACK_IMPORTED_MODULE_0__["default"]();
-var addresses = new _addresses__WEBPACK_IMPORTED_MODULE_1__["default"]();
-var customers = new _customers__WEBPACK_IMPORTED_MODULE_2__["default"]();
-var orders = new _orders__WEBPACK_IMPORTED_MODULE_3__["default"]();
-var general = new _general__WEBPACK_IMPORTED_MODULE_4__["default"]();
-var permissions = new _permissions__WEBPACK_IMPORTED_MODULE_5__["default"]();
-var zones = new _zones__WEBPACK_IMPORTED_MODULE_6__["default"]();
-var rates = new _rates__WEBPACK_IMPORTED_MODULE_12__["default"]();
-var branchOffice = new _branchOffice__WEBPACK_IMPORTED_MODULE_7__["default"]();
-var parameters = new _parameters__WEBPACK_IMPORTED_MODULE_8__["default"]();
-var hours = new _hours__WEBPACK_IMPORTED_MODULE_9__["default"]();
-var plans = new _plans__WEBPACK_IMPORTED_MODULE_10__["default"]();
-var notifications = new _notifications__WEBPACK_IMPORTED_MODULE_11__["default"]();
+var users = new _app_Modules_UserModule_views_js_users__WEBPACK_IMPORTED_MODULE_0__["default"]();
+var messengers = new _app_Modules_MessengerModule_views_js_messengers__WEBPACK_IMPORTED_MODULE_1__["default"]();
+var addresses = new _app_Modules_AddressModule_views_js_addresses__WEBPACK_IMPORTED_MODULE_2__["default"]();
+var customers = new _app_Modules_CustomerModule_views_js_customers__WEBPACK_IMPORTED_MODULE_3__["default"]();
+var orders = new _app_Modules_OrderModule_views_js_orders__WEBPACK_IMPORTED_MODULE_4__["default"]();
+var general = new _general__WEBPACK_IMPORTED_MODULE_5__["default"]();
+var permissions = new _app_Modules_PermissionModule_views_js_permissions__WEBPACK_IMPORTED_MODULE_6__["default"]();
+var zones = new _app_Modules_ZoneModule_views_js_zones__WEBPACK_IMPORTED_MODULE_7__["default"]();
+var rates = new _app_Modules_RateModule_views_js_rates__WEBPACK_IMPORTED_MODULE_13__["default"]();
+var branchOffice = new _app_Modules_BranchOfficeModule_views_js_branchOffice__WEBPACK_IMPORTED_MODULE_8__["default"]();
+var parameters = new _app_Modules_ParametersModule_views_js_parameters__WEBPACK_IMPORTED_MODULE_9__["default"]();
+var hours = new _app_Modules_PickupHourModule_views_js_hours__WEBPACK_IMPORTED_MODULE_10__["default"]();
+var plans = new _app_Modules_PlanModule_views_js_plans__WEBPACK_IMPORTED_MODULE_11__["default"]();
+var notifications = new _notifications__WEBPACK_IMPORTED_MODULE_12__["default"]();
 var app = new Vue({
   el: '#app'
 });
 document.addEventListener("DOMContentLoaded", function (event) {
   // bootstrapSelect.initialize();
+  users.initialize();
   orders.initialize();
   messengers.initialize();
   addresses.initialize();

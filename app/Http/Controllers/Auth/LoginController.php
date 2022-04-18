@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Modules\UserModule\User;
 use App\Providers\RouteServiceProvider;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Validator;
@@ -55,21 +55,27 @@ class LoginController extends Controller
             $this->username() . '.exists' => 'El usuario no esta activo'
         ]);
 
+        $message = 'Su rol se encuentra inhabilitado';
         $is_numeric = is_numeric($request->email);
 
         $field = $is_numeric ? 'phone' : 'email';
 
         $user = User::where($field, $request->email)->first();
+        if (is_null($user)) {
+            $message = 'Su usuario se encuentra inhabilitado';
+        }
 
         $active = ($user->getRole->state ?? false) == 1 && $user->getRole->deleted_at == NULL;
 
-        if(!$active){
-            $request->validate([
-                'active' => 'required'
-            ],
-            [
-                'active.required' => 'Su rol se encuentra inhabilitado'
-            ]);
+        if (!$active) {
+            $request->validate(
+                [
+                    'active' => 'required'
+                ],
+                [
+                    'active.required' => $message
+                ]
+            );
         }
     }
 }

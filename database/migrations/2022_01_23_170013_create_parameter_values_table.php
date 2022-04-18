@@ -20,6 +20,7 @@ class CreateParameterValuesTable extends Migration
             $table->unsignedBigInteger('parameter_id');
             $table->foreign('parameter_id')->references('id')->on('parameters');
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}");
+            $table->boolean('editable')->default(1)->comment("{0:False;1:True}");
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,6 +1,6 @@
 <?php
 
-use App\Role;
+use App\Modules\RoleModule\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 

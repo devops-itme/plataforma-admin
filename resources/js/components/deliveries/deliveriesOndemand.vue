@@ -224,7 +224,6 @@ export default {
                 await fetch(`/despacho/orden/estado`, requestOptions)
                     .then((response) => response.json())
                     .then(function (data) {
-                        console.log(data)
                         if (data.state == 500) {
                             return error(data.message);
                         }
@@ -248,6 +247,7 @@ export default {
         this.orderState();
         this.getOrders(this.currentTab);
         this.getMessengers();
+        
     },
 };
 </script>

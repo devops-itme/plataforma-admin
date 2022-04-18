@@ -134,7 +134,7 @@
                         <div class="font-weight-bolder mb-1">Transporte:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport" ></div>
                     </div>
-                    <div class="col-md-12 mb-2">
+                    <div class="col-md-12 mb-2" v-if="showDataGuide.movil">
                         <div class="font-weight-bolder mb-1">Movil:</div>
                         <div class="line-height-xl" v-if="showDataGuide"  v-text="showDataGuide.movil"></div>
                     </div>
@@ -321,7 +321,7 @@ export default {
             selected: 55,
             delivery_types: [
                 { value: 55, text: "Entregas" },
-                { value: 53, text: "Recogidas" },
+                { value: 56, text: "Recogidas" },
             ],
             showModal: false,
             columns:{
@@ -372,7 +372,7 @@ export default {
 
             //NAME TABS
             this.tabs[2].name = "CONSULTA Y EDICIÓN";
-            this.selected == 54?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
+            this.selected == 56?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
             this.selected == 55?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
         },
 
@@ -381,13 +381,13 @@ export default {
             this.showGuide = data;
             this.showDataGuide.type_order = data.get_order?.get_order_type.name;
             this.showDataGuide.client = data.get_order?.get_user.name;
-            this.showDataGuide.posting = data.id;
+            this.showDataGuide.posting = data?.id;
             this.showDataGuide.dispatched = data.dispatched;
             this.showDataGuide.ref_client = data.get_order?.get_user.document_number;
             this.showDataGuide.programming = data.get_order.schedule_date;
             this.showDataGuide.transport =  data.get_transport_type?.name;
-            this.showDataGuide.movil = data.get_route?.get_messenger.name+' '+data.get_route?.get_messenger.last_name  ;
-            this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department.id+':'+data.get_branch_office?.get_department?.get_department.name;
+            this.showDataGuide.movil = data.get_route&&(data.get_route?.get_messenger?.name+' '+data.get_route?.get_messenger?.last_name);
+            this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department?.id+':'+data.get_branch_office?.get_department?.get_department?.name;
             this.showDataGuide.client_branch_office = data.get_branch_office?.id+': '+data.get_branch_office?.name;
             this.showDataGuide.client_document = data.get_order?.get_user.document_number;
             this.showDataGuide.concept = data.concept;
@@ -414,7 +414,7 @@ export default {
             this.guide = {};
             this.statusMatrix(this.selected);
             type == 55 && (type = 3);
-            type == 53 && (type = 7);
+            type == 56 && (type = 7);
             let response = await this.requestGuides(type);
             this.guides = response.data;
 

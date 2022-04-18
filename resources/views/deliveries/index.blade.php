@@ -23,15 +23,6 @@
                             <a class="nav-link tablink" @click="getOrders(tab.id,index)"
                             :class="{'active': currentTab === tab.id}" :id="tab.id"  data-toggle="tab" :href="`#${tab.href}`" v-text=tab.name></a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#pordespachar">Por despachar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#despachados">Despachados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#completados">Completados</a>
-                        </li> --}}
                     </ul>
                     <ul class="overlay-panel-actions-primary">
 
@@ -73,7 +64,7 @@
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Cliente:</div>
                                 <div class="line-height-xl" v-show="showData.id"
-                                    v-text="`${showData.get_user?.name} ${showData.get_user?.last_name}`"></div>
+                                    v-text=showData?.get_user?.name??(showData?.get_user?.get_customer?.business_name??(showData?.get_user?.get_customer?.tradename??'---'))></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Teléfono:</div>
@@ -106,15 +97,15 @@
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Cliente Depto:</div>
-                                    <div class="line-height-x1" v-text="`${[showData.get_department ? showData.get_department.id+': '+showData.get_department.name : 'No registra']}`">84: PRINCIPAL</div>
+                                    <div class="line-height-x1" v-text="`${[showData.get_department ? showData.get_department.id+': '+showData.get_department.name : 'No registra']}`"></div>
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
-                                    <div class="line-height-x1" v-text="`${[showData.get_branch_office ? showData.get_branch_office.id+': '+showData.get_branch_office.name : 'No registra']}`">1179: PRINCIPAL</div>
+                                    <div class="line-height-x1" v-text="`${[showData.get_branch_office ? showData.get_branch_office.id+': '+showData.get_branch_office.name : 'No registra']}`"></div>
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Cliente Documento:</div>
-                                    <div class="line-height-x1" v-text="`${[showData.get_user ? showData.get_user.document_number+': '+showData.get_user.get_document_type?.name : '']}`">1191: DELIVERY</div>
+                                    <div class="line-height-x1" v-text="`${[showData.get_user ? showData.get_user.document_number+': '+showData.get_user.get_document_type?.name : '']}`"></div>
                                 </div>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">
@@ -123,7 +114,7 @@
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Dirección:</div>
-                                    <div class="line-height-xl" v-text="tab.get_address ? tab.get_address.name : 'No registra' "></div>
+                                    <div class="line-height-xl" v-text="tab.address_name ? tab.address_name : 'No registra' "></div>
                                 </div>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">

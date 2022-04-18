@@ -1,7 +1,7 @@
 <?php
 
-use App\Module;
-use App\Permission;
+use App\Modules\ModuleModule\Module;
+use App\Modules\PermissionModule\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 

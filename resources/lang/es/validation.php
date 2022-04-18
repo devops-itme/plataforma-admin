@@ -260,6 +260,23 @@ return [
         'extra_per_size' => 'Libra adicional por tamaño',
         'percentage_immediate_delivery' => 'Porcentaje entrega inmediata',
         'special_rate' => 'Tarifa especial',
+        'branch_office_name' => 'Nombre de sucursal',
+        'branch_office_type' => 'Tipo de sucursal',
+        'branch_office_description' => 'Descripción de sucursal',
+        'branch_office_zone' => 'Zona de sucursal',
+        'branch_office_address' => 'Dirección de sucursal',
+        'branch_office_lat' => 'Latitud de la dirección',
+        'branch_office_lng' => 'Longitud de la dirección',
+        'branch_office_email' => 'Correo de la sucursal',
+        'branch_office_contact' => 'Contacto de sucursal',
+        'branch_office_document_type' =>'Tipo de documento de sucursal',
+        'branch_office_document_number' => 'Numero de documento de sucursal',
+        'branch_office_department' => 'Departamento de sucursal',
+        'branch_office_payment_method' => 'Metodo de pagos',
+        'branch_office_phone' => 'Teléfono de sucursal',
+        'branch_office_plan' => 'Plan',
+        'branch_office_usage_mode' => 'Modo de uso',
+        'branch_office_default' => 'Predeterminada'
     ],
 
 ];

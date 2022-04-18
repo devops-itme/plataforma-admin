@@ -16,6 +16,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
 
+    protected $moduleNamespace = 'App\Modules';
+
     /**
      * The path to the "home" route for your application.
      *
@@ -46,7 +48,26 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapWebTemporaryRoutes();
+
+        $this->mapWebModuleRoutes();
+
+        $this->mapApiModuleRoutes();
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 
     /**
@@ -63,18 +84,62 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
     }
 
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
+    protected function mapWebTemporaryRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
+            ->group(base_path('routes/temporary.php'));
+    }
+
+
+    protected function mapWebModuleRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
+            ->group(function () {
+                require(base_path('app/Modules/UserModule/routes/web.php'));
+                require(base_path('app/Modules/CustomerModule/routes/web.php'));
+                require(base_path('app/Modules/ParametersModule/routes/web.php'));
+                require(base_path('app/Modules/ParameterValueModule/routes/web.php'));
+                require(base_path('app/Modules/ZoneModule/routes/web.php'));
+                require(base_path('app/Modules/AddressModule/routes/web.php'));
+                require(base_path('app/Modules/MessengerModule/routes/web.php'));
+                require(base_path('app/Modules/DepartmentModule/routes/web.php'));
+                require(base_path('app/Modules/ActivityLogModule/routes/web.php'));
+                require(base_path('app/Modules/RateModule/routes/web.php'));
+                require(base_path('app/Modules/MyServiceModule/routes/web.php'));
+                require(base_path('app/Modules/StatusMatrixModule/routes/web.php'));
+                require(base_path('app/Modules/StatusDescriptorModule/routes/web.php'));
+                require(base_path('app/Modules/OrderModule/routes/web.php'));
+                require(base_path('app/Modules/RouteModule/routes/web.php'));
+                require(base_path('app/Modules/RoleModule/routes/web.php'));
+                require(base_path('app/Modules/PermissionModule/routes/web.php'));
+                require(base_path('app/Modules/PickupHourModule/routes/web.php'));
+                require(base_path('app/Modules/BranchOfficeModule/routes/web.php'));
+                require(base_path('app/Modules/PlanModule/routes/web.php'));
+                require(base_path('app/Modules/ServiceTypeModule/routes/web.php'));
+                require(base_path('app/Modules/GuideModule/routes/web.php'));
+                require(base_path('app/Modules/GuidanceDocumentModule/routes/web.php'));
+            });
+    }
+
+    protected function mapApiModuleRoutes()
     {
         Route::prefix('api')
             ->middleware('api')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/api.php'));
+            ->namespace($this->moduleNamespace)
+            ->group(function () {
+                require(base_path('app/Modules/UserModule/routes/api.php'));
+                require(base_path('app/Modules/CustomerModule/routes/api.php'));
+                require(base_path('app/Modules/OrderModule/routes/api.php'));
+                require(base_path('app/Modules/GuideModule/routes/api.php'));
+                require(base_path('app/Modules/AddressModule/routes/api.php'));
+                require(base_path('app/Modules/MessengerModule/routes/api.php'));
+                require(base_path('app/Modules/ParameterValueModule/routes/api.php'));
+                require(base_path('app/Modules/PickupHourModule/routes/api.php'));
+                require(base_path('app/Modules/ZoneModule/routes/api.php'));
+                require(base_path('app/Modules/BranchOfficeModule/routes/api.php')); 
+                require(base_path('app/Modules/RateModule/routes/api.php'));
+            });
     }
 }

@@ -32,9 +32,9 @@
                                     @foreach($pickupdays as $day)
                                     <tr>
                                         <td>{{__($day->getDay->name)}}</td>
-                                        <td>{{date('g:m A', strtotime($day->init_time))}}</td>
+                                        <td>{{format_hour($day->init_time)}}</td>
                                         <td>
-                                            {{date('g:m A', strtotime($day->end_time))}}
+                                            {{format_hour($day->end_time)}}
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">

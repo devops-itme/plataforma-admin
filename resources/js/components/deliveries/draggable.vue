@@ -228,6 +228,7 @@ export default {
     },
     methods: {
         rowClick(data) {
+            // console.log(data)
             this.$emit("getGuide", data);
         },
 

@@ -114,14 +114,12 @@
                             <div class="col-md-8 d-flex flex-row flex-wrap border-right">
                                 <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de cliente</h5>
                                 <div class="form-group col-md-4 py-3 m-0">
-                                    <label for="exampleSelect1">Zona <span class="text-danger">*</span></label>
+                                    <label for="exampleSelect1">Zona</label>
                                     <select class="form-control form-control-solid" id="zone" name="zone">
                                         <option selected disabled> Seleccione </option>
-                                        <option value="1" {{ $customer->zone_id == 1 ? 'selected' : '' }}>Zona 1</option>
-                                        <option value="2" {{ $customer->zone_id == 2 ? 'selected' : '' }}>Zona 2</option>
-                                        <option value="3" {{ $customer->zone_id == 3 ? 'selected' : '' }}>Zona 3</option>
-                                        <option value="4" {{ $customer->zone_id == 4 ? 'selected' : '' }}>Zona 4</option>
-                                        <option value="5" {{ $customer->zone_id == 5 ? 'selected' : '' }}>Zona 5</option>
+                                        @foreach ($zones as $item)
+                                            <option value="{{$item->id}}" {{ $customer->zone_id == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4 py-3 m-0">

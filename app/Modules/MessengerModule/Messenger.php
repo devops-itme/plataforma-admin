@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Modules\MessengerModule;
+
+use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\UserModule\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
+
+class Messenger extends Model
+{
+    use SoftDeletes, LogsActivity;
+
+    protected $table = 'messengers';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'user_id',
+        'vehicle_plate',
+        'admission_date',
+        'birth_date',
+        'production_percentage',
+        'contract',
+        'exclusive',
+        'contract_type_id'
+    ];
+
+    /* Logs Config */
+    protected static $logFillable = true;
+    protected static $submitEmptyLogs = false;
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->log_name = __($eventName);
+        if ($activity->causer) {
+            $activity->description = "Se ha " . __($eventName) . " el mensajero " . $activity->subject->fullName;
+        }
+    }
+    /*End logs config */
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getContractType()
+    {
+        return $this->belongsTo(ParameterValue::class, 'contract_type_id');
+    }
+
+
+    //Scopes
+    public function scopeName($query, $value)
+    {
+        if (!is_null($value)) {
+            return $query->whereHas('user', function ($q) use ($value) {
+                $q->where(DB::raw('concat(name," ",last_name)'), 'like', '%' . $value . '%');
+            });
+        }
+    }
+    public function scopeDocument($query, $value)
+    {
+        if (!is_null($value)) {
+            return $query->whereHas('user', function ($q) use ($value) {
+                $q->where('document_number', 'like', '%' . $value . '%');
+            });
+        }
+    }
+    public function scopeEmail($query, $value)
+    {
+        if (!is_null($value)) {
+            return $query->whereHas('user', function ($q) use ($value) {
+                $q->where('email', 'like', '%' . $value . '%');
+            });
+        }
+    }
+    public function scopePhone($query, $value)
+    {
+        if (!is_null($value)) {
+            return $query->whereHas('user', function ($q) use ($value) {
+                $q->where('phone', 'like', '%' . $value . '%');
+            });
+        }
+    }
+    public function scopePlate($query, $value)
+    {
+        if (!is_null($value))
+            $query->where('vehicle_plate', 'like', '%'.$value.'%');
+    }
+    public function scopeState($query, $value)
+    {
+        if (!is_null($value)){
+            return $query->whereHas('user', function ($q) use ($value) {
+                $q->where('state',$value);
+            });
+        }
+    }
+}

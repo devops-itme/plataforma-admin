@@ -29,7 +29,7 @@ export default class Parameters {
         let response = {
             'state': 500
         };
-        await fetch("/parametros/"+id)
+        await fetch("/valor-parametros/"+id)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -79,6 +79,10 @@ export default class Parameters {
 
             const buttonsDiv = document.createElement("div");
             buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+            if(key.editable == 0){
+                editBtn.setAttribute('disabled', true);
+                deleteBtn.setAttribute('disabled', true);
+            }
             buttonsDiv.appendChild(editBtn);
             buttonsDiv.appendChild(deleteBtn);
             selectCell.appendChild(buttonsDiv);
@@ -152,7 +156,7 @@ export default class Parameters {
         let response = {
             'state': 500
         };
-        await fetch("parametros/"+id+"/edit")
+        await fetch("valor-parametros/"+id+"/edit")
             .then(response => response.json())
             .then(data => {
                 response = data
