@@ -18,12 +18,12 @@
                             <i class="fas fa-plus"></i>
                         </span>Crear
                     </a>
-                    <a href="#" class="btn btn-success btn-sm font-weight-bolder" data-toggle="modal"
+                    {{-- <a href="#" class="btn btn-success btn-sm font-weight-bolder" data-toggle="modal"
                         data-target="#modalImport" data-tooltip title="IMPORTAR">
                         <span class="svg-icon svg-icon-md">
                             <i class="fad fa-upload"></i>
                         </span>Importar
-                    </a>
+                    </a> --}}
                 </div>
             </th>
         </tr>
