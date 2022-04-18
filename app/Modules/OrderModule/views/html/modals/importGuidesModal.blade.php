@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label><b>Plantilla </b><span class="text-danger">*</span></label>
-                    <a href="{{asset('files/GuidesTemplate.xlsx')}}" download="PlantillaGuias.xlsx"> <img src="{{asset('img/laravel-excel-img.png')}}" alt="" height="50px" width="200px"> </a>
+                    <a href="{{asset('files/GuidePantillaImport.xlsx')}}" download="PlantillaGuias.xlsx"> <img src="{{asset('img/laravel-excel-img.png')}}" alt="" height="50px" width="200px"> </a>
                     <span class="form-text text-muted"></span>
                 </div>
                 <input type="text" hidden name="order_id" id="order_id" value="{{$order->id}}">
