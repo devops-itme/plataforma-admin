@@ -2454,6 +2454,8 @@ var Orders = /*#__PURE__*/function () {
                   modal.click();
 
                   _this5.listGuides();
+
+                  _this5.cleanFields();
                 } else {
                   error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
@@ -2693,7 +2695,7 @@ var Orders = /*#__PURE__*/function () {
                   // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                   // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
 
-                  guide_description = document.getElementById("address_description_edit").value = data.guide_description;
+                  guide_description = document.getElementById("address_description_edit").value = data.address_description;
                   concept = document.getElementById("concept_edit").value = data.concept;
                   rate = document.getElementById("rate_edit").value = data.rate;
                   value = document.getElementById("value_edit").value = data.value;
@@ -2708,11 +2710,11 @@ var Orders = /*#__PURE__*/function () {
                     key.value == data.zone ? key.selected = true : key.selected = false;
                   });
                   same_day_delivery = document.getElementById("same_day_delivery_edit");
-                  data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
+                  data.same_day_delivery == 0 ? same_day_delivery.checked = true : '';
                   sign = document.getElementById("sign_edit");
-                  data.sign == 1 ? sign.checked = true : '';
+                  data.sign == 0 ? sign.checked = true : '';
                   take_photo = document.getElementById("take_photo_edit");
-                  data.take_photo == 1 ? take_photo.checked = true : '';
+                  data.take_photo == 0 ? take_photo.checked = true : '';
                   boxes = JSON.parse(data.boxes);
 
                   _this7.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this7.boxes);
@@ -3448,6 +3450,8 @@ var Orders = /*#__PURE__*/function () {
                 response = _context25.sent;
                 days = response.data;
                 date_selector.addEventListener('change', function () {
+                  console.log('holis');
+
                   var day = _this11.getDayReference(date_selector.value);
 
                   var day_data = days[day];
@@ -3541,7 +3545,7 @@ var Orders = /*#__PURE__*/function () {
               case 0:
                 route = window.location.pathname;
 
-                if (route.includes('ordenes') && route.includes('edit')) {
+                if (route.includes('create') && route.includes('edit')) {
                   _context27.next = 3;
                   break;
                 }
@@ -3688,31 +3692,51 @@ var Orders = /*#__PURE__*/function () {
         }, _callee29);
       })));
     }
+  }, {
+    key: "cleanFields",
+    value: function cleanFields() {
+      document.getElementById("branch_off").selectedIndex = 0;
+      document.getElementById("address").selectedIndex = 0;
+      document.getElementById("guide_description").value = '';
+      document.getElementById("concept").value = '';
+      document.getElementById("rate").selectedIndex = 0;
+      document.getElementById("value").value = '';
+      document.getElementById("corp_value").value = '';
+      document.getElementById("customer_document_type").selectedIndex = 0;
+      document.getElementById("contact").value = '';
+      document.getElementById("phone_contact").value = '';
+      document.getElementById("email_contact").value = '';
+      document.getElementById("invoice_contact").value = '';
+      document.getElementById("zone_id").selectedIndex = 0;
+      document.getElementById("same_day_delivery").checked = false;
+      document.getElementById("sign").checked = false;
+      document.getElementById("take_photo").checked = false;
+    }
   }]);
 
   return Orders;
-}(); // $("#tabListOrders").DataTable({
-//     info: false,
-//     language: {
-//         lengthMenu:
-//             "Mostrar " +
-//             `<select>
-//                         <option value = '10'>10</option>
-//                         <option value = '15'>15</option>
-//                         <option value = '50'>50</option>
-//                         <option value = '100'>100</option>
-//                     <select>` +
-//             " registros",
-//         zeroRecords: "Nada encontrado",
-//         infoEmpty: "No records available",
-//         infoFiltered: "(filtered from _MAX_ total records)",
-//         search: "Buscar:",
-//         paginate: {
-//             next: "Siguiente",
-//             previous: "Anterior",
-//         },
-//     },
-// });
+}(); //  $("#tabListOrders").DataTable({
+//      info: false,
+//      language: {
+//          lengthMenu:
+//              "Mostrar " +
+//              `<select>
+//                          <option value = '10'>10</option>
+//                          <option value = '15'>15</option>
+//                          <option value = '50'>50</option>
+//                          <option value = '100'>100</option>
+//                      <select>` +
+//              " registros",
+//          zeroRecords: "Nada encontrado",
+//          infoEmpty: "No records available",
+//          infoFiltered: "(filtered from _MAX_ total records)",
+//          search: "Buscar:",
+//          paginate: {
+//              next: "Siguiente",
+//              previous: "Anterior",
+//          },
+//      },
+//  });
 
 
 
@@ -89175,8 +89199,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\emanu\OneDrive\Escritorio\Proyecto_Dev\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\emanu\OneDrive\Escritorio\Proyecto_Dev\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

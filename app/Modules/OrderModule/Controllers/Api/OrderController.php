@@ -48,26 +48,27 @@ class OrderController extends Controller
         $user_id = $request->user_id ?? Auth::user()->id;
         $role_name = $request->role_name ?? Auth::user()->getRole->name;
         $scope_name = $request->scope_name;
-        $scope_state = $request->scope_state;
+        $scope_status_matrix = $request->scope_status_matrix;
         $orders = [];
 
         try {
             $scope = ParameterValue::where('name', $scope_name)->first();
 
-            $state = ParameterValue::where('name', $scope_state)->first();
+            $status_matrix = StatusMatrix::where('name', $scope_status_matrix)->first();
 
             $scope_id = $scope->id ?? null;
             $status = StatusMatrix::where('scope_id', $scope_id)->get(['id']);
 
             if ($role_name == 'Cliente') {
                 $orders = Order::where('user_id', $user_id)
-                    ->scope($status)
+                    ->whereScope($status)
                     ->with($this->customerRelationships)->get();
             }
 
             if ($role_name == 'Mensajero') {
                 $orders = Order::messengerOrders($user_id)
-                    ->scope($status)->whereIn('state', $state)
+                    ->whereScope($status)
+                    ->whereStatusMatrix($status_matrix)
                     ->with($this->messengerRelationships)->get();
             }
 

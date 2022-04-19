@@ -41,10 +41,10 @@ class OrderResource extends JsonResource
             "app_status" => $this->app_status,
             "address" => [
                 "id" => $this->getAddress->id ?? '',
-                "name" => $this->getAddress->name ?? ( $this->address_name ?? ''),
-                "lat" => $this->getAddress->lat ?? ( $this->address_lat ?? ''),
-                "lng" => $this->getAddress->lng ?? ( $this->address_lng ?? ''),
-                "description" => $this->getAddress->description ?? ( $this->address_description ?? ''),
+                "name" => $this->getAddress->name ?? ($this->address_name ?? ''),
+                "lat" => $this->getAddress->lat ?? ($this->address_lat ?? ''),
+                "lng" => $this->getAddress->lng ?? ($this->address_lng ?? ''),
+                "description" => $this->getAddress->description ?? ($this->address_description ?? ''),
             ],
             "user" => [
                 "id" => $this->getUser->id ?? '',
@@ -66,9 +66,14 @@ class OrderResource extends JsonResource
                 "id" => $this->getPaymentMethod->id ?? '',
                 "name" => $this->getPaymentMethod->name ?? '',
             ],
-            "state" => [
-                "id" => $this->getState->id ?? '',
-                "name" => $this->getState->name ?? '',
+            // "state" => [
+            //     "id" => $this->getState->id ?? '',
+            //     "name" => $this->getState->name ?? '',
+            // ],
+            "status_matrix" => [
+                "id" => $this->getStatusMatrix->id ?? '',
+                "name" => $this->getStatusMatrix->name ?? '',
+                "scope_id" => $this->getStatusMatrix->scope_id ?? '',
             ],
             "department" => [
                 "id" => $this->getDepartment->id ?? '',
