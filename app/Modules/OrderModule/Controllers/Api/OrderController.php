@@ -58,13 +58,13 @@ class OrderController extends Controller
 
             if ($role_name == 'Cliente') {
                 $orders = Order::where('user_id', $user_id)
-                    ->scope($status)
+                    ->whereScope($status)
                     ->with($this->customerRelationships)->get();
             }
 
             if ($role_name == 'Mensajero') {
                 $orders = Order::messengerOrders($user_id)
-                    ->scope($status)
+                    ->whereScope($status)
                     ->with($this->messengerRelationships)->get();
             }
 

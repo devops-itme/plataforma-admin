@@ -172,7 +172,7 @@ class Order extends Model
             return $query->where('state', $value);
         }
     }
-    public function scopeScope($query, $statusArr)
+    public function scopeWhereScope($query, $statusArr)
     {
         if (!is_null($statusArr)) {
             return $query->whereIn('status_matrix_id', $statusArr);

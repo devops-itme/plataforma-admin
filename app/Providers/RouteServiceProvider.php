@@ -110,6 +110,7 @@ class RouteServiceProvider extends ServiceProvider
                 require(base_path('app/Modules/ServiceTypeModule/routes/web.php'));
                 require(base_path('app/Modules/GuideModule/routes/web.php'));
                 require(base_path('app/Modules/GuidanceDocumentModule/routes/web.php'));
+                require(base_path('app/Modules/ApiConnectionsModule/routes/web.php'));
             });
     }
 
@@ -130,6 +131,7 @@ class RouteServiceProvider extends ServiceProvider
                 require(base_path('app/Modules/ZoneModule/routes/api.php'));
                 require(base_path('app/Modules/BranchOfficeModule/routes/api.php')); 
                 require(base_path('app/Modules/RateModule/routes/api.php'));
+                require(base_path('app/Modules/ApiConnectionsModule/routes/api.php'));
             });
     }
 }
