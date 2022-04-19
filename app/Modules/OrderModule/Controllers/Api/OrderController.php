@@ -213,7 +213,7 @@ class OrderController extends Controller
             if ($order->update($request->all())) {
                 $order = $order->with($this->messengerRelationships)->get();
                 $order = OrderResource::collection($order)[0];
-                return $this->respond(200, $order, null, 'Orden finalizada');
+                return $this->respond(200, $order, null, 'Haz culminado esta orden');
             }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
