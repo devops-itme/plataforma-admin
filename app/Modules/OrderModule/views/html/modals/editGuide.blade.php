@@ -87,7 +87,7 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3 pt-2">
-                        <label>Teléfono contacto </label>
+                        <label>Teléfono contacto: <span class="text-danger">*</span> </label>
                         <input name="phone_contact" type="tel" id="phone_contact_edit" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
