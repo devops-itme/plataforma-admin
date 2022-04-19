@@ -48,8 +48,6 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        $this->mapWebTemporaryRoutes();
-
         $this->mapWebModuleRoutes();
 
         $this->mapApiModuleRoutes();
@@ -83,14 +81,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
     }
-
-    protected function mapWebTemporaryRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->moduleNamespace)
-            ->group(base_path('routes/temporary.php'));
-    }
-
 
     protected function mapWebModuleRoutes()
     {

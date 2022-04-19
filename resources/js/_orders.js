@@ -1,4 +1,3 @@
-
 let count = 0;
 let boxes = [
     {
@@ -32,7 +31,6 @@ export default class Orders {
         this.customerAddresses();
         this.loadPickupHours();
         this.loadHoursInEditOrShow();
-        this.importModal();
     }
 
     setInput() {
@@ -297,7 +295,7 @@ export default class Orders {
                         let departmentOpt = '<option value="'+element.id+'"> '+element.name+' </option>';
                         departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
                     }
-                document.getElementById("user_document_type").value = data[0]['get_document_type'] ? data[0]['get_document_type']['name'] : '';
+                document.getElementById("user_document_type").value = data[0]['get_document_type']['name'];
 
                 let modal = document.getElementById("detailCustomer");
                 modal.click();
@@ -444,16 +442,16 @@ export default class Orders {
                 let row = tbody.insertRow();
 
                 let idCell = row.insertCell(0);
-                idCell.innerHTML = key.id??'';
+                idCell.innerHTML = key.id;
 
                 let contactCell = row.insertCell(1);
-                contactCell.innerHTML = key.contact??'';
+                contactCell.innerHTML = key.contact;
 
                 let phoneCell = row.insertCell(2);
-                phoneCell.innerHTML = key.phone_contact??'';
+                phoneCell.innerHTML = key.phone_contact;
 
                 let emailCell = row.insertCell(3);
-                emailCell.innerHTML = key.email_contact??'';
+                emailCell.innerHTML = key.email_contact;
 
                 let dateCell = row.insertCell(4);
                 let allDate = new Date((key.created_at).split(' ')[0]);
@@ -461,7 +459,7 @@ export default class Orders {
                 dateCell.innerHTML = allDate.getDate()+"-"+this.months(month)+"-"+allDate.getFullYear();
 
                 let rateCell = row.insertCell(5);
-                rateCell.innerHTML = key.rate??'';
+                rateCell.innerHTML = key.rate;
 
                 let stateCell = row.insertCell(6);
                 stateCell.innerHTML = key.get_state?.name;
@@ -472,8 +470,7 @@ export default class Orders {
                 guideCheck.setAttribute('type', 'checkbox');
                 guideCheck.setAttribute('name', 'guideCheck[]');
                 guideCheck.setAttribute('value', key.id);
-                let check = guideCheck.checked = true;
-                key.order_id??check;
+                key.order_id != null ? guideCheck.checked = true : '';
                 //EDIT
                 const guideEdit = document.createElement("button");
                 guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
@@ -545,7 +542,7 @@ export default class Orders {
                 // let address_name = document.getElementById("address_edit").value = data.address_name;
                 // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                 // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
-                let guide_description = document.getElementById("address_description_edit").value = data.address_description;
+                let guide_description = document.getElementById("address_description_edit").value = data.guide_description;
                 let concept = document.getElementById("concept_edit").value = data.concept;
                 let rate = document.getElementById("rate_edit").value = data.rate;
                 let value = document.getElementById("value_edit").value = data.value;
@@ -560,11 +557,11 @@ export default class Orders {
                     key.value == data.zone ? key.selected=true : key.selected=false;
                 });
                 let same_day_delivery = document.getElementById("same_day_delivery_edit");
-                data.same_day_delivery == 0 ? same_day_delivery.checked = true : '';
+                data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
                 let sign = document.getElementById("sign_edit");
-                data.sign == 0 ? sign.checked = true : '';
+                data.sign == 1 ? sign.checked = true : '';
                 let take_photo = document.getElementById("take_photo_edit");
-                data.take_photo == 0 ? take_photo.checked = true : '';
+                data.take_photo == 1 ? take_photo.checked = true : '';
                 let boxes = JSON.parse(data.boxes);
                 this.instantiateBoxes('box-container-edit', (boxes??this.boxes));
                 this.addbox('add-box-btn-edit', (boxes??[]), 'box-container-edit');
@@ -751,17 +748,13 @@ export default class Orders {
         let data = response.data;
 
         [].forEach.call(slcAddresses, slcAddress => {
-            if(!(typeof(parseInt(location.pathname.split('/')[2])) == 'number' && location.pathname.includes('edit'))){
-                if(!slcAddress.id != 'order_customer_address'){
-                    slcAddress.selectedIndex = 0;
-                    removeOptions(slcAddress);
+            slcAddress.selectedIndex = 0;
+            removeOptions(slcAddress);
 
-                    for (var i = 0; i < data.length; i++) {
-                        let element = data[i];
-                        let optAddress = '<option value="'+element.id+'" name="'+element.name+'"> '+element.name+' </option>';
-                        slcAddress.insertAdjacentHTML('beforeend', optAddress);
-                    }
-                }
+            for (var i = 0; i < data.length; i++) {
+                let element = data[i];
+                let optAddress = '<option value="'+element.id+'" name="'+element.name+'"> '+element.name+' </option>';
+                slcAddress.insertAdjacentHTML('beforeend', optAddress);
             }
         });
     }
@@ -1009,79 +1002,28 @@ export default class Orders {
         }
     }
 
-    async sendImportModalData(formData){
-        let response = {
-            'state': 500
-        };
-
-        let token = document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content");
-        let myHeaders = new Headers();
-        myHeaders.append("accept", "application/json");
-        myHeaders.append("Access-Control-Allow-Origin", "*");
-        myHeaders.append("X-CSRF-TOKEN", token);
-        let requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: formData,
-        };
-
-        response = await fetch(`/guias/import`, requestOptions)
-        return response.json();
-    }
-
-    importModal(){
-        let btnImportGuide = document.getElementById("btnImportGuide");
-        if(btnImportGuide == null){
-            return;
-        }
-        btnImportGuide.addEventListener('click', async () => {
-            let formData = new FormData();
-            let file = document.getElementById("file_import_guide");
-            let order_id = document.getElementById("order_id").value;
-
-            if(!file.files[0]){
-               return error('Debe cargar el archivo para proceder con la importación')
-            }
-
-            formData.append('file', file.files[0]);
-            formData.append('order_id', order_id);
-
-            let response = await this.sendImportModalData(formData);
-            if(response.state == 200){
-                correct(response.message);
-                location.reload()
-            } else {
-                error('Error al importar guías.')
-                console.log('Error: '+response.error);
-            }
-        });
-    }
-
 }
 
+    $("#tabListOrders").DataTable({
+        info: false,
+        language: {
+            lengthMenu:
+                "Mostrar " +
+                `<select">
+                        <option value = '10'>10</option>
+                        <option value = '15'>15</option>
+                        <option value = '50'>50</option>
+                        <option value = '100'>100</option>
+                    <select>` +
+                " registros",
+            zeroRecords: "Nada encontrado",
+            infoEmpty: "No records available",
+            infoFiltered: "(filtered from _MAX_ total records)",
+            search: "Buscar:",
+            paginate: {
+                next: "Siguiente",
+                previous: "Anterior",
+            },
+        },
+    });
 
-
- $("#tabListOrders").DataTable({
-     info: false,
-     language: {
-         lengthMenu:
-             "Mostrar " +
-             `<select>
-                         <option value = '10'>10</option>
-                         <option value = '15'>15</option>
-                         <option value = '50'>50</option>
-                         <option value = '100'>100</option>
-                     <select>` +
-             " registros",
-         zeroRecords: "Nada encontrado",
-         infoEmpty: "No records available",
-         infoFiltered: "(filtered from _MAX_ total records)",
-         search: "Buscar:",
-         paginate: {
-             next: "Siguiente",
-             previous: "Anterior",
-         },
-     },
- });

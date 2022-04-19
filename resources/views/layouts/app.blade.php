@@ -24,11 +24,6 @@
     <script src="{{ asset('js/apexcharts.js') }}"></script>
     <script src="{{ asset('js/selectBranchOffice.js') }}"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-
-
 
 
 
@@ -55,43 +50,43 @@
     <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/tooltip.css') }}">
 
-    <!-- cdn stytle table bootstrap -->
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css"> --}}
 
-{{-- <link rel="stylesheet" href="{{asset('css/uikit.min.css')}}"> --}}
+
+
+    <!-- cdn stytle table bootstrap -->
+
 </head>
 
 <body
-class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled subheader-fixed">
-<div id="app">
-    <main class="d-flex flex-column flex-root" style="height: 100vh;">
-        <div class="d-flex flex-row flex-column-fluid page">
-            <div class="@guest d-flex flex-column flex-row-fluid
+    class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled subheader-fixed">
+    <div id="app">
+        <main class="d-flex flex-column flex-root" style="height: 100vh;">
+            <div class="d-flex flex-row flex-column-fluid page">
+                <div class="@guest d-flex flex-column flex-row-fluid
 @else
 d-flex flex-column flex-row-fluid wrapper  @endguest"
-                id="kt_wrapper">
-                @guest
-                    <div class="d-flex flex-column flex-column-fluid" id="kt_content">
-                        <div>
-                            @yield('content')
+                    id="kt_wrapper">
+                    @guest
+                        <div class="d-flex flex-column flex-column-fluid" id="kt_content">
+                            <div>
+                                @yield('content')
+                            </div>
                         </div>
-                    </div>
-                @else
-                    @include('layouts.header')
+                    @else
+                        @include('layouts.header')
 
-                    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                        @include('layouts.subheader')
-                        <div class="p-5">
-                            @yield('content')
+                        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                            @include('layouts.subheader')
+                            <div class="p-5">
+                                @yield('content')
+                            </div>
                         </div>
-                    </div>
-                    @include('layouts.footer')
-                @endguest
+                        @include('layouts.footer')
+                    @endguest
+                </div>
             </div>
-        </div>
-    </main>
-</div>
+        </main>
+    </div>
 </body>
 
 </html>

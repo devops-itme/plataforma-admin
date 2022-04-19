@@ -3448,6 +3448,8 @@ var Orders = /*#__PURE__*/function () {
                 response = _context25.sent;
                 days = response.data;
                 date_selector.addEventListener('change', function () {
+                  console.log('holis');
+
                   var day = _this11.getDayReference(date_selector.value);
 
                   var day_data = days[day];
@@ -3694,7 +3696,20 @@ var Orders = /*#__PURE__*/function () {
 }();
 
 
-$("#tabListOrders").DataTable();
+$("#tabListOrders").DataTable({
+  info: false,
+  language: {
+    lengthMenu: "Mostrar " + "<select>\n                         <option value = '10'>10</option>\n                         <option value = '15'>15</option>\n                         <option value = '50'>50</option>\n                         <option value = '100'>100</option>\n                     <select>" + " registros",
+    zeroRecords: "Nada encontrado",
+    infoEmpty: "No records available",
+    infoFiltered: "(filtered from _MAX_ total records)",
+    search: "Buscar:",
+    paginate: {
+      next: "Siguiente",
+      previous: "Anterior"
+    }
+  }
+});
 
 /***/ }),
 
