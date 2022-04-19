@@ -2693,7 +2693,7 @@ var Orders = /*#__PURE__*/function () {
                   // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                   // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
 
-                  guide_description = document.getElementById("address_description_edit").value = data.guide_description;
+                  guide_description = document.getElementById("address_description_edit").value = data.address_description;
                   concept = document.getElementById("concept_edit").value = data.concept;
                   rate = document.getElementById("rate_edit").value = data.rate;
                   value = document.getElementById("value_edit").value = data.value;
@@ -2708,11 +2708,11 @@ var Orders = /*#__PURE__*/function () {
                     key.value == data.zone ? key.selected = true : key.selected = false;
                   });
                   same_day_delivery = document.getElementById("same_day_delivery_edit");
-                  data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
+                  data.same_day_delivery == 0 ? same_day_delivery.checked = true : '';
                   sign = document.getElementById("sign_edit");
-                  data.sign == 1 ? sign.checked = true : '';
+                  data.sign == 0 ? sign.checked = true : '';
                   take_photo = document.getElementById("take_photo_edit");
-                  data.take_photo == 1 ? take_photo.checked = true : '';
+                  data.take_photo == 0 ? take_photo.checked = true : '';
                   boxes = JSON.parse(data.boxes);
 
                   _this7.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this7.boxes);
@@ -89154,8 +89154,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

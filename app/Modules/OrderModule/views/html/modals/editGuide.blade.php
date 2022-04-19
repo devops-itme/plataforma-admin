@@ -18,11 +18,14 @@
                             <option disabled> Seleccione </option>
                         </select>
                     </div>
-               
+
                     <div class="form-group col-md-3">
                         <label for="address">Dirección destino <span class="text-danger">*</span></label>
                         <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
                             <option disabled selected>Seleccione </option>
+                            @foreach ($customer_addresses as $item)
+                                <option value="{{$item->id}}"> {{$item->name}} </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
@@ -147,7 +150,7 @@
                             </li>
                         </ul>
                         <div class="tab-content min-h-100px " id="myTabContent">
-                
+
                             <div class="table-responsive tab-pane fade show active col-md-12 " id="cajas" role="tabpanel"
                                 aria-labelledby="cajas-tab">
                                   <div class="row font-weight-bold border  mt-4 text-center bg-gray-200">
@@ -166,7 +169,7 @@
                                     </div>
                                 </div>
                                  <div id="box-container-edit" name="box-container">
-                                    
+
                                 </div>
 
                             </div>

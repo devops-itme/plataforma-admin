@@ -545,7 +545,7 @@ export default class Orders {
                 // let address_name = document.getElementById("address_edit").value = data.address_name;
                 // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                 // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
-                let guide_description = document.getElementById("address_description_edit").value = data.guide_description;
+                let guide_description = document.getElementById("address_description_edit").value = data.address_description;
                 let concept = document.getElementById("concept_edit").value = data.concept;
                 let rate = document.getElementById("rate_edit").value = data.rate;
                 let value = document.getElementById("value_edit").value = data.value;
@@ -560,11 +560,11 @@ export default class Orders {
                     key.value == data.zone ? key.selected=true : key.selected=false;
                 });
                 let same_day_delivery = document.getElementById("same_day_delivery_edit");
-                data.same_day_delivery == 1 ? same_day_delivery.checked = true : '';
+                data.same_day_delivery == 0 ? same_day_delivery.checked = true : '';
                 let sign = document.getElementById("sign_edit");
-                data.sign == 1 ? sign.checked = true : '';
+                data.sign == 0 ? sign.checked = true : '';
                 let take_photo = document.getElementById("take_photo_edit");
-                data.take_photo == 1 ? take_photo.checked = true : '';
+                data.take_photo == 0 ? take_photo.checked = true : '';
                 let boxes = JSON.parse(data.boxes);
                 this.instantiateBoxes('box-container-edit', (boxes??this.boxes));
                 this.addbox('add-box-btn-edit', (boxes??[]), 'box-container-edit');
@@ -1026,7 +1026,7 @@ export default class Orders {
             headers: myHeaders,
             body: formData,
         };
-        
+
         response = await fetch(`/guias/import`, requestOptions)
         return response.json();
     }
@@ -1044,10 +1044,10 @@ export default class Orders {
             if(!file.files[0]){
                return error('Debe cargar el archivo para proceder con la importación')
             }
-    
+
             formData.append('file', file.files[0]);
-            formData.append('order_id', order_id);  
-           
+            formData.append('order_id', order_id);
+
             let response = await this.sendImportModalData(formData);
             if(response.state == 200){
                 correct(response.message);
