@@ -409,6 +409,7 @@ export default class Orders {
                 let modal = document.getElementById("modalCreate");
                 modal.click();
                 this.listGuides();
+                this.cleanFields();
             } else {
                 error('Error al crear la guía.')
                 console.log('Error: '+response.error);
@@ -1058,6 +1059,25 @@ export default class Orders {
                 console.log('Error: '+response.error);
             }
         });
+    }
+
+    cleanFields(){
+        document.getElementById("branch_off").selectedIndex = 0;
+        document.getElementById("address").selectedIndex = 0;
+        document.getElementById("guide_description").value = '';
+        document.getElementById("concept").value = '';
+        document.getElementById("rate").selectedIndex = 0;
+        document.getElementById("value").value = '';
+        document.getElementById("corp_value").value = '';
+        document.getElementById("customer_document_type").selectedIndex = 0;
+        document.getElementById("contact").value = '';
+        document.getElementById("phone_contact").value = '';
+        document.getElementById("email_contact").value = '';
+        document.getElementById("invoice_contact").value = '';
+        document.getElementById("zone_id").selectedIndex = 0;
+        document.getElementById("same_day_delivery").checked = false;
+        document.getElementById("sign").checked = false;
+        document.getElementById("take_photo").checked = false;
     }
 
 }

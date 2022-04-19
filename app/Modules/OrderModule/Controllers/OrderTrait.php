@@ -30,7 +30,7 @@ trait OrderTrait
                 'expenses' => 'nullable|numeric',
                 'diligence_expenses' => 'nullable|numeric',
                 'tax_total' => 'nullable|numeric',
-                'vehicle_type_id' => 'nullable|numeric',
+                'vehicle_type_id' => 'required|numeric',
                 'payment_method' => 'nullable|numeric',
                 'urgent_dispatch' => 'nullable|numeric',
                 'schedule_date' => 'nullable',
@@ -45,8 +45,8 @@ trait OrderTrait
                 'address_name' => 'nullable',
                 'address_lat' => 'nullable',
                 'address_lng' => 'nullable',
-                'address_description' => 'nullable',
-                'description' => 'nullable|string',
+                'address_description' => 'nullable|string',
+                'description' => 'required|string',
                 'state' => 'nullable|numeric'
             ]
         );

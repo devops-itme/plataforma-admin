@@ -64,8 +64,8 @@ class OrderController extends Controller
             $query->where('name', 'customer_document_type');
         })->get();
         $zones = Zone::get();
-
-        return view($this->path . 'create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones'));
+        $customer_addresses = [];
+        return view($this->path . 'create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'customer_addresses'));
     }
 
     /**

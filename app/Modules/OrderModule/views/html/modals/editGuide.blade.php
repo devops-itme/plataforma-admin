@@ -23,9 +23,11 @@
                         <label for="address">Dirección destino <span class="text-danger">*</span></label>
                         <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
                             <option disabled selected>Seleccione </option>
-                            @foreach ($customer_addresses as $item)
-                                <option value="{{$item->id}}"> {{$item->name}} </option>
-                            @endforeach
+                            @if($customer_addresses)
+                                @foreach ($customer_addresses as $item)
+                                    <option value="{{$item->id}}"> {{$item->name}} </option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
