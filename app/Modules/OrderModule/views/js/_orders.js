@@ -1063,25 +1063,25 @@ export default class Orders {
 
 
 
-// $("#tabListOrders").DataTable({
-//     info: false,
-//     language: {
-//         lengthMenu:
-//             "Mostrar " +
-//             `<select>
-//                         <option value = '10'>10</option>
-//                         <option value = '15'>15</option>
-//                         <option value = '50'>50</option>
-//                         <option value = '100'>100</option>
-//                     <select>` +
-//             " registros",
-//         zeroRecords: "Nada encontrado",
-//         infoEmpty: "No records available",
-//         infoFiltered: "(filtered from _MAX_ total records)",
-//         search: "Buscar:",
-//         paginate: {
-//             next: "Siguiente",
-//             previous: "Anterior",
-//         },
-//     },
-// });
+ $("#tabListOrders").DataTable({
+     info: false,
+     language: {
+         lengthMenu:
+             "Mostrar " +
+             `<select>
+                         <option value = '10'>10</option>
+                         <option value = '15'>15</option>
+                         <option value = '50'>50</option>
+                         <option value = '100'>100</option>
+                     <select>` +
+             " registros",
+         zeroRecords: "Nada encontrado",
+         infoEmpty: "No records available",
+         infoFiltered: "(filtered from _MAX_ total records)",
+         search: "Buscar:",
+         paginate: {
+             next: "Siguiente",
+             previous: "Anterior",
+         },
+     },
+ });
