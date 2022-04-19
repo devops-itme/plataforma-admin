@@ -163,8 +163,8 @@ Route::group(['middleware' => 'auth'], function () {
         return view('orders.list');
     })->name('Ordenes.Listado.index');
 
-    // Route::resource('tarifas', 'Admin\RateController')->names('rates');
-    Route::resource('tarifas', 'RateModule\Controllers\RateController')->names('rates');
+    
+    Route::resource('tarifas', 'RateModule\Controllers\RateController');
 
     // Route::resource('perfil', 'Admin\ProfileController')->names('profile');
     Route::resource('perfil', 'UserModule\Controllers\ProfileController')->names('profile');
