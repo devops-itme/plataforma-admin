@@ -202,4 +202,21 @@ class OrderController extends Controller
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
     }
+
+    public function finishOrder(Request $request)
+    {
+        try {
+            $order = Order::where('id', $request->order_id)->first();
+            if (is_null($order)) {
+                return $this->respond(500, null, 'not found', 'No se encontró la orden');
+            }
+            if ($order->update($request->all())) {
+                $order = $order->with($this->messengerRelationships)->get();
+                $order = OrderResource::collection($order)[0];
+                return $this->respond(200, $order, null, 'Orden finalizada');
+            }
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
 }
