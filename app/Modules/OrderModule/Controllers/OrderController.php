@@ -96,7 +96,7 @@ class OrderController extends Controller
                     return redirect()->back()->with('danger', $assignGuide['message']);
                 }
             }
-            
+
             return redirect()->route('orders.index')->with('success', $response['message']);
         } else {
             return redirect()->back()->with('danger', $response['message']);
@@ -199,7 +199,7 @@ class OrderController extends Controller
         } else {
             $request->merge(['urgent_dispatch' => 0]);
         }
-        $request->merge(['state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order]);
+        $request->merge(['state' => 1, 'description' => $request->description_order]);
         $response = $this->updateOrder($request->merge(['order_id' => $id]));
         if ($response['state'] == 200) {
             if ($request->guideCheck) {

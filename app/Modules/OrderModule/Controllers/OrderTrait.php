@@ -128,7 +128,7 @@ trait OrderTrait
                 'customer_user_id' => $request->user_id,
                 'branch_office' => $request->branch_office_id,
                 'department_id' => $request->department_id,
-                'address_id' => $request->address_id,
+                'address_id' => $request->customer_address,
                 'description' => $request->description
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
