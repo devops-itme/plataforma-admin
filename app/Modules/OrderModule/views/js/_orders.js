@@ -927,6 +927,7 @@ export default class Orders {
         let response = await this.requestPickupHours();
         let days = response.data;
         date_selector.addEventListener('change', () => {
+            console.log('holis');
             let day = this.getDayReference(date_selector.value);
             let day_data = days[day];
 
@@ -981,7 +982,7 @@ export default class Orders {
 
     async loadHoursInEditOrShow(){
         let route = window.location.pathname;
-        if(!(route.includes('ordenes') && route.includes('edit'))){
+        if(!(route.includes('create') && route.includes('edit'))){
             return;
         }
         let date_selector = document.getElementById("schedule_date");
@@ -1063,25 +1064,25 @@ export default class Orders {
 
 
 
- $("#tabListOrders").DataTable({
-     info: false,
-     language: {
-         lengthMenu:
-             "Mostrar " +
-             `<select>
-                         <option value = '10'>10</option>
-                         <option value = '15'>15</option>
-                         <option value = '50'>50</option>
-                         <option value = '100'>100</option>
-                     <select>` +
-             " registros",
-         zeroRecords: "Nada encontrado",
-         infoEmpty: "No records available",
-         infoFiltered: "(filtered from _MAX_ total records)",
-         search: "Buscar:",
-         paginate: {
-             next: "Siguiente",
-             previous: "Anterior",
-         },
-     },
- });
+//  $("#tabListOrders").DataTable({
+//      info: false,
+//      language: {
+//          lengthMenu:
+//              "Mostrar " +
+//              `<select>
+//                          <option value = '10'>10</option>
+//                          <option value = '15'>15</option>
+//                          <option value = '50'>50</option>
+//                          <option value = '100'>100</option>
+//                      <select>` +
+//              " registros",
+//          zeroRecords: "Nada encontrado",
+//          infoEmpty: "No records available",
+//          infoFiltered: "(filtered from _MAX_ total records)",
+//          search: "Buscar:",
+//          paginate: {
+//              next: "Siguiente",
+//              previous: "Anterior",
+//          },
+//      },
+//  });

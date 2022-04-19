@@ -27,7 +27,8 @@
         <div class="form-group col-md-6">
             <label>Hora de programación: <span class="text-danger">*</span></label>
             <select name="schedule_time_range" class="form-control form-control-solid" id="schedule_time_range">
-                <option disabled selected>Seleccione </option>
+                <option disabled>Seleccione </option>
+                <option value="{{$order->schedule_time_range}}" selected>{{$order->schedule_time_range}}</option>
             </select>
             <span class="form-text text-muted"></span>
         </div>
