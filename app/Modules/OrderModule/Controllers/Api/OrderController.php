@@ -50,13 +50,13 @@ class OrderController extends Controller
         $user_id = $request->user_id ?? Auth::user()->id;
         $role_name = $request->role_name ?? Auth::user()->getRole->name;
         $scope_name = $request->scope_name;
-        $scope_status_matrix = $request->scope_status_matrix;
+        $status_matrix = $request->status_matrix;
         $orders = [];
 
         try {
             $scope = ParameterValue::where('name', $scope_name)->first();
 
-            $status_matrix = StatusMatrix::where('name', $scope_status_matrix)->first();
+            $status_matrix = StatusMatrix::whereIn('name', $status_matrix)->get(['id']);
 
             $scope_id = $scope->id ?? null;
             $status = StatusMatrix::where('scope_id', $scope_id)->get(['id']);
@@ -209,7 +209,7 @@ class OrderController extends Controller
         }
     }
 
-    public function finishOrder(Request $request)
+    public function changeStatus(Request $request)
     {
         try {
             $order = Order::where('id', $request->order_id)->first();

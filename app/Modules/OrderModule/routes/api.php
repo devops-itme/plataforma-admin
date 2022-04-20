@@ -7,4 +7,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('orders', 'OrderModule\Controllers\Api\OrderController')->names('order');
     Route::put('order/finishOrder', 'OrderModule\Controllers\Api\OrderController@finishOrder')->name('order.finishOrder');
     Route::post('/store_evidence', 'OrderModule\Controllers\Api\OrderController@evidenceStore');
+    Route::put('order/changeStatus', 'OrderModule\Controllers\Api\OrderController@changeStatus')->name('order.changeStatus');
 });
