@@ -70,7 +70,7 @@ class AuthController extends Controller
             $token = $user->createToken('authToken')->plainTextToken;
             return $this->respond(200, $token, null, 'Acceso permitido');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
+            return $this->respond(500, [], $e->getMessage() . ' Line:' . $e->getLine(), 'Ha ocurrido un error de servidor');
         }
     }
 
