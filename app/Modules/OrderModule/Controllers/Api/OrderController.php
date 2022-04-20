@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
-    use OrderTrait, GuideTrait, AddressTrait, GuidanceDocsTrait;
+    use OrderTrait, GuideTrait, AddressTrait;
 
     public function respond($state, $data = [], $error = null, $message = '')
     {
@@ -221,34 +221,6 @@ class OrderController extends Controller
                 $order = OrderResource::collection($order);
                 return $this->respond(200, $order, null, 'Haz culminado esta orden');
             }
-        } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
-        }
-    }
-
-    public function evidenceStore(Request $request)
-    {
-        try {
-            $data = [];
-            if(gettype($request->document) == 'array'){
-                DB::beginTransaction();
-                foreach ($request->document as $file) {
-                    $document_name = '';
-                    if(File($file)){
-                        $document_name = str_replace('','_', time(). '-' .$file->getClientOriginalName());
-                        // Storage::disk('s3')->put($document_name, $document);
-                        Storage::disk('local')->put($document_name, $file);
-                    }
-                    $store_doc = $this->storeGuidanceDoc($request->merge(['url_document' => $document_name]));
-                    if($store_doc['state'] != 200){
-                        DB::rollBack();
-                        return $store_doc;
-                    }
-                    array_push($data, $store_doc['data']);
-                }
-                DB::commit();
-            }
-            return $this->respond(200, $data, '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
