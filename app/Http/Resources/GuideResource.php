@@ -50,7 +50,7 @@ class GuideResource extends JsonResource
                 'scope_id' => $this->getStatusMatrix->scope_id,
                 'updated_at' => $this->getStatusMatrix->updated_at,
             ],
-            'created_at' => $this->created_at,
+            "created_at" => $this->created_at,
             "transport" => [
                 "id" => $this->getTransportType->id ?? '',
                 "name" => $this->getTransportType->name ?? '',

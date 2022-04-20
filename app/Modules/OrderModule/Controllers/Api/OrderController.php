@@ -56,7 +56,7 @@ class OrderController extends Controller
         try {
             $scope = ParameterValue::where('name', $scope_name)->first();
 
-            $status_matrix = StatusMatrix::whereIn('name', $status_matrix)->get(['id']);
+            $status_matrix = StatusMatrix::where('name', $status_matrix)->get(['id']);
 
             $scope_id = $scope->id ?? null;
             $status = StatusMatrix::where('scope_id', $scope_id)->get(['id']);
@@ -64,6 +64,7 @@ class OrderController extends Controller
             if ($role_name == 'Cliente') {
                 $orders = Order::where('user_id', $user_id)
                     ->whereScope($status)
+                    ->whereStatusMatrix($status_matrix)
                     ->with($this->customerRelationships)->get();
             }
 
