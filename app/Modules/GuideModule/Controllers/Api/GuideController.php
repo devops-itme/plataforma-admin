@@ -7,6 +7,7 @@ use App\Http\Resources\GuideResource;
 use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
 use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\GuideModule\Guide;
+use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -85,17 +86,25 @@ class GuideController extends Controller
     {
         try {
             $data = [];
-            if(gettype($request->document) == 'array'){
+            if (gettype($request->document) == 'array') {
                 DB::beginTransaction();
                 foreach ($request->document as $file) {
+                    if (!is_numeric($request->type)) {
+                        $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
+                            $query->where('name', 'guide_document_type');
+                        })->first();
+                        $request->merge(['type' => $type->id]);
+                    }
                     $document_name = '';
-                    if(File($file)){
-                        $document_name = str_replace('','_', time(). '-' .$file->getClientOriginalName());
+                    if (File($file)) {
+                        $document_name = str_replace('', '_', time() . '-' . $file->getClientOriginalName());
                         // Storage::disk('s3')->put($document_name, $document);
                         Storage::disk('local')->put($document_name, $file);
                     }
-                    $store_doc = $this->storeGuidanceDoc($request->merge(['url_document' => $document_name]));
-                    if($store_doc['state'] != 200){
+                    $request->merge(['url_document' => $document_name]);
+
+                    $store_doc = $this->storeGuidanceDoc($request);
+                    if ($store_doc['state'] != 200) {
                         DB::rollBack();
                         return $store_doc;
                     }
