@@ -17,6 +17,7 @@ class CreateGuidanceDocumentsTable extends Migration
             $table->id();
             $table->foreignId('guides_id')->references('id')->on('guides')->nullable();
             $table->string('url_document')->nullable();
+            $table->foreignId('type')->references('id')->on('parameter_values')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

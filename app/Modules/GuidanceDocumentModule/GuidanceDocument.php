@@ -10,8 +10,9 @@ class GuidanceDocument extends Model
     use SoftDeletes;
     protected $table = 'guidance_documents';
     protected $fillable = [
-        'guides_id ',
-        'url_document'
+        'guides_id',
+        'url_document',
+        'type'
     ];
 
     public function getGuide()

@@ -15,7 +15,8 @@ class ParameterValue extends Model
         'parameter_id',
         'name',
         'description',
-        'state'
+        'state',
+        'editable'
     ];
 
     public function getParameter()

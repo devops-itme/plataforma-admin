@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Modules\AddressModule\Address;
 use App\Modules\AddressModule\Controllers\AddressTrait;
+use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
 use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\OrderModule\Controllers\OrderTrait;
 use App\Modules\OrderModule\Order;
@@ -15,6 +16,7 @@ use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {

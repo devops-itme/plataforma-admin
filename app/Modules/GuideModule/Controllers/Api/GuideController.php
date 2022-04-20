@@ -4,13 +4,16 @@ namespace App\Modules\GuideModule\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GuideResource;
+use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
 use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\GuideModule\Guide;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class GuideController extends Controller
 {
-    use GuideTrait;
+    use GuideTrait, GuidanceDocsTrait;
 
     public function respond($state, $data = [], $error = null, $message = '')
     {
@@ -73,6 +76,34 @@ class GuideController extends Controller
                 $guide = GuideResource::collection([$guide]);
                 return $this->respond(200, $guide->first(), null, 'Estado de la guía cambiado');
             }
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
+
+    public function saveEvidence(Request $request)
+    {
+        try {
+            $data = [];
+            if(gettype($request->document) == 'array'){
+                DB::beginTransaction();
+                foreach ($request->document as $file) {
+                    $document_name = '';
+                    if(File($file)){
+                        $document_name = str_replace('','_', time(). '-' .$file->getClientOriginalName());
+                        // Storage::disk('s3')->put($document_name, $document);
+                        Storage::disk('local')->put($document_name, $file);
+                    }
+                    $store_doc = $this->storeGuidanceDoc($request->merge(['url_document' => $document_name]));
+                    if($store_doc['state'] != 200){
+                        DB::rollBack();
+                        return $store_doc;
+                    }
+                    array_push($data, $store_doc['data']);
+                }
+                DB::commit();
+            }
+            return $this->respond(200, $data, '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
