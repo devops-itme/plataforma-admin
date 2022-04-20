@@ -86,7 +86,7 @@ class GuideController extends Controller
     {
         try {
             $data = [];
-            if (gettype($request->document) == 'array') {
+            // if (gettype($request->document) == 'array') {
                 DB::beginTransaction();
                 foreach ($request->document as $file) {
                     if (!is_numeric($request->type)) {
@@ -111,7 +111,7 @@ class GuideController extends Controller
                     array_push($data, $store_doc['data']);
                 }
                 DB::commit();
-            }
+            // }
             return $this->respond(200, $data, '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
