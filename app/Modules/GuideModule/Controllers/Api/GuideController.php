@@ -85,7 +85,6 @@ class GuideController extends Controller
     public function saveEvidence(Request $request)
     {
         try {
-            $data = [];
             // if (gettype($request->document) == 'array') {
                 DB::beginTransaction();
                 foreach ($request->document as $file) {
@@ -108,11 +107,10 @@ class GuideController extends Controller
                         DB::rollBack();
                         return $store_doc;
                     }
-                    array_push($data, $store_doc['data']);
                 }
                 DB::commit();
             // }
-            return $this->respond(200, $data, '', 'Documento almacenado de forma exitosa.');
+            return $this->respond(200, [], '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
