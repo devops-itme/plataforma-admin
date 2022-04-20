@@ -19,7 +19,7 @@ export default class Orders {
     }
     initialize() {
         this.instantiateBoxes();
-        this.addbox();
+        this.addBox();
         this.loadBranches();
         this.loadCustomerModal();
         this.removeBox();
@@ -140,7 +140,7 @@ export default class Orders {
         this.removeBox();
     };
 
-    addbox(button = 'add-box-btn', boxes = this.boxes, container = 'box-container') {
+    addBox(button = 'add-box-btn', boxes = this.boxes, container = 'box-container') {
         let addBoxBtn = document.getElementById(button);
 
         if (addBoxBtn == null) {
@@ -568,7 +568,7 @@ export default class Orders {
                 data.take_photo == 0 ? take_photo.checked = true : '';
                 let boxes = JSON.parse(data.boxes);
                 this.instantiateBoxes('box-container-edit', (boxes??this.boxes));
-                this.addbox('add-box-btn-edit', (boxes??[]), 'box-container-edit');
+                this.addBox('add-box-btn-edit', (boxes??[]), 'box-container-edit');
             });
         })
         this.updateGuide();

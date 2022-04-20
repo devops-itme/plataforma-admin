@@ -1899,7 +1899,7 @@ var Orders = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.instantiateBoxes();
-      this.addbox();
+      this.addBox();
       this.loadBranches();
       this.loadCustomerModal();
       this.removeBox();
@@ -2001,8 +2001,8 @@ var Orders = /*#__PURE__*/function () {
       this.removeBox();
     }
   }, {
-    key: "addbox",
-    value: function addbox() {
+    key: "addBox",
+    value: function addBox() {
       var _this = this;
 
       var button = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'add-box-btn';
@@ -2719,7 +2719,7 @@ var Orders = /*#__PURE__*/function () {
 
                   _this7.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this7.boxes);
 
-                  _this7.addbox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
+                  _this7.addBox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
 
                 case 30:
                 case "end":
@@ -3450,8 +3450,6 @@ var Orders = /*#__PURE__*/function () {
                 response = _context25.sent;
                 days = response.data;
                 date_selector.addEventListener('change', function () {
-                  console.log('holis');
-
                   var day = _this11.getDayReference(date_selector.value);
 
                   var day_data = days[day];
@@ -89199,8 +89197,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

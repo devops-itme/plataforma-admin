@@ -33,19 +33,44 @@ class ShipmentTealcaImport implements ToModel, WithHeadingRow
         if ($row) {
             $destination = $row['ciudes'];
             $requestResponse = $this->Tealca->requestDestination($destination);
-            
+            // dd($requestResponse);
             if ($requestResponse['state'] != 200) {
                 return $requestResponse;
             }
-            
+
             dd($row);
             return new Guide([
-                // 'order_id' => $this->order_id,
-                'address_name' => $row['paisdes'],
-                'concept' => $row['concepto'],
-                'contact' => $row['contacto'],
-                'phone_contact' => $row['contactotelefono'],
-                'email_contact' => $row['contactoemail']
+                'order_id',
+                'branch_office',
+                'transport_type',
+                'dispatched',
+                'address_name',//*
+                'address_lat',
+                'address_lng',
+                'address_description',
+                'description',//*
+                'zone',
+                'concept',
+                'rate',
+                'value',
+                'corp_value',
+                'customer_document_type',
+                'contact',//*
+                'phone_contact',//*
+                'email_contact',//*
+                'invoice_contact',
+                'same_day_delivery',
+                'sign',
+                'take_photo',
+                'packaging',
+                'return_last_destination',
+                'state',
+                'app_status',
+                'boxes',
+                'status_matrix_id',
+                'additional_address',
+                'additional_email',
+                'additional_phone',
             ]);
         }
     }
