@@ -321,6 +321,10 @@ return [
             'INCIDENCIA',
             'ENTREGADO'
         ]
+    ],
+    'guide_document_type' => [
+        'signature',
+        'evidence'
     ]
 
 ];
