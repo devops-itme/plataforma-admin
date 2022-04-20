@@ -207,7 +207,7 @@ class OrderController extends Controller
         }
     }
 
-    public function finishOrder(Request $request)
+    public function changeStatus(Request $request)
     {
         try {
             $order = Order::where('id', $request->order_id)->first();
