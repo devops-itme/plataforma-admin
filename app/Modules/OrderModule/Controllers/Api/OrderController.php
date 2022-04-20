@@ -48,10 +48,13 @@ class OrderController extends Controller
         $user_id = $request->user_id ?? Auth::user()->id;
         $role_name = $request->role_name ?? Auth::user()->getRole->name;
         $scope_name = $request->scope_name;
+        $scope_status_matrix = $request->scope_status_matrix;
         $orders = [];
 
         try {
             $scope = ParameterValue::where('name', $scope_name)->first();
+
+            $status_matrix = StatusMatrix::where('name', $scope_status_matrix)->first();
 
             $scope_id = $scope->id ?? null;
             $status = StatusMatrix::where('scope_id', $scope_id)->get(['id']);
@@ -65,6 +68,7 @@ class OrderController extends Controller
             if ($role_name == 'Mensajero') {
                 $orders = Order::messengerOrders($user_id)
                     ->whereScope($status)
+                    ->whereStatusMatrix($status_matrix)
                     ->with($this->messengerRelationships)->get();
             }
 
@@ -212,7 +216,7 @@ class OrderController extends Controller
             }
             if ($order->update($request->all())) {
                 $order = $order->with($this->messengerRelationships)->get();
-                $order = OrderResource::collection($order)[0];
+                $order = OrderResource::collection($order);
                 return $this->respond(200, $order, null, 'Haz culminado esta orden');
             }
         } catch (\Throwable $e) {

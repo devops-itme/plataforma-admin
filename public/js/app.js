@@ -2454,6 +2454,8 @@ var Orders = /*#__PURE__*/function () {
                   modal.click();
 
                   _this5.listGuides();
+
+                  _this5.cleanFields();
                 } else {
                   error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
@@ -3541,7 +3543,7 @@ var Orders = /*#__PURE__*/function () {
               case 0:
                 route = window.location.pathname;
 
-                if (route.includes('ordenes') && route.includes('edit')) {
+                if (route.includes('create') && route.includes('edit')) {
                   _context27.next = 3;
                   break;
                 }
@@ -3688,26 +3690,54 @@ var Orders = /*#__PURE__*/function () {
         }, _callee29);
       })));
     }
+  }, {
+    key: "cleanFields",
+    value: function cleanFields() {
+      document.getElementById("branch_off").selectedIndex = 0;
+      document.getElementById("address").selectedIndex = 0;
+      document.getElementById("guide_description").value = '';
+      document.getElementById("concept").value = '';
+      document.getElementById("rate").selectedIndex = 0;
+      document.getElementById("value").value = '';
+      document.getElementById("corp_value").value = '';
+      document.getElementById("customer_document_type").selectedIndex = 0;
+      document.getElementById("contact").value = '';
+      document.getElementById("phone_contact").value = '';
+      document.getElementById("email_contact").value = '';
+      document.getElementById("invoice_contact").value = '';
+      document.getElementById("zone_id").selectedIndex = 0;
+      document.getElementById("same_day_delivery").checked = false;
+      document.getElementById("sign").checked = false;
+      document.getElementById("take_photo").checked = false;
+    }
   }]);
 
   return Orders;
-}();
+}(); //  $("#tabListOrders").DataTable({
+//      info: false,
+//      language: {
+//          lengthMenu:
+//              "Mostrar " +
+//              `<select>
+//                          <option value = '10'>10</option>
+//                          <option value = '15'>15</option>
+//                          <option value = '50'>50</option>
+//                          <option value = '100'>100</option>
+//                      <select>` +
+//              " registros",
+//          zeroRecords: "Nada encontrado",
+//          infoEmpty: "No records available",
+//          infoFiltered: "(filtered from _MAX_ total records)",
+//          search: "Buscar:",
+//          paginate: {
+//              next: "Siguiente",
+//              previous: "Anterior",
+//          },
+//      },
+//  });
 
 
-$("#tabListOrders").DataTable({
-  info: false,
-  language: {
-    lengthMenu: "Mostrar " + "<select>\n                         <option value = '10'>10</option>\n                         <option value = '15'>15</option>\n                         <option value = '50'>50</option>\n                         <option value = '100'>100</option>\n                     <select>" + " registros",
-    zeroRecords: "Nada encontrado",
-    infoEmpty: "No records available",
-    infoFiltered: "(filtered from _MAX_ total records)",
-    search: "Buscar:",
-    paginate: {
-      next: "Siguiente",
-      previous: "Anterior"
-    }
-  }
-});
+
 
 /***/ }),
 

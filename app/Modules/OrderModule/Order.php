@@ -20,7 +20,7 @@ use Spatie\Activitylog\Contracts\Activity;
 class Order extends Model
 {
     use SoftDeletes, LogsActivity;
-    
+
     protected $table = 'orders';
     protected $fillable = [
         'order_number',
@@ -186,6 +186,12 @@ class Order extends Model
                     $query->where('messenger_user_id', $messenger_user_id);
                 });
             });
+        }
+    }
+    public function scopeWhereStatusMatrix($query, $status_matrix)
+    {
+        if (!is_null($status_matrix)) {
+            return $query->whereIn('status_matrix_id', $status_matrix);
         }
     }
 }

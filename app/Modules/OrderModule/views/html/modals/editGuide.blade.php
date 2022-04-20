@@ -23,9 +23,11 @@
                         <label for="address">Dirección destino <span class="text-danger">*</span></label>
                         <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
                             <option disabled selected>Seleccione </option>
-                            @foreach ($customer_addresses as $item)
-                                <option value="{{$item->id}}"> {{$item->name}} </option>
-                            @endforeach
+                            @if($customer_addresses)
+                                @foreach ($customer_addresses as $item)
+                                    <option value="{{$item->id}}"> {{$item->name}} </option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
@@ -87,7 +89,7 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3 pt-2">
-                        <label>Teléfono contacto </label>
+                        <label>Teléfono contacto: <span class="text-danger">*</span> </label>
                         <input name="phone_contact" type="tel" id="phone_contact_edit" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>

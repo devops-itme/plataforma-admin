@@ -409,6 +409,7 @@ export default class Orders {
                 let modal = document.getElementById("modalCreate");
                 modal.click();
                 this.listGuides();
+                this.cleanFields();
             } else {
                 error('Error al crear la guía.')
                 console.log('Error: '+response.error);
@@ -927,6 +928,7 @@ export default class Orders {
         let response = await this.requestPickupHours();
         let days = response.data;
         date_selector.addEventListener('change', () => {
+            console.log('holis');
             let day = this.getDayReference(date_selector.value);
             let day_data = days[day];
 
@@ -981,7 +983,7 @@ export default class Orders {
 
     async loadHoursInEditOrShow(){
         let route = window.location.pathname;
-        if(!(route.includes('ordenes') && route.includes('edit'))){
+        if(!(route.includes('create') && route.includes('edit'))){
             return;
         }
         let date_selector = document.getElementById("schedule_date");
@@ -1059,29 +1061,48 @@ export default class Orders {
         });
     }
 
+    cleanFields(){
+        document.getElementById("branch_off").selectedIndex = 0;
+        document.getElementById("address").selectedIndex = 0;
+        document.getElementById("guide_description").value = '';
+        document.getElementById("concept").value = '';
+        document.getElementById("rate").selectedIndex = 0;
+        document.getElementById("value").value = '';
+        document.getElementById("corp_value").value = '';
+        document.getElementById("customer_document_type").selectedIndex = 0;
+        document.getElementById("contact").value = '';
+        document.getElementById("phone_contact").value = '';
+        document.getElementById("email_contact").value = '';
+        document.getElementById("invoice_contact").value = '';
+        document.getElementById("zone_id").selectedIndex = 0;
+        document.getElementById("same_day_delivery").checked = false;
+        document.getElementById("sign").checked = false;
+        document.getElementById("take_photo").checked = false;
+    }
+
 }
 
 
 
- $("#tabListOrders").DataTable({
-     info: false,
-     language: {
-         lengthMenu:
-             "Mostrar " +
-             `<select>
-                         <option value = '10'>10</option>
-                         <option value = '15'>15</option>
-                         <option value = '50'>50</option>
-                         <option value = '100'>100</option>
-                     <select>` +
-             " registros",
-         zeroRecords: "Nada encontrado",
-         infoEmpty: "No records available",
-         infoFiltered: "(filtered from _MAX_ total records)",
-         search: "Buscar:",
-         paginate: {
-             next: "Siguiente",
-             previous: "Anterior",
-         },
-     },
- });
+//  $("#tabListOrders").DataTable({
+//      info: false,
+//      language: {
+//          lengthMenu:
+//              "Mostrar " +
+//              `<select>
+//                          <option value = '10'>10</option>
+//                          <option value = '15'>15</option>
+//                          <option value = '50'>50</option>
+//                          <option value = '100'>100</option>
+//                      <select>` +
+//              " registros",
+//          zeroRecords: "Nada encontrado",
+//          infoEmpty: "No records available",
+//          infoFiltered: "(filtered from _MAX_ total records)",
+//          search: "Buscar:",
+//          paginate: {
+//              next: "Siguiente",
+//              previous: "Anterior",
+//          },
+//      },
+//  });
