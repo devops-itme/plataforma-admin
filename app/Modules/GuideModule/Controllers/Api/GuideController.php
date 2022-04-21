@@ -95,32 +95,35 @@ class GuideController extends Controller
         try {
             // if (gettype($request->document) == 'array') {
             DB::beginTransaction();
-            foreach ($request->document as $file) {
-                if (!is_numeric($request->type)) {
-                    $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
-                        $query->where('name', 'guide_document_type');
-                    })->first();
-                    $request->merge(['type' => $type->id]);
+            // foreach ($request->document as $file) {
+            if (!is_numeric($request->type)) {
+                $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
+                    $query->where('name', 'guide_document_type');
+                })->first();
+                if (is_null($type)) {
+                    return $this->respond(500, $request->all(), 'type not found', 'Tipo de documento no encontrado');
                 }
-                $document_name = '';
-                if (File($file)) {
-                    $document_name = str_replace('', '_', time() . '-' . $file->getClientOriginalName());
-                    // Storage::disk('s3')->put($document_name, $document);
-                    Storage::disk('local')->put($document_name, $file);
-                }
-                $request->merge(['url_document' => $document_name]);
-
-                $store_doc = $this->storeGuidanceDoc($request);
-                if ($store_doc['state'] != 200) {
-                    DB::rollBack();
-                    return $store_doc;
-                }
+                $request->merge(['type' => $type->id]);
             }
+            $document_name = '';
+            if (File($request->document)) {
+                $document_name = str_replace('', '_', time() . '-' . $request->document->getClientOriginalName());
+                // Storage::disk('s3')->put($document_name, $document);
+                Storage::disk('local')->put($document_name, $request->document);
+            }
+            $request->merge(['url_document' => $document_name]);
+
+            $store_doc = $this->storeGuidanceDoc($request);
+            if ($store_doc['state'] != 200) {
+                DB::rollBack();
+                return $store_doc;
+            }
+            // }
             DB::commit();
             // }
             return $this->respond(200, [], '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+            return $this->respond(500, null, $e->getMessage() . ' Line: ' . $e->getLine(), 'Error del servidor');
         }
     }
 }
