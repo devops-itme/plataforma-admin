@@ -101,7 +101,7 @@ class GuideController extends Controller
                     $query->where('name', 'guide_document_type');
                 })->first();
                 if (is_null($type)) {
-                    return $this->respond(200, null, 'type not found', 'Tipo de documento no encontrado');
+                    return $this->respond(500, null, 'type not found', 'Tipo de documento no encontrado');
                 }
                 $request->merge(['type' => $type->id]);
             }
