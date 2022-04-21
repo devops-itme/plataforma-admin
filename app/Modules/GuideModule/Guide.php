@@ -48,6 +48,7 @@ class Guide extends Model
         'app_status',
         'boxes',
         'status_matrix_id',
+        'issue_id',
         'additional_address',
         'additional_email',
         'additional_phone',
@@ -99,6 +100,10 @@ class Guide extends Model
     {
         return $this->hasMany(GuidanceDocument::class, 'guides_id');
     }
+    // public function getIssue()
+    // {
+    //     return $this->belongsTo(StatusMatrix::class, 'issue_id');
+    // }
 
     // Scopes
 
