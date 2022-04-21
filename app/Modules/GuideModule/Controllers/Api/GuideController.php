@@ -123,7 +123,7 @@ class GuideController extends Controller
             // }
             return $this->respond(200, [], '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+            return $this->respond(500, null, $e->getMessage() . 'Line: ' . $e->getMessage(), 'Error del servidor');
         }
     }
 }
