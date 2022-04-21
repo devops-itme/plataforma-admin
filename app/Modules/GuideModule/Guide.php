@@ -47,6 +47,7 @@ class Guide extends Model
         'app_status',
         'boxes',
         'status_matrix_id',
+        'issue_id',
         'additional_address',
         'additional_email',
         'additional_phone',
@@ -94,8 +95,13 @@ class Guide extends Model
         return $this->belongsTo(ParameterValue::class, 'state');
     }
 
+    // public function getIssue()
+    // {
+    //     return $this->belongsTo(StatusMatrix::class, 'issue_id');
+    // }
+
     // Scopes
-    
+
     public function scopeWhereStatusMatrix($query, $status_matrix_id)
     {
         if (!is_null($status_matrix_id)) {
