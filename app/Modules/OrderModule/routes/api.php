@@ -8,6 +8,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('order/finishOrder', 'OrderModule\Controllers\Api\OrderController@finishOrder')->name('order.finishOrder');
     Route::put('order/changeStatus', 'OrderModule\Controllers\Api\OrderController@changeStatus')->name('order.changeStatus');
 
+    Route::get('order/webview/paguelofacil', 'OrderModule\Controllers\Api\OrderController@webviewPaguelofacil')->name('order.webview');
+    Route::get('order/webview/paguelofacil/response', 'OrderModule\Controllers\Api\OrderController@responseViewPaguelofacil')->name('order.webview.response');
 });
-Route::post('order/webview/paguelofacil', 'OrderModule\Controllers\Api\OrderController@webviewPaguelofacil')->name('order.webview');
-Route::get('order/webview/paguelofacil/response', 'OrderModule\Controllers\Api\OrderController@responseViewPaguelofacil')->name('order.webview.response');
