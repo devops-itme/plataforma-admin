@@ -8,6 +8,7 @@ use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
 use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -32,8 +33,15 @@ class GuideController extends Controller
 
     public function index(Request $request)
     {
+        $status_matrix = $request->status_matrix ?? [];
+
         try {
+            $status_matrix = StatusMatrix::whereIn('name', $status_matrix)->get(['id']);
+
+            count($status_matrix) == 0 && $status_matrix = null;
+
             $guides = Guide::where('order_id', $request->order_id)
+                ->whereStatusMatrix($status_matrix)
                 ->with($this->messengerRelationships)->get();
             $guides = GuideResource::collection($guides);
             return $this->respond(200, $guides, null, 'Guías asignadas');
