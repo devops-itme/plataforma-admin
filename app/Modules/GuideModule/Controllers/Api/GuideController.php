@@ -96,25 +96,28 @@ class GuideController extends Controller
             // if (gettype($request->document) == 'array') {
             DB::beginTransaction();
             // foreach ($request->document as $file) {
-                if (!is_numeric($request->type)) {
-                    $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
-                        $query->where('name', 'guide_document_type');
-                    })->first();
-                    $request->merge(['type' => $type->id]);
+            if (!is_numeric($request->type)) {
+                $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
+                    $query->where('name', 'guide_document_type');
+                })->first();
+                if (is_null($type)) {
+                    $this->respond(200, null, 'type not found', 'Tipo de documento no encontrado');
                 }
-                $document_name = '';
-                if (File($request->document)) {
-                    $document_name = str_replace('', '_', time() . '-' . $request->document->getClientOriginalName());
-                    // Storage::disk('s3')->put($document_name, $document);
-                    Storage::disk('local')->put($document_name, $request->document);
-                }
-                $request->merge(['url_document' => $document_name]);
+                $request->merge(['type' => $type->id]);
+            }
+            $document_name = '';
+            if (File($request->document)) {
+                $document_name = str_replace('', '_', time() . '-' . $request->document->getClientOriginalName());
+                // Storage::disk('s3')->put($document_name, $document);
+                Storage::disk('local')->put($document_name, $request->document);
+            }
+            $request->merge(['url_document' => $document_name]);
 
-                $store_doc = $this->storeGuidanceDoc($request);
-                if ($store_doc['state'] != 200) {
-                    DB::rollBack();
-                    return $store_doc;
-                }
+            $store_doc = $this->storeGuidanceDoc($request);
+            if ($store_doc['state'] != 200) {
+                DB::rollBack();
+                return $store_doc;
+            }
             // }
             DB::commit();
             // }
