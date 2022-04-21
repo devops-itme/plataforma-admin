@@ -3450,6 +3450,8 @@ var Orders = /*#__PURE__*/function () {
                 response = _context25.sent;
                 days = response.data;
                 date_selector.addEventListener('change', function () {
+                  console.log('holis');
+
                   var day = _this11.getDayReference(date_selector.value);
 
                   var day_data = days[day];
@@ -7603,6 +7605,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -7711,6 +7756,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.concept = data.concept;
       this.showDataGuide.direction = data.address_name;
+      this.showDataGuide.additional_phone = data.additional_phone;
+      this.showDataGuide.additional_email = data.additional_email;
+      this.showDataGuide.additional_address = data.additional_address;
+      this.showDataGuide.app_status = data.app_status;
+      this.showDataGuide.status = data.get_status_matrix.name;
+      this.showDataGuide.files = data.get_documents;
     },
     getGuides: function getGuides(type) {
       var _this3 = this;
@@ -7856,6 +7907,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 4:
                 programming_date = _this6.showGuide.get_order.schedule_date + ' ' + _this6.showGuide.get_order.schedule_time;
                 _this6.showModal = true;
+                _this6.guide.id = _this6.showDataGuide.posting;
                 _this6.guide.client = (_this6$showGuide$get_ = _this6.showGuide.get_order) === null || _this6$showGuide$get_ === void 0 ? void 0 : _this6$showGuide$get_.get_user.name;
                 _this6.guide.balance = 0;
                 _this6.guide.balance_money = 0;
@@ -7870,8 +7922,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.guide.contact_phone = _this6.showGuide.phone_contact;
                 _this6.guide.contact_email = _this6.showGuide.email_contact;
                 _this6.guide.programming = moment__WEBPACK_IMPORTED_MODULE_1___default()(programming_date).format("YYYY-MM-DDTHH:mm");
+                _this6.guide.additional_phone = _this6.showGuide.additional_phone;
+                _this6.guide.additional_email = _this6.showGuide.additional_email;
+                _this6.guide.additional_address = _this6.showGuide.additional_address;
+                _this6.guide.app_status = _this6.showGuide.app_status;
+                _this6.guide.status = _this6.showGuide.get_status_matrix.name;
 
-              case 20:
+              case 26:
               case "end":
                 return _context5.stop();
             }
@@ -7968,32 +8025,106 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }, _callee8);
       }))();
+    },
+    updateGuide: function updateGuide() {
+      var _this10 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        var token, myHeaders, requestOptions, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                console.log(token);
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(_this10.guide)
+                };
+                _context9.next = 12;
+                return _this10.requestUpdateGuide(requestOptions);
+
+              case 12:
+                response = _context9.sent;
+
+                if (response.state != 200) {
+                  alert(response.message);
+                }
+
+                alert(response.message);
+                _this10.showModal = false;
+
+              case 16:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }))();
+    },
+    requestUpdateGuide: function requestUpdateGuide(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context10.next = 3;
+                return fetch("/guide/update", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 3:
+                return _context10.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this10 = this;
+    var _this11 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
         while (1) {
-          switch (_context9.prev = _context9.next) {
+          switch (_context11.prev = _context11.next) {
             case 0:
-              _this10.getGuides(3);
+              _this11.getGuides(3);
 
-              _this10.getMessengers();
+              _this11.getMessengers();
 
-              _this10.documentTypes();
+              _this11.documentTypes();
 
-              _this10.transportTypes();
+              _this11.transportTypes();
 
-              _this10.paymentMethods();
+              _this11.paymentMethods();
 
             case 5:
             case "end":
-              return _context9.stop();
+              return _context11.stop();
           }
         }
-      }, _callee9);
+      }, _callee11);
     }))();
   }
 });
@@ -69116,6 +69247,99 @@ var render = function () {
                       })
                     : _vm._e(),
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Teléfono adicional:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.additional_phone
+                              ? _vm.showDataGuide.additional_phone
+                              : "No registra"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Correo adicional:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.additional_email
+                              ? _vm.showDataGuide.additional_email
+                              : "No registra"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Dirección adicional:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.additional_address
+                              ? _vm.showDataGuide.additional_address
+                              : "No registra"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Leído:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.app_status ? "Sí" : "No"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Estado:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.status
+                              ? _vm.showDataGuide.status
+                              : "No registra"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
               ]
             ),
             _vm._v(" "),
@@ -69136,13 +69360,13 @@ var render = function () {
                   ? _c(
                       "div",
                       { staticClass: "col-md-12 symbol-group symbol-hover" },
-                      [
-                        _vm._m(2),
-                        _vm._v(" "),
-                        _vm._m(3),
-                        _vm._v(" "),
-                        _vm._m(4),
-                      ]
+                      _vm._l(_vm.showDataGuide.files, function (item) {
+                        return _c("div", {
+                          key: item.id,
+                          staticClass: "symbol",
+                        })
+                      }),
+                      0
                     )
                   : _vm._e(),
               ]
@@ -69739,6 +69963,138 @@ var render = function () {
                     _vm._v(" "),
                     _c("span", { staticClass: "form-text text-muted" }),
                   ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("label", [_vm._v("Telefono adicional: ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.guide.additional_phone,
+                          expression: "guide.additional_phone",
+                        },
+                      ],
+                      staticClass: "form-control form-control-solid",
+                      attrs: { name: "additional_phone", type: "text" },
+                      domProps: { value: _vm.guide.additional_phone },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.guide,
+                            "additional_phone",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "form-text text-muted" }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("label", [_vm._v("Correo adicional: ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.guide.additional_email,
+                          expression: "guide.additional_email",
+                        },
+                      ],
+                      staticClass: "form-control form-control-solid",
+                      attrs: { name: "additional_email", type: "text" },
+                      domProps: { value: _vm.guide.additional_email },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.guide,
+                            "additional_email",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "form-text text-muted" }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("label", [_vm._v("Dirección adicional: ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.guide.additional_address,
+                          expression: "guide.additional_address",
+                        },
+                      ],
+                      staticClass: "form-control form-control-solid",
+                      attrs: { name: "additional_address", type: "text" },
+                      domProps: { value: _vm.guide.additional_address },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.guide,
+                            "additional_address",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "form-text text-muted" }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                      _vm._v("Leído:"),
+                    ]),
+                    _vm._v(" "),
+                    _vm.showDataGuide
+                      ? _c("div", {
+                          staticClass: "line-height-xl",
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.showDataGuide.app_status ? "Sí" : "No"
+                            ),
+                          },
+                        })
+                      : _vm._e(),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                      _vm._v("Estado:"),
+                    ]),
+                    _vm._v(" "),
+                    _vm.showDataGuide
+                      ? _c("div", {
+                          staticClass: "line-height-xl",
+                          domProps: {
+                            textContent: _vm._s(
+                              _vm.showDataGuide.status
+                                ? _vm.showDataGuide.status
+                                : "No registra"
+                            ),
+                          },
+                        })
+                      : _vm._e(),
+                  ]),
                 ]),
               ]),
               _vm._v(" "),
@@ -69754,7 +70110,15 @@ var render = function () {
                 _vm._v(" "),
                 _c(
                   "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.updateGuide()
+                      },
+                    },
+                  },
                   [_vm._v("Guardar")]
                 ),
               ]),
@@ -69782,36 +70146,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-1" }, [
       _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "symbol" }, [
-      _c("img", {
-        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "symbol" }, [
-      _c("img", {
-        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "symbol" }, [
-      _c("img", {
-        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-      }),
     ])
   },
 ]
@@ -89197,8 +89531,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

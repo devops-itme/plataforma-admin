@@ -106,7 +106,7 @@ class GuideController extends Controller
                 if (File($file)) {
                     $document_name = str_replace('', '_', time() . '-' . $file->getClientOriginalName());
                     // Storage::disk('s3')->put($document_name, $document);
-                    Storage::disk('local')->put($document_name, $file);
+                    Storage::disk('public')->put($document_name, $file);
                 }
                 $request->merge(['url_document' => $document_name]);
 

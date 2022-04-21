@@ -11,4 +11,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('pordespachar/packaging/{id}', 'GuideModule\Controllers\GuideController@porDespacharPackaging');
 
     Route::post('guias/import', 'GuideModule\Controllers\GuideController@importGuide')->name('guide.import');
+
+    Route::put('guide/update', 'GuideModule\Controllers\GuideController@updatePackingGuide');
 });

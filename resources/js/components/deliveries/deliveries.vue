@@ -160,19 +160,39 @@
                         <div class="font-weight-bolder mb-1">Dirección:</div>
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.direction"></div>
                     </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Teléfono adicional:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.additional_phone ? showDataGuide.additional_phone : 'No registra' "></div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Correo adicional:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.additional_email ? showDataGuide.additional_email : 'No registra'"></div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Dirección adicional:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.additional_address ? showDataGuide.additional_address : 'No registra'"></div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Leído:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.app_status ? 'Sí' : 'No'"></div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Estado:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.status ? showDataGuide.status : 'No registra' "></div>
+                    </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
                     <div class="col-md-12 symbol-group symbol-hover" v-if="type_guide === tabEdition">
-                        <div class="symbol">
+                        <div class="symbol" v-for="item in showDataGuide.files" v-bind:key="item.id">
+                            <!-- <img alt="Pic" :src="'storage/'+item.url_document+'/'"/> -->
+                        </div>
+                        <!-- <div class="symbol">
                             <img alt="Pic" src="https://placem.at/things?h=100"/>
                         </div>
                         <div class="symbol">
                             <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div>
-                        <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -295,11 +315,34 @@
                     <input name="programming_date" type="datetime-local"  v-model="guide.programming" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
+                <div class="form-group col-md-4">
+                    <label>Telefono adicional: </label>
+                    <input name="additional_phone" type="text"  v-model="guide.additional_phone" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Correo adicional: </label>
+                    <input name="additional_email" type="text"  v-model="guide.additional_email" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Dirección adicional: </label>
+                    <input name="additional_address" type="text"  v-model="guide.additional_address" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="font-weight-bolder mb-1">Leído:</div>
+                    <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.app_status ? 'Sí' : 'No' "></div>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="font-weight-bolder mb-1">Estado:</div>
+                    <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.status ? showDataGuide.status : 'No registra' "></div>
+                </div>
             </div>
         </div>
         <div slot="footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-primary" v-on:click="updateGuide()">Guardar</button>
         </div>
         </modalEdit>
     </div>
@@ -392,6 +435,12 @@ export default {
             this.showDataGuide.client_document = data.get_order?.get_user.document_number;
             this.showDataGuide.concept = data.concept;
             this.showDataGuide.direction = data.address_name;
+            this.showDataGuide.additional_phone = data.additional_phone;
+            this.showDataGuide.additional_email = data.additional_email;
+            this.showDataGuide.additional_address = data.additional_address;
+            this.showDataGuide.app_status = data.app_status;
+            this.showDataGuide.status = data.get_status_matrix.name;
+            this.showDataGuide.files = data.get_documents;
         },
         async getGuides(type) {
             this.guides2 = [];
@@ -439,7 +488,7 @@ export default {
             return response;
 
         },
-           async getMessengers() {
+        async getMessengers() {
             let _this = this;
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -460,6 +509,7 @@ export default {
             }
             let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
             this.showModal = true;
+            this.guide.id = this.showDataGuide.posting;
             this.guide.client =  this.showGuide.get_order?.get_user.name;
             this.guide.balance  = 0;
             this.guide.balance_money  = 0;
@@ -473,7 +523,12 @@ export default {
             this.guide.contact = this.showGuide.contact;
             this.guide.contact_phone = this.showGuide.phone_contact;
             this.guide.contact_email = this.showGuide.email_contact;
-            this.guide.programming = moment(programming_date).format("YYYY-MM-DDTHH:mm")
+            this.guide.programming = moment(programming_date).format("YYYY-MM-DDTHH:mm");
+            this.guide.additional_phone = this.showGuide.additional_phone;
+            this.guide.additional_email = this.showGuide.additional_email;
+            this.guide.additional_address = this.showGuide.additional_address;
+            this.guide.app_status = this.showGuide.app_status;
+            this.guide.status = this.showGuide.get_status_matrix.name;
         },
 
         async documentTypes() {
@@ -496,6 +551,42 @@ export default {
             let res = await req.json()
             this.payment_methods = res.data;
         },
+        async updateGuide(){
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+                console.log(token)
+            let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify(this.guide)
+            };
+            let response = await this.requestUpdateGuide(requestOptions);
+            if(response.state != 200){
+                alert(response.message);
+            }
+            alert(response.message);
+            this.showModal = false;
+        },
+        async requestUpdateGuide(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("/guide/update", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log(e));
+            return response;
+        }
 
 
     },
