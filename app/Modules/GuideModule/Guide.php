@@ -74,7 +74,7 @@ class Guide extends Model
     {
         return $this->hasOne(Route::class, 'guide_id');
     }
-    
+
     public function getStatusMatrix()
     {
         return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
@@ -92,5 +92,14 @@ class Guide extends Model
     public function getState()
     {
         return $this->belongsTo(ParameterValue::class, 'state');
+    }
+
+    // Scopes
+    
+    public function scopeWhereStatusMatrix($query, $status_matrix_id)
+    {
+        if (!is_null($status_matrix_id)) {
+            return $query->whereIn('status_matrix_id', $status_matrix_id);
+        }
     }
 }
