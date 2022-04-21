@@ -16,6 +16,7 @@ use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
@@ -225,5 +226,58 @@ class OrderController extends Controller
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
+    }
+
+    public function webviewPaguelofacil(Request $request)
+    {
+
+        $host = $request->getHost();
+        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelofacil/response";
+        // dd($confirmationUrl);
+        $cclw = env('PAGUELOFACIL_CCLW');
+        $amount = intval($request->totalValue);
+        $description = 'Pago orden multientrega';
+        $data = array(
+            "CCLW" => $cclw,
+            "CMTN" => $amount,
+            "CDSC" => $description,
+            "RETURN_URL" => $confirmationUrl,
+            "PF_CF" => '5B7B226964223A227472616D6974654964222C226E616D654F724C6162656C223A2249642064656C205472616D697465222C2276616C7565223A2254494432333435227D5D',
+            "payment_type" => '',
+        );
+        $postR = "";
+        $sw = 0;
+        foreach ($data as $mk => $mv) {
+            if($sw == 0){
+                $postR = "?". $mk . "=" . $mv;
+                $sw = 1;
+                continue;
+            }
+            $postR .= "&" . $mk . "=" . $mv;
+        }
+
+        $sendOrder = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Accept'=> '*/*',
+        ])->post(env('PAGUELOFACIL_URL').$postR);
+        $response = $sendOrder->json();
+
+        // dd($response['data']['url']);
+
+        return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
+        // return redirect()->to($response['data']['url']);
+
+
+    }
+
+    public function responseViewPaguelofacil(Request $request)
+    {
+        // $paymentState = $request->TotalPagado>0  && $request->Estado != 'Denegada' ? 33 : ($request->Estado == 'Denegada' ? 34 : 35);
+        $pay_response = [
+            'totalPagado'=>$request->TotalPagado,
+            'Estado'=>$request->Estado
+        ];
+
+        return view('OrderModule.views.html.webview.paguelofacil', compact('data_pay'));
     }
 }
