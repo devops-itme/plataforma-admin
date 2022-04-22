@@ -48,6 +48,7 @@ class CreateGuidesTable extends Migration
             $table->string('additional_address')->nullable();
             $table->string('additional_email')->nullable();
             $table->string('additional_phone')->nullable();
+            $table->string('novelty')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
