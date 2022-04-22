@@ -39,13 +39,15 @@ export default class Orders {
     async sendPushNotification() {
         let state = document.getElementById("state");
         let notification_type = document.getElementById("notification_type");
+        let fcm_token = document.getElementById("fcm_token");
 
         if (state == null || notification_type == null) {
             return;
         }
         state = state.value;
         notification_type = notification_type.value;
-        let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}`
+        fcm_token = fcm_token.value;
+        let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`
         console.log(url)
         await fetch(url)
             .then(response => response.json())

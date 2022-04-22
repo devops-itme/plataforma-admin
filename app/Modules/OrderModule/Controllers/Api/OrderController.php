@@ -272,8 +272,10 @@ class OrderController extends Controller
 
     public function responseViewPagueloFacil(Request $request)
     {
-        $response = $request->all();
 
+        $response = $request->all();
+        $response['fcm_token'] = Auth::user()->fcm_token ?? '';
+        
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
 }
