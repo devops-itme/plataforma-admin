@@ -25,7 +25,7 @@
     },
     "dependencies": {
         "bootstrap-select": "^1.13.18",
-        "firebase": "^9.6.10",
+        "firebase": "^9.6.11",
         "sortablejs": "^1.14.0",
         "sweetalert": "^2.1.2",
         "vue-moment": "^4.1.0",

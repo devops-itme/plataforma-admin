@@ -111,7 +111,7 @@
     <div id="app">
         <main class="d-flex flex-column flex-root" style="height: 100vh;">
             <div class="d-flex flex-row flex-column-fluid page">
-                <div class="card text-center">
+                <div class="card text-center col-12">
                     <div class="card-header text-uppercase font-weight-bold h1">
                         Detalle de la orden
                     </div>
