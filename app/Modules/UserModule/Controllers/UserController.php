@@ -142,6 +142,9 @@ class UserController extends Controller
     public function sendPushNotification(Request $request)
     {
         $userToken = Auth::user()->fcm_token ?? '';
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->code = rand(0,10);
+        $user->save();
         $data = $request->all();
         return sendCustomNotifications('Notification', 'Notification', $data, $userToken);
     }
