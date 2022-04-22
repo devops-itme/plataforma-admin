@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('code')->nullable();
             $table->integer('code_confirmed')->default('1')->nullable();
+            $table->string('fcm_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

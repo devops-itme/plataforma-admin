@@ -231,12 +231,11 @@ class OrderController extends Controller
         }
     }
 
-    public function webviewPaguelofacil(Request $request)
+    public function webviewPagueloFacil(Request $request)
     {
 
         $host = $request->getHost();
-        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelofacil/response";
-        // dd($confirmationUrl);
+        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response";
         $cclw = env('PAGUELOFACIL_CCLW');
         $amount = intval($request->totalValue);
         $description = 'Pago orden multientrega';
@@ -265,22 +264,16 @@ class OrderController extends Controller
         ])->post(env('PAGUELOFACIL_URL') . $postR);
         $response = $sendOrder->json();
 
-        // dd($response['data']['url']);
-
-        return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
-        // return redirect()->to($response['data']['url']);
+        $total = $request->totalValue;
 
 
+        return view('OrderModule.views.html.webview.paguelofacil', compact('response', 'total'));
     }
 
-    public function responseViewPaguelofacil(Request $request)
+    public function responseViewPagueloFacil(Request $request)
     {
-        // $paymentState = $request->TotalPagado>0  && $request->Estado != 'Denegada' ? 33 : ($request->Estado == 'Denegada' ? 34 : 35);
-        $pay_response = [
-            'totalPagado' => $request->TotalPagado,
-            'Estado' => $request->Estado
-        ];
+        $response = $request->all();
 
-        return view('OrderModule.views.html.webview.paguelofacil', compact('data_pay'));
+        return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
 }

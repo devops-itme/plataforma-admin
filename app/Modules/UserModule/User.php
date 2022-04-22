@@ -33,7 +33,8 @@ class User extends Model implements AuthenticatableContract
         'phone',
         'password',
         'role',
-        'state'
+        'fcm_token',
+        'state',
     ];
 
     /* Logs Config */

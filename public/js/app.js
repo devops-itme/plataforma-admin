@@ -1913,7 +1913,55 @@ var Orders = /*#__PURE__*/function () {
       this.loadPickupHours();
       this.loadHoursInEditOrShow();
       this.importModal();
+      this.sendPushNotification();
     }
+  }, {
+    key: "sendPushNotification",
+    value: function () {
+      var _sendPushNotification = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var state, notification_type, url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                state = document.getElementById("state");
+                notification_type = document.getElementById("notification_type");
+
+                if (!(state == null || notification_type == null)) {
+                  _context.next = 4;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 4:
+                state = state.value;
+                notification_type = notification_type.value;
+                url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type);
+                console.log(url);
+                _context.next = 10;
+                return fetch(url).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  console.log(data);
+                })["catch"](function (e) {
+                  return console.log(e);
+                });
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function sendPushNotification() {
+        return _sendPushNotification.apply(this, arguments);
+      }
+
+      return sendPushNotification;
+    }()
   }, {
     key: "setInput",
     value: function setInput() {
@@ -2065,16 +2113,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestSearchCustomer",
     value: function () {
-      var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(query) {
+      var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(query) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context.next = 3;
+                _context2.next = 3;
                 return fetch("/search_customers?value=" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2084,14 +2132,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context.abrupt("return", response);
+                return _context2.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }));
 
       function requestSearchCustomer(_x) {
@@ -2111,22 +2159,22 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var tbody, inputValue, response, data, type, row, cell, i, _row, idCell, phoneCell, tradenameCell, selectCell, userCheck;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 tbody = document.querySelector("#table_customers tbody");
                 tbody.innerHTML = '';
                 inputValue = document.getElementById("search_customer").value;
                 tbody.innerHTML = '';
-                _context2.next = 6;
+                _context3.next = 6;
                 return _this3.requestSearchCustomer(inputValue);
 
               case 6:
-                response = _context2.sent;
+                response = _context3.sent;
                 data = response.data;
                 type = response.type;
 
@@ -2169,25 +2217,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 12:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       })));
     }
   }, {
     key: "requestSelectedCustomerData",
     value: function () {
-      var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(query) {
+      var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(query) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context3.next = 3;
+                _context4.next = 3;
                 return fetch("/customer_data/" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2197,14 +2245,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context3.abrupt("return", response);
+                return _context4.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }));
 
       function requestSelectedCustomerData(_x2) {
@@ -2221,18 +2269,18 @@ var Orders = /*#__PURE__*/function () {
       var allCustomerChecks = document.getElementsByClassName("customerCheck");
 
       var _loop = function _loop(i) {
-        allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
           var response, data, branches, branchSlc, _i, element, branchOpt, departments, departmentSlc, _i2, _element, departmentOpt, modal;
 
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
-                  _context4.next = 2;
+                  _context5.next = 2;
                   return _this4.requestSelectedCustomerData(allCustomerChecks[i].value);
 
                 case 2:
-                  response = _context4.sent;
+                  response = _context5.sent;
                   data = response.data;
                   document.getElementById("user_code").value = data[0]['id'];
                   document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
@@ -2269,10 +2317,10 @@ var Orders = /*#__PURE__*/function () {
 
                 case 21:
                 case "end":
-                  return _context4.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee4);
+          }, _callee5);
         })));
       };
 
@@ -2283,16 +2331,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestOrderNumber",
     value: function () {
-      var _requestOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var _requestOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context5.next = 3;
+                _context6.next = 3;
                 return fetch("/order_number").then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2302,14 +2350,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context5.abrupt("return", response);
+                return _context6.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5);
+        }, _callee6);
       }));
 
       function requestOrderNumber() {
@@ -2321,35 +2369,35 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadOrderNumber",
     value: function () {
-      var _loadOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      var _loadOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var orderNumber, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 orderNumber = document.getElementById("order_number");
 
                 if (!(orderNumber == null)) {
-                  _context6.next = 3;
+                  _context7.next = 3;
                   break;
                 }
 
-                return _context6.abrupt("return");
+                return _context7.abrupt("return");
 
               case 3:
-                _context6.next = 5;
+                _context7.next = 5;
                 return this.requestOrderNumber();
 
               case 5:
-                response = _context6.sent;
+                response = _context7.sent;
                 orderNumber.setAttribute('value', response.data);
 
               case 7:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee7, this);
       }));
 
       function loadOrderNumber() {
@@ -2369,11 +2417,11 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
         var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 branch_office = document.getElementById("branch_off").value;
                 transport_type = document.getElementById("trans_type").value; // let dispatched = document.getElementById("dispatched").value;
@@ -2442,11 +2490,11 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('sign', sign);
                 formData.append('take_photo', take_photo); // formData.append('customer_address',customer_address);
 
-                _context7.next = 47;
+                _context8.next = 47;
                 return _this5.sendGuideData(formData);
 
               case 47:
-                response = _context7.sent;
+                response = _context8.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
@@ -2463,25 +2511,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 49:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7);
+        }, _callee8);
       })));
     }
   }, {
     key: "sendGuideData",
     value: function () {
-      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(formData) {
+      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(formData) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context8.next = 3;
+                _context9.next = 3;
                 return fetch("/guias/store", {
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2491,15 +2539,15 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context8.sent;
-                return _context8.abrupt("return", response.json());
+                response = _context9.sent;
+                return _context9.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8);
+        }, _callee9);
       }));
 
       function sendGuideData(_x3) {
@@ -2511,30 +2559,30 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "listGuides",
     value: function () {
-      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         var _this6 = this;
 
         var tbody, response, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
                 tbody = document.querySelector("#guidesTable tbody");
 
                 if (!(tbody == null)) {
-                  _context9.next = 3;
+                  _context10.next = 3;
                   break;
                 }
 
-                return _context9.abrupt("return");
+                return _context10.abrupt("return");
 
               case 3:
                 tbody.innerHTML = '';
-                _context9.next = 6;
+                _context10.next = 6;
                 return this.requestGuides();
 
               case 6:
-                response = _context9.sent;
+                response = _context10.sent;
                 data = response.data;
 
                 if (data.length > 0) {
@@ -2600,10 +2648,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 10:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9, this);
+        }, _callee10, this);
       }));
 
       function listGuides() {
@@ -2615,11 +2663,11 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestGuides",
     value: function () {
-      var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+      var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
         var orderNumber, path, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
                 orderNumber = document.getElementsByName("order_number")[0];
 
@@ -2633,7 +2681,7 @@ var Orders = /*#__PURE__*/function () {
                 response = {
                   'state': 500
                 };
-                _context10.next = 6;
+                _context11.next = 6;
                 return fetch("/guias?order=" + orderNumber + "&path=" + path).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2643,14 +2691,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 6:
-                return _context10.abrupt("return", response);
+                return _context11.abrupt("return", response);
 
               case 7:
               case "end":
-                return _context10.stop();
+                return _context11.stop();
             }
           }
-        }, _callee10);
+        }, _callee11);
       }));
 
       function requestGuides() {
@@ -2671,18 +2719,18 @@ var Orders = /*#__PURE__*/function () {
       }
 
       [].forEach.call(guides, function (guide) {
-        guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+        guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
           var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zones, same_day_delivery, sign, take_photo, boxes;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
             while (1) {
-              switch (_context11.prev = _context11.next) {
+              switch (_context12.prev = _context12.next) {
                 case 0:
                   _this7.guideId = guide['id'].split('-')[1];
-                  _context11.next = 3;
+                  _context12.next = 3;
                   return _this7.requestGuide(_this7.guideId);
 
                 case 3:
-                  response = _context11.sent;
+                  response = _context12.sent;
                   data = response.data;
                   branch_office = document.getElementById("branch_off_edit");
                   branch_office.value = data.branch_office;
@@ -2723,10 +2771,10 @@ var Orders = /*#__PURE__*/function () {
 
                 case 30:
                 case "end":
-                  return _context11.stop();
+                  return _context12.stop();
               }
             }
-          }, _callee11);
+          }, _callee12);
         })));
       });
       this.updateGuide();
@@ -2734,16 +2782,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestGuide",
     value: function () {
-      var _requestGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(id) {
+      var _requestGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(id) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context13.prev = _context13.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context12.next = 3;
+                _context13.next = 3;
                 return fetch("/guias/" + id + "/edit").then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2753,14 +2801,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context12.abrupt("return", response);
+                return _context13.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context12.stop();
+                return _context13.stop();
             }
           }
-        }, _callee12);
+        }, _callee13);
       }));
 
       function requestGuide(_x4) {
@@ -2780,11 +2828,11 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+      btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         var branch_off_edit, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
                 branch_off_edit = document.getElementById("branch_off_edit").value; // let dispatched = document.getElementById("dispatched_edit").value;
 
@@ -2867,11 +2915,11 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context13.next = 59;
+                _context14.next = 59;
                 return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
 
               case 59:
-                response = _context13.sent;
+                response = _context14.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
@@ -2886,25 +2934,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 61:
               case "end":
-                return _context13.stop();
+                return _context14.stop();
             }
           }
-        }, _callee13);
+        }, _callee14);
       })));
     }
   }, {
     key: "sendDataToUpdate",
     value: function () {
-      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(id, requestOptions) {
+      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(id, requestOptions) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context14.prev = _context14.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context14.next = 3;
+                _context15.next = 3;
                 return fetch("/guias/" + id, requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2914,14 +2962,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context14.abrupt("return", response);
+                return _context15.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context14.stop();
+                return _context15.stop();
             }
           }
-        }, _callee14);
+        }, _callee15);
       }));
 
       function sendDataToUpdate(_x5, _x6) {
@@ -2942,19 +2990,19 @@ var Orders = /*#__PURE__*/function () {
       }
 
       [].forEach.call(branchesSlc, /*#__PURE__*/function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(branch) {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(branch) {
           var response, data, i, element, branchOffice;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
             while (1) {
-              switch (_context15.prev = _context15.next) {
+              switch (_context16.prev = _context16.next) {
                 case 0:
                   branch.selectedIndex = 0;
                   removeOptions(branch);
-                  _context15.next = 4;
+                  _context16.next = 4;
                   return _this9.requestBranches();
 
                 case 4:
-                  response = _context15.sent;
+                  response = _context16.sent;
                   data = response.data;
 
                   for (i = 0; i < data.length; i++) {
@@ -2965,10 +3013,10 @@ var Orders = /*#__PURE__*/function () {
 
                 case 7:
                 case "end":
-                  return _context15.stop();
+                  return _context16.stop();
               }
             }
-          }, _callee15);
+          }, _callee16);
         }));
 
         return function (_x7) {
@@ -2979,16 +3027,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestBranches",
     value: function () {
-      var _requestBranches = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+      var _requestBranches = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
           while (1) {
-            switch (_context16.prev = _context16.next) {
+            switch (_context17.prev = _context17.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context16.next = 3;
+                _context17.next = 3;
                 return fetch("/allBranches").then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2998,14 +3046,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context16.abrupt("return", response);
+                return _context17.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context16.stop();
+                return _context17.stop();
             }
           }
-        }, _callee16);
+        }, _callee17);
       }));
 
       function requestBranches() {
@@ -3017,47 +3065,47 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "customerAddresses",
     value: function () {
-      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
         var customerId,
             slcAddresses,
             response,
             data,
-            _args17 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+            _args18 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
           while (1) {
-            switch (_context17.prev = _context17.next) {
+            switch (_context18.prev = _context18.next) {
               case 0:
-                customerId = _args17.length > 0 && _args17[0] !== undefined ? _args17[0] : null;
+                customerId = _args18.length > 0 && _args18[0] !== undefined ? _args18[0] : null;
                 slcAddresses = document.getElementsByName("customer_address");
 
                 if (!(customerId == '')) {
-                  _context17.next = 4;
+                  _context18.next = 4;
                   break;
                 }
 
-                return _context17.abrupt("return");
+                return _context18.abrupt("return");
 
               case 4:
                 if (!(slcAddresses == null)) {
-                  _context17.next = 6;
+                  _context18.next = 6;
                   break;
                 }
 
-                return _context17.abrupt("return");
+                return _context18.abrupt("return");
 
               case 6:
-                _context17.next = 8;
+                _context18.next = 8;
                 return this.requestCustomerAddresses(customerId);
 
               case 8:
-                response = _context17.sent;
+                response = _context18.sent;
 
                 if (!(response == null)) {
-                  _context17.next = 11;
+                  _context18.next = 11;
                   break;
                 }
 
-                return _context17.abrupt("return");
+                return _context18.abrupt("return");
 
               case 11:
                 data = response.data;
@@ -3078,10 +3126,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 13:
               case "end":
-                return _context17.stop();
+                return _context18.stop();
             }
           }
-        }, _callee17, this);
+        }, _callee18, this);
       }));
 
       function customerAddresses() {
@@ -3093,31 +3141,31 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestCustomerAddresses",
     value: function () {
-      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
+      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
         var id,
             route,
             response,
-            _args18 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+            _args19 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
           while (1) {
-            switch (_context18.prev = _context18.next) {
+            switch (_context19.prev = _context19.next) {
               case 0:
-                id = _args18.length > 0 && _args18[0] !== undefined ? _args18[0] : null;
+                id = _args19.length > 0 && _args19[0] !== undefined ? _args19[0] : null;
                 route = window.location.pathname.split('/');
 
                 if (!(document.getElementById("user_code") == null)) {
-                  _context18.next = 4;
+                  _context19.next = 4;
                   break;
                 }
 
-                return _context18.abrupt("return");
+                return _context19.abrupt("return");
 
               case 4:
                 route.includes('edit') ? id = document.getElementById("user_code").value : '';
                 response = {
                   'state': 500
                 };
-                _context18.next = 8;
+                _context19.next = 8;
                 return fetch("/customer_addresses/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3127,14 +3175,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 8:
-                return _context18.abrupt("return", response);
+                return _context19.abrupt("return", response);
 
               case 9:
               case "end":
-                return _context18.stop();
+                return _context19.stop();
             }
           }
-        }, _callee18);
+        }, _callee19);
       }));
 
       function requestCustomerAddresses() {
@@ -3154,11 +3202,11 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20() {
         var formData, description, address, lat, lng, user_id, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
           while (1) {
-            switch (_context19.prev = _context19.next) {
+            switch (_context20.prev = _context20.next) {
               case 0:
                 formData = new FormData();
                 description = document.getElementById("add_description").value;
@@ -3172,11 +3220,11 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('lng', lng);
                 formData.append('description', description);
                 formData.append('requestByJs', 1);
-                _context19.next = 14;
+                _context20.next = 14;
                 return _this10.sendAddressData(formData);
 
               case 14:
-                response = _context19.sent;
+                response = _context20.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
@@ -3193,25 +3241,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 16:
               case "end":
-                return _context19.stop();
+                return _context20.stop();
             }
           }
-        }, _callee19);
+        }, _callee20);
       })));
     }
   }, {
     key: "sendAddressData",
     value: function () {
-      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(formData) {
+      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21(formData) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
           while (1) {
-            switch (_context20.prev = _context20.next) {
+            switch (_context21.prev = _context21.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context20.next = 3;
+                _context21.next = 3;
                 return fetch("/direcciones", {
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -3221,15 +3269,15 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context20.sent;
-                return _context20.abrupt("return", response.json());
+                response = _context21.sent;
+                return _context21.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context20.stop();
+                return _context21.stop();
             }
           }
-        }, _callee20);
+        }, _callee21);
       }));
 
       function sendAddressData(_x8) {
@@ -3260,41 +3308,41 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "porDespacharOndemand",
     value: function () {
-      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22() {
+      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23() {
         var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
           while (1) {
-            switch (_context22.prev = _context22.next) {
+            switch (_context23.prev = _context23.next) {
               case 0:
                 button = document.getElementById('porDespacharOndemand');
 
                 if (!(button == null)) {
-                  _context22.next = 3;
+                  _context23.next = 3;
                   break;
                 }
 
-                return _context22.abrupt("return");
+                return _context23.abrupt("return");
 
               case 3:
-                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21() {
+                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22() {
                   var order_id, result, req;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
                     while (1) {
-                      switch (_context21.prev = _context21.next) {
+                      switch (_context22.prev = _context22.next) {
                         case 0:
                           order_id = button.value;
-                          _context21.next = 3;
+                          _context22.next = 3;
                           return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
 
                         case 3:
-                          result = _context21.sent;
+                          result = _context22.sent;
 
                           if (!(result == true)) {
-                            _context21.next = 9;
+                            _context22.next = 9;
                             break;
                           }
 
-                          _context21.next = 7;
+                          _context22.next = 7;
                           return fetch("/pordespachar/ondemand/".concat(order_id), {
                             method: "POST",
                             headers: {
@@ -3304,7 +3352,7 @@ var Orders = /*#__PURE__*/function () {
                           });
 
                         case 7:
-                          req = _context21.sent;
+                          req = _context22.sent;
 
                           if (req.ok) {
                             correct("Estado actualizado!");
@@ -3315,18 +3363,18 @@ var Orders = /*#__PURE__*/function () {
 
                         case 9:
                         case "end":
-                          return _context21.stop();
+                          return _context22.stop();
                       }
                     }
-                  }, _callee21);
+                  }, _callee22);
                 })));
 
               case 4:
               case "end":
-                return _context22.stop();
+                return _context23.stop();
             }
           }
-        }, _callee22);
+        }, _callee23);
       }));
 
       function porDespacharOndemand() {
@@ -3338,37 +3386,37 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "porDespacharPackaging",
     value: function () {
-      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
+      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25() {
         var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
           while (1) {
-            switch (_context24.prev = _context24.next) {
+            switch (_context25.prev = _context25.next) {
               case 0:
                 button = document.getElementById('porDespacharPackaging');
 
                 if (!(button == null)) {
-                  _context24.next = 3;
+                  _context25.next = 3;
                   break;
                 }
 
-                return _context24.abrupt("return");
+                return _context25.abrupt("return");
 
               case 3:
-                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23() {
+                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
                   var order_id, result, formData, token, myHeaders, requestOptions, data, req;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
                     while (1) {
-                      switch (_context23.prev = _context23.next) {
+                      switch (_context24.prev = _context24.next) {
                         case 0:
                           order_id = button.value;
-                          _context23.next = 3;
+                          _context24.next = 3;
                           return porDespacharPackagingAlert();
 
                         case 3:
-                          result = _context23.sent;
+                          result = _context24.sent;
 
                           if (!(result == 3 || result == 7)) {
-                            _context23.next = 18;
+                            _context24.next = 18;
                             break;
                           }
 
@@ -3387,11 +3435,11 @@ var Orders = /*#__PURE__*/function () {
                           data = {
                             type: result
                           };
-                          _context23.next = 16;
+                          _context24.next = 16;
                           return fetch("/pordespachar/packaging/".concat(order_id), requestOptions);
 
                         case 16:
-                          req = _context23.sent;
+                          req = _context24.sent;
 
                           if (req.ok) {
                             correct("Estado actualizado!");
@@ -3402,18 +3450,18 @@ var Orders = /*#__PURE__*/function () {
 
                         case 18:
                         case "end":
-                          return _context23.stop();
+                          return _context24.stop();
                       }
                     }
-                  }, _callee23);
+                  }, _callee24);
                 })));
 
               case 4:
               case "end":
-                return _context24.stop();
+                return _context25.stop();
             }
           }
-        }, _callee24);
+        }, _callee25);
       }));
 
       function porDespacharPackaging() {
@@ -3425,29 +3473,29 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadPickupHours",
     value: function () {
-      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25() {
+      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
         var _this11 = this;
 
         var date_selector, response, days;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
           while (1) {
-            switch (_context25.prev = _context25.next) {
+            switch (_context26.prev = _context26.next) {
               case 0:
                 date_selector = document.getElementById("schedule_date");
 
                 if (!(date_selector == null)) {
-                  _context25.next = 3;
+                  _context26.next = 3;
                   break;
                 }
 
-                return _context25.abrupt("return");
+                return _context26.abrupt("return");
 
               case 3:
-                _context25.next = 5;
+                _context26.next = 5;
                 return this.requestPickupHours();
 
               case 5:
-                response = _context25.sent;
+                response = _context26.sent;
                 days = response.data;
                 date_selector.addEventListener('change', function () {
                   console.log('holis');
@@ -3477,10 +3525,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 8:
               case "end":
-                return _context25.stop();
+                return _context26.stop();
             }
           }
-        }, _callee25, this);
+        }, _callee26, this);
       }));
 
       function loadPickupHours() {
@@ -3492,16 +3540,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestPickupHours",
     value: function () {
-      var _requestPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
+      var _requestPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee27() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee27$(_context27) {
           while (1) {
-            switch (_context26.prev = _context26.next) {
+            switch (_context27.prev = _context27.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context26.next = 3;
+                _context27.next = 3;
                 return fetch("/getPickupHours").then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3511,14 +3559,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context26.abrupt("return", response);
+                return _context27.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context26.stop();
+                return _context27.stop();
             }
           }
-        }, _callee26);
+        }, _callee27);
       }));
 
       function requestPickupHours() {
@@ -3537,28 +3585,28 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadHoursInEditOrShow",
     value: function () {
-      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee27() {
+      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee28() {
         var route, date_selector, response, days, day, day_data, schedule_time_range, i, element, text, option;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee27$(_context27) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee28$(_context28) {
           while (1) {
-            switch (_context27.prev = _context27.next) {
+            switch (_context28.prev = _context28.next) {
               case 0:
                 route = window.location.pathname;
 
                 if (route.includes('create') && route.includes('edit')) {
-                  _context27.next = 3;
+                  _context28.next = 3;
                   break;
                 }
 
-                return _context27.abrupt("return");
+                return _context28.abrupt("return");
 
               case 3:
                 date_selector = document.getElementById("schedule_date");
-                _context27.next = 6;
+                _context28.next = 6;
                 return this.requestPickupHours();
 
               case 6:
-                response = _context27.sent;
+                response = _context28.sent;
                 days = response.data;
                 day = this.getDayReference(date_selector.value);
                 day_data = days[day];
@@ -3584,10 +3632,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 11:
               case "end":
-                return _context27.stop();
+                return _context28.stop();
             }
           }
-        }, _callee27, this);
+        }, _callee28, this);
       }));
 
       function loadHoursInEditOrShow() {
@@ -3599,11 +3647,11 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "sendImportModalData",
     value: function () {
-      var _sendImportModalData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee28(formData) {
+      var _sendImportModalData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee29(formData) {
         var response, token, myHeaders, requestOptions;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee28$(_context28) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee29$(_context29) {
           while (1) {
-            switch (_context28.prev = _context28.next) {
+            switch (_context29.prev = _context29.next) {
               case 0:
                 response = {
                   'state': 500
@@ -3618,19 +3666,19 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: formData
                 };
-                _context28.next = 9;
+                _context29.next = 9;
                 return fetch("/guias/import", requestOptions);
 
               case 9:
-                response = _context28.sent;
-                return _context28.abrupt("return", response.json());
+                response = _context29.sent;
+                return _context29.abrupt("return", response.json());
 
               case 11:
               case "end":
-                return _context28.stop();
+                return _context29.stop();
             }
           }
-        }, _callee28);
+        }, _callee29);
       }));
 
       function sendImportModalData(_x9) {
@@ -3650,31 +3698,31 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnImportGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee29() {
+      btnImportGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee30() {
         var formData, file, order_id, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee29$(_context29) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee30$(_context30) {
           while (1) {
-            switch (_context29.prev = _context29.next) {
+            switch (_context30.prev = _context30.next) {
               case 0:
                 formData = new FormData();
                 file = document.getElementById("file_import_guide");
                 order_id = document.getElementById("order_id").value;
 
                 if (file.files[0]) {
-                  _context29.next = 5;
+                  _context30.next = 5;
                   break;
                 }
 
-                return _context29.abrupt("return", error('Debe cargar el archivo para proceder con la importación'));
+                return _context30.abrupt("return", error('Debe cargar el archivo para proceder con la importación'));
 
               case 5:
                 formData.append('file', file.files[0]);
                 formData.append('order_id', order_id);
-                _context29.next = 9;
+                _context30.next = 9;
                 return _this12.sendImportModalData(formData);
 
               case 9:
-                response = _context29.sent;
+                response = _context30.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
@@ -3686,10 +3734,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 11:
               case "end":
-                return _context29.stop();
+                return _context30.stop();
             }
           }
-        }, _callee29);
+        }, _callee30);
       })));
     }
   }, {
@@ -89531,8 +89579,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

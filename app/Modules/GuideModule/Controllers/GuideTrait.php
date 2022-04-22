@@ -136,6 +136,7 @@ trait GuideTrait
                 'additional_address' => 'nullable|string',
                 'additional_email' => 'nullable|email',
                 'additional_phone' => 'nullable|numeric',
+                'novelty' => 'nullable|string',
             ]
         );
 

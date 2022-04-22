@@ -8,6 +8,7 @@ use App\Modules\RoleModule\Role;
 use App\Modules\UserModule\Controllers\UserTrait;
 use App\Modules\UserModule\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -135,5 +136,16 @@ class UserController extends Controller
         } else {
             return redirect()->back()->with('danger', $response['message']);
         }
+    }
+
+
+    public function sendPushNotification(Request $request)
+    {
+        $userToken = Auth::user()->fcm_token ?? '';
+        $user = User::where('id', 1)->first();
+        $user->code = rand(0,10);
+        $user->save();
+        $data = $request->all();
+        return sendCustomNotifications('Notification', 'Notification', $data, $userToken);
     }
 }

@@ -51,11 +51,11 @@ trait UserTrait
     {
         try {
             $users = User::name(request()->name)
-            ->document(request()->document)
-            ->email(request()->email)
-            ->phone(request()->phone)
-            ->state(request()->state)
-            ->paginate(10);
+                ->document(request()->document)
+                ->email(request()->email)
+                ->phone(request()->phone)
+                ->state(request()->state)
+                ->paginate(10);
             return $this->respond(200, $users);
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
@@ -101,7 +101,7 @@ trait UserTrait
 
     public function updateUser($request)
     {
-        $validator = $this->validateUser($request,null,$request->user_id);
+        $validator = $this->validateUser($request, null, $request->user_id);
 
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
@@ -121,7 +121,7 @@ trait UserTrait
                 'email' => $request->email ?? $user->email,
                 'phone' => $request->phone ?? $user->phone,
                 'password' => $request->password ? Hash::make($request->password) : $user->password,
-                // 'role' => $request->role ?? $user->role,
+                // 'role' => $request->role ?? $user->role,fcm_token
                 'state' => $request->state ?? $user->state
             ]);
 

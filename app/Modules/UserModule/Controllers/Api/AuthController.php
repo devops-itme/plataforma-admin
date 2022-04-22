@@ -66,6 +66,8 @@ class AuthController extends Controller
             if ($user->state != 1) {
                 return $this->respond(401,  null, 'Unauthorized', 'Usuario inactivo');
             }
+            $user->fcm_token = $request->fcm_token ?? NULL;
+            $user->save();
 
             $token = $user->createToken('authToken')->plainTextToken;
             return $this->respond(200, $token, null, 'Acceso permitido');
