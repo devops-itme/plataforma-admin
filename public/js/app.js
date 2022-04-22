@@ -7698,6 +7698,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -7811,6 +7821,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.additional_address = data.additional_address;
       this.showDataGuide.app_status = data.app_status;
       this.showDataGuide.status = data.get_status_matrix.name;
+      this.showDataGuide.novelty = data.novelty;
       this.showDataGuide.files = data.get_documents;
     },
     getGuides: function getGuides(type) {
@@ -7977,8 +7988,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.guide.additional_address = _this6.showGuide.additional_address;
                 _this6.guide.app_status = _this6.showGuide.app_status;
                 _this6.guide.status = _this6.showGuide.get_status_matrix.name;
+                _this6.guide.novelty = _this6.showGuide.novelty;
 
-              case 26:
+              case 27:
               case "end":
                 return _context5.stop();
             }
@@ -69390,6 +69402,25 @@ var render = function () {
                       })
                     : _vm._e(),
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Novedades:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.novelty
+                              ? _vm.showDataGuide.novelty
+                              : "No registra"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
               ]
             ),
             _vm._v(" "),
@@ -70103,6 +70134,34 @@ var render = function () {
                             "additional_address",
                             $event.target.value
                           )
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "form-text text-muted" }),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("label", [_vm._v("Novedades: ")]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.guide.novelty,
+                          expression: "guide.novelty",
+                        },
+                      ],
+                      staticClass: "form-control form-control-solid",
+                      attrs: { name: "novelty", id: "novelty" },
+                      domProps: { value: _vm.guide.novelty },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.guide, "novelty", $event.target.value)
                         },
                       },
                     }),
@@ -89581,8 +89640,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

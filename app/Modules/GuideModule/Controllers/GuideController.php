@@ -271,7 +271,8 @@ class GuideController extends Controller
                 'customer_document_type' => $request->document_type,
                 'transport_type' => $request->transport_type,
                 'value' => $request->value,
-                'value_corp' => $request->corp_value
+                'value_corp' => $request->corp_value,
+                'novelty' => $request->novelty
             ]);
             return $this->respond(200, $guide, '', 'Guía actualizada exitosamente');
         } catch (\Exception $e) {

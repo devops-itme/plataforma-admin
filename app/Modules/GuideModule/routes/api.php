@@ -9,3 +9,4 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('guide/changeStatus', 'GuideModule\Controllers\Api\GuideController@changeStatus')->name('guide.changeStatus');
     Route::post('guide/saveEvidence', 'GuideModule\Controllers\Api\GuideController@saveEvidence');
 });
+Route::post('guide/saveNovelty', 'GuideModule\Controllers\Api\GuideController@saveNovelty');

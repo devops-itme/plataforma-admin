@@ -180,6 +180,10 @@
                         <div class="font-weight-bolder mb-1">Estado:</div>
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.status ? showDataGuide.status : 'No registra' "></div>
                     </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Novedades:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.novelty ? showDataGuide.novelty : 'No registra' "></div>
+                    </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
@@ -331,6 +335,12 @@
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
+                    <label>Novedades: </label>
+                    <!-- <input name="novelty" type="text"  v-model="guide.novelty" class="form-control form-control-solid" /> -->
+                    <textarea name="novelty" id="novelty" v-model="guide.novelty" class="form-control form-control-solid"></textarea>
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-4">
                     <div class="font-weight-bolder mb-1">Leído:</div>
                     <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.app_status ? 'Sí' : 'No' "></div>
                 </div>
@@ -440,6 +450,7 @@ export default {
             this.showDataGuide.additional_address = data.additional_address;
             this.showDataGuide.app_status = data.app_status;
             this.showDataGuide.status = data.get_status_matrix.name;
+            this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.get_documents;
         },
         async getGuides(type) {
@@ -529,6 +540,7 @@ export default {
             this.guide.additional_address = this.showGuide.additional_address;
             this.guide.app_status = this.showGuide.app_status;
             this.guide.status = this.showGuide.get_status_matrix.name;
+            this.guide.novelty = this.showGuide.novelty;
         },
 
         async documentTypes() {
