@@ -1919,27 +1919,29 @@ var Orders = /*#__PURE__*/function () {
     key: "sendPushNotification",
     value: function () {
       var _sendPushNotification = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var state, notification_type, url;
+        var state, notification_type, fcm_token, url;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 state = document.getElementById("state");
                 notification_type = document.getElementById("notification_type");
+                fcm_token = document.getElementById("fcm_token");
 
                 if (!(state == null || notification_type == null)) {
-                  _context.next = 4;
+                  _context.next = 5;
                   break;
                 }
 
                 return _context.abrupt("return");
 
-              case 4:
+              case 5:
                 state = state.value;
                 notification_type = notification_type.value;
-                url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type);
+                fcm_token = fcm_token.value;
+                url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
                 console.log(url);
-                _context.next = 10;
+                _context.next = 12;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -1948,7 +1950,7 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 10:
+              case 12:
               case "end":
                 return _context.stop();
             }

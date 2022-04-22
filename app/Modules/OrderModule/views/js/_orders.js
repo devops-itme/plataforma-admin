@@ -44,7 +44,7 @@ export default class Orders {
         if (state == null || notification_type == null) {
             return;
         }
-        state = state.value;
+        state = state.value; 
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
         let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`
