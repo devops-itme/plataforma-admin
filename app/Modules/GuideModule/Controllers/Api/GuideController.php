@@ -146,16 +146,16 @@ class GuideController extends Controller
         }
     }
 
-    public function saveNovelty(Request $request)
-    {
-        try {
-            $guide = Guide::findOrFail($request->guide_id);
-            $guide->update([
-                'novelty' => $request->novelty
-            ]);
-            return $this->respond(200, $guide, '', 'Novedad registrada satisfactoriamente');
-        } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() , 'Error al registrar la novedad');
-        }
-    }
+    // public function saveNovelty(Request $request)
+    // {
+    //     try {
+    //         $guide = Guide::findOrFail($request->guide_id);
+    //         $guide->update([
+    //             'novelty' => $request->novelty
+    //         ]);
+    //         return $this->respond(200, $guide, '', 'Novedad registrada satisfactoriamente');
+    //     } catch (\Exception $e) {
+    //         return $this->respond(500, [], $e->getMessage() , 'Error al registrar la novedad');
+    //     }
+    // }
 }
