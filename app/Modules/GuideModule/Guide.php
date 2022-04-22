@@ -100,10 +100,6 @@ class Guide extends Model
     {
         return $this->hasMany(GuidanceDocument::class, 'guides_id');
     }
-    // public function getIssue()
-    // {
-    //     return $this->belongsTo(StatusMatrix::class, 'issue_id');
-    // }
 
     // Scopes
 
