@@ -50,19 +50,20 @@ class OrderController extends Controller
     {
         $user_id = $request->user_id ?? Auth::user()->id;
         $role_name = $request->role_name ?? Auth::user()->getRole->name;
-        $scope_name = $request->scope_name;
+        $scope_name = $request->scope_name ?? [];
         $status_matrix = $request->status_matrix ?? [];
         $orders = [];
 
         try {
-            $scope = ParameterValue::where('name', $scope_name)->first();
+            // $scope = ParameterValue::where('name', $scope_name)->first();
 
             $status_matrix = StatusMatrix::whereIn('name', $status_matrix)->get(['id']);
 
             count($status_matrix) == 0 && $status_matrix = null;
 
-            $scope_id = $scope->id ?? null;
-            $status = StatusMatrix::where('scope_id', $scope_id)->get(['id']);
+            // $scope_id = $scope->id ?? null;
+            $status = StatusMatrix::whereIn('name', $scope_name)->get(['id']);
+            count($status) == 0 && $status = null;
 
             if ($role_name == 'Cliente') {
                 $orders = Order::where('user_id', $user_id)
@@ -250,8 +251,8 @@ class OrderController extends Controller
         $postR = "";
         $sw = 0;
         foreach ($data as $mk => $mv) {
-            if($sw == 0){
-                $postR = "?". $mk . "=" . $mv;
+            if ($sw == 0) {
+                $postR = "?" . $mk . "=" . $mv;
                 $sw = 1;
                 continue;
             }
@@ -260,8 +261,8 @@ class OrderController extends Controller
 
         $sendOrder = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
-            'Accept'=> '*/*',
-        ])->post(env('PAGUELOFACIL_URL').$postR);
+            'Accept' => '*/*',
+        ])->post(env('PAGUELOFACIL_URL') . $postR);
         $response = $sendOrder->json();
 
         // dd($response['data']['url']);
@@ -276,8 +277,8 @@ class OrderController extends Controller
     {
         // $paymentState = $request->TotalPagado>0  && $request->Estado != 'Denegada' ? 33 : ($request->Estado == 'Denegada' ? 34 : 35);
         $pay_response = [
-            'totalPagado'=>$request->TotalPagado,
-            'Estado'=>$request->Estado
+            'totalPagado' => $request->TotalPagado,
+            'Estado' => $request->Estado
         ];
 
         return view('OrderModule.views.html.webview.paguelofacil', compact('data_pay'));
