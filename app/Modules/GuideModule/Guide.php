@@ -48,7 +48,7 @@ class Guide extends Model
         'app_status',
         'boxes',
         'status_matrix_id',
-        'issue_id',
+        'issue',
         'additional_address',
         'additional_email',
         'additional_phone',
