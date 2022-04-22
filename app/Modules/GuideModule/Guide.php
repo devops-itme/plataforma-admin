@@ -4,6 +4,7 @@ namespace App\Modules\GuideModule;
 
 use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
+use App\Modules\GuidanceDocumentModule\GuidanceDocument;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RouteModule\Route;
@@ -95,10 +96,10 @@ class Guide extends Model
         return $this->belongsTo(ParameterValue::class, 'state');
     }
 
-    // public function getIssue()
-    // {
-    //     return $this->belongsTo(StatusMatrix::class, 'issue_id');
-    // }
+    public function getDocuments()
+    {
+        return $this->hasMany(GuidanceDocument::class, 'guides_id');
+    }
 
     // Scopes
 

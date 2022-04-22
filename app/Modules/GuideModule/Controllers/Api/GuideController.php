@@ -96,6 +96,25 @@ class GuideController extends Controller
             // if (gettype($request->document) == 'array') {
             DB::beginTransaction();
             // foreach ($request->document as $file) {
+            //     if (!is_numeric($request->type)) {
+            //         $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
+            //             $query->where('name', 'guide_document_type');
+            //         })->first();
+            //         $request->merge(['type' => $type->id]);
+            //     }
+            //     $document_name = '';
+            //     if (File($file)) {
+            //         $document_name = str_replace('', '_', time() . '-' . $file->getClientOriginalName());
+            //         // Storage::disk('s3')->put($document_name, $document);
+            //         Storage::disk('public')->put($document_name, $file);
+            //     }
+            //     $request->merge(['url_document' => $document_name]);
+
+            //     $store_doc = $this->storeGuidanceDoc($request);
+            //     if ($store_doc['state'] != 200) {
+            //         DB::rollBack();
+            //         return $store_doc;
+            // foreach ($request->document as $file) {
             if (!is_numeric($request->type)) {
                 $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
                     $query->where('name', 'guide_document_type');

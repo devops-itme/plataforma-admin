@@ -26,11 +26,6 @@ class StatusMatrix extends Model
         return $this->belongsTo(ParameterValue::class, 'scope_id');
     }
 
-    // public function getIssue()
-    // {
-    //     return $this->belongsTo(ParameterValue::class, 'issue_id');
-    // }
-
 
     public function scopeScope($query, $value)
     {

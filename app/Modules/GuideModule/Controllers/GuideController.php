@@ -199,7 +199,7 @@ class GuideController extends Controller
             $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query)  {
                 $query->where('order_type', 36);
             })->whereIn('status_matrix_id', $state)
-            ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment'])
+            ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments'])
             ->get();
 
             return $this->respond(200, $guides, null, 'Lista de guiás packing');
@@ -252,6 +252,31 @@ class GuideController extends Controller
         return $this->respond(500,  [], '', 'Error al importar archivo');
 
 
+    }
+
+    public function updatePackingGuide(Request $request)
+    {
+        try {
+            $guide = Guide::findOrFail($request->id);
+            $guide->update([
+                'additional_address' => $request->additional_address,
+                'additional_email' => $request->additional_email,
+                'additional_phone' => $request->additional_phone,
+                'address_name' => $request->address,
+                'app_status' => $request->app_status,
+                'concept' => $request->concept,
+                'contact' => $request->contact,
+                'email_contact' => $request->contact_email,
+                'phone_contact' => $request->contact_phone,
+                'customer_document_type' => $request->document_type,
+                'transport_type' => $request->transport_type,
+                'value' => $request->value,
+                'value_corp' => $request->corp_value
+            ]);
+            return $this->respond(200, $guide, '', 'Guía actualizada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar guía');
+        }
     }
 
 }

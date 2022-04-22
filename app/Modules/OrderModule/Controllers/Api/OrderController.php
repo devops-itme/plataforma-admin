@@ -50,19 +50,20 @@ class OrderController extends Controller
     {
         $user_id = $request->user_id ?? Auth::user()->id;
         $role_name = $request->role_name ?? Auth::user()->getRole->name;
-        $scope_name = $request->scope_name;
+        $scope_name = $request->scope_name ?? [];
         $status_matrix = $request->status_matrix ?? [];
         $orders = [];
 
         try {
-            $scope = ParameterValue::where('name', $scope_name)->first();
+            // $scope = ParameterValue::where('name', $scope_name)->first();
 
             $status_matrix = StatusMatrix::whereIn('name', $status_matrix)->get(['id']);
 
             count($status_matrix) == 0 && $status_matrix = null;
 
-            $scope_id = $scope->id ?? null;
-            $status = StatusMatrix::where('scope_id', $scope_id)->get(['id']);
+            // $scope_id = $scope->id ?? null;
+            $status = StatusMatrix::whereIn('name', $scope_name)->get(['id']);
+            count($status) == 0 && $status = null;
 
             if ($role_name == 'Cliente') {
                 $orders = Order::where('user_id', $user_id)
@@ -261,8 +262,8 @@ class OrderController extends Controller
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Accept' => '*/*',
         ])->post(env('PAGUELOFACIL_URL') . $postR);
-
         $response = $sendOrder->json();
+
         $total = $request->totalValue;
 
 
@@ -275,5 +276,4 @@ class OrderController extends Controller
 
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
-
 }
