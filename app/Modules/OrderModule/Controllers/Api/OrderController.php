@@ -230,12 +230,11 @@ class OrderController extends Controller
         }
     }
 
-    public function webviewPaguelofacil(Request $request)
+    public function webviewPagueloFacil(Request $request)
     {
 
         $host = $request->getHost();
-        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelofacil/response";
-        // dd($confirmationUrl);
+        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response";
         $cclw = env('PAGUELOFACIL_CCLW');
         $amount = intval($request->totalValue);
         $description = 'Pago orden multientrega';
@@ -250,8 +249,8 @@ class OrderController extends Controller
         $postR = "";
         $sw = 0;
         foreach ($data as $mk => $mv) {
-            if($sw == 0){
-                $postR = "?". $mk . "=" . $mv;
+            if ($sw == 0) {
+                $postR = "?" . $mk . "=" . $mv;
                 $sw = 1;
                 continue;
             }
@@ -260,26 +259,21 @@ class OrderController extends Controller
 
         $sendOrder = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
-            'Accept'=> '*/*',
-        ])->post(env('PAGUELOFACIL_URL').$postR);
-        $response = $sendOrder->json();
+            'Accept' => '*/*',
+        ])->post(env('PAGUELOFACIL_URL') . $postR);
 
-        // dd($response['data']['url']);
+        $response = $sendOrder->json();
+        $total = $request->totalValue;
+
+
+        return view('OrderModule.views.html.webview.paguelofacil', compact('response', 'total'));
+    }
+
+    public function responseViewPagueloFacil(Request $request)
+    {
+        $response = $request->all();
 
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
-        // return redirect()->to($response['data']['url']);
-
-
     }
 
-    public function responseViewPaguelofacil(Request $request)
-    {
-        // $paymentState = $request->TotalPagado>0  && $request->Estado != 'Denegada' ? 33 : ($request->Estado == 'Denegada' ? 34 : 35);
-        $pay_response = [
-            'totalPagado'=>$request->TotalPagado,
-            'Estado'=>$request->Estado
-        ];
-
-        return view('OrderModule.views.html.webview.paguelofacil', compact('data_pay'));
-    }
 }

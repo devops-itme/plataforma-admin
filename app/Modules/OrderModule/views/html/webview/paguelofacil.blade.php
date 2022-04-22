@@ -106,28 +106,46 @@
 
 </head>
 
-<body class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled subheader-fixed">
+<body
+    class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed subheader-enabled subheader-fixed">
     <div id="app">
         <main class="d-flex flex-column flex-root" style="height: 100vh;">
             <div class="d-flex flex-row flex-column-fluid page">
                 <div class="card text-center">
-                    <div class="card-header">
-                      Detalle de orden
+                    <div class="card-header text-uppercase font-weight-bold h1">
+                        Detalle de la orden
                     </div>
 
                     <div class="card-body">
-                        @if (!isset($pay_response))
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        @if (!is_null($response ?? null))
+                            @if (!is_null($total ?? null))
+                                <h5 class="card-title">Total a pagar: US${{ $total }}</h5>
+                            @endif
+                            @if (!is_null($response['Estado'] ?? null))
+                                <h5 class="card-title">Transferencia {{ $response['Estado'] }}</h5>
+
+                                <input type="hidden" name="state" id="state" value="{{ $response['Estado'] }}">
+                                <input type="hidden" name="notification_type" id="notification_type"
+                                    value="payment_notification">
+                            @endif
+                            @if (!is_null($response['Fecha'] ?? null) && !is_null($response['Hora'] ?? null))
+                                <p class="card-text">{{ $response['Fecha'] }} - {{ $response['Hora'] }}</p>
+                            @endif
                         @endif
+                        <img src="{{ asset('/img/logoME-02.png') }}" width="300px">
 
                     </div>
                     <div class="card-footer">
-                        @if (!isset($pay_response))
-                            <a href={{$response['data']['url']}} class="btn btn-primary">Ir a pagar</a>
+                        @if (!is_null($response['Estado'] ?? null))
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        @endif
+                        @if (!is_null($response['data']['url'] ?? null))
+                            <a href={{ $response['data']['url'] }} class="btn btn-primary">Ir a pagar</a>
                         @endif
                     </div>
-                  </div>
+                </div>
             </div>
         </main>
     </div>

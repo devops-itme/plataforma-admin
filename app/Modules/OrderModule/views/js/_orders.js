@@ -13,7 +13,7 @@ let boxes = [
 ];
 
 export default class Orders {
-    constructor(){
+    constructor() {
         this.guideId = '';
         this.boxes = boxes;
     }
@@ -33,6 +33,26 @@ export default class Orders {
         this.loadPickupHours();
         this.loadHoursInEditOrShow();
         this.importModal();
+        this.sendPushNotification();
+    }
+
+    async sendPushNotification() {
+        let state = document.getElementById("state");
+        let notification_type = document.getElementById("notification_type");
+
+        if (state == null || notification_type == null) {
+            return;
+        }
+        state = state.value;
+        notification_type = notification_type.value;
+        let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}`
+        console.log(url)
+        await fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(e => console.log(e));
     }
 
     setInput() {
@@ -179,9 +199,9 @@ export default class Orders {
         });
     }
 
-    loadCustomerModal(){
+    loadCustomerModal() {
         let btnDetailCustomer = document.getElementById("btnDetailCustomer");
-        if(btnDetailCustomer == null){
+        if (btnDetailCustomer == null) {
             return;
         }
         btnDetailCustomer.addEventListener('click', () => {
@@ -235,7 +255,7 @@ export default class Orders {
                     phoneCell.innerHTML = type == 1 ? data[i].phone : data[i].get_user.phone;
 
                     let tradenameCell = row.insertCell(2);
-                    if(type == 1){
+                    if (type == 1) {
                         tradenameCell.innerHTML = (data[i].name != null) ? data[i].name + " " + data[i].last_name : data[i].get_customer.tradename;
                     } else {
                         tradenameCell.innerHTML = (data[i].name != null) ? data[i].name + " " + data[i].last_name : data[i].tradename;
@@ -281,27 +301,27 @@ export default class Orders {
                 document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
                 let branches = data[1];
                 let branchSlc = document.getElementById("user_branch_office");
-                    branchSlc.selectedIndex = 0;
-                    removeOptions(branchSlc);
-                    for (let i = 0; i < branches.length; i++) {
-                        let element = branches[i];
-                        let branchOpt = '<option value="'+element.id+'"> '+element.name+' </option>';
-                        branchSlc.insertAdjacentHTML('beforeend', branchOpt);
-                    }
+                branchSlc.selectedIndex = 0;
+                removeOptions(branchSlc);
+                for (let i = 0; i < branches.length; i++) {
+                    let element = branches[i];
+                    let branchOpt = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    branchSlc.insertAdjacentHTML('beforeend', branchOpt);
+                }
                 let departments = data[2];
                 let departmentSlc = document.getElementById("user_departments");
-                    departmentSlc.selectedIndex = 0;
-                    removeOptions(departmentSlc);
-                    for (let i = 0; i < departments.length; i++) {
-                        let element = departments[i];
-                        let departmentOpt = '<option value="'+element.id+'"> '+element.name+' </option>';
-                        departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
-                    }
+                departmentSlc.selectedIndex = 0;
+                removeOptions(departmentSlc);
+                for (let i = 0; i < departments.length; i++) {
+                    let element = departments[i];
+                    let departmentOpt = '<option value="' + element.id + '"> ' + element.name + ' </option>';
+                    departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
+                }
                 document.getElementById("user_document_type").value = data[0]['get_document_type'] ? data[0]['get_document_type']['name'] : '';
 
                 let modal = document.getElementById("detailCustomer");
                 modal.click();
-                if(document.getElementById("user_code").value != null){
+                if (document.getElementById("user_code").value != null) {
                     this.customerAddresses(document.getElementById("user_code").value);
                 }
 
@@ -309,7 +329,7 @@ export default class Orders {
         }
     }
 
-    async requestOrderNumber(){
+    async requestOrderNumber() {
         let response = {
             'state': 500
         };
@@ -322,18 +342,18 @@ export default class Orders {
         return response;
     }
 
-    async loadOrderNumber(){
+    async loadOrderNumber() {
         let orderNumber = document.getElementById("order_number");
-        if(orderNumber == null){
+        if (orderNumber == null) {
             return;
         }
         let response = await this.requestOrderNumber();
         orderNumber.setAttribute('value', response.data);
     }
 
-    saveGuides(){
+    saveGuides() {
         let btnStoreGuide = document.getElementById("btnStoreGuide");
-        if(btnStoreGuide == null){
+        if (btnStoreGuide == null) {
             return;
         }
         btnStoreGuide.addEventListener('click', async () => {
@@ -369,42 +389,42 @@ export default class Orders {
             let boxArr = [];
             for (let i = 0; i < ids.length; i++) {
                 let individualBoxArr = {
-                    'number' : ids[i].value,
-                    'weight' : weights[i].value,
-                    'long' : longs[i].value,
-                    'broad' : broads[i].value,
-                    'high' : highs[i].value,
-                    'vol_weight' : vol_weights[i].value,
-                    'description' : descriptions[i].value
+                    'number': ids[i].value,
+                    'weight': weights[i].value,
+                    'long': longs[i].value,
+                    'broad': broads[i].value,
+                    'high': highs[i].value,
+                    'vol_weight': vol_weights[i].value,
+                    'description': descriptions[i].value
                 };
                 boxArr.push(individualBoxArr);
             }
             let formData = new FormData();
             formData.append('boxes', JSON.stringify(boxArr));
             formData.append('branch_office', branch_office);
-            formData.append('transport_type',transport_type);
+            formData.append('transport_type', transport_type);
             // formData.append('dispatched',dispatched);
-            formData.append('address_name',address_name);
+            formData.append('address_name', address_name);
             // formData.append('address_lat',address_lat);
             // formData.append('address_lng',address_lng);
-            formData.append('guide_description',guide_description);
-            formData.append('concept',concept);
-            formData.append('rate',rate);
-            formData.append('value',value);
-            formData.append('corp_value',corp_value);
-            formData.append('customer_document_type',customer_document_type);
-            formData.append('contact',contact);
-            formData.append('phone_contact',phone_contact);
-            formData.append('email_contact',email_contact);
-            formData.append('invoice_contact',invoice_contact);
-            formData.append('zone',zone);
-            formData.append('same_day_delivery',same_day_delivery);
-            formData.append('sign',sign);
-            formData.append('take_photo',take_photo);
+            formData.append('guide_description', guide_description);
+            formData.append('concept', concept);
+            formData.append('rate', rate);
+            formData.append('value', value);
+            formData.append('corp_value', corp_value);
+            formData.append('customer_document_type', customer_document_type);
+            formData.append('contact', contact);
+            formData.append('phone_contact', phone_contact);
+            formData.append('email_contact', email_contact);
+            formData.append('invoice_contact', invoice_contact);
+            formData.append('zone', zone);
+            formData.append('same_day_delivery', same_day_delivery);
+            formData.append('sign', sign);
+            formData.append('take_photo', take_photo);
             // formData.append('customer_address',customer_address);
 
             let response = await this.sendGuideData(formData);
-            if(response.state == 200){
+            if (response.state == 200) {
                 correct(response.message);
                 let modal = document.getElementById("modalCreate");
                 modal.click();
@@ -412,18 +432,18 @@ export default class Orders {
                 this.cleanFields();
             } else {
                 error('Error al crear la guía.')
-                console.log('Error: '+response.error);
+                console.log('Error: ' + response.error);
             }
         })
     }
 
-    async sendGuideData(formData){
+    async sendGuideData(formData) {
         let response = {
             'state': 500
         };
 
         response = await fetch("/guias/store", {
-            headers:{
+            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             method: 'POST',
@@ -432,37 +452,37 @@ export default class Orders {
         return response.json();
     }
 
-    async listGuides(){
+    async listGuides() {
         let tbody = document.querySelector("#guidesTable tbody");
-        if(tbody == null){
+        if (tbody == null) {
             return;
         }
         tbody.innerHTML = '';
         let response = await this.requestGuides();
         let data = response.data;
-        if(data.length > 0){
+        if (data.length > 0) {
             [].forEach.call(data, key => {
                 let row = tbody.insertRow();
 
                 let idCell = row.insertCell(0);
-                idCell.innerHTML = key.id??'';
+                idCell.innerHTML = key.id ?? '';
 
                 let contactCell = row.insertCell(1);
-                contactCell.innerHTML = key.contact??'';
+                contactCell.innerHTML = key.contact ?? '';
 
                 let phoneCell = row.insertCell(2);
-                phoneCell.innerHTML = key.phone_contact??'';
+                phoneCell.innerHTML = key.phone_contact ?? '';
 
                 let emailCell = row.insertCell(3);
-                emailCell.innerHTML = key.email_contact??'';
+                emailCell.innerHTML = key.email_contact ?? '';
 
                 let dateCell = row.insertCell(4);
                 let allDate = new Date((key.created_at).split(' ')[0]);
                 let month = allDate.getMonth();
-                dateCell.innerHTML = allDate.getDate()+"-"+this.months(month)+"-"+allDate.getFullYear();
+                dateCell.innerHTML = allDate.getDate() + "-" + this.months(month) + "-" + allDate.getFullYear();
 
                 let rateCell = row.insertCell(5);
-                rateCell.innerHTML = key.rate??'';
+                rateCell.innerHTML = key.rate ?? '';
 
                 let stateCell = row.insertCell(6);
                 stateCell.innerHTML = key.get_state?.name;
@@ -474,18 +494,18 @@ export default class Orders {
                 guideCheck.setAttribute('name', 'guideCheck[]');
                 guideCheck.setAttribute('value', key.id);
                 let check = guideCheck.checked = true;
-                key.order_id??check;
+                key.order_id ?? check;
                 //EDIT
                 const guideEdit = document.createElement("button");
                 guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
                 guideEdit.setAttribute('data-toggle', 'modal');
                 guideEdit.setAttribute('data-target', '#modalEdit');
-                guideEdit.setAttribute('id', 'guide-'+key.id);
+                guideEdit.setAttribute('id', 'guide-' + key.id);
                 guideEdit.setAttribute('type', 'button');
                 guideEdit.innerHTML = '<i class="fas fa-edit"></i>';
                 //DELETE
                 const guideDelete = document.createElement("button");
-                guideDelete.onclick = function(){deleteResource('/guias/'+key.id)};
+                guideDelete.onclick = function () { deleteResource('/guias/' + key.id) };
                 guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
                 guideDelete.setAttribute('type', 'button');
                 guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
@@ -503,9 +523,9 @@ export default class Orders {
         this.editGuide();
     }
 
-    async requestGuides(){
+    async requestGuides() {
         let orderNumber = document.getElementsByName("order_number")[0]
-        if(orderNumber == null){
+        if (orderNumber == null) {
             orderNumber = null;
         } else {
             orderNumber = orderNumber.value;
@@ -515,7 +535,7 @@ export default class Orders {
         let response = {
             'state': 500
         };
-        await fetch("/guias?order="+orderNumber+"&path="+path)
+        await fetch("/guias?order=" + orderNumber + "&path=" + path)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -524,9 +544,9 @@ export default class Orders {
         return response;
     }
 
-    editGuide(){
+    editGuide() {
         let guides = document.getElementsByClassName("btnEditGuide");
-        if(guides == null){
+        if (guides == null) {
             return;
         }
         [].forEach.call(guides, guide => {
@@ -539,7 +559,7 @@ export default class Orders {
                 branch_office.value = data.branch_office;
                 let customer_address = document.getElementById('customer_address_edit').options;
                 [].forEach.call(customer_address, key => {
-                    key.text == data.address_name ? key.selected=true : key.selected=false;
+                    key.text == data.address_name ? key.selected = true : key.selected = false;
                 });
                 // customer_address.value = data.customer_address;
                 // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
@@ -558,7 +578,7 @@ export default class Orders {
                 let invoice_contact = document.getElementById("invoice_contact_edit").value = data.invoice_contact;
                 let zones = document.getElementById("zone_edit");
                 [].forEach.call(zones, key => {
-                    key.value == data.zone ? key.selected=true : key.selected=false;
+                    key.value == data.zone ? key.selected = true : key.selected = false;
                 });
                 let same_day_delivery = document.getElementById("same_day_delivery_edit");
                 data.same_day_delivery == 0 ? same_day_delivery.checked = true : '';
@@ -567,18 +587,18 @@ export default class Orders {
                 let take_photo = document.getElementById("take_photo_edit");
                 data.take_photo == 0 ? take_photo.checked = true : '';
                 let boxes = JSON.parse(data.boxes);
-                this.instantiateBoxes('box-container-edit', (boxes??this.boxes));
-                this.addBox('add-box-btn-edit', (boxes??[]), 'box-container-edit');
+                this.instantiateBoxes('box-container-edit', (boxes ?? this.boxes));
+                this.addBox('add-box-btn-edit', (boxes ?? []), 'box-container-edit');
             });
         })
         this.updateGuide();
     }
 
-    async requestGuide(id){
+    async requestGuide(id) {
         let response = {
             'state': 500
         };
-        await fetch("/guias/"+id+"/edit")
+        await fetch("/guias/" + id + "/edit")
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -587,9 +607,9 @@ export default class Orders {
         return response;
     }
 
-    updateGuide(){
+    updateGuide() {
         let btnUpdateGuide = document.getElementById("btnUpdateGuide");
-        if(btnUpdateGuide == null){
+        if (btnUpdateGuide == null) {
             return;
         }
         btnUpdateGuide.addEventListener("click", async () => {
@@ -628,13 +648,13 @@ export default class Orders {
             let boxArr = [];
             for (let i = 1; i < ids.length; i++) {
                 let individualBoxArr = {
-                    'number' : ids[i].value,
-                    'weight' : weights[i].value,
-                    'long' : longs[i].value,
-                    'broad' : broads[i].value,
-                    'high' : highs[i].value,
-                    'vol_weight' : vol_weights[i].value,
-                    'description' : descriptions[i].value
+                    'number': ids[i].value,
+                    'weight': weights[i].value,
+                    'long': longs[i].value,
+                    'broad': broads[i].value,
+                    'high': highs[i].value,
+                    'vol_weight': vol_weights[i].value,
+                    'description': descriptions[i].value
                 };
                 boxArr.push(individualBoxArr);
             }
@@ -666,12 +686,12 @@ export default class Orders {
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
             let myHeaders = new Headers();
-                myHeaders.append("Accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                myHeaders.append('Content-Type', "application/json");
-                myHeaders.append('Content-Type', "multipart/form-data");
-                myHeaders.append("X-CSRF-TOKEN", token);
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("Access-Control-Allow-Origin", "*");
+            myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+            myHeaders.append('Content-Type', "application/json");
+            myHeaders.append('Content-Type', "multipart/form-data");
+            myHeaders.append("X-CSRF-TOKEN", token);
             let requestOptions = {
                 method: "PUT",
                 headers: myHeaders,
@@ -679,23 +699,23 @@ export default class Orders {
             };
 
             let response = await this.sendDataToUpdate(this.guideId, requestOptions);
-            if(response.state == 200){
+            if (response.state == 200) {
                 correct(response.message);
                 let modal = document.getElementById("modalEdit");
                 modal.click();
                 this.listGuides();
             } else {
                 error('Error al crear la guía.')
-                console.log('Error: '+response.error);
+                console.log('Error: ' + response.error);
             }
         });
     }
 
-    async sendDataToUpdate(id, requestOptions){
+    async sendDataToUpdate(id, requestOptions) {
         let response = {
             'state': 500
         };
-        await fetch("/guias/"+id, requestOptions)
+        await fetch("/guias/" + id, requestOptions)
             .then((response) => response.json())
             .then(data => {
                 response = data
@@ -704,12 +724,12 @@ export default class Orders {
         return response;
     }
 
-    loadBranches(){
+    loadBranches() {
         let branchesSlc = document.getElementsByName("branch_office");
-        if(branchesSlc == null){
+        if (branchesSlc == null) {
             return;
         }
-        [].forEach.call(branchesSlc, async branch  => {
+        [].forEach.call(branchesSlc, async branch => {
             branch.selectedIndex = 0;
             removeOptions(branch);
 
@@ -718,13 +738,13 @@ export default class Orders {
 
             for (var i = 0; i < data.length; i++) {
                 let element = data[i];
-                let branchOffice = '<option value="'+element.id+'"> '+element.name+' </option>';
+                let branchOffice = '<option value="' + element.id + '"> ' + element.name + ' </option>';
                 branch.insertAdjacentHTML('beforeend', branchOffice);
             }
         });
     }
 
-    async requestBranches(){
+    async requestBranches() {
         let response = {
             'state': 500
         };
@@ -737,29 +757,29 @@ export default class Orders {
         return response;
     }
 
-    async customerAddresses(customerId = null){
+    async customerAddresses(customerId = null) {
         let slcAddresses = document.getElementsByName("customer_address");
-        if(customerId == ''){
+        if (customerId == '') {
             return;
         }
-        if(slcAddresses == null){
+        if (slcAddresses == null) {
             return;
         }
         let response = await this.requestCustomerAddresses(customerId);
-        if(response == null){
+        if (response == null) {
             return;
         }
         let data = response.data;
 
         [].forEach.call(slcAddresses, slcAddress => {
-            if(!(typeof(parseInt(location.pathname.split('/')[2])) == 'number' && location.pathname.includes('edit'))){
-                if(!slcAddress.id != 'order_customer_address'){
+            if (!(typeof (parseInt(location.pathname.split('/')[2])) == 'number' && location.pathname.includes('edit'))) {
+                if (!slcAddress.id != 'order_customer_address') {
                     slcAddress.selectedIndex = 0;
                     removeOptions(slcAddress);
 
                     for (var i = 0; i < data.length; i++) {
                         let element = data[i];
-                        let optAddress = '<option value="'+element.id+'" name="'+element.name+'"> '+element.name+' </option>';
+                        let optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + ' </option>';
                         slcAddress.insertAdjacentHTML('beforeend', optAddress);
                     }
                 }
@@ -767,16 +787,16 @@ export default class Orders {
         });
     }
 
-    async requestCustomerAddresses(id = null){
+    async requestCustomerAddresses(id = null) {
         let route = window.location.pathname.split('/');
-        if(document.getElementById("user_code") == null){
+        if (document.getElementById("user_code") == null) {
             return;
         }
         route.includes('edit') ? id = document.getElementById("user_code").value : '';
         let response = {
             'state': 500
         };
-        await fetch("/customer_addresses/"+id)
+        await fetch("/customer_addresses/" + id)
             .then(response => response.json())
             .then(data => {
                 response = data
@@ -785,9 +805,9 @@ export default class Orders {
         return response;
     }
 
-    createAddress(){
+    createAddress() {
         let btnSaveAddress = document.getElementById("saveAddress");
-        if(btnSaveAddress == null){
+        if (btnSaveAddress == null) {
             return;
         }
         btnSaveAddress.addEventListener('click', async () => {
@@ -806,7 +826,7 @@ export default class Orders {
             formData.append('requestByJs', 1);
 
             let response = await this.sendAddressData(formData);
-            if(response.state == 200){
+            if (response.state == 200) {
                 correct(response.message);
                 let modal = document.getElementById("modalCreateAddress");
                 modal.click();
@@ -814,18 +834,18 @@ export default class Orders {
                 this.customerAddresses(document.getElementById("user_code").value);
             } else {
                 error('Error al crear la guía.')
-                console.log('Error: '+response.error);
+                console.log('Error: ' + response.error);
             }
         });
     }
 
-    async sendAddressData(formData){
+    async sendAddressData(formData) {
         let response = {
             'state': 500
         };
 
         response = await fetch("/direcciones", {
-            headers:{
+            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             method: 'POST',
@@ -834,7 +854,7 @@ export default class Orders {
         return response.json();
     }
 
-    months(month){
+    months(month) {
         const months = {
             0: 'Enero',
             1: 'Febrero',
@@ -851,10 +871,10 @@ export default class Orders {
         }
         return months[month];
     }
-    async porDespacharOndemand(){
+    async porDespacharOndemand() {
 
         let button = document.getElementById('porDespacharOndemand');
-        if(button == null){
+        if (button == null) {
             return;
         }
 
@@ -882,10 +902,10 @@ export default class Orders {
         });
     }
 
-    async porDespacharPackaging(){
+    async porDespacharPackaging() {
 
         let button = document.getElementById('porDespacharPackaging');
-        if(button == null){
+        if (button == null) {
             return;
         }
         button.addEventListener("click", async () => {
@@ -895,8 +915,8 @@ export default class Orders {
                 let formData = new FormData();
                 formData.append('type', result);
                 let token = document
-                            .querySelector('meta[name="csrf-token"]')
-                            .getAttribute("content");
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content");
                 let myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -907,7 +927,7 @@ export default class Orders {
                     headers: myHeaders,
                     body: formData,
                 };
-                var data = {type: result};
+                var data = { type: result };
                 let req = await fetch(`/pordespachar/packaging/${order_id}`, requestOptions);
                 if (req.ok) {
                     correct("Estado actualizado!");
@@ -920,9 +940,9 @@ export default class Orders {
         });
     }
 
-    async loadPickupHours(){
+    async loadPickupHours() {
         let date_selector = document.getElementById("schedule_date");
-        if(date_selector == null){
+        if (date_selector == null) {
             return;
         }
         let response = await this.requestPickupHours();
@@ -933,28 +953,28 @@ export default class Orders {
             let day_data = days[day];
 
             let schedule_time_range = document.getElementById("schedule_time_range");
-                schedule_time_range.selectedIndex = 0;
-                removeOptions(schedule_time_range);
+            schedule_time_range.selectedIndex = 0;
+            removeOptions(schedule_time_range);
 
-                if(day_data){
-                    for (let i = 0; i < day_data.length; i++) {
-                        let element = day_data[i];
-                        let text = formatAMPM(element.init_time)+" - "+formatAMPM(element.end_time)
-                        let option = '<option value="'+text+'" id="'+element.id+'"> '+text+' </option>';
-                        schedule_time_range.insertAdjacentHTML('beforeend', option);
-                    }
-                    schedule_time_range.addEventListener('change', () => {
-                        let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
-                        let schedule_time = document.getElementById("schedule_time");
-                        schedule_time.value = id;
-                    })
-
+            if (day_data) {
+                for (let i = 0; i < day_data.length; i++) {
+                    let element = day_data[i];
+                    let text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time)
+                    let option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
+                    schedule_time_range.insertAdjacentHTML('beforeend', option);
                 }
+                schedule_time_range.addEventListener('change', () => {
+                    let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+                    let schedule_time = document.getElementById("schedule_time");
+                    schedule_time.value = id;
+                })
+
+            }
 
         });
     }
 
-    async requestPickupHours(){
+    async requestPickupHours() {
         let response = {
             'state': 500
         };
@@ -967,7 +987,7 @@ export default class Orders {
         return response;
     }
 
-    getDayReference(day){
+    getDayReference(day) {
         let days = [
             'Lunes',
             'Martes',
@@ -981,9 +1001,9 @@ export default class Orders {
         return days[day];
     }
 
-    async loadHoursInEditOrShow(){
+    async loadHoursInEditOrShow() {
         let route = window.location.pathname;
-        if(!(route.includes('create') && route.includes('edit'))){
+        if (!(route.includes('create') && route.includes('edit'))) {
             return;
         }
         let date_selector = document.getElementById("schedule_date");
@@ -992,15 +1012,15 @@ export default class Orders {
         let day = this.getDayReference(date_selector.value);
         let day_data = days[day];
 
-        if(day_data){
+        if (day_data) {
             let schedule_time_range = document.getElementById("schedule_time_range");
-                schedule_time_range.selectedIndex = 0;
-                removeOptions(schedule_time_range);
+            schedule_time_range.selectedIndex = 0;
+            removeOptions(schedule_time_range);
 
             for (let i = 0; i < day_data.length; i++) {
                 let element = day_data[i];
-                let text = formatAMPM(element.init_time)+" - "+formatAMPM(element.end_time)
-                let option = '<option value="'+text+'" id="'+element.id+'"> '+text+' </option>';
+                let text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time)
+                let option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
                 schedule_time_range.insertAdjacentHTML('beforeend', option);
             }
             schedule_time_range.addEventListener('change', () => {
@@ -1011,7 +1031,7 @@ export default class Orders {
         }
     }
 
-    async sendImportModalData(formData){
+    async sendImportModalData(formData) {
         let response = {
             'state': 500
         };
@@ -1033,9 +1053,9 @@ export default class Orders {
         return response.json();
     }
 
-    importModal(){
+    importModal() {
         let btnImportGuide = document.getElementById("btnImportGuide");
-        if(btnImportGuide == null){
+        if (btnImportGuide == null) {
             return;
         }
         btnImportGuide.addEventListener('click', async () => {
@@ -1043,25 +1063,25 @@ export default class Orders {
             let file = document.getElementById("file_import_guide");
             let order_id = document.getElementById("order_id").value;
 
-            if(!file.files[0]){
-               return error('Debe cargar el archivo para proceder con la importación')
+            if (!file.files[0]) {
+                return error('Debe cargar el archivo para proceder con la importación')
             }
 
             formData.append('file', file.files[0]);
             formData.append('order_id', order_id);
 
             let response = await this.sendImportModalData(formData);
-            if(response.state == 200){
+            if (response.state == 200) {
                 correct(response.message);
                 location.reload()
             } else {
                 error('Error al importar guías.')
-                console.log('Error: '+response.error);
+                console.log('Error: ' + response.error);
             }
         });
     }
 
-    cleanFields(){
+    cleanFields() {
         document.getElementById("branch_off").selectedIndex = 0;
         document.getElementById("address").selectedIndex = 0;
         document.getElementById("guide_description").value = '';
