@@ -55,26 +55,23 @@ class OrderController extends Controller
         $orders = [];
 
         try {
-            // $scope = ParameterValue::where('name', $scope_name)->first();
-
             $status_matrix = StatusMatrix::whereIn('name', $status_matrix)->get(['id']);
-
             count($status_matrix) == 0 && $status_matrix = null;
 
-            // $scope_id = $scope->id ?? null;
-            $status = StatusMatrix::whereIn('name', $scope_name)->get(['id']);
+            $scopes = ParameterValue::whereIn('name', $scope_name)->get(['id']);
+            $status = StatusMatrix::whereIn('scope_id', $scopes)->get(['id']);
             count($status) == 0 && $status = null;
 
             if ($role_name == 'Cliente') {
                 $orders = Order::where('user_id', $user_id)
-                    ->whereScope($status)
+                    ->whereStatusMatrix($status)
                     ->whereStatusMatrix($status_matrix)
                     ->with($this->customerRelationships)->get();
             }
 
             if ($role_name == 'Mensajero') {
                 $orders = Order::messengerOrders($user_id)
-                    ->whereScope($status)
+                    ->whereStatusMatrix($status)
                     ->whereStatusMatrix($status_matrix)
                     ->with($this->messengerRelationships)->get();
             }
@@ -275,7 +272,7 @@ class OrderController extends Controller
 
         $response = $request->all();
         $response['fcm_token'] = Auth::user()->fcm_token ?? '';
-        
+
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
 }

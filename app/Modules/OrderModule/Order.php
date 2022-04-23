@@ -172,12 +172,6 @@ class Order extends Model
             return $query->where('state', $value);
         }
     }
-    public function scopeWhereScope($query, $statusArr)
-    {
-        if (!is_null($statusArr)) {
-            return $query->whereIn('status_matrix_id', $statusArr);
-        }
-    }
     public function scopeMessengerOrders($query, $messenger_user_id)
     {
         if (!is_null($messenger_user_id)) {
