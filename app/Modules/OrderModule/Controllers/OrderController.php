@@ -13,6 +13,7 @@ use App\Modules\OrderModule\Controllers\OrderTrait;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\PickupHourModule\PickupHour;
+use App\Modules\RateModule\Rate;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,8 +65,9 @@ class OrderController extends Controller
             $query->where('name', 'customer_document_type');
         })->get();
         $zones = Zone::get();
+        $rates = Rate::get();
         $customer_addresses = [];
-        return view($this->path . 'create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'customer_addresses'));
+        return view($this->path . 'create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses'));
     }
 
     /**
@@ -135,7 +137,8 @@ class OrderController extends Controller
             $query->where('user_id', $user_id);
         })->get();
         $zones = Zone::get();
-        return view($this->path . 'show.index', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses', 'zones'));
+        $rates = Rate::get();
+        return view($this->path . 'show.index', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses', 'zones', 'rates'));
     }
 
 
@@ -178,8 +181,8 @@ class OrderController extends Controller
             $query->where('user_id', $user_id);
         })->get();
         $zones = Zone::get();
-
-        return view($this->path . 'edit.index', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones'));
+        $rates = Rate::get();
+        return view($this->path . 'edit.index', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
     }
 
     /**

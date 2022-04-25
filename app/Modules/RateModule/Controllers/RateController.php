@@ -18,12 +18,10 @@ class RateController extends Controller
 
     public function index()
     {
-        // $model = new Rate();
-        // return $model->calculateRate(1, 75, 79);
         $rates = Rate::packageType(request()->package_type)
             ->baseValue(request()->base_value)
             ->packageType(request()->package_type)
-            ->zone(request()->zone_id)
+            ->whereZone(request()->zone_id)
             ->neighborhood(request()->neighborhood_id)
             ->state(request()->state)
             ->paginate(12);

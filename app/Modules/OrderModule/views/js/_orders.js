@@ -1,5 +1,6 @@
 
 let count = 0;
+let rate_id = null;
 let boxes = [
     {
         number: 0,
@@ -11,6 +12,67 @@ let boxes = [
         description: '',
     }
 ];
+
+const requestRate = async (zone_id) => {
+    let response = { state: 500, message: 'Error en la consulta' };
+    let url = `${window.location.origin}/api/rateInquiry?zone_id=${zone_id}`;
+
+    await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log('rateInquiry', data);
+            response = data;
+        })
+        .catch(e => {
+            response.error = e;
+        });
+
+    return response;
+}
+
+const requestCalculatePackingRates = async (rate_id, lbs, vol, immediate_delivery) => {
+    let response = { state: 500, message: 'Error en la consulta' };
+    let url = `${window.location.origin}/api/calculatePackingRates?rate_id=${rate_id}&lbs=${lbs}&vol=${vol}&immediate_delivery=${immediate_delivery}`;
+
+    await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log('requestCalculatePackingRates', data);
+            response = data;
+        })
+        .catch(e => {
+            response.error = e;
+        });
+
+    return response;
+}
+
+const calculateRate = async () => {
+    if (rate_id == null) {
+        return
+    }
+    let corp_value = document.getElementById("corp_value");
+    if (corp_value == null) {
+        return;
+    }
+    corp_value.value = 0;
+
+    let same_day_delivery = document.getElementById("same_day_delivery");
+    if (same_day_delivery == null) {
+        return;
+    }
+    let immediate_delivery = same_day_delivery.checked ? 1 : 0;
+
+    await [].forEach.call(boxes, async (box) => {
+        let lbs = box?.weight;
+        let vol = box?.long * box?.broad * box?.high;
+
+        let response = await requestCalculatePackingRates(rate_id, lbs, vol, immediate_delivery);
+        if (response.state == 200) {
+            corp_value.value = parseFloat(corp_value.value) + parseFloat(response.data);
+        }
+    });
+}
 
 export default class Orders {
     constructor() {
@@ -34,6 +96,71 @@ export default class Orders {
         this.loadHoursInEditOrShow();
         this.importModal();
         this.sendPushNotification();
+        this.listenRateVariables();
+    }
+
+    listenGuideCheck() {
+
+        let guideCheck = document.getElementsByClassName("guideCheck");
+        let order_value = document.getElementById("order_value");
+
+        if (guideCheck == null || order_value == null) {
+            return;
+        }
+
+        [].forEach.call(guideCheck, function (guide) {
+            guide.addEventListener('change', async () => {
+                order_value.value = 0;
+                [].forEach.call(guideCheck, function (guide) {
+                    console.log(guide.parentNode.parentNode.parentNode.corp_value);
+                    let corp_value = guide.parentNode?.parentNode?.parentNode?.corp_value ?? 0;
+                    guide.checked && (order_value.value = parseFloat(order_value.value) + parseFloat(corp_value));
+                });
+            });
+        });
+    }
+
+    async listenRateVariables() {
+        let rate = document.getElementById("rate");
+        let zone = document.getElementById("zone_id");
+        let same_day_delivery = document.getElementById("same_day_delivery");
+
+        if (rate == null || zone == null || same_day_delivery == null) {
+            return;
+        }
+
+        rate.addEventListener('change', async () => {
+            if (zone.value == "") {
+                return;
+            }
+            let response = await requestRate(zone.value);
+            if (response.state == 200) {
+                rate_id = response.data?.id;
+            }
+            calculateRate();
+        });
+
+        zone.addEventListener('change', async () => {
+            if (zone.value == "") {
+                return;
+            }
+            let response = await requestRate(zone.value);
+            if (response.state == 200) {
+                rate_id = response.data?.id;
+            }
+            calculateRate();
+        });
+
+        same_day_delivery.addEventListener('click', async () => {
+            if (zone.value == "") {
+                return;
+            }
+            let response = await requestRate(zone.value);
+            if (response.state == 200) {
+                rate_id = response.data?.id;
+            }
+            calculateRate();
+        });
     }
 
     async sendPushNotification() {
@@ -44,11 +171,11 @@ export default class Orders {
         if (state == null || notification_type == null) {
             return;
         }
-        state = state.value; 
+        state = state.value;
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
         let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`
-        console.log(url)
+
         await fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -78,18 +205,14 @@ export default class Orders {
                 el.addEventListener('keyup', () => {
 
                     let parent = el.parentNode.parentNode.parentNode;
-                    // console.log('parent', parent);
                     let children = el.parentNode.parentNode;
-                    // console.log("children", children);
 
                     let index = Array.prototype.indexOf.call(parent.children, children);
-                    // console.log('index', index);
 
                     let name = input.replace('[]', '');
-                    // console.log('name', name);
 
-                    // console.log('el', el.value);
                     boxes[index][name] = el.value;
+                    calculateRate();
                 });
             });
         });
@@ -135,8 +258,6 @@ export default class Orders {
             volWeightCell.innerHTML = `<input type="number" name="vol_weight[]" class="form-control" min="0" value="${box.vol_weight}">`;
             row.appendChild(volWeightCell);
 
-
-
             let descriptionCell = document.createElement("td");
             descriptionCell.className = `col-2 py-4 border-right`;
             descriptionCell.innerHTML = `<input type="text" name="description[]" class="form-control" placeholder="comentarios" value="${box.description}">`;
@@ -160,6 +281,7 @@ export default class Orders {
         });
         this.setInput();
         this.removeBox();
+        calculateRate();
     };
 
     addBox(button = 'add-box-btn', boxes = this.boxes, container = 'box-container') {
@@ -197,6 +319,7 @@ export default class Orders {
                 let index = Array.prototype.indexOf.call(parent.children, box);
                 boxes.splice(index, 1);
                 box.remove();
+                calculateRate();
             });
         });
     }
@@ -220,7 +343,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 
@@ -288,7 +411,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 
@@ -340,7 +463,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 
@@ -465,6 +588,8 @@ export default class Orders {
         if (data.length > 0) {
             [].forEach.call(data, key => {
                 let row = tbody.insertRow();
+                row.setAttribute('corp_value', key?.corp_value);
+                row.setAttribute('value', key?.value);
 
                 let idCell = row.insertCell(0);
                 idCell.innerHTML = key.id ?? '';
@@ -491,7 +616,7 @@ export default class Orders {
                 let selectCell = row.insertCell(7);
                 //CHECK
                 const guideCheck = document.createElement("input");
-                guideCheck.setAttribute('class', 'checkbox-inline mt-3')
+                guideCheck.setAttribute('class', 'checkbox-inline mt-3 guideCheck')
                 guideCheck.setAttribute('type', 'checkbox');
                 guideCheck.setAttribute('name', 'guideCheck[]');
                 guideCheck.setAttribute('value', key.id);
@@ -523,6 +648,7 @@ export default class Orders {
             });
         }
         this.editGuide();
+        this.listenGuideCheck()
     }
 
     async requestGuides() {
@@ -542,7 +668,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 
@@ -605,7 +731,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 
@@ -722,7 +848,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 
@@ -755,7 +881,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 
@@ -803,7 +929,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 
@@ -950,7 +1076,6 @@ export default class Orders {
         let response = await this.requestPickupHours();
         let days = response.data;
         date_selector.addEventListener('change', () => {
-            console.log('holis');
             let day = this.getDayReference(date_selector.value);
             let day_data = days[day];
 
@@ -985,7 +1110,7 @@ export default class Orders {
             .then(data => {
                 response = data
             })
-            .catch(e => console.log(e));
+            .catch(e => response.error = e);
         return response;
     }
 

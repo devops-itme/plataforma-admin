@@ -68,7 +68,7 @@ class Rate extends Model
             $query->where('base_value',  $value);
     }
 
-    public function scopeZone($query, $value)
+    public function scopeWhereZone($query, $value)
     {
         if (!is_null($value))
             $query->where('zone_id',  $value);

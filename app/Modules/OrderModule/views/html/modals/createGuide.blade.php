@@ -15,7 +15,7 @@
                     <div class="form-group col-md-3">
                         <label for="branch_off">Sucursal despacho <span class="text-danger">*</span></label>
                         <select name="branch_office" class="form-control form-control-solid" id="branch_off">
-                            <option selected disabled>Seleccione sucursal</option>
+                            <option selected disabled value="">Seleccione sucursal</option>
                         </select>
                     </div>
                     {{-- <div class="form-group col-md-3">
@@ -47,28 +47,27 @@
                     <div class="form-group col-md-3">
                         <label for="district">Tarifa <span class="text-danger">*</span></label>
                         <select name="rate" class="form-control form-control-solid" id="rate">
-                            <option selected disabled>Seleccione Tarifa</option>
-                            <option>Adicional</option>
-                            <option>Plena</option>
-                            <option>Retorno</option>
-                            <option>Adicional*0</option>
-                            <option>Plena/2</option>
+                            <option selected disabled value="">Seleccione Tarifa</option>
+                            {{-- @foreach ($rates as $item)
+                                <option value="{{$item->id}}" {{ request()->rate == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                            @endforeach --}}
+                            <option value="0">Packaging</option>
                         </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor: <span class="text-danger">*</span></label>
-                        <input name="value" id="value" type="number" class="form-control form-control-solid" placeholder="" />
+                        <input name="value" id="value" type="number" class="form-control form-control-solid" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor Corp: <span class="text-danger">*</span></label>
-                        <input name="corp_value" id="corp_value" type="number" class="form-control form-control-solid" placeholder="" />
+                        <input name="corp_value" id="corp_value" type="number" class="form-control form-control-solid" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="doc_type">Cliente tipo documento <span class="text-danger">*</span></label>
                         <select name="doc_type" class="form-control form-control-solid" id="customer_document_type">
-                            <option selected disabled>Seleccione tipo documento</option>
+                            <option selected disabled value="">Seleccione tipo documento</option>
                             @foreach ($customer_document_type as $document)
                                 <option value="{{$document->id}}"> {{$document->name}} </option>
                             @endforeach
@@ -98,7 +97,7 @@
                     <div class="form-group col-md-3">
                         <label>Zona: </label>
                         <select name="zone_id" class="form-control form-control-solid" id="zone_id">
-                            <option selected disabled>Seleccione</option>
+                            <option selected disabled value="">Seleccione</option>
                             @foreach ($zones as $item)
                                 <option value="{{$item->id}}" {{ request()->zone == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
                             @endforeach
@@ -219,7 +218,7 @@
                                     <div class="form-group col-md-3">
                                         <label>Producto: <span class="text-danger">*</span></label>
                                         <select name="prdc" class="form-control form-control-solid mr-2" id="prdc">
-                                            <option selected disabled>Seleccione producto</option>
+                                            <option selected disabled value="">Seleccione producto</option>
                                             <option>FOTOCOPIA COLOR</option>
                                             <option>FOTOCOPIA B/N</option>
                                         </select>
