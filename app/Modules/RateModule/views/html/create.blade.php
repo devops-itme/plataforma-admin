@@ -32,7 +32,7 @@
                 <div class="form-group col-md-3">
                     <label>Zona: <span class="text-danger">*</span></label>
                     <select class="form-control form-control-solid" name="zone_id" id="select-zone" required>
-                        <option selected disabled>Seleccione zona</option>
+                        <option selected disabled value="">Seleccione zona</option>
                         @foreach ($zones as $zone)
                             <option {{ old('zone_id') == $zone->id ? 'selected ' : '' }} value="{{ $zone->id }}">
                                 {{ $zone->name }}</option>
@@ -42,44 +42,47 @@
 
                 <div class="form-group col-md-3">
                     <label>Barrio: <span class="text-danger">*</span></label>
-                    <select class="form-control form-control-solid" name="neighborhood_id" id="select-neighborhood" required>
-                        <option selected disabled>Seleccione</option>
+                    <input type="hidden" name="old_neighborhood_id" id="old-neighborhood-id" value="{{old('neighborhood_id')}}">
+                    <select class="form-control form-control-solid" name="neighborhood_id" id="select-neighborhood"
+                        required>
+                        <option selected disabled value="">Seleccione</option>
                     </select>
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Tiempo estimado(en horas): <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid" placeholder="Estime el tiempo"
-                        name="estimated_time" value="{{old('estimated_time')}}" />
+                        name="estimated_time" value="{{ old('estimated_time') }}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>Valor base(en dolares): <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid" placeholder="Cantidad de Libra adicional"
-                        name="base_value" value="{{old('base_value')}}" />
+                        name="base_value" value="{{ old('base_value') }}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>Libra adicional por peso: <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid" placeholder="Cantidad de Libra adicional"
-                        name="extra_for_weight" value="{{old('extra_for_weight')}}" />
+                        name="extra_for_weight" value="{{ old('extra_for_weight') }}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>Libra adicional por tamaño(Vol.) <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid"
-                        placeholder="Cantidad de Libra adicional x Tamaño" name="extra_per_size" value="{{old('extra_per_size')}}" />
+                        placeholder="Cantidad de Libra adicional x Tamaño" name="extra_per_size"
+                        value="{{ old('extra_per_size') }}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>% Por entrega inmediata <span class="text-danger">*</span></label>
                     <input type="number" class="form-control form-control-solid" placeholder="Porcentaje x entrega"
-                        name="percentage_immediate_delivery" value="{{old('percentage_immediate_delivery')}}" />
+                        name="percentage_immediate_delivery" value="{{ old('percentage_immediate_delivery') }}" />
                 </div>
-                
+
                 <div class="form-group row col-md-3 ml-1">
                     <label class="checkbox">
-                        <input type="checkbox" name="special_rate" {{old('special_rate') === 'on' ? 'checked' : ''}}  />
+                        <input type="checkbox" name="special_rate" {{ old('special_rate') === 'on' ? 'checked' : '' }} />
                         <span class="mr-2"></span>Tarifa especial
                     </label>
                 </div>

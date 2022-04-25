@@ -56,6 +56,7 @@ class RateController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->neighborhood_id);
         $special_rate_value = $request->special_rate == 'on' ? 1 : 0;
         $request->merge(['special_rate' => $special_rate_value]);
         $rateResponse = $this->saveRate($request);

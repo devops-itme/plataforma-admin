@@ -5190,11 +5190,15 @@ var Rates = /*#__PURE__*/function () {
                 return _context.abrupt("return");
 
               case 3:
+                if (select.value != "") {
+                  getNeighborhoods(select.value);
+                }
+
                 select.addEventListener('change', function () {
                   getNeighborhoods(select.value);
                 });
 
-              case 4:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -5249,11 +5253,13 @@ var getNeighborhoods = /*#__PURE__*/function () {
           case 9:
             neighborhoods = response.data;
             neighborhoods.map(function (neighborhood) {
-              var _neighborhood$name, _neighborhood$get_cor, _neighborhood$get_cor2, _neighborhood$get_cor3, _neighborhood$get_cor4;
+              var _document$getElementB, _neighborhood$name, _neighborhood$get_cor, _neighborhood$get_cor2, _neighborhood$get_cor3, _neighborhood$get_cor4;
 
               var option = document.createElement("option");
+              var neighborhood_id = (_document$getElementB = document.getElementById("old-neighborhood-id")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.value;
               option.text = ((_neighborhood$name = neighborhood.name) !== null && _neighborhood$name !== void 0 ? _neighborhood$name : '') + '; ' + ((_neighborhood$get_cor = neighborhood.get_corregimiento.name) !== null && _neighborhood$get_cor !== void 0 ? _neighborhood$get_cor : '') + '; ' + ((_neighborhood$get_cor2 = neighborhood.get_corregimiento.get_district.name) !== null && _neighborhood$get_cor2 !== void 0 ? _neighborhood$get_cor2 : '') + '; ' + ((_neighborhood$get_cor3 = neighborhood.get_corregimiento.get_district.get_province.name) !== null && _neighborhood$get_cor3 !== void 0 ? _neighborhood$get_cor3 : '') + '; ' + ((_neighborhood$get_cor4 = neighborhood.get_corregimiento.get_district.get_province.get_country.name) !== null && _neighborhood$get_cor4 !== void 0 ? _neighborhood$get_cor4 : '');
               option.value = neighborhood.id;
+              option.selected = neighborhood_id ? true : false;
               select.appendChild(option);
             });
 

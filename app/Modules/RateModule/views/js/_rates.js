@@ -10,6 +10,10 @@ export default class Rates {
             return;
         }
 
+        if (select.value != "") {
+            getNeighborhoods(select.value);
+        }
+
         select.addEventListener('change', function () {
             getNeighborhoods(select.value);
         });
@@ -32,6 +36,7 @@ const getNeighborhoods = async (id) => {
     let neighborhoods = response.data;
     neighborhoods.map(neighborhood => {
         let option = document.createElement("option");
+        let neighborhood_id = document.getElementById("old-neighborhood-id")?.value;
         
         option.text = ((neighborhood.name ?? '') + '; ' +
             (neighborhood.get_corregimiento.name ?? '') + '; ' +
@@ -39,6 +44,7 @@ const getNeighborhoods = async (id) => {
             (neighborhood.get_corregimiento.get_district.get_province.name ?? '') + '; ' +
             (neighborhood.get_corregimiento.get_district.get_province.get_country.name ?? ''));
         option.value = neighborhood.id;
+        option.selected = neighborhood_id ? true : false;
         select.appendChild(option);
     });
 }
