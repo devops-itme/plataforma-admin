@@ -79,7 +79,7 @@
                             </div>
                         @endif
                         @if (!is_null($response['data']['url'] ?? null))
-                            <a href={{ $response['data']['url'] }} class="btn btn-primary">Ir a pagar</a>
+                            <a href={{ $response['data']['url'] }} class="btn-block btn-lg btn-primary">Ir a pagar</a>
                         @endif
                     </div>
                 </div>
