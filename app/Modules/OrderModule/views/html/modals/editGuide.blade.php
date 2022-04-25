@@ -56,12 +56,12 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor: <span class="text-danger">*</span></label>
-                        <input name="value" id="value_edit" type="number" class="form-control form-control-solid" placeholder="" />
+                        <input name="value" id="value_edit" type="number" class="form-control form-control-solid" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor Corp: <span class="text-danger">*</span></label>
-                        <input name="corp_value" id="corp_value_edit" type="number" class="form-control form-control-solid" placeholder="" />
+                        <input name="corp_value" id="corp_value_edit" type="number" class="form-control form-control-solid" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">

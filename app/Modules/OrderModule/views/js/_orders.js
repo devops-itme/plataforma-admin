@@ -142,7 +142,7 @@ export default class Orders {
             if (response.state == 200) {
                 rate_id = response.data?.id;
             }
-            calculateRate();
+            calculateRate(edit);
         });
 
         zone.addEventListener('change', async () => {
@@ -153,7 +153,7 @@ export default class Orders {
             if (response.state == 200) {
                 rate_id = response.data?.id;
             }
-            calculateRate();
+            calculateRate(edit);
         });
 
         same_day_delivery.addEventListener('click', async () => {
@@ -164,7 +164,7 @@ export default class Orders {
             if (response.state == 200) {
                 rate_id = response.data?.id;
             }
-            calculateRate();
+            calculateRate(edit);
         });
     }
 
@@ -217,7 +217,8 @@ export default class Orders {
                     let name = input.replace('[]', '');
 
                     boxes[index][name] = el.value;
-                    calculateRate();
+                    calculateRate(true);
+                    calculateRate(false);
                 });
             });
         });
@@ -286,7 +287,8 @@ export default class Orders {
         });
         this.setInput();
         this.removeBox();
-        calculateRate();
+        calculateRate(true);
+        calculateRate(false);
     };
 
     addBox(button = 'add-box-btn', boxes = this.boxes, container = 'box-container') {
@@ -324,7 +326,8 @@ export default class Orders {
                 let index = Array.prototype.indexOf.call(parent.children, box);
                 boxes.splice(index, 1);
                 box.remove();
-                calculateRate();
+                calculateRate(true);
+                calculateRate(false);
             });
         });
     }

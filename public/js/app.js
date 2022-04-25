@@ -2162,7 +2162,7 @@ var Orders = /*#__PURE__*/function () {
                             rate_id = (_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.id;
                           }
 
-                          calculateRate();
+                          calculateRate(edit);
 
                         case 7:
                         case "end":
@@ -2196,7 +2196,7 @@ var Orders = /*#__PURE__*/function () {
                             rate_id = (_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.id;
                           }
 
-                          calculateRate();
+                          calculateRate(edit);
 
                         case 7:
                         case "end":
@@ -2230,7 +2230,7 @@ var Orders = /*#__PURE__*/function () {
                             rate_id = (_response$data3 = response.data) === null || _response$data3 === void 0 ? void 0 : _response$data3.id;
                           }
 
-                          calculateRate();
+                          calculateRate(edit);
 
                         case 7:
                         case "end":
@@ -2320,7 +2320,8 @@ var Orders = /*#__PURE__*/function () {
             var index = Array.prototype.indexOf.call(parent.children, children);
             var name = input.replace('[]', '');
             boxes[index][name] = el.value;
-            calculateRate();
+            calculateRate(true);
+            calculateRate(false);
           });
         });
       });
@@ -2383,7 +2384,8 @@ var Orders = /*#__PURE__*/function () {
       });
       this.setInput();
       this.removeBox();
-      calculateRate();
+      calculateRate(true);
+      calculateRate(false);
     }
   }, {
     key: "addBox",
@@ -2429,7 +2431,8 @@ var Orders = /*#__PURE__*/function () {
           var index = Array.prototype.indexOf.call(parent.children, box);
           boxes.splice(index, 1);
           box.remove();
-          calculateRate();
+          calculateRate(true);
+          calculateRate(false);
         });
       });
     }
