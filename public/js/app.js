@@ -1965,7 +1965,7 @@ var requestCalculatePackingRates = /*#__PURE__*/function () {
 }();
 
 var calculateRate = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(edit) {
     var corp_value, same_day_delivery, immediate_delivery;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
       while (1) {
@@ -1979,7 +1979,7 @@ var calculateRate = /*#__PURE__*/function () {
             return _context4.abrupt("return");
 
           case 2:
-            corp_value = document.getElementById("corp_value");
+            corp_value = document.getElementById(edit ? "corp_value_edit" : "corp_value");
 
             if (!(corp_value == null)) {
               _context4.next = 5;
@@ -1990,7 +1990,7 @@ var calculateRate = /*#__PURE__*/function () {
 
           case 5:
             corp_value.value = 0;
-            same_day_delivery = document.getElementById("same_day_delivery");
+            same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
 
             if (!(same_day_delivery == null)) {
               _context4.next = 9;
@@ -2029,7 +2029,7 @@ var calculateRate = /*#__PURE__*/function () {
                 }, _callee3);
               }));
 
-              return function (_x6) {
+              return function (_x7) {
                 return _ref4.apply(this, arguments);
               };
             }());
@@ -2042,7 +2042,7 @@ var calculateRate = /*#__PURE__*/function () {
     }, _callee4);
   }));
 
-  return function calculateRate() {
+  return function calculateRate(_x6) {
     return _ref3.apply(this, arguments);
   };
 }();
@@ -2074,11 +2074,21 @@ var Orders = /*#__PURE__*/function () {
       this.loadHoursInEditOrShow();
       this.importModal();
       this.sendPushNotification();
-      this.listenRateVariables();
+      this.listenRateVariables(true);
+      this.listenRateVariables(false);
     }
   }, {
     key: "listenGuideCheck",
     value: function listenGuideCheck() {
+      var setValue = function setValue() {
+        [].forEach.call(guideCheck, function (guide) {
+          var _guide$parentNode$par, _guide$parentNode, _guide$parentNode$par2, _guide$parentNode$par3;
+
+          var corp_value = (_guide$parentNode$par = (_guide$parentNode = guide.parentNode) === null || _guide$parentNode === void 0 ? void 0 : (_guide$parentNode$par2 = _guide$parentNode.parentNode) === null || _guide$parentNode$par2 === void 0 ? void 0 : (_guide$parentNode$par3 = _guide$parentNode$par2.parentNode) === null || _guide$parentNode$par3 === void 0 ? void 0 : _guide$parentNode$par3.getAttribute('corp_value')) !== null && _guide$parentNode$par !== void 0 ? _guide$parentNode$par : 0;
+          guide.checked && (order_value.value = parseFloat(order_value.value) + parseFloat(corp_value));
+        });
+      };
+
       var guideCheck = document.getElementsByClassName("guideCheck");
       var order_value = document.getElementById("order_value");
 
@@ -2086,6 +2096,8 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
+      order_value.value = 0;
+      setValue();
       [].forEach.call(guideCheck, function (guide) {
         guide.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -2093,13 +2105,7 @@ var Orders = /*#__PURE__*/function () {
               switch (_context5.prev = _context5.next) {
                 case 0:
                   order_value.value = 0;
-                  [].forEach.call(guideCheck, function (guide) {
-                    var _guide$parentNode$par, _guide$parentNode, _guide$parentNode$par2, _guide$parentNode$par3;
-
-                    console.log(guide.parentNode.parentNode.parentNode.corp_value);
-                    var corp_value = (_guide$parentNode$par = (_guide$parentNode = guide.parentNode) === null || _guide$parentNode === void 0 ? void 0 : (_guide$parentNode$par2 = _guide$parentNode.parentNode) === null || _guide$parentNode$par2 === void 0 ? void 0 : (_guide$parentNode$par3 = _guide$parentNode$par2.parentNode) === null || _guide$parentNode$par3 === void 0 ? void 0 : _guide$parentNode$par3.corp_value) !== null && _guide$parentNode$par !== void 0 ? _guide$parentNode$par : 0;
-                    guide.checked && (order_value.value = parseFloat(order_value.value) + parseFloat(corp_value));
-                  });
+                  setValue();
 
                 case 2:
                 case "end":
@@ -2113,15 +2119,15 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "listenRateVariables",
     value: function () {
-      var _listenRateVariables = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+      var _listenRateVariables = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(edit) {
         var rate, zone, same_day_delivery;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                rate = document.getElementById("rate");
-                zone = document.getElementById("zone_id");
-                same_day_delivery = document.getElementById("same_day_delivery");
+                rate = document.getElementById(edit ? "rate_edit" : "rate");
+                zone = document.getElementById(edit ? "zone_edit" : "zone_id");
+                same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
 
                 if (!(rate == null || zone == null || same_day_delivery == null)) {
                   _context9.next = 5;
@@ -2242,7 +2248,7 @@ var Orders = /*#__PURE__*/function () {
         }, _callee9);
       }));
 
-      function listenRateVariables() {
+      function listenRateVariables(_x8) {
         return _listenRateVariables.apply(this, arguments);
       }
 
@@ -2474,7 +2480,7 @@ var Orders = /*#__PURE__*/function () {
         }, _callee11);
       }));
 
-      function requestSearchCustomer(_x7) {
+      function requestSearchCustomer(_x9) {
         return _requestSearchCustomer.apply(this, arguments);
       }
 
@@ -2587,7 +2593,7 @@ var Orders = /*#__PURE__*/function () {
         }, _callee13);
       }));
 
-      function requestSelectedCustomerData(_x8) {
+      function requestSelectedCustomerData(_x10) {
         return _requestSelectedCustomerData.apply(this, arguments);
       }
 
@@ -2882,7 +2888,7 @@ var Orders = /*#__PURE__*/function () {
         }, _callee18);
       }));
 
-      function sendGuideData(_x9) {
+      function sendGuideData(_x11) {
         return _sendGuideData.apply(this, arguments);
       }
 
@@ -3146,7 +3152,7 @@ var Orders = /*#__PURE__*/function () {
         }, _callee22);
       }));
 
-      function requestGuide(_x10) {
+      function requestGuide(_x12) {
         return _requestGuide.apply(this, arguments);
       }
 
@@ -3307,7 +3313,7 @@ var Orders = /*#__PURE__*/function () {
         }, _callee24);
       }));
 
-      function sendDataToUpdate(_x11, _x12) {
+      function sendDataToUpdate(_x13, _x14) {
         return _sendDataToUpdate.apply(this, arguments);
       }
 
@@ -3354,7 +3360,7 @@ var Orders = /*#__PURE__*/function () {
           }, _callee25);
         }));
 
-        return function (_x13) {
+        return function (_x15) {
           return _ref14.apply(this, arguments);
         };
       }());
@@ -3615,7 +3621,7 @@ var Orders = /*#__PURE__*/function () {
         }, _callee30);
       }));
 
-      function sendAddressData(_x14) {
+      function sendAddressData(_x16) {
         return _sendAddressData.apply(this, arguments);
       }
 
@@ -4014,7 +4020,7 @@ var Orders = /*#__PURE__*/function () {
         }, _callee38);
       }));
 
-      function sendImportModalData(_x15) {
+      function sendImportModalData(_x17) {
         return _sendImportModalData.apply(this, arguments);
       }
 

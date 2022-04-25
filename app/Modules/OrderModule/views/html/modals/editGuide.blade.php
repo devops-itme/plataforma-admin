@@ -47,12 +47,11 @@
                     <div class="form-group col-md-3">
                         <label for="district">Tarifa <span class="text-danger">*</span></label>
                         <select name="rate" class="form-control form-control-solid" id="rate_edit">
-                            <option selected disabled>Seleccione Tarifa</option>
-                            <option>Adicional</option>
-                            <option>Plena</option>
-                            <option>Retorno</option>
-                            <option>Adicional*0</option>
-                            <option>Plena/2</option>
+                            <option selected disabled value="">Seleccione Tarifa</option>
+                            {{-- @foreach ($rates as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @endforeach --}}
+                            <option value="0">Packaging</option>
                         </select>
                     </div>
                     <div class="form-group col-md-3">

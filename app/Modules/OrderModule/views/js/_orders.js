@@ -47,17 +47,17 @@ const requestCalculatePackingRates = async (rate_id, lbs, vol, immediate_deliver
     return response;
 }
 
-const calculateRate = async () => {
+const calculateRate = async (edit) => {
     if (rate_id == null) {
         return
     }
-    let corp_value = document.getElementById("corp_value");
+    let corp_value = document.getElementById(edit ? "corp_value_edit" : "corp_value");
     if (corp_value == null) {
         return;
     }
     corp_value.value = 0;
 
-    let same_day_delivery = document.getElementById("same_day_delivery");
+    let same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
     if (same_day_delivery == null) {
         return;
     }
@@ -96,10 +96,17 @@ export default class Orders {
         this.loadHoursInEditOrShow();
         this.importModal();
         this.sendPushNotification();
-        this.listenRateVariables();
+        this.listenRateVariables(true);
+        this.listenRateVariables(false);
     }
 
     listenGuideCheck() {
+        const setValue = () => {
+            [].forEach.call(guideCheck, function (guide) {
+                let corp_value = guide.parentNode?.parentNode?.parentNode?.getAttribute('corp_value') ?? 0;
+                guide.checked && (order_value.value = parseFloat(order_value.value) + parseFloat(corp_value));
+            });
+        };
 
         let guideCheck = document.getElementsByClassName("guideCheck");
         let order_value = document.getElementById("order_value");
@@ -107,23 +114,21 @@ export default class Orders {
         if (guideCheck == null || order_value == null) {
             return;
         }
+        order_value.value = 0;
+        setValue();
 
         [].forEach.call(guideCheck, function (guide) {
             guide.addEventListener('change', async () => {
                 order_value.value = 0;
-                [].forEach.call(guideCheck, function (guide) {
-                    console.log(guide.parentNode.parentNode.parentNode.corp_value);
-                    let corp_value = guide.parentNode?.parentNode?.parentNode?.corp_value ?? 0;
-                    guide.checked && (order_value.value = parseFloat(order_value.value) + parseFloat(corp_value));
-                });
+                setValue();
             });
         });
     }
 
-    async listenRateVariables() {
-        let rate = document.getElementById("rate");
-        let zone = document.getElementById("zone_id");
-        let same_day_delivery = document.getElementById("same_day_delivery");
+    async listenRateVariables(edit) {
+        let rate = document.getElementById(edit ? "rate_edit" : "rate");
+        let zone = document.getElementById(edit ? "zone_edit" : "zone_id");
+        let same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
 
         if (rate == null || zone == null || same_day_delivery == null) {
             return;
