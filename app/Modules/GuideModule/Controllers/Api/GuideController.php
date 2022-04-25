@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 
 class GuideController extends Controller
 {
-    use GuideTrait, GuidanceDocsTrait;
+    use GuidanceDocsTrait;
 
     public function respond($state, $data = [], $error = null, $message = '')
     {
