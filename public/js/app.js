@@ -5348,24 +5348,73 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var map;
-var infoWindow;
+var coordinates = [];
 
 function showArrays(event) {
-  // Since this polygon has only one path, we can call getPath() to return the
-  // MVCArray of LatLngs.
+  var coordinates_input = document.getElementById("coordinates");
+
+  if (coordinates_input == null) {
+    return;
+  }
+
   var polygon = this;
   var vertices = polygon.getPath();
-  var contentString = "<b>Bermuda Triangle polygon</b><br>" + "Clicked location: <br>" + event.latLng.lat() + "," + event.latLng.lng() + "<br>"; // Iterate over the vertices.
+  coordinates = [];
 
   for (var i = 0; i < vertices.getLength(); i++) {
     var xy = vertices.getAt(i);
-    contentString += "<br>" + "Coordinate " + i + ":<br>" + xy.lat() + "," + xy.lng();
-  } // Replace the info window's content and position.
+    coordinates.push({
+      lat: xy.lat(),
+      lng: xy.lng()
+    });
+  }
+
+  coordinates_input.value = JSON.stringify(coordinates);
+}
+
+function initMap() {
+  var coordinates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+  if (google == null) {
+    return;
+  } // The location of panama 8.689078613386496, -81.13166771577085
 
 
-  infoWindow.setContent(contentString);
-  infoWindow.setPosition(event.latLng);
-  infoWindow.open(map);
+  var panama = {
+    lat: 8.689,
+    lng: -81.131
+  };
+  var mapTemplate = document.getElementById("map");
+
+  if (mapTemplate == null) {
+    return;
+  } // The map, centered at panama
+
+
+  map = new google.maps.Map(mapTemplate, {
+    zoom: 7,
+    center: panama,
+    mapTypeId: google.maps.MapTypeId.RoadMap
+  });
+  var triangleCoords = [new google.maps.LatLng(8.827520901431855, -82.07374528457048), new google.maps.LatLng(8.281601970995954, -81.7386623009158)];
+
+  if (coordinates != null) {
+    triangleCoords = JSON.parse(coordinates);
+  }
+
+  var myPolygon = new google.maps.Polygon({
+    paths: triangleCoords,
+    draggable: true,
+    // turn off if it gets annoying
+    editable: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35
+  });
+  myPolygon.setMap(map);
+  myPolygon.addListener("mouseup", showArrays);
 }
 
 var Zones = /*#__PURE__*/function () {
@@ -5376,51 +5425,9 @@ var Zones = /*#__PURE__*/function () {
   _createClass(Zones, [{
     key: "initialize",
     value: function initialize() {
-      this.initMap();
+      initMap();
       this.getCountries();
       this.formHandler();
-    }
-  }, {
-    key: "initMap",
-    value: function initMap() {
-      infoWindow = new google.maps.InfoWindow(); // The location of panama 8.689078613386496, -81.13166771577085
-
-      var panama = {
-        lat: 8.689,
-        lng: -81.131
-      };
-      var mapTemplate = document.getElementById("map");
-
-      if (mapTemplate == null) {
-        return;
-      } // The map, centered at panama
-
-
-      map = new google.maps.Map(mapTemplate, {
-        zoom: 7,
-        center: panama,
-        mapTypeId: google.maps.MapTypeId.RoadMap
-      }); // The marker, positioned at Uluru
-      // const marker = new google.maps.Marker({
-      //     position: panama,
-      //     map: map,
-      // });
-
-      var triangleCoords = [new google.maps.LatLng(8.827520901431855, -82.07374528457048), new google.maps.LatLng(8.281601970995954, -81.7386623009158) // new google.maps.LatLng(8.71351334406503, -81.26075706193294)
-      ];
-      var myPolygon = new google.maps.Polygon({
-        paths: triangleCoords,
-        draggable: true,
-        // turn off if it gets annoying
-        editable: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35
-      });
-      myPolygon.setMap(map);
-      myPolygon.addListener("dragend", showArrays);
     }
   }, {
     key: "getCountries",
@@ -5552,6 +5559,7 @@ var Zones = /*#__PURE__*/function () {
 
                 case 18:
                   zone = response.data;
+                  initMap(zone.coordinates);
                   zone_form.setAttribute('action', "zonas/".concat(zone.id));
                   put = document.createElement('input');
                   put.type = 'hidden';
@@ -5570,7 +5578,7 @@ var Zones = /*#__PURE__*/function () {
                   getCorregimientos(district.id, corregimiento.id);
                   getNeighborhoods(corregimiento.id, neighborhoods);
 
-                case 36:
+                case 37:
                 case "end":
                   return _context2.stop();
               }

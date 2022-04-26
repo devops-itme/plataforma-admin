@@ -8,7 +8,7 @@
             <div class="card card-custom gutter-b">
 
                 <div class="card-body">
-                    <h3>My Google Maps Demo</h3>
+                    <h3>Zonas</h3>
                     <div id="map" style="height: 420px; width: 100%;"></div>
                 </div>
             </div>
@@ -24,6 +24,7 @@
                     @include('layouts.alerts')
                     <form action="{{ route('zones.store') }}" id="zone-form" method="POST">
                         @csrf
+                        <input type="hidden" name="coordinates" id="coordinates">
                         <div class="form-group py-3 m-0 col-md-12">
                             <label>Nombre: </label>
                             <input type="text" class="form-control" id="input-name" name="name"

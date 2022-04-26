@@ -16,6 +16,7 @@ class CreateZonesTable extends Migration
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->json('coordinates')->nullable();
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}");
             $table->timestamps();
             $table->softDeletes();

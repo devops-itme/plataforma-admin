@@ -16,7 +16,7 @@ trait RatesTrait
             $request->all(),
             [
                 'zone_id' => 'required|exists:zones,id',
-                'neighborhood_id' => 'required|exists:neighborhoods,id',
+                'neighborhood_id' => 'nullable|exists:neighborhoods,id',
                 'package_type' => 'required|exists:parameter_values,id',
                 'estimated_time' => 'required|numeric',
                 'base_value' => 'required|numeric',

@@ -40,8 +40,8 @@
                         @endforeach
                     </select>
                 </div>
-
-                <div class="form-group col-md-3">
+                {{-- don't delete --}}
+                {{-- <div class="form-group col-md-3">
                     <label>Barrio: <span class="text-danger">*</span></label>
                     <select class="form-control form-control-solid" id="select-neighborhood" name="neighborhood_id" required>
                         <option selected disabled>Seleccione Barrio</option>
@@ -50,7 +50,7 @@
                                 {{ $neighborhood->name }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
 
                 <div class="form-group col-md-3">
                     <label>Tiempo estimado(en horas): <span class="text-danger">*</span></label>

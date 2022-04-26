@@ -18,6 +18,7 @@ class Zone extends Model
     protected $table = 'zones';
     protected $fillable = [
         'name',
+        'coordinates',
         'state'
     ];
 
@@ -73,6 +74,7 @@ class Zone extends Model
             $request->all(),
             [
                 'name' => 'required|string',
+                'coordinates' => 'nullable',
                 'state' => 'nullable|numeric',
             ]
         );
@@ -89,6 +91,7 @@ class Zone extends Model
         try {
             $zone = $this::create([
                 'name' => $request->name,
+                'coordinates' => $request->coordinates,
                 'state' => $request->state ?? 1
             ]);
 

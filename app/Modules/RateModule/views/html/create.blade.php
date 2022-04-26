@@ -39,15 +39,15 @@
                         @endforeach
                     </select>
                 </div>
-
-                <div class="form-group col-md-3">
+                {{-- don't delete --}}
+                {{-- <div class="form-group col-md-3">
                     <label>Barrio: <span class="text-danger">*</span></label>
                     <input type="hidden" name="old_neighborhood_id" id="old-neighborhood-id" value="{{old('neighborhood_id')}}">
                     <select class="form-control form-control-solid" name="neighborhood_id" id="select-neighborhood"
                         required>
                         <option selected disabled value="">Seleccione</option>
                     </select>
-                </div>
+                </div> --}}
 
                 <div class="form-group col-md-3">
                     <label>Tiempo estimado(en horas): <span class="text-danger">*</span></label>
@@ -79,7 +79,7 @@
                     <input type="number" class="form-control form-control-solid" placeholder="Porcentaje x entrega"
                         name="percentage_immediate_delivery" value="{{ old('percentage_immediate_delivery') }}" />
                 </div>
-
+                
                 <div class="form-group row col-md-3 ml-1">
                     <label class="checkbox">
                         <input type="checkbox" name="special_rate" {{ old('special_rate') === 'on' ? 'checked' : '' }} />

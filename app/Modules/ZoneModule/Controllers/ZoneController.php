@@ -35,13 +35,7 @@ class ZoneController extends Controller
 
         return view($this->path . 'index', compact('zones', 'countries'));
     }
-
-    public function edit($id)
-    {
-        $zone = Zone::where('id', $id)->with($this->zoneRelationships)->first();
-        return $this->respond(200, $zone, 'detail zone', 'Información de la zona');
-    }
-
+    
     public function store(Request $request)
     {
         try {
@@ -51,15 +45,15 @@ class ZoneController extends Controller
                 if ($zoneResponse['state'] != 200) {
                     return $zoneResponse;
                 }
-
+                
                 $zone_id = $zoneResponse['data']->id;
-
+                
                 foreach ($request->neighborhood as $hood) {
                     $field = ['zone_id' => $zone_id];
-
+                    
                     $neighborhood = Neighborhood::find($hood)
-                        ->update($field);
-
+                    ->update($field);
+                    
                     if (!$neighborhood) {
                         return $this->respond(500, null, 'Neighborhood' . $hood . 'no updated', 'Error del servidor');
                     };
@@ -72,6 +66,12 @@ class ZoneController extends Controller
             return redirect()->back()->withInput()->with('danger', 'Error del servidor');
             // return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
         }
+    }
+    
+    public function edit($id)
+    {
+        $zone = Zone::where('id', $id)->with($this->zoneRelationships)->first();
+        return $this->respond(200, $zone, 'detail zone', 'Información de la zona');
     }
 
     public function update(Request $request, $id)
