@@ -1316,7 +1316,7 @@ var Customers = /*#__PURE__*/function () {
       }
 
       btnSubmit.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var parent_id, name, last_name, email, phone, password, password_confirm, formData, response, modal;
+        var parent_id, name, last_name, email, phone, password, password_confirm, formData, response, modal, form;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -1338,11 +1338,13 @@ var Customers = /*#__PURE__*/function () {
                 if (response.state == 200) {
                   correct(response.message);
                   modal = document.getElementById("modalCreateUser");
+                  form = document.getElementById("user-bank-form");
+                  form.reset();
                   modal.click();
 
                   _this5.listUsers();
                 } else {
-                  error(response.error);
+                  error(response.message);
                   console.log('Error: ' + response.error);
                 }
 

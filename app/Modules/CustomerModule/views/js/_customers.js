@@ -515,10 +515,12 @@ export default class Customers {
             if(response.state == 200){
                 correct(response.message);
                 let modal = document.getElementById("modalCreateUser");
+                let form = document.getElementById("user-bank-form");
+                form.reset();
                 modal.click();
                 this.listUsers();
             } else {
-                error(response.error);
+                error(response.message);
                 console.log('Error: '+response.error);
             }
         });

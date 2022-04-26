@@ -14,6 +14,7 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\UserModule\User;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -83,7 +84,7 @@ class CustomerController extends Controller
         })->get();
 
         $zones = Zone::get();
-        return view($this->path . 'create', compact('documents','payment_period','payment_method','branch_office_type','use_mode','plans','zones'));
+        return view($this->path . 'create', compact('documents', 'payment_period', 'payment_method', 'branch_office_type', 'use_mode', 'plans', 'zones'));
     }
 
     /**
@@ -95,18 +96,18 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         if (is_null($request->person_type)) {
-            return $this->respond(500,null,'validation fail', 'El campo Tipo de persona es requerido');
+            return $this->respond(500, null, 'validation fail', 'El campo Tipo de persona es requerido');
             // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
         }
         if ($request->person_type == 1 && (is_null($request->name) || is_null($request->last_name))) {
-            return $this->respond(500, null, 'validation fail', ('El campo '.(is_null($request->name) ? 'Nombres' : 'Apellidos') . ' es requerido para las personas de tipo natural'));
+            return $this->respond(500, null, 'validation fail', ('El campo ' . (is_null($request->name) ? 'Nombres' : 'Apellidos') . ' es requerido para las personas de tipo natural'));
             // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
         }
         if ($request->person_type == 2 && is_null($request->business_name)) {
-            return $this->respond(500,null,'validation fail', 'El campo nombre de empresa es requerido para las personas de tipo jurídica');
+            return $this->respond(500, null, 'validation fail', 'El campo nombre de empresa es requerido para las personas de tipo jurídica');
             // return redirect()->back()->with('danger', 'Error. La entidad debe tener nombre.');
         }
-        $response = DB::transaction(function () use ($request){
+        $response = DB::transaction(function () use ($request) {
 
             $saveUserData = $this->saveUser($request->merge(['state' => 1, 'role' => 4]));
             if ($saveUserData['state'] != 200) {
@@ -331,24 +332,24 @@ class CustomerController extends Controller
 
     public function UserBankStore(Request $request, $parent_id = null)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'last_name' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+        $password_message = '';
         if (is_null($request->password) && is_null($request->password_confirmation)) {
             $request->merge(['password' => 'Admin1234', 'password_confirmation' => 'Admin1234']);
+            $password_message = '. La contraseña por defecto es: Admin1234';
         }
-        $response = $this->saveUser($request->merge(['parent_id' => $parent_id ? $parent_id : null, 'role' => 4, 'state' => 1]));
-        if ($response['state'] == 200) {
-            // return redirect()->route('bankUsers.index', $parent_id)->with('success', 'Usuario registrado exitosamente');
-            return json_encode([
-                'state' => 200,
-                'message' => "Usuario creado exitosamente"
-            ]);
-        } else {
-            // return redirect()->back()->with('danger', $response['message']);
-            return json_encode([
-                'state' => 500,
-                'message' => "Error al crear usuario",
-                'error' => $response['message']
-            ]);
-        }
+        $response = $this->saveUser($request->merge(['parent_id' => $parent_id ?? null, 'role' => 4, 'state' => 1]));
+        $response['message'] = $response['message'] . $password_message; 
+        return $response;
     }
 
     public function UserBankShow($parent_id, $id)
