@@ -116,6 +116,7 @@ class Zone extends Model
             }
             $zone->update([
                 'name' => $request->name,
+                'coordinates' => $request->coordinates,
                 'state' => $request->state ?? 1
             ]);
 
