@@ -67,8 +67,6 @@ export default class Zones {
         this.formHandler();
     }
 
-
-
     async getCountries() {
         let select = document.getElementById("select-country");
         if (select == null) {
