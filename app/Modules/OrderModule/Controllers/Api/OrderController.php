@@ -12,6 +12,7 @@ use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\OrderModule\Controllers\OrderTrait;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
+use App\Modules\RateModule\Rate;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,15 +97,19 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        if (Auth()->user()->role != 1) {
-            $request->merge(['user_id' => Auth()->user()->id]);
-        };
-
-        $last_id = Order::all()->last()->id ?? 0;
-        $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
-
         try {
+            if (Auth()->user()->role != 1) {
+                $request->merge(['user_id' => Auth()->user()->id]);
+            };
+
+            $last_id = Order::all()->last()->id ?? 0;
+            $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
+
             $transactionResponse = DB::transaction(function () use ($request) {
+                $Rate = new Rate();
+                $source_zone_id = $request->zone_id;
+                $source_rate = $Rate->calculateRate($source_zone_id);
+
                 $user_id = Auth::user()->id;
                 $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
 
@@ -138,6 +143,8 @@ class OrderController extends Controller
 
                 $guides = $request->guides;
 
+                $rate_value = 0;
+
                 foreach ($guides as $guide) {
                     $address = null;
                     if (!is_null($guide['address_id'])) {
@@ -146,6 +153,9 @@ class OrderController extends Controller
                             return $this->respond(500, null, 'not found', 'Dirección no encontrada');
                         }
                     }
+                    $destination_zone_id = $guide['zone_id'];
+                    $destination_rate = $Rate->calculateRate($destination_zone_id);
+                    $rate_value += ($source_rate > $destination_rate ? $source_rate : $destination_rate);
 
                     $request->merge([
                         'order_id' => $order_id,
@@ -184,6 +194,10 @@ class OrderController extends Controller
                         return $storeGuideResponse;
                     }
                 }
+
+                $order = Order::find($order_id);
+                $order->update(['order_value' => $request->order_value,]);
+
                 return $this->respond(200, null, null, 'Orden creada correctamente');
             });
             return $transactionResponse;

@@ -37,7 +37,7 @@ class CreateOrdersTable extends Migration
             $table->double('percentage_to_collect')->nullable()->comment('Porcentaje de seguro');
             $table->integer('customer_user_id');
             $table->integer('creator_user_id')->nullable();
-            $table->integer('zone')->nullable();
+            $table->integer('zone_id')->nullable();
             $table->string('dispatched')->unique()->nullable();
             $table->unsignedBigInteger('address_id')->nullable();
             $table->string('address_name')->nullable();

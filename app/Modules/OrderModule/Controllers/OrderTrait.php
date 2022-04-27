@@ -23,6 +23,7 @@ trait OrderTrait
                     Rule::requiredIf($action == 'create'), Rule::unique('orders', 'order_number')->ignore($id)->whereNull('deleted_at'), 'string'
                 ],
                 'user_id' => 'required|exists:users,id|numeric',
+                'zone_id' => 'nullable|exists:zones,id|numeric',
                 'order_type' => 'required|numeric',
                 'order_value' => 'nullable|numeric',
                 'receive_by_COD' => 'nullable|numeric',
@@ -64,6 +65,7 @@ trait OrderTrait
             $order = Order::create([
                 'order_number' => $request->order_number,
                 'user_id' => $request->user_id,
+                'zone_id' => $request->zone_id,
                 'order_type' => $request->order_type,
                 'order_value' => $request->order_value,
                 'receive_by_COD' => $request->receive_by_COD,
@@ -111,6 +113,7 @@ trait OrderTrait
             }
             $order->update([
                 'user_id' => $request->user_id,
+                'zone_id' => $request->zone_id,
                 'order_type' => $request->order_type,
                 'order_value' => $request->order_value,
                 'receive_by_COD' => $request->receive_by_COD,

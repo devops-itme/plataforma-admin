@@ -87,7 +87,7 @@ class Rate extends Model
     }
 
 
-    public function calculateRate($rate_id, $lbs, $vol, $immediate_delivery = false)
+    public function calculateRate($rate_id, $lbs = 0, $vol = 0, $immediate_delivery = false)
     {
         $calculated = null;
         $rate = $this::where('id', $rate_id)->first();
