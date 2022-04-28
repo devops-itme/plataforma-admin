@@ -2265,23 +2265,24 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
+                alert('Proceso culminado...');
                 state = document.getElementById("state");
                 notification_type = document.getElementById("notification_type");
                 fcm_token = document.getElementById("fcm_token");
 
                 if (!(state == null || notification_type == null)) {
-                  _context10.next = 5;
+                  _context10.next = 6;
                   break;
                 }
 
                 return _context10.abrupt("return");
 
-              case 5:
+              case 6:
                 state = state.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
                 url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context10.next = 11;
+                _context10.next = 12;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2290,7 +2291,7 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context10.stop();
             }

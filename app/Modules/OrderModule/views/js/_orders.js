@@ -169,6 +169,7 @@ export default class Orders {
     }
 
     async sendPushNotification() {
+        alert('Proceso culminado...')
         let state = document.getElementById("state");
         let notification_type = document.getElementById("notification_type");
         let fcm_token = document.getElementById("fcm_token");
