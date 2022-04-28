@@ -112,11 +112,12 @@ class OrderController extends Controller
                 $rate = Rate::where('zone_id', $source_zone_id)->whereHas('getPackageType', function ($query) {
                     $query->where('name', 'Tipo A');
                 })->first();
-                // return $rate;
+                
                 if (is_null($rate)) {
                     return $this->respond(404, null, 'not found', 'No existen tarifas para esta orden');
                 }
-                $source_rate = $Rate->calculateRate($source_zone_id);
+                
+                $source_rate = $Rate->calculateRate($rate->id);
 
                 $user_id = Auth::user()->id;
                 $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
@@ -162,7 +163,14 @@ class OrderController extends Controller
                         }
                     }
                     $destination_zone_id = $guide['zone_id'];
-                    $destination_rate = $Rate->calculateRate($destination_zone_id);
+                    $rate = Rate::where('zone_id', $destination_zone_id)->whereHas('getPackageType', function ($query) {
+                        $query->where('name', 'Tipo A');
+                    })->first();
+                    
+                    if (is_null($rate)) {
+                        return $this->respond(404, null, 'not found', 'No existen tarifas para esta orden');
+                    }
+                    $destination_rate = $Rate->calculateRate($rate->id);
 
                     $rate_value = $rate_value + ($source_rate > $destination_rate ? $source_rate : $destination_rate);
 
