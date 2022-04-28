@@ -97,6 +97,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        return $request->all();
         try {
             if (Auth()->user()->role != 1) {
                 $request->merge(['user_id' => Auth()->user()->id]);
