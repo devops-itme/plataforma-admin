@@ -2260,7 +2260,7 @@ var Orders = /*#__PURE__*/function () {
     key: "sendPushNotification",
     value: function () {
       var _sendPushNotification = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var state, notification_type, fcm_token, url;
+        var state, notification_type, fcm_token, message, url;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
@@ -2269,20 +2269,21 @@ var Orders = /*#__PURE__*/function () {
                 state = document.getElementById("state");
                 notification_type = document.getElementById("notification_type");
                 fcm_token = document.getElementById("fcm_token");
+                message = document.getElementById("message");
 
-                if (!(state == null || notification_type == null)) {
-                  _context10.next = 6;
+                if (!(state == null || notification_type == null || fcm_token == null || message == null)) {
+                  _context10.next = 7;
                   break;
                 }
 
                 return _context10.abrupt("return");
 
-              case 6:
+              case 7:
                 state = state.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
                 url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context10.next = 12;
+                _context10.next = 13;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2291,7 +2292,10 @@ var Orders = /*#__PURE__*/function () {
                   return console.log(e);
                 });
 
-              case 12:
+              case 13:
+                message.innerText = "Proceso culminado...";
+
+              case 14:
               case "end":
                 return _context10.stop();
             }

@@ -173,8 +173,9 @@ export default class Orders {
         let state = document.getElementById("state");
         let notification_type = document.getElementById("notification_type");
         let fcm_token = document.getElementById("fcm_token");
+        let message = document.getElementById("message");
 
-        if (state == null || notification_type == null) {
+        if (state == null || notification_type == null || fcm_token == null || message == null) {
             return;
         }
         state = state.value;
@@ -188,6 +189,8 @@ export default class Orders {
                 console.log(data);
             })
             .catch(e => console.log(e));
+            
+        message.innerText = `Proceso culminado...`;
     }
 
     setInput() {
