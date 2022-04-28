@@ -155,7 +155,7 @@ class OrderController extends Controller
                     }
                     $destination_zone_id = $guide['zone_id'];
                     $destination_rate = $Rate->calculateRate($destination_zone_id);
-                    
+                    return ($source_rate > $destination_rate ? $source_rate : $destination_rate);
                     $rate_value = $rate_value + ($source_rate > $destination_rate ? $source_rate : $destination_rate);
 
                     $request->merge([
