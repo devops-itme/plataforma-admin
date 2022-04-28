@@ -97,7 +97,6 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        return $request->zone_id;
         try {
             if (Auth()->user()->role != 1) {
                 $request->merge(['user_id' => Auth()->user()->id]);
@@ -110,7 +109,7 @@ class OrderController extends Controller
                 $Rate = new Rate();
                 $source_zone_id = $request->zone_id;
                 $source_rate = $Rate->calculateRate($source_zone_id);
-
+                return $source_rate;
                 $user_id = Auth::user()->id;
                 $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
 
