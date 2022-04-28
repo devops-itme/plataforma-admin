@@ -185,12 +185,10 @@ export default class Orders {
         await fetch(url)
             .then(response => response.json())
             .then(data => {
-                alert('HERE 1')
+                alert(JSON.stringify(data))
                 console.log(data);
             })
-            .catch(e => { alert('HERE 2'); console.log(e) });
-        alert('Proceso culminado...', url)
-
+            .catch(e => { console.log(e) });
     }
 
     setInput() {

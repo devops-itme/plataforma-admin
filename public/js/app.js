@@ -2285,17 +2285,13 @@ var Orders = /*#__PURE__*/function () {
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  alert('HERE 1');
+                  alert(JSON.stringify(data));
                   console.log(data);
                 })["catch"](function (e) {
-                  alert('HERE 2');
                   console.log(e);
                 });
 
               case 11:
-                alert('Proceso culminado...', url);
-
-              case 12:
               case "end":
                 return _context10.stop();
             }
