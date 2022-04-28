@@ -2280,19 +2280,17 @@ var Orders = /*#__PURE__*/function () {
                 state = state.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
-                alert(fcm_token);
                 url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context10.next = 12;
+                _context10.next = 11;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  alert(JSON.stringify(data));
                   console.log(data);
                 })["catch"](function (e) {
                   console.log(e);
                 });
 
-              case 12:
+              case 11:
               case "end":
                 return _context10.stop();
             }

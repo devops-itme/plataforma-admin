@@ -180,12 +180,11 @@ export default class Orders {
         state = state.value;
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
-        alert(fcm_token);
+       
         let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`
         await fetch(url)
             .then(response => response.json())
             .then(data => {
-                alert(JSON.stringify(data))
                 console.log(data);
             })
             .catch(e => { console.log(e) });
