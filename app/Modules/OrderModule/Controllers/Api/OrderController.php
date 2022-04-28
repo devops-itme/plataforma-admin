@@ -155,7 +155,7 @@ class OrderController extends Controller
                     }
                     $destination_zone_id = $guide['zone_id'];
                     $destination_rate = $Rate->calculateRate($destination_zone_id);
-                    return ($source_rate > $destination_rate ? $source_rate : $destination_rate);
+                    
                     $rate_value = $rate_value + ($source_rate > $destination_rate ? $source_rate : $destination_rate);
 
                     $request->merge([
@@ -173,7 +173,6 @@ class OrderController extends Controller
                         "transport_type" => $guide['transport_type'] ?? '',
                         'state' => 31
                     ]);
-                    return $rate_value;
 
                     if (is_null($guide['address_id'])) {
                         $validator = $this->AddressesValidate($request);
@@ -195,7 +194,7 @@ class OrderController extends Controller
                         return $storeGuideResponse;
                     }
                 }
-
+                return $rate_value;
                 $order = Order::find($order_id);
                 $order->update(['order_value' => $request->order_value,]);
 
