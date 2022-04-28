@@ -141,7 +141,7 @@ class UserController extends Controller
 
     public function sendPushNotification(Request $request)
     {
-        $userToken = $request->fcm_token ?? 'frg_R3WoQWaf8bGHcyK909:APA91bH8t5h_5kqfQ8ca5yn1qsuFsj6ndT_51R0g71Wiw4UieFCtuSprR0Qopo5MpQPVaxJevu2rLEMTzjvGRKwdBSH0TIxltj0-5yW2K2-pNDOcer9ZAgQgOgNQ0ijVUUAJA9J6j1lJ';
+        $userToken = $request->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';
        
         $data = $request->all();
         return sendCustomNotifications('Notification', 'Notification', $data, $userToken);        
