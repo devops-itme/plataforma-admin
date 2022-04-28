@@ -173,13 +173,16 @@ export default class Orders {
         let notification_type = document.getElementById("notification_type");
         let fcm_token = document.getElementById("fcm_token");
         let message = document.getElementById("message");
-
+        alert('HERE 1')
         if (state == null || notification_type == null || fcm_token == null || message == null) {
+            alert('HERE 2')
             return;
         }
+        alert('HERE 3')
         state = state.value;
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
+        alert('HERE 4')
         let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`
         alert('Proceso culminado...', url)
         await fetch(url)
