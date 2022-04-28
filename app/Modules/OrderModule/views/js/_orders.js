@@ -169,7 +169,6 @@ export default class Orders {
     }
 
     async sendPushNotification() {
-        alert('Proceso culminado...')
         let state = document.getElementById("state");
         let notification_type = document.getElementById("notification_type");
         let fcm_token = document.getElementById("fcm_token");
@@ -182,14 +181,14 @@ export default class Orders {
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
         let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`
-
+        alert('Proceso culminado...', url)
         await fetch(url)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
             })
             .catch(e => console.log(e));
-            
+
         message.innerText = `Proceso culminado...`;
     }
 
