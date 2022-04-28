@@ -14,6 +14,7 @@ use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RateModule\Rate;
 use App\Modules\StatusMatrixModule\StatusMatrix;
+use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -108,8 +109,15 @@ class OrderController extends Controller
             $transactionResponse = DB::transaction(function () use ($request) {
                 $Rate = new Rate();
                 $source_zone_id = $request->zone_id;
+                $rate = Rate::where('zone_id', $source_zone_id)->whereHas('getPackageType', function ($query) {
+                    $query->where('name', 'Tipo A');
+                })->first();
+                return $rate;
+                if (is_null($rate)) {
+                    return $this->respond(404, null, 'not found', 'No existen tarifas para esta orden');
+                }
                 $source_rate = $Rate->calculateRate($source_zone_id);
-               
+
                 $user_id = Auth::user()->id;
                 $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
 
@@ -155,7 +163,7 @@ class OrderController extends Controller
                     }
                     $destination_zone_id = $guide['zone_id'];
                     $destination_rate = $Rate->calculateRate($destination_zone_id);
-                    
+
                     $rate_value = $rate_value + ($source_rate > $destination_rate ? $source_rate : $destination_rate);
 
                     $request->merge([
