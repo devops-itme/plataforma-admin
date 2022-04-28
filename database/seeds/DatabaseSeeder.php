@@ -15,11 +15,14 @@ class DatabaseSeeder extends Seeder
             ParameterValueSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            // ZonesSeeder::class,
             ModuleSeeder::class,
             MessengerSeeder::class,
             StatusMatrixSeeder::class,
+            CountrySeeder::class,
+            ProvinceSeeder::class,
+            DistrictSeeder::class,
+            CorregimientoSeeder::class,
+            NeighborhoodSeeder::class,
         ]);
-
     }
 }
