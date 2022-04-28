@@ -109,7 +109,7 @@ class OrderController extends Controller
                 $Rate = new Rate();
                 $source_zone_id = $request->zone_id;
                 $source_rate = $Rate->calculateRate($source_zone_id);
-                return $source_rate;
+               
                 $user_id = Auth::user()->id;
                 $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
 
@@ -172,7 +172,7 @@ class OrderController extends Controller
                         "transport_type" => $guide['transport_type'] ?? '',
                         'state' => 31
                     ]);
-
+                    return $rate_value;
 
                     if (is_null($guide['address_id'])) {
                         $validator = $this->AddressesValidate($request);
