@@ -194,9 +194,9 @@ class OrderController extends Controller
                         return $storeGuideResponse;
                     }
                 }
-                return $rate_value;
                 $order = Order::find($order_id);
                 $order->update(['order_value' => $request->order_value,]);
+                return $order;
 
                 return $this->respond(200, null, null, 'Orden creada correctamente');
             });
