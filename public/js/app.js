@@ -2268,34 +2268,34 @@ var Orders = /*#__PURE__*/function () {
                 state = document.getElementById("state");
                 notification_type = document.getElementById("notification_type");
                 fcm_token = document.getElementById("fcm_token");
-                alert('HERE 1');
 
                 if (!(state == null || notification_type == null || fcm_token == null)) {
-                  _context10.next = 7;
+                  _context10.next = 5;
                   break;
                 }
 
-                alert('HERE 2');
                 return _context10.abrupt("return");
 
-              case 7:
-                alert('HERE 3');
+              case 5:
                 state = state.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
-                alert('HERE 4');
                 url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                alert('Proceso culminado...', url);
-                _context10.next = 16;
+                _context10.next = 11;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
+                  alert('HERE 1');
                   console.log(data);
                 })["catch"](function (e) {
-                  return console.log(e);
+                  alert('HERE 2');
+                  console.log(e);
                 });
 
-              case 16:
+              case 11:
+                alert('Proceso culminado...', url);
+
+              case 12:
               case "end":
                 return _context10.stop();
             }
