@@ -112,7 +112,7 @@ class OrderController extends Controller
                 $rate = Rate::where('zone_id', $source_zone_id)->whereHas('getPackageType', function ($query) {
                     $query->where('name', 'Tipo A');
                 })->first();
-                return $rate;
+                // return $rate;
                 if (is_null($rate)) {
                     return $this->respond(404, null, 'not found', 'No existen tarifas para esta orden');
                 }
