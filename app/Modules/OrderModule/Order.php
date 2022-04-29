@@ -57,7 +57,8 @@ class Order extends Model
         'branch_office',
         'dispatched',
         'app_status',
-        'status_matrix_id'
+        'status_matrix_id',
+        'paid'
     ];
 
     /* Logs Config */

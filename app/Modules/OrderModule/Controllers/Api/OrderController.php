@@ -261,7 +261,8 @@ class OrderController extends Controller
     {
 
         $host = $request->getHost();
-        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response";
+        $fcm_token =  Auth::user()->fcm_token;
+        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=".$fcm_token;
         $cclw = env('PAGUELOFACIL_CCLW');
         $amount = intval($request->totalValue);
         $description = 'Pago orden multientrega';
@@ -298,9 +299,11 @@ class OrderController extends Controller
 
     public function responseViewPagueloFacil(Request $request)
     {
-
         $response = $request->all();
-        $response['fcm_token'] = Auth::user()->fcm_token;
+        // if($response['Estado'] != 'Denegada') {
+
+        // }
+        // $response['fcm_token'] = Auth::user()->fcm_token;
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
 }
