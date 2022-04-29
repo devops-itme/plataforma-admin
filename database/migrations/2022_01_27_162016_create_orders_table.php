@@ -49,7 +49,7 @@ class CreateOrdersTable extends Migration
             $table->integer('app_status')->nullable()->default(0)->comment("{0:Pendiente;1:Leído;}");
             $table->unsignedBigInteger('status_matrix_id')->nullable();
             $table->foreign('status_matrix_id')->references('id')->on('status_matrix');
-            $table->integer('paid')->nullable();
+            $table->integer('paid')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
