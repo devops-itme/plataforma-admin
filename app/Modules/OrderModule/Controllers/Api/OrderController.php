@@ -301,7 +301,7 @@ class OrderController extends Controller
     public function responseViewPagueloFacil(Request $request)
     {
         $response = $request->all();
-        if($response['Estado'] == 'Denegada') {
+        if($response['Estado'] != 'Denegada') {
             $order = Order::find($request->order_id);
             $order->update(['paid' => 1]);
         }
