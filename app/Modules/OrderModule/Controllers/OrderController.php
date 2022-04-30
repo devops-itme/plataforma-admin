@@ -14,6 +14,7 @@ use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\PickupHourModule\PickupHour;
 use App\Modules\RateModule\Rate;
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,14 +35,15 @@ class OrderController extends Controller
             ->order_type(request()->order_type)
             ->customer(request()->name)
             ->date(request()->from, request()->to)
-            ->state(request()->state)
+            ->whereStatusMatrix([request()->state])
             ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
                 $query->where('name', '!=', 'ENTREGADO');
             })->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
-        return view($this->path . 'index', compact('orders', 'order_type'));
+        $status_matrix = StatusMatrix::get();
+        return view($this->path . 'index', compact('orders', 'order_type', 'status_matrix'));
     }
 
     /**

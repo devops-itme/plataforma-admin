@@ -119,32 +119,37 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Valor Orden OnDemand/Corp:</label>
-                        <input name="order_value" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->order_value}}" />
+                        <input name="order_value" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->order_value}}" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>FF, COD, Com.Gastos, Seguro:</label>
-                        <input name="expenses" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->expenses}}" />
+                        <input name="expenses" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->expenses}}" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Recibir por COD: </label>
-                        <input name="receive_by_COD" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->receive_by_COD}}" />
+                        <input name="receive_by_COD" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->receive_by_COD}}" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Gastos diligencia: </label>
-                        <input name="diligence_expenses" type="number" class="form-control form-control-solid" placeholder="0.00"value="{{$order->diligence_expenses}}" />
+                        <input name="diligence_expenses" type="number" class="form-control form-control-solid" placeholder="0.00"value="{{$order->diligence_expenses}}" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Producto interno: </label>
-                        <input name="internal_product" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->internal_product}}" />
+                        <input name="internal_product" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->internal_product}}" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Total Tax: </label>
-                        <input name="tax_total" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->tax_total}}" />
+                        <input name="tax_total" type="number" class="form-control form-control-solid" placeholder="0.00" value="{{$order->tax_total}}" disabled />
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Estado de pago: </label>
+                        <input name="paid" type="text" class="form-control form-control-solid" value="{{$order->paid == 0 ? 'Pendiente' : 'Pagado'}}" disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                 </div>

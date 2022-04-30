@@ -185,7 +185,7 @@ class Order extends Model
     }
     public function scopeWhereStatusMatrix($query, $status_matrix)
     {
-        if (!is_null($status_matrix)) {
+        if (!is_null($status_matrix) && is_countable($status_matrix) && $status_matrix[0] != null) {
             return $query->whereIn('status_matrix_id', $status_matrix);
         }
     }

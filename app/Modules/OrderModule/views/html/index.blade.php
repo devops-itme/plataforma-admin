@@ -78,10 +78,11 @@
                                 <label for="exampleSelect1">Estado: </label>
                                 <select class="form-control form-control-solid" id="zone" name="state">
                                     <option selected disabled> Seleccione </option>
-                                    <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                    <option value="0"
-                                        {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
-                                    </option>
+                                    @foreach ($status_matrix as $item)
+                                        <option value="{{ $item->id }}"
+                                            {{ $item->id == request()->state ? 'selected' : '' }}>{{ $item->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 <span class="form-text text-muted">Filtro estado</span>
                             </div>
@@ -111,6 +112,7 @@
                         <th scope="col">Tipo de orden</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Fecha y Hora de creación</th>
+                        <th scope="col">Estado de pago</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -135,6 +137,9 @@
                                 <td>{{ $order->getUser ? $order->getUser->name." ".$order->getUser->last_name : 'No registra' }}
                                 </td>
                                 <td>{{ format_date(date('Y-n-d', strtotime($order->created_at)))}} <b>{{date('h:m A', strtotime($order->created_at))}}</b></td>
+                                <td>
+                                    {{$order->paid == 1 ? 'Pagado': 'Pendiente'}}
+                                </td>
                                 <td>
                                     {{$order->getStatusMatrix->name??'No registra'}}
                                 </td>
