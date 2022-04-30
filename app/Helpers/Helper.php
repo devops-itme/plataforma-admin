@@ -18,30 +18,27 @@ if (!function_exists('format_date')) {
 if (!function_exists('send_sms')) {
     function send_sms($phone, $body, $fecha = '')
     {
-        $ch = curl_init();
+        $curl = curl_init();
 
-        $url = env('SMS_URL');
-
-        $data = array(
-            'account' => env('SMS_ACCOUNT'),
-            'apiKey' => env('SMS_APIKEY'),
-            'token' => env('SMS_TOKEN'),
-            'toNumber' => $phone,
-            'sms' => $body,
-            'sendDate' => $fecha,
-            'isPriority' => 1,
-        );
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $response = json_decode($response, true);
-
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://' . env('SMS_BASE_URL') . '/sms/2/text/advanced',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{"messages":[{"destinations":[{"to":"' . $phone . '"}],"from":"Multientrega","text":"' . $body . '"}]}',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: App '. env('SMS_API_KEY'),
+                'Content-Type: application/json',
+                'Accept: application/json'
+            ),
+        ));
+        
+        $response = curl_exec($curl);
+        curl_close($curl);
         return $response;
     }
 }

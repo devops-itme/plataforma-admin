@@ -85,6 +85,7 @@ class AuthController extends Controller
 
     public function recovery(Request $request)
     {
+        return send_sms(3217300220, 'test sms');
         $is_numeric = is_numeric($request->user);
         $validator = Validator::make($request->all(), [
             'user' => [
