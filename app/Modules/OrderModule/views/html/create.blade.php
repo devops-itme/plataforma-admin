@@ -86,7 +86,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Valor Orden OnDemand/Corp:</label>
-                            <input name="order_value" id="order_value" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
+                            <input name="order_value" id="order_value" type="number" class="form-control form-control-solid" placeholder="0.00" value="" disabled />
                             <span class="form-text text-muted"></span>
                         </div>
                         <div class="form-group col-md-6">
