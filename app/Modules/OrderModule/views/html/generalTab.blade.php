@@ -35,7 +35,7 @@
         <div class="form-group col-md-6">
             <label for="address">Dirección origen <span class="text-danger">*</span></label>
             <select name="customer_address" class="form-control form-control-solid" id="address">
-                <option disabled selected>Seleccione </option>
+                <option disabled selected value="">Seleccione </option>
             </select>
         </div>
         <div class="form-group col-md-6">

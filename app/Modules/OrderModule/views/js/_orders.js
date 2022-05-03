@@ -1,6 +1,7 @@
 
 let count = 0;
-let rate_id = null;
+let destination_rate_id = null;
+let source_rate_id = null;
 let boxes = [
     {
         number: 0,
@@ -13,6 +14,22 @@ let boxes = [
     }
 ];
 
+const requestSearchZone = async (address_id) => {
+    let response = { state: 500, message: 'Error en la consulta' };
+    let url = `${window.location.origin}/api/searchZone?address_id=${address_id}`;
+
+    await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            response = data;
+        })
+        .catch(e => {
+            response.error = e;
+        });
+
+    return response;
+}
+
 const requestRate = async (zone_id) => {
     let response = { state: 500, message: 'Error en la consulta' };
     let url = `${window.location.origin}/api/rateInquiry?zone_id=${zone_id}`;
@@ -20,7 +37,6 @@ const requestRate = async (zone_id) => {
     await fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log('rateInquiry', data);
             response = data;
         })
         .catch(e => {
@@ -48,11 +64,12 @@ const requestCalculatePackingRates = async (rate_id, lbs, vol, immediate_deliver
 }
 
 const calculateRate = async (edit) => {
-    if (rate_id == null) {
+    if (destination_rate_id == null) {
         return
     }
     let corp_value = document.getElementById(edit ? "corp_value_edit" : "corp_value");
-    if (corp_value == null) {
+    let address = document.getElementById("address");
+    if (corp_value == null || address == null) {
         return;
     }
     corp_value.value = 0;
@@ -67,7 +84,7 @@ const calculateRate = async (edit) => {
         let lbs = box?.weight;
         let vol = box?.long * box?.broad * box?.high;
 
-        let response = await requestCalculatePackingRates(rate_id, lbs, vol, immediate_delivery);
+        let response = await requestCalculatePackingRates(destination_rate_id, lbs, vol, immediate_delivery);
         if (response.state == 200) {
             corp_value.value = parseFloat(corp_value.value) + parseFloat(response.data);
         }
@@ -101,27 +118,64 @@ export default class Orders {
     }
 
     listenGuideCheck() {
-        const setValue = () => {
-            [].forEach.call(guideCheck, function (guide) {
+        const setValue = async () => {
+            if (source_address.value == "") {
+                return;
+            }
+            let total = 0;
+            await [].forEach.call(guideCheck, async function (guide) {
+
                 let corp_value = guide.parentNode?.parentNode?.parentNode?.getAttribute('corp_value') ?? 0;
-                guide.checked && (order_value.value = parseFloat(order_value.value) + parseFloat(corp_value));
+
+                let boxes = guide.parentNode?.parentNode?.parentNode?.getAttribute('boxes') ?? [];
+                let immediate_delivery = guide.parentNode?.parentNode?.parentNode?.getAttribute('same_day_delivery') ?? 0;
+                boxes = JSON.parse(boxes);
+                let source_rate = 0;
+                await [].forEach.call(boxes, async (box) => {
+                    let lbs = box?.weight;
+                    let vol = box?.long * box?.broad * box?.high;
+                    console.log(lbs);
+                    let response = await requestCalculatePackingRates(source_rate_id, lbs, vol, immediate_delivery);
+                    if (response.state == 200) {
+                        source_rate = parseFloat(source_rate) + parseFloat(response.data);
+                    }
+                });
+              
+                let higher_rate = parseFloat(source_rate) > parseFloat(corp_value) ? parseFloat(source_rate) : parseFloat(corp_value);
+                guide.checked && (total = parseFloat(total) + parseFloat(higher_rate));
             });
+            order_value.setAttribute("value", total)
         };
 
+        let source_address = document.getElementById("address");
         let guideCheck = document.getElementsByClassName("guideCheck");
         let order_value = document.getElementById("order_value");
 
         if (guideCheck == null || order_value == null) {
             return;
         }
-        order_value.value = 0;
+
+        order_value.setAttribute("value", 0)
         setValue();
 
         [].forEach.call(guideCheck, function (guide) {
             guide.addEventListener('change', async () => {
-                order_value.value = 0;
+                order_value.setAttribute("value", 0)
                 setValue();
             });
+        });
+
+        source_address.addEventListener('change', async () => {
+            if (source_address.value == "") {
+                return;
+            }
+            let response = await requestSearchZone(source_address.value);
+
+            if (response.state == 200) {
+                source_rate_id = response.data?.zone_id;
+            }
+            order_value.setAttribute("value", 0)
+            setValue();
         });
     }
 
@@ -129,8 +183,9 @@ export default class Orders {
         let rate = document.getElementById(edit ? "rate_edit" : "rate");
         let zone = document.getElementById(edit ? "zone_edit" : "zone_id");
         let same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
+        let source_address = document.getElementById("address");
 
-        if (rate == null || zone == null || same_day_delivery == null) {
+        if (rate == null || zone == null || same_day_delivery == null || source_address == null) {
             return;
         }
 
@@ -140,7 +195,7 @@ export default class Orders {
             }
             let response = await requestRate(zone.value);
             if (response.state == 200) {
-                rate_id = response.data?.id;
+                destination_rate_id = response.data?.id;
             }
             calculateRate(edit);
         });
@@ -151,7 +206,7 @@ export default class Orders {
             }
             let response = await requestRate(zone.value);
             if (response.state == 200) {
-                rate_id = response.data?.id;
+                destination_rate_id = response.data?.id;
             }
             calculateRate(edit);
         });
@@ -162,7 +217,7 @@ export default class Orders {
             }
             let response = await requestRate(zone.value);
             if (response.state == 200) {
-                rate_id = response.data?.id;
+                destination_rate_id = response.data?.id;
             }
             calculateRate(edit);
         });
@@ -180,7 +235,7 @@ export default class Orders {
         state = state.value;
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
-       
+
         let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`
         await fetch(url)
             .then(response => response.json())
@@ -598,6 +653,8 @@ export default class Orders {
             [].forEach.call(data, key => {
                 let row = tbody.insertRow();
                 row.setAttribute('corp_value', key?.corp_value);
+                row.setAttribute('boxes', key?.boxes);
+                row.setAttribute('same_day_delivery', key?.same_day_delivery);
                 row.setAttribute('value', key?.value);
 
                 let idCell = row.insertCell(0);

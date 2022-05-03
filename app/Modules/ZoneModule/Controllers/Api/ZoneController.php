@@ -4,6 +4,7 @@ namespace App\Modules\ZoneModule\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
+use App\Modules\AddressModule\Address;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,8 +23,9 @@ class ZoneController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'lat' => 'required',
-                    'lng' => 'required',
+                    'address_id' => 'nullable|exists:addresses,id',
+                    'lat' => 'nullable',
+                    'lng' => 'nullable',
                 ]
             );
 
@@ -31,8 +33,22 @@ class ZoneController extends Controller
                 return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
             }
 
-            $lat = $request->lat;
-            $lng = $request->lng;
+            $lat = null;
+            $lng = null;
+
+            if (!is_null($request->address_id)) {
+                $address_id = $request->address_id;
+                $address = Address::find($address_id);
+                if (is_null($address)) {
+                    return $this->respond(500,  null, 'address not found', 'No se encontró la dirección');
+                }
+                $lat = $address->lat;
+                $lng = $address->lng;
+            } else {
+                $lat = $request->lat;
+                $lng = $request->lng;
+            }
+
             $point = ['lat' => $lat, 'lng' => $lng];
 
             $zones = Zone::get(['id', 'coordinates']);
