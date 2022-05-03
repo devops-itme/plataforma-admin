@@ -16,6 +16,11 @@
                 </h2>
             </div>
             <div class="card-toolbar">
+                <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
+                    <span class="svg-icon svg-icon-md">
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                    </span>Filtro
+                </button>
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -92,6 +97,65 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="mb-7">
+                <div class="form-filter" style="display:none">
+                    <form action="">
+                        <div class="row align-items-center">
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Número de orden:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Orden_1"
+                                    name="number" value="" />
+                                <span class="form-text text-muted">Filtro numero</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label for="exampleSelect1">Tipo de orden:</label>
+                                <select class="form-control form-control-solid" name="">
+                                    <option selected disabled> Seleccione </option>
+
+                                </select>
+                                <span class="form-text text-muted">Filtro tipo de orden</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Nombre del cliente:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson"
+                                    name="name" value="" />
+                                <span class="form-text text-muted">Filtro nombre</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Desde:</label>
+                                <input type="date" class="form-control form-control-solid" placeholder="" name="from"
+                                    value="" />
+                                <span class="form-text text-muted">Filtro desde</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label>Hasta:</label>
+                                <input type="date" class="form-control form-control-solid" placeholder="" name="to"
+                                    value="" />
+                                <span class="form-text text-muted">Filtro hasta</span>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
+                                <label for="exampleSelect1">Estado: </label>
+                                <select class="form-control form-control-solid" id="zone" name="state">
+                                    <option selected disabled> Seleccione </option>
+
+                                </select>
+                                <span class="form-text text-muted">Filtro estado</span>
+                            </div>
+                            <div class=" row form-group py-6 m-0 col-md-12">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block">
+                                        Filtrar</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href=""
+                                        class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <table class="table table-sm text-center display" id="tabListOrders">
                 <thead class="">
                     <tr>

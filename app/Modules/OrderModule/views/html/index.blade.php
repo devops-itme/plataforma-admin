@@ -18,7 +18,7 @@
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
                 </button>
-              
+
                 <a href="{{ route('orders.record') }}" class="btn btn-light-primary font-weight-bolder mr-2">
                     <i class="fas fa-history"></i>
                     Historial</a>
