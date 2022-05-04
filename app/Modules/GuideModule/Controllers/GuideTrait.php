@@ -88,7 +88,7 @@ trait GuideTrait
 
     public function updateGuide($request)
     {
-        $validator = $this->GuideValidate($request);
+        $validator = $this->GuideValidate($request, null);
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
@@ -99,27 +99,27 @@ trait GuideTrait
             }
             $guide->update([
                 // 'dispatched' => $request->dispatched,
-                'branch_office' => $request->branch_office,
-                'address_name' => $request->address_name,
-                'address_lat' => $request->address_lat,
-                'address_lng' => $request->address_lng,
-                'address_description' => $request->address_description,
-                'zone' => $request->zone,
-                'concept' => $request->concept,
-                'rate' => $request->rate,
-                'value' => $request->value,
-                'corp_value' => $request->corp_value,
-                'customer_document_type' => $request->customer_document_type,
-                'contact' => $request->contact,
-                'phone_contact' => $request->phone_contact,
-                'email_contact' => $request->email_contact,
-                'invoice_contact' => $request->invoice_contact,
-                'same_day_delivery' => $request->same_day_delivery,
-                'sign' => $request->sign,
-                'take_photo' => $request->take_photo,
-                'packaging' => $request->packaging,
-                'return_last_destination' => $request->return_last_destination,
-                'boxes' => $request->boxes
+                'branch_office' => $request->branch_office ?? $guide->branch_office,
+                'address_name' => $request->address_name ?? $guide->address_name,
+                'address_lat' => $request->address_lat ?? $guide->address_lat,
+                'address_lng' => $request->address_lng ?? $guide->address_lng,
+                'address_description' => $request->address_description ?? $guide->address_description,
+                'zone' => $request->zone ?? $guide->zone,
+                'concept' => $request->concept ?? $guide->concept,
+                'rate' => $request->rate ?? $guide->rate,
+                'value' => $request->value ?? $guide->value,
+                'corp_value' => $request->corp_value ?? $guide->corp_value,
+                'customer_document_type' => $request->customer_document_type ?? $guide->customer_document_type,
+                'contact' => $request->contact ?? $guide->contact,
+                'phone_contact' => $request->phone_contact ?? $guide->phone_contact,
+                'email_contact' => $request->email_contact ?? $guide->email_contact,
+                'invoice_contact' => $request->invoice_contact ?? $guide->invoice_contact,
+                'same_day_delivery' => $request->same_day_delivery ?? $guide->same_day_delivery,
+                'sign' => $request->sign ?? $guide->sign,
+                'take_photo' => $request->take_photo ?? $guide->take_photo,
+                'packaging' => $request->packaging ?? $guide->packaging,
+                'return_last_destination' => $request->return_last_destination ?? $guide->return_last_destination,
+                'boxes' => $request->boxes ?? $guide->boxes,
             ]);
             return $this->respond(200, $guide, null, 'Guía actualizada exitosamente');
         } catch (\Exception $e) {

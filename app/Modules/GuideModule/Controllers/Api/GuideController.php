@@ -50,6 +50,12 @@ class GuideController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->merge(['guide_id' => $id]);
+        return $guideResponse = $this->updateGuide($request);
+    }
+
     public function updateAdditionalInformation(Request $request)
     {
         $response = $this->setAdditionalInformation($request);
