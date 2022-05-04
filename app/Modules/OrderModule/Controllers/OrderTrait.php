@@ -22,21 +22,21 @@ trait OrderTrait
                     $action == 'create' ? 'confirmed' : 'nullable',
                     Rule::requiredIf($action == 'create'), Rule::unique('orders', 'order_number')->ignore($id)->whereNull('deleted_at'), 'string'
                 ],
-                'user_id' => 'required|exists:users,id|numeric',
+                'user_id' => [Rule::requiredIf($action == 'create'), 'exists:users,id', 'numeric'],
                 'zone_id' => 'nullable|exists:zones,id|numeric',
-                'order_type' => 'required|numeric',
+                'order_type' => [Rule::requiredIf($action == 'create'), 'numeric'],
                 'order_value' => 'nullable|numeric',
                 'receive_by_COD' => 'nullable|numeric',
                 'internal_product' => 'nullable|numeric',
                 'expenses' => 'nullable|numeric',
                 'diligence_expenses' => 'nullable|numeric',
                 'tax_total' => 'nullable|numeric',
-                'vehicle_type_id' => 'required|numeric',
+                'vehicle_type_id' => [Rule::requiredIf($action == 'create'), 'numeric'],
                 'payment_method' => 'nullable|numeric',
                 'urgent_dispatch' => 'nullable|numeric',
                 'schedule_date' => 'nullable',
                 'schedule_time' => 'nullable|numeric|exists:pickup_hours,id',
-                'schedule_time_range' => 'required|string',
+                'schedule_time_range' => [Rule::requiredIf($action == 'create'), 'string'],
                 'insured_value' => 'nullable|numeric',
                 'money_to_collect' => 'nullable|numeric',
                 'percentage_to_collect' => 'nullable|numeric',
@@ -47,7 +47,7 @@ trait OrderTrait
                 'address_lat' => 'nullable',
                 'address_lng' => 'nullable',
                 'address_description' => 'nullable|string',
-                'description' => 'required|string',
+                'description' => [Rule::requiredIf($action == 'create'), 'string'],
                 'state' => 'nullable|numeric'
             ]
         );
@@ -109,30 +109,30 @@ trait OrderTrait
         try {
             $order = Order::find($request->order_id);
             if (is_null($order)) {
-                return $this->respond(500, [], 'user not found', 'No se encontró la orden');
+                return $this->respond(500, [], 'order not found', 'No se encontró la orden');
             }
             $order->update([
-                'user_id' => $request->user_id,
-                'zone_id' => $request->zone_id,
-                'order_type' => $request->order_type,
-                'order_value' => $request->order_value,
-                'receive_by_COD' => $request->receive_by_COD,
-                'internal_product' => $request->internal_product,
-                'expenses' => $request->expenses,
-                'diligence_expenses' => $request->diligence_expenses,
-                'tax_total' => $request->tax_total,
-                'payment_method' => $request->payment_method,
-                'urgent_dispatch' => $request->urgent_dispatch,
-                'schedule_date' => $request->schedule_date,
-                'schedule_time' => $request->schedule_time,
-                'insured_value' => $request->insured_value,
-                'money_to_collect' => $request->money_to_collect,
-                'percentage_to_collect' => $request->percentage_to_collect,
-                'customer_user_id' => $request->user_id,
-                'branch_office' => $request->branch_office_id,
-                'department_id' => $request->department_id,
-                'address_id' => $request->customer_address,
-                'description' => $request->description
+                'user_id' => $request->user_id ?? $order->user_id,
+                'zone_id' => $request->zone_id ?? $order->zone_id,
+                'order_type' => $request->order_type ?? $order->order_type,
+                'order_value' => $request->order_value ?? $order->order_value,
+                'receive_by_COD' => $request->receive_by_COD ?? $order->receive_by_COD,
+                'internal_product' => $request->internal_product ?? $order->internal_product,
+                'expenses' => $request->expenses ?? $order->expenses,
+                'diligence_expenses' => $request->diligence_expenses ?? $order->diligence_expenses,
+                'tax_total' => $request->tax_total ?? $order->tax_total,
+                'payment_method' => $request->payment_method ?? $order->payment_method,
+                'urgent_dispatch' => $request->urgent_dispatch ?? $order->urgent_dispatch,
+                'schedule_date' => $request->schedule_date ?? $order->schedule_date,
+                'schedule_time' => $request->schedule_time ?? $order->schedule_time,
+                'insured_value' => $request->insured_value ?? $order->insured_value,
+                'money_to_collect' => $request->money_to_collect ?? $order->money_to_collect,
+                'percentage_to_collect' => $request->percentage_to_collect ?? $order->percentage_to_collect,
+                'customer_user_id' => $request->user_id ?? $order->user_id,
+                'branch_office' => $request->branch_office_id ?? $order->branch_office_id,
+                'department_id' => $request->department_id ?? $order->department_id,
+                'address_id' => $request->customer_address ?? $order->customer_address,
+                'description' => $request->description ?? $order->description
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {

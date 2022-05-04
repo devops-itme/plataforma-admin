@@ -112,11 +112,11 @@ class OrderController extends Controller
                 $rate = Rate::where('zone_id', $source_zone_id)->whereHas('getPackageType', function ($query) {
                     $query->where('name', 'Tipo A');
                 })->first();
-                
+
                 if (is_null($rate)) {
                     return $this->respond(404, null, 'not found', 'No existen tarifas para esta orden');
                 }
-                
+
                 $source_rate = $Rate->calculateRate($rate->id);
 
                 $user_id = Auth::user()->id;
@@ -166,7 +166,7 @@ class OrderController extends Controller
                     $rate = Rate::where('zone_id', $destination_zone_id)->whereHas('getPackageType', function ($query) {
                         $query->where('name', 'Tipo A');
                     })->first();
-                    
+
                     if (is_null($rate)) {
                         return $this->respond(404, null, 'not found', 'No existen tarifas para esta orden');
                     }
@@ -221,6 +221,17 @@ class OrderController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $request->merge(['order_id' => $id]);
+            return $orderResponse = $this->updateOrder($request);
+
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
+        }
+    }
+
     public function markAsRead(Request $request)
     {
         try {
@@ -263,7 +274,7 @@ class OrderController extends Controller
         $host = $request->getHost();
         $fcm_token =  Auth::user()->fcm_token;
         $order_id = $request->order_id;
-        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=" .$fcm_token. "&order_id=" .$order_id;
+        $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=" . $fcm_token . "&order_id=" . $order_id;
         $cclw = env('PAGUELOFACIL_CCLW');
         $amount = intval($request->totalValue);
         $description = 'Pago orden multientrega';
@@ -301,7 +312,7 @@ class OrderController extends Controller
     public function responseViewPagueloFacil(Request $request)
     {
         $response = $request->all();
-        if($response['Estado'] != 'Denegada') {
+        if ($response['Estado'] != 'Denegada') {
             $order = Order::find($request->order_id);
             $order->update(['paid' => 1]);
         }
