@@ -125,6 +125,7 @@ trait OrderTrait
                 'urgent_dispatch' => $request->urgent_dispatch ?? $order->urgent_dispatch,
                 'schedule_date' => $request->schedule_date ?? $order->schedule_date,
                 'schedule_time' => $request->schedule_time ?? $order->schedule_time,
+                'schedule_time_range' => $request->schedule_time_range ?? $order->schedule_time_range,
                 'insured_value' => $request->insured_value ?? $order->insured_value,
                 'money_to_collect' => $request->money_to_collect ?? $order->money_to_collect,
                 'percentage_to_collect' => $request->percentage_to_collect ?? $order->percentage_to_collect,
@@ -132,7 +133,12 @@ trait OrderTrait
                 'branch_office' => $request->branch_office_id ?? $order->branch_office_id,
                 'department_id' => $request->department_id ?? $order->department_id,
                 'address_id' => $request->customer_address ?? $order->customer_address,
-                'description' => $request->description ?? $order->description
+                'description' => $request->description ?? $order->description,
+                'address_id' => $request->address_id ?? $order->address_id,
+                'address_name' => $request->address ?? $order->address,
+                'address_lat' => $request->lat ?? $order->lat,
+                'address_lng' => $request->lng ?? $order->lng,
+                'address_description' => $request->address_description ?? $order->address_description,
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {
