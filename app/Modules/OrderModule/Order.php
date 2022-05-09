@@ -44,7 +44,7 @@ class Order extends Model
         'percentage_to_collect',
         'customer_user_id',
         'creator_user_id',
-        'zone',
+        'zone_id',
         'address_id',
         'address_name',
         'address_lat',

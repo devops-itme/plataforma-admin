@@ -131,8 +131,13 @@ trait OrderTrait
                 'customer_user_id' => $request->user_id ?? $order->user_id,
                 'branch_office' => $request->branch_office_id ?? $order->branch_office_id,
                 'department_id' => $request->department_id ?? $order->department_id,
-                'address_id' => $request->customer_address ?? $order->customer_address,
-                'description' => $request->description ?? $order->description
+                'address_id' => $request->address_id ?? $order->address_id,
+                'address_name' => $request->address_name ?? $order->address_name,
+                'address_lat' => $request->address_lat ?? $order->address_lat,
+                'address_lng' => $request->address_lng ?? $order->address_lng,
+                'address_description' => $request->address_description ?? $order->address_description,
+                'description' => $request->description ?? $order->description,
+                'state' => $request->state ?? $order->state,
             ]);
             return $this->respond(200, $order, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {
