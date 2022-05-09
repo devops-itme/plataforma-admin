@@ -125,6 +125,7 @@ trait OrderTrait
                 'urgent_dispatch' => $request->urgent_dispatch ?? $order->urgent_dispatch,
                 'schedule_date' => $request->schedule_date ?? $order->schedule_date,
                 'schedule_time' => $request->schedule_time ?? $order->schedule_time,
+                'schedule_time_range' => $request->schedule_time_range ?? $order->schedule_time_range,
                 'insured_value' => $request->insured_value ?? $order->insured_value,
                 'money_to_collect' => $request->money_to_collect ?? $order->money_to_collect,
                 'percentage_to_collect' => $request->percentage_to_collect ?? $order->percentage_to_collect,
