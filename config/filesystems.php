@@ -63,7 +63,7 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'root' => env('AWS_ROOT'),
             'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
+            'endpoint' => env('AWS_ENDPOINT', 'https://minio:9000'),
         ],
 
     ],
