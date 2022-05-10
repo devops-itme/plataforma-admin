@@ -324,7 +324,8 @@ return [
     ],
     'guide_document_type' => [
         'signature',
-        'evidence'
+        'evidence',
+        'package_picture',
     ]
 
 ];
