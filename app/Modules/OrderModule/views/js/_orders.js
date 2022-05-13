@@ -144,14 +144,19 @@ export default class Orders {
                 let higher_rate = parseFloat(source_rate) > parseFloat(corp_value) ? parseFloat(source_rate) : parseFloat(corp_value);
                 guide.checked && (total = parseFloat(total) + parseFloat(higher_rate));
             });
-            order_value.setAttribute("value", total)
+            let full_tax = total * tax_percentage.value / 100;
+            tax_total.setAttribute("value", full_tax);
+            total = total + full_tax;
+            order_value.setAttribute("value", total );
         };
 
         let source_address = document.getElementById("address");
         let guideCheck = document.getElementsByClassName("guideCheck");
         let order_value = document.getElementById("order_value");
+        let tax_percentage = document.getElementById("tax_percentage");
+        let tax_total = document.getElementById("tax_total");
 
-        if (guideCheck == null || order_value == null) {
+        if (guideCheck == null || order_value == null || tax_percentage == null || tax_total == null) {
             return;
         }
 

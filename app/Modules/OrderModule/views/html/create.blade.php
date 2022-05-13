@@ -4,19 +4,19 @@
 {{-- Content --}}
 @section('content')
 @include('layouts.breadCrumbs')
-    <div class="card card-custom">
-        <div class="card-header">
-            <h3 class="card-title">
-                Crear orden
-            </h3>
-        </div>
-        @include('layouts.alerts')
-        <!--begin::Form-->
-        <form action="{{route('orders.store')}}" method="post">
-            @csrf
-            <div class="card-body d-flex flex-row flex-wrap pt-2">
-                <div class="col-md-6 border-right">
-                    <div class="d-flex flex-row flex-wrap">
+<div class="card card-custom">
+    <div class="card-header">
+        <h3 class="card-title">
+            Crear orden
+        </h3>
+    </div>
+    @include('layouts.alerts')
+    <!--begin::Form-->
+    <form action="{{route('orders.store')}}" method="post">
+        @csrf
+        <div class="card-body d-flex flex-row flex-wrap pt-2">
+            <div class="col-md-6 border-right">
+                <div class="d-flex flex-row flex-wrap">
                     <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de orden</h5>
                     <div class="form-group col-md-6">
                         <label>Numero de orden: <span class="text-danger">*</span></label>
@@ -28,7 +28,7 @@
                         <select name="order_type" class="form-control form-control-solid" id="order_type">
                             <option selected disabled>Seleccione tipo de orden</option>
                             @foreach($order_type as $order)
-                                <option {{old('order_type')==$order->id?'selected ':''}}  value="{{$order->id}}">{{$order->name}}</option>
+                            <option {{old('order_type')==$order->id?'selected ':''}} value="{{$order->id}}">{{$order->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -65,87 +65,86 @@
                         <label for="customers">Tipo de documento</label>
                         <input type="text" id="user_document_type" class="form-control form-control-solid" readonly value="">
                     </div>
-                   </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="d-flex flex-row flex-wrap">
-                        <div class="d-flex flex-row flex-wrap col-md-12 justify-content-between">
-                            <h5 class="my-4 font-weight-bold text-dark col-md-3">Totales</h5>
-                            <div class="col-6">
-                                <div class="d-flex flex-row flex-wrap">
-                                    <div class="col-6 p-0">
-                                        <small class="mb-0 label label-sm label-warning label-pill label-inline">Valor total OnDemand</small><br>
-                                        <small class="mb-0 pl-2 text-danger">1.00</small>
-                                    </div>
-                                    <div class="col-6 p-0">
-                                        <small class="mb-0 label label-sm label-warning label-pill label-inline">Valor Pagar Cliente</small><br>
-                                        <small class="mb-0 pl-2 text-danger">1.00</small>
-                                    </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex flex-row flex-wrap">
+                    <div class="d-flex flex-row flex-wrap col-md-12 justify-content-between">
+                        <h5 class="my-4 font-weight-bold text-dark col-md-3">Totales</h5>
+                        <div class="col-6">
+                            <div class="d-flex flex-row flex-wrap">
+                                <div class="col-6 p-0">
+                                    <small class="mb-0 label label-sm label-warning label-pill label-inline">Valor total OnDemand</small><br>
+                                    <small class="mb-0 pl-2 text-danger">1.00</small>
+                                </div>
+                                <div class="col-6 p-0">
+                                    <small class="mb-0 label label-sm label-warning label-pill label-inline">Valor Pagar Cliente</small><br>
+                                    <small class="mb-0 pl-2 text-danger">1.00</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Valor Orden OnDemand/Corp:</label>
-                            <input name="order_value" id="order_value" type="number" class="form-control form-control-solid" placeholder="0.00" value="" disabled />
-                            <span class="form-text text-muted"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>FF, COD, Com.Gastos, Seguro:</label>
-                            <input name="expenses" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
-                            <span class="form-text text-muted"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Recibir por COD: </label>
-                            <input name="receive_by_COD" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
-                            <span class="form-text text-muted"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Gastos diligencia: </label>
-                            <input name="diligence_expenses" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
-                            <span class="form-text text-muted"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Producto interno: </label>
-                            <input name="internal_product" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
-                            <span class="form-text text-muted"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Total Tax: </label>
-                            <input name="tax_total"  value="{{ $tax_value}}" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
-                            <span class="form-text text-muted"></span>
-                        </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <ul class="nav nav-light-success nav-pills border-bottom pb-3" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab"
-                                aria-controls="general" aria-selected="true">General</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                aria-controls="profile" aria-selected="false">Pedidos / Destinos</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
-                            @include('OrderModule.views.html.generalTab')
-                        </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            @include('OrderModule.views.html.guideTab')
-                        </div>
+                    <div class="form-group col-md-6">
+                        <label>Valor Orden OnDemand/Corp:</label>
+                        <input name="order_value" id="order_value" type="number" class="form-control form-control-solid" placeholder="0.00" value="" disabled />
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>FF, COD, Com.Gastos, Seguro:</label>
+                        <input name="expenses" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Recibir por COD: </label>
+                        <input name="receive_by_COD" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Gastos diligencia: </label>
+                        <input name="diligence_expenses" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Producto interno: </label>
+                        <input name="internal_product" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
+                        <span class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Total Tax: </label>
+                        <input type="hidden" value="{{$tax_percentage}}" id="tax_percentage">
+                        <input name="tax_total" id="tax_total" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
+                        <span class="form-text text-muted"></span>
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <ul class="nav nav-light-success nav-pills border-bottom pb-3" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pedidos / Destinos</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                        @include('OrderModule.views.html.generalTab')
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        @include('OrderModule.views.html.guideTab')
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <div class="card-footer d-flex justify-content-end">
-                <button type="submit" id="btn-create-messenger" class="btn btn-primary mr-2">Guardar</button>
-                <button type="reset" class="btn btn-secondary">Limpiar</button>
-            </div>
-        </form>
-        <!--end::Form-->
-    </div>
-    @include('OrderModule.views.html.detailCustomer')
+        <div class="card-footer d-flex justify-content-end">
+            <button type="submit" id="btn-create-messenger" class="btn btn-primary mr-2">Guardar</button>
+            <button type="reset" class="btn btn-secondary">Limpiar</button>
+        </div>
+    </form>
+    <!--end::Form-->
+</div>
+@include('OrderModule.views.html.detailCustomer')
 
 @endsection
 

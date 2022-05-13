@@ -2122,7 +2122,7 @@ var Orders = /*#__PURE__*/function () {
     value: function listenGuideCheck() {
       var setValue = /*#__PURE__*/function () {
         var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-          var total;
+          var total, full_tax;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
             while (1) {
               switch (_context8.prev = _context8.next) {
@@ -2203,9 +2203,12 @@ var Orders = /*#__PURE__*/function () {
                   }());
 
                 case 5:
+                  full_tax = total * tax_percentage.value / 100;
+                  tax_total.setAttribute("value", full_tax);
+                  total = total + full_tax;
                   order_value.setAttribute("value", total);
 
-                case 6:
+                case 9:
                 case "end":
                   return _context8.stop();
               }
@@ -2221,8 +2224,10 @@ var Orders = /*#__PURE__*/function () {
       var source_address = document.getElementById("address");
       var guideCheck = document.getElementsByClassName("guideCheck");
       var order_value = document.getElementById("order_value");
+      var tax_percentage = document.getElementById("tax_percentage");
+      var tax_total = document.getElementById("tax_total");
 
-      if (guideCheck == null || order_value == null) {
+      if (guideCheck == null || order_value == null || tax_percentage == null || tax_total == null) {
         return;
       }
 
@@ -90162,8 +90167,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
