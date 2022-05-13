@@ -69,7 +69,8 @@ class OrderController extends Controller
         $zones = Zone::get();
         $rates = Rate::get();
         $customer_addresses = [];
-        return view($this->path . 'create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses'));
+        $tax_value = 7000;
+        return view($this->path . 'create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses', 'tax_value'));
     }
 
     /**

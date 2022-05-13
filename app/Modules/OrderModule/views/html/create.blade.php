@@ -111,7 +111,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Total Tax: </label>
-                            <input name="tax_total" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
+                            <input name="tax_total"  value="{{ $tax_value}}" type="number" class="form-control form-control-solid" placeholder="0.00" disabled />
                             <span class="form-text text-muted"></span>
                         </div>
                     </div>
