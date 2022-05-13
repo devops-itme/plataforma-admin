@@ -113,6 +113,7 @@
                         <th scope="col">Cliente</th>
                         <th scope="col">Fecha y Hora de creación</th>
                         <th scope="col">Estado de pago</th>
+                        <th scope="col">Valor de impuesto</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -139,6 +140,9 @@
                                 <td>{{ format_date(date('Y-n-d', strtotime($order->created_at)))}} <b>{{date('h:m A', strtotime($order->created_at))}}</b></td>
                                 <td>
                                     {{$order->paid == 1 ? 'Pagado': 'Pendiente'}}
+                                </td>
+                                <td>
+                                    {{$order->tax_total}}
                                 </td>
                                 <td>
                                     {{$order->getStatusMatrix->name??'No registra'}}
