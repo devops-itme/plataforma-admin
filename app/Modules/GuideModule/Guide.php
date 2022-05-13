@@ -99,7 +99,7 @@ class Guide extends Model
 
     public function getDocuments()
     {
-        return $this->hasMany(GuidanceDocument::class, 'guides_id');
+        return $this->hasMany(GuidanceDocument::class, 'guide_id');
     }
 
     // Scopes

@@ -4,7 +4,6 @@ namespace App\Modules\GuideModule\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GuideResource;
-use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
 use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ParameterValueModule\ParameterValue;
@@ -15,7 +14,6 @@ use Illuminate\Support\Facades\Storage;
 
 class GuideController extends Controller
 {
-    use GuidanceDocsTrait;
 
     public function respond($state, $data = [], $error = null, $message = '')
     {
@@ -96,54 +94,4 @@ class GuideController extends Controller
         }
     }
 
-    public function saveEvidence(Request $request)
-    {
-        try {
-            // return $request->file('document')->getClientOriginalExtension();
-
-            DB::beginTransaction();
-            // foreach ($request->document as $file) {
-            if (!is_numeric($request->type)) {
-                $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
-                    $query->where('name', 'guide_document_type');
-                })->first();
-                if (is_null($type)) {
-                    return $this->respond(500, $request->all(), 'type not found', 'Tipo de documento no encontrado');
-                }
-                $request->merge(['type' => $type->id]);
-            }
-            $document_name = '';
-            if (File($request->document)) {
-                $document_name = str_replace('', '_', time() . '-' . $request->document->getClientOriginalName());
-                Storage::disk('s3')->put('/guidance_doc', $request->file('document'));
-                // Storage::disk('local')->put($document_name, $request->document);
-            }
-            $request->merge(['url_document' => $document_name]);
-
-            $store_doc = $this->storeGuidanceDoc($request);
-            if ($store_doc['state'] != 200) {
-                DB::rollBack();
-                return $store_doc;
-            }
-            // }
-            DB::commit();
-            // }
-            return $this->respond(200, [], '', 'Documento almacenado de forma exitosa.');
-        } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage() . ' Line: ' . $e->getLine(), 'Error del servidor');
-        }
-    }
-
-    // public function saveNovelty(Request $request)
-    // {
-    //     try {
-    //         $guide = Guide::findOrFail($request->guide_id);
-    //         $guide->update([
-    //             'novelty' => $request->novelty
-    //         ]);
-    //         return $this->respond(200, $guide, '', 'Novedad registrada satisfactoriamente');
-    //     } catch (\Exception $e) {
-    //         return $this->respond(500, [], $e->getMessage() , 'Error al registrar la novedad');
-    //     }
-    // }
 }

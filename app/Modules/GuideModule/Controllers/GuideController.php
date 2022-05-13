@@ -5,7 +5,7 @@ namespace App\Modules\GuideModule\Controllers;
 use App\Http\Controllers\Controller;
 use App\Imports\GuidesImport;
 use App\Modules\AddressModule\Address;
-use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
+use App\Modules\GuidanceDocumentModule\GuidanceDocument;
 use App\Modules\GuideModule\Guide;
 use App\Modules\OrderModule\Order;
 use Illuminate\Http\Request;
@@ -15,7 +15,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class GuideController extends Controller
 {
-    use GuidanceDocsTrait;
+
+    protected $GuidanceDocument;
+
+    public function __construct()
+    {
+        $this->GuidanceDocument = new GuidanceDocument();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -85,7 +92,7 @@ class GuideController extends Controller
         $response = $this->storeGuide($request);
         if($response['state'] == 200){
             if(!is_null($request->guides_doc)){
-                $guidance_docs = $this->storeGuidanceDoc($request->merge(['guides_id' => $response['data']->id]));
+                $guidance_docs = $this->GuidanceDocument->saveGuidanceDoc($request->merge(['guide_id' => $response['data']->id]));
                 if($guidance_docs['state'] != 200){
                     return json_encode($response, $response['message']);
                 }
