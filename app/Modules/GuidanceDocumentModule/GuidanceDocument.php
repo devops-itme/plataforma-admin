@@ -5,6 +5,7 @@ namespace App\Modules\GuidanceDocumentModule;
 use App\Http\Controllers\Traits\RestActions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -18,6 +19,17 @@ class GuidanceDocument extends Model
         'url_document',
         'type'
     ];
+    
+    protected $appends = ['file_url'];
+
+    public function getFileUrlAttribute()
+    {
+        $link = "";
+        if(!empty($this->url_document)){
+            $link = Storage::disk('s3')->url($this->url_document);
+        }
+        return $link;
+    }
 
     public function getGuide()
     {

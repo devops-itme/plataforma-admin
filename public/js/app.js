@@ -69964,17 +69964,31 @@ var render = function () {
                   [_vm._v("Adjuntos")]
                 ),
                 _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
                 _vm.type_guide === _vm.tabEdition
                   ? _c(
                       "div",
                       { staticClass: "col-md-12 symbol-group symbol-hover" },
-                      _vm._l(_vm.showDataGuide.files, function (item) {
-                        return _c("div", {
-                          key: item.id,
-                          staticClass: "symbol",
-                        })
-                      }),
-                      0
+                      [
+                        _vm._l(_vm.showDataGuide.files, function (item) {
+                          return _c(
+                            "div",
+                            { key: item.id, staticClass: "symbol" },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  alt: "Pic",
+                                  src: "storage/" + item.url_document + "/",
+                                },
+                              }),
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _vm._m(3),
+                      ],
+                      2
                     )
                   : _vm._e(),
               ]
@@ -70782,6 +70796,26 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-1" }, [
       _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "symbol" }, [
+      _c("img", {
+        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "symbol" }, [
+      _c("img", {
+        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
+      }),
     ])
   },
 ]
@@ -90167,8 +90201,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
