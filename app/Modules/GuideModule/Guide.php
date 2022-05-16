@@ -6,6 +6,7 @@ use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
 use App\Modules\OrderModule\Order;
+use App\Modules\ZoneModule\Zone;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RouteModule\Route;
 use App\Modules\StatusMatrixModule\StatusMatrix;
@@ -100,6 +101,11 @@ class Guide extends Model
     public function getDocuments()
     {
         return $this->hasMany(GuidanceDocument::class, 'guides_id');
+    }
+
+    public function getZone()
+    {
+        return $this->belongsTo(Zone::class, 'zone');
     }
 
     // Scopes

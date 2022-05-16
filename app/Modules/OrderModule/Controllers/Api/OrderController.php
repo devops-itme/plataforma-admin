@@ -174,6 +174,11 @@ class OrderController extends Controller
 
                     $rate_value = $rate_value + ($source_rate > $destination_rate ? $source_rate : $destination_rate);
 
+                    $tax_percentage = 7;
+                    $tax_value = $rate_value * ($tax_percentage / 100);
+                    $request->merge(['tax_total' => $tax_value]);
+                    $rate_value = $rate_value + $tax_value;
+
                     $request->merge([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
@@ -226,7 +231,6 @@ class OrderController extends Controller
         try {
             $request->merge(['order_id' => $id]);
             return $orderResponse = $this->updateOrder($request);
-
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
         }
