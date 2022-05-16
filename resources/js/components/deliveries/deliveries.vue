@@ -187,16 +187,16 @@
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
+                        <div class="symbol">
+                            <img alt="Pic" src="https://placem.at/things?h=100"/>
+                        </div>
                     <div class="col-md-12 symbol-group symbol-hover" v-if="type_guide === tabEdition">
                         <div class="symbol" v-for="item in showDataGuide.files" v-bind:key="item.id">
-                            <!-- <img alt="Pic" :src="'storage/'+item.url_document+'/'"/> -->
-                        </div>
-                        <!-- <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
+                            <img alt="Pic" :src="'storage/'+item.url_document+'/'"/>
                         </div>
                         <div class="symbol">
                             <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
