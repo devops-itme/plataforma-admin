@@ -47,33 +47,59 @@ class Tealca
 
     public function requestCreateShipment($guide)
     {
-        $createShipment = Http::post(
+        $body = [
+            "UserLogin" => "multi.entrega",
+            "Observations" => $guide->description,
+            "TotalPieces" => $guide->pieces,
+            "DeclaratedValueCurrency" => "USD",
+            "IsSafeKeeping" => 0, //
+            "DeclaratedValue" => $guide->declared,
+            "CustomerCode" => "2722",
+            "BUCodeSource" => "1102", //
+            // "ConsigneeCountry" =>  $guide->country,
+            "ConsigneeCountry" =>  'VE',
+            "ConsigneeCity" =>  $guide->city,
+            "ConsigneeAddress" =>  $guide->address_name,
+            "ConsigneePhoneCode" => "58",
+            "ConsigneePhone" =>  $guide->phone_contact,
+            "EmailType" => "020",
+            "ConsigneeEmail" =>  $guide->email_contact,
+            "ConsigneeName" =>  $guide->recipient_name,
+            "ConsigneeIdentification" =>  $guide->document,
+            "ConsigneeTaxIdentTypeCode" => "V", //
+            "ShipperCountry" => "VE", //
+            "ShipperCity" => "CCS", //
+            "ShipperAddress" => "Direccion Remitente", //
+            "ShipperEmail" =>  $guide->email_contact,
+            "ShippingMethodID" => 10, //
+            "ShipperIdentification" => "3334441", //
+            "ShipperName" => "Remitente API 1", //
+            "ShipperPhoneCode" => "58", //
+            "ShipperPhone" => "4141234567", //
+            "ShipperTaxIdentTypeCode" => "V", //
+            "DeliveryTypeID" => 10, //
+            "MeasureUnitTypeID" => 30, //
+            "WeightUnitID" => 10, //
+            "PackageTypeID" => 20, //
+            "ShipmentDetail" => array([
+                "PieceNumber" =>  $guide->pieces,
+                "PhysicalWeight" =>  $guide->kg
+            ])
+        ];
+
+        $createShipmentResponse = Http::withHeaders([
+            'Authorization' =>  $this->token,
+        ])->post(
             'http://qaapicore.tealca.com/v1/Shipment/',
-            [
-                "UserLogin" => "multi.entrega",
-                "Observations" => $guide->description,
-                "TotalPieces" => $guide->pieces,
-                "DeclaratedValueCurrency" => "USD",
-                "IsSafeKeeping" => 0, //
-                "DeclaratedValue" => $guide->declared,
-                "CustomerCode" => "2722",
-                "BUCodeSource" => "1102", //
-                "ConsigneeCountry" =>  $guide->country,
-                "ConsigneeCity" =>  $guide->city,
-                "ConsigneeAddress" =>  $guide->address_name,
-                "ConsigneePhoneCode" => "58",
-                "ConsigneePhone" =>  $guide->phone_contact,
-                "EmailType" => "020",
-                "ConsigneeEmail" =>  $guide->email_contact,
-                "ConsigneeName" =>  $guide->recipient_name,
-                "ConsigneeIdentification" =>  $guide->recipient_name,
-                "ConsigneeTaxIdentTypeCode" => "V", //
-                "ShipperCountry" => "PAN", //
-                "ShipperCity" => "CCS", //
-                "ShipperAddress" => "Direccion Remitente", //
-                
-                "WeightUnitID" => 10,
-            ]
+            $body
         );
+        // return (array([
+        //     "PieceNumber" =>  $guide->pieces,
+        //     "PhysicalWeight" =>  $guide->kg
+        // ]));
+        if ($createShipmentResponse->status() != 200) {
+            return $this->respond(500, $body, $createShipmentResponse->json(), 'Fallo en el servicio. Guía N° ' . $guide->id);
+        };
+        return $this->respond(200, $createShipmentResponse->json(), null, 'successful request');
     }
 }

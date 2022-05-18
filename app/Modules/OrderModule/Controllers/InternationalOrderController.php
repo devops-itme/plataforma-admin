@@ -4,6 +4,8 @@ namespace App\Modules\OrderModule\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
+use App\Modules\ApiConnectionsModule\Imports\ShipmentTealcaImport;
+use App\Modules\ApiConnectionsModule\Models\Tealca;
 use App\Modules\GuideModule\Guide;
 use App\Modules\OrderModule\Imports\BatchImport;
 use App\Modules\OrderModule\Order;
@@ -39,7 +41,7 @@ class InternationalOrderController extends Controller
     public function show($id)
     {
         $Guide = new Guide();
-        $response = $Guide->getGuidesByOrder($id);
+        $response = $Guide->getGuidesByOrder($id, (request()->pagination ?? 15));
         if ($response['state'] != 200) {
             return redirect()->back()->with('warning', 'Orden no encontrada');
         };
@@ -47,14 +49,8 @@ class InternationalOrderController extends Controller
         return view($this->path . 'shipments.index', compact('shipments'));
     }
 
-    public function sendBatch($id)
-    {
-        return 1;
-    }
-
     public function importBatch(Request $request)
     {
-        // try {
         $validator = Validator::make(
             $request->all(),
             [
@@ -65,10 +61,26 @@ class InternationalOrderController extends Controller
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
         $file = $request->file('excel');
-        Excel::import(new BatchImport, $file);
+        Excel::import(new ShipmentTealcaImport, $file);
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
-        // } catch (\Exception $e) {
-        //     return $this->respond(500, null, $e->getMessage(), 'Problemas al cargar el archivo');
-        // }
+    }
+
+    public function sendBatch($id)
+    {
+        $Guide = new Guide();
+        $Tealca = new Tealca();
+        $Tealca->login();
+        $guideResponse = $Guide->getGuidesByOrder($id, false);
+        if ($guideResponse['state'] != 200) {
+            return $guideResponse;
+        }
+        $guides = $guideResponse['data'];
+        foreach ($guides as $guide) {
+            $response = $Tealca->requestCreateShipment($guide);
+            if ($response['state'] != 200) {
+                return redirect()->back()->with('danger', $response['message']);
+            }
+        }
+        return redirect()->route('internationalOrders.index')->with('success', 'Lote subido correctamente');
     }
 }

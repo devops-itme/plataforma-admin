@@ -21,9 +21,12 @@
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
                 </button>
-                <button class="btn btn-primary">
-                    <span>Enviar lote</span>
-                </button>
+                <form action="{{ route('internationalOrders.assign', $shipments[0]->getOrder->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">
+                        <span>Enviar lote</span>
+                    </button>
+                </form>
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     {{-- <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -119,6 +122,16 @@
                                 <span class="form-text text-muted">Filtro tipo de orden</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
+                                <label for="pagination">Cantidad por página</label>
+                                <select name="pagination" class="form-control form-control-solid">
+                                    <option value="15" {{request()->paagination == 15 && 'selected'}}>15</option>
+                                    <option value="25" {{request()->paagination == 25 && 'selected'}}>25</option>
+                                    <option value="50" {{request()->paagination == 50 && 'selected'}}>50</option>
+                                    <option value="100" {{request()->paagination == 100 && 'selected'}}>100</option>
+                                </select>
+                                <small id="helpId" class="text-muted">Cantidad de registros por página</small>
+                            </div>
+                            <div class="form-group py-3 m-0 col-md-4">
                                 <label>Nombre del cliente:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson"
                                     name="name" value="" />
@@ -150,14 +163,14 @@
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                    <a href="{{ route('internationalOrders.show', $shipments[0]->getOrder->id) }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-
+            @include('layouts.alerts')
             <table class="table table-sm text-center display" id="tabListOrders">
                 <thead class="">
                     <tr>
@@ -177,12 +190,12 @@
                         <tr>
                             <th>{{ $shipment->external_id ?? 'No registrada' }}</th>
                             <td>---</td>
-                            <td>{{$shipment->recipient_name ?? 'No registra'}}</td>
+                            <td>{{ $shipment->recipient_name ?? 'No registra' }}</td>
                             <td>{{ $shipment->getOrder->getOrderType->name }}</td>
                             <td>{{ format_date(date('Y-n-d', strtotime($shipment->created_at))) }}
                                 <b>{{ date('h:m A', strtotime($shipment->created_at)) }}</b>
                             </td>
-                            <td>{{$shipment->contact}}</td>
+                            <td>{{ $shipment->contact }}</td>
                             <td>
                                 {{ $shipment->getOrder->getStatusMatrix->name ?? 'No registra' }}
                             </td>

@@ -130,14 +130,17 @@ class Guide extends Model
         }
     }
 
-    public function getGuidesByOrder($order_id)
+    public function getGuidesByOrder($order_id, $paginate = 10)
     {
         try {
-            $guide = $this::where('order_id', $order_id)->paginate(10);
-            if (is_null($guide)) {
+            $guides = $paginate
+                ? $this::where('order_id', $order_id)->paginate($paginate)
+                : $this::where('order_id', $order_id)->get();
+
+            if (is_null($guides)) {
                 return $this->respond(500, [], 'guides not founds', 'Error al encontrar guías');
             }
-            return $this->respond(200, $guide, null, 'Guías encontradas exitosamente');
+            return $this->respond(200, $guides, null, 'Guías encontradas exitosamente');
         } catch (\Throwable $th) {
             return $this->respond(500, [], $th->getMessage(), 'Error al encontrar guías');
         }
