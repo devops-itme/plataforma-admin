@@ -176,8 +176,30 @@ class OrderController extends Controller
 
                     $tax_percentage = 7;
                     $tax_value = $rate_value * ($tax_percentage / 100);
-                    $request->merge(['tax_total' => $tax_value]);
                     $rate_value = $rate_value + $tax_value;
+
+                    // if (!is_numeric($request->type)) {
+                    //     $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
+                    //         $query->where('name', 'guide_document_type');
+                    //     })->first();
+                    //     if (is_null($type)) {
+                    //         return $this->respond(500, $request->all(), 'type not found', 'Tipo de documento no encontrado');
+                    //     }
+                    //     $request->merge(['type' => $type->id]);
+                    // }
+
+                    // if (File($request->document)) {
+                    //     $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'));
+                    // }
+                    // $request->merge(['url_document' => $path]);
+
+                    // $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);
+                    // if ($store_doc['state'] != 200) {
+                    //     DB::rollBack();
+                    //     return $store_doc;
+                    // }
+                    // DB::commit();
+                    // return $this->respond(200, [], '', 'Imágenes almacenadas de forma exitosa.');
 
                     $request->merge([
                         'order_id' => $order_id,
@@ -215,8 +237,9 @@ class OrderController extends Controller
                         return $storeGuideResponse;
                     }
                 }
+
                 $order = Order::find($order_id);
-                $order->update(['order_value' => $rate_value,]);
+                $order->update(['order_value' => $rate_value, 'tax_total' => $tax_value]);
 
                 return $this->respond(200, $order, null, 'Orden creada correctamente');
             });
@@ -322,5 +345,19 @@ class OrderController extends Controller
         }
         // $response['fcm_token'] = Auth::user()->fcm_token;
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
+    }
+
+    public function sendPushNotification(Request $request)
+    {
+        try {
+            $status = $request->status_matrix_id;
+            $userToken = $request->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';
+            $data = $request->all();
+            if ($status != 1) {
+                return sendCustomNotifications('Notification', 'Estado cambiado', $data, $userToken);
+            }
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
     }
 }

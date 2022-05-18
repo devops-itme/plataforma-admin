@@ -25,6 +25,8 @@ class OrderResource extends JsonResource
             "expenses" => $this->expenses,
             "diligence_expenses" => $this->diligence_expenses,
             "tax_total" => $this->tax_total,
+            "rate_value" => $this->rate_value,
+            "tax_percentage" => $this->tax_percentage,
             "urgent_dispatch" => $this->urgent_dispatch,
             "schedule_date" => Carbon::parse($this->schedule_date)->format('d/m/Y'),
             'paid' => $this->paid,
