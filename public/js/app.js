@@ -1854,628 +1854,65 @@ var Messengers = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./app/Modules/OrderModule/views/js/_orders.js":
-/*!*****************************************************!*\
-  !*** ./app/Modules/OrderModule/views/js/_orders.js ***!
-  \*****************************************************/
+/***/ "./app/Modules/OrderModule/views/js/_boxes.js":
+/*!****************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/_boxes.js ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Orders; });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Boxes; });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var Boxes = /*#__PURE__*/function () {
+  function Boxes() {
+    var boxes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+    _classCallCheck(this, Boxes);
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+    _defineProperty(this, "boxes", [{
+      number: 0,
+      weight: 0,
+      "long": 0,
+      broad: 0,
+      high: 0,
+      vol_weight: 0,
+      description: ''
+    }]);
 
-var count = 0;
-var destination_rate_id = null;
-var source_rate_id = null;
-var boxes = [{
-  number: 0,
-  weight: 0,
-  "long": 0,
-  broad: 0,
-  high: 0,
-  vol_weight: 0,
-  description: ''
-}];
+    _defineProperty(this, "container", 'box-container');
 
-var requestSearchZone = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(address_id) {
-    var response, url;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            response = {
-              state: 500,
-              message: 'Error en la consulta'
-            };
-            url = "".concat(window.location.origin, "/api/searchZone?address_id=").concat(address_id);
-            _context.next = 4;
-            return fetch(url).then(function (response) {
-              return response.json();
-            }).then(function (data) {
-              response = data;
-            })["catch"](function (e) {
-              response.error = e;
-            });
+    if ((boxes === null || boxes === void 0 ? void 0 : boxes.length) != 0) {
+      alert(this.boxes);
+      this.boxes = boxes;
+    }
 
-          case 4:
-            return _context.abrupt("return", response);
-
-          case 5:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function requestSearchZone(_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-var requestRate = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(zone_id) {
-    var response, url;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            response = {
-              state: 500,
-              message: 'Error en la consulta'
-            };
-            url = "".concat(window.location.origin, "/api/rateInquiry?zone_id=").concat(zone_id);
-            _context2.next = 4;
-            return fetch(url).then(function (response) {
-              return response.json();
-            }).then(function (data) {
-              response = data;
-            })["catch"](function (e) {
-              response.error = e;
-            });
-
-          case 4:
-            return _context2.abrupt("return", response);
-
-          case 5:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-
-  return function requestRate(_x2) {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
-var requestCalculatePackingRates = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(rate_id, lbs, vol, immediate_delivery) {
-    var response, url;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            response = {
-              state: 500,
-              message: 'Error en la consulta'
-            };
-            url = "".concat(window.location.origin, "/api/calculatePackingRates?rate_id=").concat(rate_id, "&lbs=").concat(lbs, "&vol=").concat(vol, "&immediate_delivery=").concat(immediate_delivery);
-            _context3.next = 4;
-            return fetch(url).then(function (response) {
-              return response.json();
-            }).then(function (data) {
-              console.log('requestCalculatePackingRates', data);
-              response = data;
-            })["catch"](function (e) {
-              response.error = e;
-            });
-
-          case 4:
-            return _context3.abrupt("return", response);
-
-          case 5:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3);
-  }));
-
-  return function requestCalculatePackingRates(_x3, _x4, _x5, _x6) {
-    return _ref3.apply(this, arguments);
-  };
-}();
-
-var calculateRate = /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(edit) {
-    var corp_value, address, same_day_delivery, immediate_delivery;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            if (!(destination_rate_id == null)) {
-              _context5.next = 2;
-              break;
-            }
-
-            return _context5.abrupt("return");
-
-          case 2:
-            corp_value = document.getElementById(edit ? "corp_value_edit" : "corp_value");
-            address = document.getElementById("address");
-
-            if (!(corp_value == null || address == null)) {
-              _context5.next = 6;
-              break;
-            }
-
-            return _context5.abrupt("return");
-
-          case 6:
-            corp_value.value = 0;
-            same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
-
-            if (!(same_day_delivery == null)) {
-              _context5.next = 10;
-              break;
-            }
-
-            return _context5.abrupt("return");
-
-          case 10:
-            immediate_delivery = same_day_delivery.checked ? 1 : 0;
-            _context5.next = 13;
-            return [].forEach.call(boxes, /*#__PURE__*/function () {
-              var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(box) {
-                var lbs, vol, response;
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-                  while (1) {
-                    switch (_context4.prev = _context4.next) {
-                      case 0:
-                        lbs = box === null || box === void 0 ? void 0 : box.weight;
-                        vol = (box === null || box === void 0 ? void 0 : box["long"]) * (box === null || box === void 0 ? void 0 : box.broad) * (box === null || box === void 0 ? void 0 : box.high);
-                        _context4.next = 4;
-                        return requestCalculatePackingRates(destination_rate_id, lbs, vol, immediate_delivery);
-
-                      case 4:
-                        response = _context4.sent;
-
-                        if (response.state == 200) {
-                          corp_value.value = parseFloat(corp_value.value) + parseFloat(response.data);
-                        }
-
-                      case 6:
-                      case "end":
-                        return _context4.stop();
-                    }
-                  }
-                }, _callee4);
-              }));
-
-              return function (_x8) {
-                return _ref5.apply(this, arguments);
-              };
-            }());
-
-          case 13:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5);
-  }));
-
-  return function calculateRate(_x7) {
-    return _ref4.apply(this, arguments);
-  };
-}();
-
-var Orders = /*#__PURE__*/function () {
-  function Orders() {
-    _classCallCheck(this, Orders);
-
-    this.guideId = '';
-    this.boxes = boxes;
+    if (container != null) {
+      this.container = container;
+    }
   }
 
-  _createClass(Orders, [{
+  _createClass(Boxes, [{
     key: "initialize",
     value: function initialize() {
       this.instantiateBoxes();
       this.addBox();
-      this.loadBranches();
-      this.loadCustomerModal();
       this.removeBox();
-      this.loadOrderNumber();
-      this.saveGuides();
-      this.createAddress();
-      this.listGuides();
-      this.porDespacharOndemand();
-      this.porDespacharPackaging();
-      this.customerAddresses();
-      this.loadPickupHours();
-      this.loadHoursInEditOrShow();
-      this.importModal();
-      this.sendPushNotification();
-      this.listenRateVariables(true);
-      this.listenRateVariables(false);
     }
-  }, {
-    key: "listenGuideCheck",
-    value: function listenGuideCheck() {
-      var setValue = /*#__PURE__*/function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-          var total, full_tax;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-            while (1) {
-              switch (_context8.prev = _context8.next) {
-                case 0:
-                  if (!(source_address.value == "")) {
-                    _context8.next = 2;
-                    break;
-                  }
-
-                  return _context8.abrupt("return");
-
-                case 2:
-                  total = 0;
-                  _context8.next = 5;
-                  return [].forEach.call(guideCheck, /*#__PURE__*/function () {
-                    var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(guide) {
-                      var _guide$parentNode$par, _guide$parentNode, _guide$parentNode$par2, _guide$parentNode$par3, _guide$parentNode$par4, _guide$parentNode2, _guide$parentNode2$pa, _guide$parentNode2$pa2, _guide$parentNode$par5, _guide$parentNode3, _guide$parentNode3$pa, _guide$parentNode3$pa2;
-
-                      var corp_value, boxes, immediate_delivery, source_rate, higher_rate;
-                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-                        while (1) {
-                          switch (_context7.prev = _context7.next) {
-                            case 0:
-                              corp_value = (_guide$parentNode$par = (_guide$parentNode = guide.parentNode) === null || _guide$parentNode === void 0 ? void 0 : (_guide$parentNode$par2 = _guide$parentNode.parentNode) === null || _guide$parentNode$par2 === void 0 ? void 0 : (_guide$parentNode$par3 = _guide$parentNode$par2.parentNode) === null || _guide$parentNode$par3 === void 0 ? void 0 : _guide$parentNode$par3.getAttribute('corp_value')) !== null && _guide$parentNode$par !== void 0 ? _guide$parentNode$par : 0;
-                              boxes = (_guide$parentNode$par4 = (_guide$parentNode2 = guide.parentNode) === null || _guide$parentNode2 === void 0 ? void 0 : (_guide$parentNode2$pa = _guide$parentNode2.parentNode) === null || _guide$parentNode2$pa === void 0 ? void 0 : (_guide$parentNode2$pa2 = _guide$parentNode2$pa.parentNode) === null || _guide$parentNode2$pa2 === void 0 ? void 0 : _guide$parentNode2$pa2.getAttribute('boxes')) !== null && _guide$parentNode$par4 !== void 0 ? _guide$parentNode$par4 : [];
-                              immediate_delivery = (_guide$parentNode$par5 = (_guide$parentNode3 = guide.parentNode) === null || _guide$parentNode3 === void 0 ? void 0 : (_guide$parentNode3$pa = _guide$parentNode3.parentNode) === null || _guide$parentNode3$pa === void 0 ? void 0 : (_guide$parentNode3$pa2 = _guide$parentNode3$pa.parentNode) === null || _guide$parentNode3$pa2 === void 0 ? void 0 : _guide$parentNode3$pa2.getAttribute('same_day_delivery')) !== null && _guide$parentNode$par5 !== void 0 ? _guide$parentNode$par5 : 0;
-                              boxes = JSON.parse(boxes);
-                              source_rate = 0;
-                              _context7.next = 7;
-                              return [].forEach.call(boxes, /*#__PURE__*/function () {
-                                var _ref8 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(box) {
-                                  var lbs, vol, response;
-                                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-                                    while (1) {
-                                      switch (_context6.prev = _context6.next) {
-                                        case 0:
-                                          lbs = box === null || box === void 0 ? void 0 : box.weight;
-                                          vol = (box === null || box === void 0 ? void 0 : box["long"]) * (box === null || box === void 0 ? void 0 : box.broad) * (box === null || box === void 0 ? void 0 : box.high);
-                                          console.log(lbs);
-                                          _context6.next = 5;
-                                          return requestCalculatePackingRates(source_rate_id, lbs, vol, immediate_delivery);
-
-                                        case 5:
-                                          response = _context6.sent;
-
-                                          if (response.state == 200) {
-                                            source_rate = parseFloat(source_rate) + parseFloat(response.data);
-                                          }
-
-                                        case 7:
-                                        case "end":
-                                          return _context6.stop();
-                                      }
-                                    }
-                                  }, _callee6);
-                                }));
-
-                                return function (_x10) {
-                                  return _ref8.apply(this, arguments);
-                                };
-                              }());
-
-                            case 7:
-                              higher_rate = parseFloat(source_rate) > parseFloat(corp_value) ? parseFloat(source_rate) : parseFloat(corp_value);
-                              guide.checked && (total = parseFloat(total) + parseFloat(higher_rate));
-
-                            case 9:
-                            case "end":
-                              return _context7.stop();
-                          }
-                        }
-                      }, _callee7);
-                    }));
-
-                    return function (_x9) {
-                      return _ref7.apply(this, arguments);
-                    };
-                  }());
-
-                case 5:
-                  full_tax = total * tax_percentage.value / 100;
-                  tax_total.setAttribute("value", full_tax);
-                  total = total + full_tax;
-                  order_value.setAttribute("value", total);
-
-                case 9:
-                case "end":
-                  return _context8.stop();
-              }
-            }
-          }, _callee8);
-        }));
-
-        return function setValue() {
-          return _ref6.apply(this, arguments);
-        };
-      }();
-
-      var source_address = document.getElementById("address");
-      var guideCheck = document.getElementsByClassName("guideCheck");
-      var order_value = document.getElementById("order_value");
-      var tax_percentage = document.getElementById("tax_percentage");
-      var tax_total = document.getElementById("tax_total");
-
-      if (guideCheck == null || order_value == null || tax_percentage == null || tax_total == null) {
-        return;
-      }
-
-      order_value.setAttribute("value", 0);
-      setValue();
-      [].forEach.call(guideCheck, function (guide) {
-        guide.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-            while (1) {
-              switch (_context9.prev = _context9.next) {
-                case 0:
-                  order_value.setAttribute("value", 0);
-                  setValue();
-
-                case 2:
-                case "end":
-                  return _context9.stop();
-              }
-            }
-          }, _callee9);
-        })));
-      });
-      source_address.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var response, _response$data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                if (!(source_address.value == "")) {
-                  _context10.next = 2;
-                  break;
-                }
-
-                return _context10.abrupt("return");
-
-              case 2:
-                _context10.next = 4;
-                return requestSearchZone(source_address.value);
-
-              case 4:
-                response = _context10.sent;
-
-                if (response.state == 200) {
-                  source_rate_id = (_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.zone_id;
-                }
-
-                order_value.setAttribute("value", 0);
-                setValue();
-
-              case 8:
-              case "end":
-                return _context10.stop();
-            }
-          }
-        }, _callee10);
-      })));
-    }
-  }, {
-    key: "listenRateVariables",
-    value: function () {
-      var _listenRateVariables = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(edit) {
-        var rate, zone, same_day_delivery, source_address;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
-          while (1) {
-            switch (_context14.prev = _context14.next) {
-              case 0:
-                rate = document.getElementById(edit ? "rate_edit" : "rate");
-                zone = document.getElementById(edit ? "zone_edit" : "zone_id");
-                same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
-                source_address = document.getElementById("address");
-
-                if (!(rate == null || zone == null || same_day_delivery == null || source_address == null)) {
-                  _context14.next = 6;
-                  break;
-                }
-
-                return _context14.abrupt("return");
-
-              case 6:
-                rate.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-                  var response, _response$data2;
-
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
-                    while (1) {
-                      switch (_context11.prev = _context11.next) {
-                        case 0:
-                          if (!(zone.value == "")) {
-                            _context11.next = 2;
-                            break;
-                          }
-
-                          return _context11.abrupt("return");
-
-                        case 2:
-                          _context11.next = 4;
-                          return requestRate(zone.value);
-
-                        case 4:
-                          response = _context11.sent;
-
-                          if (response.state == 200) {
-                            destination_rate_id = (_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.id;
-                          }
-
-                          calculateRate(edit);
-
-                        case 7:
-                        case "end":
-                          return _context11.stop();
-                      }
-                    }
-                  }, _callee11);
-                })));
-                zone.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-                  var response, _response$data3;
-
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
-                    while (1) {
-                      switch (_context12.prev = _context12.next) {
-                        case 0:
-                          if (!(zone.value == "")) {
-                            _context12.next = 2;
-                            break;
-                          }
-
-                          return _context12.abrupt("return");
-
-                        case 2:
-                          _context12.next = 4;
-                          return requestRate(zone.value);
-
-                        case 4:
-                          response = _context12.sent;
-
-                          if (response.state == 200) {
-                            destination_rate_id = (_response$data3 = response.data) === null || _response$data3 === void 0 ? void 0 : _response$data3.id;
-                          }
-
-                          calculateRate(edit);
-
-                        case 7:
-                        case "end":
-                          return _context12.stop();
-                      }
-                    }
-                  }, _callee12);
-                })));
-                same_day_delivery.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-                  var response, _response$data4;
-
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
-                    while (1) {
-                      switch (_context13.prev = _context13.next) {
-                        case 0:
-                          if (!(zone.value == "")) {
-                            _context13.next = 2;
-                            break;
-                          }
-
-                          return _context13.abrupt("return");
-
-                        case 2:
-                          _context13.next = 4;
-                          return requestRate(zone.value);
-
-                        case 4:
-                          response = _context13.sent;
-
-                          if (response.state == 200) {
-                            destination_rate_id = (_response$data4 = response.data) === null || _response$data4 === void 0 ? void 0 : _response$data4.id;
-                          }
-
-                          calculateRate(edit);
-
-                        case 7:
-                        case "end":
-                          return _context13.stop();
-                      }
-                    }
-                  }, _callee13);
-                })));
-
-              case 9:
-              case "end":
-                return _context14.stop();
-            }
-          }
-        }, _callee14);
-      }));
-
-      function listenRateVariables(_x11) {
-        return _listenRateVariables.apply(this, arguments);
-      }
-
-      return listenRateVariables;
-    }()
-  }, {
-    key: "sendPushNotification",
-    value: function () {
-      var _sendPushNotification = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
-        var state, notification_type, fcm_token, url;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
-          while (1) {
-            switch (_context15.prev = _context15.next) {
-              case 0:
-                state = document.getElementById("state");
-                notification_type = document.getElementById("notification_type");
-                fcm_token = document.getElementById("fcm_token");
-
-                if (!(state == null || notification_type == null || fcm_token == null)) {
-                  _context15.next = 5;
-                  break;
-                }
-
-                return _context15.abrupt("return");
-
-              case 5:
-                state = state.value;
-                notification_type = notification_type.value;
-                fcm_token = fcm_token.value;
-                url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context15.next = 11;
-                return fetch(url).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  console.log(data);
-                })["catch"](function (e) {
-                  console.log(e);
-                });
-
-              case 11:
-              case "end":
-                return _context15.stop();
-            }
-          }
-        }, _callee15);
-      }));
-
-      function sendPushNotification() {
-        return _sendPushNotification.apply(this, arguments);
-      }
-
-      return sendPushNotification;
-    }()
   }, {
     key: "setInput",
     value: function setInput() {
+      var _this = this;
+
       var inputs = ['number[]', 'weight[]', 'long[]', 'broad[]', 'high[]', 'vol_weight[]', 'description[]'];
       [].forEach.call(inputs, function (input) {
         var elements = document.getElementsByName(input);
@@ -2490,9 +1927,8 @@ var Orders = /*#__PURE__*/function () {
             var children = el.parentNode.parentNode;
             var index = Array.prototype.indexOf.call(parent.children, children);
             var name = input.replace('[]', '');
-            boxes[index][name] = el.value;
-            calculateRate(true);
-            calculateRate(false);
+            _this.boxes[index][name] = el.value; // calculateRate(true, boxes, destination_rate_id);
+            // calculateRate(false, boxes, destination_rate_id);
           });
         });
       });
@@ -2500,16 +1936,14 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "instantiateBoxes",
     value: function instantiateBoxes() {
-      var container = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'box-container';
-      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
-      var boxContainer = document.getElementById(container);
+      var boxContainer = document.getElementById(this.container);
 
       if (boxContainer == null) {
         return;
       }
 
       boxContainer.innerHTML = "";
-      [].forEach.call(boxes, function (box) {
+      [].forEach.call(this.boxes, function (box) {
         var row = document.createElement("tr");
         row.className = "row border mt-0 text-center box-register col-md-13 \"";
         var numberCell = document.createElement("td");
@@ -2555,17 +1989,13 @@ var Orders = /*#__PURE__*/function () {
       });
       this.setInput();
       this.removeBox();
-      calculateRate(true);
-      calculateRate(false);
     }
   }, {
     key: "addBox",
     value: function addBox() {
-      var _this = this;
+      var _this2 = this;
 
       var button = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'add-box-btn';
-      var boxes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.boxes;
-      var container = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'box-container';
       var addBoxBtn = document.getElementById(button);
 
       if (addBoxBtn == null) {
@@ -2573,7 +2003,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       addBoxBtn.addEventListener('click', function () {
-        boxes.push({
+        _this2.boxes.push({
           number: 0,
           weight: 0,
           "long": 0,
@@ -2583,12 +2013,15 @@ var Orders = /*#__PURE__*/function () {
           description: ''
         });
 
-        _this.instantiateBoxes(container, boxes);
+        _this2.instantiateBoxes(); // calculateRate(true, boxes, destination_rate_id);
+        // calculateRate(false, boxes, destination_rate_id);
+
       });
     }
   }, {
     key: "removeBox",
     value: function removeBox() {
+      var boxes = this.boxes;
       var removeBoxBtn = document.getElementsByClassName("remove-box-btn");
 
       if (removeBoxBtn == null) {
@@ -2601,16 +2034,398 @@ var Orders = /*#__PURE__*/function () {
           var parent = box.parentNode;
           var index = Array.prototype.indexOf.call(parent.children, box);
           boxes.splice(index, 1);
-          box.remove();
-          calculateRate(true);
-          calculateRate(false);
+          box.remove(); // calculateRate(true, boxes, destination_rate_id);
+          // calculateRate(false, boxes, destination_rate_id);
         });
       });
     }
+  }]);
+
+  return Boxes;
+}();
+
+
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/_orders.js":
+/*!*****************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/_orders.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Orders; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _request_requestRate_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./request/requestRate.js */ "./app/Modules/OrderModule/views/js/request/requestRate.js");
+/* harmony import */ var _request_requestBranches_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./request/requestBranches.js */ "./app/Modules/OrderModule/views/js/request/requestBranches.js");
+/* harmony import */ var _request_requestSearchZone__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./request/requestSearchZone */ "./app/Modules/OrderModule/views/js/request/requestSearchZone.js");
+/* harmony import */ var _request_requestCalculatePackingRates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./request/requestCalculatePackingRates */ "./app/Modules/OrderModule/views/js/request/requestCalculatePackingRates.js");
+/* harmony import */ var _calculateRate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calculateRate */ "./app/Modules/OrderModule/views/js/calculateRate.js");
+/* harmony import */ var _listener__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./listener */ "./app/Modules/OrderModule/views/js/listener.js");
+/* harmony import */ var _importModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./importModal */ "./app/Modules/OrderModule/views/js/importModal.js");
+/* harmony import */ var _boxes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_boxes */ "./app/Modules/OrderModule/views/js/_boxes.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+//requests
+
+
+
+ //functions
+
+
+
+ //classes
+
+
+var destination_rate_id = null;
+var source_rate_id = null;
+
+var Orders = /*#__PURE__*/function () {
+  function Orders() {
+    _classCallCheck(this, Orders);
+
+    this.guideId = '';
+  }
+
+  _createClass(Orders, [{
+    key: "initialize",
+    value: function initialize() {
+      var boxes = new _boxes__WEBPACK_IMPORTED_MODULE_8__["default"]();
+      boxes.initialize();
+      console.log(boxes);
+      this.loadBranches();
+      this.loadCustomerModal();
+      this.loadOrderNumber();
+      this.saveGuides();
+      this.createAddress();
+      this.listGuides();
+      this.porDespacharOndemand();
+      this.porDespacharPackaging();
+      this.customerAddresses();
+      this.loadPickupHours();
+      this.loadHoursInEditOrShow();
+      this.sendPushNotification();
+      this.listenRateVariables(true);
+      this.listenRateVariables(false);
+      Object(_importModal__WEBPACK_IMPORTED_MODULE_7__["importModal"])();
+    }
+  }, {
+    key: "listenGuideCheck",
+    value: function listenGuideCheck() {
+      var setValue = /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          var total, full_tax;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  if (!(source_address.value == "")) {
+                    _context3.next = 2;
+                    break;
+                  }
+
+                  return _context3.abrupt("return");
+
+                case 2:
+                  total = 0;
+                  _context3.next = 5;
+                  return [].forEach.call(guideCheck, /*#__PURE__*/function () {
+                    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(guide) {
+                      var _guide$parentNode$par, _guide$parentNode, _guide$parentNode$par2, _guide$parentNode$par3, _guide$parentNode$par4, _guide$parentNode2, _guide$parentNode2$pa, _guide$parentNode2$pa2, _guide$parentNode$par5, _guide$parentNode3, _guide$parentNode3$pa, _guide$parentNode3$pa2;
+
+                      var corp_value, boxes, immediate_delivery, source_rate, higher_rate;
+                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                        while (1) {
+                          switch (_context2.prev = _context2.next) {
+                            case 0:
+                              corp_value = (_guide$parentNode$par = (_guide$parentNode = guide.parentNode) === null || _guide$parentNode === void 0 ? void 0 : (_guide$parentNode$par2 = _guide$parentNode.parentNode) === null || _guide$parentNode$par2 === void 0 ? void 0 : (_guide$parentNode$par3 = _guide$parentNode$par2.parentNode) === null || _guide$parentNode$par3 === void 0 ? void 0 : _guide$parentNode$par3.getAttribute('corp_value')) !== null && _guide$parentNode$par !== void 0 ? _guide$parentNode$par : 0;
+                              boxes = (_guide$parentNode$par4 = (_guide$parentNode2 = guide.parentNode) === null || _guide$parentNode2 === void 0 ? void 0 : (_guide$parentNode2$pa = _guide$parentNode2.parentNode) === null || _guide$parentNode2$pa === void 0 ? void 0 : (_guide$parentNode2$pa2 = _guide$parentNode2$pa.parentNode) === null || _guide$parentNode2$pa2 === void 0 ? void 0 : _guide$parentNode2$pa2.getAttribute('boxes')) !== null && _guide$parentNode$par4 !== void 0 ? _guide$parentNode$par4 : [];
+                              immediate_delivery = (_guide$parentNode$par5 = (_guide$parentNode3 = guide.parentNode) === null || _guide$parentNode3 === void 0 ? void 0 : (_guide$parentNode3$pa = _guide$parentNode3.parentNode) === null || _guide$parentNode3$pa === void 0 ? void 0 : (_guide$parentNode3$pa2 = _guide$parentNode3$pa.parentNode) === null || _guide$parentNode3$pa2 === void 0 ? void 0 : _guide$parentNode3$pa2.getAttribute('same_day_delivery')) !== null && _guide$parentNode$par5 !== void 0 ? _guide$parentNode$par5 : 0;
+                              boxes = JSON.parse(boxes);
+                              source_rate = 0;
+                              _context2.next = 7;
+                              return [].forEach.call(boxes, /*#__PURE__*/function () {
+                                var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(box) {
+                                  var lbs, vol, response;
+                                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                                    while (1) {
+                                      switch (_context.prev = _context.next) {
+                                        case 0:
+                                          lbs = box === null || box === void 0 ? void 0 : box.weight;
+                                          vol = (box === null || box === void 0 ? void 0 : box["long"]) * (box === null || box === void 0 ? void 0 : box.broad) * (box === null || box === void 0 ? void 0 : box.high);
+                                          console.log(lbs);
+                                          _context.next = 5;
+                                          return Object(_request_requestCalculatePackingRates__WEBPACK_IMPORTED_MODULE_4__["requestCalculatePackingRates"])(source_rate_id, lbs, vol, immediate_delivery);
+
+                                        case 5:
+                                          response = _context.sent;
+
+                                          if (response.state == 200) {
+                                            source_rate = parseFloat(source_rate) + parseFloat(response.data);
+                                          }
+
+                                        case 7:
+                                        case "end":
+                                          return _context.stop();
+                                      }
+                                    }
+                                  }, _callee);
+                                }));
+
+                                return function (_x2) {
+                                  return _ref3.apply(this, arguments);
+                                };
+                              }());
+
+                            case 7:
+                              higher_rate = parseFloat(source_rate) > parseFloat(corp_value) ? parseFloat(source_rate) : parseFloat(corp_value);
+                              guide.checked && (total = parseFloat(total) + parseFloat(higher_rate));
+
+                            case 9:
+                            case "end":
+                              return _context2.stop();
+                          }
+                        }
+                      }, _callee2);
+                    }));
+
+                    return function (_x) {
+                      return _ref2.apply(this, arguments);
+                    };
+                  }());
+
+                case 5:
+                  full_tax = total * tax_percentage.value / 100;
+                  tax_total.setAttribute("value", full_tax);
+                  total = total + full_tax;
+                  order_value.setAttribute("value", total);
+
+                case 9:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        }));
+
+        return function setValue() {
+          return _ref.apply(this, arguments);
+        };
+      }();
+
+      var source_address = document.getElementById("address");
+      var guideCheck = document.getElementsByClassName("guideCheck");
+      var order_value = document.getElementById("order_value");
+      var tax_percentage = document.getElementById("tax_percentage");
+      var tax_total = document.getElementById("tax_total");
+
+      if (guideCheck == null || order_value == null || tax_percentage == null || tax_total == null) {
+        return;
+      }
+
+      order_value.setAttribute("value", 0);
+      setValue();
+      [].forEach.call(guideCheck, function (guide) {
+        guide.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  order_value.setAttribute("value", 0);
+                  setValue();
+
+                case 2:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        })));
+      });
+      source_address.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response, _response$data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                if (!(source_address.value == "")) {
+                  _context5.next = 2;
+                  break;
+                }
+
+                return _context5.abrupt("return");
+
+              case 2:
+                _context5.next = 4;
+                return Object(_request_requestSearchZone__WEBPACK_IMPORTED_MODULE_3__["requestSearchZone"])(source_address.value);
+
+              case 4:
+                response = _context5.sent;
+
+                if (response.state == 200) {
+                  source_rate_id = (_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.zone_id;
+                }
+
+                order_value.setAttribute("value", 0);
+                setValue();
+
+              case 8:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      })));
+    }
+  }, {
+    key: "listenRateVariables",
+    value: function () {
+      var _listenRateVariables = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(edit) {
+        var rate, zone, same_day_delivery, source_address, action;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                rate = document.getElementById(edit ? "rate_edit" : "rate");
+                zone = document.getElementById(edit ? "zone_edit" : "zone_id");
+                same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
+                source_address = document.getElementById("address");
+
+                if (!(rate == null || zone == null || same_day_delivery == null || source_address == null)) {
+                  _context7.next = 6;
+                  break;
+                }
+
+                return _context7.abrupt("return");
+
+              case 6:
+                action = /*#__PURE__*/function () {
+                  var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+                    var response, _response$data2;
+
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+                      while (1) {
+                        switch (_context6.prev = _context6.next) {
+                          case 0:
+                            if (!(zone.value == "")) {
+                              _context6.next = 2;
+                              break;
+                            }
+
+                            return _context6.abrupt("return");
+
+                          case 2:
+                            _context6.next = 4;
+                            return Object(_request_requestRate_js__WEBPACK_IMPORTED_MODULE_1__["requestRate"])(zone.value);
+
+                          case 4:
+                            response = _context6.sent;
+                            console.log('listener', response);
+
+                            if (response.state == 200) {
+                              destination_rate_id = (_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.id;
+                            }
+
+                            Object(_calculateRate__WEBPACK_IMPORTED_MODULE_5__["calculateRate"])(edit, boxes, destination_rate_id);
+
+                          case 8:
+                          case "end":
+                            return _context6.stop();
+                        }
+                      }
+                    }, _callee6);
+                  }));
+
+                  return function action() {
+                    return _ref6.apply(this, arguments);
+                  };
+                }();
+
+                Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(rate, action);
+                Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(zone, action);
+                Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(same_day_delivery, action, 'click');
+
+              case 10:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function listenRateVariables(_x3) {
+        return _listenRateVariables.apply(this, arguments);
+      }
+
+      return listenRateVariables;
+    }()
+  }, {
+    key: "sendPushNotification",
+    value: function () {
+      var _sendPushNotification = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var state, notification_type, fcm_token, url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                state = document.getElementById("state");
+                notification_type = document.getElementById("notification_type");
+                fcm_token = document.getElementById("fcm_token");
+
+                if (!(state == null || notification_type == null || fcm_token == null)) {
+                  _context8.next = 5;
+                  break;
+                }
+
+                return _context8.abrupt("return");
+
+              case 5:
+                state = state.value;
+                notification_type = notification_type.value;
+                fcm_token = fcm_token.value;
+                url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
+                _context8.next = 11;
+                return fetch(url).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  console.log(data);
+                })["catch"](function (e) {
+                  console.log(e);
+                });
+
+              case 11:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }));
+
+      function sendPushNotification() {
+        return _sendPushNotification.apply(this, arguments);
+      }
+
+      return sendPushNotification;
+    }()
   }, {
     key: "loadCustomerModal",
     value: function loadCustomerModal() {
-      var _this2 = this;
+      var _this = this;
 
       var btnDetailCustomer = document.getElementById("btnDetailCustomer");
 
@@ -2619,22 +2434,22 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnDetailCustomer.addEventListener('click', function () {
-        _this2.searchCustomerData();
+        _this.searchCustomerData();
       });
     }
   }, {
     key: "requestSearchCustomer",
     value: function () {
-      var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(query) {
+      var _requestSearchCustomer = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(query) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context16.prev = _context16.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context16.next = 3;
+                _context9.next = 3;
                 return fetch("/search_customers?value=" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2644,17 +2459,17 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context16.abrupt("return", response);
+                return _context9.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context16.stop();
+                return _context9.stop();
             }
           }
-        }, _callee16);
+        }, _callee9);
       }));
 
-      function requestSearchCustomer(_x12) {
+      function requestSearchCustomer(_x4) {
         return _requestSearchCustomer.apply(this, arguments);
       }
 
@@ -2663,7 +2478,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "searchCustomerData",
     value: function searchCustomerData() {
-      var _this3 = this;
+      var _this2 = this;
 
       var btnSearch = document.getElementById("btnSearch");
 
@@ -2671,22 +2486,22 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+      btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         var tbody, inputValue, response, data, type, row, cell, i, _row, idCell, phoneCell, tradenameCell, selectCell, userCheck;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context17.prev = _context17.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
                 tbody = document.querySelector("#table_customers tbody");
                 tbody.innerHTML = '';
                 inputValue = document.getElementById("search_customer").value;
                 tbody.innerHTML = '';
-                _context17.next = 6;
-                return _this3.requestSearchCustomer(inputValue);
+                _context10.next = 6;
+                return _this2.requestSearchCustomer(inputValue);
 
               case 6:
-                response = _context17.sent;
+                response = _context10.sent;
                 data = response.data;
                 type = response.type;
 
@@ -2725,29 +2540,29 @@ var Orders = /*#__PURE__*/function () {
                   }
                 }
 
-                _this3.selectCustomer();
+                _this2.selectCustomer();
 
               case 12:
               case "end":
-                return _context17.stop();
+                return _context10.stop();
             }
           }
-        }, _callee17);
+        }, _callee10);
       })));
     }
   }, {
     key: "requestSelectedCustomerData",
     value: function () {
-      var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(query) {
+      var _requestSelectedCustomerData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(query) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context18.prev = _context18.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context18.next = 3;
+                _context11.next = 3;
                 return fetch("/customer_data/" + query).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2757,17 +2572,17 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context18.abrupt("return", response);
+                return _context11.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context18.stop();
+                return _context11.stop();
             }
           }
-        }, _callee18);
+        }, _callee11);
       }));
 
-      function requestSelectedCustomerData(_x13) {
+      function requestSelectedCustomerData(_x5) {
         return _requestSelectedCustomerData.apply(this, arguments);
       }
 
@@ -2776,23 +2591,23 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "selectCustomer",
     value: function selectCustomer() {
-      var _this4 = this;
+      var _this3 = this;
 
       var allCustomerChecks = document.getElementsByClassName("customerCheck");
 
       var _loop = function _loop(i) {
-        allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+        allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
           var response, data, branches, branchSlc, _i, element, branchOpt, departments, departmentSlc, _i2, _element, departmentOpt, modal;
 
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
             while (1) {
-              switch (_context19.prev = _context19.next) {
+              switch (_context12.prev = _context12.next) {
                 case 0:
-                  _context19.next = 2;
-                  return _this4.requestSelectedCustomerData(allCustomerChecks[i].value);
+                  _context12.next = 2;
+                  return _this3.requestSelectedCustomerData(allCustomerChecks[i].value);
 
                 case 2:
-                  response = _context19.sent;
+                  response = _context12.sent;
                   data = response.data;
                   document.getElementById("user_code").value = data[0]['id'];
                   document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
@@ -2824,15 +2639,15 @@ var Orders = /*#__PURE__*/function () {
                   modal.click();
 
                   if (document.getElementById("user_code").value != null) {
-                    _this4.customerAddresses(document.getElementById("user_code").value);
+                    _this3.customerAddresses(document.getElementById("user_code").value);
                   }
 
                 case 21:
                 case "end":
-                  return _context19.stop();
+                  return _context12.stop();
               }
             }
-          }, _callee19);
+          }, _callee12);
         })));
       };
 
@@ -2843,16 +2658,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestOrderNumber",
     value: function () {
-      var _requestOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20() {
+      var _requestOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
-            switch (_context20.prev = _context20.next) {
+            switch (_context13.prev = _context13.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context20.next = 3;
+                _context13.next = 3;
                 return fetch("/order_number").then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -2862,14 +2677,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context20.abrupt("return", response);
+                return _context13.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context20.stop();
+                return _context13.stop();
             }
           }
-        }, _callee20);
+        }, _callee13);
       }));
 
       function requestOrderNumber() {
@@ -2881,35 +2696,35 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadOrderNumber",
     value: function () {
-      var _loadOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21() {
+      var _loadOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         var orderNumber, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context21.prev = _context21.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
                 orderNumber = document.getElementById("order_number");
 
                 if (!(orderNumber == null)) {
-                  _context21.next = 3;
+                  _context14.next = 3;
                   break;
                 }
 
-                return _context21.abrupt("return");
+                return _context14.abrupt("return");
 
               case 3:
-                _context21.next = 5;
+                _context14.next = 5;
                 return this.requestOrderNumber();
 
               case 5:
-                response = _context21.sent;
+                response = _context14.sent;
                 orderNumber.setAttribute('value', response.data);
 
               case 7:
               case "end":
-                return _context21.stop();
+                return _context14.stop();
             }
           }
-        }, _callee21, this);
+        }, _callee14, this);
       }));
 
       function loadOrderNumber() {
@@ -2921,7 +2736,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "saveGuides",
     value: function saveGuides() {
-      var _this5 = this;
+      var _this4 = this;
 
       var btnStoreGuide = document.getElementById("btnStoreGuide");
 
@@ -2929,11 +2744,11 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22() {
+      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
         var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context22.prev = _context22.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
                 branch_office = document.getElementById("branch_off").value;
                 transport_type = document.getElementById("trans_type").value; // let dispatched = document.getElementById("dispatched").value;
@@ -3002,20 +2817,20 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('sign', sign);
                 formData.append('take_photo', take_photo); // formData.append('customer_address',customer_address);
 
-                _context22.next = 47;
-                return _this5.sendGuideData(formData);
+                _context15.next = 47;
+                return _this4.sendGuideData(formData);
 
               case 47:
-                response = _context22.sent;
+                response = _context15.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
-                  _this5.listGuides();
+                  _this4.listGuides();
 
-                  _this5.cleanFields();
+                  _this4.cleanFields();
                 } else {
                   error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
@@ -3023,25 +2838,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 49:
               case "end":
-                return _context22.stop();
+                return _context15.stop();
             }
           }
-        }, _callee22);
+        }, _callee15);
       })));
     }
   }, {
     key: "sendGuideData",
     value: function () {
-      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23(formData) {
+      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(formData) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
           while (1) {
-            switch (_context23.prev = _context23.next) {
+            switch (_context16.prev = _context16.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context23.next = 3;
+                _context16.next = 3;
                 return fetch("/guias/store", {
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -3051,18 +2866,18 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context23.sent;
-                return _context23.abrupt("return", response.json());
+                response = _context16.sent;
+                return _context16.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context23.stop();
+                return _context16.stop();
             }
           }
-        }, _callee23);
+        }, _callee16);
       }));
 
-      function sendGuideData(_x14) {
+      function sendGuideData(_x6) {
         return _sendGuideData.apply(this, arguments);
       }
 
@@ -3071,30 +2886,30 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "listGuides",
     value: function () {
-      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
-        var _this6 = this;
+      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+        var _this5 = this;
 
         var tbody, response, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
           while (1) {
-            switch (_context24.prev = _context24.next) {
+            switch (_context17.prev = _context17.next) {
               case 0:
                 tbody = document.querySelector("#guidesTable tbody");
 
                 if (!(tbody == null)) {
-                  _context24.next = 3;
+                  _context17.next = 3;
                   break;
                 }
 
-                return _context24.abrupt("return");
+                return _context17.abrupt("return");
 
               case 3:
                 tbody.innerHTML = '';
-                _context24.next = 6;
+                _context17.next = 6;
                 return this.requestGuides();
 
               case 6:
-                response = _context24.sent;
+                response = _context17.sent;
                 data = response.data;
 
                 if (data.length > 0) {
@@ -3117,7 +2932,7 @@ var Orders = /*#__PURE__*/function () {
                     var dateCell = row.insertCell(4);
                     var allDate = new Date(key.created_at.split(' ')[0]);
                     var month = allDate.getMonth();
-                    dateCell.innerHTML = allDate.getDate() + "-" + _this6.months(month) + "-" + allDate.getFullYear();
+                    dateCell.innerHTML = allDate.getDate() + "-" + _this5.months(month) + "-" + allDate.getFullYear();
                     var rateCell = row.insertCell(5);
                     rateCell.innerHTML = (_key$rate = key.rate) !== null && _key$rate !== void 0 ? _key$rate : '';
                     var stateCell = row.insertCell(6);
@@ -3165,10 +2980,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 11:
               case "end":
-                return _context24.stop();
+                return _context17.stop();
             }
           }
-        }, _callee24, this);
+        }, _callee17, this);
       }));
 
       function listGuides() {
@@ -3180,11 +2995,11 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestGuides",
     value: function () {
-      var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25() {
+      var _requestGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
         var orderNumber, path, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
           while (1) {
-            switch (_context25.prev = _context25.next) {
+            switch (_context18.prev = _context18.next) {
               case 0:
                 orderNumber = document.getElementsByName("order_number")[0];
 
@@ -3198,7 +3013,7 @@ var Orders = /*#__PURE__*/function () {
                 response = {
                   'state': 500
                 };
-                _context25.next = 6;
+                _context18.next = 6;
                 return fetch("/guias?order=" + orderNumber + "&path=" + path).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3208,14 +3023,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 6:
-                return _context25.abrupt("return", response);
+                return _context18.abrupt("return", response);
 
               case 7:
               case "end":
-                return _context25.stop();
+                return _context18.stop();
             }
           }
-        }, _callee25);
+        }, _callee18);
       }));
 
       function requestGuides() {
@@ -3227,7 +3042,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "editGuide",
     value: function editGuide() {
-      var _this7 = this;
+      var _this6 = this;
 
       var guides = document.getElementsByClassName("btnEditGuide");
 
@@ -3236,18 +3051,18 @@ var Orders = /*#__PURE__*/function () {
       }
 
       [].forEach.call(guides, function (guide) {
-        guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
+        guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
           var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zones, same_day_delivery, sign, take_photo, boxes;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
             while (1) {
-              switch (_context26.prev = _context26.next) {
+              switch (_context19.prev = _context19.next) {
                 case 0:
-                  _this7.guideId = guide['id'].split('-')[1];
-                  _context26.next = 3;
-                  return _this7.requestGuide(_this7.guideId);
+                  _this6.guideId = guide['id'].split('-')[1];
+                  _context19.next = 3;
+                  return _this6.requestGuide(_this6.guideId);
 
                 case 3:
-                  response = _context26.sent;
+                  response = _context19.sent;
                   data = response.data;
                   branch_office = document.getElementById("branch_off_edit");
                   branch_office.value = data.branch_office;
@@ -3282,16 +3097,19 @@ var Orders = /*#__PURE__*/function () {
                   data.take_photo == 0 ? take_photo.checked = true : '';
                   boxes = JSON.parse(data.boxes);
 
-                  _this7.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this7.boxes);
+                  _this6.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this6.boxes);
 
-                  _this7.addBox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
+                  Object(_calculateRate__WEBPACK_IMPORTED_MODULE_5__["calculateRate"])(true, boxes, destination_rate_id);
+                  Object(_calculateRate__WEBPACK_IMPORTED_MODULE_5__["calculateRate"])(false, boxes, destination_rate_id);
 
-                case 30:
+                  _this6.addBox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
+
+                case 32:
                 case "end":
-                  return _context26.stop();
+                  return _context19.stop();
               }
             }
-          }, _callee26);
+          }, _callee19);
         })));
       });
       this.updateGuide();
@@ -3299,16 +3117,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestGuide",
     value: function () {
-      var _requestGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee27(id) {
+      var _requestGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(id) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee27$(_context27) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
           while (1) {
-            switch (_context27.prev = _context27.next) {
+            switch (_context20.prev = _context20.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context27.next = 3;
+                _context20.next = 3;
                 return fetch("/guias/" + id + "/edit").then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3318,17 +3136,17 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context27.abrupt("return", response);
+                return _context20.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context27.stop();
+                return _context20.stop();
             }
           }
-        }, _callee27);
+        }, _callee20);
       }));
 
-      function requestGuide(_x15) {
+      function requestGuide(_x7) {
         return _requestGuide.apply(this, arguments);
       }
 
@@ -3337,7 +3155,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "updateGuide",
     value: function updateGuide() {
-      var _this8 = this;
+      var _this7 = this;
 
       var btnUpdateGuide = document.getElementById("btnUpdateGuide");
 
@@ -3345,11 +3163,11 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee28() {
+      btnUpdateGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21() {
         var branch_off_edit, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, customer_address, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, token, myHeaders, requestOptions, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee28$(_context28) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
           while (1) {
-            switch (_context28.prev = _context28.next) {
+            switch (_context21.prev = _context21.next) {
               case 0:
                 branch_off_edit = document.getElementById("branch_off_edit").value; // let dispatched = document.getElementById("dispatched_edit").value;
 
@@ -3432,18 +3250,18 @@ var Orders = /*#__PURE__*/function () {
                   headers: myHeaders,
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
-                _context28.next = 59;
-                return _this8.sendDataToUpdate(_this8.guideId, requestOptions);
+                _context21.next = 59;
+                return _this7.sendDataToUpdate(_this7.guideId, requestOptions);
 
               case 59:
-                response = _context28.sent;
+                response = _context21.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
                   modal = document.getElementById("modalEdit");
                   modal.click();
 
-                  _this8.listGuides();
+                  _this7.listGuides();
                 } else {
                   error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
@@ -3451,25 +3269,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 61:
               case "end":
-                return _context28.stop();
+                return _context21.stop();
             }
           }
-        }, _callee28);
+        }, _callee21);
       })));
     }
   }, {
     key: "sendDataToUpdate",
     value: function () {
-      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee29(id, requestOptions) {
+      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22(id, requestOptions) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee29$(_context29) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
           while (1) {
-            switch (_context29.prev = _context29.next) {
+            switch (_context22.prev = _context22.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context29.next = 3;
+                _context22.next = 3;
                 return fetch("/guias/" + id, requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3479,17 +3297,17 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context29.abrupt("return", response);
+                return _context22.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context29.stop();
+                return _context22.stop();
             }
           }
-        }, _callee29);
+        }, _callee22);
       }));
 
-      function sendDataToUpdate(_x16, _x17) {
+      function sendDataToUpdate(_x8, _x9) {
         return _sendDataToUpdate.apply(this, arguments);
       }
 
@@ -3498,8 +3316,6 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadBranches",
     value: function loadBranches() {
-      var _this9 = this;
-
       var branchesSlc = document.getElementsByName("branch_office");
 
       if (branchesSlc == null) {
@@ -3507,19 +3323,19 @@ var Orders = /*#__PURE__*/function () {
       }
 
       [].forEach.call(branchesSlc, /*#__PURE__*/function () {
-        var _ref19 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee30(branch) {
+        var _ref12 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23(branch) {
           var response, data, i, element, branchOffice;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee30$(_context30) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
             while (1) {
-              switch (_context30.prev = _context30.next) {
+              switch (_context23.prev = _context23.next) {
                 case 0:
                   branch.selectedIndex = 0;
                   removeOptions(branch);
-                  _context30.next = 4;
-                  return _this9.requestBranches();
+                  _context23.next = 4;
+                  return Object(_request_requestBranches_js__WEBPACK_IMPORTED_MODULE_2__["requestBranches"])();
 
                 case 4:
-                  response = _context30.sent;
+                  response = _context23.sent;
                   data = response.data;
 
                   for (i = 0; i < data.length; i++) {
@@ -3530,99 +3346,61 @@ var Orders = /*#__PURE__*/function () {
 
                 case 7:
                 case "end":
-                  return _context30.stop();
+                  return _context23.stop();
               }
             }
-          }, _callee30);
+          }, _callee23);
         }));
 
-        return function (_x18) {
-          return _ref19.apply(this, arguments);
+        return function (_x10) {
+          return _ref12.apply(this, arguments);
         };
       }());
     }
   }, {
-    key: "requestBranches",
-    value: function () {
-      var _requestBranches = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee31() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee31$(_context31) {
-          while (1) {
-            switch (_context31.prev = _context31.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context31.next = 3;
-                return fetch("/allBranches").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return response.error = e;
-                });
-
-              case 3:
-                return _context31.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context31.stop();
-            }
-          }
-        }, _callee31);
-      }));
-
-      function requestBranches() {
-        return _requestBranches.apply(this, arguments);
-      }
-
-      return requestBranches;
-    }()
-  }, {
     key: "customerAddresses",
     value: function () {
-      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee32() {
+      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
         var customerId,
             slcAddresses,
             response,
             data,
-            _args32 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee32$(_context32) {
+            _args24 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
           while (1) {
-            switch (_context32.prev = _context32.next) {
+            switch (_context24.prev = _context24.next) {
               case 0:
-                customerId = _args32.length > 0 && _args32[0] !== undefined ? _args32[0] : null;
+                customerId = _args24.length > 0 && _args24[0] !== undefined ? _args24[0] : null;
                 slcAddresses = document.getElementsByName("customer_address");
 
                 if (!(customerId == '')) {
-                  _context32.next = 4;
+                  _context24.next = 4;
                   break;
                 }
 
-                return _context32.abrupt("return");
+                return _context24.abrupt("return");
 
               case 4:
                 if (!(slcAddresses == null)) {
-                  _context32.next = 6;
+                  _context24.next = 6;
                   break;
                 }
 
-                return _context32.abrupt("return");
+                return _context24.abrupt("return");
 
               case 6:
-                _context32.next = 8;
+                _context24.next = 8;
                 return this.requestCustomerAddresses(customerId);
 
               case 8:
-                response = _context32.sent;
+                response = _context24.sent;
 
                 if (!(response == null)) {
-                  _context32.next = 11;
+                  _context24.next = 11;
                   break;
                 }
 
-                return _context32.abrupt("return");
+                return _context24.abrupt("return");
 
               case 11:
                 data = response.data;
@@ -3643,10 +3421,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 13:
               case "end":
-                return _context32.stop();
+                return _context24.stop();
             }
           }
-        }, _callee32, this);
+        }, _callee24, this);
       }));
 
       function customerAddresses() {
@@ -3658,31 +3436,31 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestCustomerAddresses",
     value: function () {
-      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee33() {
+      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25() {
         var id,
             route,
             response,
-            _args33 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee33$(_context33) {
+            _args25 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
           while (1) {
-            switch (_context33.prev = _context33.next) {
+            switch (_context25.prev = _context25.next) {
               case 0:
-                id = _args33.length > 0 && _args33[0] !== undefined ? _args33[0] : null;
+                id = _args25.length > 0 && _args25[0] !== undefined ? _args25[0] : null;
                 route = window.location.pathname.split('/');
 
                 if (!(document.getElementById("user_code") == null)) {
-                  _context33.next = 4;
+                  _context25.next = 4;
                   break;
                 }
 
-                return _context33.abrupt("return");
+                return _context25.abrupt("return");
 
               case 4:
                 route.includes('edit') ? id = document.getElementById("user_code").value : '';
                 response = {
                   'state': 500
                 };
-                _context33.next = 8;
+                _context25.next = 8;
                 return fetch("/customer_addresses/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3692,14 +3470,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 8:
-                return _context33.abrupt("return", response);
+                return _context25.abrupt("return", response);
 
               case 9:
               case "end":
-                return _context33.stop();
+                return _context25.stop();
             }
           }
-        }, _callee33);
+        }, _callee25);
       }));
 
       function requestCustomerAddresses() {
@@ -3711,7 +3489,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "createAddress",
     value: function createAddress() {
-      var _this10 = this;
+      var _this8 = this;
 
       var btnSaveAddress = document.getElementById("saveAddress");
 
@@ -3719,11 +3497,11 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee34() {
+      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
         var formData, description, address, lat, lng, user_id, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee34$(_context34) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
           while (1) {
-            switch (_context34.prev = _context34.next) {
+            switch (_context26.prev = _context26.next) {
               case 0:
                 formData = new FormData();
                 description = document.getElementById("add_description").value;
@@ -3737,20 +3515,20 @@ var Orders = /*#__PURE__*/function () {
                 formData.append('lng', lng);
                 formData.append('description', description);
                 formData.append('requestByJs', 1);
-                _context34.next = 14;
-                return _this10.sendAddressData(formData);
+                _context26.next = 14;
+                return _this8.sendAddressData(formData);
 
               case 14:
-                response = _context34.sent;
+                response = _context26.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
                   modal = document.getElementById("modalCreateAddress");
                   modal.click();
 
-                  _this10.listGuides();
+                  _this8.listGuides();
 
-                  _this10.customerAddresses(document.getElementById("user_code").value);
+                  _this8.customerAddresses(document.getElementById("user_code").value);
                 } else {
                   error('Error al crear la guía.');
                   console.log('Error: ' + response.error);
@@ -3758,25 +3536,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 16:
               case "end":
-                return _context34.stop();
+                return _context26.stop();
             }
           }
-        }, _callee34);
+        }, _callee26);
       })));
     }
   }, {
     key: "sendAddressData",
     value: function () {
-      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee35(formData) {
+      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee27(formData) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee35$(_context35) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee27$(_context27) {
           while (1) {
-            switch (_context35.prev = _context35.next) {
+            switch (_context27.prev = _context27.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context35.next = 3;
+                _context27.next = 3;
                 return fetch("/direcciones", {
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -3786,18 +3564,18 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context35.sent;
-                return _context35.abrupt("return", response.json());
+                response = _context27.sent;
+                return _context27.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context35.stop();
+                return _context27.stop();
             }
           }
-        }, _callee35);
+        }, _callee27);
       }));
 
-      function sendAddressData(_x19) {
+      function sendAddressData(_x11) {
         return _sendAddressData.apply(this, arguments);
       }
 
@@ -3825,41 +3603,41 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "porDespacharOndemand",
     value: function () {
-      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee37() {
+      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee29() {
         var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee37$(_context37) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee29$(_context29) {
           while (1) {
-            switch (_context37.prev = _context37.next) {
+            switch (_context29.prev = _context29.next) {
               case 0:
                 button = document.getElementById('porDespacharOndemand');
 
                 if (!(button == null)) {
-                  _context37.next = 3;
+                  _context29.next = 3;
                   break;
                 }
 
-                return _context37.abrupt("return");
+                return _context29.abrupt("return");
 
               case 3:
-                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee36() {
+                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee28() {
                   var order_id, result, req;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee36$(_context36) {
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee28$(_context28) {
                     while (1) {
-                      switch (_context36.prev = _context36.next) {
+                      switch (_context28.prev = _context28.next) {
                         case 0:
                           order_id = button.value;
-                          _context36.next = 3;
+                          _context28.next = 3;
                           return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
 
                         case 3:
-                          result = _context36.sent;
+                          result = _context28.sent;
 
                           if (!(result == true)) {
-                            _context36.next = 9;
+                            _context28.next = 9;
                             break;
                           }
 
-                          _context36.next = 7;
+                          _context28.next = 7;
                           return fetch("/pordespachar/ondemand/".concat(order_id), {
                             method: "POST",
                             headers: {
@@ -3869,7 +3647,7 @@ var Orders = /*#__PURE__*/function () {
                           });
 
                         case 7:
-                          req = _context36.sent;
+                          req = _context28.sent;
 
                           if (req.ok) {
                             correct("Estado actualizado!");
@@ -3880,18 +3658,18 @@ var Orders = /*#__PURE__*/function () {
 
                         case 9:
                         case "end":
-                          return _context36.stop();
+                          return _context28.stop();
                       }
                     }
-                  }, _callee36);
+                  }, _callee28);
                 })));
 
               case 4:
               case "end":
-                return _context37.stop();
+                return _context29.stop();
             }
           }
-        }, _callee37);
+        }, _callee29);
       }));
 
       function porDespacharOndemand() {
@@ -3903,37 +3681,37 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "porDespacharPackaging",
     value: function () {
-      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee39() {
+      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee31() {
         var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee39$(_context39) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee31$(_context31) {
           while (1) {
-            switch (_context39.prev = _context39.next) {
+            switch (_context31.prev = _context31.next) {
               case 0:
                 button = document.getElementById('porDespacharPackaging');
 
                 if (!(button == null)) {
-                  _context39.next = 3;
+                  _context31.next = 3;
                   break;
                 }
 
-                return _context39.abrupt("return");
+                return _context31.abrupt("return");
 
               case 3:
-                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee38() {
+                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee30() {
                   var order_id, result, formData, token, myHeaders, requestOptions, data, req;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee38$(_context38) {
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee30$(_context30) {
                     while (1) {
-                      switch (_context38.prev = _context38.next) {
+                      switch (_context30.prev = _context30.next) {
                         case 0:
                           order_id = button.value;
-                          _context38.next = 3;
+                          _context30.next = 3;
                           return porDespacharPackagingAlert();
 
                         case 3:
-                          result = _context38.sent;
+                          result = _context30.sent;
 
                           if (!(result == 3 || result == 7)) {
-                            _context38.next = 18;
+                            _context30.next = 18;
                             break;
                           }
 
@@ -3952,11 +3730,11 @@ var Orders = /*#__PURE__*/function () {
                           data = {
                             type: result
                           };
-                          _context38.next = 16;
+                          _context30.next = 16;
                           return fetch("/pordespachar/packaging/".concat(order_id), requestOptions);
 
                         case 16:
-                          req = _context38.sent;
+                          req = _context30.sent;
 
                           if (req.ok) {
                             correct("Estado actualizado!");
@@ -3967,18 +3745,18 @@ var Orders = /*#__PURE__*/function () {
 
                         case 18:
                         case "end":
-                          return _context38.stop();
+                          return _context30.stop();
                       }
                     }
-                  }, _callee38);
+                  }, _callee30);
                 })));
 
               case 4:
               case "end":
-                return _context39.stop();
+                return _context31.stop();
             }
           }
-        }, _callee39);
+        }, _callee31);
       }));
 
       function porDespacharPackaging() {
@@ -3990,32 +3768,32 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadPickupHours",
     value: function () {
-      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee40() {
-        var _this11 = this;
+      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee32() {
+        var _this9 = this;
 
         var date_selector, response, days;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee40$(_context40) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee32$(_context32) {
           while (1) {
-            switch (_context40.prev = _context40.next) {
+            switch (_context32.prev = _context32.next) {
               case 0:
                 date_selector = document.getElementById("schedule_date");
 
                 if (!(date_selector == null)) {
-                  _context40.next = 3;
+                  _context32.next = 3;
                   break;
                 }
 
-                return _context40.abrupt("return");
+                return _context32.abrupt("return");
 
               case 3:
-                _context40.next = 5;
+                _context32.next = 5;
                 return this.requestPickupHours();
 
               case 5:
-                response = _context40.sent;
+                response = _context32.sent;
                 days = response.data;
                 date_selector.addEventListener('change', function () {
-                  var day = _this11.getDayReference(date_selector.value);
+                  var day = _this9.getDayReference(date_selector.value);
 
                   var day_data = days[day];
                   var schedule_time_range = document.getElementById("schedule_time_range");
@@ -4040,10 +3818,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 8:
               case "end":
-                return _context40.stop();
+                return _context32.stop();
             }
           }
-        }, _callee40, this);
+        }, _callee32, this);
       }));
 
       function loadPickupHours() {
@@ -4055,16 +3833,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestPickupHours",
     value: function () {
-      var _requestPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee41() {
+      var _requestPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee33() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee41$(_context41) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee33$(_context33) {
           while (1) {
-            switch (_context41.prev = _context41.next) {
+            switch (_context33.prev = _context33.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context41.next = 3;
+                _context33.next = 3;
                 return fetch("/getPickupHours").then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -4074,14 +3852,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context41.abrupt("return", response);
+                return _context33.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context41.stop();
+                return _context33.stop();
             }
           }
-        }, _callee41);
+        }, _callee33);
       }));
 
       function requestPickupHours() {
@@ -4100,28 +3878,28 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadHoursInEditOrShow",
     value: function () {
-      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee42() {
+      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee34() {
         var route, date_selector, response, days, day, day_data, schedule_time_range, i, element, text, option;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee42$(_context42) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee34$(_context34) {
           while (1) {
-            switch (_context42.prev = _context42.next) {
+            switch (_context34.prev = _context34.next) {
               case 0:
                 route = window.location.pathname;
 
                 if (route.includes('create') && route.includes('edit')) {
-                  _context42.next = 3;
+                  _context34.next = 3;
                   break;
                 }
 
-                return _context42.abrupt("return");
+                return _context34.abrupt("return");
 
               case 3:
                 date_selector = document.getElementById("schedule_date");
-                _context42.next = 6;
+                _context34.next = 6;
                 return this.requestPickupHours();
 
               case 6:
-                response = _context42.sent;
+                response = _context34.sent;
                 days = response.data;
                 day = this.getDayReference(date_selector.value);
                 day_data = days[day];
@@ -4147,10 +3925,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 11:
               case "end":
-                return _context42.stop();
+                return _context34.stop();
             }
           }
-        }, _callee42, this);
+        }, _callee34, this);
       }));
 
       function loadHoursInEditOrShow() {
@@ -4159,102 +3937,6 @@ var Orders = /*#__PURE__*/function () {
 
       return loadHoursInEditOrShow;
     }()
-  }, {
-    key: "sendImportModalData",
-    value: function () {
-      var _sendImportModalData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee43(formData) {
-        var response, token, myHeaders, requestOptions;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee43$(_context43) {
-          while (1) {
-            switch (_context43.prev = _context43.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                myHeaders = new Headers();
-                myHeaders.append("accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append("X-CSRF-TOKEN", token);
-                requestOptions = {
-                  method: "POST",
-                  headers: myHeaders,
-                  body: formData
-                };
-                _context43.next = 9;
-                return fetch("/guias/import", requestOptions);
-
-              case 9:
-                response = _context43.sent;
-                return _context43.abrupt("return", response.json());
-
-              case 11:
-              case "end":
-                return _context43.stop();
-            }
-          }
-        }, _callee43);
-      }));
-
-      function sendImportModalData(_x20) {
-        return _sendImportModalData.apply(this, arguments);
-      }
-
-      return sendImportModalData;
-    }()
-  }, {
-    key: "importModal",
-    value: function importModal() {
-      var _this12 = this;
-
-      var btnImportGuide = document.getElementById("btnImportGuide");
-
-      if (btnImportGuide == null) {
-        return;
-      }
-
-      btnImportGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee44() {
-        var formData, file, order_id, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee44$(_context44) {
-          while (1) {
-            switch (_context44.prev = _context44.next) {
-              case 0:
-                formData = new FormData();
-                file = document.getElementById("file_import_guide");
-                order_id = document.getElementById("order_id").value;
-
-                if (file.files[0]) {
-                  _context44.next = 5;
-                  break;
-                }
-
-                return _context44.abrupt("return", error('Debe cargar el archivo para proceder con la importación'));
-
-              case 5:
-                formData.append('file', file.files[0]);
-                formData.append('order_id', order_id);
-                _context44.next = 9;
-                return _this12.sendImportModalData(formData);
-
-              case 9:
-                response = _context44.sent;
-
-                if (response.state == 200) {
-                  correct(response.message);
-                  location.reload();
-                } else {
-                  error('Error al importar guías.');
-                  console.log('Error: ' + response.error);
-                }
-
-              case 11:
-              case "end":
-                return _context44.stop();
-            }
-          }
-        }, _callee44);
-      })));
-    }
   }, {
     key: "cleanFields",
     value: function cleanFields() {
@@ -4278,31 +3960,499 @@ var Orders = /*#__PURE__*/function () {
   }]);
 
   return Orders;
-}(); //  $("#tabListOrders").DataTable({
-//      info: false,
-//      language: {
-//          lengthMenu:
-//              "Mostrar " +
-//              `<select>
-//                          <option value = '10'>10</option>
-//                          <option value = '15'>15</option>
-//                          <option value = '50'>50</option>
-//                          <option value = '100'>100</option>
-//                      <select>` +
-//              " registros",
-//          zeroRecords: "Nada encontrado",
-//          infoEmpty: "No records available",
-//          infoFiltered: "(filtered from _MAX_ total records)",
-//          search: "Buscar:",
-//          paginate: {
-//              next: "Siguiente",
-//              previous: "Anterior",
-//          },
-//      },
-//  });
+}();
 
 
 
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/calculateRate.js":
+/*!***********************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/calculateRate.js ***!
+  \***********************************************************/
+/*! exports provided: calculateRate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calculateRate", function() { return calculateRate; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _request_requestCalculatePackingRates__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./request/requestCalculatePackingRates */ "./app/Modules/OrderModule/views/js/request/requestCalculatePackingRates.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var calculateRate = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(edit, boxes, destination_rate_id) {
+    var corp_value, address, same_day_delivery, immediate_delivery;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            if (!(destination_rate_id == null)) {
+              _context2.next = 2;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 2:
+            corp_value = document.getElementById(edit ? "corp_value_edit" : "corp_value");
+            address = document.getElementById("address");
+
+            if (!(corp_value == null || address == null)) {
+              _context2.next = 6;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 6:
+            corp_value.value = 0;
+            same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
+
+            if (!(same_day_delivery == null)) {
+              _context2.next = 10;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 10:
+            immediate_delivery = same_day_delivery.checked ? 1 : 0;
+            _context2.next = 13;
+            return [].forEach.call(boxes, /*#__PURE__*/function () {
+              var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(box) {
+                var lbs, vol, response;
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        lbs = box === null || box === void 0 ? void 0 : box.weight;
+                        vol = (box === null || box === void 0 ? void 0 : box["long"]) * (box === null || box === void 0 ? void 0 : box.broad) * (box === null || box === void 0 ? void 0 : box.high);
+                        _context.next = 4;
+                        return Object(_request_requestCalculatePackingRates__WEBPACK_IMPORTED_MODULE_1__["requestCalculatePackingRates"])(destination_rate_id, lbs, vol, immediate_delivery);
+
+                      case 4:
+                        response = _context.sent;
+
+                        if (response.state == 200) {
+                          corp_value.value = parseFloat(corp_value.value) + parseFloat(response.data);
+                        }
+
+                      case 6:
+                      case "end":
+                        return _context.stop();
+                    }
+                  }
+                }, _callee);
+              }));
+
+              return function (_x4) {
+                return _ref2.apply(this, arguments);
+              };
+            }());
+
+          case 13:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function calculateRate(_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/importModal.js":
+/*!*********************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/importModal.js ***!
+  \*********************************************************/
+/*! exports provided: importModal */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "importModal", function() { return importModal; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var importModal = function importModal() {
+  var btnImportGuide = document.getElementById("btnImportGuide");
+
+  if (btnImportGuide == null) {
+    return;
+  }
+
+  btnImportGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    var formData, file, order_id, response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            formData = new FormData();
+            file = document.getElementById("file_import_guide");
+            order_id = document.getElementById("order_id").value;
+
+            if (file.files[0]) {
+              _context.next = 5;
+              break;
+            }
+
+            return _context.abrupt("return", error('Debe cargar el archivo para proceder con la importación'));
+
+          case 5:
+            formData.append('file', file.files[0]);
+            formData.append('order_id', order_id);
+            _context.next = 9;
+            return sendImportModalData(formData);
+
+          case 9:
+            response = _context.sent;
+
+            if (response.state == 200) {
+              correct(response.message);
+              location.reload();
+            } else {
+              error('Error al importar guías.');
+              console.log('Error: ' + response.error);
+            }
+
+          case 11:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  })));
+};
+
+var sendImportModalData = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(formData) {
+    var response, token, myHeaders, requestOptions;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            response = {
+              'state': 500
+            };
+            token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            myHeaders = new Headers();
+            myHeaders.append("accept", "application/json");
+            myHeaders.append("Access-Control-Allow-Origin", "*");
+            myHeaders.append("X-CSRF-TOKEN", token);
+            requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: formData
+            };
+            _context2.next = 9;
+            return fetch("/guias/import", requestOptions);
+
+          case 9:
+            response = _context2.sent;
+            return _context2.abrupt("return", response.json());
+
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function sendImportModalData(_x) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/listener.js":
+/*!******************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/listener.js ***!
+  \******************************************************/
+/*! exports provided: listener */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "listener", function() { return listener; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var listener = function listener(item, action) {
+  var event = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'change';
+  item.addEventListener(event, /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            action();
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  })));
+};
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/request/requestBranches.js":
+/*!*********************************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/request/requestBranches.js ***!
+  \*********************************************************************/
+/*! exports provided: requestBranches */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestBranches", function() { return requestBranches; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var requestBranches = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    var response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            response = {
+              'state': 500
+            };
+            _context.next = 3;
+            return fetch("/allBranches").then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              return response.error = e;
+            });
+
+          case 3:
+            return _context.abrupt("return", response);
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestBranches() {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/request/requestCalculatePackingRates.js":
+/*!**********************************************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/request/requestCalculatePackingRates.js ***!
+  \**********************************************************************************/
+/*! exports provided: requestCalculatePackingRates */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestCalculatePackingRates", function() { return requestCalculatePackingRates; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var requestCalculatePackingRates = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(rate_id, lbs, vol, immediate_delivery) {
+    var response, url;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            response = {
+              state: 500,
+              message: 'Error en la consulta'
+            };
+
+            if (!(rate_id == null)) {
+              _context.next = 4;
+              break;
+            }
+
+            response.message = 'id de la tarifa es obligatorio';
+            return _context.abrupt("return", response);
+
+          case 4:
+            url = "".concat(window.location.origin, "/api/calculatePackingRates?rate_id=").concat(rate_id, "&lbs=").concat(lbs, "&vol=").concat(vol, "&immediate_delivery=").concat(immediate_delivery);
+            _context.next = 7;
+            return fetch(url).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              response.error = e;
+            });
+
+          case 7:
+            return _context.abrupt("return", response);
+
+          case 8:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestCalculatePackingRates(_x, _x2, _x3, _x4) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/request/requestRate.js":
+/*!*****************************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/request/requestRate.js ***!
+  \*****************************************************************/
+/*! exports provided: requestRate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestRate", function() { return requestRate; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var requestRate = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(zone_id) {
+    var response, url;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            response = {
+              state: 500,
+              message: 'Error en la consulta'
+            };
+            url = "".concat(window.location.origin, "/api/rateInquiry?zone_id=").concat(zone_id);
+            _context.next = 4;
+            return fetch(url).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              response.error = e;
+            });
+
+          case 4:
+            return _context.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestRate(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/request/requestSearchZone.js":
+/*!***********************************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/request/requestSearchZone.js ***!
+  \***********************************************************************/
+/*! exports provided: requestSearchZone */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestSearchZone", function() { return requestSearchZone; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var requestSearchZone = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(address_id) {
+    var response, url;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            response = {
+              state: 500,
+              message: 'Error en la consulta'
+            };
+            url = "".concat(window.location.origin, "/api/searchZone?address_id=").concat(address_id);
+            _context.next = 4;
+            return fetch(url).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              response.error = e;
+            });
+
+          case 4:
+            return _context.abrupt("return", response);
+
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestSearchZone(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
 
 /***/ }),
 
@@ -69964,31 +70114,17 @@ var render = function () {
                   [_vm._v("Adjuntos")]
                 ),
                 _vm._v(" "),
-                _vm._m(2),
-                _vm._v(" "),
                 _vm.type_guide === _vm.tabEdition
                   ? _c(
                       "div",
                       { staticClass: "col-md-12 symbol-group symbol-hover" },
-                      [
-                        _vm._l(_vm.showDataGuide.files, function (item) {
-                          return _c(
-                            "div",
-                            { key: item.id, staticClass: "symbol" },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  alt: "Pic",
-                                  src: "storage/" + item.url_document + "/",
-                                },
-                              }),
-                            ]
-                          )
-                        }),
-                        _vm._v(" "),
-                        _vm._m(3),
-                      ],
-                      2
+                      _vm._l(_vm.showDataGuide.files, function (item) {
+                        return _c("div", {
+                          key: item.id,
+                          staticClass: "symbol",
+                        })
+                      }),
+                      0
                     )
                   : _vm._e(),
               ]
@@ -70796,26 +70932,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-1" }, [
       _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "symbol" }, [
-      _c("img", {
-        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "symbol" }, [
-      _c("img", {
-        attrs: { alt: "Pic", src: "https://placem.at/things?h=100" },
-      }),
     ])
   },
 ]

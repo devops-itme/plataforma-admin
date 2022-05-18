@@ -1,107 +1,31 @@
+//requests
+import { requestRate } from './request/requestRate.js';
+import { requestBranches } from './request/requestBranches.js';
+import { requestSearchZone } from './request/requestSearchZone';
+import { requestCalculatePackingRates } from './request/requestCalculatePackingRates';
 
-let count = 0;
+//functions
+import { calculateRate } from './calculateRate';
+import { listener } from './listener';
+import { importModal } from './importModal';
+
+//classes
+import Boxes from './_boxes';
+
 let destination_rate_id = null;
 let source_rate_id = null;
-let boxes = [
-    {
-        number: 0,
-        weight: 0,
-        long: 0,
-        broad: 0,
-        high: 0,
-        vol_weight: 0,
-        description: '',
-    }
-];
-
-const requestSearchZone = async (address_id) => {
-    let response = { state: 500, message: 'Error en la consulta' };
-    let url = `${window.location.origin}/api/searchZone?address_id=${address_id}`;
-
-    await fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            response = data;
-        })
-        .catch(e => {
-            response.error = e;
-        });
-
-    return response;
-}
-
-const requestRate = async (zone_id) => {
-    let response = { state: 500, message: 'Error en la consulta' };
-    let url = `${window.location.origin}/api/rateInquiry?zone_id=${zone_id}`;
-
-    await fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            response = data;
-        })
-        .catch(e => {
-            response.error = e;
-        });
-
-    return response;
-}
-
-const requestCalculatePackingRates = async (rate_id, lbs, vol, immediate_delivery) => {
-    let response = { state: 500, message: 'Error en la consulta' };
-    let url = `${window.location.origin}/api/calculatePackingRates?rate_id=${rate_id}&lbs=${lbs}&vol=${vol}&immediate_delivery=${immediate_delivery}`;
-
-    await fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log('requestCalculatePackingRates', data);
-            response = data;
-        })
-        .catch(e => {
-            response.error = e;
-        });
-
-    return response;
-}
-
-const calculateRate = async (edit) => {
-    if (destination_rate_id == null) {
-        return
-    }
-    let corp_value = document.getElementById(edit ? "corp_value_edit" : "corp_value");
-    let address = document.getElementById("address");
-    if (corp_value == null || address == null) {
-        return;
-    }
-    corp_value.value = 0;
-
-    let same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
-    if (same_day_delivery == null) {
-        return;
-    }
-    let immediate_delivery = same_day_delivery.checked ? 1 : 0;
-
-    await [].forEach.call(boxes, async (box) => {
-        let lbs = box?.weight;
-        let vol = box?.long * box?.broad * box?.high;
-
-        let response = await requestCalculatePackingRates(destination_rate_id, lbs, vol, immediate_delivery);
-        if (response.state == 200) {
-            corp_value.value = parseFloat(corp_value.value) + parseFloat(response.data);
-        }
-    });
-}
 
 export default class Orders {
     constructor() {
         this.guideId = '';
-        this.boxes = boxes;
     }
+
     initialize() {
-        this.instantiateBoxes();
-        this.addBox();
+        const boxes = new Boxes();
+        boxes.initialize();
+        console.log(boxes);
         this.loadBranches();
         this.loadCustomerModal();
-        this.removeBox();
         this.loadOrderNumber();
         this.saveGuides();
         this.createAddress();
@@ -111,10 +35,10 @@ export default class Orders {
         this.customerAddresses();
         this.loadPickupHours();
         this.loadHoursInEditOrShow();
-        this.importModal();
         this.sendPushNotification();
         this.listenRateVariables(true);
         this.listenRateVariables(false);
+        importModal();
     }
 
     listenGuideCheck() {
@@ -140,14 +64,14 @@ export default class Orders {
                         source_rate = parseFloat(source_rate) + parseFloat(response.data);
                     }
                 });
-              
+
                 let higher_rate = parseFloat(source_rate) > parseFloat(corp_value) ? parseFloat(source_rate) : parseFloat(corp_value);
                 guide.checked && (total = parseFloat(total) + parseFloat(higher_rate));
             });
             let full_tax = total * tax_percentage.value / 100;
             tax_total.setAttribute("value", full_tax);
             total = total + full_tax;
-            order_value.setAttribute("value", total );
+            order_value.setAttribute("value", total);
         };
 
         let source_address = document.getElementById("address");
@@ -194,38 +118,21 @@ export default class Orders {
             return;
         }
 
-        rate.addEventListener('change', async () => {
+        const action = async () => {
             if (zone.value == "") {
                 return;
             }
             let response = await requestRate(zone.value);
+            console.log('listener', response)
             if (response.state == 200) {
                 destination_rate_id = response.data?.id;
             }
-            calculateRate(edit);
-        });
+            calculateRate(edit, boxes, destination_rate_id);
+        }
 
-        zone.addEventListener('change', async () => {
-            if (zone.value == "") {
-                return;
-            }
-            let response = await requestRate(zone.value);
-            if (response.state == 200) {
-                destination_rate_id = response.data?.id;
-            }
-            calculateRate(edit);
-        });
-
-        same_day_delivery.addEventListener('click', async () => {
-            if (zone.value == "") {
-                return;
-            }
-            let response = await requestRate(zone.value);
-            if (response.state == 200) {
-                destination_rate_id = response.data?.id;
-            }
-            calculateRate(edit);
-        });
+        listener(rate, action);
+        listener(zone, action);
+        listener(same_day_delivery, action, 'click');
     }
 
     async sendPushNotification() {
@@ -248,149 +155,6 @@ export default class Orders {
                 console.log(data);
             })
             .catch(e => { console.log(e) });
-    }
-
-    setInput() {
-        const inputs = [
-            'number[]',
-            'weight[]',
-            'long[]',
-            'broad[]',
-            'high[]',
-            'vol_weight[]',
-            'description[]',
-        ];
-
-        [].forEach.call(inputs, input => {
-            let elements = document.getElementsByName(input);
-
-            if (elements == null) {
-                return
-            }
-            [].forEach.call(elements, el => {
-                el.addEventListener('keyup', () => {
-
-                    let parent = el.parentNode.parentNode.parentNode;
-                    let children = el.parentNode.parentNode;
-
-                    let index = Array.prototype.indexOf.call(parent.children, children);
-
-                    let name = input.replace('[]', '');
-
-                    boxes[index][name] = el.value;
-                    calculateRate(true);
-                    calculateRate(false);
-                });
-            });
-        });
-    }
-
-    instantiateBoxes(container = 'box-container', boxes = this.boxes) {
-        let boxContainer = document.getElementById(container);
-        if (boxContainer == null) {
-            return
-        }
-        boxContainer.innerHTML = ``;
-        [].forEach.call(boxes, box => {
-            let row = document.createElement("tr");
-            row.className = `row border mt-0 text-center box-register col-md-13 "`;
-
-            let numberCell = document.createElement("td");
-            numberCell.className = `col-1 py-4 border-right`;
-            numberCell.innerHTML = `<input type="number" name="id[]" class="form-control" min="0" value="${box.number}">`;
-            row.appendChild(numberCell);
-
-            let weightCell = document.createElement("td");
-            weightCell.className = `col-1 py-4 border-right`;
-            weightCell.innerHTML = `<input type="number" name="weight[]" class="form-control" min="0" value="${box.weight}">`;
-            row.appendChild(weightCell);
-
-            let longCell = document.createElement("td");
-            longCell.className = `col-1 py-4 border-right`;
-            longCell.innerHTML = `<input type="number" name="long[]" class="form-control" min="0" value="${box.long}">`;
-            row.appendChild(longCell);
-
-            let broadCell = document.createElement("td");
-            broadCell.className = `col-1 py-4 border-right`;
-            broadCell.innerHTML = `<input type="number" name="broad[]" class="form-control" min="0" value="${box.broad}">`;
-            row.appendChild(broadCell);
-
-            let highCell = document.createElement("td");
-            highCell.className = `col-1 py-4 border-right`;
-            highCell.innerHTML = `<input type="number" name="high[]" class="form-control" min="0" value="${box.high}">`;
-            row.appendChild(highCell);
-
-            let volWeightCell = document.createElement("td");
-            volWeightCell.className = `col-1 py-4 border-right`;
-            volWeightCell.innerHTML = `<input type="number" name="vol_weight[]" class="form-control" min="0" value="${box.vol_weight}">`;
-            row.appendChild(volWeightCell);
-
-            let descriptionCell = document.createElement("td");
-            descriptionCell.className = `col-2 py-4 border-right`;
-            descriptionCell.innerHTML = `<input type="text" name="description[]" class="form-control" placeholder="comentarios" value="${box.description}">`;
-            row.appendChild(descriptionCell);
-
-            let btnCell = document.createElement("td");
-            btnCell.className = `col-1 py-4`;
-            btnCell.innerHTML = ` <div class="d-flex flex-row flex-wrap justify-content-center"></div>`;
-
-            let removeBoxBtn = document.createElement("a");
-            removeBoxBtn.className = 'btn btn-icon btn-light-danger btn-sm mr-2 remove-box-btn';
-            removeBoxBtn.id = `remove-box-btn`;
-            removeBoxBtn.title = 'Borrar';
-            removeBoxBtn.setAttribute('data-tooltip', '');
-            removeBoxBtn.innerHTML = `<i class="fad fa-minus-circle"></i>`;
-
-            btnCell.children[0].appendChild(removeBoxBtn);
-            row.appendChild(btnCell);
-
-            boxContainer.appendChild(row);
-        });
-        this.setInput();
-        this.removeBox();
-        calculateRate(true);
-        calculateRate(false);
-    };
-
-    addBox(button = 'add-box-btn', boxes = this.boxes, container = 'box-container') {
-        let addBoxBtn = document.getElementById(button);
-
-        if (addBoxBtn == null) {
-            return
-        }
-
-        addBoxBtn.addEventListener('click', () => {
-            boxes.push({
-                number: 0,
-                weight: 0,
-                long: 0,
-                broad: 0,
-                high: 0,
-                vol_weight: 0,
-                description: '',
-            });
-            this.instantiateBoxes(container, boxes);
-        });
-    }
-
-    removeBox() {
-        let removeBoxBtn = document.getElementsByClassName("remove-box-btn");
-        if (removeBoxBtn == null) {
-            return;
-        }
-
-        [].forEach.call(removeBoxBtn, function (btn) {
-            btn.addEventListener('click', () => {
-
-                let box = btn.parentNode.parentNode.parentNode;
-                let parent = box.parentNode;
-                let index = Array.prototype.indexOf.call(parent.children, box);
-                boxes.splice(index, 1);
-                box.remove();
-                calculateRate(true);
-                calculateRate(false);
-            });
-        });
     }
 
     loadCustomerModal() {
@@ -787,6 +551,8 @@ export default class Orders {
                 data.take_photo == 0 ? take_photo.checked = true : '';
                 let boxes = JSON.parse(data.boxes);
                 this.instantiateBoxes('box-container-edit', (boxes ?? this.boxes));
+                calculateRate(true, boxes, destination_rate_id);
+                calculateRate(false, boxes, destination_rate_id);
                 this.addBox('add-box-btn-edit', (boxes ?? []), 'box-container-edit');
             });
         })
@@ -932,7 +698,7 @@ export default class Orders {
             branch.selectedIndex = 0;
             removeOptions(branch);
 
-            let response = await this.requestBranches();
+            let response = await requestBranches();
             let data = response.data;
 
             for (var i = 0; i < data.length; i++) {
@@ -941,19 +707,6 @@ export default class Orders {
                 branch.insertAdjacentHTML('beforeend', branchOffice);
             }
         });
-    }
-
-    async requestBranches() {
-        let response = {
-            'state': 500
-        };
-        await fetch("/allBranches")
-            .then(response => response.json())
-            .then(data => {
-                response = data
-            })
-            .catch(e => response.error = e);
-        return response;
     }
 
     async customerAddresses(customerId = null) {
@@ -1229,56 +982,6 @@ export default class Orders {
         }
     }
 
-    async sendImportModalData(formData) {
-        let response = {
-            'state': 500
-        };
-
-        let token = document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content");
-        let myHeaders = new Headers();
-        myHeaders.append("accept", "application/json");
-        myHeaders.append("Access-Control-Allow-Origin", "*");
-        myHeaders.append("X-CSRF-TOKEN", token);
-        let requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: formData,
-        };
-
-        response = await fetch(`/guias/import`, requestOptions)
-        return response.json();
-    }
-
-    importModal() {
-        let btnImportGuide = document.getElementById("btnImportGuide");
-        if (btnImportGuide == null) {
-            return;
-        }
-        btnImportGuide.addEventListener('click', async () => {
-            let formData = new FormData();
-            let file = document.getElementById("file_import_guide");
-            let order_id = document.getElementById("order_id").value;
-
-            if (!file.files[0]) {
-                return error('Debe cargar el archivo para proceder con la importación')
-            }
-
-            formData.append('file', file.files[0]);
-            formData.append('order_id', order_id);
-
-            let response = await this.sendImportModalData(formData);
-            if (response.state == 200) {
-                correct(response.message);
-                location.reload()
-            } else {
-                error('Error al importar guías.')
-                console.log('Error: ' + response.error);
-            }
-        });
-    }
-
     cleanFields() {
         document.getElementById("branch_off").selectedIndex = 0;
         document.getElementById("address").selectedIndex = 0;
@@ -1300,27 +1003,3 @@ export default class Orders {
 
 }
 
-
-
-//  $("#tabListOrders").DataTable({
-//      info: false,
-//      language: {
-//          lengthMenu:
-//              "Mostrar " +
-//              `<select>
-//                          <option value = '10'>10</option>
-//                          <option value = '15'>15</option>
-//                          <option value = '50'>50</option>
-//                          <option value = '100'>100</option>
-//                      <select>` +
-//              " registros",
-//          zeroRecords: "Nada encontrado",
-//          infoEmpty: "No records available",
-//          infoFiltered: "(filtered from _MAX_ total records)",
-//          search: "Buscar:",
-//          paginate: {
-//              next: "Siguiente",
-//              previous: "Anterior",
-//          },
-//      },
-//  });

@@ -87,6 +87,9 @@
                                         <li><a class="dropdown-item" href="{{ route('orders.index') }}">Ordenes de
                                                 Servicio</a>
                                         </li>
+                                        <li><a class="dropdown-item" href="{{ route('internationalOrders.index') }}">Ordenes de
+                                                Servicio Internacional</a>
+                                        </li>
                                         <li><a class="dropdown-item" href="#">Clonar/Replicar</a></li>
                                         <li><a class="dropdown-item" href="#">Importar de Excel</a></li>
                                     </ul>
@@ -205,7 +208,8 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link " href="#" id="navbarDropdownMenuLink" role="button"
-                                data-toggle="dropdown" aria-expanded="false"><i class="fas fa-globe"></i> Configuraciones</a>
+                                data-toggle="dropdown" aria-expanded="false"><i class="fas fa-globe"></i>
+                                Configuraciones</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('zones.index') }}">Zonas</a></li>
                                 <li><a class="dropdown-item" href="{{ route('parameters.index') }}">Parametros</a>

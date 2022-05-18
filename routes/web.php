@@ -25,91 +25,91 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/customer_data/{id}', 'CustomerModule\Controllers\CustomerController@customerData');
-    Route::get('/search_customers', 'CustomerModule\Controllers\CustomerController@search_customer');
+    // Route::get('/customer_data/{id}', 'CustomerModule\Controllers\CustomerController@customerData');
+    // Route::get('/search_customers', 'CustomerModule\Controllers\CustomerController@search_customer');
 
-    Route::get('/unassigned_branch_offices', 'BranchOfficeModule\Controllers\BranchOfficeController@unassigned_branch_offices');
+    // Route::get('/unassigned_branch_offices', 'BranchOfficeModule\Controllers\BranchOfficeController@unassigned_branch_offices');
     // Route::get('/order_number', 'Admin\OrderController@orderNumber');
-    Route::get('/order_number', 'OrderModule\Controllers\OrderController@orderNumber');
+    // Route::get('/order_number', 'OrderModule\Controllers\OrderController@orderNumber');
 
-    Route::get('/allBranches', 'BranchOfficeModule\Controllers\BranchOfficeController@allBranches');
+    // Route::get('/allBranches', 'BranchOfficeModule\Controllers\BranchOfficeController@allBranches');
 
-    Route::get('unassigned_depts', 'DepartmentModule\Controllers\DepartmentController@UnassignedDepts');
+    // Route::get('unassigned_depts', 'DepartmentModule\Controllers\DepartmentController@UnassignedDepts');
 
-    Route::get('/customer_addresses/{id}', 'AddressModule\Controllers\AddressController@customerAddresses');
+    // Route::get('/customer_addresses/{id}', 'AddressModule\Controllers\AddressController@customerAddresses');
     //GUIAS
-    Route::resource('/guias', 'GuideModule\Controllers\GuideController')->names('guias')->except('store');
-    Route::post('/guias/store', 'GuideModule\Controllers\GuideController@store')->name('guide.store');
+    // Route::resource('/guias', 'GuideModule\Controllers\GuideController')->names('guias')->except('store');
+    // Route::post('/guias/store', 'GuideModule\Controllers\GuideController@store')->name('guide.store');
     // Route::post('/ordenes/asignacion', 'Admin\DeliveryController@assignOndemad')->name('orders.assign');
-    Route::post('/ordenes/asignacion', 'OrderModule\Controllers\DeliveryController@assignOndemad')->name('orders.assign');
+    // Route::post('/ordenes/asignacion', 'OrderModule\Controllers\DeliveryController@assignOndemad')->name('orders.assign');
 
     // Route::post('/quias/asignacion', 'Admin\DeliveryController@assignPacking')->name('guides.assign');
-    Route::post('/quias/asignacion', 'OrderModule\Controllers\DeliveryController@assignPacking')->name('guides.assign');
+    // Route::post('/quias/asignacion', 'OrderModule\Controllers\DeliveryController@assignPacking')->name('guides.assign');
     //update order state
     // Route::post('/despacho/orden/estado', 'Admin\DeliveryController@updateStateOrders');
-    Route::post('/despacho/orden/estado', 'OrderModule\Controllers\DeliveryController@updateStateOrders');
+    // Route::post('/despacho/orden/estado', 'OrderModule\Controllers\DeliveryController@updateStateOrders');
 
     // Route::resource('parametros', 'Admin\ParameterController')->except('destroy')->names('parameters');
     // Route::delete('parametros/delete/{id}', 'Admin\ParameterController@destroy')->name('parameters.destroy');
-    Route::resource('parametros', 'ParametersModule\Controllers\ParameterController')->except('destroy')->names('parameters');
-    Route::delete('parametros/delete/{id}', 'ParametersModule\Controllers\ParameterController@destroy')->name('parameters.destroy');
+    // Route::resource('parametros', 'ParametersModule\Controllers\ParameterController')->except('destroy')->names('parameters');
+    // Route::delete('parametros/delete/{id}', 'ParametersModule\Controllers\ParameterController@destroy')->name('parameters.destroy');
     Route::group(['middleware' => 'role'], function () {
         //USER
         // Route::resource('usuarios', 'Admin\UserController')->names('users');
-        Route::resource('usuarios', 'UserModule\Controllers\UserController')->names('users');
+        // Route::resource('usuarios', 'UserModule\Controllers\UserController')->names('users');
 
 
         //CUSTOMER
-        Route::resource('/clientes', 'CustomerModule\Controllers\CustomerController')->except('store')->names('customers');
-        Route::post('/clientes/store', 'CustomerModule\Controllers\CustomerController@store')->name('customers.store');
+        // Route::resource('/clientes', 'CustomerModule\Controllers\CustomerController')->except('store')->names('customers');
+        // Route::post('/clientes/store', 'CustomerModule\Controllers\CustomerController@store')->name('customers.store');
         // Route::resource('/clientes', 'Admin\CustomerController')->except('store')->names('customers');
         // Route::post('/clientes/store', 'Admin\CustomerController@store')->name('customers.store');
         //Obtener sucursales
-        Route::get('/sucursales_cliente/{id}', 'CustomerModule\Controllers\CustomerController@getBranchOffices')->name('branchOffices.index');
+        // Route::get('/sucursales_cliente/{id}', 'CustomerModule\Controllers\CustomerController@getBranchOffices')->name('branchOffices.index');
         //BANKS
         // Route::get('/bancos', 'Admin\CustomerController@BankIndex')->name('banks.index');
 
         //USER BANKS
-        Route::get('/usuario-banco/{parent_id}', 'CustomerModule\Controllers\CustomerController@UserBankIndex')->name('bankUsers.index');
-    Route::get('/usuario-banco/{parent_id}/create', 'CustomerModule\Controllers\CustomerController@UserBankCreate')->name('bankUsers.create');
-    Route::post('/usuario-banco/{parent_id}/store', 'CustomerModule\Controllers\CustomerController@UserBankStore')->name('bankUsers.store');
-    Route::get('/usuario-banco/{parent_id}/{id}', 'CustomerModule\Controllers\CustomerController@UserBankShow')->name('bankUsers.show');
-    Route::get('/usuario-banco/{parent_id}/{id}/edit', 'CustomerModule\Controllers\CustomerController@UserBankEdit')->name('bankUsers.edit');
-    Route::put('/usuario-banco/{parent_id}/{id}/update', 'CustomerModule\Controllers\CustomerController@UserBankUpdate')->name('bankUsers.update');
-    Route::delete('/usuario-banco/{parent_id}/{id}', 'CustomerModule\Controllers\CustomerController@UserBankDestroy')->name('bankUsers.delete');
+    //     Route::get('/usuario-banco/{parent_id}', 'CustomerModule\Controllers\CustomerController@UserBankIndex')->name('bankUsers.index');
+    // Route::get('/usuario-banco/{parent_id}/create', 'CustomerModule\Controllers\CustomerController@UserBankCreate')->name('bankUsers.create');
+    // Route::post('/usuario-banco/{parent_id}/store', 'CustomerModule\Controllers\CustomerController@UserBankStore')->name('bankUsers.store');
+    // Route::get('/usuario-banco/{parent_id}/{id}', 'CustomerModule\Controllers\CustomerController@UserBankShow')->name('bankUsers.show');
+    // Route::get('/usuario-banco/{parent_id}/{id}/edit', 'CustomerModule\Controllers\CustomerController@UserBankEdit')->name('bankUsers.edit');
+    // Route::put('/usuario-banco/{parent_id}/{id}/update', 'CustomerModule\Controllers\CustomerController@UserBankUpdate')->name('bankUsers.update');
+    // Route::delete('/usuario-banco/{parent_id}/{id}', 'CustomerModule\Controllers\CustomerController@UserBankDestroy')->name('bankUsers.delete');
 
         //BRANCH OFFICES
-        Route::get('/sucursales/{parent_id}', 'BranchOfficeModule\Controllers\BranchOfficeController@index')->name('branchOffices.index');
-        Route::get('/sucursales/{parent_id}/create', 'BranchOfficeModule\Controllers\BranchOfficeController@create')->name('branchOffices.create');
-        Route::post('/sucursales/{parent_id}/store', 'BranchOfficeModule\Controllers\BranchOfficeController@store')->name('branchOffices.store');
-        Route::get('/sucursales/{parent_id}/{id}', 'BranchOfficeModule\Controllers\BranchOfficeController@show')->name('branchOffices.show');
-        Route::get('/sucursales/{parent_id}/{id}/edit', 'BranchOfficeModule\Controllers\BranchOfficeController@edit')->name('branchOffices.edit');
-        Route::put('/sucursales/{parent_id}/{id}/update', 'BranchOfficeModule\Controllers\BranchOfficeController@update')->name('branchOffices.update');
-        Route::delete('sucursales/{parent_id}/{id}', 'BranchOfficeModule\Controllers\BranchOfficeController@destroy')->name('branchOffices.delete');
+        // Route::get('/sucursales/{parent_id}', 'BranchOfficeModule\Controllers\BranchOfficeController@index')->name('branchOffices.index');
+        // Route::get('/sucursales/{parent_id}/create', 'BranchOfficeModule\Controllers\BranchOfficeController@create')->name('branchOffices.create');
+        // Route::post('/sucursales/{parent_id}/store', 'BranchOfficeModule\Controllers\BranchOfficeController@store')->name('branchOffices.store');
+        // Route::get('/sucursales/{parent_id}/{id}', 'BranchOfficeModule\Controllers\BranchOfficeController@show')->name('branchOffices.show');
+        // Route::get('/sucursales/{parent_id}/{id}/edit', 'BranchOfficeModule\Controllers\BranchOfficeController@edit')->name('branchOffices.edit');
+        // Route::put('/sucursales/{parent_id}/{id}/update', 'BranchOfficeModule\Controllers\BranchOfficeController@update')->name('branchOffices.update');
+        // Route::delete('sucursales/{parent_id}/{id}', 'BranchOfficeModule\Controllers\BranchOfficeController@destroy')->name('branchOffices.delete');
 
         //MESSEGERS
         // Route::resource('mensajeros', 'MessengerController@index')->names('messengers');
-        Route::resource('mensajeros', 'MessengerModule\Controllers\MessengerController')->names('messengers');
+        // Route::resource('mensajeros', 'MessengerModule\Controllers\MessengerController')->names('messengers');
 
         //BANK DEPARTMENTS
         // Route::resource('departamentos', 'Admin\DepartmentController')->names('departments');
-        Route::resource('departamentos', 'DepartmentModule\Controllers\DepartmentController')->names('departments');
+        // Route::resource('departamentos', 'DepartmentModule\Controllers\DepartmentController')->names('departments');
 
         //ORDENES
         // Route::get('ordenes/historial', function () {
         //     return view('orders.historial');
         // })->name('orders.record');
         // Route::get('/ordenes/historial', 'Admin\OrderController@record')->name('orders.record');
-        Route::get('/ordenes/historial', 'OrderModule\Controllers\OrderController@record')->name('orders.record');
+        // Route::get('/ordenes/historial', 'OrderModule\Controllers\OrderController@record')->name('orders.record');
         // Route::resource('/ordenes', 'Admin\OrderController')->names('orders');
-        Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
+        // Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
 
         //DOCUMENTOS DE GUIÁS
     Route::resource('/guias_doc', 'GuidanceDocumentModule\Controllers\GuidanceDocumentController')->names('guias_doc');
     });
     //Status matrix
     // Route::get('matriz-estados', 'Admin\StatusMatrixController@index')->name('statusMatrix.index');
-    Route::get('matriz-estados', 'StatusMatrixModule\Controllers\StatusMatrixController@index')->name('statusMatrix.index');
+    // Route::get('matriz-estados', 'StatusMatrixModule\Controllers\StatusMatrixController@index')->name('statusMatrix.index');
 
 
     //Status Descriptor
@@ -120,36 +120,36 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Por despachar ondemand
     // Route::post('pordespachar/ondemand/{id}', 'Admin\OrderController@porDespacharOndemand');
-    Route::post('pordespachar/ondemand/{id}', 'OrderModule\Controllers\OrderController@porDespacharOndemand');
+    // Route::post('pordespachar/ondemand/{id}', 'OrderModule\Controllers\OrderController@porDespacharOndemand');
     //Por despachar packaging
-    Route::post('pordespachar/packaging/{id}', 'GuideModule\Controllers\GuideController@porDespacharPackaging');
+    // Route::post('pordespachar/packaging/{id}', 'GuideModule\Controllers\GuideController@porDespacharPackaging');
 
 
 
     //Orders states
     // Route::get('order_states', 'Admin\DeliveryController@orderStates');
-    Route::get('order_states', 'OrderModule\Controllers\DeliveryController@orderStates');
+    // Route::get('order_states', 'OrderModule\Controllers\DeliveryController@orderStates');
     //Orders delivery
     // Route::get('orders_ondemand/{type}', 'Admin\OrderController@ordersForDelivery');
-    Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
+    // Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
     //Orders Delivery Packing
-    Route::get('orders_packing/{type}', 'GuideModule\Controllers\GuideController@guidesForDeliveryPacking');
+    // Route::get('orders_packing/{type}', 'GuideModule\Controllers\GuideController@guidesForDeliveryPacking');
     //Messengers delivery
     // Route::get('messengers_delivery', 'Admin\MessengerController@messengersForDelivery');
-    Route::get('messengers_delivery', 'MessengerModule\Controllers\MessengerController@messengersForDelivery');
+    // Route::get('messengers_delivery', 'MessengerModule\Controllers\MessengerController@messengersForDelivery');
 
 
     // Route::get('despachos', 'Admin\DeliveryController@indexOndemand')->name('delivery.index');
-    Route::get('despachos', 'OrderModule\Controllers\DeliveryController@indexOndemand')->name('delivery.index');
+    // Route::get('despachos', 'OrderModule\Controllers\DeliveryController@indexOndemand')->name('delivery.index');
     // Route::get('despachos-packing', 'Admin\DeliveryController@indexPacking')->name('deliveryPacking.index');
-    Route::get('despachos-packing', 'OrderModule\Controllers\DeliveryController@indexPacking')->name('deliveryPacking.index');
+    // Route::get('despachos-packing', 'OrderModule\Controllers\DeliveryController@indexPacking')->name('deliveryPacking.index');
 
     // Route::get('getPlaces', 'Admin\PlaceController@getPlaces');
     // Route::get('getZoneNeighborhoods/{id}', 'Admin\PlaceController@getZoneNeighborhoods');
     // Route::resource('zonas', 'Admin\ZoneController')->names('zones');
-    Route::resource('zonas', 'ZoneModule\Controllers\ZoneController')->names('zones');
-    Route::get('getPlaces', 'ZoneModule\Controllers\PlaceController@getPlaces');
-    Route::get('getZoneNeighborhoods/{id}', 'ZoneModule\Controllers\PlaceController@getZoneNeighborhoods');
+    // Route::resource('zonas', 'ZoneModule\Controllers\ZoneController')->names('zones');
+    // Route::get('getPlaces', 'ZoneModule\Controllers\PlaceController@getPlaces');
+    // Route::get('getZoneNeighborhoods/{id}', 'ZoneModule\Controllers\PlaceController@getZoneNeighborhoods');
 
     Route::get('notificaciones', function () {
         return view('notifications.index');
@@ -158,16 +158,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('todasnotificaciones', function () {
         return view('notifications.seeAll');
     })->name('todasnotificaciones.index');
-
-    Route::get('ordenes-listado', function () {
-        return view('orders.list');
-    })->name('Ordenes.Listado.index');
-
     
-    Route::resource('tarifas', 'RateModule\Controllers\RateController');
+    // Route::resource('tarifas', 'RateModule\Controllers\RateController');
 
     // Route::resource('perfil', 'Admin\ProfileController')->names('profile');
-    Route::resource('perfil', 'UserModule\Controllers\ProfileController')->names('profile');
+    // Route::resource('perfil', 'UserModule\Controllers\ProfileController')->names('profile');
     // Route::get('perfil', function () {
 
     // })->name('profile');
@@ -177,38 +172,38 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::post('roles/store', 'Admin\PermissionController@storeRole')->name('permits.role');
     // Route::get('permisos/getPermissions/{role_id}', 'Admin\PermissionController@getPermissions')->name('permits.getPermissions');
 
-    Route::resource('permisos', 'PermissionModule\Controllers\PermissionController')->names('permits');
-    Route::resource('roles', 'RoleModule\Controllers\RoleController')->names('roles');
-    Route::get('permisos/getPermissions/{role_id}', 'PermissionModule\Controllers\PermissionController@getPermissions')->name('permits.getPermissions');
+    // Route::resource('permisos', 'PermissionModule\Controllers\PermissionController')->names('permits');
+    // Route::resource('roles', 'RoleModule\Controllers\RoleController')->names('roles');
+    // Route::get('permisos/getPermissions/{role_id}', 'PermissionModule\Controllers\PermissionController@getPermissions')->name('permits.getPermissions');
 
     // Route::resource('planes', 'Admin\PlanController')->names('plans');
-    Route::resource('planes', 'PlanModule\Controllers\PlanController')->names('plans');
+    // Route::resource('planes', 'PlanModule\Controllers\PlanController')->names('plans');
 
 
     //Matriz de estados del despacho lógica
     // Route::get('despacho/matriz_estados', 'Admin\DeliveryController@statusMatrix');
-    Route::get('despacho/matriz_estados', 'OrderModule\Controllers\DeliveryController@statusMatrix');
+    // Route::get('despacho/matriz_estados', 'OrderModule\Controllers\DeliveryController@statusMatrix');
     // Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->names('addresses');
 
     // Route::resource('horas', 'Admin\PickupHourController')->except('delete')->names('hours');
     // Route::delete('horas/{id}', 'Admin\PickupHourController@destroy')->name('hours.delete');
     // Route::get('/getPickupHours', 'Admin\PickupHourController@pickupHours');
-    Route::resource('horas', 'PickupHourModule\Controllers\PickupHourController')->names('hours');
-    Route::get('/getPickupHours', 'PickupHourModule\Controllers\PickupHourController@pickupHours');
+    // Route::resource('horas', 'PickupHourModule\Controllers\PickupHourController')->names('hours');
+    // Route::get('/getPickupHours', 'PickupHourModule\Controllers\PickupHourController@pickupHours');
 
     // Route::get('log', 'Admin\LogController@index')->name('log.index');
-    Route::get('log', 'ActivityLogModule\Controllers\LogController@index')->name('log.index');
+    // Route::get('log', 'ActivityLogModule\Controllers\LogController@index')->name('log.index');
 
     Route::get('{page}', 'PageController@index')->name('page.index');
     //RUTAS
     // Route::resource('/rutas', 'Admin\RouteController')->names('routes');
-    Route::resource('/rutas', 'RouteModule\Controllers\RouteController')->names('routes');
+    // Route::resource('/rutas', 'RouteModule\Controllers\RouteController')->names('routes');
 });
 // Route::get('admin/order', 'Admin\OrderController@historial');
 
 //ADDRESSES
 // Route::resource('direcciones', 'Admin\AddressController')->names('addresses');
-Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->names('addresses');
+// Route::resource('direcciones', 'AddressModule\Controllers\AddressController')->names('addresses');
 
 //REPORTS
-Route::resource('reportes', 'Admin\ReportController')->names('reports'); //DELETE REPORTS
+// Route::resource('reportes', 'Admin\ReportController')->names('reports'); //DELETE REPORTS

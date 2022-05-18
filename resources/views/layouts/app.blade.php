@@ -14,8 +14,7 @@
 
     <!-- Scripts -->
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9MFKCZ2zM_6wtlJCiaSdalzbubH_tKFk&libraries=places">
-    </script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9MFKCZ2zM_6wtlJCiaSdalzbubH_tKFk&libraries=places"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/tooltip.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -23,8 +22,6 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="{{ asset('js/apexcharts.js') }}"></script>
     <script src="{{ asset('js/selectBranchOffice.js') }}"></script>
-
-
 
 
     <!-- Fonts -->
@@ -88,5 +85,13 @@ d-flex flex-column flex-row-fluid wrapper  @endguest"
         </main>
     </div>
 </body>
+
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 
 </html>

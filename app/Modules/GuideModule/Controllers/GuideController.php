@@ -3,6 +3,7 @@
 namespace App\Modules\GuideModule\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\RestActions;
 use App\Imports\GuidesImport;
 use App\Modules\AddressModule\Address;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
@@ -15,7 +16,8 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class GuideController extends Controller
 {
-
+    use GuideTrait;
+    
     protected $GuidanceDocument;
 
     public function __construct()

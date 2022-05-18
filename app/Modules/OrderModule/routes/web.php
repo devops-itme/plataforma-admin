@@ -7,7 +7,8 @@ Route::group(['middleware' => 'auth'], function () {
      
         Route::get('/ordenes/historial', 'OrderModule\Controllers\OrderController@record')->name('orders.record');
         Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
-     
+        Route::resource('/ordenes-internacionales', 'OrderModule\Controllers\InternationalOrderController')->names('internationalOrders');
+        Route::post('/importBatch', 'OrderModule\Controllers\InternationalOrderController@importBatch')->name('internationalOrders.import');
     });
     Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
     Route::get('/order_number', 'OrderModule\Controllers\OrderController@orderNumber');

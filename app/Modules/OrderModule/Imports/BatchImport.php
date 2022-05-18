@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\ApiConnectionsModule\Imports;
+namespace App\Modules\OrderModule\Imports;
 
 use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\OrderModule\Controllers\OrderTrait;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidation
+class BatchImport implements ToCollection, WithHeadingRow, WithValidation
 {
     use OrderTrait, GuideTrait;
     public function collection(Collection $rows)
