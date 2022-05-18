@@ -2,6 +2,7 @@
 
 namespace App\Modules\GuideModule;
 
+use App\Http\Controllers\Traits\RestActions;
 use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
@@ -17,11 +18,12 @@ use Spatie\Activitylog\Contracts\Activity;
 
 class Guide extends Model
 {
-    use SoftDeletes, LogsActivity;
+    use SoftDeletes, LogsActivity, RestActions;
 
     protected $table = 'guides';
     protected $fillable = [
         'order_id',
+        'external_id',
         'branch_office',
         'transport_type',
         'dispatched',
@@ -31,6 +33,17 @@ class Guide extends Model
         'address_description',
         'description',
         'zone',
+        'country',
+        'city',
+        'recipient_name',
+        'document_type',
+        'document',
+        'delivery_office',
+        'pre_guide',
+        'invoice_number',
+        'declared',
+        'pieces',
+        'kg',
         'concept',
         'rate',
         'value',
@@ -114,6 +127,19 @@ class Guide extends Model
     {
         if (!is_null($status_matrix_id)) {
             return $query->whereIn('status_matrix_id', $status_matrix_id);
+        }
+    }
+
+    public function getGuidesByOrder($order_id)
+    {
+        try {
+            $guide = $this::where('order_id', $order_id)->paginate(10);
+            if (is_null($guide)) {
+                return $this->respond(500, [], 'guides not founds', 'Error al encontrar guías');
+            }
+            return $this->respond(200, $guide, null, 'Guías encontradas exitosamente');
+        } catch (\Throwable $th) {
+            return $this->respond(500, [], $th->getMessage(), 'Error al encontrar guías');
         }
     }
 }

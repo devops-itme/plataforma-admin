@@ -40,6 +40,17 @@ return [
                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
+        'internationalOrders' => [
+            'name' => 'Ordenes Internacionales', 'reference' => 'internationalOrders', 'icon' => '', 'position' => '2',
+            'actions' => '6,7,8,9,10,11,12,13,17',
+            'children' => [],
+            'permission' => [
+                'Admin' =>  ['role_id' => 1, 'actions' => '6,7,8,9,10,11,12,13,15,17'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
+            ]
+        ],
         'customers' => [
             'name' => 'Clientes', 'reference' => 'customers', 'icon' => '', 'position' => '3',
             'actions' => '6,7,8,9,10,11,12,13',
@@ -254,7 +265,8 @@ return [
         ],
         'order_types' => [
             'Ondemand',
-            'Packaging'
+            'Packaging',
+            'International'
         ],
         'transport_type' => [
             'Moto',

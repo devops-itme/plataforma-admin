@@ -109,6 +109,11 @@ export default class Zones {
                     return;
                 }
 
+                let select_state = document.getElementById("select-state");
+                if (select_state==null) {
+                    return;
+                }
+
                 let input_name = document.getElementById("input-name");
                 if (input_name == null) {
                     return;
@@ -122,7 +127,7 @@ export default class Zones {
                 let response = await requestZone(btn?.id);
                 if (response?.state != 200) {
                     return;
-                }
+                }               
 
                 let zone = response.data;
                 initMap(zone.coordinates);
@@ -143,6 +148,10 @@ export default class Zones {
                 getDistricts(province.id, district.id);
                 getCorregimientos(district.id, corregimiento.id);
                 getNeighborhoods(corregimiento.id, neighborhoods);
+
+                select_state.value = zone.state;
+                let select_state_container = select_state.parentNode;
+                select_state_container.className = "form-group col-md-12";
             });
         });
     }

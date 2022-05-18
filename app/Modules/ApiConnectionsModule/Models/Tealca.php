@@ -44,4 +44,36 @@ class Tealca
 
         return $this->respond(200, $response->json(), null, 'successful request');
     }
+
+    public function requestCreateShipment($guide)
+    {
+        $createShipment = Http::post(
+            'http://qaapicore.tealca.com/v1/Shipment/',
+            [
+                "UserLogin" => "multi.entrega",
+                "Observations" => $guide->description,
+                "TotalPieces" => $guide->pieces,
+                "DeclaratedValueCurrency" => "USD",
+                "IsSafeKeeping" => 0, //
+                "DeclaratedValue" => $guide->declared,
+                "CustomerCode" => "2722",
+                "BUCodeSource" => "1102", //
+                "ConsigneeCountry" =>  $guide->country,
+                "ConsigneeCity" =>  $guide->city,
+                "ConsigneeAddress" =>  $guide->address_name,
+                "ConsigneePhoneCode" => "58",
+                "ConsigneePhone" =>  $guide->phone_contact,
+                "EmailType" => "020",
+                "ConsigneeEmail" =>  $guide->email_contact,
+                "ConsigneeName" =>  $guide->recipient_name,
+                "ConsigneeIdentification" =>  $guide->recipient_name,
+                "ConsigneeTaxIdentTypeCode" => "V", //
+                "ShipperCountry" => "PAN", //
+                "ShipperCity" => "CCS", //
+                "ShipperAddress" => "Direccion Remitente", //
+                
+                "WeightUnitID" => 10,
+            ]
+        );
+    }
 }

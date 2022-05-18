@@ -2,6 +2,7 @@
 
 namespace App\Modules\OrderModule;
 
+use App\Http\Controllers\Traits\RestActions;
 use App\Modules\OrderLogModule\OrderLog;
 use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
@@ -19,7 +20,7 @@ use Spatie\Activitylog\Contracts\Activity;
 
 class Order extends Model
 {
-    use SoftDeletes, LogsActivity;
+    use SoftDeletes, LogsActivity, RestActions;
 
     protected $table = 'orders';
     protected $fillable = [
@@ -139,8 +140,6 @@ class Order extends Model
         return $this->belongsTo(BranchOffice::class, 'branch_office');
     }
 
-
-
     //SCOPES
 
     public function scopeNumber($query, $value)
@@ -187,6 +186,19 @@ class Order extends Model
     {
         if (!is_null($status_matrix) && is_countable($status_matrix) && $status_matrix[0] != null) {
             return $query->whereIn('status_matrix_id', $status_matrix);
+        }
+    }
+
+    public function showOrder($id)
+    {
+        try {
+            $order = $this::find($id);
+            if (is_null($order)) {
+                return $this->respond(500, [], 'order not found', 'Error al encontrar orden');
+            }
+            return $this->respond(200, $order, null, 'Orden encontrada exitosamente');
+        } catch (\Throwable $th) {
+            return $this->respond(500, [], $th->getMessage(), 'Error al encontrar orden');
         }
     }
 }
