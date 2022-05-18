@@ -13,7 +13,7 @@ class NeighborhoodSeeder extends Seeder
     public function run()
     {
         DB::insert(DB::raw("        
-            INSERT INTO `multientrega_db`.`neighborhoods` (`id`, `corregimiento_id`, `zone_id`, `name`, `state`, `created_at`, `updated_at`, `deleted_at`) VALUES
+            INSERT INTO `neighborhoods` (`id`, `corregimiento_id`, `zone_id`, `name`, `state`, `created_at`, `updated_at`, `deleted_at`) VALUES
             (1, 1, NULL, 'BARRIADA GUAYMI', 1, '2021-11-24 19:11:13', '2021-11-24 19:11:13', NULL),
             (2, 2, NULL, 'BARRIO FRANCES', 1, '2021-11-24 19:11:13', '2021-11-24 19:11:13', NULL),
             (3, 3, NULL, 'NANCE DE RISCO', 1, '2021-11-24 19:11:13', '2021-11-24 19:11:13', NULL),
