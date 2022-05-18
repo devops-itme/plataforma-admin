@@ -11,3 +11,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('order/webview/paguelo-facil', 'OrderModule\Controllers\Api\OrderController@webviewPagueloFacil')->name('order.webview');
 });
 Route::get('order/webview/paguelo-facil/response', 'OrderModule\Controllers\Api\OrderController@responseViewPagueloFacil')->name('order.webview.response');
+Route::get('sendPushNotification', 'OrderModule\Controllers\Api\OrderController@sendPushNotification')->name('order.sendPushNotification');
