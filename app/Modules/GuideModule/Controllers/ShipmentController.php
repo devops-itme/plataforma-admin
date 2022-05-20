@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\OrderModule\Controllers;
+namespace App\Modules\GuideModule\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class ShipmentController extends Controller
 {
     use RestActions;
 
-    protected $path = 'OrderModule.views.html.international.shipments.';
+    protected $path = 'GuideModule.views.html.shipments.';
 
     public function index(Request $request)
     {
@@ -26,23 +26,7 @@ class ShipmentController extends Controller
             return redirect()->back()->with('warning', 'Orden no encontrada');
         };
         $shipments = $response['data'];
-        return view($this->path . 'index', compact('shipments'));
-    }
-
-    public function importBatch(Request $request)
-    {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'excel' => 'required|mimes:xlsx',
-            ]
-        );
-        if ($validator->fails()) {
-            return redirect()->back()->with('danger', $validator->errors()->first());
-        }
-        $file = $request->file('excel');
-        Excel::import(new ShipmentTealcaImport, $file);
-        return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
+        return view($this->path . 'index', compact('shipments', 'order_id'));
     }
 
     public function sendBatch($id)
@@ -64,6 +48,6 @@ class ShipmentController extends Controller
                 return redirect()->back()->with('danger', $response['message']);
             }
         }
-        return redirect()->route('internationalOrders.index')->with('success', 'Lote subido correctamente');
+        return redirect()->route('shipments.index')->with('success', 'Lote subido correctamente');
     }
 }

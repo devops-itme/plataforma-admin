@@ -21,7 +21,7 @@
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
                 </button>
-                <form action="{{ route('shipments.assign', $shipments[0]->getOrder->id) }}" method="POST">
+                <form action="{{ route('shipments.assign', $order_id) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-primary">
                         <span>Enviar lote</span>
@@ -105,65 +105,66 @@
         <div class="card-body">
             <div class="mb-7">
                 <div class="form-filter" style="display:none">
-                    <form action="">
+                    <form action="{{ route('shipments.index') }}">
+                        @csrf
+                        <input type="hidden" name="order_id" value="{{ $order_id }}">
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label>Número de orden:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Orden_1"
-                                    name="number" value="" />
-                                <span class="form-text text-muted">Filtro numero</span>
+                                <label>NO. GUIA:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="4700412"
+                                    name="external_id" value="{{request()->external_id}}" />
+                                <span class="form-text text-muted">Filtro NO. GUIA</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label for="exampleSelect1">Tipo de orden:</label>
-                                <select class="form-control form-control-solid" name="">
-                                    <option selected disabled> Seleccione </option>
-
-                                </select>
-                                <span class="form-text text-muted">Filtro tipo de orden</span>
+                                <label for="exampleSelect1">CLIENTE:</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Jaime Barrios"
+                                    name="recipient_name" value="{{request()->recipient_name}}" />
+                                <span class="form-text text-muted">Filtro CLIENTE</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label for="pagination">Cantidad por página</label>
-                                <select name="pagination" class="form-control form-control-solid">
-                                    <option value="15" {{request()->paagination == 15 && 'selected'}}>15</option>
-                                    <option value="25" {{request()->paagination == 25 && 'selected'}}>25</option>
-                                    <option value="50" {{request()->paagination == 50 && 'selected'}}>50</option>
-                                    <option value="100" {{request()->paagination == 100 && 'selected'}}>100</option>
-                                </select>
-                                <small id="helpId" class="text-muted">Cantidad de registros por página</small>
-                            </div>
-                            <div class="form-group py-3 m-0 col-md-4">
-                                <label>Nombre del cliente:</label>
+                                <label>CONTACTO:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson"
-                                    name="name" value="" />
-                                <span class="form-text text-muted">Filtro nombre</span>
+                                    name="contact" value="{{request()->contact}}" />
+                                <span class="form-text text-muted">Filtro CONTACTO</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Desde:</label>
                                 <input type="date" class="form-control form-control-solid" placeholder="" name="from"
-                                    value="" />
+                                    value="{{request()->from}}" />
                                 <span class="form-text text-muted">Filtro desde</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Hasta:</label>
                                 <input type="date" class="form-control form-control-solid" placeholder="" name="to"
-                                    value="" />
+                                    value="{{request()->to}}" />
                                 <span class="form-text text-muted">Filtro hasta</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
+                                <label for="pagination">Cantidad por página</label>
+                                <select name="pagination" class="form-control form-control-solid">
+                                    <option value="15" {{ request()->pagination == 15 ? 'selected' : '' }}>15</option>
+                                    <option value="25" {{ request()->pagination == 25 ? 'selected' : '' }}>25</option>
+                                    <option value="50" {{ request()->pagination == 50 ? 'selected' : '' }}>50</option>
+                                    <option value="100" {{ request()->pagination == 100 ? 'selected' : '' }}>100</option>
+                                </select>
+                                <small id="helpId" class="text-muted">Cantidad de registros por página</small>
+                            </div>
+                            {{-- <div class="form-group py-3 m-0 col-md-4">
                                 <label for="exampleSelect1">Estado: </label>
                                 <select class="form-control form-control-solid" id="zone" name="state">
                                     <option selected disabled> Seleccione </option>
 
                                 </select>
                                 <span class="form-text text-muted">Filtro estado</span>
-                            </div>
+                            </div> --}}
                             <div class=" row form-group py-6 m-0 col-md-12">
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block">
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('shipments.index', $shipments[0]->getOrder->id) }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                    <a href="{{ route('shipments.index', ['order_id' => $order_id]) }}"
+                                        class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +176,6 @@
                 <thead class="">
                     <tr>
                         <th scope="col">NO. GUIA</th>
-                        <th scope="col">REFERENCIA</th>
                         <th scope="col">CLIENTE</th>
                         <th scope="col">TIPO</th>
                         <th scope="col">FECHA - HORA</th>
@@ -188,7 +188,6 @@
                     @foreach ($shipments as $shipment)
                         <tr>
                             <th>{{ $shipment->external_id ?? 'No registrada' }}</th>
-                            <td>---</td>
                             <td>{{ $shipment->recipient_name ?? 'No registra' }}</td>
                             <td>{{ $shipment->getOrder->getOrderType->name }}</td>
                             <td>{{ format_date(date('Y-n-d', strtotime($shipment->created_at))) }}

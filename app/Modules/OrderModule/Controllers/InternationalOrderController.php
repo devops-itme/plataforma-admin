@@ -34,4 +34,20 @@ class InternationalOrderController extends Controller
     {
        
     }
+
+    public function importBatch(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'excel' => 'required|mimes:xlsx',
+            ]
+        );
+        if ($validator->fails()) {
+            return redirect()->back()->with('danger', $validator->errors()->first());
+        }
+        $file = $request->file('excel');
+        Excel::import(new ShipmentTealcaImport, $file);
+        return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
@@ -14,3 +15,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::put('guide/update', 'GuideModule\Controllers\GuideController@updatePackingGuide');
 });
+Route::resource('/envíos-tealca', 'GuideModule\Controllers\ShipmentController')->names('shipments');
+Route::post('/sendBatch/{id}', 'GuideModule\Controllers\ShipmentController@sendBatch')->name('shipments.assign');
