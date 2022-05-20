@@ -21,7 +21,7 @@
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
                 </button>
-                <form action="{{ route('internationalOrders.assign', $shipments[0]->getOrder->id) }}" method="POST">
+                <form action="{{ route('shipments.assign', $shipments[0]->getOrder->id) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-primary">
                         <span>Enviar lote</span>
@@ -163,7 +163,7 @@
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('internationalOrders.show', $shipments[0]->getOrder->id) }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
+                                    <a href="{{ route('shipments.index', $shipments[0]->getOrder->id) }}" class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +180,6 @@
                         <th scope="col">TIPO</th>
                         <th scope="col">FECHA - HORA</th>
                         <th scope="col">CONTACTO</th>
-                        <th scope="col">SUCURSAL</th>
                         <th scope="col">ESTADO</th>
                         <th scope="col"></th>
                     </tr>

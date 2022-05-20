@@ -8,9 +8,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/ordenes/historial', 'OrderModule\Controllers\OrderController@record')->name('orders.record');
         Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
         Route::resource('/ordenes-internacionales', 'OrderModule\Controllers\InternationalOrderController')->names('internationalOrders');
-        Route::post('/importBatch', 'OrderModule\Controllers\InternationalOrderController@importBatch')->name('internationalOrders.import');
     });
-    Route::post('/sendBatch/{id}', 'OrderModule\Controllers\InternationalOrderController@sendBatch')->name('internationalOrders.assign');
+    Route::resource('/envíos-tealca', 'OrderModule\Controllers\ShipmentController')->names('shipments');
+    Route::post('/importBatch', 'OrderModule\Controllers\ShipmentController@importBatch')->name('shipments.import');
+    Route::post('/sendBatch/{id}', 'OrderModule\Controllers\ShipmentController@sendBatch')->name('shipments.assign');
     Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
     Route::get('/order_number', 'OrderModule\Controllers\OrderController@orderNumber');
     Route::post('pordespachar/ondemand/{id}', 'OrderModule\Controllers\OrderController@porDespacharOndemand');

@@ -162,7 +162,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                        <a href="{{ route('internationalOrders.show', $order->id) }}"
+                                        <a href="{{ route('shipments.index', ['order_id' => $order->id]) }}"
                                             class="btn btn-icon btn-light btn-sm mr-2" data-tooltip title="Listado">
                                             <i class="fas fa-eye"></i>
                                         </a>
