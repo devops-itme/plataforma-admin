@@ -71,7 +71,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             "paisdes" => 'required|string|size:3', //
             "ciudes" => 'required|string|size:3', //
             "nomdes" => 'required|string', //
-            "dirdes" => 'required|string', //
+            "dirdes" => 'required|string|max:200', //
             "documenttypedes" => 'required|string', //
             "documentnumberdes" => 'required|numeric', //
             "teldes" => 'required|numeric', //

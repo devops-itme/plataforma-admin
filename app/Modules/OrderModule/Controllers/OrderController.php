@@ -18,6 +18,7 @@ use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -81,6 +82,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'address_id' => 'required|numeric|exists:addresses,id',
+                'required' => 'nullable|numeric',
+            ]
+        );
+        if ($validator->fails()) {
+            return redirect()->back()->with('danger', $validator->errors()->first());
+        }
+
         if (Auth()->user()->role != 1) {
             $request->merge(['user_id' => Auth()->user()->id]);
         };

@@ -122,22 +122,54 @@ class Guide extends Model
     }
 
     // Scopes
-
+    public function scopeWhereExternalId($query, $value)
+    {
+        if (!is_null($value)) {
+            return $query->where('external_id', 'like', '%' . $value . '%');
+        }
+    }
+    public function scopeWhereRecipientName($query, $value)
+    {
+        if (!is_null($value)) {
+            return $query->where('recipient_name', 'like', '%' . $value . '%');
+        }
+    }
+    public function scopeWhereContact($query, $value)
+    {
+        if (!is_null($value)) {
+            return $query->where('contact', 'like', '%' . $value . '%');
+        }
+    }
     public function scopeWhereStatusMatrix($query, $status_matrix_id)
     {
         if (!is_null($status_matrix_id)) {
             return $query->whereIn('status_matrix_id', $status_matrix_id);
         }
     }
+    public function scopeDate($query, $from, $to)
+    {
+        if (!is_null($from) && !is_null($to)) {
+            return $query->whereBetween('created_at', [$from, $to]);
+        }
+    }
 
-    public function getGuidesByOrder($order_id)
+    public function getGuidesByOrder($order_id, $paginate = 10)
     {
         try {
-            $guide = $this::where('order_id', $order_id)->paginate(10);
-            if (is_null($guide)) {
+            $guides = $this::whereExternalId(request()->external_id)
+                ->whereRecipientName(request()->recipient_name)
+                ->whereContact(request()->contact)
+                ->date(request()->from, request()->to);
+
+            // dd($guides);
+            $guides = $paginate
+                ? $guides->where('order_id', $order_id)->paginate($paginate)
+                : $guides->where('order_id', $order_id)->get();
+
+            if (is_null($guides)) {
                 return $this->respond(500, [], 'guides not founds', 'Error al encontrar guías');
             }
-            return $this->respond(200, $guide, null, 'Guías encontradas exitosamente');
+            return $this->respond(200, $guides, null, 'Guías encontradas exitosamente');
         } catch (\Throwable $th) {
             return $this->respond(500, [], $th->getMessage(), 'Error al encontrar guías');
         }
