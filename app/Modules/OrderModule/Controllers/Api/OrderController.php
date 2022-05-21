@@ -14,6 +14,7 @@ use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RateModule\Rate;
 use App\Modules\StatusMatrixModule\StatusMatrix;
+use App\Modules\GuidanceDocumentModule\Controllers\Api\GuidanceDocumentController;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -176,30 +177,10 @@ class OrderController extends Controller
 
                     $tax_percentage = 7;
                     $tax_value = $rate_value * ($tax_percentage / 100);
-                    $rate_value = $rate_value + $tax_value;
+                    $rate_value_total = $rate_value + $tax_value;
 
-                    // if (!is_numeric($request->type)) {
-                    //     $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
-                    //         $query->where('name', 'guide_document_type');
-                    //     })->first();
-                    //     if (is_null($type)) {
-                    //         return $this->respond(500, $request->all(), 'type not found', 'Tipo de documento no encontrado');
-                    //     }
-                    //     $request->merge(['type' => $type->id]);
-                    // }
-
-                    // if (File($request->document)) {
-                    //     $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'));
-                    // }
-                    // $request->merge(['url_document' => $path]);
-
-                    // $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);
-                    // if ($store_doc['state'] != 200) {
-                    //     DB::rollBack();
-                    //     return $store_doc;
-                    // }
-                    // DB::commit();
-                    // return $this->respond(200, [], '', 'Imágenes almacenadas de forma exitosa.');
+                    // $guidance_document = new GuidanceDocumentController();
+                    // $guidance_document->store($request->$guidance_document);
 
                     $request->merge([
                         'order_id' => $order_id,
@@ -214,7 +195,8 @@ class OrderController extends Controller
                         'address_description' => $address->description ?? $guide['address_description'],
                         'description' => $address->description ?? $guide['address_description'],
                         "transport_type" => $guide['transport_type'] ?? '',
-                        'state' => 31
+                        'state' => 31,
+                        // 'guidance_document' => $guidance_document,
                     ]);
 
                     if (is_null($guide['address_id'])) {
@@ -239,7 +221,7 @@ class OrderController extends Controller
                 }
 
                 $order = Order::find($order_id);
-                $order->update(['order_value' => $rate_value, 'tax_total' => $tax_value]);
+                $order->update(['order_value' => $rate_value_total, 'tax_total' => $tax_value]);
 
                 return $this->respond(200, $order, null, 'Orden creada correctamente');
             });

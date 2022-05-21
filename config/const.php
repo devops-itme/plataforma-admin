@@ -185,6 +185,11 @@ return [
                 'Operador' => ['role_id' => 2, 'actions' => '6'],
                 'Mensajero' => ['role_id' => 3, 'actions' => '6'],
                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
+            ],
+            'guide_document_type' => [
+                'signature',
+                'evidence',
+                'package_picture',
             ]
         ],
     ],
@@ -334,10 +339,5 @@ return [
             'ENTREGADO'
         ]
     ],
-    'guide_document_type' => [
-        'signature',
-        'evidence',
-        'package_picture',
-    ]
 
 ];
