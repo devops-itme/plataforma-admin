@@ -103,7 +103,7 @@ class OrderController extends Controller
                 $request->merge(['user_id' => Auth()->user()->id]);
             };
 
-            $last_id = Order::all()->last()->id ?? 0;
+            $last_id = Order::where('external_id', NULL)->all()->last()->id ?? 0;
             $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
 
             $transactionResponse = DB::transaction(function () use ($request) {
