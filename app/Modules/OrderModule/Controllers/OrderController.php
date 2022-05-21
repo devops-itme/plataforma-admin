@@ -90,7 +90,7 @@ class OrderController extends Controller
             ]
         );
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            return redirect()->back()->with('danger', $validator->errors()->first());
         }
 
         if (Auth()->user()->role != 1) {
