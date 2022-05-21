@@ -3,6 +3,7 @@
 namespace App\Modules\ApiConnectionsModule\Models;
 
 use App\Http\Controllers\Traits\RestActions;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class Tealca
@@ -93,13 +94,15 @@ class Tealca
             'http://qaapicore.tealca.com/v1/Shipment/',
             $body
         );
-        // return (array([
-        //     "PieceNumber" =>  $guide->pieces,
-        //     "PhysicalWeight" =>  $guide->kg
-        // ]));
+
         if ($createShipmentResponse->status() != 200) {
             return $this->respond(500, $body, $createShipmentResponse->json(), 'Fallo en el servicio. Guía N° ' . $guide->id);
         };
-        return $this->respond(200, $createShipmentResponse->json(), null, 'successful request');
+
+        $headers = $createShipmentResponse->headers();
+        $external_id = explode(".", explode("'", $headers["Content-Disposition"][0])[2])[0];
+        $guide->external_id = $external_id;
+        $guide->save();
+        return $this->respond(200, $guide, null, 'successful request');
     }
 }

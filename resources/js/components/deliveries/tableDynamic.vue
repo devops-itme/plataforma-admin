@@ -36,7 +36,7 @@
                         <td>0084774</td>
                         <td>17/02/2022</td>
                         <td>9013</td>
-                        <td>Leido</td>
+                        <td>{{tblItem.app_status == 0 ? 'Pendiente' : 'Leido'}}</td>
                         <td>Marta ayega</td>
                         <td>5757848</td>
                         <td>City:Malambo</td>

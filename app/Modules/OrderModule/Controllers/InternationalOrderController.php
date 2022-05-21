@@ -23,14 +23,6 @@ class InternationalOrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(10);
-        // $orders = InternationalOrder::number(request()->number)
-        //     ->order_type(request()->order_type)
-        //     ->customer(request()->name)
-        //     ->date(request()->from, request()->to)
-        //     ->whereStatusMatrix([request()->state])
-        //     ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
-        //         $query->where('name', '!=', 'ENTREGADO');
-        //     })->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
@@ -40,13 +32,7 @@ class InternationalOrderController extends Controller
 
     public function show($id)
     {
-        $Guide = new Guide();
-        $response = $Guide->getGuidesByOrder($id, (request()->pagination ?? 15));
-        if ($response['state'] != 200) {
-            return redirect()->back()->with('warning', 'Orden no encontrada');
-        };
-        $shipments = $response['data'];
-        return view($this->path . 'shipments.index', compact('shipments'));
+       
     }
 
     public function importBatch(Request $request)
@@ -63,24 +49,5 @@ class InternationalOrderController extends Controller
         $file = $request->file('excel');
         Excel::import(new ShipmentTealcaImport, $file);
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
-    }
-
-    public function sendBatch($id)
-    {
-        $Guide = new Guide();
-        $Tealca = new Tealca();
-        $Tealca->login();
-        $guideResponse = $Guide->getGuidesByOrder($id, false);
-        if ($guideResponse['state'] != 200) {
-            return $guideResponse;
-        }
-        $guides = $guideResponse['data'];
-        foreach ($guides as $guide) {
-            $response = $Tealca->requestCreateShipment($guide);
-            if ($response['state'] != 200) {
-                return redirect()->back()->with('danger', $response['message']);
-            }
-        }
-        return redirect()->route('internationalOrders.index')->with('success', 'Lote subido correctamente');
     }
 }

@@ -71565,7 +71565,11 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [_vm._v("9013")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Leido")]),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(tblItem.app_status == 0 ? "Pendiente" : "Leido")
+                      ),
+                    ]),
                     _vm._v(" "),
                     _c("td", [_vm._v("Marta ayega")]),
                     _vm._v(" "),
@@ -90330,8 +90334,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\GERMAN VEGA\Documents\multiE\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\GERMAN VEGA\Documents\multiE\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
