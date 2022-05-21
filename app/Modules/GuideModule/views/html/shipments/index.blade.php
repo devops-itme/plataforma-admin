@@ -218,7 +218,7 @@
                 </tbody>
             </table>
             <div class="col-md-12 d-flex align-items-center justify-content-end">
-                {{ $shipments->links() }}
+                {{ $shipments->withQueryString()->links() }}
             </div>
         </div>
     </div>
