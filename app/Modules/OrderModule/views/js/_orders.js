@@ -4,6 +4,9 @@ import { requestBranches } from "./request/requestBranches.js";
 import { requestSearchZone } from "./request/requestSearchZone";
 import { requestCalculatePackingRates } from "./request/requestCalculatePackingRates";
 
+//src
+import { months } from "./src/months.js";
+
 //functions
 import { calculateRate } from "./calculateRate";
 import { listener } from "./listener";
@@ -461,8 +464,7 @@ export default class Orders {
                 correct(response.message);
                 let modal = document.getElementById("modalCreate");
                 modal.click();
-                this.listGuides();
-                this.cleanFields();
+                this.initialize();
             } else {
                 error("Error al crear la guía.");
                 console.log("Error: " + response.error);
@@ -519,7 +521,7 @@ export default class Orders {
                 dateCell.innerHTML =
                     allDate.getDate() +
                     "-" +
-                    this.months(month) +
+                    months(month) +
                     "-" +
                     allDate.getFullYear();
 
@@ -976,23 +978,6 @@ export default class Orders {
         return response.json();
     }
 
-    months(month) {
-        const months = {
-            0: "Enero",
-            1: "Febrero",
-            2: "Marzo",
-            3: "Abril",
-            4: "Mayo",
-            5: "Junio",
-            6: "Julio",
-            7: "Agosto",
-            8: "Septiembre",
-            9: "Octubre",
-            10: "Noviembre",
-            11: "Diciembre",
-        };
-        return months[month];
-    }
     async porDespacharOndemand() {
         let button = document.getElementsByClassName("porDespacharOndemand");
         if (button == null) {
@@ -1190,22 +1175,4 @@ export default class Orders {
         }
     }
 
-    cleanFields() {
-        document.getElementById("branch_off").selectedIndex = 0;
-        document.getElementById("address").selectedIndex = 0;
-        document.getElementById("guide_description").value = "";
-        document.getElementById("concept").value = "";
-        document.getElementById("rate").selectedIndex = 0;
-        document.getElementById("value").value = "";
-        document.getElementById("corp_value").value = "";
-        document.getElementById("customer_document_type").selectedIndex = 0;
-        document.getElementById("contact").value = "";
-        document.getElementById("phone_contact").value = "";
-        document.getElementById("email_contact").value = "";
-        document.getElementById("invoice_contact").value = "";
-        document.getElementById("zone_id").selectedIndex = 0;
-        document.getElementById("same_day_delivery").checked = false;
-        document.getElementById("sign").checked = false;
-        document.getElementById("take_photo").checked = false;
-    }
 }

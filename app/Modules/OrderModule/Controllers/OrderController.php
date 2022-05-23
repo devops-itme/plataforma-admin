@@ -39,7 +39,9 @@ class OrderController extends Controller
             ->whereStatusMatrix([request()->state])
             ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
                 $query->where('name', '!=', 'ENTREGADO');
-            })->paginate(10);
+            })
+            ->national()
+            ->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();

@@ -172,6 +172,18 @@ class Order extends Model
             return $query->where('state', $value);
         }
     }
+    public function scopeNational($query)
+    {
+        return $query->whereHas('getOrderType', function ($query) {
+            $query->where('name', '<>', 'International');
+        });
+    }
+    public function scopeInternational($query)
+    {
+        return $query->whereHas('getOrderType', function ($query) {
+            $query->where('name', 'International');
+        });
+    }
     public function scopeMessengerOrders($query, $messenger_user_id)
     {
         if (!is_null($messenger_user_id)) {

@@ -2064,10 +2064,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _request_requestBranches_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./request/requestBranches.js */ "./app/Modules/OrderModule/views/js/request/requestBranches.js");
 /* harmony import */ var _request_requestSearchZone__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./request/requestSearchZone */ "./app/Modules/OrderModule/views/js/request/requestSearchZone.js");
 /* harmony import */ var _request_requestCalculatePackingRates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./request/requestCalculatePackingRates */ "./app/Modules/OrderModule/views/js/request/requestCalculatePackingRates.js");
-/* harmony import */ var _calculateRate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calculateRate */ "./app/Modules/OrderModule/views/js/calculateRate.js");
-/* harmony import */ var _listener__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./listener */ "./app/Modules/OrderModule/views/js/listener.js");
-/* harmony import */ var _importModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./importModal */ "./app/Modules/OrderModule/views/js/importModal.js");
-/* harmony import */ var _boxes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./_boxes */ "./app/Modules/OrderModule/views/js/_boxes.js");
+/* harmony import */ var _src_months_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./src/months.js */ "./app/Modules/OrderModule/views/js/src/months.js");
+/* harmony import */ var _calculateRate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./calculateRate */ "./app/Modules/OrderModule/views/js/calculateRate.js");
+/* harmony import */ var _listener__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./listener */ "./app/Modules/OrderModule/views/js/listener.js");
+/* harmony import */ var _importModal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./importModal */ "./app/Modules/OrderModule/views/js/importModal.js");
+/* harmony import */ var _boxes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_boxes */ "./app/Modules/OrderModule/views/js/_boxes.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2083,6 +2084,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //requests
 
 
+
+ //src
 
  //functions
 
@@ -2104,7 +2107,7 @@ var Orders = /*#__PURE__*/function () {
   _createClass(Orders, [{
     key: "initialize",
     value: function initialize() {
-      var boxes = new _boxes__WEBPACK_IMPORTED_MODULE_8__["default"]();
+      var boxes = new _boxes__WEBPACK_IMPORTED_MODULE_9__["default"]();
       boxes.initialize();
       console.log(boxes);
       this.loadBranches();
@@ -2121,7 +2124,7 @@ var Orders = /*#__PURE__*/function () {
       this.sendPushNotification();
       this.listenRateVariables(true);
       this.listenRateVariables(false);
-      Object(_importModal__WEBPACK_IMPORTED_MODULE_7__["importModal"])();
+      Object(_importModal__WEBPACK_IMPORTED_MODULE_8__["importModal"])();
     }
   }, {
     key: "listenGuideCheck",
@@ -2341,7 +2344,7 @@ var Orders = /*#__PURE__*/function () {
                               destination_rate_id = (_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.id;
                             }
 
-                            Object(_calculateRate__WEBPACK_IMPORTED_MODULE_5__["calculateRate"])(edit, boxes, destination_rate_id);
+                            Object(_calculateRate__WEBPACK_IMPORTED_MODULE_6__["calculateRate"])(edit, boxes, destination_rate_id);
 
                           case 8:
                           case "end":
@@ -2356,9 +2359,9 @@ var Orders = /*#__PURE__*/function () {
                   };
                 }();
 
-                Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(rate, action);
-                Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(zone, action);
-                Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(same_day_delivery, action, "click");
+                Object(_listener__WEBPACK_IMPORTED_MODULE_7__["listener"])(rate, action);
+                Object(_listener__WEBPACK_IMPORTED_MODULE_7__["listener"])(zone, action);
+                Object(_listener__WEBPACK_IMPORTED_MODULE_7__["listener"])(same_day_delivery, action, "click");
 
               case 10:
               case "end":
@@ -2828,9 +2831,7 @@ var Orders = /*#__PURE__*/function () {
                   modal = document.getElementById("modalCreate");
                   modal.click();
 
-                  _this4.listGuides();
-
-                  _this4.cleanFields();
+                  _this4.initialize();
                 } else {
                   error("Error al crear la guía.");
                   console.log("Error: " + response.error);
@@ -2887,8 +2888,6 @@ var Orders = /*#__PURE__*/function () {
     key: "listGuides",
     value: function () {
       var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
-        var _this5 = this;
-
         var tbody, response, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
           while (1) {
@@ -2932,7 +2931,7 @@ var Orders = /*#__PURE__*/function () {
                     var dateCell = row.insertCell(4);
                     var allDate = new Date(key.created_at.split(" ")[0]);
                     var month = allDate.getMonth();
-                    dateCell.innerHTML = allDate.getDate() + "-" + _this5.months(month) + "-" + allDate.getFullYear();
+                    dateCell.innerHTML = allDate.getDate() + "-" + Object(_src_months_js__WEBPACK_IMPORTED_MODULE_5__["months"])(month) + "-" + allDate.getFullYear();
                     var rateCell = row.insertCell(5);
                     rateCell.innerHTML = (_key$rate = key.rate) !== null && _key$rate !== void 0 ? _key$rate : "";
                     var stateCell = row.insertCell(6);
@@ -3042,7 +3041,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "editGuide",
     value: function editGuide() {
-      var _this6 = this;
+      var _this5 = this;
 
       var guides = document.getElementsByClassName("btnEditGuide");
 
@@ -3057,9 +3056,9 @@ var Orders = /*#__PURE__*/function () {
             while (1) {
               switch (_context19.prev = _context19.next) {
                 case 0:
-                  _this6.guideId = guide["id"].split("-")[1];
+                  _this5.guideId = guide["id"].split("-")[1];
                   _context19.next = 3;
-                  return _this6.requestGuide(_this6.guideId);
+                  return _this5.requestGuide(_this5.guideId);
 
                 case 3:
                   response = _context19.sent;
@@ -3097,12 +3096,12 @@ var Orders = /*#__PURE__*/function () {
                   data.take_photo == 0 ? take_photo.checked = true : "";
                   boxes = JSON.parse(data.boxes);
 
-                  _this6.instantiateBoxes("box-container-edit", boxes !== null && boxes !== void 0 ? boxes : _this6.boxes);
+                  _this5.instantiateBoxes("box-container-edit", boxes !== null && boxes !== void 0 ? boxes : _this5.boxes);
 
-                  Object(_calculateRate__WEBPACK_IMPORTED_MODULE_5__["calculateRate"])(true, boxes, destination_rate_id);
-                  Object(_calculateRate__WEBPACK_IMPORTED_MODULE_5__["calculateRate"])(false, boxes, destination_rate_id);
+                  Object(_calculateRate__WEBPACK_IMPORTED_MODULE_6__["calculateRate"])(true, boxes, destination_rate_id);
+                  Object(_calculateRate__WEBPACK_IMPORTED_MODULE_6__["calculateRate"])(false, boxes, destination_rate_id);
 
-                  _this6.addBox("add-box-btn-edit", boxes !== null && boxes !== void 0 ? boxes : [], "box-container-edit");
+                  _this5.addBox("add-box-btn-edit", boxes !== null && boxes !== void 0 ? boxes : [], "box-container-edit");
 
                 case 32:
                 case "end":
@@ -3155,7 +3154,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "updateGuide",
     value: function updateGuide() {
-      var _this7 = this;
+      var _this6 = this;
 
       var btnUpdateGuide = document.getElementById("btnUpdateGuide");
 
@@ -3251,7 +3250,7 @@ var Orders = /*#__PURE__*/function () {
                   body: JSON.stringify(Object.fromEntries(formData))
                 };
                 _context21.next = 59;
-                return _this7.sendDataToUpdate(_this7.guideId, requestOptions);
+                return _this6.sendDataToUpdate(_this6.guideId, requestOptions);
 
               case 59:
                 response = _context21.sent;
@@ -3261,7 +3260,7 @@ var Orders = /*#__PURE__*/function () {
                   modal = document.getElementById("modalEdit");
                   modal.click();
 
-                  _this7.listGuides();
+                  _this6.listGuides();
                 } else {
                   error("Error al crear la guía.");
                   console.log("Error: " + response.error);
@@ -3489,7 +3488,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "createAddress",
     value: function createAddress() {
-      var _this8 = this;
+      var _this7 = this;
 
       var btnSaveAddress = document.getElementById("saveAddress");
 
@@ -3516,7 +3515,7 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("description", description);
                 formData.append("requestByJs", 1);
                 _context26.next = 14;
-                return _this8.sendAddressData(formData);
+                return _this7.sendAddressData(formData);
 
               case 14:
                 response = _context26.sent;
@@ -3526,9 +3525,9 @@ var Orders = /*#__PURE__*/function () {
                   modal = document.getElementById("modalCreateAddress");
                   modal.click();
 
-                  _this8.listGuides();
+                  _this7.listGuides();
 
-                  _this8.customerAddresses(document.getElementById("user_code").value);
+                  _this7.customerAddresses(document.getElementById("user_code").value);
                 } else {
                   error("Error al crear la guía.");
                   console.log("Error: " + response.error);
@@ -3581,25 +3580,6 @@ var Orders = /*#__PURE__*/function () {
 
       return sendAddressData;
     }()
-  }, {
-    key: "months",
-    value: function months(month) {
-      var months = {
-        0: "Enero",
-        1: "Febrero",
-        2: "Marzo",
-        3: "Abril",
-        4: "Mayo",
-        5: "Junio",
-        6: "Julio",
-        7: "Agosto",
-        8: "Septiembre",
-        9: "Octubre",
-        10: "Noviembre",
-        11: "Diciembre"
-      };
-      return months[month];
-    }
   }, {
     key: "porDespacharOndemand",
     value: function () {
@@ -3773,7 +3753,7 @@ var Orders = /*#__PURE__*/function () {
     key: "loadPickupHours",
     value: function () {
       var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee32() {
-        var _this9 = this;
+        var _this8 = this;
 
         var date_selector, response, days;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee32$(_context32) {
@@ -3797,7 +3777,7 @@ var Orders = /*#__PURE__*/function () {
                 response = _context32.sent;
                 days = response.data;
                 date_selector.addEventListener("change", function () {
-                  var day = _this9.getDayReference(date_selector.value);
+                  var day = _this8.getDayReference(date_selector.value);
 
                   var day_data = days[day];
                   var schedule_time_range = document.getElementById("schedule_time_range");
@@ -3941,26 +3921,6 @@ var Orders = /*#__PURE__*/function () {
 
       return loadHoursInEditOrShow;
     }()
-  }, {
-    key: "cleanFields",
-    value: function cleanFields() {
-      document.getElementById("branch_off").selectedIndex = 0;
-      document.getElementById("address").selectedIndex = 0;
-      document.getElementById("guide_description").value = "";
-      document.getElementById("concept").value = "";
-      document.getElementById("rate").selectedIndex = 0;
-      document.getElementById("value").value = "";
-      document.getElementById("corp_value").value = "";
-      document.getElementById("customer_document_type").selectedIndex = 0;
-      document.getElementById("contact").value = "";
-      document.getElementById("phone_contact").value = "";
-      document.getElementById("email_contact").value = "";
-      document.getElementById("invoice_contact").value = "";
-      document.getElementById("zone_id").selectedIndex = 0;
-      document.getElementById("same_day_delivery").checked = false;
-      document.getElementById("sign").checked = false;
-      document.getElementById("take_photo").checked = false;
-    }
   }]);
 
   return Orders;
@@ -4457,6 +4417,36 @@ var requestSearchZone = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/src/months.js":
+/*!********************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/src/months.js ***!
+  \********************************************************/
+/*! exports provided: months */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "months", function() { return months; });
+function months(index) {
+  var months = {
+    0: "Enero",
+    1: "Febrero",
+    2: "Marzo",
+    3: "Abril",
+    4: "Mayo",
+    5: "Junio",
+    6: "Julio",
+    7: "Agosto",
+    8: "Septiembre",
+    9: "Octubre",
+    10: "Noviembre",
+    11: "Diciembre"
+  };
+  return months[index];
+}
 
 /***/ }),
 
@@ -90338,8 +90328,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
