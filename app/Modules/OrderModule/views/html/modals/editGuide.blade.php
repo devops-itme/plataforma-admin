@@ -88,18 +88,18 @@
                         <span class="form-text text-muted"></span>
                     </div> --}}
                     <div class="form-group col-md-3 pt-2">
-                        <label>Teléfono contacto: <span class="text-danger">*</span> </label>
+                        <label>Teléfono contacto:</label>
                         <input name="phone_contact" type="tel" id="phone_contact_edit" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Contacto Email: <span class="text-danger">*</span></label>
+                        <label>Contacto Email:</label>
                         <input name="email_contact" id="email_contact_edit" type="email" class="form-control form-control-solid"
                             placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>Contacto Factura: <span class="text-danger">*</span></label>
+                        <label>Contacto Factura:</label>
                         <input name="invoice_contact" id="invoice_contact_edit" type="text" class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
