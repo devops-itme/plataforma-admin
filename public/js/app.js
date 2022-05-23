@@ -2098,7 +2098,7 @@ var Orders = /*#__PURE__*/function () {
   function Orders() {
     _classCallCheck(this, Orders);
 
-    this.guideId = '';
+    this.guideId = "";
   }
 
   _createClass(Orders, [{
@@ -2152,9 +2152,9 @@ var Orders = /*#__PURE__*/function () {
                         while (1) {
                           switch (_context2.prev = _context2.next) {
                             case 0:
-                              corp_value = (_guide$parentNode$par = (_guide$parentNode = guide.parentNode) === null || _guide$parentNode === void 0 ? void 0 : (_guide$parentNode$par2 = _guide$parentNode.parentNode) === null || _guide$parentNode$par2 === void 0 ? void 0 : (_guide$parentNode$par3 = _guide$parentNode$par2.parentNode) === null || _guide$parentNode$par3 === void 0 ? void 0 : _guide$parentNode$par3.getAttribute('corp_value')) !== null && _guide$parentNode$par !== void 0 ? _guide$parentNode$par : 0;
-                              boxes = (_guide$parentNode$par4 = (_guide$parentNode2 = guide.parentNode) === null || _guide$parentNode2 === void 0 ? void 0 : (_guide$parentNode2$pa = _guide$parentNode2.parentNode) === null || _guide$parentNode2$pa === void 0 ? void 0 : (_guide$parentNode2$pa2 = _guide$parentNode2$pa.parentNode) === null || _guide$parentNode2$pa2 === void 0 ? void 0 : _guide$parentNode2$pa2.getAttribute('boxes')) !== null && _guide$parentNode$par4 !== void 0 ? _guide$parentNode$par4 : [];
-                              immediate_delivery = (_guide$parentNode$par5 = (_guide$parentNode3 = guide.parentNode) === null || _guide$parentNode3 === void 0 ? void 0 : (_guide$parentNode3$pa = _guide$parentNode3.parentNode) === null || _guide$parentNode3$pa === void 0 ? void 0 : (_guide$parentNode3$pa2 = _guide$parentNode3$pa.parentNode) === null || _guide$parentNode3$pa2 === void 0 ? void 0 : _guide$parentNode3$pa2.getAttribute('same_day_delivery')) !== null && _guide$parentNode$par5 !== void 0 ? _guide$parentNode$par5 : 0;
+                              corp_value = (_guide$parentNode$par = (_guide$parentNode = guide.parentNode) === null || _guide$parentNode === void 0 ? void 0 : (_guide$parentNode$par2 = _guide$parentNode.parentNode) === null || _guide$parentNode$par2 === void 0 ? void 0 : (_guide$parentNode$par3 = _guide$parentNode$par2.parentNode) === null || _guide$parentNode$par3 === void 0 ? void 0 : _guide$parentNode$par3.getAttribute("corp_value")) !== null && _guide$parentNode$par !== void 0 ? _guide$parentNode$par : 0;
+                              boxes = (_guide$parentNode$par4 = (_guide$parentNode2 = guide.parentNode) === null || _guide$parentNode2 === void 0 ? void 0 : (_guide$parentNode2$pa = _guide$parentNode2.parentNode) === null || _guide$parentNode2$pa === void 0 ? void 0 : (_guide$parentNode2$pa2 = _guide$parentNode2$pa.parentNode) === null || _guide$parentNode2$pa2 === void 0 ? void 0 : _guide$parentNode2$pa2.getAttribute("boxes")) !== null && _guide$parentNode$par4 !== void 0 ? _guide$parentNode$par4 : [];
+                              immediate_delivery = (_guide$parentNode$par5 = (_guide$parentNode3 = guide.parentNode) === null || _guide$parentNode3 === void 0 ? void 0 : (_guide$parentNode3$pa = _guide$parentNode3.parentNode) === null || _guide$parentNode3$pa === void 0 ? void 0 : (_guide$parentNode3$pa2 = _guide$parentNode3$pa.parentNode) === null || _guide$parentNode3$pa2 === void 0 ? void 0 : _guide$parentNode3$pa2.getAttribute("same_day_delivery")) !== null && _guide$parentNode$par5 !== void 0 ? _guide$parentNode$par5 : 0;
                               boxes = JSON.parse(boxes);
                               source_rate = 0;
                               _context2.next = 7;
@@ -2240,7 +2240,7 @@ var Orders = /*#__PURE__*/function () {
       order_value.setAttribute("value", 0);
       setValue();
       [].forEach.call(guideCheck, function (guide) {
-        guide.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        guide.addEventListener("change", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
@@ -2256,7 +2256,7 @@ var Orders = /*#__PURE__*/function () {
           }, _callee4);
         })));
       });
-      source_address.addEventListener('change', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      source_address.addEventListener("change", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var response, _response$data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -2335,7 +2335,7 @@ var Orders = /*#__PURE__*/function () {
 
                           case 4:
                             response = _context6.sent;
-                            console.log('listener', response);
+                            console.log("listener", response);
 
                             if (response.state == 200) {
                               destination_rate_id = (_response$data2 = response.data) === null || _response$data2 === void 0 ? void 0 : _response$data2.id;
@@ -2358,7 +2358,7 @@ var Orders = /*#__PURE__*/function () {
 
                 Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(rate, action);
                 Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(zone, action);
-                Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(same_day_delivery, action, 'click');
+                Object(_listener__WEBPACK_IMPORTED_MODULE_6__["listener"])(same_day_delivery, action, "click");
 
               case 10:
               case "end":
@@ -2433,7 +2433,7 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnDetailCustomer.addEventListener('click', function () {
+      btnDetailCustomer.addEventListener("click", function () {
         _this.searchCustomerData();
       });
     }
@@ -2447,7 +2447,7 @@ var Orders = /*#__PURE__*/function () {
             switch (_context9.prev = _context9.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context9.next = 3;
                 return fetch("/search_customers?value=" + query).then(function (response) {
@@ -2486,7 +2486,7 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnSearch.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+      btnSearch.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         var tbody, inputValue, response, data, type, row, cell, i, _row, idCell, phoneCell, tradenameCell, selectCell, userCheck;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
@@ -2494,9 +2494,9 @@ var Orders = /*#__PURE__*/function () {
             switch (_context10.prev = _context10.next) {
               case 0:
                 tbody = document.querySelector("#table_customers tbody");
-                tbody.innerHTML = '';
+                tbody.innerHTML = "";
                 inputValue = document.getElementById("search_customer").value;
-                tbody.innerHTML = '';
+                tbody.innerHTML = "";
                 _context10.next = 6;
                 return _this2.requestSearchCustomer(inputValue);
 
@@ -2510,7 +2510,7 @@ var Orders = /*#__PURE__*/function () {
                   cell = row.insertCell(0);
                   cell.innerHTML = "No se encontraron registros";
                   cell.colSpan = 3;
-                  cell.setAttribute('class', 'text-center font-weight-bold');
+                  cell.setAttribute("class", "text-center font-weight-bold");
                 }
 
                 if (data.length > 0) {
@@ -2530,11 +2530,11 @@ var Orders = /*#__PURE__*/function () {
 
                     selectCell = _row.insertCell(3);
                     userCheck = document.createElement("input");
-                    userCheck.setAttribute('class', 'btn btn-success customerCheck');
-                    userCheck.setAttribute('type', 'radio');
-                    userCheck.setAttribute('name', 'customerCheck');
-                    userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', type == 1 ? data[i].id : data[i].get_user.id);
+                    userCheck.setAttribute("class", "btn btn-success customerCheck");
+                    userCheck.setAttribute("type", "radio");
+                    userCheck.setAttribute("name", "customerCheck");
+                    userCheck.setAttribute("id", "customerCheck");
+                    userCheck.setAttribute("value", type == 1 ? data[i].id : data[i].get_user.id);
                     selectCell.appendChild(userCheck);
                     tbody.appendChild(_row);
                   }
@@ -2560,7 +2560,7 @@ var Orders = /*#__PURE__*/function () {
             switch (_context11.prev = _context11.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context11.next = 3;
                 return fetch("/customer_data/" + query).then(function (response) {
@@ -2596,7 +2596,7 @@ var Orders = /*#__PURE__*/function () {
       var allCustomerChecks = document.getElementsByClassName("customerCheck");
 
       var _loop = function _loop(i) {
-        allCustomerChecks[i].addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+        allCustomerChecks[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
           var response, data, branches, branchSlc, _i, element, branchOpt, departments, departmentSlc, _i2, _element, departmentOpt, modal;
 
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
@@ -2609,9 +2609,9 @@ var Orders = /*#__PURE__*/function () {
                 case 2:
                   response = _context12.sent;
                   data = response.data;
-                  document.getElementById("user_code").value = data[0]['id'];
-                  document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
-                  document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
+                  document.getElementById("user_code").value = data[0]["id"];
+                  document.getElementById("user_name").value = data[0]["name"] ? data[0]["name"] + " " + data[0]["last_name"] : data[0]["get_customer"]["tradename"];
+                  document.getElementById("user_contact").value = data[0]["get_customer"]["contact"];
                   branches = data[1];
                   branchSlc = document.getElementById("user_branch_office");
                   branchSlc.selectedIndex = 0;
@@ -2619,8 +2619,8 @@ var Orders = /*#__PURE__*/function () {
 
                   for (_i = 0; _i < branches.length; _i++) {
                     element = branches[_i];
-                    branchOpt = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                    branchSlc.insertAdjacentHTML('beforeend', branchOpt);
+                    branchOpt = '<option value="' + element.id + '"> ' + element.name + " </option>";
+                    branchSlc.insertAdjacentHTML("beforeend", branchOpt);
                   }
 
                   departments = data[2];
@@ -2630,11 +2630,11 @@ var Orders = /*#__PURE__*/function () {
 
                   for (_i2 = 0; _i2 < departments.length; _i2++) {
                     _element = departments[_i2];
-                    departmentOpt = '<option value="' + _element.id + '"> ' + _element.name + ' </option>';
-                    departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
+                    departmentOpt = '<option value="' + _element.id + '"> ' + _element.name + " </option>";
+                    departmentSlc.insertAdjacentHTML("beforeend", departmentOpt);
                   }
 
-                  document.getElementById("user_document_type").value = data[0]['get_document_type'] ? data[0]['get_document_type']['name'] : '';
+                  document.getElementById("user_document_type").value = data[0]["get_document_type"] ? data[0]["get_document_type"]["name"] : "";
                   modal = document.getElementById("detailCustomer");
                   modal.click();
 
@@ -2665,7 +2665,7 @@ var Orders = /*#__PURE__*/function () {
             switch (_context13.prev = _context13.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context13.next = 3;
                 return fetch("/order_number").then(function (response) {
@@ -2717,7 +2717,7 @@ var Orders = /*#__PURE__*/function () {
 
               case 5:
                 response = _context14.sent;
-                orderNumber.setAttribute('value', response.data);
+                orderNumber.setAttribute("value", response.data);
 
               case 7:
               case "end":
@@ -2744,7 +2744,7 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnStoreGuide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+      btnStoreGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
         var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
@@ -2772,50 +2772,50 @@ var Orders = /*#__PURE__*/function () {
                 take_photo = document.getElementById("take_photo").value; // let customer_address = document.getElementById("customer_address").value;
                 //Boxes
 
-                ids = document.getElementsByName('id[]');
-                weights = document.getElementsByName('weight[]');
-                longs = document.getElementsByName('long[]');
-                broads = document.getElementsByName('broad[]');
-                highs = document.getElementsByName('high[]');
-                vol_weights = document.getElementsByName('vol_weight[]');
-                descriptions = document.getElementsByName('description[]');
+                ids = document.getElementsByName("id[]");
+                weights = document.getElementsByName("weight[]");
+                longs = document.getElementsByName("long[]");
+                broads = document.getElementsByName("broad[]");
+                highs = document.getElementsByName("high[]");
+                vol_weights = document.getElementsByName("vol_weight[]");
+                descriptions = document.getElementsByName("description[]");
                 boxArr = [];
 
                 for (i = 0; i < ids.length; i++) {
                   individualBoxArr = {
-                    'number': ids[i].value,
-                    'weight': weights[i].value,
-                    'long': longs[i].value,
-                    'broad': broads[i].value,
-                    'high': highs[i].value,
-                    'vol_weight': vol_weights[i].value,
-                    'description': descriptions[i].value
+                    number: ids[i].value,
+                    weight: weights[i].value,
+                    "long": longs[i].value,
+                    broad: broads[i].value,
+                    high: highs[i].value,
+                    vol_weight: vol_weights[i].value,
+                    description: descriptions[i].value
                   };
                   boxArr.push(individualBoxArr);
                 }
 
                 formData = new FormData();
-                formData.append('boxes', JSON.stringify(boxArr));
-                formData.append('branch_office', branch_office);
-                formData.append('transport_type', transport_type); // formData.append('dispatched',dispatched);
+                formData.append("boxes", JSON.stringify(boxArr));
+                formData.append("branch_office", branch_office);
+                formData.append("transport_type", transport_type); // formData.append('dispatched',dispatched);
 
-                formData.append('address_name', address_name); // formData.append('address_lat',address_lat);
+                formData.append("address_name", address_name); // formData.append('address_lat',address_lat);
                 // formData.append('address_lng',address_lng);
 
-                formData.append('guide_description', guide_description);
-                formData.append('concept', concept);
-                formData.append('rate', rate);
-                formData.append('value', value);
-                formData.append('corp_value', corp_value);
-                formData.append('customer_document_type', customer_document_type);
-                formData.append('contact', contact);
-                formData.append('phone_contact', phone_contact);
-                formData.append('email_contact', email_contact);
-                formData.append('invoice_contact', invoice_contact);
-                formData.append('zone', zone);
-                formData.append('same_day_delivery', same_day_delivery);
-                formData.append('sign', sign);
-                formData.append('take_photo', take_photo); // formData.append('customer_address',customer_address);
+                formData.append("guide_description", guide_description);
+                formData.append("concept", concept);
+                formData.append("rate", rate);
+                formData.append("value", value);
+                formData.append("corp_value", corp_value);
+                formData.append("customer_document_type", customer_document_type);
+                formData.append("contact", contact);
+                formData.append("phone_contact", phone_contact);
+                formData.append("email_contact", email_contact);
+                formData.append("invoice_contact", invoice_contact);
+                formData.append("zone", zone);
+                formData.append("same_day_delivery", same_day_delivery);
+                formData.append("sign", sign);
+                formData.append("take_photo", take_photo); // formData.append('customer_address',customer_address);
 
                 _context15.next = 47;
                 return _this4.sendGuideData(formData);
@@ -2832,8 +2832,8 @@ var Orders = /*#__PURE__*/function () {
 
                   _this4.cleanFields();
                 } else {
-                  error('Error al crear la guía.');
-                  console.log('Error: ' + response.error);
+                  error("Error al crear la guía.");
+                  console.log("Error: " + response.error);
                 }
 
               case 49:
@@ -2854,14 +2854,14 @@ var Orders = /*#__PURE__*/function () {
             switch (_context16.prev = _context16.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context16.next = 3;
                 return fetch("/guias/store", {
                   headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                   },
-                  method: 'POST',
+                  method: "POST",
                   body: formData
                 });
 
@@ -2904,7 +2904,7 @@ var Orders = /*#__PURE__*/function () {
                 return _context17.abrupt("return");
 
               case 3:
-                tbody.innerHTML = '';
+                tbody.innerHTML = "";
                 _context17.next = 6;
                 return this.requestGuides();
 
@@ -2917,56 +2917,56 @@ var Orders = /*#__PURE__*/function () {
                     var _key$id, _key$contact, _key$phone_contact, _key$email_contact, _key$rate, _key$get_state, _key$order_id;
 
                     var row = tbody.insertRow();
-                    row.setAttribute('corp_value', key === null || key === void 0 ? void 0 : key.corp_value);
-                    row.setAttribute('boxes', key === null || key === void 0 ? void 0 : key.boxes);
-                    row.setAttribute('same_day_delivery', key === null || key === void 0 ? void 0 : key.same_day_delivery);
-                    row.setAttribute('value', key === null || key === void 0 ? void 0 : key.value);
+                    row.setAttribute("corp_value", key === null || key === void 0 ? void 0 : key.corp_value);
+                    row.setAttribute("boxes", key === null || key === void 0 ? void 0 : key.boxes);
+                    row.setAttribute("same_day_delivery", key === null || key === void 0 ? void 0 : key.same_day_delivery);
+                    row.setAttribute("value", key === null || key === void 0 ? void 0 : key.value);
                     var idCell = row.insertCell(0);
-                    idCell.innerHTML = (_key$id = key.id) !== null && _key$id !== void 0 ? _key$id : '';
+                    idCell.innerHTML = (_key$id = key.id) !== null && _key$id !== void 0 ? _key$id : "";
                     var contactCell = row.insertCell(1);
-                    contactCell.innerHTML = (_key$contact = key.contact) !== null && _key$contact !== void 0 ? _key$contact : '';
+                    contactCell.innerHTML = (_key$contact = key.contact) !== null && _key$contact !== void 0 ? _key$contact : "";
                     var phoneCell = row.insertCell(2);
-                    phoneCell.innerHTML = (_key$phone_contact = key.phone_contact) !== null && _key$phone_contact !== void 0 ? _key$phone_contact : '';
+                    phoneCell.innerHTML = (_key$phone_contact = key.phone_contact) !== null && _key$phone_contact !== void 0 ? _key$phone_contact : "";
                     var emailCell = row.insertCell(3);
-                    emailCell.innerHTML = (_key$email_contact = key.email_contact) !== null && _key$email_contact !== void 0 ? _key$email_contact : '';
+                    emailCell.innerHTML = (_key$email_contact = key.email_contact) !== null && _key$email_contact !== void 0 ? _key$email_contact : "";
                     var dateCell = row.insertCell(4);
-                    var allDate = new Date(key.created_at.split(' ')[0]);
+                    var allDate = new Date(key.created_at.split(" ")[0]);
                     var month = allDate.getMonth();
                     dateCell.innerHTML = allDate.getDate() + "-" + _this5.months(month) + "-" + allDate.getFullYear();
                     var rateCell = row.insertCell(5);
-                    rateCell.innerHTML = (_key$rate = key.rate) !== null && _key$rate !== void 0 ? _key$rate : '';
+                    rateCell.innerHTML = (_key$rate = key.rate) !== null && _key$rate !== void 0 ? _key$rate : "";
                     var stateCell = row.insertCell(6);
                     stateCell.innerHTML = (_key$get_state = key.get_state) === null || _key$get_state === void 0 ? void 0 : _key$get_state.name;
                     var selectCell = row.insertCell(7); //CHECK
 
                     var guideCheck = document.createElement("input");
-                    guideCheck.setAttribute('class', 'checkbox-inline mt-3 guideCheck');
-                    guideCheck.setAttribute('type', 'checkbox');
-                    guideCheck.setAttribute('name', 'guideCheck[]');
-                    guideCheck.setAttribute('value', key.id);
+                    guideCheck.setAttribute("class", "checkbox-inline mt-3 guideCheck");
+                    guideCheck.setAttribute("type", "checkbox");
+                    guideCheck.setAttribute("name", "guideCheck[]");
+                    guideCheck.setAttribute("value", key.id);
                     var check = guideCheck.checked = true;
                     (_key$order_id = key.order_id) !== null && _key$order_id !== void 0 ? _key$order_id : check; //EDIT
 
                     var guideEdit = document.createElement("button");
-                    guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
-                    guideEdit.setAttribute('data-toggle', 'modal');
-                    guideEdit.setAttribute('data-target', '#modalEdit');
-                    guideEdit.setAttribute('id', 'guide-' + key.id);
-                    guideEdit.setAttribute('type', 'button');
+                    guideEdit.setAttribute("class", "btn btnEditGuide btn-icon btn-light-success btn-sm mr-2");
+                    guideEdit.setAttribute("data-toggle", "modal");
+                    guideEdit.setAttribute("data-target", "#modalEdit");
+                    guideEdit.setAttribute("id", "guide-" + key.id);
+                    guideEdit.setAttribute("type", "button");
                     guideEdit.innerHTML = '<i class="fas fa-edit"></i>'; //DELETE
 
                     var guideDelete = document.createElement("button");
 
                     guideDelete.onclick = function () {
-                      deleteResource('/guias/' + key.id);
+                      deleteResource("/guias/" + key.id);
                     };
 
-                    guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                    guideDelete.setAttribute('type', 'button');
+                    guideDelete.setAttribute("class", "btn btn-icon btn-light-danger btn-sm mr-2");
+                    guideDelete.setAttribute("type", "button");
                     guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>'; //Div
 
                     var buttonsDiv = document.createElement("div");
-                    buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                    buttonsDiv.setAttribute("class", "d-flex justify-content-around aling-items-center flex-wrap flex-row");
                     buttonsDiv.appendChild(guideCheck);
                     buttonsDiv.appendChild(guideEdit);
                     buttonsDiv.appendChild(guideDelete);
@@ -3009,9 +3009,9 @@ var Orders = /*#__PURE__*/function () {
                   orderNumber = orderNumber.value;
                 }
 
-                path = window.location.pathname.split('/');
+                path = window.location.pathname.split("/");
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context18.next = 6;
                 return fetch("/guias?order=" + orderNumber + "&path=" + path).then(function (response) {
@@ -3051,13 +3051,13 @@ var Orders = /*#__PURE__*/function () {
       }
 
       [].forEach.call(guides, function (guide) {
-        guide.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+        guide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
           var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zones, same_day_delivery, sign, take_photo, boxes;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
             while (1) {
               switch (_context19.prev = _context19.next) {
                 case 0:
-                  _this6.guideId = guide['id'].split('-')[1];
+                  _this6.guideId = guide["id"].split("-")[1];
                   _context19.next = 3;
                   return _this6.requestGuide(_this6.guideId);
 
@@ -3066,7 +3066,7 @@ var Orders = /*#__PURE__*/function () {
                   data = response.data;
                   branch_office = document.getElementById("branch_off_edit");
                   branch_office.value = data.branch_office;
-                  customer_address = document.getElementById('customer_address_edit').options;
+                  customer_address = document.getElementById("customer_address_edit").options;
                   [].forEach.call(customer_address, function (key) {
                     key.text == data.address_name ? key.selected = true : key.selected = false;
                   }); // customer_address.value = data.customer_address;
@@ -3090,19 +3090,19 @@ var Orders = /*#__PURE__*/function () {
                     key.value == data.zone ? key.selected = true : key.selected = false;
                   });
                   same_day_delivery = document.getElementById("same_day_delivery_edit");
-                  data.same_day_delivery == 0 ? same_day_delivery.checked = true : '';
+                  data.same_day_delivery == 0 ? same_day_delivery.checked = true : "";
                   sign = document.getElementById("sign_edit");
-                  data.sign == 0 ? sign.checked = true : '';
+                  data.sign == 0 ? sign.checked = true : "";
                   take_photo = document.getElementById("take_photo_edit");
-                  data.take_photo == 0 ? take_photo.checked = true : '';
+                  data.take_photo == 0 ? take_photo.checked = true : "";
                   boxes = JSON.parse(data.boxes);
 
-                  _this6.instantiateBoxes('box-container-edit', boxes !== null && boxes !== void 0 ? boxes : _this6.boxes);
+                  _this6.instantiateBoxes("box-container-edit", boxes !== null && boxes !== void 0 ? boxes : _this6.boxes);
 
                   Object(_calculateRate__WEBPACK_IMPORTED_MODULE_5__["calculateRate"])(true, boxes, destination_rate_id);
                   Object(_calculateRate__WEBPACK_IMPORTED_MODULE_5__["calculateRate"])(false, boxes, destination_rate_id);
 
-                  _this6.addBox('add-box-btn-edit', boxes !== null && boxes !== void 0 ? boxes : [], 'box-container-edit');
+                  _this6.addBox("add-box-btn-edit", boxes !== null && boxes !== void 0 ? boxes : [], "box-container-edit");
 
                 case 32:
                 case "end":
@@ -3124,7 +3124,7 @@ var Orders = /*#__PURE__*/function () {
             switch (_context20.prev = _context20.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context20.next = 3;
                 return fetch("/guias/" + id + "/edit").then(function (response) {
@@ -3193,30 +3193,30 @@ var Orders = /*#__PURE__*/function () {
                 take_photo.checked == true ? take_photo = 1 : take_photo = 0;
                 customer_address = document.getElementById("customer_address_edit").value; //Boxes
 
-                ids = document.getElementsByName('id[]');
-                weights = document.getElementsByName('weight[]');
-                longs = document.getElementsByName('long[]');
-                broads = document.getElementsByName('broad[]');
-                highs = document.getElementsByName('high[]');
-                vol_weights = document.getElementsByName('vol_weight[]');
-                descriptions = document.getElementsByName('description[]');
+                ids = document.getElementsByName("id[]");
+                weights = document.getElementsByName("weight[]");
+                longs = document.getElementsByName("long[]");
+                broads = document.getElementsByName("broad[]");
+                highs = document.getElementsByName("high[]");
+                vol_weights = document.getElementsByName("vol_weight[]");
+                descriptions = document.getElementsByName("description[]");
                 boxArr = [];
 
                 for (i = 1; i < ids.length; i++) {
                   individualBoxArr = {
-                    'number': ids[i].value,
-                    'weight': weights[i].value,
-                    'long': longs[i].value,
-                    'broad': broads[i].value,
-                    'high': highs[i].value,
-                    'vol_weight': vol_weights[i].value,
-                    'description': descriptions[i].value
+                    number: ids[i].value,
+                    weight: weights[i].value,
+                    "long": longs[i].value,
+                    broad: broads[i].value,
+                    high: highs[i].value,
+                    vol_weight: vol_weights[i].value,
+                    description: descriptions[i].value
                   };
                   boxArr.push(individualBoxArr);
                 }
 
                 formData = new FormData();
-                formData.append('boxes', JSON.stringify(boxArr));
+                formData.append("boxes", JSON.stringify(boxArr));
                 formData.append("branch_office", branch_off_edit); // formData.append("dispatched", dispatched);
 
                 formData.append("address_name", address_name); // formData.append("address_lat", address_lat);
@@ -3241,9 +3241,9 @@ var Orders = /*#__PURE__*/function () {
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-                myHeaders.append('Content-Type', "application/json");
-                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Content-Type", "multipart/form-data");
                 myHeaders.append("X-CSRF-TOKEN", token);
                 requestOptions = {
                   method: "PUT",
@@ -3263,8 +3263,8 @@ var Orders = /*#__PURE__*/function () {
 
                   _this7.listGuides();
                 } else {
-                  error('Error al crear la guía.');
-                  console.log('Error: ' + response.error);
+                  error("Error al crear la guía.");
+                  console.log("Error: " + response.error);
                 }
 
               case 61:
@@ -3285,7 +3285,7 @@ var Orders = /*#__PURE__*/function () {
             switch (_context22.prev = _context22.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context22.next = 3;
                 return fetch("/guias/" + id, requestOptions).then(function (response) {
@@ -3340,8 +3340,8 @@ var Orders = /*#__PURE__*/function () {
 
                   for (i = 0; i < data.length; i++) {
                     element = data[i];
-                    branchOffice = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                    branch.insertAdjacentHTML('beforeend', branchOffice);
+                    branchOffice = '<option value="' + element.id + '"> ' + element.name + " </option>";
+                    branch.insertAdjacentHTML("beforeend", branchOffice);
                   }
 
                 case 7:
@@ -3373,7 +3373,7 @@ var Orders = /*#__PURE__*/function () {
                 customerId = _args24.length > 0 && _args24[0] !== undefined ? _args24[0] : null;
                 slcAddresses = document.getElementsByName("customer_address");
 
-                if (!(customerId == '')) {
+                if (!(customerId == "")) {
                   _context24.next = 4;
                   break;
                 }
@@ -3405,15 +3405,15 @@ var Orders = /*#__PURE__*/function () {
               case 11:
                 data = response.data;
                 [].forEach.call(slcAddresses, function (slcAddress) {
-                  if (!(typeof parseInt(location.pathname.split('/')[2]) == 'number' && location.pathname.includes('edit'))) {
-                    if (!slcAddress.id != 'order_customer_address') {
+                  if (!(typeof parseInt(location.pathname.split("/")[2]) == "number" && location.pathname.includes("edit"))) {
+                    if (!slcAddress.id != "order_customer_address") {
                       slcAddress.selectedIndex = 0;
                       removeOptions(slcAddress);
 
                       for (var i = 0; i < data.length; i++) {
                         var element = data[i];
-                        var optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + ' </option>';
-                        slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                        var optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + " </option>";
+                        slcAddress.insertAdjacentHTML("beforeend", optAddress);
                       }
                     }
                   }
@@ -3446,7 +3446,7 @@ var Orders = /*#__PURE__*/function () {
             switch (_context25.prev = _context25.next) {
               case 0:
                 id = _args25.length > 0 && _args25[0] !== undefined ? _args25[0] : null;
-                route = window.location.pathname.split('/');
+                route = window.location.pathname.split("/");
 
                 if (!(document.getElementById("user_code") == null)) {
                   _context25.next = 4;
@@ -3456,9 +3456,9 @@ var Orders = /*#__PURE__*/function () {
                 return _context25.abrupt("return");
 
               case 4:
-                route.includes('edit') ? id = document.getElementById("user_code").value : '';
+                route.includes("edit") ? id = document.getElementById("user_code").value : "";
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context25.next = 8;
                 return fetch("/customer_addresses/" + id).then(function (response) {
@@ -3497,7 +3497,7 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnSaveAddress.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
+      btnSaveAddress.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
         var formData, description, address, lat, lng, user_id, response, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
           while (1) {
@@ -3509,12 +3509,12 @@ var Orders = /*#__PURE__*/function () {
                 lat = document.getElementById("add_lat").value;
                 lng = document.getElementById("add_lng").value;
                 user_id = document.getElementById("user_code").value;
-                formData.append('user_id', user_id);
-                formData.append('address', address);
-                formData.append('lat', lat);
-                formData.append('lng', lng);
-                formData.append('description', description);
-                formData.append('requestByJs', 1);
+                formData.append("user_id", user_id);
+                formData.append("address", address);
+                formData.append("lat", lat);
+                formData.append("lng", lng);
+                formData.append("description", description);
+                formData.append("requestByJs", 1);
                 _context26.next = 14;
                 return _this8.sendAddressData(formData);
 
@@ -3530,8 +3530,8 @@ var Orders = /*#__PURE__*/function () {
 
                   _this8.customerAddresses(document.getElementById("user_code").value);
                 } else {
-                  error('Error al crear la guía.');
-                  console.log('Error: ' + response.error);
+                  error("Error al crear la guía.");
+                  console.log("Error: " + response.error);
                 }
 
               case 16:
@@ -3552,14 +3552,14 @@ var Orders = /*#__PURE__*/function () {
             switch (_context27.prev = _context27.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context27.next = 3;
                 return fetch("/direcciones", {
                   headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                   },
-                  method: 'POST',
+                  method: "POST",
                   body: formData
                 });
 
@@ -3585,18 +3585,18 @@ var Orders = /*#__PURE__*/function () {
     key: "months",
     value: function months(month) {
       var months = {
-        0: 'Enero',
-        1: 'Febrero',
-        2: 'Marzo',
-        3: 'Abril',
-        4: 'Mayo',
-        5: 'Junio',
-        6: 'Julio',
-        7: 'Agosto',
-        8: 'Septiembre',
-        9: 'Octubre',
-        10: 'Noviembre',
-        11: 'Diciembre'
+        0: "Enero",
+        1: "Febrero",
+        2: "Marzo",
+        3: "Abril",
+        4: "Mayo",
+        5: "Junio",
+        6: "Julio",
+        7: "Agosto",
+        8: "Septiembre",
+        9: "Octubre",
+        10: "Noviembre",
+        11: "Diciembre"
       };
       return months[month];
     }
@@ -3609,7 +3609,7 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context29.prev = _context29.next) {
               case 0:
-                button = document.getElementById('porDespacharOndemand');
+                button = document.getElementsByClassName("porDespacharOndemand");
 
                 if (!(button == null)) {
                   _context29.next = 3;
@@ -3619,50 +3619,52 @@ var Orders = /*#__PURE__*/function () {
                 return _context29.abrupt("return");
 
               case 3:
-                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee28() {
-                  var order_id, result, req;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee28$(_context28) {
-                    while (1) {
-                      switch (_context28.prev = _context28.next) {
-                        case 0:
-                          order_id = button.value;
-                          _context28.next = 3;
-                          return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
+                [].forEach.call(button, function (btn) {
+                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee28() {
+                    var order_id, result, req;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee28$(_context28) {
+                      while (1) {
+                        switch (_context28.prev = _context28.next) {
+                          case 0:
+                            order_id = btn.parentNode.parentNode;
+                            _context28.next = 3;
+                            return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", "info");
 
-                        case 3:
-                          result = _context28.sent;
+                          case 3:
+                            result = _context28.sent;
 
-                          if (!(result == true)) {
-                            _context28.next = 9;
-                            break;
-                          }
-
-                          _context28.next = 7;
-                          return fetch("/pordespachar/ondemand/".concat(order_id), {
-                            method: "POST",
-                            headers: {
-                              "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
-                              accept: "application/json"
+                            if (!(result == true)) {
+                              _context28.next = 9;
+                              break;
                             }
-                          });
 
-                        case 7:
-                          req = _context28.sent;
+                            _context28.next = 7;
+                            return fetch("/pordespachar/ondemand/".concat(order_id.id), {
+                              method: "POST",
+                              headers: {
+                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                                accept: "application/json"
+                              }
+                            });
 
-                          if (req.ok) {
-                            correct("Estado actualizado!");
-                            window.location.reload();
-                          } else {
-                            error("Error al actualizar estado");
-                          }
+                          case 7:
+                            req = _context28.sent;
 
-                        case 9:
-                        case "end":
-                          return _context28.stop();
+                            if (req.ok) {
+                              correct("Estado actualizado!");
+                              window.location.reload();
+                            } else {
+                              error("Error al actualizar estado");
+                            }
+
+                          case 9:
+                          case "end":
+                            return _context28.stop();
+                        }
                       }
-                    }
-                  }, _callee28);
-                })));
+                    }, _callee28);
+                  })));
+                });
 
               case 4:
               case "end":
@@ -3687,7 +3689,7 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context31.prev = _context31.next) {
               case 0:
-                button = document.getElementById('porDespacharPackaging');
+                button = document.getElementsByClassName("porDespacharPackaging");
 
                 if (!(button == null)) {
                   _context31.next = 3;
@@ -3697,59 +3699,61 @@ var Orders = /*#__PURE__*/function () {
                 return _context31.abrupt("return");
 
               case 3:
-                button.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee30() {
-                  var order_id, result, formData, token, myHeaders, requestOptions, data, req;
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee30$(_context30) {
-                    while (1) {
-                      switch (_context30.prev = _context30.next) {
-                        case 0:
-                          order_id = button.value;
-                          _context30.next = 3;
-                          return porDespacharPackagingAlert();
+                [].forEach.call(button, function (btn) {
+                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee30() {
+                    var order_id, result, formData, token, myHeaders, requestOptions, data, req;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee30$(_context30) {
+                      while (1) {
+                        switch (_context30.prev = _context30.next) {
+                          case 0:
+                            order_id = btn.parentNode.parentNode;
+                            _context30.next = 3;
+                            return porDespacharPackagingAlert();
 
-                        case 3:
-                          result = _context30.sent;
+                          case 3:
+                            result = _context30.sent;
 
-                          if (!(result == 3 || result == 7)) {
-                            _context30.next = 18;
-                            break;
-                          }
+                            if (!(result == 3 || result == 7)) {
+                              _context30.next = 18;
+                              break;
+                            }
 
-                          formData = new FormData();
-                          formData.append('type', result);
-                          token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                          myHeaders = new Headers();
-                          myHeaders.append("accept", "application/json");
-                          myHeaders.append("Access-Control-Allow-Origin", "*");
-                          myHeaders.append("X-CSRF-TOKEN", token);
-                          requestOptions = {
-                            method: "POST",
-                            headers: myHeaders,
-                            body: formData
-                          };
-                          data = {
-                            type: result
-                          };
-                          _context30.next = 16;
-                          return fetch("/pordespachar/packaging/".concat(order_id), requestOptions);
+                            formData = new FormData();
+                            formData.append("type", result);
+                            token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                            myHeaders = new Headers();
+                            myHeaders.append("accept", "application/json");
+                            myHeaders.append("Access-Control-Allow-Origin", "*");
+                            myHeaders.append("X-CSRF-TOKEN", token);
+                            requestOptions = {
+                              method: "POST",
+                              headers: myHeaders,
+                              body: formData
+                            };
+                            data = {
+                              type: result
+                            };
+                            _context30.next = 16;
+                            return fetch("/pordespachar/packaging/".concat(order_id.id), requestOptions);
 
-                        case 16:
-                          req = _context30.sent;
+                          case 16:
+                            req = _context30.sent;
 
-                          if (req.ok) {
-                            correct("Estado actualizado!");
-                            window.location.reload();
-                          } else {
-                            error("Error al actualizar estado");
-                          }
+                            if (req.ok) {
+                              correct("Estado actualizado!");
+                              window.location.reload();
+                            } else {
+                              error("Error al actualizar estado");
+                            }
 
-                        case 18:
-                        case "end":
-                          return _context30.stop();
+                          case 18:
+                          case "end":
+                            return _context30.stop();
+                        }
                       }
-                    }
-                  }, _callee30);
-                })));
+                    }, _callee30);
+                  })));
+                });
 
               case 4:
               case "end":
@@ -3792,7 +3796,7 @@ var Orders = /*#__PURE__*/function () {
               case 5:
                 response = _context32.sent;
                 days = response.data;
-                date_selector.addEventListener('change', function () {
+                date_selector.addEventListener("change", function () {
                   var day = _this9.getDayReference(date_selector.value);
 
                   var day_data = days[day];
@@ -3804,11 +3808,11 @@ var Orders = /*#__PURE__*/function () {
                     for (var i = 0; i < day_data.length; i++) {
                       var element = day_data[i];
                       var text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time);
-                      var option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
-                      schedule_time_range.insertAdjacentHTML('beforeend', option);
+                      var option = '<option value="' + text + '" id="' + element.id + '"> ' + text + " </option>";
+                      schedule_time_range.insertAdjacentHTML("beforeend", option);
                     }
 
-                    schedule_time_range.addEventListener('change', function () {
+                    schedule_time_range.addEventListener("change", function () {
                       var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
                       var schedule_time = document.getElementById("schedule_time");
                       schedule_time.value = id;
@@ -3840,7 +3844,7 @@ var Orders = /*#__PURE__*/function () {
             switch (_context33.prev = _context33.next) {
               case 0:
                 response = {
-                  'state': 500
+                  state: 500
                 };
                 _context33.next = 3;
                 return fetch("/getPickupHours").then(function (response) {
@@ -3871,7 +3875,7 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "getDayReference",
     value: function getDayReference(day) {
-      var days = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+      var days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"];
       day = new Date(day).getDay();
       return days[day];
     }
@@ -3886,7 +3890,7 @@ var Orders = /*#__PURE__*/function () {
               case 0:
                 route = window.location.pathname;
 
-                if (route.includes('create') && route.includes('edit')) {
+                if (route.includes("create") && route.includes("edit")) {
                   _context34.next = 3;
                   break;
                 }
@@ -3912,11 +3916,11 @@ var Orders = /*#__PURE__*/function () {
                   for (i = 0; i < day_data.length; i++) {
                     element = day_data[i];
                     text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time);
-                    option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
-                    schedule_time_range.insertAdjacentHTML('beforeend', option);
+                    option = '<option value="' + text + '" id="' + element.id + '"> ' + text + " </option>";
+                    schedule_time_range.insertAdjacentHTML("beforeend", option);
                   }
 
-                  schedule_time_range.addEventListener('change', function () {
+                  schedule_time_range.addEventListener("change", function () {
                     var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
                     var schedule_time = document.getElementById("schedule_time");
                     schedule_time.value = id;
@@ -3942,16 +3946,16 @@ var Orders = /*#__PURE__*/function () {
     value: function cleanFields() {
       document.getElementById("branch_off").selectedIndex = 0;
       document.getElementById("address").selectedIndex = 0;
-      document.getElementById("guide_description").value = '';
-      document.getElementById("concept").value = '';
+      document.getElementById("guide_description").value = "";
+      document.getElementById("concept").value = "";
       document.getElementById("rate").selectedIndex = 0;
-      document.getElementById("value").value = '';
-      document.getElementById("corp_value").value = '';
+      document.getElementById("value").value = "";
+      document.getElementById("corp_value").value = "";
       document.getElementById("customer_document_type").selectedIndex = 0;
-      document.getElementById("contact").value = '';
-      document.getElementById("phone_contact").value = '';
-      document.getElementById("email_contact").value = '';
-      document.getElementById("invoice_contact").value = '';
+      document.getElementById("contact").value = "";
+      document.getElementById("phone_contact").value = "";
+      document.getElementById("email_contact").value = "";
+      document.getElementById("invoice_contact").value = "";
       document.getElementById("zone_id").selectedIndex = 0;
       document.getElementById("same_day_delivery").checked = false;
       document.getElementById("sign").checked = false;
@@ -90334,8 +90338,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\GERMAN VEGA\Documents\multiE\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\GERMAN VEGA\Documents\multiE\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

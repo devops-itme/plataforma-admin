@@ -1,23 +1,23 @@
 //requests
-import { requestRate } from './request/requestRate.js';
-import { requestBranches } from './request/requestBranches.js';
-import { requestSearchZone } from './request/requestSearchZone';
-import { requestCalculatePackingRates } from './request/requestCalculatePackingRates';
+import { requestRate } from "./request/requestRate.js";
+import { requestBranches } from "./request/requestBranches.js";
+import { requestSearchZone } from "./request/requestSearchZone";
+import { requestCalculatePackingRates } from "./request/requestCalculatePackingRates";
 
 //functions
-import { calculateRate } from './calculateRate';
-import { listener } from './listener';
-import { importModal } from './importModal';
+import { calculateRate } from "./calculateRate";
+import { listener } from "./listener";
+import { importModal } from "./importModal";
 
 //classes
-import Boxes from './_boxes';
+import Boxes from "./_boxes";
 
 let destination_rate_id = null;
 let source_rate_id = null;
 
 export default class Orders {
     constructor() {
-        this.guideId = '';
+        this.guideId = "";
     }
 
     initialize() {
@@ -48,27 +48,45 @@ export default class Orders {
             }
             let total = 0;
             await [].forEach.call(guideCheck, async function (guide) {
+                let corp_value =
+                    guide.parentNode?.parentNode?.parentNode?.getAttribute(
+                        "corp_value"
+                    ) ?? 0;
 
-                let corp_value = guide.parentNode?.parentNode?.parentNode?.getAttribute('corp_value') ?? 0;
-
-                let boxes = guide.parentNode?.parentNode?.parentNode?.getAttribute('boxes') ?? [];
-                let immediate_delivery = guide.parentNode?.parentNode?.parentNode?.getAttribute('same_day_delivery') ?? 0;
+                let boxes =
+                    guide.parentNode?.parentNode?.parentNode?.getAttribute(
+                        "boxes"
+                    ) ?? [];
+                let immediate_delivery =
+                    guide.parentNode?.parentNode?.parentNode?.getAttribute(
+                        "same_day_delivery"
+                    ) ?? 0;
                 boxes = JSON.parse(boxes);
                 let source_rate = 0;
                 await [].forEach.call(boxes, async (box) => {
                     let lbs = box?.weight;
                     let vol = box?.long * box?.broad * box?.high;
                     console.log(lbs);
-                    let response = await requestCalculatePackingRates(source_rate_id, lbs, vol, immediate_delivery);
+                    let response = await requestCalculatePackingRates(
+                        source_rate_id,
+                        lbs,
+                        vol,
+                        immediate_delivery
+                    );
                     if (response.state == 200) {
-                        source_rate = parseFloat(source_rate) + parseFloat(response.data);
+                        source_rate =
+                            parseFloat(source_rate) + parseFloat(response.data);
                     }
                 });
 
-                let higher_rate = parseFloat(source_rate) > parseFloat(corp_value) ? parseFloat(source_rate) : parseFloat(corp_value);
-                guide.checked && (total = parseFloat(total) + parseFloat(higher_rate));
+                let higher_rate =
+                    parseFloat(source_rate) > parseFloat(corp_value)
+                        ? parseFloat(source_rate)
+                        : parseFloat(corp_value);
+                guide.checked &&
+                    (total = parseFloat(total) + parseFloat(higher_rate));
             });
-            let full_tax = total * tax_percentage.value / 100;
+            let full_tax = (total * tax_percentage.value) / 100;
             tax_total.setAttribute("value", full_tax);
             total = total + full_tax;
             order_value.setAttribute("value", total);
@@ -80,21 +98,26 @@ export default class Orders {
         let tax_percentage = document.getElementById("tax_percentage");
         let tax_total = document.getElementById("tax_total");
 
-        if (guideCheck == null || order_value == null || tax_percentage == null || tax_total == null) {
+        if (
+            guideCheck == null ||
+            order_value == null ||
+            tax_percentage == null ||
+            tax_total == null
+        ) {
             return;
         }
 
-        order_value.setAttribute("value", 0)
+        order_value.setAttribute("value", 0);
         setValue();
 
         [].forEach.call(guideCheck, function (guide) {
-            guide.addEventListener('change', async () => {
-                order_value.setAttribute("value", 0)
+            guide.addEventListener("change", async () => {
+                order_value.setAttribute("value", 0);
                 setValue();
             });
         });
 
-        source_address.addEventListener('change', async () => {
+        source_address.addEventListener("change", async () => {
             if (source_address.value == "") {
                 return;
             }
@@ -103,7 +126,7 @@ export default class Orders {
             if (response.state == 200) {
                 source_rate_id = response.data?.zone_id;
             }
-            order_value.setAttribute("value", 0)
+            order_value.setAttribute("value", 0);
             setValue();
         });
     }
@@ -111,10 +134,17 @@ export default class Orders {
     async listenRateVariables(edit) {
         let rate = document.getElementById(edit ? "rate_edit" : "rate");
         let zone = document.getElementById(edit ? "zone_edit" : "zone_id");
-        let same_day_delivery = document.getElementById(edit ? "same_day_delivery_edit" : "same_day_delivery");
+        let same_day_delivery = document.getElementById(
+            edit ? "same_day_delivery_edit" : "same_day_delivery"
+        );
         let source_address = document.getElementById("address");
 
-        if (rate == null || zone == null || same_day_delivery == null || source_address == null) {
+        if (
+            rate == null ||
+            zone == null ||
+            same_day_delivery == null ||
+            source_address == null
+        ) {
             return;
         }
 
@@ -123,16 +153,16 @@ export default class Orders {
                 return;
             }
             let response = await requestRate(zone.value);
-            console.log('listener', response)
+            console.log("listener", response);
             if (response.state == 200) {
                 destination_rate_id = response.data?.id;
             }
             calculateRate(edit, boxes, destination_rate_id);
-        }
+        };
 
         listener(rate, action);
         listener(zone, action);
-        listener(same_day_delivery, action, 'click');
+        listener(same_day_delivery, action, "click");
     }
 
     async sendPushNotification() {
@@ -148,13 +178,15 @@ export default class Orders {
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
 
-        let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`
+        let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`;
         await fetch(url)
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 console.log(data);
             })
-            .catch(e => { console.log(e) });
+            .catch((e) => {
+                console.log(e);
+            });
     }
 
     loadCustomerModal() {
@@ -162,21 +194,21 @@ export default class Orders {
         if (btnDetailCustomer == null) {
             return;
         }
-        btnDetailCustomer.addEventListener('click', () => {
+        btnDetailCustomer.addEventListener("click", () => {
             this.searchCustomerData();
         });
     }
 
     async requestSearchCustomer(query) {
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/search_customers?value=" + query)
-            .then(response => response.json())
-            .then(data => {
-                response = data
+            .then((response) => response.json())
+            .then((data) => {
+                response = data;
             })
-            .catch(e => response.error = e);
+            .catch((e) => (response.error = e));
         return response;
     }
 
@@ -186,11 +218,11 @@ export default class Orders {
         if (btnSearch == null) {
             return;
         }
-        btnSearch.addEventListener('click', async () => {
+        btnSearch.addEventListener("click", async () => {
             let tbody = document.querySelector("#table_customers tbody");
-            tbody.innerHTML = '';
+            tbody.innerHTML = "";
             let inputValue = document.getElementById("search_customer").value;
-            tbody.innerHTML = '';
+            tbody.innerHTML = "";
             let response = await this.requestSearchCustomer(inputValue);
             let data = response.data;
             let type = response.type;
@@ -200,32 +232,46 @@ export default class Orders {
                 let cell = row.insertCell(0);
                 cell.innerHTML = "No se encontraron registros";
                 cell.colSpan = 3;
-                cell.setAttribute('class', 'text-center font-weight-bold');
+                cell.setAttribute("class", "text-center font-weight-bold");
             }
             if (data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
                     let row = tbody.insertRow(i);
 
                     let idCell = row.insertCell(0);
-                    idCell.innerHTML = type == 1 ? data[i].id : data[i].get_user.id;
+                    idCell.innerHTML =
+                        type == 1 ? data[i].id : data[i].get_user.id;
 
                     let phoneCell = row.insertCell(1);
-                    phoneCell.innerHTML = type == 1 ? data[i].phone : data[i].get_user.phone;
+                    phoneCell.innerHTML =
+                        type == 1 ? data[i].phone : data[i].get_user.phone;
 
                     let tradenameCell = row.insertCell(2);
                     if (type == 1) {
-                        tradenameCell.innerHTML = (data[i].name != null) ? data[i].name + " " + data[i].last_name : data[i].get_customer.tradename;
+                        tradenameCell.innerHTML =
+                            data[i].name != null
+                                ? data[i].name + " " + data[i].last_name
+                                : data[i].get_customer.tradename;
                     } else {
-                        tradenameCell.innerHTML = (data[i].name != null) ? data[i].name + " " + data[i].last_name : data[i].tradename;
+                        tradenameCell.innerHTML =
+                            data[i].name != null
+                                ? data[i].name + " " + data[i].last_name
+                                : data[i].tradename;
                     }
 
                     let selectCell = row.insertCell(3);
                     const userCheck = document.createElement("input");
-                    userCheck.setAttribute('class', 'btn btn-success customerCheck');
-                    userCheck.setAttribute('type', 'radio');
-                    userCheck.setAttribute('name', 'customerCheck');
-                    userCheck.setAttribute('id', 'customerCheck');
-                    userCheck.setAttribute('value', type == 1 ? data[i].id : data[i].get_user.id);
+                    userCheck.setAttribute(
+                        "class",
+                        "btn btn-success customerCheck"
+                    );
+                    userCheck.setAttribute("type", "radio");
+                    userCheck.setAttribute("name", "customerCheck");
+                    userCheck.setAttribute("id", "customerCheck");
+                    userCheck.setAttribute(
+                        "value",
+                        type == 1 ? data[i].id : data[i].get_user.id
+                    );
                     selectCell.appendChild(userCheck);
 
                     tbody.appendChild(row);
@@ -237,34 +283,45 @@ export default class Orders {
 
     async requestSelectedCustomerData(query) {
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/customer_data/" + query)
-            .then(response => response.json())
-            .then(data => {
-                response = data
+            .then((response) => response.json())
+            .then((data) => {
+                response = data;
             })
-            .catch(e => response.error = e);
+            .catch((e) => (response.error = e));
         return response;
     }
 
     selectCustomer() {
-        let allCustomerChecks = document.getElementsByClassName("customerCheck");
+        let allCustomerChecks =
+            document.getElementsByClassName("customerCheck");
         for (let i = 0; i < allCustomerChecks.length; i++) {
-            allCustomerChecks[i].addEventListener('click', async () => {
-                let response = await this.requestSelectedCustomerData(allCustomerChecks[i].value);
+            allCustomerChecks[i].addEventListener("click", async () => {
+                let response = await this.requestSelectedCustomerData(
+                    allCustomerChecks[i].value
+                );
                 let data = response.data;
-                document.getElementById("user_code").value = data[0]['id'];
-                document.getElementById("user_name").value = data[0]['name'] ? data[0]['name'] + " " + data[0]['last_name'] : data[0]['get_customer']['tradename'];
-                document.getElementById("user_contact").value = data[0]['get_customer']['contact'];
+                document.getElementById("user_code").value = data[0]["id"];
+                document.getElementById("user_name").value = data[0]["name"]
+                    ? data[0]["name"] + " " + data[0]["last_name"]
+                    : data[0]["get_customer"]["tradename"];
+                document.getElementById("user_contact").value =
+                    data[0]["get_customer"]["contact"];
                 let branches = data[1];
                 let branchSlc = document.getElementById("user_branch_office");
                 branchSlc.selectedIndex = 0;
                 removeOptions(branchSlc);
                 for (let i = 0; i < branches.length; i++) {
                     let element = branches[i];
-                    let branchOpt = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                    branchSlc.insertAdjacentHTML('beforeend', branchOpt);
+                    let branchOpt =
+                        '<option value="' +
+                        element.id +
+                        '"> ' +
+                        element.name +
+                        " </option>";
+                    branchSlc.insertAdjacentHTML("beforeend", branchOpt);
                 }
                 let departments = data[2];
                 let departmentSlc = document.getElementById("user_departments");
@@ -272,31 +329,44 @@ export default class Orders {
                 removeOptions(departmentSlc);
                 for (let i = 0; i < departments.length; i++) {
                     let element = departments[i];
-                    let departmentOpt = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                    departmentSlc.insertAdjacentHTML('beforeend', departmentOpt);
+                    let departmentOpt =
+                        '<option value="' +
+                        element.id +
+                        '"> ' +
+                        element.name +
+                        " </option>";
+                    departmentSlc.insertAdjacentHTML(
+                        "beforeend",
+                        departmentOpt
+                    );
                 }
-                document.getElementById("user_document_type").value = data[0]['get_document_type'] ? data[0]['get_document_type']['name'] : '';
+                document.getElementById("user_document_type").value = data[0][
+                    "get_document_type"
+                ]
+                    ? data[0]["get_document_type"]["name"]
+                    : "";
 
                 let modal = document.getElementById("detailCustomer");
                 modal.click();
                 if (document.getElementById("user_code").value != null) {
-                    this.customerAddresses(document.getElementById("user_code").value);
+                    this.customerAddresses(
+                        document.getElementById("user_code").value
+                    );
                 }
-
-            })
+            });
         }
     }
 
     async requestOrderNumber() {
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/order_number")
-            .then(response => response.json())
-            .then(data => {
-                response = data
+            .then((response) => response.json())
+            .then((data) => {
+                response = data;
             })
-            .catch(e => response.error = e);
+            .catch((e) => (response.error = e));
         return response;
     }
 
@@ -306,7 +376,7 @@ export default class Orders {
             return;
         }
         let response = await this.requestOrderNumber();
-        orderNumber.setAttribute('value', response.data);
+        orderNumber.setAttribute("value", response.data);
     }
 
     saveGuides() {
@@ -314,71 +384,76 @@ export default class Orders {
         if (btnStoreGuide == null) {
             return;
         }
-        btnStoreGuide.addEventListener('click', async () => {
+        btnStoreGuide.addEventListener("click", async () => {
             let branch_office = document.getElementById("branch_off").value;
             let transport_type = document.getElementById("trans_type").value;
             // let dispatched = document.getElementById("dispatched").value;
             let address_name = document.getElementById("address").value;
             // let address_lat = document.getElementById("lat").value;
             // let address_lng = document.getElementById("lng").value;
-            let guide_description = document.getElementById("guide_description").value;
+            let guide_description =
+                document.getElementById("guide_description").value;
             let concept = document.getElementById("concept").value;
             let rate = document.getElementById("rate").value;
             let value = document.getElementById("value").value;
             let corp_value = document.getElementById("corp_value").value;
-            let customer_document_type = document.getElementById("customer_document_type").value;
+            let customer_document_type = document.getElementById(
+                "customer_document_type"
+            ).value;
             let contact = document.getElementById("contact").value;
             let phone_contact = document.getElementById("phone_contact").value;
             let email_contact = document.getElementById("email_contact").value;
-            let invoice_contact = document.getElementById("invoice_contact").value;
+            let invoice_contact =
+                document.getElementById("invoice_contact").value;
             let zone = document.getElementById("zone_id").value;
-            let same_day_delivery = document.getElementById("same_day_delivery").value;
+            let same_day_delivery =
+                document.getElementById("same_day_delivery").value;
             let sign = document.getElementById("sign").value;
             let take_photo = document.getElementById("take_photo").value;
             // let customer_address = document.getElementById("customer_address").value;
             //Boxes
-            let ids = document.getElementsByName('id[]');
-            let weights = document.getElementsByName('weight[]');
-            let longs = document.getElementsByName('long[]');
-            let broads = document.getElementsByName('broad[]');
-            let highs = document.getElementsByName('high[]');
-            let vol_weights = document.getElementsByName('vol_weight[]');
-            let descriptions = document.getElementsByName('description[]');
+            let ids = document.getElementsByName("id[]");
+            let weights = document.getElementsByName("weight[]");
+            let longs = document.getElementsByName("long[]");
+            let broads = document.getElementsByName("broad[]");
+            let highs = document.getElementsByName("high[]");
+            let vol_weights = document.getElementsByName("vol_weight[]");
+            let descriptions = document.getElementsByName("description[]");
             let boxArr = [];
             for (let i = 0; i < ids.length; i++) {
                 let individualBoxArr = {
-                    'number': ids[i].value,
-                    'weight': weights[i].value,
-                    'long': longs[i].value,
-                    'broad': broads[i].value,
-                    'high': highs[i].value,
-                    'vol_weight': vol_weights[i].value,
-                    'description': descriptions[i].value
+                    number: ids[i].value,
+                    weight: weights[i].value,
+                    long: longs[i].value,
+                    broad: broads[i].value,
+                    high: highs[i].value,
+                    vol_weight: vol_weights[i].value,
+                    description: descriptions[i].value,
                 };
                 boxArr.push(individualBoxArr);
             }
             let formData = new FormData();
-            formData.append('boxes', JSON.stringify(boxArr));
-            formData.append('branch_office', branch_office);
-            formData.append('transport_type', transport_type);
+            formData.append("boxes", JSON.stringify(boxArr));
+            formData.append("branch_office", branch_office);
+            formData.append("transport_type", transport_type);
             // formData.append('dispatched',dispatched);
-            formData.append('address_name', address_name);
+            formData.append("address_name", address_name);
             // formData.append('address_lat',address_lat);
             // formData.append('address_lng',address_lng);
-            formData.append('guide_description', guide_description);
-            formData.append('concept', concept);
-            formData.append('rate', rate);
-            formData.append('value', value);
-            formData.append('corp_value', corp_value);
-            formData.append('customer_document_type', customer_document_type);
-            formData.append('contact', contact);
-            formData.append('phone_contact', phone_contact);
-            formData.append('email_contact', email_contact);
-            formData.append('invoice_contact', invoice_contact);
-            formData.append('zone', zone);
-            formData.append('same_day_delivery', same_day_delivery);
-            formData.append('sign', sign);
-            formData.append('take_photo', take_photo);
+            formData.append("guide_description", guide_description);
+            formData.append("concept", concept);
+            formData.append("rate", rate);
+            formData.append("value", value);
+            formData.append("corp_value", corp_value);
+            formData.append("customer_document_type", customer_document_type);
+            formData.append("contact", contact);
+            formData.append("phone_contact", phone_contact);
+            formData.append("email_contact", email_contact);
+            formData.append("invoice_contact", invoice_contact);
+            formData.append("zone", zone);
+            formData.append("same_day_delivery", same_day_delivery);
+            formData.append("sign", sign);
+            formData.append("take_photo", take_photo);
             // formData.append('customer_address',customer_address);
 
             let response = await this.sendGuideData(formData);
@@ -389,24 +464,24 @@ export default class Orders {
                 this.listGuides();
                 this.cleanFields();
             } else {
-                error('Error al crear la guía.')
-                console.log('Error: ' + response.error);
+                error("Error al crear la guía.");
+                console.log("Error: " + response.error);
             }
-        })
+        });
     }
 
     async sendGuideData(formData) {
         let response = {
-            'state': 500
+            state: 500,
         };
 
         response = await fetch("/guias/store", {
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            method: 'POST',
-            body: formData
-        })
+            method: "POST",
+            body: formData,
+        });
         return response.json();
     }
 
@@ -415,65 +490,84 @@ export default class Orders {
         if (tbody == null) {
             return;
         }
-        tbody.innerHTML = '';
+        tbody.innerHTML = "";
         let response = await this.requestGuides();
         let data = response.data;
         if (data.length > 0) {
-            [].forEach.call(data, key => {
+            [].forEach.call(data, (key) => {
                 let row = tbody.insertRow();
-                row.setAttribute('corp_value', key?.corp_value);
-                row.setAttribute('boxes', key?.boxes);
-                row.setAttribute('same_day_delivery', key?.same_day_delivery);
-                row.setAttribute('value', key?.value);
+                row.setAttribute("corp_value", key?.corp_value);
+                row.setAttribute("boxes", key?.boxes);
+                row.setAttribute("same_day_delivery", key?.same_day_delivery);
+                row.setAttribute("value", key?.value);
 
                 let idCell = row.insertCell(0);
-                idCell.innerHTML = key.id ?? '';
+                idCell.innerHTML = key.id ?? "";
 
                 let contactCell = row.insertCell(1);
-                contactCell.innerHTML = key.contact ?? '';
+                contactCell.innerHTML = key.contact ?? "";
 
                 let phoneCell = row.insertCell(2);
-                phoneCell.innerHTML = key.phone_contact ?? '';
+                phoneCell.innerHTML = key.phone_contact ?? "";
 
                 let emailCell = row.insertCell(3);
-                emailCell.innerHTML = key.email_contact ?? '';
+                emailCell.innerHTML = key.email_contact ?? "";
 
                 let dateCell = row.insertCell(4);
-                let allDate = new Date((key.created_at).split(' ')[0]);
+                let allDate = new Date(key.created_at.split(" ")[0]);
                 let month = allDate.getMonth();
-                dateCell.innerHTML = allDate.getDate() + "-" + this.months(month) + "-" + allDate.getFullYear();
+                dateCell.innerHTML =
+                    allDate.getDate() +
+                    "-" +
+                    this.months(month) +
+                    "-" +
+                    allDate.getFullYear();
 
                 let rateCell = row.insertCell(5);
-                rateCell.innerHTML = key.rate ?? '';
+                rateCell.innerHTML = key.rate ?? "";
 
                 let stateCell = row.insertCell(6);
                 stateCell.innerHTML = key.get_state?.name;
                 let selectCell = row.insertCell(7);
                 //CHECK
                 const guideCheck = document.createElement("input");
-                guideCheck.setAttribute('class', 'checkbox-inline mt-3 guideCheck')
-                guideCheck.setAttribute('type', 'checkbox');
-                guideCheck.setAttribute('name', 'guideCheck[]');
-                guideCheck.setAttribute('value', key.id);
-                let check = guideCheck.checked = true;
+                guideCheck.setAttribute(
+                    "class",
+                    "checkbox-inline mt-3 guideCheck"
+                );
+                guideCheck.setAttribute("type", "checkbox");
+                guideCheck.setAttribute("name", "guideCheck[]");
+                guideCheck.setAttribute("value", key.id);
+                let check = (guideCheck.checked = true);
                 key.order_id ?? check;
                 //EDIT
                 const guideEdit = document.createElement("button");
-                guideEdit.setAttribute('class', 'btn btnEditGuide btn-icon btn-light-success btn-sm mr-2');
-                guideEdit.setAttribute('data-toggle', 'modal');
-                guideEdit.setAttribute('data-target', '#modalEdit');
-                guideEdit.setAttribute('id', 'guide-' + key.id);
-                guideEdit.setAttribute('type', 'button');
+                guideEdit.setAttribute(
+                    "class",
+                    "btn btnEditGuide btn-icon btn-light-success btn-sm mr-2"
+                );
+                guideEdit.setAttribute("data-toggle", "modal");
+                guideEdit.setAttribute("data-target", "#modalEdit");
+                guideEdit.setAttribute("id", "guide-" + key.id);
+                guideEdit.setAttribute("type", "button");
                 guideEdit.innerHTML = '<i class="fas fa-edit"></i>';
                 //DELETE
                 const guideDelete = document.createElement("button");
-                guideDelete.onclick = function () { deleteResource('/guias/' + key.id) };
-                guideDelete.setAttribute('class', 'btn btn-icon btn-light-danger btn-sm mr-2');
-                guideDelete.setAttribute('type', 'button');
+                guideDelete.onclick = function () {
+                    deleteResource("/guias/" + key.id);
+                };
+                guideDelete.setAttribute(
+                    "class",
+                    "btn btn-icon btn-light-danger btn-sm mr-2"
+                );
+                guideDelete.setAttribute("type", "button");
                 guideDelete.innerHTML = '<i class="fas fa-trash-alt"></i>';
                 //Div
                 const buttonsDiv = document.createElement("div");
-                buttonsDiv.setAttribute('class', 'd-flex justify-content-around aling-items-center flex-wrap flex-row');
+                buttonsDiv.setAttribute(
+                    "class",
+                    "d-flex justify-content-around aling-items-center flex-wrap flex-row"
+                );
                 buttonsDiv.appendChild(guideCheck);
                 buttonsDiv.appendChild(guideEdit);
                 buttonsDiv.appendChild(guideDelete);
@@ -483,27 +577,26 @@ export default class Orders {
             });
         }
         this.editGuide();
-        this.listenGuideCheck()
+        this.listenGuideCheck();
     }
 
     async requestGuides() {
-        let orderNumber = document.getElementsByName("order_number")[0]
+        let orderNumber = document.getElementsByName("order_number")[0];
         if (orderNumber == null) {
             orderNumber = null;
         } else {
             orderNumber = orderNumber.value;
-
         }
-        let path = window.location.pathname.split('/');
+        let path = window.location.pathname.split("/");
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/guias?order=" + orderNumber + "&path=" + path)
-            .then(response => response.json())
-            .then(data => {
-                response = data
+            .then((response) => response.json())
+            .then((data) => {
+                response = data;
             })
-            .catch(e => response.error = e);
+            .catch((e) => (response.error = e));
         return response;
     }
 
@@ -512,63 +605,96 @@ export default class Orders {
         if (guides == null) {
             return;
         }
-        [].forEach.call(guides, guide => {
-            guide.addEventListener('click', async () => {
-                this.guideId = guide['id'].split('-')[1];
+        [].forEach.call(guides, (guide) => {
+            guide.addEventListener("click", async () => {
+                this.guideId = guide["id"].split("-")[1];
                 let response = await this.requestGuide(this.guideId);
                 let data = response.data;
 
                 let branch_office = document.getElementById("branch_off_edit");
                 branch_office.value = data.branch_office;
-                let customer_address = document.getElementById('customer_address_edit').options;
-                [].forEach.call(customer_address, key => {
-                    key.text == data.address_name ? key.selected = true : key.selected = false;
+                let customer_address = document.getElementById(
+                    "customer_address_edit"
+                ).options;
+                [].forEach.call(customer_address, (key) => {
+                    key.text == data.address_name
+                        ? (key.selected = true)
+                        : (key.selected = false);
                 });
                 // customer_address.value = data.customer_address;
                 // let dispatched = document.getElementById("dispatched_edit").value = data.dispatched;
                 // let address_name = document.getElementById("address_edit").value = data.address_name;
                 // let address_lat = document.getElementById("lat_edit").value = data.address_lat;
                 // let address_lng = document.getElementById("lng_edit").value = data.address_lng;
-                let guide_description = document.getElementById("address_description_edit").value = data.address_description;
-                let concept = document.getElementById("concept_edit").value = data.concept;
-                let rate = document.getElementById("rate_edit").value = data.rate;
-                let value = document.getElementById("value_edit").value = data.value;
-                let corp_value = document.getElementById("corp_value_edit").value = data.corp_value;
-                let customer_document_type = document.getElementById("customer_document_type_edit").value = data.customer_document_type;
-                let contact = document.getElementById("contact_edit").value = data.contact;
-                let phone_contact = document.getElementById("phone_contact_edit").value = data.phone_contact;
-                let email_contact = document.getElementById("email_contact_edit").value = data.email_contact;
-                let invoice_contact = document.getElementById("invoice_contact_edit").value = data.invoice_contact;
+                let guide_description = (document.getElementById(
+                    "address_description_edit"
+                ).value = data.address_description);
+                let concept = (document.getElementById("concept_edit").value =
+                    data.concept);
+                let rate = (document.getElementById("rate_edit").value =
+                    data.rate);
+                let value = (document.getElementById("value_edit").value =
+                    data.value);
+                let corp_value = (document.getElementById(
+                    "corp_value_edit"
+                ).value = data.corp_value);
+                let customer_document_type = (document.getElementById(
+                    "customer_document_type_edit"
+                ).value = data.customer_document_type);
+                let contact = (document.getElementById("contact_edit").value =
+                    data.contact);
+                let phone_contact = (document.getElementById(
+                    "phone_contact_edit"
+                ).value = data.phone_contact);
+                let email_contact = (document.getElementById(
+                    "email_contact_edit"
+                ).value = data.email_contact);
+                let invoice_contact = (document.getElementById(
+                    "invoice_contact_edit"
+                ).value = data.invoice_contact);
                 let zones = document.getElementById("zone_edit");
-                [].forEach.call(zones, key => {
-                    key.value == data.zone ? key.selected = true : key.selected = false;
+                [].forEach.call(zones, (key) => {
+                    key.value == data.zone
+                        ? (key.selected = true)
+                        : (key.selected = false);
                 });
-                let same_day_delivery = document.getElementById("same_day_delivery_edit");
-                data.same_day_delivery == 0 ? same_day_delivery.checked = true : '';
+                let same_day_delivery = document.getElementById(
+                    "same_day_delivery_edit"
+                );
+                data.same_day_delivery == 0
+                    ? (same_day_delivery.checked = true)
+                    : "";
                 let sign = document.getElementById("sign_edit");
-                data.sign == 0 ? sign.checked = true : '';
+                data.sign == 0 ? (sign.checked = true) : "";
                 let take_photo = document.getElementById("take_photo_edit");
-                data.take_photo == 0 ? take_photo.checked = true : '';
+                data.take_photo == 0 ? (take_photo.checked = true) : "";
                 let boxes = JSON.parse(data.boxes);
-                this.instantiateBoxes('box-container-edit', (boxes ?? this.boxes));
+                this.instantiateBoxes(
+                    "box-container-edit",
+                    boxes ?? this.boxes
+                );
                 calculateRate(true, boxes, destination_rate_id);
                 calculateRate(false, boxes, destination_rate_id);
-                this.addBox('add-box-btn-edit', (boxes ?? []), 'box-container-edit');
+                this.addBox(
+                    "add-box-btn-edit",
+                    boxes ?? [],
+                    "box-container-edit"
+                );
             });
-        })
+        });
         this.updateGuide();
     }
 
     async requestGuide(id) {
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/guias/" + id + "/edit")
-            .then(response => response.json())
-            .then(data => {
-                response = data
+            .then((response) => response.json())
+            .then((data) => {
+                response = data;
             })
-            .catch(e => response.error = e);
+            .catch((e) => (response.error = e));
         return response;
     }
 
@@ -578,54 +704,71 @@ export default class Orders {
             return;
         }
         btnUpdateGuide.addEventListener("click", async () => {
-            let branch_off_edit = document.getElementById("branch_off_edit").value;
+            let branch_off_edit =
+                document.getElementById("branch_off_edit").value;
             // let dispatched = document.getElementById("dispatched_edit").value;
-            let address_name = document.getElementById("customer_address_edit").value;
+            let address_name = document.getElementById(
+                "customer_address_edit"
+            ).value;
             // let address_lat = document.getElementById("lat_edit").value;
             // let address_lng = document.getElementById("lng_edit").value;
-            let guide_description = document.getElementById("address_description_edit").value;
+            let guide_description = document.getElementById(
+                "address_description_edit"
+            ).value;
             let concept = document.getElementById("concept_edit").value;
             let rate = document.getElementById("rate_edit").value;
             let value = document.getElementById("value_edit").value;
             let corp_value = document.getElementById("corp_value_edit").value;
-            let customer_document_type = document.getElementById("customer_document_type_edit").value;
+            let customer_document_type = document.getElementById(
+                "customer_document_type_edit"
+            ).value;
             let contact = document.getElementById("contact_edit").value;
-            let phone_contact = document.getElementById("phone_contact_edit").value;
-            let email_contact = document.getElementById("email_contact_edit").value;
-            let invoice_contact = document.getElementById("invoice_contact_edit").value;
+            let phone_contact =
+                document.getElementById("phone_contact_edit").value;
+            let email_contact =
+                document.getElementById("email_contact_edit").value;
+            let invoice_contact = document.getElementById(
+                "invoice_contact_edit"
+            ).value;
             let zone = document.getElementById("zone_edit").value;
-            let same_day_delivery = document.getElementById("same_day_delivery_edit");
-            same_day_delivery.checked == true ? same_day_delivery = 1 : same_day_delivery = 0;
+            let same_day_delivery = document.getElementById(
+                "same_day_delivery_edit"
+            );
+            same_day_delivery.checked == true
+                ? (same_day_delivery = 1)
+                : (same_day_delivery = 0);
             let sign = document.getElementById("sign_edit");
-            sign.checked == true ? sign = 1 : sign = 0;
+            sign.checked == true ? (sign = 1) : (sign = 0);
             let take_photo = document.getElementById("take_photo_edit");
-            take_photo.checked == true ? take_photo = 1 : take_photo = 0;
-            let customer_address = document.getElementById("customer_address_edit").value;
+            take_photo.checked == true ? (take_photo = 1) : (take_photo = 0);
+            let customer_address = document.getElementById(
+                "customer_address_edit"
+            ).value;
 
             //Boxes
-            let ids = document.getElementsByName('id[]');
-            let weights = document.getElementsByName('weight[]');
-            let longs = document.getElementsByName('long[]');
-            let broads = document.getElementsByName('broad[]');
-            let highs = document.getElementsByName('high[]');
-            let vol_weights = document.getElementsByName('vol_weight[]');
-            let descriptions = document.getElementsByName('description[]');
+            let ids = document.getElementsByName("id[]");
+            let weights = document.getElementsByName("weight[]");
+            let longs = document.getElementsByName("long[]");
+            let broads = document.getElementsByName("broad[]");
+            let highs = document.getElementsByName("high[]");
+            let vol_weights = document.getElementsByName("vol_weight[]");
+            let descriptions = document.getElementsByName("description[]");
             let boxArr = [];
             for (let i = 1; i < ids.length; i++) {
                 let individualBoxArr = {
-                    'number': ids[i].value,
-                    'weight': weights[i].value,
-                    'long': longs[i].value,
-                    'broad': broads[i].value,
-                    'high': highs[i].value,
-                    'vol_weight': vol_weights[i].value,
-                    'description': descriptions[i].value
+                    number: ids[i].value,
+                    weight: weights[i].value,
+                    long: longs[i].value,
+                    broad: broads[i].value,
+                    high: highs[i].value,
+                    vol_weight: vol_weights[i].value,
+                    description: descriptions[i].value,
                 };
                 boxArr.push(individualBoxArr);
             }
 
             let formData = new FormData();
-            formData.append('boxes', JSON.stringify(boxArr));
+            formData.append("boxes", JSON.stringify(boxArr));
             formData.append("branch_office", branch_off_edit);
             // formData.append("dispatched", dispatched);
             formData.append("address_name", address_name);
@@ -653,39 +796,45 @@ export default class Orders {
             let myHeaders = new Headers();
             myHeaders.append("Accept", "application/json");
             myHeaders.append("Access-Control-Allow-Origin", "*");
-            myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
-            myHeaders.append('Content-Type', "application/json");
-            myHeaders.append('Content-Type', "multipart/form-data");
+            myHeaders.append(
+                "Content-Type",
+                "application/x-www-form-urlencoded"
+            );
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Content-Type", "multipart/form-data");
             myHeaders.append("X-CSRF-TOKEN", token);
             let requestOptions = {
                 method: "PUT",
                 headers: myHeaders,
-                body: JSON.stringify(Object.fromEntries(formData))
+                body: JSON.stringify(Object.fromEntries(formData)),
             };
 
-            let response = await this.sendDataToUpdate(this.guideId, requestOptions);
+            let response = await this.sendDataToUpdate(
+                this.guideId,
+                requestOptions
+            );
             if (response.state == 200) {
                 correct(response.message);
                 let modal = document.getElementById("modalEdit");
                 modal.click();
                 this.listGuides();
             } else {
-                error('Error al crear la guía.')
-                console.log('Error: ' + response.error);
+                error("Error al crear la guía.");
+                console.log("Error: " + response.error);
             }
         });
     }
 
     async sendDataToUpdate(id, requestOptions) {
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/guias/" + id, requestOptions)
             .then((response) => response.json())
-            .then(data => {
-                response = data
+            .then((data) => {
+                response = data;
             })
-            .catch(e => response.error = e);
+            .catch((e) => (response.error = e));
         return response;
     }
 
@@ -694,7 +843,7 @@ export default class Orders {
         if (branchesSlc == null) {
             return;
         }
-        [].forEach.call(branchesSlc, async branch => {
+        [].forEach.call(branchesSlc, async (branch) => {
             branch.selectedIndex = 0;
             removeOptions(branch);
 
@@ -703,15 +852,20 @@ export default class Orders {
 
             for (var i = 0; i < data.length; i++) {
                 let element = data[i];
-                let branchOffice = '<option value="' + element.id + '"> ' + element.name + ' </option>';
-                branch.insertAdjacentHTML('beforeend', branchOffice);
+                let branchOffice =
+                    '<option value="' +
+                    element.id +
+                    '"> ' +
+                    element.name +
+                    " </option>";
+                branch.insertAdjacentHTML("beforeend", branchOffice);
             }
         });
     }
 
     async customerAddresses(customerId = null) {
         let slcAddresses = document.getElementsByName("customer_address");
-        if (customerId == '') {
+        if (customerId == "") {
             return;
         }
         if (slcAddresses == null) {
@@ -723,16 +877,28 @@ export default class Orders {
         }
         let data = response.data;
 
-        [].forEach.call(slcAddresses, slcAddress => {
-            if (!(typeof (parseInt(location.pathname.split('/')[2])) == 'number' && location.pathname.includes('edit'))) {
-                if (!slcAddress.id != 'order_customer_address') {
+        [].forEach.call(slcAddresses, (slcAddress) => {
+            if (
+                !(
+                    typeof parseInt(location.pathname.split("/")[2]) ==
+                        "number" && location.pathname.includes("edit")
+                )
+            ) {
+                if (!slcAddress.id != "order_customer_address") {
                     slcAddress.selectedIndex = 0;
                     removeOptions(slcAddress);
 
                     for (var i = 0; i < data.length; i++) {
                         let element = data[i];
-                        let optAddress = '<option value="' + element.id + '" name="' + element.name + '"> ' + element.name + ' </option>';
-                        slcAddress.insertAdjacentHTML('beforeend', optAddress);
+                        let optAddress =
+                            '<option value="' +
+                            element.id +
+                            '" name="' +
+                            element.name +
+                            '"> ' +
+                            element.name +
+                            " </option>";
+                        slcAddress.insertAdjacentHTML("beforeend", optAddress);
                     }
                 }
             }
@@ -740,20 +906,22 @@ export default class Orders {
     }
 
     async requestCustomerAddresses(id = null) {
-        let route = window.location.pathname.split('/');
+        let route = window.location.pathname.split("/");
         if (document.getElementById("user_code") == null) {
             return;
         }
-        route.includes('edit') ? id = document.getElementById("user_code").value : '';
+        route.includes("edit")
+            ? (id = document.getElementById("user_code").value)
+            : "";
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/customer_addresses/" + id)
-            .then(response => response.json())
-            .then(data => {
-                response = data
+            .then((response) => response.json())
+            .then((data) => {
+                response = data;
             })
-            .catch(e => response.error = e);
+            .catch((e) => (response.error = e));
         return response;
     }
 
@@ -762,7 +930,7 @@ export default class Orders {
         if (btnSaveAddress == null) {
             return;
         }
-        btnSaveAddress.addEventListener('click', async () => {
+        btnSaveAddress.addEventListener("click", async () => {
             let formData = new FormData();
             let description = document.getElementById("add_description").value;
             let address = document.getElementById("add_name").value;
@@ -770,12 +938,12 @@ export default class Orders {
             let lng = document.getElementById("add_lng").value;
             let user_id = document.getElementById("user_code").value;
 
-            formData.append('user_id', user_id);
-            formData.append('address', address);
-            formData.append('lat', lat);
-            formData.append('lng', lng);
-            formData.append('description', description);
-            formData.append('requestByJs', 1);
+            formData.append("user_id", user_id);
+            formData.append("address", address);
+            formData.append("lat", lat);
+            formData.append("lng", lng);
+            formData.append("description", description);
+            formData.append("requestByJs", 1);
 
             let response = await this.sendAddressData(formData);
             if (response.state == 200) {
@@ -783,112 +951,123 @@ export default class Orders {
                 let modal = document.getElementById("modalCreateAddress");
                 modal.click();
                 this.listGuides();
-                this.customerAddresses(document.getElementById("user_code").value);
+                this.customerAddresses(
+                    document.getElementById("user_code").value
+                );
             } else {
-                error('Error al crear la guía.')
-                console.log('Error: ' + response.error);
+                error("Error al crear la guía.");
+                console.log("Error: " + response.error);
             }
         });
     }
 
     async sendAddressData(formData) {
         let response = {
-            'state': 500
+            state: 500,
         };
 
         response = await fetch("/direcciones", {
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            method: 'POST',
-            body: formData
-        })
+            method: "POST",
+            body: formData,
+        });
         return response.json();
     }
 
     months(month) {
         const months = {
-            0: 'Enero',
-            1: 'Febrero',
-            2: 'Marzo',
-            3: 'Abril',
-            4: 'Mayo',
-            5: 'Junio',
-            6: 'Julio',
-            7: 'Agosto',
-            8: 'Septiembre',
-            9: 'Octubre',
-            10: 'Noviembre',
-            11: 'Diciembre'
-        }
+            0: "Enero",
+            1: "Febrero",
+            2: "Marzo",
+            3: "Abril",
+            4: "Mayo",
+            5: "Junio",
+            6: "Julio",
+            7: "Agosto",
+            8: "Septiembre",
+            9: "Octubre",
+            10: "Noviembre",
+            11: "Diciembre",
+        };
         return months[month];
     }
     async porDespacharOndemand() {
-
-        let button = document.getElementById('porDespacharOndemand');
+        let button = document.getElementsByClassName("porDespacharOndemand");
         if (button == null) {
             return;
         }
-
-        button.addEventListener("click", async () => {
-            let order_id = button.value;
-            let result = await confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", 'info');
-            if (result == true) {
-                let req = await fetch(`/pordespachar/ondemand/${order_id}`, {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": document
-                            .querySelector('meta[name="csrf-token"]')
-                            .getAttribute("content"),
-                        accept: "application/json",
-                    },
-                });
-                if (req.ok) {
-                    correct("Estado actualizado!");
-                    window.location.reload()
-                } else {
-                    error("Error al actualizar estado");
-
+        [].forEach.call(button, function (btn) {
+            btn.addEventListener("click", async () => {
+                let order_id = btn.parentNode.parentNode;
+                let result = await confirmation(
+                    "¿Esta seguro?",
+                    "Se pasara a orden a por despachar",
+                    "info"
+                );
+                if (result == true) {
+                    let req = await fetch(
+                        `/pordespachar/ondemand/${order_id.id}`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "X-CSRF-TOKEN": document
+                                    .querySelector('meta[name="csrf-token"]')
+                                    .getAttribute("content"),
+                                accept: "application/json",
+                            },
+                        }
+                    );
+                    if (req.ok) {
+                        correct("Estado actualizado!");
+                        window.location.reload();
+                    } else {
+                        error("Error al actualizar estado");
+                    }
                 }
-            }
+            });
         });
     }
 
     async porDespacharPackaging() {
-
-        let button = document.getElementById('porDespacharPackaging');
+        let button = document.getElementsByClassName("porDespacharPackaging");
         if (button == null) {
             return;
         }
-        button.addEventListener("click", async () => {
-            let order_id = button.value;
-            let result = await porDespacharPackagingAlert();
-            if (result == 3 || result == 7) {
-                let formData = new FormData();
-                formData.append('type', result);
-                let token = document
-                    .querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content");
-                let myHeaders = new Headers();
-                myHeaders.append("accept", "application/json");
-                myHeaders.append("Access-Control-Allow-Origin", "*");
-                myHeaders.append("X-CSRF-TOKEN", token);
+        [].forEach.call(button, function (btn) {
+            btn.addEventListener("click", async () => {
+                let order_id = btn.parentNode.parentNode;
+                let result = await porDespacharPackagingAlert();
+                if (result == 3 || result == 7) {
+                    let formData = new FormData();
+                    formData.append("type", result);
+                    let token = document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content");
+                    let myHeaders = new Headers();
+                    myHeaders.append("accept", "application/json");
+                    myHeaders.append("Access-Control-Allow-Origin", "*");
+                    myHeaders.append("X-CSRF-TOKEN", token);
 
-                let requestOptions = {
-                    method: "POST",
-                    headers: myHeaders,
-                    body: formData,
-                };
-                var data = { type: result };
-                let req = await fetch(`/pordespachar/packaging/${order_id}`, requestOptions);
-                if (req.ok) {
-                    correct("Estado actualizado!");
-                    window.location.reload()
-                } else {
-                    error("Error al actualizar estado");
-
+                    let requestOptions = {
+                        method: "POST",
+                        headers: myHeaders,
+                        body: formData,
+                    };
+                    var data = { type: result };
+                    let req = await fetch(
+                        `/pordespachar/packaging/${order_id.id}`,
+                        requestOptions
+                    );
+                    if (req.ok) {
+                        correct("Estado actualizado!");
+                        window.location.reload();
+                    } else {
+                        error("Error al actualizar estado");
+                    }
                 }
-            }
+            });
         });
     }
 
@@ -899,54 +1078,68 @@ export default class Orders {
         }
         let response = await this.requestPickupHours();
         let days = response.data;
-        date_selector.addEventListener('change', () => {
+        date_selector.addEventListener("change", () => {
             let day = this.getDayReference(date_selector.value);
             let day_data = days[day];
 
-            let schedule_time_range = document.getElementById("schedule_time_range");
+            let schedule_time_range = document.getElementById(
+                "schedule_time_range"
+            );
             schedule_time_range.selectedIndex = 0;
             removeOptions(schedule_time_range);
 
             if (day_data) {
                 for (let i = 0; i < day_data.length; i++) {
                     let element = day_data[i];
-                    let text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time)
-                    let option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
-                    schedule_time_range.insertAdjacentHTML('beforeend', option);
+                    let text =
+                        formatAMPM(element.init_time) +
+                        " - " +
+                        formatAMPM(element.end_time);
+                    let option =
+                        '<option value="' +
+                        text +
+                        '" id="' +
+                        element.id +
+                        '"> ' +
+                        text +
+                        " </option>";
+                    schedule_time_range.insertAdjacentHTML("beforeend", option);
                 }
-                schedule_time_range.addEventListener('change', () => {
-                    let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
-                    let schedule_time = document.getElementById("schedule_time");
+                schedule_time_range.addEventListener("change", () => {
+                    let id =
+                        schedule_time_range.options[
+                            schedule_time_range.selectedIndex
+                        ].id;
+                    let schedule_time =
+                        document.getElementById("schedule_time");
                     schedule_time.value = id;
-                })
-
+                });
             }
-
         });
     }
 
     async requestPickupHours() {
         let response = {
-            'state': 500
+            state: 500,
         };
         await fetch("/getPickupHours")
-            .then(response => response.json())
-            .then(data => {
-                response = data
+            .then((response) => response.json())
+            .then((data) => {
+                response = data;
             })
-            .catch(e => response.error = e);
+            .catch((e) => (response.error = e));
         return response;
     }
 
     getDayReference(day) {
         let days = [
-            'Lunes',
-            'Martes',
-            'Miercoles',
-            'Jueves',
-            'Viernes',
-            'Sábado',
-            'Domingo'
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes",
+            "Sábado",
+            "Domingo",
         ];
         day = new Date(day).getDay();
         return days[day];
@@ -954,7 +1147,7 @@ export default class Orders {
 
     async loadHoursInEditOrShow() {
         let route = window.location.pathname;
-        if (!(route.includes('create') && route.includes('edit'))) {
+        if (!(route.includes("create") && route.includes("edit"))) {
             return;
         }
         let date_selector = document.getElementById("schedule_date");
@@ -964,42 +1157,55 @@ export default class Orders {
         let day_data = days[day];
 
         if (day_data) {
-            let schedule_time_range = document.getElementById("schedule_time_range");
+            let schedule_time_range = document.getElementById(
+                "schedule_time_range"
+            );
             schedule_time_range.selectedIndex = 0;
             removeOptions(schedule_time_range);
 
             for (let i = 0; i < day_data.length; i++) {
                 let element = day_data[i];
-                let text = formatAMPM(element.init_time) + " - " + formatAMPM(element.end_time)
-                let option = '<option value="' + text + '" id="' + element.id + '"> ' + text + ' </option>';
-                schedule_time_range.insertAdjacentHTML('beforeend', option);
+                let text =
+                    formatAMPM(element.init_time) +
+                    " - " +
+                    formatAMPM(element.end_time);
+                let option =
+                    '<option value="' +
+                    text +
+                    '" id="' +
+                    element.id +
+                    '"> ' +
+                    text +
+                    " </option>";
+                schedule_time_range.insertAdjacentHTML("beforeend", option);
             }
-            schedule_time_range.addEventListener('change', () => {
-                let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+            schedule_time_range.addEventListener("change", () => {
+                let id =
+                    schedule_time_range.options[
+                        schedule_time_range.selectedIndex
+                    ].id;
                 let schedule_time = document.getElementById("schedule_time");
                 schedule_time.value = id;
-            })
+            });
         }
     }
 
     cleanFields() {
         document.getElementById("branch_off").selectedIndex = 0;
         document.getElementById("address").selectedIndex = 0;
-        document.getElementById("guide_description").value = '';
-        document.getElementById("concept").value = '';
+        document.getElementById("guide_description").value = "";
+        document.getElementById("concept").value = "";
         document.getElementById("rate").selectedIndex = 0;
-        document.getElementById("value").value = '';
-        document.getElementById("corp_value").value = '';
+        document.getElementById("value").value = "";
+        document.getElementById("corp_value").value = "";
         document.getElementById("customer_document_type").selectedIndex = 0;
-        document.getElementById("contact").value = '';
-        document.getElementById("phone_contact").value = '';
-        document.getElementById("email_contact").value = '';
-        document.getElementById("invoice_contact").value = '';
+        document.getElementById("contact").value = "";
+        document.getElementById("phone_contact").value = "";
+        document.getElementById("email_contact").value = "";
+        document.getElementById("invoice_contact").value = "";
         document.getElementById("zone_id").selectedIndex = 0;
         document.getElementById("same_day_delivery").checked = false;
         document.getElementById("sign").checked = false;
         document.getElementById("take_photo").checked = false;
     }
-
 }
-
