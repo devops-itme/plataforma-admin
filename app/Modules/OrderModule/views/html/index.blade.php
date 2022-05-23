@@ -113,7 +113,7 @@
             <tbody>
                 @if (count($orders) > 0)
                 @foreach ($orders as $order)
-                <tr>
+                <tr id="{{$order->id}}">
                     <th scope="row">{{ $order->order_number??'No registra' }}</th>
                     <td>
                         @if ($order->getOrderType->name == 'Ondemand')
@@ -137,12 +137,12 @@
                     </td>
                     <td>
                         @if ($order->order_type == 35 && $order->status_matrix_id == 1 )
-                        <button type="button" id="porDespacharOndemand" value="{{$order->id}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Enviar a por despachar">
+                        <button type="button" value="{{$order->id}}" class="btn btn-icon btn-light-info btn-sm mr-2 porDespacharOndemand" data-tooltip title="Enviar a por despachar">
                             <i class="fad fa-hand-holding-box"></i>
                         </button>
                         @endif
                         @if ($order->order_type == 36 && $order->status_matrix_id == 1)
-                        <button type="button" id="porDespacharPackaging" value="{{$order->id}}" class="btn btn-icon btn-light-info btn-sm mr-2" data-tooltip title="Enviar a por despachar">
+                        <button type="button" value="{{$order->id}}" class="btn btn-icon btn-light-info btn-sm mr-2 porDespacharPackaging" data-tooltip title="Enviar a por despachar">
                             <i class="fad fa-hand-holding-box"></i>
                         </button>
                         @endif
@@ -184,3 +184,4 @@
 {{-- Styles Section --}}
 @section('styles')
 @endsection
+
