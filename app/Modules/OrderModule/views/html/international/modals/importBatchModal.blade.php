@@ -11,7 +11,11 @@
                 @csrf
                 <div class="modal-body">
                     <p>Cargar excel.</p>
-                    <input class="form-control-file" type="file" name="excel" id="file">
+                    <div class="row mx-2">
+                        <input class="form-input" type="checkbox" value="true" name="unique_phone" id="">
+                        <p class="ml-2">Permitir datos repetidos</p>
+                    </div>
+                        <input class="form-control-file" type="file" name="excel" id="file">
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Importar</button>
