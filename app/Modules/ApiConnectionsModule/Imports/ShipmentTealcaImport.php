@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -17,6 +18,31 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidation
 {
     use OrderTrait, GuideTrait;
+
+    protected $unique_phone;
+
+    public function __construct(bool $unique_phone = false)
+    {
+        $this->unique_phone = $unique_phone;
+    }
+
+    protected function validatePhones($rows)
+    {
+        $phones = [];
+        $messages = [];
+        $failed_validation = false;
+        foreach ($rows as $key => $row) {
+            if (count($rows) == ($key + 1) && $failed_validation) {
+                throw ValidationException::withMessages($messages);
+            }
+            if (in_array($row['teldes'], $phones)) {
+                $failed_validation = true;
+                $messages[] = 'Hubo un error en la fila  ' . ($key + 1) . '. El campo teldes(Teléfono de destino) se encuentra repetido.';
+            }
+            $phones[] = $row['teldes'];
+        }
+    }
+
     public function collection(Collection $rows)
     {
         $order_type = ParameterValue::where('name', 'International')->first(['id'])->id;
@@ -38,6 +64,11 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             return 0;
         };
         $order_id = $orderResponse['data']['id'];
+
+        if (!$this->unique_phone) {
+            $this->validatePhones($rows);
+        }
+
         foreach ($rows as $row) {
             $guideResponse = $this->storeGuide(new Request(array(
                 'order_id' => $order_id,
@@ -59,7 +90,8 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                 'email_contact' => $row['email'],
             )));
             if ($guideResponse['state'] != 200) {
-                return DB::rollBack();
+                DB::rollBack();
+                throw ValidationException::withMessages([$guideResponse['message']]);
             };
         }
         DB::commit();
@@ -71,7 +103,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             "paisdes" => 'required|string|size:3', //
             "ciudes" => 'required|string|size:3', //
             "nomdes" => 'required|string', //
-            "dirdes" => 'required|string|max:200', //
+            // "dirdes" => 'required|string|max:200', //
             "documenttypedes" => 'required|string', //
             "documentnumberdes" => 'required|numeric', //
             "teldes" => 'required|numeric', //

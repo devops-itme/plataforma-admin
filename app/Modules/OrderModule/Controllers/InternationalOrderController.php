@@ -32,7 +32,6 @@ class InternationalOrderController extends Controller
 
     public function show($id)
     {
-       
     }
 
     public function importBatch(Request $request)
@@ -46,8 +45,10 @@ class InternationalOrderController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
+        $unique_phone = $request->unique_phone === 'true';
         $file = $request->file('excel');
-        Excel::import(new ShipmentTealcaImport, $file);
+        $excelResponse = Excel::import(new ShipmentTealcaImport($unique_phone), $file);
+        // dd($excelResponse);
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
     }
 }
