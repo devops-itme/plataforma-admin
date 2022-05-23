@@ -179,9 +179,6 @@ class OrderController extends Controller
                     $tax_value = $rate_value * ($tax_percentage / 100);
                     $rate_value_total = $rate_value + $tax_value;
 
-                    // $guidance_document = new GuidanceDocumentController();
-                    // $guidance_document->store($request->$guidance_document);
-
                     $request->merge([
                         'order_id' => $order_id,
                         'guide_description' => $guide['guide_description'],
@@ -195,8 +192,7 @@ class OrderController extends Controller
                         'address_description' => $address->description ?? $guide['address_description'],
                         'description' => $address->description ?? $guide['address_description'],
                         "transport_type" => $guide['transport_type'] ?? '',
-                        'state' => 31,
-                        // 'guidance_document' => $guidance_document,
+                        'state' => 31
                     ]);
 
                     if (is_null($guide['address_id'])) {
@@ -218,6 +214,10 @@ class OrderController extends Controller
                     if ($storeGuideResponse['state'] != 200) {
                         return $storeGuideResponse;
                     }
+
+                    // $guide_id = $storeGuideResponse['data']->id;
+                    // $guidance_doc = new GuidanceDocumentController();
+                    // $guidance_doc->store($request->guidance_doc, $guide_id);
                 }
 
                 $order = Order::find($order_id);
