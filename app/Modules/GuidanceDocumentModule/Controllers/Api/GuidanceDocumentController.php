@@ -43,7 +43,7 @@ class GuidanceDocumentController extends Controller
             }
 
             if (File($request->document)) {
-                $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'));
+                $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'), 'public');
             }
             $request->merge(['url_document' => $path]);
 
