@@ -1892,7 +1892,6 @@ var Boxes = /*#__PURE__*/function () {
     _defineProperty(this, "container", 'box-container');
 
     if ((boxes === null || boxes === void 0 ? void 0 : boxes.length) != 0) {
-      alert(this.boxes);
       this.boxes = boxes;
     }
 
@@ -3051,7 +3050,7 @@ var Orders = /*#__PURE__*/function () {
 
       [].forEach.call(guides, function (guide) {
         guide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
-          var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zones, same_day_delivery, sign, take_photo, boxes;
+          var response, data, branch_office, customer_address, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zones, same_day_delivery, sign, take_photo, boxes, BoxesClass;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
             while (1) {
               switch (_context19.prev = _context19.next) {
@@ -3095,15 +3094,13 @@ var Orders = /*#__PURE__*/function () {
                   take_photo = document.getElementById("take_photo_edit");
                   data.take_photo == 0 ? take_photo.checked = true : "";
                   boxes = JSON.parse(data.boxes);
-
-                  _this5.instantiateBoxes("box-container-edit", boxes !== null && boxes !== void 0 ? boxes : _this5.boxes);
-
+                  BoxesClass = new _boxes__WEBPACK_IMPORTED_MODULE_9__["default"](boxes, "box-container-edit");
+                  BoxesClass.instantiateBoxes();
                   Object(_calculateRate__WEBPACK_IMPORTED_MODULE_6__["calculateRate"])(true, boxes, destination_rate_id);
                   Object(_calculateRate__WEBPACK_IMPORTED_MODULE_6__["calculateRate"])(false, boxes, destination_rate_id);
+                  BoxesClass.addBox("add-box-btn-edit");
 
-                  _this5.addBox("add-box-btn-edit", boxes !== null && boxes !== void 0 ? boxes : [], "box-container-edit");
-
-                case 32:
+                case 33:
                 case "end":
                   return _context19.stop();
               }

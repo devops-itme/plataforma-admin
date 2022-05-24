@@ -671,17 +671,11 @@ export default class Orders {
                 let take_photo = document.getElementById("take_photo_edit");
                 data.take_photo == 0 ? (take_photo.checked = true) : "";
                 let boxes = JSON.parse(data.boxes);
-                this.instantiateBoxes(
-                    "box-container-edit",
-                    boxes ?? this.boxes
-                );
+                const BoxesClass = new Boxes(boxes, "box-container-edit");
+                BoxesClass.instantiateBoxes();
                 calculateRate(true, boxes, destination_rate_id);
                 calculateRate(false, boxes, destination_rate_id);
-                this.addBox(
-                    "add-box-btn-edit",
-                    boxes ?? [],
-                    "box-container-edit"
-                );
+                BoxesClass.addBox("add-box-btn-edit");
             });
         });
         this.updateGuide();
@@ -883,7 +877,7 @@ export default class Orders {
             if (
                 !(
                     typeof parseInt(location.pathname.split("/")[2]) ==
-                        "number" && location.pathname.includes("edit")
+                    "number" && location.pathname.includes("edit")
                 )
             ) {
                 if (!slcAddress.id != "order_customer_address") {

@@ -14,7 +14,6 @@ export default class Boxes {
 
     constructor(boxes = [], container = null) {
         if (boxes?.length != 0) {
-            alert(this.boxes)
             this.boxes = boxes;
         }
         if (container != null) {

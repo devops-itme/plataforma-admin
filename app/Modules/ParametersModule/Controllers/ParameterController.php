@@ -16,7 +16,9 @@ class ParameterController extends Controller
      */
     public function index()
     {
-        $parameters = Parameter::get();
+
+        $Parameter = new Parameter();
+        $parameters = $Parameter->getEditableParameters()['data'];
         return view($this->path . 'index', compact('parameters'));
     }
 

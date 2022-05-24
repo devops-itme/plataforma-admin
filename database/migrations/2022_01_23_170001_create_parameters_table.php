@@ -17,6 +17,7 @@ class CreateParametersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
+            $table->boolean('editable')->default(0)->comment("{0:False;1:True}");
             $table->integer('state')->default(1)->comment("{0:Inactive;1:Active}");
             $table->timestamps();
             $table->softDeletes();

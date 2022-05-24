@@ -14,10 +14,12 @@ class ParameterValueSeeder extends Seeder
      */
     public function run()
     {
+        $editable_parameters = Config::get('const.editable_parameters');
         $parameters = Config::get('const.parameters');
-        foreach ($parameters as $id => $values) {
+        foreach ($parameters as $key => $values) {
             $parameter = Parameter::create([
-                'name' => $id
+                'name' => $key,
+                'editable' => in_array($key, $editable_parameters) ? 1 : 0
             ]);
             foreach ($values as $value) {
                 ParameterValue::create([
