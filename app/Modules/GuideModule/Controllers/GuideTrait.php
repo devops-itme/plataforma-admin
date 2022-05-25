@@ -1,16 +1,12 @@
 <?php
-
 namespace App\Modules\GuideModule\Controllers;
-
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Modules\GuideModule\Guide;
 use Illuminate\Validation\Rule;
-
 trait GuideTrait
 {
     use RestActions;
-
     public function GuideValidate($request, $action = null, $id = null)
     {
         return Validator::make(
@@ -56,7 +52,6 @@ trait GuideTrait
             ]
         );
     }
-
     public function storeGuide($request)
     {
         $validator = $this->GuideValidate($request);
@@ -107,7 +102,6 @@ trait GuideTrait
             return $this->respond(500, [], $e->getMessage(), 'Error al crear guiá');
         }
     }
-
     public function updateGuide($request)
     {
         $validator = $this->GuideValidate($request, null);
@@ -159,7 +153,6 @@ trait GuideTrait
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar guía');
         }
     }
-
     public function setAdditionalInformation($request)
     {
         $validator = Validator::make(
@@ -172,7 +165,6 @@ trait GuideTrait
                 'novelty' => 'nullable|string',
             ]
         );
-
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
@@ -181,15 +173,12 @@ trait GuideTrait
             if (is_null($guide)) {
                 return $this->respond(500, [], 'guide not found', 'No se encontró la orden');
             }
-
             $guide->update($request->all());
-
             return $this->respond(200, $guide, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar orden');
         }
     }
-
     public function deleteGuide($id)
     {
         try {
