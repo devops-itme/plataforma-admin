@@ -223,6 +223,14 @@ return [
         5 => 'Viernes',
         6 => 'Sábado',
     ],
+    'editable_parameters' => [
+        'document_type',
+        'payment_period',
+        'payment_method',
+        'use_mode',
+        'plans',
+        'customer_document_type',
+    ],
     'parameters' => [
         'document_type' => [
             'C.C',

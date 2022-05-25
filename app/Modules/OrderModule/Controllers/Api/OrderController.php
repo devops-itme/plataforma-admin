@@ -295,7 +295,7 @@ class OrderController extends Controller
         $order_id = $request->order_id;
         $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=" . $fcm_token . "&order_id=" . $order_id;
         $cclw = env('PAGUELOFACIL_CCLW');
-        $amount = intval($request->totalValue);
+        $amount = (float) $request->totalValue;
         $description = 'Pago orden multientrega';
         $data = array(
             "CCLW" => $cclw,
