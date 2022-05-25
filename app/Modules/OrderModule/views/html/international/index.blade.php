@@ -46,7 +46,7 @@
             <!--begin::Search Form-->
             <div class="mb-7">
                 <div class="form-filter" style="display:none">
-                    <form action="">
+                    <form action="{{ route('internationalOrders.index') }}">
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Número de orden:</label>
@@ -102,7 +102,7 @@
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('orders.index') }}"
+                                    <a href="{{ route('internationalOrders.index') }}"
                                         class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
