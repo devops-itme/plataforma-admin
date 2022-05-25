@@ -207,10 +207,10 @@
                                         title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip
-                                        title="Eliminar">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    <button type="button" onclick="confirmDelete('/guias/'+{{ $shipment->id }})"
+                                        class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
+                                        <i class="fad fa-trash-alt"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
