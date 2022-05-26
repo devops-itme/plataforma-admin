@@ -152,7 +152,7 @@ class OrderController extends Controller
                 $order_id = $storeOderResponse['data']->id;
 
                 $guides = $request->guides;
-                $guides = json_decode($guides, true);
+                // $guides = json_decode($guides, true);
 
                 $rate_value = 0;
 
@@ -193,7 +193,8 @@ class OrderController extends Controller
                         'address_description' => $address->description ?? $guide['address_description'],
                         'description' => $address->description ?? $guide['address_description'],
                         "transport_type" => $guide['transport_type'] ?? '',
-                        'state' => 31
+                        'state' => 31,
+                        'detail_package' => $guide['detail_package'] ?? '',
                     ]);
 
                     if (is_null($guide['address_id'])) {
