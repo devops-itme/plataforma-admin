@@ -20,7 +20,7 @@
         <div class="card-header">
             <form class="row g-3" method="post" action="{{ route('shipments.store', ['order_id' => $order_id]) }}">
                 @csrf
-                <div class="input-group mt-5">
+                <div class="input-group mt-8">
                     <div class="input-group-prepend">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
@@ -44,17 +44,23 @@
                         </h2>
                     </div>
                 </div>
-                <div class="container">
+                <div class="container mt-8">
                     <div class="row">
                         <div class="col">
-                            <label for="exampleInputEmail1">Nombre del destinatario</label>
-                            <input type="text" class="form-control" id="exampleInputE1" aria-describedby="emailHelp"
-                                placeholder="Juan Perez" name="recipient_name" required>
+                            <label for="recipient_name">Nombre del destinatario</label>
+                            <input type="text" class="form-control" id="recipient_name" aria-describedby="emailHelp"
+                                placeholder="Juan Perez" name="recipient_name" class="@error('recipient_name') is-invalid @enderror">
+                                @error('recipient_name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Direccion del destinatario</label>
-                            <input type="text" class="form-control" id="exampleInputP1" placeholder="Direccion"
-                                name="address_name" required>
+                            <label for="address_name">Direccion del destinatario</label>
+                            <input type="text" class="form-control" id="address_name" placeholder="Direccion"
+                                name="address_name" class="@error('address_name') is-invalid @enderror">
+                                @error('address_name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -124,7 +130,7 @@
                         </div>
                         <div class="col">
                             <label for="venvio">Valor declarado del envió</label>
-                            <input type="number" class="form-control" id="telp" placeholder="Telefono" name="declared">
+                            <input type="number" class="form-control" id="telp" placeholder="Valor" name="declared">
                         </div>
                     </div>
                 </div>
@@ -159,7 +165,10 @@
     </form>
     </div>
     </div>
+
 @endsection
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>

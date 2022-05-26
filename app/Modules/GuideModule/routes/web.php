@@ -17,3 +17,4 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::resource('/envíos-tealca', 'GuideModule\Controllers\ShipmentController')->names('shipments');
 Route::post('/sendBatch/{id}', 'GuideModule\Controllers\ShipmentController@sendBatch')->name('shipments.assign');
+
