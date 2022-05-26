@@ -66,7 +66,8 @@ class Guide extends Model
         'additional_address',
         'additional_email',
         'additional_phone',
-        'novelty'
+        'novelty',
+        'detail_package'
     ];
 
     /* Logs Config */
