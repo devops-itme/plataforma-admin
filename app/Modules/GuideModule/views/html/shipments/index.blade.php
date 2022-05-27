@@ -213,9 +213,8 @@
                                         title="Detalle">
                                         <i class="far fa-folder-open"></i>
                                     </a>
-                                    <a href="#" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip
-                                        title="Editar">
-                                        <i class="fas fa-edit"></i>
+                                    <a href="{{ route('shipments.edit', $shipment->id,'edit') }}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
+                                        <i class="fad fa-edit"></i>
                                     </a>
                                     <button type="button" onclick="confirmDelete('/guias/'+{{ $shipment->id }})"
                                         class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
