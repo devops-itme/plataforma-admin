@@ -144,7 +144,11 @@ class Order extends Model
     }
 
     //SCOPES
-
+    public function scopeWhereCustomer($query, $value)
+    {
+        if (!is_null($value))
+            return $query->where('customer_user_id',  $value);
+    }
     public function scopeNumber($query, $value)
     {
         if (!is_null($value))
@@ -249,7 +253,7 @@ class Order extends Model
     public function showOrder($id)
     {
         try {
-            $order = $this::find($id);
+            $order = $this::find($id)->load(['getGuides']);
             if (is_null($order)) {
                 return $this->respond(500, [], 'order not found', 'Error al encontrar orden');
             }
@@ -314,6 +318,8 @@ class Order extends Model
                 return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
             }
             DB::beginTransaction();
+            $status = StatusMatrix::get();
+            $status_id = $status[0]->id;
             $order = $this::create([
                 'user_id' => $request->user_id,
                 'customer_user_id' => $request->user_id,
@@ -325,6 +331,7 @@ class Order extends Model
                 'urgent_dispatch' => $request->urgent_dispatch,
                 'order_number' => $request->order_number,
                 'creator_user_id' => $request->creator_user_id,
+                'status_matrix_id' => $status_id,
                 'state' => 1,
             ]);
 

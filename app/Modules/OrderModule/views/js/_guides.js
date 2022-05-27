@@ -20,8 +20,8 @@ let source_rate_id = null;
 export default class Guides {
 
     guides = [];
-    constructor(guides = []) {
-        if (guides.length != 0) {
+    constructor(guides = null) {
+        if (guides) {
             this.guides = guides;
         }
     }
