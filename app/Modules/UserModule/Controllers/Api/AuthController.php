@@ -174,19 +174,18 @@ class AuthController extends Controller
     public function forward(Request $request)
     {
         $is_numeric = is_numeric($request->user);
+        $validator = Validator::make($request->all(), [
+            'user' => [
+                'required',
+                ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
+                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
         try {
-            $validator = Validator::make($request->all(), [
-                'user' => [
-                    'required',
-                    ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                    ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
-                ],
-            ]);
-
-            if ($validator->fails()) {
-                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
-            }
-
             $randomCode = rand(100000, 999999);
             $user = User::where($is_numeric ? 'phone' : 'email', $request->user)->first();
             $user->code = $randomCode;
@@ -194,8 +193,8 @@ class AuthController extends Controller
             $user->update();
 
             send_sms($user->phone, 'Su código de verificación es:' . $randomCode);
-            // Mail::to($user->email)
-            //     ->send(new CodeMail($randomCode));
+            Mail::to($user->email)
+                ->send(new CodeMail($randomCode));
             return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
