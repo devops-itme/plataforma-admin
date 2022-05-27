@@ -14,15 +14,29 @@ import Boxes from "./_boxes";
 import { requestPickupHours } from "./request/requestPickupHours.js";
 import { getDayReference } from "./src/getDayReference.js";
 import Guides from "./_guides.js";
+import { requestGetOrder } from "./request/requestGetOrder.js";
 
 
 
 export default class Orders {
+
+    order = null;
+
     constructor() {
-        this.guideId = "";
+
     }
 
-    initialize() {
+    async initialize() {
+        let pathname = window.location.pathname;
+        if (pathname.includes('edit')) {
+            let regex = /(\d+)/g;
+            let order_id = pathname.match(regex);
+            let response = await requestGetOrder(order_id);
+            if (response.state == 200) {
+                this.order = response.data;
+            }
+        }
+
         this.loadCustomer();
         this.loadGuides();
 
@@ -31,7 +45,6 @@ export default class Orders {
 
         this.loadBranches();
 
-        this.loadOrderNumber();
         this.saveGuides();
         this.createAddress();
         this.porDespacharOndemand();
@@ -48,9 +61,11 @@ export default class Orders {
         let CustomerClass;
         if (customer != null) {
             let customer_id = customer.value;
-            CustomerClass = new Customer(customer_id);
+            CustomerClass = new Customer(customer_id, this.order);
         } else {
-            CustomerClass = new Customer();
+            let customer = document.getElementById("customer");
+            let customer_id = customer.value;
+            CustomerClass = new Customer(customer_id, this.order);
         }
         CustomerClass.initialize();
     }
@@ -68,7 +83,8 @@ export default class Orders {
         if (guides == null) {
             return;
         }
-        let GuidesClass = new Guides();
+        let guidesArr = this.order?.get_guides;
+        let GuidesClass = new Guides(guidesArr);
         GuidesClass.initialize();
         addGuideBtn.addEventListener('click', async function () {
             GuidesClass.addGuide();
@@ -104,28 +120,6 @@ export default class Orders {
             .catch((e) => {
                 console.log(e);
             });
-    }
-
-    async requestOrderNumber() {
-        let response = {
-            state: 500,
-        };
-        await fetch("/order_number")
-            .then((response) => response.json())
-            .then((data) => {
-                response = data;
-            })
-            .catch((e) => (response.error = e));
-        return response;
-    }
-
-    async loadOrderNumber() {
-        let orderNumber = document.getElementById("order_number");
-        if (orderNumber == null) {
-            return;
-        }
-        let response = await this.requestOrderNumber();
-        orderNumber.setAttribute("value", response.data);
     }
 
     saveGuides() {
