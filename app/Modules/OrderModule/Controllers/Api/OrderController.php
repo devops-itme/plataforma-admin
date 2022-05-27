@@ -122,6 +122,7 @@ class OrderController extends Controller
 
                 $user_id = Auth::user()->id;
                 $request->merge(['user_id' => $user_id, 'address_description' => $request->address_description]);
+                $request->merge(['description' => $request->order_description]);
 
                 if (!is_null($request->address_id)) {
                     $address = Address::find($request->address_id);
@@ -142,7 +143,6 @@ class OrderController extends Controller
                     }
                 }
 
-                $request->merge(['description' => $request->order_description]);
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -152,7 +152,7 @@ class OrderController extends Controller
                 $order_id = $storeOderResponse['data']->id;
 
                 $guides = $request->guides;
-                // $guides = json_decode($guides, true);
+                $guides = json_decode($guides, true);
 
                 $rate_value = 0;
 
