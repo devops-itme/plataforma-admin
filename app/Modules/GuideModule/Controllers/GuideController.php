@@ -17,7 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class GuideController extends Controller
 {
     use GuideTrait;
-    
+
     protected $GuidanceDocument;
 
     public function __construct()
@@ -33,9 +33,9 @@ class GuideController extends Controller
     public function index()
     {
         $guides = [];
-        if(str_contains(request()->path, 'create')){
+        if (str_contains(request()->path, 'create')) {
             $guides = Guide::where('order_id', NULL)->with('getState')->get();
-        } else if(str_contains(request()->path, 'edit')){
+        } else if (str_contains(request()->path, 'edit')) {
             $order_id = request()->order;
             $guides = Guide::with('getOrder')->whereHas('getOrder', function ($query) use ($order_id) {
                 $query->where('order_number', $order_id);
@@ -70,18 +70,30 @@ class GuideController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->same_day_delivery == 'on'){$request->merge(['same_day_delivery' => 1]);}
-        else{$request->merge(['same_day_delivery' => 0]);}
-        if($request->sign == 'on'){$request->merge(['sign' => 1]);}
-        else{$request->merge(['sign' => 0]);}
-        if($request->take_photo == 'on'){$request->merge(['take_photo' => 1]);}
-        else{$request->merge(['take_photo' => 0]);}
-        if($request->zone == 'Seleccione'){$request->merge(['zone' => NULL]);}
+        if ($request->same_day_delivery == 'on') {
+            $request->merge(['same_day_delivery' => 1]);
+        } else {
+            $request->merge(['same_day_delivery' => 0]);
+        }
+        if ($request->sign == 'on') {
+            $request->merge(['sign' => 1]);
+        } else {
+            $request->merge(['sign' => 0]);
+        }
+        if ($request->take_photo == 'on') {
+            $request->merge(['take_photo' => 1]);
+        } else {
+            $request->merge(['take_photo' => 0]);
+        }
+        if ($request->zone == 'Seleccione') {
+            $request->merge(['zone' => NULL]);
+        }
         $request->merge(['return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0]);
-        if($request->address_name){
-            $address = Address::find($request->address_name);
-            if(!is_null($address)){
+        if ($request->customer_address) {
+            $address = Address::find($request->customer_address);
+            if (!is_null($address)) {
                 $request->merge([
+                    'address_id' => $address->id,
                     'address_name' => $address->name,
                     'address_lat' => $address->lat,
                     'address_lng' => $address->lng,
@@ -89,13 +101,13 @@ class GuideController extends Controller
                 ]);
             }
         }
-        // if($request->customer_address == 'Seleccione'){$request->merge(['customer_address' => NULL]);}
+
         $request->merge(['state' => 31]);
         $response = $this->storeGuide($request);
-        if($response['state'] == 200){
-            if(!is_null($request->guides_doc)){
+        if ($response['state'] == 200) {
+            if (!is_null($request->guides_doc)) {
                 $guidance_docs = $this->GuidanceDocument->saveGuidanceDoc($request->merge(['guide_id' => $response['data']->id]));
-                if($guidance_docs['state'] != 200){
+                if ($guidance_docs['state'] != 200) {
                     return json_encode($response, $response['message']);
                 }
             }
@@ -148,15 +160,17 @@ class GuideController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->zone == 'Seleccione'){$request->merge(['zone' => NULL]);}
-        if(!($request->state)){
+        if ($request->zone == 'Seleccione') {
+            $request->merge(['zone' => NULL]);
+        }
+        if (!($request->state)) {
             $request->merge(['state' => 31]);
         }
         $request->merge(['return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0]);
 
-        if($request->address_name){
+        if ($request->address_name) {
             $address = Address::find($request->address_name);
-            if(!is_null($address)){
+            if (!is_null($address)) {
                 $request->merge([
                     'address_name' => $address->name,
                     'address_lat' => $address->lat,
@@ -166,7 +180,7 @@ class GuideController extends Controller
             }
         }
         $response = $this->updateGuide($request->merge(['guide_id' => $id]));
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return json_encode([
                 'data' => $response['data'],
                 'state' => $response['state'],
@@ -189,7 +203,7 @@ class GuideController extends Controller
     public function destroy($id)
     {
         $response = $this->deleteGuide($id);
-        if($response['state'] == 200){
+        if ($response['state'] == 200) {
             return json_encode([
                 'state' => $response['state'],
                 'message' => 'Guia eliminada'
@@ -204,12 +218,12 @@ class GuideController extends Controller
 
         try {
 
-            $state == 5? $state = [3,4,5,6] : ( $state == 9?  $state = [7,8,9,10] : $state =[intval($state)]);
-            $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query)  {
+            $state == 5 ? $state = [3, 4, 5, 6] : ($state == 9 ?  $state = [7, 8, 9, 10] : $state = [intval($state)]);
+            $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query) {
                 $query->where('order_type', 36);
             })->whereIn('status_matrix_id', $state)
-            ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments'])
-            ->get();
+                ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments'])
+                ->get();
 
             return $this->respond(200, $guides, null, 'Lista de guiás packing');
         } catch (\Throwable $e) {
@@ -253,14 +267,12 @@ class GuideController extends Controller
         }
         $order_id = $request->order_id;
 
-        if($request->hasFile('file')){
-           $file_import = $request->file('file');
-           Excel::import(new GuidesImport($order_id), $file_import);
-        return $this->respond(200,  [], null, 'Importación de guías completada');
+        if ($request->hasFile('file')) {
+            $file_import = $request->file('file');
+            Excel::import(new GuidesImport($order_id), $file_import);
+            return $this->respond(200,  [], null, 'Importación de guías completada');
         }
         return $this->respond(500,  [], '', 'Error al importar archivo');
-
-
     }
 
     public function updatePackingGuide(Request $request)
@@ -289,4 +301,31 @@ class GuideController extends Controller
         }
     }
 
+    public function validateGuide(Request $request)
+    {
+        try {
+            $Address = new Address();
+            $addressResponse = $Address->showAddress($request->address_id);
+            $address = $addressResponse['data'];
+            if ($addressResponse['state'] != 200) {
+                return $this->respond(500,  null, $addressResponse['error'], 'La dirección es obligatoria');
+            }
+            $request->merge([
+                'address_name' => $address->name,
+                'address_lat' => $address->lat,
+                'address_lng' => $address->lng,
+                'address_description' => $address->description,
+            ]);
+
+            $Guide = new Guide();
+
+            $validator = $Guide->validateGuide($request);
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
+            return $this->respond(200, $request->all(), null, 'Guía validada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al validar guía');
+        }
+    }
 }

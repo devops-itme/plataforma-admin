@@ -47,8 +47,9 @@
     <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/tooltip.css') }}">
 
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- cdn stytle table bootstrap -->
 
@@ -85,13 +86,21 @@ d-flex flex-column flex-row-fluid wrapper  @endguest"
         </main>
     </div>
 </body>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        $('.select2-customers').select2();
+    });
+</script>
 <style>
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
+
 </style>
 
 </html>

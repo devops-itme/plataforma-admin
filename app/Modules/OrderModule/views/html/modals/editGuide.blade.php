@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCreateLabel">Editar guia</h5>
+                <h5 class="modal-title" id="modalCreateLabel">Editar guía</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="far fa-times h5"></i>
                 </button>
@@ -21,17 +21,19 @@
 
                     <div class="form-group col-md-3">
                         <label for="address">Dirección destino <span class="text-danger">*</span></label>
-                        <select name="customer_address" class="form-control form-control-solid" id="customer_address_edit">
+                        <select name="customer_address" class="form-control form-control-solid"
+                            id="customer_address_edit">
                             <option disabled selected>Seleccione </option>
-                            @if($customer_addresses)
+                            @if ($customer_addresses)
                                 @foreach ($customer_addresses as $item)
-                                    <option value="{{$item->id}}"> {{$item->name}} </option>
+                                    <option value="{{ $item->id }}"> {{ $item->name }} </option>
                                 @endforeach
                             @endif
                         </select>
                     </div>
                     <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
-                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
+                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress"
+                            data-dismiss="modal">
                             <i class="fad fa-plus-circle text-info"></i>
                         </a>
                     </div>
@@ -41,12 +43,13 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Concepto: <span class="text-danger">*</span></label>
-                        <input name="concept" id="concept_edit" type="text" class="form-control form-control-solid" placeholder="" />
+                        <input name="concept" id="concept_edit" type="text" class="form-control form-control-solid"
+                            placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="district">Tarifa <span class="text-danger">*</span></label>
-                        <select name="rate" class="form-control form-control-solid" id="rate_edit">
+                        <select name="rate" class="form-control form-control-solid" id="rate">
                             <option selected disabled value="">Seleccione Tarifa</option>
                             {{-- @foreach ($rates as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
@@ -56,26 +59,30 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor: <span class="text-danger">*</span></label>
-                        <input name="value" id="value_edit" type="number" class="form-control form-control-solid" disabled />
+                        <input name="value" id="value_edit" type="number" class="form-control form-control-solid"
+                            disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Valor Corp: <span class="text-danger">*</span></label>
-                        <input name="corp_value" id="corp_value_edit" type="number" class="form-control form-control-solid" disabled />
+                        <input name="corp_value" id="corp_value" type="number" class="form-control form-control-solid"
+                            disabled />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="doc_type">Cliente tipo documento <span class="text-danger">*</span></label>
-                        <select name="doc_type" class="form-control form-control-solid" id="customer_document_type_edit">
+                        <select name="doc_type" class="form-control form-control-solid"
+                            id="customer_document_type_edit">
                             <option selected disabled>Seleccione tipo documento</option>
                             @foreach ($customer_document_type as $document)
-                                <option value="{{$document->id}}"> {{$document->name}} </option>
+                                <option value="{{ $document->id }}"> {{ $document->name }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Contacto: <span class="text-danger">*</span></label>
-                        <input name="contact" id="contact_edit" type="text" class="form-control form-control-solid" placeholder="" />
+                        <input name="contact" id="contact_edit" type="text" class="form-control form-control-solid"
+                            placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     {{-- <div class="form-group col-md-3">
@@ -89,26 +96,29 @@
                     </div> --}}
                     <div class="form-group col-md-3 pt-2">
                         <label>Teléfono contacto:</label>
-                        <input name="phone_contact" type="tel" id="phone_contact_edit" class="form-control form-control-solid" placeholder="" />
+                        <input name="phone_contact" type="tel" id="phone_contact_edit"
+                            class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Contacto Email:</label>
-                        <input name="email_contact" id="email_contact_edit" type="email" class="form-control form-control-solid"
-                            placeholder="" />
+                        <input name="email_contact" id="email_contact_edit" type="email"
+                            class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Contacto Factura:</label>
-                        <input name="invoice_contact" id="invoice_contact_edit" type="text" class="form-control form-control-solid" placeholder="" />
+                        <input name="invoice_contact" id="invoice_contact_edit" type="text"
+                            class="form-control form-control-solid" placeholder="" />
                         <span class="form-text text-muted"></span>
                     </div>
                     <div class="form-group col-md-3">
                         <label>Zona: </label>
-                        <select name="zone" class="form-control form-control-solid" id="zone_edit">
+                        <select name="zone" class="form-control form-control-solid" id="zone_id">
                             <option selected>Seleccione</option>
                             @foreach ($zones as $item)
-                                <option value="{{$item->id}}" {{ request()->zone == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                                <option value="{{ $item->id }}"
+                                    {{ request()->zone == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                             @endforeach
                         </select>
                         <span class="form-text text-muted"></span>
@@ -116,7 +126,7 @@
                     <div class="form-group col-md-6 d-flex align-items-center">
                         <div class="checkbox-inline">
                             <label class="checkbox">
-                                <input type="checkbox" name="same_day_delivery" id="same_day_delivery_edit" />
+                                <input type="checkbox" name="same_day_delivery" id="same_day_delivery" />
                                 <span></span>
                                 Some Day Delivery
                             </label>
@@ -135,7 +145,8 @@
                     <div class="col-md-12">
                         <ul class="nav nav-tabs nav-bolder nav-tabs-line nav-tabs-line-3x" id="tabmodal" role="tablist">
                             <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab" aria-controls="cajas" aria-selected="true">Cajas/Embalaje</a>
+                                <a class="nav-link active" id="cajas-tab" data-toggle="tab" href="#cajas" role="tab"
+                                    aria-controls="cajas" aria-selected="true">Cajas/Embalaje</a>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="facil-tab" data-toggle="tab" href="#facil" role="tab"
@@ -152,9 +163,9 @@
                         </ul>
                         <div class="tab-content min-h-100px " id="myTabContent">
 
-                            <div class="table-responsive tab-pane fade show active col-md-12 " id="cajas" role="tabpanel"
-                                aria-labelledby="cajas-tab">
-                                  <div class="row font-weight-bold border  mt-4 text-center bg-gray-200">
+                            <div class="table-responsive tab-pane fade show active col-md-12 " id="cajas"
+                                role="tabpanel" aria-labelledby="cajas-tab">
+                                <div class="row font-weight-bold border  mt-4 text-center bg-gray-200">
                                     <div class="col-1 border-right">#</div>
                                     <div class="col-1 border-right">Peso</div>
                                     <div class="col-1 border-right">Largo</div>
@@ -169,7 +180,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                 <div id="box-container-edit" name="box-container">
+                                <div id="box-container-edit" name="box-container">
 
                                 </div>
 

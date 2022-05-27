@@ -59,7 +59,6 @@
                         <select name="branch_office_id" id="user_branch_office" class="form-control form-control-solid">
                             <option value="" selected disabled> Seleccione </option>
                         </select>
-                        {{-- <input type="text" id="user_branch_office" class="form-control form-control-solid" readonly value=""> --}}
                     </div>
                     <div class="form-group col-md-6">
                         <label for="customers">Tipo de documento</label>
@@ -144,7 +143,7 @@
     </form>
     <!--end::Form-->
 </div>
-@include('OrderModule.views.html.detailCustomer')
+@include('OrderModule.views.html.modals.detailCustomer')
 
 @endsection
 

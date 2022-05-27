@@ -68,7 +68,6 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-
         $address = $this->showAddress($id);
         $address = $address['data'];
         return $this->respond(200, $address, null);

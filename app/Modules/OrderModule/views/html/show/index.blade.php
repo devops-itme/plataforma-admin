@@ -181,6 +181,6 @@
     </form>
     <!--end::Form-->
 </div>
-@include('orders.detailCustomer')
+@include('OrderModule.views.html.modals.detailCustomer')
 
 @endsection

@@ -46,7 +46,7 @@ class OrderController extends Controller
             $query->where('name', 'order_types');
         })->get();
         $status_matrix = StatusMatrix::get();
-        return view($this->path . 'index', compact('orders', 'order_type', 'status_matrix'));
+        return view($this->path . 'national.index', compact('orders', 'order_type', 'status_matrix'));
     }
 
     /**
@@ -56,24 +56,35 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+        $order_type = ParameterValue::whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
+        })
+            ->where('name', '<>', 'International')
+            ->get();
+
+        $customers = Customer::whereHas('getUser', function ($query) {
+            $query->whereHas('getRole', function ($query) {
+                $query->where('name', 'Cliente');
+            });
         })->get();
+
         $transport_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'transport_type');
         })->get();
+
         $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'payment_method');
         })->get();
-        $customers = Customer::with('getUser')->get();
+
         $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'customer_document_type');
         })->get();
+
         $zones = Zone::get();
         $rates = Rate::get();
         $customer_addresses = [];
         $tax_percentage = 7;
-        return view($this->path . 'create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses', 'tax_percentage'));
+        return view($this->path . 'national.create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses', 'tax_percentage'));
     }
 
     /**
@@ -88,37 +99,35 @@ class OrderController extends Controller
             $request->all(),
             [
                 'address_id' => 'required|numeric|exists:addresses,id',
-                'required' => 'nullable|numeric',
+                'guides' => 'required'
             ]
         );
+
         if ($validator->fails()) {
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
+        
+        $Order = new Order();
+        $order_number = $Order->generateOrderNumber()['data'];
+        $request->merge([
+            'order_number' => $order_number,
+            'guides' => json_decode($request->guides),
+            'urgent_dispatch' => $request->urgent_dispatch == 'on' ? 1 : 0,
+            'return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0,
+            'state' => 1,
+            'description' => $request->order_description,
+            'creator_user_id' => Auth::user()->id,
+        ]);
 
         if (Auth()->user()->role != 1) {
             $request->merge(['user_id' => Auth()->user()->id]);
         };
-        if ($request->urgent_dispatch == 'on') {
-            $request->merge(['urgent_dispatch' => 1]);
-        } else {
-            $request->merge(['urgent_dispatch' => 0]);
-        }
-        $request->merge([
-            'state' => 1, 'address_id' => $request->customer_address, 'description' => $request->description_order,
-            'creator_user_id' => Auth::user()->id,
-        ]);
-        $response = $this->storeOrder($request);
-        if ($response['state'] == 200) {
-            if ($request->guideCheck) {
-                $assignGuide = $this->assignGuide($request, $response['data']->id);
-                if ($assignGuide['state'] != 200) {
-                    return redirect()->back()->with('danger', $assignGuide['message']);
-                }
-            }
 
+        $response = $Order->createOrderWithGuides($request);
+        if ($response['state'] == 200) {
             return redirect()->route('orders.index')->with('success', $response['message']);
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return redirect()->back()->with('danger', $response['message'] . ' ' . $response['error']);
         }
     }
 
@@ -288,26 +297,6 @@ class OrderController extends Controller
         }
     }
 
-
-    public function orderNumber()
-    {
-        //Search Orders
-        $orders = Order::get();
-        if (count($orders) > 0) {
-            $last_order = $orders[count($orders) - 1]->order_number;
-            $order_number = explode('_', $last_order)[1];
-            $orderNumber = 'Orden_' . ($order_number + 1);
-            return json_encode([
-                'state' => 200,
-                'data' => $orderNumber,
-            ]);
-        } else {
-            return json_encode([
-                'state' => 200,
-                'data' => 'Orden_1',
-            ]);
-        }
-    }
     public function record()
     {
         $orders = Order::with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {

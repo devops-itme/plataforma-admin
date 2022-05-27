@@ -13,6 +13,7 @@ use App\Modules\RouteModule\Route;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
 
@@ -151,6 +152,50 @@ class Guide extends Model
         if (!is_null($from) && !is_null($to)) {
             return $query->whereBetween('created_at', [$from, $to]);
         }
+    }
+
+    public function validateGuide($request, $action = null, $id = null)
+    {
+        return Validator::make(
+            $request->all(),
+            [
+                'order_id' => 'nullable|exists:orders,id',
+                'branch_office' => 'nullable',
+                'transport_type' => 'nullable',
+                'dispatched' => 'nullable',
+                'address_name' => 'required',
+                'address_lat' => 'nullable',
+                'address_lng' => 'nullable',
+                'address_description' => 'nullable',
+                'description' => 'required',
+                'zone' => 'nullable',
+                'country' => 'nullable',
+                'city' => 'nullable',
+                'recipient_name' => 'nullable',
+                'document_type' => 'nullable',
+                'document' => 'nullable',
+                'delivery_office' => 'nullable',
+                'pre_guide' => 'nullable',
+                'invoice_number' => 'nullable',
+                'declared' => 'nullable',
+                'pieces' => 'nullable',
+                'kg' => 'nullable',
+                'concept' => 'nullable',
+                'rate' => 'nullable',
+                'value' => 'nullable',
+                'corp_value' => 'nullable',
+                'customer_document_type' => 'nullable',
+                'contact' => 'nullable',
+                'phone_contact' => 'nullable',
+                'email_contact' => 'nullable',
+                'invoice_contact' => 'nullable',
+                'same_day_delivery' => 'nullable',
+                'sign' => 'nullable',
+                'take_photo' => 'nullable',
+                'packaging' => 'nullable',
+                'return_last_destination' => 'nullable',
+            ]
+        );
     }
 
     public function getGuidesByOrder($order_id, $paginate = 10)

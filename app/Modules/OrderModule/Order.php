@@ -14,7 +14,10 @@ use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\UserModule\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
 
@@ -201,6 +204,48 @@ class Order extends Model
         }
     }
 
+    ////////////////////////
+
+    public function orderValidate($request, $action = null, $id = null)
+    {
+        return Validator::make(
+            $request->all(),
+            [
+                'order_number' => [
+                    $action == 'create' ? 'confirmed' : 'nullable',
+                    Rule::requiredIf($action == 'create'), Rule::unique('orders', 'order_number')->ignore($id)->whereNull('deleted_at'), 'string'
+                ],
+                'user_id' => [Rule::requiredIf($action == 'create'), 'exists:users,id', 'numeric'],
+                'zone_id' => 'nullable|exists:zones,id|numeric',
+                'order_type' => [Rule::requiredIf($action == 'create'), 'numeric'],
+                'order_value' => 'nullable|numeric',
+                'receive_by_COD' => 'nullable|numeric',
+                'internal_product' => 'nullable|numeric',
+                'expenses' => 'nullable|numeric',
+                'diligence_expenses' => 'nullable|numeric',
+                'tax_total' => 'nullable|numeric',
+                'vehicle_type_id' => [Rule::requiredIf($action == 'create'), 'numeric'],
+                'payment_method' => 'nullable|numeric',
+                'urgent_dispatch' => 'nullable|numeric',
+                'schedule_date' => 'nullable',
+                'schedule_time' => 'nullable|numeric|exists:pickup_hours,id',
+                'schedule_time_range' => [Rule::requiredIf($action == 'create'), 'string'],
+                'insured_value' => 'nullable|numeric',
+                'money_to_collect' => 'nullable|numeric',
+                'percentage_to_collect' => 'nullable|numeric',
+                'branch_office' => 'nullable|numeric|exists:branch_offices,id',
+                'department_id' => 'nullable|numeric|exists:departments,id',
+                'address_id' => 'nullable|numeric|exists:addresses,id',
+                'address_name' => 'nullable',
+                'address_lat' => 'nullable',
+                'address_lng' => 'nullable',
+                'address_description' => 'nullable|string',
+                'description' => [Rule::requiredIf($action == 'create'), 'string'],
+                'state' => 'nullable|numeric'
+            ]
+        );
+    }
+
     public function showOrder($id)
     {
         try {
@@ -211,6 +256,117 @@ class Order extends Model
             return $this->respond(200, $order, null, 'Orden encontrada exitosamente');
         } catch (\Throwable $th) {
             return $this->respond(500, [], $th->getMessage(), 'Error al encontrar orden');
+        }
+    }
+
+    public function orderStore($request)
+    {
+        $validator = $this->orderValidate($request);
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+        $status = StatusMatrix::get();
+        $status_id = $status[0]->id;
+        try {
+            $order = $this::create([
+                'order_number' => $request->order_number,
+                'user_id' => $request->user_id,
+                'zone_id' => $request->zone_id,
+                'order_type' => $request->order_type,
+                'order_value' => $request->order_value,
+                'receive_by_COD' => $request->receive_by_COD,
+                'internal_product' => $request->internal_product,
+                'expenses' => $request->expenses,
+                'diligence_expenses' => $request->diligence_expenses,
+                'tax_total' => $request->tax_total,
+                'vehicle_type_id' => $request->vehicle_type_id,
+                'payment_method' => $request->payment_method,
+                'urgent_dispatch' => $request->urgent_dispatch,
+                'schedule_date' => $request->schedule_date,
+                'schedule_time' => $request->schedule_time,
+                'schedule_time_range' => $request->schedule_time_range,
+                'insured_value' => $request->insured_value,
+                'money_to_collect' => $request->money_to_collect,
+                'percentage_to_collect' => $request->percentage_to_collect,
+                'customer_user_id' => $request->user_id,
+                'branch_office' => $request->branch_office_id,
+                'address_id' => $request->address_id,
+                'address_name' => $request->address,
+                'address_lat' => $request->lat,
+                'address_lng' => $request->lng,
+                'address_description' => $request->address_description,
+                'description' => $request->description,
+                'department_id' => $request->department_id,
+                'status_matrix_id' => $status_id,
+                'creator_user_id' => $request->creator_user_id
+            ]);
+            return $this->respond(200, $order, null, 'Orden creada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear orden');
+        }
+    }
+
+    public function createOrderWithGuides($request)
+    {
+        try {
+            $validator = $this->orderValidate($request);
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
+            DB::beginTransaction();
+            $order = $this::create([
+                'user_id' => $request->user_id,
+                'customer_user_id' => $request->user_id,
+                'order_type' => $request->order_type,
+                'address_id' => $request->address_id,
+                'vehicle_type_id' => $request->vehicle_type_id,
+                'schedule_date' => $request->schedule_date,
+                'description' => $request->description,
+                'urgent_dispatch' => $request->urgent_dispatch,
+                'order_number' => $request->order_number,
+                'creator_user_id' => $request->creator_user_id,
+                'state' => 1,
+            ]);
+
+            foreach ($request->guides as $guide) {
+                $data = Guide::create([
+                    'order_id' => $order->id,
+                    "contact" => $guide->contact,
+                    'phone_contact' => $request->phone_contact,
+                    'email_contact' => $request->email_contact,
+                    "phone_contact" => $guide->phone_contact,
+                    "email_contact" => $guide->email_contact,
+                    "same_day_delivery" => $guide->same_day_delivery,
+                    "sign" => $guide->sign,
+                    "take_photo" => $guide->take_photo,
+                    "description" => $guide->description,
+                    "address_name" => $guide->address_name,
+                    "address_lat" => $guide->address_lat,
+                    "address_lng" => $guide->address_lng,
+                    "address_description" => $guide->address_description,
+                    'return_last_destination' => $request->return_last_destination,
+                ]);
+            }
+            DB::commit();
+            return $this->respond(200, $order, null, 'Orden creada exitosamente');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->respond(500, [], $th->getMessage() . ' ' . $th->getLine(), 'Error al crear orden');
+        }
+    }
+
+    public function generateOrderNumber()
+    {
+        $order_type = ParameterValue::where('name', 'International')->first(['id'])->id;
+        //Search Orders
+        $orders = Order::where('order_type', '<>', $order_type)->get();
+        if (count($orders) > 0) {
+            $last_order = $orders[count($orders) - 1]->order_number;
+            $order_number = explode('_', $last_order)[1];
+            $orderNumber = 'Orden_' . ($order_number + 1);
+            return $this->respond(200, $orderNumber);
+        } else {
+            return $this->respond(500, 'Orden_1');
         }
     }
 }

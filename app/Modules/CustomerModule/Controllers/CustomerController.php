@@ -4,6 +4,7 @@ namespace App\Modules\CustomerModule\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Modules\AddressModule\Address;
 use Illuminate\Http\Request;
 use App\Modules\CustomerModule\Controllers\CustomerTrait;
 use App\Modules\BranchOfficeModule\BranchOffice;
@@ -197,9 +198,15 @@ class CustomerController extends Controller
         $departments = Department::with('getDepartmentUser')->whereHas('getDepartmentUser', function ($query) use ($id) {
             $query->where('user_id', $id);
         })->get();
+        $addresses = Address::where('user_id', $id)->get();
         return json_encode([
             'state' => 200,
-            'data' => [$customer, $branches, $departments]
+            'data' => [
+                'customer' => $customer,
+                'branches' => $branches,
+                'departments' => $departments,
+                'addresses' => $addresses
+            ]
         ]);
     }
 
@@ -348,7 +355,7 @@ class CustomerController extends Controller
             $password_message = '. La contraseña por defecto es: Admin1234';
         }
         $response = $this->saveUser($request->merge(['parent_id' => $parent_id ?? null, 'role' => 4, 'state' => 1]));
-        $response['message'] = $response['message'] . $password_message; 
+        $response['message'] = $response['message'] . $password_message;
         return $response;
     }
 
