@@ -2075,60 +2075,64 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var Customer = /*#__PURE__*/function () {
-  function Customer(customer) {
+  function Customer(customer, order) {
     _classCallCheck(this, Customer);
 
     this.user_id = customer;
+
+    if (order) {
+      this.order = order;
+      console.log(this.order);
+    }
   }
 
   _createClass(Customer, [{
     key: "initialize",
     value: function () {
       var _initialize = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var customer_id, response, address, guide_address, user_departments, user_branch_office;
+        var _this$order, _this$order2, _this$order3, customer_id, response, address, guide_address, user_departments, user_branch_office;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (this.user_id) {
-                  _context.next = 4;
+                if (!this.user_id) {
+                  _context.next = 19;
                   break;
                 }
 
-                this.changeCustomerId();
-                _context.next = 22;
-                break;
-
-              case 4:
                 customer_id = this.user_id;
-                _context.next = 7;
+                _context.next = 4;
                 return Object(_request_requestCustomerData__WEBPACK_IMPORTED_MODULE_1__["requestCustomerData"])(customer_id);
 
-              case 7:
+              case 4:
                 response = _context.sent;
 
                 if (!(response.state != 200)) {
-                  _context.next = 10;
+                  _context.next = 7;
                   break;
                 }
 
                 return _context.abrupt("return");
 
-              case 10:
+              case 7:
                 this.user = response.data.customer;
                 this.branches = response.data.branches;
                 this.departments = response.data.departments;
                 this.addresses = response.data.addresses;
                 address = document.getElementById("address");
                 guide_address = document.getElementById("guide_address");
-                loadSelect(this.addresses, address);
+                loadSelect(this.addresses, address, (_this$order = this.order) === null || _this$order === void 0 ? void 0 : _this$order.address_id);
                 loadSelect(this.addresses, guide_address);
                 user_departments = document.getElementById("user_departments");
-                loadSelect(this.departments, user_departments);
+                loadSelect(this.departments, user_departments, (_this$order2 = this.order) === null || _this$order2 === void 0 ? void 0 : _this$order2.department_id);
                 user_branch_office = document.getElementById("user_branch_office");
-                loadSelect(this.branches, user_branch_office);
+                loadSelect(this.branches, user_branch_office, (_this$order3 = this.order) === null || _this$order3 === void 0 ? void 0 : _this$order3.branch_office_id);
 
-              case 22:
+              case 19:
+                this.changeCustomerId();
+
+              case 20:
               case "end":
                 return _context.stop();
             }
@@ -2208,6 +2212,8 @@ var Customer = /*#__PURE__*/function () {
 
 
 var loadSelect = function loadSelect(data, element) {
+  var selected = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
   if (element == null) {
     return;
   }
@@ -2223,9 +2229,10 @@ var loadSelect = function loadSelect(data, element) {
               option = document.createElement('option');
               option.value = item.id;
               option.label = item.name;
+              option.selected = item.id == selected;
               element.appendChild(option);
 
-            case 4:
+            case 5:
             case "end":
               return _context3.stop();
           }
@@ -2290,13 +2297,13 @@ var source_rate_id = null;
 
 var Guides = /*#__PURE__*/function () {
   function Guides() {
-    var guides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var guides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
     _classCallCheck(this, Guides);
 
     _defineProperty(this, "guides", []);
 
-    if (guides.length != 0) {
+    if (guides) {
       this.guides = guides;
     }
   }
@@ -2980,6 +2987,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _request_requestPickupHours_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./request/requestPickupHours.js */ "./app/Modules/OrderModule/views/js/request/requestPickupHours.js");
 /* harmony import */ var _src_getDayReference_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/getDayReference.js */ "./app/Modules/OrderModule/views/js/src/getDayReference.js");
 /* harmony import */ var _guides_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_guides.js */ "./app/Modules/OrderModule/views/js/_guides.js");
+/* harmony import */ var _request_requestGetOrder_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./request/requestGetOrder.js */ "./app/Modules/OrderModule/views/js/request/requestGetOrder.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2991,6 +2999,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //requests
 
@@ -3006,32 +3016,72 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
 var Orders = /*#__PURE__*/function () {
   function Orders() {
     _classCallCheck(this, Orders);
 
-    this.guideId = "";
+    _defineProperty(this, "order", null);
   }
 
   _createClass(Orders, [{
     key: "initialize",
-    value: function initialize() {
-      this.loadCustomer();
-      this.loadGuides();
-      var boxes = new _boxes__WEBPACK_IMPORTED_MODULE_7__["default"]();
-      boxes.initialize();
-      this.loadBranches();
-      this.loadOrderNumber();
-      this.saveGuides();
-      this.createAddress();
-      this.porDespacharOndemand();
-      this.porDespacharPackaging();
-      this.customerAddresses();
-      this.loadPickupHours();
-      this.loadHoursInEditOrShow();
-      this.sendPushNotification();
-      Object(_importModal__WEBPACK_IMPORTED_MODULE_5__["importModal"])();
-    }
+    value: function () {
+      var _initialize = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var pathname, regex, order_id, response, boxes;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                pathname = window.location.pathname;
+
+                if (!pathname.includes('edit')) {
+                  _context.next = 8;
+                  break;
+                }
+
+                regex = /(\d+)/g;
+                order_id = pathname.match(regex);
+                _context.next = 6;
+                return Object(_request_requestGetOrder_js__WEBPACK_IMPORTED_MODULE_11__["requestGetOrder"])(order_id);
+
+              case 6:
+                response = _context.sent;
+
+                if (response.state == 200) {
+                  this.order = response.data;
+                }
+
+              case 8:
+                this.loadCustomer();
+                this.loadGuides();
+                boxes = new _boxes__WEBPACK_IMPORTED_MODULE_7__["default"]();
+                boxes.initialize();
+                this.loadBranches();
+                this.saveGuides();
+                this.createAddress();
+                this.porDespacharOndemand();
+                this.porDespacharPackaging();
+                this.customerAddresses();
+                this.loadPickupHours();
+                this.loadHoursInEditOrShow();
+                this.sendPushNotification();
+                Object(_importModal__WEBPACK_IMPORTED_MODULE_5__["importModal"])();
+
+              case 22:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function initialize() {
+        return _initialize.apply(this, arguments);
+      }
+
+      return initialize;
+    }()
   }, {
     key: "loadCustomer",
     value: function loadCustomer() {
@@ -3040,9 +3090,12 @@ var Orders = /*#__PURE__*/function () {
 
       if (customer != null) {
         var customer_id = customer.value;
-        CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_6__["default"](customer_id);
+        CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_6__["default"](customer_id, this.order);
       } else {
-        CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_6__["default"]();
+        var _customer = document.getElementById("customer");
+
+        var _customer_id = _customer.value;
+        CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_6__["default"](_customer_id, this.order);
       }
 
       CustomerClass.initialize();
@@ -3050,6 +3103,8 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadGuides",
     value: function loadGuides() {
+      var _this$order;
+
       var addGuideBtn = document.getElementById("add-guide-btn");
 
       if (addGuideBtn == null) {
@@ -3068,28 +3123,15 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      var GuidesClass = new _guides_js__WEBPACK_IMPORTED_MODULE_10__["default"]();
+      var guidesArr = (_this$order = this.order) === null || _this$order === void 0 ? void 0 : _this$order.get_guides;
+      var GuidesClass = new _guides_js__WEBPACK_IMPORTED_MODULE_10__["default"](guidesArr);
       GuidesClass.initialize();
-      addGuideBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                GuidesClass.addGuide();
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      })));
-      createOrderBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      addGuideBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                guides.value = JSON.stringify(GuidesClass.guides);
+                GuidesClass.addGuide();
 
               case 1:
               case "end":
@@ -3098,34 +3140,48 @@ var Orders = /*#__PURE__*/function () {
           }
         }, _callee2);
       })));
+      createOrderBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                guides.value = JSON.stringify(GuidesClass.guides);
+
+              case 1:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      })));
     } /////////////////////////////////////
 
   }, {
     key: "sendPushNotification",
     value: function () {
-      var _sendPushNotification = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var _sendPushNotification = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var state, notification_type, fcm_token, url;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 state = document.getElementById("state");
                 notification_type = document.getElementById("notification_type");
                 fcm_token = document.getElementById("fcm_token");
 
                 if (!(state == null || notification_type == null || fcm_token == null)) {
-                  _context3.next = 5;
+                  _context4.next = 5;
                   break;
                 }
 
-                return _context3.abrupt("return");
+                return _context4.abrupt("return");
 
               case 5:
                 state = state.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
                 url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context3.next = 11;
+                _context4.next = 11;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3136,10 +3192,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 11:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }));
 
       function sendPushNotification() {
@@ -3147,84 +3203,6 @@ var Orders = /*#__PURE__*/function () {
       }
 
       return sendPushNotification;
-    }()
-  }, {
-    key: "requestOrderNumber",
-    value: function () {
-      var _requestOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                response = {
-                  state: 500
-                };
-                _context4.next = 3;
-                return fetch("/order_number").then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return response.error = e;
-                });
-
-              case 3:
-                return _context4.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }));
-
-      function requestOrderNumber() {
-        return _requestOrderNumber.apply(this, arguments);
-      }
-
-      return requestOrderNumber;
-    }()
-  }, {
-    key: "loadOrderNumber",
-    value: function () {
-      var _loadOrderNumber = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var orderNumber, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                orderNumber = document.getElementById("order_number");
-
-                if (!(orderNumber == null)) {
-                  _context5.next = 3;
-                  break;
-                }
-
-                return _context5.abrupt("return");
-
-              case 3:
-                _context5.next = 5;
-                return this.requestOrderNumber();
-
-              case 5:
-                response = _context5.sent;
-                orderNumber.setAttribute("value", response.data);
-
-              case 7:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, this);
-      }));
-
-      function loadOrderNumber() {
-        return _loadOrderNumber.apply(this, arguments);
-      }
-
-      return loadOrderNumber;
     }()
   }, {
     key: "saveGuides",
@@ -3237,11 +3215,11 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnStoreGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      btnStoreGuide.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var branch_office, transport_type, address_name, guide_description, concept, rate, value, corp_value, customer_document_type, contact, phone_contact, email_contact, invoice_contact, zone, same_day_delivery, sign, take_photo, ids, weights, longs, broads, highs, vol_weights, descriptions, boxArr, i, individualBoxArr, formData, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 branch_office = document.getElementById("branch_off").value;
                 transport_type = document.getElementById("trans_type").value; // let dispatched = document.getElementById("dispatched").value;
@@ -3310,11 +3288,11 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("sign", sign);
                 formData.append("take_photo", take_photo); // formData.append('customer_address',customer_address);
 
-                _context6.next = 47;
+                _context5.next = 47;
                 return _this.sendGuideData(formData);
 
               case 47:
-                response = _context6.sent;
+                response = _context5.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
@@ -3329,25 +3307,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 49:
               case "end":
-                return _context6.stop();
+                return _context5.stop();
             }
           }
-        }, _callee6);
+        }, _callee5);
       })));
     }
   }, {
     key: "sendGuideData",
     value: function () {
-      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(formData) {
+      var _sendGuideData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(formData) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 response = {
                   state: 500
                 };
-                _context7.next = 3;
+                _context6.next = 3;
                 return fetch("/guias/store", {
                   headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -3357,15 +3335,15 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context7.sent;
-                return _context7.abrupt("return", response.json());
+                response = _context6.sent;
+                return _context6.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7);
+        }, _callee6);
       }));
 
       function sendGuideData(_x) {
@@ -3377,16 +3355,16 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "sendDataToUpdate",
     value: function () {
-      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(id, requestOptions) {
+      var _sendDataToUpdate = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(id, requestOptions) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 response = {
                   state: 500
                 };
-                _context8.next = 3;
+                _context7.next = 3;
                 return fetch("/guias/" + id, requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3396,14 +3374,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context8.abrupt("return", response);
+                return _context7.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context8.stop();
+                return _context7.stop();
             }
           }
-        }, _callee8);
+        }, _callee7);
       }));
 
       function sendDataToUpdate(_x2, _x3) {
@@ -3422,19 +3400,19 @@ var Orders = /*#__PURE__*/function () {
       }
 
       [].forEach.call(branchesSlc, /*#__PURE__*/function () {
-        var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(branch) {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(branch) {
           var response, data, i, element, branchOffice;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
             while (1) {
-              switch (_context9.prev = _context9.next) {
+              switch (_context8.prev = _context8.next) {
                 case 0:
                   branch.selectedIndex = 0;
                   removeOptions(branch);
-                  _context9.next = 4;
+                  _context8.next = 4;
                   return Object(_request_requestBranches_js__WEBPACK_IMPORTED_MODULE_2__["requestBranches"])();
 
                 case 4:
-                  response = _context9.sent;
+                  response = _context8.sent;
                   data = response.data;
 
                   for (i = 0; i < data.length; i++) {
@@ -3445,10 +3423,10 @@ var Orders = /*#__PURE__*/function () {
 
                 case 7:
                 case "end":
-                  return _context9.stop();
+                  return _context8.stop();
               }
             }
-          }, _callee9);
+          }, _callee8);
         }));
 
         return function (_x4) {
@@ -3459,47 +3437,47 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "customerAddresses",
     value: function () {
-      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+      var _customerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
         var customerId,
             slcAddresses,
             response,
             data,
-            _args10 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+            _args9 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                customerId = _args10.length > 0 && _args10[0] !== undefined ? _args10[0] : null;
+                customerId = _args9.length > 0 && _args9[0] !== undefined ? _args9[0] : null;
                 slcAddresses = document.getElementsByName("customer_address");
 
                 if (!(customerId == "")) {
-                  _context10.next = 4;
+                  _context9.next = 4;
                   break;
                 }
 
-                return _context10.abrupt("return");
+                return _context9.abrupt("return");
 
               case 4:
                 if (!(slcAddresses == null)) {
-                  _context10.next = 6;
+                  _context9.next = 6;
                   break;
                 }
 
-                return _context10.abrupt("return");
+                return _context9.abrupt("return");
 
               case 6:
-                _context10.next = 8;
+                _context9.next = 8;
                 return this.requestCustomerAddresses(customerId);
 
               case 8:
-                response = _context10.sent;
+                response = _context9.sent;
 
                 if (!(response == null)) {
-                  _context10.next = 11;
+                  _context9.next = 11;
                   break;
                 }
 
-                return _context10.abrupt("return");
+                return _context9.abrupt("return");
 
               case 11:
                 data = response.data;
@@ -3520,10 +3498,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 13:
               case "end":
-                return _context10.stop();
+                return _context9.stop();
             }
           }
-        }, _callee10, this);
+        }, _callee9, this);
       }));
 
       function customerAddresses() {
@@ -3535,31 +3513,31 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "requestCustomerAddresses",
     value: function () {
-      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+      var _requestCustomerAddresses = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         var id,
             route,
             response,
-            _args11 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+            _args10 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                id = _args11.length > 0 && _args11[0] !== undefined ? _args11[0] : null;
+                id = _args10.length > 0 && _args10[0] !== undefined ? _args10[0] : null;
                 route = window.location.pathname.split("/");
 
                 if (!(document.getElementById("user_code") == null)) {
-                  _context11.next = 4;
+                  _context10.next = 4;
                   break;
                 }
 
-                return _context11.abrupt("return");
+                return _context10.abrupt("return");
 
               case 4:
                 route.includes("edit") ? id = document.getElementById("user_code").value : "";
                 response = {
                   state: 500
                 };
-                _context11.next = 8;
+                _context10.next = 8;
                 return fetch("/customer_addresses/" + id).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3569,14 +3547,14 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 8:
-                return _context11.abrupt("return", response);
+                return _context10.abrupt("return", response);
 
               case 9:
               case "end":
-                return _context11.stop();
+                return _context10.stop();
             }
           }
-        }, _callee11);
+        }, _callee10);
       }));
 
       function requestCustomerAddresses() {
@@ -3596,11 +3574,11 @@ var Orders = /*#__PURE__*/function () {
         return;
       }
 
-      btnSaveAddress.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+      btnSaveAddress.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
         var formData, description, address, lat, lng, user_id, response, modal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
                 formData = new FormData();
                 description = document.getElementById("add_description").value;
@@ -3614,11 +3592,11 @@ var Orders = /*#__PURE__*/function () {
                 formData.append("lng", lng);
                 formData.append("description", description);
                 formData.append("requestByJs", 1);
-                _context12.next = 14;
+                _context11.next = 14;
                 return _this2.sendAddressData(formData);
 
               case 14:
-                response = _context12.sent;
+                response = _context11.sent;
 
                 if (response.state == 200) {
                   correct(response.message);
@@ -3635,25 +3613,25 @@ var Orders = /*#__PURE__*/function () {
 
               case 16:
               case "end":
-                return _context12.stop();
+                return _context11.stop();
             }
           }
-        }, _callee12);
+        }, _callee11);
       })));
     }
   }, {
     key: "sendAddressData",
     value: function () {
-      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(formData) {
+      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(formData) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
                 response = {
                   state: 500
                 };
-                _context13.next = 3;
+                _context12.next = 3;
                 return fetch("/direcciones", {
                   headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -3663,15 +3641,15 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context13.sent;
-                return _context13.abrupt("return", response.json());
+                response = _context12.sent;
+                return _context12.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context13.stop();
+                return _context12.stop();
             }
           }
-        }, _callee13);
+        }, _callee12);
       }));
 
       function sendAddressData(_x5) {
@@ -3683,42 +3661,42 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "porDespacharOndemand",
     value: function () {
-      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context15.prev = _context15.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
                 button = document.getElementsByClassName("porDespacharOndemand");
 
                 if (!(button == null)) {
-                  _context15.next = 3;
+                  _context14.next = 3;
                   break;
                 }
 
-                return _context15.abrupt("return");
+                return _context14.abrupt("return");
 
               case 3:
                 [].forEach.call(button, function (btn) {
-                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
+                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
                     var order_id, result, req;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
                       while (1) {
-                        switch (_context14.prev = _context14.next) {
+                        switch (_context13.prev = _context13.next) {
                           case 0:
                             order_id = btn.parentNode.parentNode;
-                            _context14.next = 3;
+                            _context13.next = 3;
                             return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", "info");
 
                           case 3:
-                            result = _context14.sent;
+                            result = _context13.sent;
 
                             if (!(result == true)) {
-                              _context14.next = 9;
+                              _context13.next = 9;
                               break;
                             }
 
-                            _context14.next = 7;
+                            _context13.next = 7;
                             return fetch("/pordespachar/ondemand/".concat(order_id.id), {
                               method: "POST",
                               headers: {
@@ -3728,7 +3706,7 @@ var Orders = /*#__PURE__*/function () {
                             });
 
                           case 7:
-                            req = _context14.sent;
+                            req = _context13.sent;
 
                             if (req.ok) {
                               correct("Estado actualizado!");
@@ -3739,19 +3717,19 @@ var Orders = /*#__PURE__*/function () {
 
                           case 9:
                           case "end":
-                            return _context14.stop();
+                            return _context13.stop();
                         }
                       }
-                    }, _callee14);
+                    }, _callee13);
                   })));
                 });
 
               case 4:
               case "end":
-                return _context15.stop();
+                return _context14.stop();
             }
           }
-        }, _callee15);
+        }, _callee14);
       }));
 
       function porDespacharOndemand() {
@@ -3763,38 +3741,38 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "porDespacharPackaging",
     value: function () {
-      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
         var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
           while (1) {
-            switch (_context17.prev = _context17.next) {
+            switch (_context16.prev = _context16.next) {
               case 0:
                 button = document.getElementsByClassName("porDespacharPackaging");
 
                 if (!(button == null)) {
-                  _context17.next = 3;
+                  _context16.next = 3;
                   break;
                 }
 
-                return _context17.abrupt("return");
+                return _context16.abrupt("return");
 
               case 3:
                 [].forEach.call(button, function (btn) {
-                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
                     var order_id, result, formData, token, myHeaders, requestOptions, data, req;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
                       while (1) {
-                        switch (_context16.prev = _context16.next) {
+                        switch (_context15.prev = _context15.next) {
                           case 0:
                             order_id = btn.parentNode.parentNode;
-                            _context16.next = 3;
+                            _context15.next = 3;
                             return porDespacharPackagingAlert();
 
                           case 3:
-                            result = _context16.sent;
+                            result = _context15.sent;
 
                             if (!(result == 3 || result == 7)) {
-                              _context16.next = 18;
+                              _context15.next = 18;
                               break;
                             }
 
@@ -3813,11 +3791,11 @@ var Orders = /*#__PURE__*/function () {
                             data = {
                               type: result
                             };
-                            _context16.next = 16;
+                            _context15.next = 16;
                             return fetch("/pordespachar/packaging/".concat(order_id.id), requestOptions);
 
                           case 16:
-                            req = _context16.sent;
+                            req = _context15.sent;
 
                             if (req.ok) {
                               correct("Estado actualizado!");
@@ -3828,19 +3806,19 @@ var Orders = /*#__PURE__*/function () {
 
                           case 18:
                           case "end":
-                            return _context16.stop();
+                            return _context15.stop();
                         }
                       }
-                    }, _callee16);
+                    }, _callee15);
                   })));
                 });
 
               case 4:
               case "end":
-                return _context17.stop();
+                return _context16.stop();
             }
           }
-        }, _callee17);
+        }, _callee16);
       }));
 
       function porDespacharPackaging() {
@@ -3852,27 +3830,27 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadPickupHours",
     value: function () {
-      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
+      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
         var date_selector, response, days;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
           while (1) {
-            switch (_context18.prev = _context18.next) {
+            switch (_context17.prev = _context17.next) {
               case 0:
                 date_selector = document.getElementById("schedule_date");
 
                 if (!(date_selector == null)) {
-                  _context18.next = 3;
+                  _context17.next = 3;
                   break;
                 }
 
-                return _context18.abrupt("return");
+                return _context17.abrupt("return");
 
               case 3:
-                _context18.next = 5;
+                _context17.next = 5;
                 return Object(_request_requestPickupHours_js__WEBPACK_IMPORTED_MODULE_8__["requestPickupHours"])();
 
               case 5:
-                response = _context18.sent;
+                response = _context17.sent;
                 days = response.data;
                 date_selector.addEventListener("change", function () {
                   var day = Object(_src_getDayReference_js__WEBPACK_IMPORTED_MODULE_9__["getDayReference"])(date_selector.value);
@@ -3900,10 +3878,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 8:
               case "end":
-                return _context18.stop();
+                return _context17.stop();
             }
           }
-        }, _callee18);
+        }, _callee17);
       }));
 
       function loadPickupHours() {
@@ -3915,28 +3893,28 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadHoursInEditOrShow",
     value: function () {
-      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
         var route, date_selector, response, days, day, day_data, schedule_time_range, i, element, text, option;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
           while (1) {
-            switch (_context19.prev = _context19.next) {
+            switch (_context18.prev = _context18.next) {
               case 0:
                 route = window.location.pathname;
 
                 if (route.includes("create") && route.includes("edit")) {
-                  _context19.next = 3;
+                  _context18.next = 3;
                   break;
                 }
 
-                return _context19.abrupt("return");
+                return _context18.abrupt("return");
 
               case 3:
                 date_selector = document.getElementById("schedule_date");
-                _context19.next = 6;
+                _context18.next = 6;
                 return this.requestPickupHours();
 
               case 6:
-                response = _context19.sent;
+                response = _context18.sent;
                 days = response.data;
                 day = Object(_src_getDayReference_js__WEBPACK_IMPORTED_MODULE_9__["getDayReference"])(date_selector.value);
                 day_data = days[day];
@@ -3962,10 +3940,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 11:
               case "end":
-                return _context19.stop();
+                return _context18.stop();
             }
           }
-        }, _callee19, this);
+        }, _callee18, this);
       }));
 
       function loadHoursInEditOrShow() {
@@ -4408,6 +4386,61 @@ var requestCustomerData = /*#__PURE__*/function () {
   }));
 
   return function requestCustomerData(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./app/Modules/OrderModule/views/js/request/requestGetOrder.js":
+/*!*********************************************************************!*\
+  !*** ./app/Modules/OrderModule/views/js/request/requestGetOrder.js ***!
+  \*********************************************************************/
+/*! exports provided: requestGetOrder */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestGetOrder", function() { return requestGetOrder; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var requestGetOrder = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id) {
+    var response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            response = {
+              state: 500
+            };
+            _context.next = 3;
+            return fetch("/getOrder/" + id).then(function (response) {
+              return response.json();
+            }).then(function (data) {
+              response = data;
+            })["catch"](function (e) {
+              return response.error = e;
+            });
+
+          case 3:
+            return _context.abrupt("return", response);
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function requestGetOrder(_x) {
     return _ref.apply(this, arguments);
   };
 }();

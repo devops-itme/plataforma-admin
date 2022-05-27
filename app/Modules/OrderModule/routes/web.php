@@ -10,6 +10,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/ordenes-internacionales', 'OrderModule\Controllers\InternationalOrderController')->names('internationalOrders');
         Route::post('/importBatch', 'OrderModule\Controllers\InternationalOrderController@importBatch')->name('internationalOrders.import');
     });
+    
+    Route::get('getOrder/{id}', 'OrderModule\Controllers\OrderController@getOrder');
     Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
     Route::get('/order_number', 'OrderModule\Controllers\OrderController@orderNumber');
     Route::post('pordespachar/ondemand/{id}', 'OrderModule\Controllers\OrderController@porDespacharOndemand');
