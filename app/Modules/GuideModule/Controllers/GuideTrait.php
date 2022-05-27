@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Modules\GuideModule\Controllers;
+
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Modules\GuideModule\Guide;
 use Illuminate\Validation\Rule;
+
 trait GuideTrait
 {
     use RestActions;
@@ -122,6 +125,7 @@ trait GuideTrait
                 'address_lng' => $request->address_lng ?? $guide->address_lng,
                 'address_description' => $request->address_description ?? $guide->address_description,
                 'detail_package' => $request->detail_package ?? $guide->detail_package,
+                'description' => $request->description ?? $guide->description,
                 'zone' => $request->zone ?? $guide->zone,
                 'country' => $request->country ?? $guide->country,
                 'city' => $request->city ?? $guide->city,
