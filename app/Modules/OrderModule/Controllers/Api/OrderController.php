@@ -152,7 +152,7 @@ class OrderController extends Controller
                 $order_id = $storeOderResponse['data']->id;
 
                 $guides = $request->guides;
-                $guides = json_decode($guides, true);
+                // $guides = json_decode($guides, true);
 
                 $rate_value = 0;
 
