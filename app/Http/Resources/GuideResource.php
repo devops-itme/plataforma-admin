@@ -25,6 +25,7 @@ class GuideResource extends JsonResource
             "address_lng" => $this->address_lng,
             "address_description" => $this->address_description,
             "description" =>  $this->description,
+            "detail_package" => $this->detail_package,
             "zone" =>  $this->zone,
             "zone_id" =>  $this->zone_id,
             // "zone_names" => [

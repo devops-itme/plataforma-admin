@@ -20,9 +20,18 @@ class InternationalOrderController extends Controller
     use RestActions;
 
     protected $path = 'OrderModule.views.html.international.';
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::paginate(10);
+        $orders = Order::number($request->get('number'))
+            ->order_type(request()->order_type)
+            ->customer(request()->name)
+            ->date(request()->from, request()->to)
+            ->whereStatusMatrix([request()->state])
+            ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
+                $query->where('name', '!=', 'ENTREGADO');
+            })
+            ->international()
+            ->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();

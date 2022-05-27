@@ -106,7 +106,7 @@ class OrderController extends Controller
 
             $last_id = Order::all()->where('external_id', NULL)->last()->id ?? 0;
             $request->merge(['order_number' => 'Orden_' . ($last_id + 1)]);
-            
+
             $transactionResponse = DB::transaction(function () use ($request) {
                 $Rate = new Rate();
                 $source_zone_id = $request->zone_id;
@@ -121,7 +121,8 @@ class OrderController extends Controller
                 $source_rate = $Rate->calculateRate($rate->id);
 
                 $user_id = Auth::user()->id;
-                $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
+                $request->merge(['user_id' => $user_id, 'address_description' => $request->address_description]);
+                $request->merge(['description' => $request->order_description]);
 
                 if (!is_null($request->address_id)) {
                     $address = Address::find($request->address_id);
@@ -142,7 +143,6 @@ class OrderController extends Controller
                     }
                 }
 
-                $request->merge(['description' => $request->order_description]);
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
@@ -152,6 +152,7 @@ class OrderController extends Controller
                 $order_id = $storeOderResponse['data']->id;
 
                 $guides = $request->guides;
+                // $guides = json_decode($guides, true);
 
                 $rate_value = 0;
 
@@ -184,7 +185,7 @@ class OrderController extends Controller
                         'guide_description' => $guide['guide_description'],
                         'contact' => $guide['contact'],
                         'phone_contact' => $guide['phone_contact'],
-                        'email_contact' => $guide['email_contact'],
+                        'email_contact' => $guide['email_contact'] ?? '',
                         'return_last_destination' => $guide['return_last_destination'],
                         'address_name' => $address->name ?? $guide['address'],
                         'address_lat' => $address->lat ?? $guide['lat'],
@@ -192,7 +193,8 @@ class OrderController extends Controller
                         'address_description' => $address->description ?? $guide['address_description'],
                         'description' => $address->description ?? $guide['address_description'],
                         "transport_type" => $guide['transport_type'] ?? '',
-                        'state' => 31
+                        'state' => 31,
+                        'detail_package' => $guide['detail_package'] ?? '',
                     ]);
 
                     if (is_null($guide['address_id'])) {
@@ -216,8 +218,17 @@ class OrderController extends Controller
                     }
 
                     // $guide_id = $storeGuideResponse['data']->id;
-                    // $guidance_doc = new GuidanceDocumentController();
-                    // $guidance_doc->store($request->guidance_doc, $guide_id);
+                    // $guidance_document = $guide['guidance_doc'];
+                    // // $guidance_document = json_decode($guidance_document, true);
+                    // // dd($guidance_document);
+
+                    // if (!is_null($guidance_document)) {
+                    //     $guidance_doc = new GuidanceDocumentController();
+                    //     $guidance_doc->store($request->$guidance_document, $guide_id);
+                    //     if (is_null($guidance_doc)) {
+                    //         return $this->respond(500, null, 'not found', 'No hay imágenes para esta guía');
+                    //     }
+                    // }
                 }
 
                 $order = Order::find($order_id);
@@ -285,7 +296,7 @@ class OrderController extends Controller
         $order_id = $request->order_id;
         $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=" . $fcm_token . "&order_id=" . $order_id;
         $cclw = env('PAGUELOFACIL_CCLW');
-        $amount = intval($request->totalValue);
+        $amount = (float) $request->totalValue;
         $description = 'Pago orden multientrega';
         $data = array(
             "CCLW" => $cclw,
