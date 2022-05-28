@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\RestActions;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Imports\ShipmentTealcaImport;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
+use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\OrderModule\Order;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -69,5 +70,35 @@ class ShipmentController extends Controller
          return redirect()->route('shipments.index',['order_id'=>$request->order_id])->with('success',$response['message']); 
         }
          return redirect()->back()->with('danger', $response['message']);
+    }
+
+    public function edit($id){
+        
+        
+        $guide = Guide::find($id);
+        $id_branch_office = $guide['branch_office'];
+
+        if($id_branch_office == null){
+            $branch = new BranchOffice();
+            $branch->name ='Sin seleccionar';
+         }else{
+            $branch = BranchOffice::find($id_branch_office);
+         }
+        
+        return view($this->path. 'edit', compact('guide', 'branch'));
+    }
+
+    public function update(Request $request, $id){
+
+        $dato_guide = Guide::find($id);
+        $order_id = $dato_guide->order_id;
+
+        $request->guide_id = $id;
+        $response = $this->updateGuide($request);
+
+        if($response['state'] = 200){
+            return redirect()->route('shipments.index',['order_id'=>$order_id])->with('success', 'Guia actualizada exitosamente.');
+        }
+        return redirect()->back()->with('danger',$response['message']);
     }
 }

@@ -40,8 +40,13 @@ class OrderController extends Controller
             ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
                 $query->where('name', '!=', 'ENTREGADO');
             })
-            ->national()
-            ->paginate(10);
+            ->national();
+
+        if (Auth::user()->getRole->name != 'Admin') {
+            $orders = $orders->whereCustomer(Auth::user()->id);
+        }
+        $orders = $orders->paginate(10);
+
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
@@ -106,7 +111,7 @@ class OrderController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
-        
+
         $Order = new Order();
         $order_number = $Order->generateOrderNumber()['data'];
         $request->merge([
@@ -183,20 +188,27 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order = Order::with('getUser', 'getUser.getCustomer', 'getGuides')->find($id);
-        $user_id = $order->getUser->id;
-        $branches = BranchOffice::with('getBranchUser')->whereHas('getBranchUser', function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
+        $order = Order::find($id);
+
+        $customers = Customer::whereHas('getUser', function ($query) {
+            $query->whereHas('getRole', function ($query) {
+                $query->where('name', 'Cliente');
+            });
         })->get();
-        $departments = Department::with('getDepartmentUser')->whereHas('getDepartmentUser', function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
-        })->get();
-        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+
+        $order_type = ParameterValue::whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
-        })->get();
+        })
+            ->where('name', '<>', 'International')
+            ->get();
+
         $transport_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'transport_type');
         })->get();
+
+        $user_id = $order->getUser->id;
+
+       
         $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'payment_method');
         })->get();
@@ -208,7 +220,7 @@ class OrderController extends Controller
         })->get();
         $zones = Zone::get();
         $rates = Rate::get();
-        return view($this->path . 'edit.index', compact('order', 'branches', 'departments', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
+        return view($this->path . 'national.edit', compact('customers', 'order', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
     }
 
     /**
@@ -228,7 +240,7 @@ class OrderController extends Controller
         } else {
             $request->merge(['urgent_dispatch' => 0]);
         }
-        $request->merge(['address_id' => $request->customer_address, 'description' => $request->description_order]);
+        $request->merge(['description' => $request->order_description]);
         $response = $this->updateOrder($request->merge(['order_id' => $id]));
         if ($response['state'] == 200) {
             if ($request->guideCheck) {
@@ -310,5 +322,11 @@ class OrderController extends Controller
             $query->where('name', 'order_types');
         })->get();
         return view($this->path . 'historial', compact('orders', 'order_type'));
+    }
+
+    public function getOrder($id)
+    {
+        $Order = new Order();
+        return $Order->showOrder($id);
     }
 }

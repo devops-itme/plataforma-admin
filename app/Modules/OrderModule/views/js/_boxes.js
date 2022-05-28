@@ -1,7 +1,8 @@
+import { requestCalculatePackingRates } from "./request/requestCalculatePackingRates";
+
 export default class Boxes {
     boxes = [
         {
-            number: 0,
             weight: 0,
             long: 0,
             broad: 0,
@@ -29,7 +30,6 @@ export default class Boxes {
 
     setInput() {
         const inputs = [
-            'number[]',
             'weight[]',
             'long[]',
             'broad[]',
@@ -55,8 +55,7 @@ export default class Boxes {
                     let name = input.replace('[]', '');
 
                     this.boxes[index][name] = el.value;
-                    // calculateRate(true, boxes, destination_rate_id);
-                    // calculateRate(false, boxes, destination_rate_id);
+                    this.calculateRate();
                 });
             });
         });
@@ -71,11 +70,6 @@ export default class Boxes {
         [].forEach.call(this.boxes, box => {
             let row = document.createElement("tr");
             row.className = `row border mt-0 text-center box-register col-md-13 "`;
-
-            let numberCell = document.createElement("td");
-            numberCell.className = `col-1 py-4 border-right`;
-            numberCell.innerHTML = `<input type="number" name="id[]" class="form-control" min="0" value="${box.number}">`;
-            row.appendChild(numberCell);
 
             let weightCell = document.createElement("td");
             weightCell.className = `col-1 py-4 border-right`;
@@ -103,7 +97,7 @@ export default class Boxes {
             row.appendChild(volWeightCell);
 
             let descriptionCell = document.createElement("td");
-            descriptionCell.className = `col-2 py-4 border-right`;
+            descriptionCell.className = `col-6 py-4 border-right`;
             descriptionCell.innerHTML = `<input type="text" name="description[]" class="form-control" placeholder="comentarios" value="${box.description}">`;
             row.appendChild(descriptionCell);
 
@@ -136,7 +130,6 @@ export default class Boxes {
 
         addBoxBtn.addEventListener('click', () => {
             this.boxes.push({
-                number: 0,
                 weight: 0,
                 long: 0,
                 broad: 0,
@@ -145,8 +138,7 @@ export default class Boxes {
                 description: '',
             });
             this.instantiateBoxes();
-            // calculateRate(true, boxes, destination_rate_id);
-            // calculateRate(false, boxes, destination_rate_id);
+            this.calculateRate();
         });
     }
 
@@ -165,9 +157,40 @@ export default class Boxes {
                 let index = Array.prototype.indexOf.call(parent.children, box);
                 boxes.splice(index, 1);
                 box.remove();
-                // calculateRate(true, boxes, destination_rate_id);
-                // calculateRate(false, boxes, destination_rate_id);
+                this.calculateRate();
             });
+        });
+    }
+
+    async calculateRate() {
+        let corp_value = document.getElementById("corp_value");
+        let value = document.getElementById("value");
+        let same_day_delivery = document.getElementById("same_day_delivery");
+        
+        if (corp_value == null || value == null || same_day_delivery == null) {
+            return;
+        }
+        corp_value.value = 0;
+        value.value = 0;
+
+        if (this.rateId == null) {
+            return;
+        }
+
+        let immediate_delivery = same_day_delivery.checked ? 1 : 0;
+
+        let rateId = this.rateId;
+        let boxes = this.boxes;
+        await [].forEach.call(boxes, async (box) => {
+            let lbs = box?.weight;
+            let vol = box?.long * box?.broad * box?.high;
+
+            let response = await requestCalculatePackingRates(rateId, lbs, vol, immediate_delivery);
+            if (response.state == 200) {
+                let rateValue = response.data;
+                corp_value.value = parseFloat(corp_value.value) + parseFloat(rateValue);
+                value.value = parseFloat(value.value) + parseFloat(rateValue);
+            }
         });
     }
 }

@@ -1,21 +1,23 @@
-{{-- Extends layout --}}
 @extends('layouts.app')
-
-{{-- Content --}}
 @section('content')
     @include('layouts.breadCrumbs')
     <div class="card card-custom">
         <div class="card-header">
             <h3 class="card-title">
-                Crear orden
+                Editar orden
             </h3>
         </div>
         @include('layouts.alerts')
-
-        <form action="{{ route('orders.store') }}" method="post">
-            @csrf
+        <form action="{{ route('orders.update', $order->id) }}" method="POST">
+            @csrf @method('PUT')
 
             <div class="card-body d-flex flex-row flex-wrap pt-2">
+                <div class="form-group col-md-2">
+                    <label>Numero de orden: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-solid" value="{{ $order->order_number }}"
+                        readonly />
+                    <span class="form-text text-muted"></span>
+                </div>
 
                 @if (Auth::user()->getRole->name == 'Admin')
                     <div class="form-group col-md-3">
@@ -23,7 +25,7 @@
                         <select name="user_id" class="select2-customers form-control form-control-solid" id="customer">
                             <option value="" selected disabled>Seleccione un cliente</option>
                             @foreach ($customers as $customer)
-                                <option {{ old('customer') == $customer->getUser->id ? 'selected ' : '' }}
+                                <option {{ $order->user_id == $customer->getUser->id ? 'selected ' : '' }}
                                     value="{{ $customer->getUser->id }}">
                                     {{ $customer->tradename }}
                                 </option>
@@ -38,9 +40,9 @@
                     <label for="order_type">Tipo de orden <span class="text-danger">*</span></label>
                     <select name="order_type" class="form-control form-control-solid" id="order_type">
                         <option selected disabled>Seleccione tipo de orden</option>
-                        @foreach ($order_type as $order)
-                            <option {{ old('order_type') == $order->id ? 'selected ' : '' }} value="{{ $order->id }}">
-                                {{ $order->name }}</option>
+                        @foreach ($order_type as $key)
+                            <option {{ $order->order_type == $key->id ? 'selected ' : '' }} value="{{ $key->id }}">
+                                {{ $key->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -83,7 +85,7 @@
                 <div class="form-group col-md-3">
                     <label>Fecha de programación: <span class="text-danger">*</span></label>
                     <input name="schedule_date" id="schedule_date" type="date" class="form-control form-control-solid"
-                        placeholder="" />
+                        placeholder="" value="{{ $order->schedule_date }}" />
                     <span class="form-text text-muted"></span>
                 </div>
 
@@ -104,26 +106,28 @@
                 <div class="form-group col-md-12 m-0 d-flex align-items-center">
                     <div class="checkbox-inline">
                         <label class="checkbox">
-                            <input type="checkbox" name="urgent_dispatch" />
+                            <input type="checkbox" name="urgent_dispatch"
+                                {{ $order->urgent_dispatch == 1 ? 'checked' : '' }} />
                             <span></span>
                             Marcar Urgente Despacho
                         </label>
                         <label class="checkbox">
-                            <input type="checkbox" name="return_last_destination" />
+                            <input type="checkbox" name="return_last_destination"
+                                {{ $order->return_last_destination == 1 ? 'checked' : '' }} />
                             <span></span>
                             Retorno Ultimo Destino
                         </label>
                     </div>
                 </div>
             </div>
-
             <div class="card-header row flex-wrap border-0 pt-6 pb-0">
                 <h3 class="card-title col-10">
                     Datos de destino
                 </h3>
 
                 <div class="card-toolbar col-2">
-                    <button class="btn btn-primary font-weight-bolder" id="add-guide-btn" type="button" data-tooltip title="CREAR">
+                    <button class="btn btn-primary font-weight-bolder" id="add-guide-btn" type="button" data-tooltip
+                        title="CREAR">
                         <span class="svg-icon svg-icon-md">
                             <i class="fas fa-plus"></i>
                         </span>Añadir destino
@@ -211,7 +215,7 @@
                 <div class="form-group col-md-6">
                     <label for="description">Descripción <span class="text-danger">*</span></label>
                     <textarea name="guide_description" id="guide_description" cols="10" rows="2"
-                        class="form-control form-control-solid">{{ $order->description }}</textarea>
+                        class="form-control form-control-solid"></textarea>
                 </div>
 
                 @include('OrderModule.views.html.national.guideContentTab')
@@ -219,10 +223,9 @@
             @include('OrderModule.views.html.national.guideList')
             <input type="hidden" name="guides" id="guides">
             <div class="card-footer d-flex justify-content-end">
-                <button type="submit" id="create-order-btn" class="btn btn-primary mr-2">Crear Orden</button>
+                <button type="submit" id="create-order-btn" class="btn btn-primary mr-2">Actualizar Orden</button>
                 <button type="reset" class="btn btn-secondary">Limpiar</button>
             </div>
         </form>
     </div>
 @endsection
-
