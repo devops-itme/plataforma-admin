@@ -218,9 +218,9 @@
                         class="form-control form-control-solid"></textarea>
                 </div>
 
-                {{-- @include('OrderModule.views.html.national.guideContentTab') --}}
-                @include('OrderModule.views.html.national.guideList')
+                @include('OrderModule.views.html.national.guideContentTab')
             </div>
+            @include('OrderModule.views.html.national.guideList')
             <input type="hidden" name="guides" id="guides">
             <div class="card-footer d-flex justify-content-end">
                 <button type="submit" id="create-order-btn" class="btn btn-primary mr-2">Actualizar Orden</button>

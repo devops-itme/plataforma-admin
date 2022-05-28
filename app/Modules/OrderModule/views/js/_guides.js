@@ -1,25 +1,27 @@
 //requests
 import { requestGuide } from "./request/requestGuide.js";
-import { requestGuides } from "./request/requestGuides.js";
 import { requestValidateGuide } from "./request/requestValidateGuide.js";
+import { requestCalculatePackingRates } from "./request/requestCalculatePackingRates";
 
 //src
 import { months } from "./src/months.js";
 
 //functions
-import { calculateRate } from "./calculateRate";
 import { listener } from "./listener";
 
 //classes
 import Boxes from "./_boxes";
+import { requestSearchZone } from "./request/requestSearchZone.js";
+import { requestRate } from "./request/requestRate.js";
 
 let destination_rate_id = null;
 let source_rate_id = null;
 
 
 export default class Guides {
-
+    boxes = new Boxes();
     guides = [];
+    rateId;
     constructor(guides = null) {
         if (guides) {
             this.guides = guides;
@@ -28,8 +30,31 @@ export default class Guides {
 
     initialize() {
         this.listGuides();
+        this.boxes.initialize();
         // this.listenRateVariables(true);
         // this.listenRateVariables(false);
+    }
+
+    async sourceAddressHandler() {
+        let guide_address = document.getElementById("guide_address");
+        if (guide_address == null) {
+            return;
+        }
+
+        const setRateId = async () => {
+            this.boxes.rateId = null;
+            let response = await requestSearchZone(guide_address.value);
+            if (response.state == 200) {
+                let zone_id = response.data.zone_id;
+                let responseRate = await requestRate(zone_id);
+                if (responseRate.state == 200 && response.data != null) {
+                    this.boxes.rateId = responseRate.data.id;
+                }
+            }
+            this.boxes.calculateRate();
+        }
+
+        guide_address.addEventListener('change', () => setRateId());
     }
 
     async addGuide() {
@@ -42,11 +67,16 @@ export default class Guides {
         let sign = document.getElementById("sign");
         let take_photo = document.getElementById("take_photo");
         let guide_description = document.getElementById("guide_description");
+        let value = document.getElementById("value");
+        let corp_value = document.getElementById("corp_value");
 
         if (guide_address == null || contact == null || phone_contact == null || email_contact == null) {
             return;
         }
         if (same_day_delivery == null || sign == null || take_photo == null || guide_description == null) {
+            return;
+        }
+        if (value == null || corp_value == null) {
             return;
         }
 
@@ -58,6 +88,8 @@ export default class Guides {
         sign = sign.checked ? 1 : 0;
         take_photo = take_photo.checked ? 1 : 0;
         guide_description = guide_description.value;
+        value = value.value;
+        corp_value = corp_value.value;
 
         let guide = {
             address_id: guide_address,
@@ -67,7 +99,9 @@ export default class Guides {
             same_day_delivery,
             sign,
             take_photo,
-            description: guide_description
+            description: guide_description, 
+            value,
+            corp_value
         };
 
         let response = await requestValidateGuide(JSON.stringify(guide));
@@ -133,7 +167,6 @@ export default class Guides {
         }
         this.removeGuide();
         // this.editGuide();
-        // this.listenGuideCheck();
     }
 
     removeGuide() {
@@ -152,131 +185,9 @@ export default class Guides {
             });
         }
 
-        [].forEach.call(removeGuideBtn, (btn) =>  removeGuideBtnHandler(btn));
+        [].forEach.call(removeGuideBtn, (btn) => removeGuideBtnHandler(btn));
     }
-    //////////////////////////////////
-    listenGuideCheck() {
-        const setValue = async () => {
-            if (source_address.value == "") {
-                return;
-            }
-            let total = 0;
-            await [].forEach.call(guideCheck, async function (guide) {
-                let corp_value =
-                    guide.parentNode?.parentNode?.parentNode?.getAttribute(
-                        "corp_value"
-                    ) ?? 0;
-
-                let boxes =
-                    guide.parentNode?.parentNode?.parentNode?.getAttribute(
-                        "boxes"
-                    ) ?? [];
-                let immediate_delivery =
-                    guide.parentNode?.parentNode?.parentNode?.getAttribute(
-                        "same_day_delivery"
-                    ) ?? 0;
-                boxes = JSON.parse(boxes);
-                let source_rate = 0;
-                await [].forEach.call(boxes, async (box) => {
-                    let lbs = box?.weight;
-                    let vol = box?.long * box?.broad * box?.high;
-                    console.log(lbs);
-                    let response = await requestCalculatePackingRates(
-                        source_rate_id,
-                        lbs,
-                        vol,
-                        immediate_delivery
-                    );
-                    if (response.state == 200) {
-                        source_rate =
-                            parseFloat(source_rate) + parseFloat(response.data);
-                    }
-                });
-
-                let higher_rate =
-                    parseFloat(source_rate) > parseFloat(corp_value)
-                        ? parseFloat(source_rate)
-                        : parseFloat(corp_value);
-                guide.checked &&
-                    (total = parseFloat(total) + parseFloat(higher_rate));
-            });
-            let full_tax = (total * tax_percentage.value) / 100;
-            tax_total.setAttribute("value", full_tax);
-            total = total + full_tax;
-            order_value.setAttribute("value", total);
-        };
-
-        let source_address = document.getElementById("address");
-        let guideCheck = document.getElementsByClassName("guideCheck");
-        let order_value = document.getElementById("order_value");
-        let tax_percentage = document.getElementById("tax_percentage");
-        let tax_total = document.getElementById("tax_total");
-
-        if (
-            guideCheck == null ||
-            order_value == null ||
-            tax_percentage == null ||
-            tax_total == null
-        ) {
-            return;
-        }
-
-        order_value.setAttribute("value", 0);
-        setValue();
-
-        [].forEach.call(guideCheck, function (guide) {
-            guide.addEventListener("change", async () => {
-                order_value.setAttribute("value", 0);
-                setValue();
-            });
-        });
-
-        source_address.addEventListener("change", async () => {
-            if (source_address.value == "") {
-                return;
-            }
-            let response = await requestSearchZone(source_address.value);
-
-            if (response.state == 200) {
-                source_rate_id = response.data?.zone_id;
-            }
-            order_value.setAttribute("value", 0);
-            setValue();
-        });
-    }
-
-    async listenRateVariables() {
-        let rate = document.getElementById("rate");
-        let zone = document.getElementById("zone_id");
-        let same_day_delivery = document.getElementById("same_day_delivery");
-        let source_address = document.getElementById("address");
-
-        if (
-            rate == null ||
-            zone == null ||
-            same_day_delivery == null ||
-            source_address == null
-        ) {
-            return;
-        }
-
-        const action = async () => {
-            if (zone.value == "") {
-                return;
-            }
-            let response = await requestRate(zone.value);
-            console.log("listener", response);
-            if (response.state == 200) {
-                destination_rate_id = response.data?.id;
-            }
-            calculateRate(edit, boxes, destination_rate_id);
-        };
-
-        listener(rate, action);
-        listener(zone, action);
-        listener(same_day_delivery, action, "click");
-    }
-
+    ////////////////////////////////// 
 
     editGuide() {
         let guides = document.getElementsByClassName("btnEditGuide");
@@ -351,8 +262,6 @@ export default class Guides {
                 let boxes = JSON.parse(data.boxes);
                 const BoxesClass = new Boxes(boxes, "box-container-edit");
                 BoxesClass.instantiateBoxes();
-                calculateRate(true, boxes, destination_rate_id);
-                calculateRate(false, boxes, destination_rate_id);
                 BoxesClass.addBox("add-box-btn-edit");
             });
         });

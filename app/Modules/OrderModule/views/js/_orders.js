@@ -3,18 +3,17 @@ import { requestRate } from "./request/requestRate.js";
 import { requestBranches } from "./request/requestBranches.js";
 import { requestSearchZone } from "./request/requestSearchZone";
 import { requestCalculatePackingRates } from "./request/requestCalculatePackingRates";
+import { requestPickupHours } from "./request/requestPickupHours.js";
+import { requestGetOrder } from "./request/requestGetOrder.js";
 
 
 //functions
 import { importModal } from "./importModal";
+import { getDayReference } from "./src/getDayReference.js";
 
 //classes
 import Customer from "./_customer";
-import Boxes from "./_boxes";
-import { requestPickupHours } from "./request/requestPickupHours.js";
-import { getDayReference } from "./src/getDayReference.js";
 import Guides from "./_guides.js";
-import { requestGetOrder } from "./request/requestGetOrder.js";
 
 
 
@@ -40,8 +39,7 @@ export default class Orders {
         this.loadCustomer();
         this.loadGuides();
 
-        const boxes = new Boxes();
-        boxes.initialize();
+       
 
         this.loadBranches();
 
@@ -86,6 +84,7 @@ export default class Orders {
         let guidesArr = this.order?.get_guides;
         let GuidesClass = new Guides(guidesArr);
         GuidesClass.initialize();
+        GuidesClass.sourceAddressHandler();
         addGuideBtn.addEventListener('click', async function () {
             GuidesClass.addGuide();
         });

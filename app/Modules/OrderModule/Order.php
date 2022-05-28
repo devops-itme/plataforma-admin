@@ -352,6 +352,8 @@ class Order extends Model
                     "address_lng" => $guide->address_lng,
                     "address_description" => $guide->address_description,
                     'return_last_destination' => $request->return_last_destination,
+                    'value' => $guide->value,
+                    'corp_value' => $guide->corp_value,
                 ]);
             }
             DB::commit();
