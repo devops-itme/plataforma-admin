@@ -50,6 +50,7 @@ class CreateGuidesTable extends Migration
             $table->string('phone_contact')->nullable();
             $table->string('email_contact')->nullable();
             $table->string('invoice_contact')->nullable();
+            $table->string('detail_package')->nullable();
             $table->integer('same_day_delivery')->nullable();
             $table->integer('sign')->nullable();
             $table->integer('take_photo')->nullable();
