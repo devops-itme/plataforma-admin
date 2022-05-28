@@ -8649,7 +8649,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
                 _this2.selected == 57 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
-                _this2.selected == 56 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
+                _this2.selected == 57 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
               case 13:
               case "end":
