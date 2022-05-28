@@ -36,17 +36,18 @@ export default class Orders {
             }
         }
 
+        this.porDespacharOndemand();
+        this.porDespacharPackaging();
+
         this.loadCustomer();
         this.loadGuides();
 
-       
+
 
         this.loadBranches();
 
         this.saveGuides();
         this.createAddress();
-        this.porDespacharOndemand();
-        this.porDespacharPackaging();
         this.customerAddresses();
         this.loadPickupHours();
         this.loadHoursInEditOrShow();
@@ -62,6 +63,9 @@ export default class Orders {
             CustomerClass = new Customer(customer_id, this.order);
         } else {
             let customer = document.getElementById("customer");
+            if (customer == null) {
+                return;
+            }
             let customer_id = customer.value;
             CustomerClass = new Customer(customer_id, this.order);
         }
@@ -378,6 +382,7 @@ export default class Orders {
     }
 
     async porDespacharOndemand() {
+        console.log(11111);
         let button = document.getElementsByClassName("porDespacharOndemand");
         if (button == null) {
             return;

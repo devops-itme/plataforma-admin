@@ -2996,13 +2996,13 @@ var Orders = /*#__PURE__*/function () {
                 }
 
               case 8:
+                this.porDespacharOndemand();
+                this.porDespacharPackaging();
                 this.loadCustomer();
                 this.loadGuides();
                 this.loadBranches();
                 this.saveGuides();
                 this.createAddress();
-                this.porDespacharOndemand();
-                this.porDespacharPackaging();
                 this.customerAddresses();
                 this.loadPickupHours();
                 this.loadHoursInEditOrShow();
@@ -3034,6 +3034,10 @@ var Orders = /*#__PURE__*/function () {
         CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_9__["default"](customer_id, this.order);
       } else {
         var _customer = document.getElementById("customer");
+
+        if (_customer == null) {
+          return;
+        }
 
         var _customer_id = _customer.value;
         CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_9__["default"](_customer_id, this.order);
@@ -3609,16 +3613,17 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context14.prev = _context14.next) {
               case 0:
+                console.log(11111);
                 button = document.getElementsByClassName("porDespacharOndemand");
 
                 if (!(button == null)) {
-                  _context14.next = 3;
+                  _context14.next = 4;
                   break;
                 }
 
                 return _context14.abrupt("return");
 
-              case 3:
+              case 4:
                 [].forEach.call(button, function (btn) {
                   btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
                     var order_id, result, req;
@@ -3666,7 +3671,7 @@ var Orders = /*#__PURE__*/function () {
                   })));
                 });
 
-              case 4:
+              case 5:
               case "end":
                 return _context14.stop();
             }
