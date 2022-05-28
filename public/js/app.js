@@ -8580,12 +8580,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return _defineProperty({
-      selected: 55,
+      selected: 56,
       delivery_types: [{
-        value: 55,
+        value: 56,
         text: "Entregas"
       }, {
-        value: 56,
+        value: 57,
         text: "Recogidas"
       }],
       showModal: false,
@@ -8648,8 +8648,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.tabs[2].href = "consultas"; //NAME TABS
 
                 _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
-                _this2.selected == 56 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
-                _this2.selected == 55 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
+                _this2.selected == 57 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
+                _this2.selected == 57 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
               case 13:
               case "end":
@@ -8713,8 +8713,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 _this3.statusMatrix(_this3.selected);
 
-                type == 55 && (type = 3);
-                type == 56 && (type = 7);
+                type == 56 && (type = 3);
+                type == 57 && (type = 7);
                 _context2.next = 8;
                 return _this3.requestGuides(type);
 
@@ -71158,7 +71158,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Destinos por\n                        " +
-                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 56 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -71283,7 +71283,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Seleccionados por\n                        " +
-                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 56 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -90504,8 +90504,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

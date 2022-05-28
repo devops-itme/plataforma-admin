@@ -152,7 +152,7 @@ class OrderController extends Controller
                 $order_id = $storeOderResponse['data']->id;
 
                 $guides = $request->guides;
-                // $guides = json_decode($guides, true);
+                $guides = json_decode($guides, true);
 
                 $rate_value = 0;
 
@@ -219,14 +219,28 @@ class OrderController extends Controller
 
                     // $guide_id = $storeGuideResponse['data']->id;
                     // $guidance_document = $guide['guidance_doc'];
-                    // // $guidance_document = json_decode($guidance_document, true);
                     // // dd($guidance_document);
 
-                    // if (!is_null($guidance_document)) {
+                    // foreach ($guidance_document as $document) {
+
+
                     //     $guidance_doc = new GuidanceDocumentController();
-                    //     $guidance_doc->store($request->$guidance_document, $guide_id);
-                    //     if (is_null($guidance_doc)) {
+
+                    //     if (is_null($document)) {
                     //         return $this->respond(500, null, 'not found', 'No hay imágenes para esta guía');
+                    //     }
+
+                    //     $request->merge([
+                    //         'guide_id' => $guide_id,
+                    //         'document' => $document['document'],
+                    //         'type' => $document['type'],
+                    //     ]);
+
+                    //     // dd($request->all());
+
+                    //     $storeDocumentResponse = $guidance_doc->store($request);
+                    //     if ($storeDocumentResponse['state'] != 200) {
+                    //         return $storeDocumentResponse;
                     //     }
                     // }
                 }

@@ -6,7 +6,7 @@
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center px-0">
                         <h5 class="font-weight-bold text-dark">
                             Destinos por
-                            {{ selected == 55 ? "Entregar" : "Recoger" }}
+                            {{ selected == 56 ? "Entregar" : "Recoger" }}
                         </h5>
                         <div class="col-md-2 px-0">
                             <button
@@ -88,7 +88,7 @@
                     <div class="col-md-12 d-flex flex-row flex-wrap justify-content-between align-items-center py-2">
                         <h5 class="font-weight-bold text-dark">
                             Seleccionados por
-                            {{ selected == 55 ? "Entregar" : "Recoger" }}
+                            {{ selected == 56 ? "Entregar" : "Recoger" }}
                         </h5>
                     </div>
                     <div class="max-h-425px h-425px col-md-12 border rounded px-0">

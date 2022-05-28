@@ -71,6 +71,7 @@ class Order extends Model
 
     public function tapActivity(Activity $activity, string $eventName)
     {
+        dd($activity);
         $activity->log_name = __($eventName);
         if ($activity->causer) {
             $activity->description = "Se ha " . __($eventName) . " la orden " . $activity->subject->fullName;
