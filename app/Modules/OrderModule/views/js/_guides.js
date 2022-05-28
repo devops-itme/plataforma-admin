@@ -31,8 +31,6 @@ export default class Guides {
     initialize() {
         this.listGuides();
         this.boxes.initialize();
-        // this.listenRateVariables(true);
-        // this.listenRateVariables(false);
     }
 
     async sourceAddressHandler() {
@@ -90,6 +88,7 @@ export default class Guides {
         guide_description = guide_description.value;
         value = value.value;
         corp_value = corp_value.value;
+        let boxes = this.boxes.boxes;
 
         let guide = {
             address_id: guide_address,
@@ -101,15 +100,15 @@ export default class Guides {
             take_photo,
             description: guide_description, 
             value,
-            corp_value
+            corp_value,
+            boxes
         };
 
         let response = await requestValidateGuide(JSON.stringify(guide));
         if (response.state != 200) {
             return alert(response.message);
         }
-        this.guides.push(response.data)
-        console.log(this.guides);
+        this.guides.push(response.data);
         this.listGuides();
     }
 

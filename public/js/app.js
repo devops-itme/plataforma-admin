@@ -2411,8 +2411,7 @@ var Guides = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.listGuides();
-      this.boxes.initialize(); // this.listenRateVariables(true);
-      // this.listenRateVariables(false);
+      this.boxes.initialize();
     }
   }, {
     key: "sourceAddressHandler",
@@ -2503,7 +2502,7 @@ var Guides = /*#__PURE__*/function () {
     key: "addGuide",
     value: function () {
       var _addGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var guide_address, contact, phone_contact, email_contact, same_day_delivery, sign, take_photo, guide_description, value, corp_value, guide, response;
+        var guide_address, contact, phone_contact, email_contact, same_day_delivery, sign, take_photo, guide_description, value, corp_value, boxes, guide, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -2553,6 +2552,7 @@ var Guides = /*#__PURE__*/function () {
                 guide_description = guide_description.value;
                 value = value.value;
                 corp_value = corp_value.value;
+                boxes = this.boxes.boxes;
                 guide = {
                   address_id: guide_address,
                   contact: contact,
@@ -2563,24 +2563,24 @@ var Guides = /*#__PURE__*/function () {
                   take_photo: take_photo,
                   description: guide_description,
                   value: value,
-                  corp_value: corp_value
+                  corp_value: corp_value,
+                  boxes: boxes
                 };
-                _context3.next = 29;
+                _context3.next = 30;
                 return Object(_request_requestValidateGuide_js__WEBPACK_IMPORTED_MODULE_2__["requestValidateGuide"])(JSON.stringify(guide));
 
-              case 29:
+              case 30:
                 response = _context3.sent;
 
                 if (!(response.state != 200)) {
-                  _context3.next = 32;
+                  _context3.next = 33;
                   break;
                 }
 
                 return _context3.abrupt("return", alert(response.message));
 
-              case 32:
+              case 33:
                 this.guides.push(response.data);
-                console.log(this.guides);
                 this.listGuides();
 
               case 35:
@@ -2996,13 +2996,13 @@ var Orders = /*#__PURE__*/function () {
                 }
 
               case 8:
+                this.porDespacharOndemand();
+                this.porDespacharPackaging();
                 this.loadCustomer();
                 this.loadGuides();
                 this.loadBranches();
                 this.saveGuides();
                 this.createAddress();
-                this.porDespacharOndemand();
-                this.porDespacharPackaging();
                 this.customerAddresses();
                 this.loadPickupHours();
                 this.loadHoursInEditOrShow();
@@ -3034,6 +3034,10 @@ var Orders = /*#__PURE__*/function () {
         CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_9__["default"](customer_id, this.order);
       } else {
         var _customer = document.getElementById("customer");
+
+        if (_customer == null) {
+          return;
+        }
 
         var _customer_id = _customer.value;
         CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_9__["default"](_customer_id, this.order);
@@ -3609,16 +3613,17 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context14.prev = _context14.next) {
               case 0:
+                console.log(11111);
                 button = document.getElementsByClassName("porDespacharOndemand");
 
                 if (!(button == null)) {
-                  _context14.next = 3;
+                  _context14.next = 4;
                   break;
                 }
 
                 return _context14.abrupt("return");
 
-              case 3:
+              case 4:
                 [].forEach.call(button, function (btn) {
                   btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
                     var order_id, result, req;
@@ -3666,7 +3671,7 @@ var Orders = /*#__PURE__*/function () {
                   })));
                 });
 
-              case 4:
+              case 5:
               case "end":
                 return _context14.stop();
             }
@@ -8575,12 +8580,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return _defineProperty({
-      selected: 55,
+      selected: 56,
       delivery_types: [{
-        value: 55,
+        value: 56,
         text: "Entregas"
       }, {
-        value: 56,
+        value: 57,
         text: "Recogidas"
       }],
       showModal: false,
@@ -8643,8 +8648,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.tabs[2].href = "consultas"; //NAME TABS
 
                 _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
-                _this2.selected == 56 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
-                _this2.selected == 55 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
+                _this2.selected == 57 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
+                _this2.selected == 57 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
               case 13:
               case "end":
@@ -8708,8 +8713,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 _this3.statusMatrix(_this3.selected);
 
-                type == 55 && (type = 3);
-                type == 56 && (type = 7);
+                type == 56 && (type = 3);
+                type == 57 && (type = 7);
                 _context2.next = 8;
                 return _this3.requestGuides(type);
 
@@ -71153,7 +71158,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Destinos por\n                        " +
-                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 56 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -71278,7 +71283,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Seleccionados por\n                        " +
-                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 56 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -90499,8 +90504,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

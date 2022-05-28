@@ -30,12 +30,12 @@
                     </select>
                 </div>
                 <div class="col-md-6 mt-5">
-                    <label for="inputPassword4" class="form-label">Cod País</label>
-                    <input type="number" class="form-control" id="inputPassword4" disabled="disabled" >
+                    <label for="codpais" class="form-label">Cod País</label>
+                    <input type="number" class="form-control" id="codpais" disabled="disabled" >
                 </div>
                 <div class="col-md-6 mt-5">
-                    <label for="inputAddress" class="form-label">Cod Ciudad</label>
-                    <input type="text" class="form-control" id="inputAddress" disabled="disabled">
+                    <label for="codciudad" class="form-label">Cod Ciudad</label>
+                    <input type="text" class="form-control" id="codciudad" disabled="disabled">
                 </div>
                 <div class="card-header">
                     <div class="card-title">
@@ -152,7 +152,7 @@
                         <div class="container">
                             <div class="row mt-10">
                                 <label for="textarea">Descripción</label>
-                                <textarea class="form-control" id="textarea" rows="3" name="description"></textarea>
+                                <textarea class="form-control" id="description" rows="3" name="description"></textarea>
                             </div>
                         </div>
                     </div>

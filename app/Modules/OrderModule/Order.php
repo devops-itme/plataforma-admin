@@ -71,6 +71,7 @@ class Order extends Model
 
     public function tapActivity(Activity $activity, string $eventName)
     {
+        dd($activity);
         $activity->log_name = __($eventName);
         if ($activity->causer) {
             $activity->description = "Se ha " . __($eventName) . " la orden " . $activity->subject->fullName;
@@ -354,6 +355,7 @@ class Order extends Model
                     'return_last_destination' => $request->return_last_destination,
                     'value' => $guide->value,
                     'corp_value' => $guide->corp_value,
+                    'boxes' => json_encode($guide->boxes),
                 ]);
             }
             DB::commit();
