@@ -52,20 +52,22 @@ class ShipmentController extends Controller
     public function create(Request $request)
     {
         $order_id = $request->order_id;
-        return view($this->path . 'create', compact('order_id'));
+        return view($this->path. 'create', compact('order_id'));
     }
 
-    public function store(Request $request)
+    public function store (Request $request)
     {
+        
         /* $validated = $request->validate([
             'recipient_name' => 'required|max:40',
             'address_name' => 'required|max:35',
         ]); */
         $response = $this->storeGuide($request);
+        //este no es
+        /* dd($response); */
         if ($response['state'] = 200){
          return redirect()->route('shipments.index',['order_id'=>$request->order_id])->with('success',$response['message']); 
         }
-        
-        return redirect()->back()->with('danger', $response['message']);
+         return redirect()->back()->with('danger', $response['message']);
     }
 }

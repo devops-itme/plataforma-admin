@@ -371,10 +371,10 @@ export default {
     data() {
         return {
 
-            selected: 55,
+            selected: 56,
             delivery_types: [
-                { value: 55, text: "Entregas" },
-                { value: 56, text: "Recogidas" },
+                { value: 56, text: "Entregas" },
+                { value: 57, text: "Recogidas" },
             ],
             showModal: false,
             columns:{
@@ -425,8 +425,8 @@ export default {
 
             //NAME TABS
             this.tabs[2].name = "CONSULTA Y EDICIÓN";
-            this.selected == 56?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
-            this.selected == 55?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
+            this.selected == 57?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
+            this.selected == 56?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
         },
 
 
@@ -473,8 +473,8 @@ export default {
             },
             this.guide = {};
             this.statusMatrix(this.selected);
-            type == 55 && (type = 3);
-            type == 56 && (type = 7);
+            type == 56 && (type = 3);
+            type == 57 && (type = 7);
             let response = await this.requestGuides(type);
             this.guides = response.data;
 

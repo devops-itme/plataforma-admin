@@ -69,7 +69,7 @@ trait GuideTrait
                 'address_lat' => $request->address_lat,
                 'address_lng' => $request->address_lng,
                 'address_description' => $request->address_description,
-                'detail_package' => $request->detail_package,
+                /* 'detail_package' => $request->detail_package, */
                 'zone' => $request->zone,
                 'country' => $request->country,
                 'city' => $request->city,
@@ -121,7 +121,7 @@ trait GuideTrait
                 'address_lat' => $request->address_lat ?? $guide->address_lat,
                 'address_lng' => $request->address_lng ?? $guide->address_lng,
                 'address_description' => $request->address_description ?? $guide->address_description,
-                'detail_package' => $request->detail_package ?? $guide->detail_package,
+                /* 'detail_package' => $request->detail_package ?? $guide->detail_package, */
                 'zone' => $request->zone ?? $guide->zone,
                 'country' => $request->country ?? $guide->country,
                 'city' => $request->city ?? $guide->city,
