@@ -2411,8 +2411,7 @@ var Guides = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       this.listGuides();
-      this.boxes.initialize(); // this.listenRateVariables(true);
-      // this.listenRateVariables(false);
+      this.boxes.initialize();
     }
   }, {
     key: "sourceAddressHandler",
@@ -2503,7 +2502,7 @@ var Guides = /*#__PURE__*/function () {
     key: "addGuide",
     value: function () {
       var _addGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var guide_address, contact, phone_contact, email_contact, same_day_delivery, sign, take_photo, guide_description, value, corp_value, guide, response;
+        var guide_address, contact, phone_contact, email_contact, same_day_delivery, sign, take_photo, guide_description, value, corp_value, boxes, guide, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -2553,6 +2552,7 @@ var Guides = /*#__PURE__*/function () {
                 guide_description = guide_description.value;
                 value = value.value;
                 corp_value = corp_value.value;
+                boxes = this.boxes.boxes;
                 guide = {
                   address_id: guide_address,
                   contact: contact,
@@ -2563,24 +2563,24 @@ var Guides = /*#__PURE__*/function () {
                   take_photo: take_photo,
                   description: guide_description,
                   value: value,
-                  corp_value: corp_value
+                  corp_value: corp_value,
+                  boxes: boxes
                 };
-                _context3.next = 29;
+                _context3.next = 30;
                 return Object(_request_requestValidateGuide_js__WEBPACK_IMPORTED_MODULE_2__["requestValidateGuide"])(JSON.stringify(guide));
 
-              case 29:
+              case 30:
                 response = _context3.sent;
 
                 if (!(response.state != 200)) {
-                  _context3.next = 32;
+                  _context3.next = 33;
                   break;
                 }
 
                 return _context3.abrupt("return", alert(response.message));
 
-              case 32:
+              case 33:
                 this.guides.push(response.data);
-                console.log(this.guides);
                 this.listGuides();
 
               case 35:
