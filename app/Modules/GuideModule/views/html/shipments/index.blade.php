@@ -23,11 +23,11 @@
                 </button>
 
 
-                        <a href="{{ route('shipments.create',['order_id' => $order_id])}}">
-                            <button class="btn btn-light-primary mr-2 px-6">
-                        <i class="fas fa-plus"></i>
-                        Crear</button>
-                    </a>
+                <a href="{{ route('shipments.create',['order_id' => $order_id])}}">
+                    <button class="btn btn-light-primary mr-2 px-6">
+                <i class="fas fa-plus"></i>
+                Crear Guía</button>
+            </a>
 
 
                 <form action="{{ route('shipments.assign', $order_id) }}" method="POST">

@@ -20,30 +20,34 @@
         <div class="card-header">
             <form class="row g-3" method="post" action="{{ route('shipments.store', ['order_id' => $order_id]) }}">
                 @csrf
-                <div class="input-group mt-8">
-                    <div class="input-group-prepend">
+                <div class="container mt-8">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                    </div>
                     <select name="branch_office" class="custom-select" id="branch_off">
                         <option value="" disabled selected>Seleccionar</option>
                     </select>
                 </div>
-                <div class="col-md-6 mt-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col mt-5">
                     <label for="codpais" class="form-label">Cod País</label>
                     <input type="number" class="form-control" id="codpais" disabled="disabled" >
                 </div>
-                <div class="col-md-6 mt-5">
+                <div class="col mt-5">
                     <label for="codciudad" class="form-label">Cod Ciudad</label>
                     <input type="text" class="form-control" id="codciudad" disabled="disabled">
                 </div>
-                <div class="card-header">
+            </div>
+        </div>
+                
                     <div class="card-title">
                         <h2 class="card-label">
+                            <hr width="570%" />
                             Datos del usuario destinatario
+                            <hr width="570%" />
                         </h2>
                     </div>
-                </div>
+                
                 <div class="container mt-8">
                     <div class="row">
                         <div class="col">
@@ -108,13 +112,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-header">
-                    <div class="card-title">
+               
+                    <div class="card-title mt-8">
                         <h2 class="card-label">
+                            <hr width="1000%" />
                             Datos de la Guía
+                            <hr width="1000%" />
                         </h2>
                     </div>
-                </div>
+              
                 {{-- datos de la guia --}}
                 <div class="container">
                     <div class="row mt-10">
@@ -158,7 +164,7 @@
                     </div>
                 </div>
                 <div class="col-12 mt-5 text-center">
-                    <button type="submit" class="btn btn-primary">Crear Orden</button>
+                    <button type="submit" class="btn btn-primary">Crear Guía</button>
                 </div>
         </div>
     </div>
