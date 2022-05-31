@@ -426,7 +426,7 @@ export default {
             //NAME TABS
             this.tabs[2].name = "CONSULTA Y EDICIÓN";
             this.selected == 57?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
-            this.selected == 56?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
+            this.selected == 57?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
         },
 
 

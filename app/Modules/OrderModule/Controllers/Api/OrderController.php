@@ -219,14 +219,28 @@ class OrderController extends Controller
 
                     // $guide_id = $storeGuideResponse['data']->id;
                     // $guidance_document = $guide['guidance_doc'];
-                    // // $guidance_document = json_decode($guidance_document, true);
-                    // // dd($guidance_document);
 
-                    // if (!is_null($guidance_document)) {
+                    // foreach ($guidance_document as $document) {
+
+                    //     // dd($document['document']);
+
                     //     $guidance_doc = new GuidanceDocumentController();
-                    //     $guidance_doc->store($request->$guidance_document, $guide_id);
-                    //     if (is_null($guidance_doc)) {
+
+                    //     if (is_null($document)) {
                     //         return $this->respond(500, null, 'not found', 'No hay imágenes para esta guía');
+                    //     }
+
+                    //     $request->merge([
+                    //         'guide_id' => $guide_id,
+                    //         'type' => $document['type'],
+                    //         'document' => $document['document'],
+                    //     ]);
+
+                    //     // dd($request->all());
+
+                    //     $storeDocumentResponse = $guidance_doc->store($request);
+                    //     if ($storeDocumentResponse['state'] != 200) {
+                    //         return $storeDocumentResponse;
                     //     }
                     // }
                 }
@@ -343,11 +357,12 @@ class OrderController extends Controller
     public function sendPushNotification(Request $request)
     {
         try {
-            $status = $request->status_matrix_id;
+            $status = $request->get('status_matrix_id');
+            $order_name = $request->get('order_number');             
             $userToken = $request->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';
             $data = $request->all();
             if ($status != 1) {
-                return sendCustomNotifications('Notification', 'Estado cambiado', $data, $userToken);
+                return sendCustomNotifications('Notification', 'Estado de orden cambiado', $data, $userToken);
             }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');

@@ -8648,7 +8648,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
                 _this2.selected == 57 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
-                _this2.selected == 56 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
+                _this2.selected == 57 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
               case 13:
               case "end":
@@ -71157,7 +71157,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Destinos por\n                        " +
-                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 56 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -71282,7 +71282,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Seleccionados por\n                        " +
-                      _vm._s(_vm.selected == 55 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 56 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -90503,8 +90503,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
