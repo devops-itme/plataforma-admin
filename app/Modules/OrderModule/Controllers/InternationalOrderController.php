@@ -4,6 +4,7 @@ namespace App\Modules\OrderModule\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
+use App\Modules\OrderModule\Exports\OrdersExport;
 use App\Modules\ApiConnectionsModule\Imports\ShipmentTealcaImport;
 use App\Modules\ApiConnectionsModule\Exports\TealcaInformExport;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
@@ -62,18 +63,26 @@ class InternationalOrderController extends Controller
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
     }
 
-    public function incidencesExport (){
-        $guides = Guide::select('id','external_id','contact')->where('external_id', '<>', null)
-        ->where('state','1')->get();
+
+    public function exportBatch()
+    {
+        return Excel::download(new OrdersExport, 'orders.xlsx');
+    }
+
+
+    public function incidencesExport()
+    {
+        $guides = Guide::select('id', 'external_id', 'contact')->where('external_id', '<>', null)
+            ->where('state', '1')->get();
         $incidences = [];
 
-        foreach ($guides as $guide){
+        foreach ($guides as $guide) {
             $guideTracking = Tealca::requestOrderStatus($guide->external_id);
 
             $statuses = json_decode($guideTracking)->tracking;
             $order1 = json_decode($guide);
             foreach ($statuses as $status) {
-                if ($status->status == 'Incidencia'){
+                if ($status->status == 'Incidencia') {
                     $order1->Status = $status->status;
                     $order1->Fecha = date('Y/m/d H:i:s', strtotime($status->date));
                     $order1->description = $status->description;

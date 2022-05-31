@@ -11,6 +11,11 @@
         </div>
 
         <div class="card-toolbar">
+            <a href="{{ route('internationalOrders.export') }}" type="button" class="btn btn-success mr-2 px-6 font-weight-bolder" >
+                <span class="svg-icon svg-icon-md">
+                    <i class="fad fa-download"></i>
+                </span>Exportar órdenes internacionales
+            </a>
             <!--begin::Button filter-->
 
             <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
@@ -27,11 +32,10 @@
                 </span>Importar
             </button>
 
-            <a type="button" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="EXPORTAR INCIDENCIAS"
-            href="{{ route('internationalOrders.incidencesExport') }}">
-            <span class="svg-icon svg-icon-md">
-                <i class="fad fa-download"></i>
-            </span>Exportar Incidencias
+            <a type="button" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="EXPORTAR INCIDENCIAS" href="{{ route('internationalOrders.incidencesExport') }}">
+                <span class="svg-icon svg-icon-md">
+                    <i class="fad fa-download"></i>
+                </span>Exportar Incidencias
             </a>
 
             {{-- <a href="{{ route('orders.record') }}" class="btn btn-light-primary font-weight-bolder mr-2">
