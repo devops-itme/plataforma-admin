@@ -78,23 +78,22 @@ export default class Orders {
             return;
         }
         let createOrderBtn = document.getElementById("create-order-btn");
-        if (createOrderBtn == null) {
-            return;
-        }
+        let order_form = document.getElementById("order-form");
         let guides = document.getElementById("guides");
-        if (guides == null) {
+        if (createOrderBtn == null || order_form == null || guides == null) {
             return;
         }
+
         let guidesArr = this.order?.get_guides;
         let GuidesClass = new Guides(guidesArr);
         GuidesClass.initialize();
         GuidesClass.sourceAddressHandler();
         addGuideBtn.addEventListener('click', async function () {
-            console.log(11111);
             GuidesClass.addGuide();
         });
         createOrderBtn.addEventListener('click', async function () {
             guides.value = JSON.stringify(GuidesClass.guides);
+            order_form.submit();
         });
     }
 

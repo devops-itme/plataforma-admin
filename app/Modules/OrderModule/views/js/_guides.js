@@ -76,9 +76,9 @@ export default class Guides {
             return;
         }
         if (value == null || corp_value == null || guide_form == null) {
-            console.log(guide_form);
             return;
         }
+        console.log(guide_form);
 
         guide_address = guide_address.value;
         contact = contact.value;

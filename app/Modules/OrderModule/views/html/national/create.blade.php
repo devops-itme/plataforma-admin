@@ -12,7 +12,7 @@
         </div>
         @include('layouts.alerts')
 
-        <form action="{{ route('orders.store') }}" method="post">
+        <form id="order-form" action="{{ route('orders.store') }}" method="post">
             @csrf
 
             <div class="card-body d-flex flex-row flex-wrap pt-2">
@@ -116,7 +116,10 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="guides" id="guides">
+        </form>
 
+        <form id="guide_form" class="guide_form">
             <div class="card-header row flex-wrap border-0 pt-6 pb-0">
                 <h3 class="card-title col-10">
                     Datos de destino
@@ -132,100 +135,95 @@
                 </div>
             </div>
             <div class="card-body d-flex flex-row flex-wrap pt-2">
-                <form id="guide_form">
-                    <div class="form-group col-md-2">
-                        <label for="guide_address">Dirección destino <span class="text-danger">*</span></label>
-                        <select name="guide_address" class="form-control form-control-solid" id="guide_address">
-                            <option disabled selected>Seleccione </option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
-                        <a class="btn" data-toggle="modal" data-target="#modalCreateAddress"
-                            data-dismiss="modal">
-                            <i class="fad fa-plus-circle text-info"></i>
-                        </a>
-                    </div>
+                <div class="form-group col-md-2">
+                    <label for="guide_address">Dirección destino <span class="text-danger">*</span></label>
+                    <select name="guide_address" class="form-control form-control-solid" id="guide_address">
+                        <option disabled selected>Seleccione </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
+                    <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
+                        <i class="fad fa-plus-circle text-info"></i>
+                    </a>
+                </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="district">Tarifa <span class="text-danger">*</span></label>
-                        <select name="rate" class="form-control form-control-solid" id="rate">
-                            <option selected disabled value="">Seleccione Tarifa</option>
-                            @foreach ($rates as $item)
-                                <option value="{{ $item->id }}"
-                                    {{ request()->rate == $item->id ? 'selected' : '' }}>
-                                    {{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="form-group col-md-3">
+                    <label for="district">Tarifa <span class="text-danger">*</span></label>
+                    <select name="rate" class="form-control form-control-solid" id="rate">
+                        <option selected disabled value="">Seleccione Tarifa</option>
+                        @foreach ($rates as $item)
+                            <option value="{{ $item->id }}" {{ request()->rate == $item->id ? 'selected' : '' }}>
+                                {{ $item }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-                    <div class="form-group col-md-3">
-                        <label>Valor: <span class="text-danger">*</span></label>
-                        <input name="value" id="value" type="number" class="form-control form-control-solid" disabled />
-                        <span class="form-text text-muted"></span>
-                    </div>
+                <div class="form-group col-md-3">
+                    <label>Valor: <span class="text-danger">*</span></label>
+                    <input name="value" id="value" type="number" class="form-control form-control-solid" disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
 
-                    <div class="form-group col-md-3">
-                        <label>Valor Corp: <span class="text-danger">*</span></label>
-                        <input name="corp_value" id="corp_value" type="number" class="form-control form-control-solid"
-                            disabled />
-                        <span class="form-text text-muted"></span>
-                    </div>
+                <div class="form-group col-md-3">
+                    <label>Valor Corp: <span class="text-danger">*</span></label>
+                    <input name="corp_value" id="corp_value" type="number" class="form-control form-control-solid"
+                        disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
 
-                    <div class="form-group col-md-3">
-                        <label>Contacto: <span class="text-danger">*</span></label>
-                        <input name="contact" id="contact" type="text" class="form-control form-control-solid"
-                            placeholder="" />
-                        <span class="form-text text-muted"></span>
-                    </div>
+                <div class="form-group col-md-3">
+                    <label>Contacto: <span class="text-danger">*</span></label>
+                    <input name="contact" id="contact" type="text" class="form-control form-control-solid" placeholder="" />
+                    <span class="form-text text-muted"></span>
+                </div>
 
-                    <div class="form-group col-md-3 pt-2">
-                        <label>Teléfono contacto </label>
-                        <input name="phone_contact" type="tel" id="phone_contact" class="form-control form-control-solid"
-                            placeholder="" />
-                        <span class="form-text text-muted"></span>
-                    </div>
+                <div class="form-group col-md-3 pt-2">
+                    <label>Teléfono contacto </label>
+                    <input name="phone_contact" type="tel" id="phone_contact" class="form-control form-control-solid"
+                        placeholder="" />
+                    <span class="form-text text-muted"></span>
+                </div>
 
-                    <div class="form-group col-md-3">
-                        <label>Contacto Email: </label>
-                        <input name="email_contact" id="email_contact" type="email" class="form-control form-control-solid"
-                            placeholder="" />
-                        <span class="form-text text-muted"></span>
-                    </div>
+                <div class="form-group col-md-3">
+                    <label>Contacto Email: </label>
+                    <input name="email_contact" id="email_contact" type="email" class="form-control form-control-solid"
+                        placeholder="" />
+                    <span class="form-text text-muted"></span>
+                </div>
 
-                    <div class="form-group col-md-3 d-flex align-items-center">
-                        <div class="checkbox-inline">
-                            <label class="checkbox">
-                                <input type="checkbox" name="same_day_delivery" id="same_day_delivery" />
-                                <span></span>
-                                Some Day Delivery
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="sign" id="sign" />
-                                <span></span>
-                                Firmar
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="take_photo" id="take_photo" />
-                                <span></span>
-                                Tomar Foto
-                            </label>
-                        </div>
+                <div class="form-group col-md-3 d-flex align-items-center">
+                    <div class="checkbox-inline">
+                        <label class="checkbox">
+                            <input type="checkbox" name="same_day_delivery" id="same_day_delivery" />
+                            <span></span>
+                            Some Day Delivery
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="sign" id="sign" />
+                            <span></span>
+                            Firmar
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="take_photo" id="take_photo" />
+                            <span></span>
+                            Tomar Foto
+                        </label>
                     </div>
+                </div>
 
-                    <div class="form-group col-md-6">
-                        <label for="description">Descripción <span class="text-danger">*</span></label>
-                        <textarea name="guide_description" id="guide_description" cols="10" rows="2"
-                            class="form-control form-control-solid">{{ $order->description }}</textarea>
-                    </div>
-                </form>
+                <div class="form-group col-md-6">
+                    <label for="description">Descripción <span class="text-danger">*</span></label>
+                    <textarea name="guide_description" id="guide_description" cols="10" rows="2"
+                        class="form-control form-control-solid">{{ $order->description }}</textarea>
+                </div>
                 @include('OrderModule.views.html.national.guideContentTab')
             </div>
             @include('OrderModule.views.html.national.guideList')
-            <input type="hidden" name="guides" id="guides">
-            <div class="card-footer d-flex justify-content-end">
-                <button type="submit" id="create-order-btn" class="btn btn-primary mr-2">Crear Orden</button>
-                <button type="reset" class="btn btn-secondary">Limpiar</button>
-            </div>
         </form>
+
+        <div class="card-footer d-flex justify-content-end">
+            <button type="submit" id="create-order-btn" class="btn btn-primary mr-2">Crear Orden</button>
+            <button type="reset" class="btn btn-secondary">Limpiar</button>
+        </div>
     </div>
 @endsection

@@ -2536,14 +2536,14 @@ var Guides = /*#__PURE__*/function () {
 
               case 15:
                 if (!(value == null || corp_value == null || guide_form == null)) {
-                  _context3.next = 18;
+                  _context3.next = 17;
                   break;
                 }
 
-                console.log(guide_form);
                 return _context3.abrupt("return");
 
-              case 18:
+              case 17:
+                console.log(guide_form);
                 guide_address = guide_address.value;
                 contact = contact.value;
                 phone_contact = phone_contact.value;
@@ -3060,14 +3060,10 @@ var Orders = /*#__PURE__*/function () {
       }
 
       var createOrderBtn = document.getElementById("create-order-btn");
-
-      if (createOrderBtn == null) {
-        return;
-      }
-
+      var order_form = document.getElementById("order-form");
       var guides = document.getElementById("guides");
 
-      if (guides == null) {
+      if (createOrderBtn == null || order_form == null || guides == null) {
         return;
       }
 
@@ -3080,10 +3076,9 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log(11111);
                 GuidesClass.addGuide();
 
-              case 2:
+              case 1:
               case "end":
                 return _context2.stop();
             }
@@ -3096,8 +3091,9 @@ var Orders = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 guides.value = JSON.stringify(GuidesClass.guides);
+                order_form.submit();
 
-              case 1:
+              case 2:
               case "end":
                 return _context3.stop();
             }
