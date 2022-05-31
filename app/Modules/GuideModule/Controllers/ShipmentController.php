@@ -103,4 +103,10 @@ class ShipmentController extends Controller
         }
         return redirect()->back()->with('danger', $response['message']);
     }
+
+    public function show($id){
+        $guide = Guide::find($id);
+
+        return view($this->path. 'show', compact('guide'));
+    }
 }

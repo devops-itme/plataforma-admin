@@ -21,14 +21,14 @@
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
                 </button>
-                
-                     
+
+
                         <a href="{{ route('shipments.create',['order_id' => $order_id])}}">
-                            <button class="btn btn-light-primary mr-2 px-6"> 
+                            <button class="btn btn-light-primary mr-2 px-6">
                         <i class="fas fa-plus"></i>
                         Crear</button>
                     </a>
-                    
+
 
                 <form action="{{ route('shipments.assign', $order_id) }}" method="POST">
                     @csrf
@@ -36,7 +36,7 @@
                         <span>Enviar lote</span>
                     </button>
                 </form>
-             
+
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     {{-- <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -209,7 +209,7 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
+                                    <a href="{{ route('shipments.show', $shipment->id,'show') }}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
                                         title="Detalle">
                                         <i class="far fa-folder-open"></i>
                                     </a>
