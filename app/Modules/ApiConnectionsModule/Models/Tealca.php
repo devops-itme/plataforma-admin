@@ -105,4 +105,21 @@ class Tealca
         $guide->save();
         return $this->respond(200, $guide, null, 'successful request');
     }
+
+    public function requestOrderStatus($guide)
+    {
+        $trackingResponse = Http::withHeaders([
+            'Authorization' =>  $this->token,
+        ])->get(
+            'http://qaapicore.tealca.com/Tracking?shipment='.$guide
+        );
+
+        if ($createShipmentResponse->status() != 200) {
+            return $this->respond(500, $trackingResponse->json(), null , 'Fallo en el servicio. Guía N° ' . $guide);
+        };
+
+
+        return $this->respond(200, $trackingResponse->json(), null, 'successful request');
+    }
+
 }

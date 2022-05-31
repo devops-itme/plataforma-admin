@@ -27,6 +27,13 @@
                 </span>Importar
             </button>
 
+            <a type="button" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="EXPORTAR INCIDENCIAS"
+            href="{{ route('internationalOrders.incidencesExport') }}">
+            <span class="svg-icon svg-icon-md">
+                <i class="fad fa-download"></i>
+            </span>Exportar Incidencias
+            </a>
+
             {{-- <a href="{{ route('orders.record') }}" class="btn btn-light-primary font-weight-bolder mr-2">
             <i class="fas fa-history"></i>
             Historial</a> --}}
@@ -51,7 +58,7 @@
                             <label>Número de Lote:</label>
                             <input type="text" class="form-control form-control-solid" placeholder="Lote_1" name="number" value="{{ request()->number }}" />
                             <span class="form-text text-muted">Filtro numero</span>
-                        </div>                        
+                        </div>
                         <div class="form-group py-3 m-0 col-md-4">
                             <label>Nombre del cliente:</label>
                             <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson" name="name" value="{{ request()->name }}" />
