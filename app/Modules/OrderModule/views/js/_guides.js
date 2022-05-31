@@ -78,7 +78,6 @@ export default class Guides {
         if (value == null || corp_value == null || guide_form == null) {
             return;
         }
-        console.log(guide_form);
 
         guide_address = guide_address.value;
         contact = contact.value;
@@ -135,19 +134,22 @@ export default class Guides {
                 let idCell = row.insertCell(0);
                 idCell.innerHTML = key.id ?? "";
 
-                let contactCell = row.insertCell(1);
+                let addressCell = row.insertCell(1);
+                addressCell.innerHTML = key.address_name ?? "";
+
+                let contactCell = row.insertCell(2);
                 contactCell.innerHTML = key.contact ?? "";
 
-                let phoneCell = row.insertCell(2);
+                let phoneCell = row.insertCell(3);
                 phoneCell.innerHTML = key.phone_contact ?? "";
 
-                let emailCell = row.insertCell(3);
+                let emailCell = row.insertCell(4);
                 emailCell.innerHTML = key.email_contact ?? "";
 
-                let rateCell = row.insertCell(4);
+                let rateCell = row.insertCell(5);
                 rateCell.innerHTML = key.rate ?? "";
 
-                let selectCell = row.insertCell(5);
+                let selectCell = row.insertCell(6);
 
                 // //DELETE
                 const guideDelete = document.createElement("button");
@@ -201,7 +203,7 @@ export default class Guides {
                 this.guideId = guide["id"].split("-")[1];
                 let response = await requestGuide(this.guideId);
                 let data = response.data;
-                console.log(data)
+                
                 let branch_office = document.getElementById("branch_off_edit");
                 branch_office.value = data.branch_office;
                 let customer_address = document.getElementById("customer_address_edit").options;

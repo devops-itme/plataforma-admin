@@ -2548,7 +2548,6 @@ var Guides = /*#__PURE__*/function () {
                 return _context3.abrupt("return");
 
               case 17:
-                console.log(guide_form);
                 guide_address = guide_address.value;
                 contact = contact.value;
                 phone_contact = phone_contact.value;
@@ -2573,25 +2572,25 @@ var Guides = /*#__PURE__*/function () {
                   corp_value: corp_value,
                   boxes: boxes
                 };
-                _context3.next = 32;
+                _context3.next = 31;
                 return Object(_request_requestValidateGuide_js__WEBPACK_IMPORTED_MODULE_2__["requestValidateGuide"])(JSON.stringify(guide));
 
-              case 32:
+              case 31:
                 response = _context3.sent;
 
                 if (!(response.state != 200)) {
-                  _context3.next = 35;
+                  _context3.next = 34;
                   break;
                 }
 
                 return _context3.abrupt("return", alert(response.message));
 
-              case 35:
+              case 34:
                 this.guides.push(response.data);
                 this.listGuides();
                 guide_form.reset();
 
-              case 38:
+              case 37:
               case "end":
                 return _context3.stop();
             }
@@ -2631,7 +2630,7 @@ var Guides = /*#__PURE__*/function () {
 
                 if (data.length > 0) {
                   [].forEach.call(data, function (key) {
-                    var _key$id, _key$contact, _key$phone_contact, _key$email_contact, _key$rate;
+                    var _key$id, _key$address_name, _key$contact, _key$phone_contact, _key$email_contact, _key$rate;
 
                     var row = tbody.insertRow();
                     row.setAttribute("corp_value", key === null || key === void 0 ? void 0 : key.corp_value);
@@ -2640,15 +2639,17 @@ var Guides = /*#__PURE__*/function () {
                     row.setAttribute("value", key === null || key === void 0 ? void 0 : key.value);
                     var idCell = row.insertCell(0);
                     idCell.innerHTML = (_key$id = key.id) !== null && _key$id !== void 0 ? _key$id : "";
-                    var contactCell = row.insertCell(1);
+                    var addressCell = row.insertCell(1);
+                    addressCell.innerHTML = (_key$address_name = key.address_name) !== null && _key$address_name !== void 0 ? _key$address_name : "";
+                    var contactCell = row.insertCell(2);
                     contactCell.innerHTML = (_key$contact = key.contact) !== null && _key$contact !== void 0 ? _key$contact : "";
-                    var phoneCell = row.insertCell(2);
+                    var phoneCell = row.insertCell(3);
                     phoneCell.innerHTML = (_key$phone_contact = key.phone_contact) !== null && _key$phone_contact !== void 0 ? _key$phone_contact : "";
-                    var emailCell = row.insertCell(3);
+                    var emailCell = row.insertCell(4);
                     emailCell.innerHTML = (_key$email_contact = key.email_contact) !== null && _key$email_contact !== void 0 ? _key$email_contact : "";
-                    var rateCell = row.insertCell(4);
+                    var rateCell = row.insertCell(5);
                     rateCell.innerHTML = (_key$rate = key.rate) !== null && _key$rate !== void 0 ? _key$rate : "";
-                    var selectCell = row.insertCell(5); // //DELETE
+                    var selectCell = row.insertCell(6); // //DELETE
 
                     var guideDelete = document.createElement("button");
                     guideDelete.setAttribute("class", "btn btn-icon btn-light-danger btn-sm mr-2 remove-guide-btn");
@@ -2733,7 +2734,6 @@ var Guides = /*#__PURE__*/function () {
                 case 3:
                   response = _context5.sent;
                   data = response.data;
-                  console.log(data);
                   branch_office = document.getElementById("branch_off_edit");
                   branch_office.value = data.branch_office;
                   customer_address = document.getElementById("customer_address_edit").options;
@@ -2776,7 +2776,7 @@ var Guides = /*#__PURE__*/function () {
                   BoxesClass.instantiateBoxes();
                   BoxesClass.addBox("add-box-btn-edit");
 
-                case 34:
+                case 33:
                 case "end":
                   return _context5.stop();
               }
