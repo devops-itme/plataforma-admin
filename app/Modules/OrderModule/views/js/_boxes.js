@@ -149,6 +149,11 @@ export default class Boxes {
             return;
         }
 
+        const setBoxes = (boxes) => {
+            this.boxes = boxes;            
+            this.calculateRate();
+        }
+
         [].forEach.call(removeBoxBtn, function (btn) {
             btn.addEventListener('click', () => {
 
@@ -157,7 +162,7 @@ export default class Boxes {
                 let index = Array.prototype.indexOf.call(parent.children, box);
                 boxes.splice(index, 1);
                 box.remove();
-                this.calculateRate();
+                setBoxes(boxes);
             });
         });
     }

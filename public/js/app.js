@@ -2026,6 +2026,8 @@ var Boxes = /*#__PURE__*/function () {
   }, {
     key: "removeBox",
     value: function removeBox() {
+      var _this3 = this;
+
       var boxes = this.boxes;
       var removeBoxBtn = document.getElementsByClassName("remove-box-btn");
 
@@ -2033,17 +2035,20 @@ var Boxes = /*#__PURE__*/function () {
         return;
       }
 
-      [].forEach.call(removeBoxBtn, function (btn) {
-        var _this3 = this;
+      var setBoxes = function setBoxes(boxes) {
+        _this3.boxes = boxes;
 
+        _this3.calculateRate();
+      };
+
+      [].forEach.call(removeBoxBtn, function (btn) {
         btn.addEventListener('click', function () {
           var box = btn.parentNode.parentNode.parentNode;
           var parent = box.parentNode;
           var index = Array.prototype.indexOf.call(parent.children, box);
           boxes.splice(index, 1);
           box.remove();
-
-          _this3.calculateRate();
+          setBoxes(boxes);
         });
       });
     }
