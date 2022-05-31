@@ -152,7 +152,7 @@ class OrderController extends Controller
                 $order_id = $storeOderResponse['data']->id;
 
                 $guides = $request->guides;
-                $guides = json_decode($guides, true);
+                // $guides = json_decode($guides, true);
 
                 $rate_value = 0;
 
@@ -219,10 +219,10 @@ class OrderController extends Controller
 
                     // $guide_id = $storeGuideResponse['data']->id;
                     // $guidance_document = $guide['guidance_doc'];
-                    // // dd($guidance_document);
 
                     // foreach ($guidance_document as $document) {
 
+                    //     // dd($document['document']);
 
                     //     $guidance_doc = new GuidanceDocumentController();
 
@@ -232,8 +232,8 @@ class OrderController extends Controller
 
                     //     $request->merge([
                     //         'guide_id' => $guide_id,
-                    //         'document' => $document['document'],
                     //         'type' => $document['type'],
+                    //         'document' => $document['document'],
                     //     ]);
 
                     //     // dd($request->all());
