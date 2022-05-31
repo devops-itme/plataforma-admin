@@ -2502,7 +2502,7 @@ var Guides = /*#__PURE__*/function () {
     key: "addGuide",
     value: function () {
       var _addGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var guide_address, contact, phone_contact, email_contact, same_day_delivery, sign, take_photo, guide_description, value, corp_value, boxes, guide, response;
+        var guide_address, contact, phone_contact, email_contact, same_day_delivery, sign, take_photo, guide_description, value, corp_value, guide_form, boxes, guide, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -2517,31 +2517,33 @@ var Guides = /*#__PURE__*/function () {
                 guide_description = document.getElementById("guide_description");
                 value = document.getElementById("value");
                 corp_value = document.getElementById("corp_value");
+                guide_form = document.getElementById("guide_form");
 
                 if (!(guide_address == null || contact == null || phone_contact == null || email_contact == null)) {
-                  _context3.next = 12;
+                  _context3.next = 13;
                   break;
                 }
 
                 return _context3.abrupt("return");
 
-              case 12:
+              case 13:
                 if (!(same_day_delivery == null || sign == null || take_photo == null || guide_description == null)) {
-                  _context3.next = 14;
+                  _context3.next = 15;
                   break;
                 }
 
                 return _context3.abrupt("return");
 
-              case 14:
-                if (!(value == null || corp_value == null)) {
-                  _context3.next = 16;
+              case 15:
+                if (!(value == null || corp_value == null || guide_form == null)) {
+                  _context3.next = 18;
                   break;
                 }
 
+                console.log(guide_form);
                 return _context3.abrupt("return");
 
-              case 16:
+              case 18:
                 guide_address = guide_address.value;
                 contact = contact.value;
                 phone_contact = phone_contact.value;
@@ -2566,24 +2568,25 @@ var Guides = /*#__PURE__*/function () {
                   corp_value: corp_value,
                   boxes: boxes
                 };
-                _context3.next = 30;
+                _context3.next = 32;
                 return Object(_request_requestValidateGuide_js__WEBPACK_IMPORTED_MODULE_2__["requestValidateGuide"])(JSON.stringify(guide));
 
-              case 30:
+              case 32:
                 response = _context3.sent;
 
                 if (!(response.state != 200)) {
-                  _context3.next = 33;
+                  _context3.next = 35;
                   break;
                 }
 
                 return _context3.abrupt("return", alert(response.message));
 
-              case 33:
+              case 35:
                 this.guides.push(response.data);
                 this.listGuides();
+                guide_form.reset();
 
-              case 35:
+              case 38:
               case "end":
                 return _context3.stop();
             }
@@ -3077,9 +3080,10 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                console.log(11111);
                 GuidesClass.addGuide();
 
-              case 1:
+              case 2:
               case "end":
                 return _context2.stop();
             }
@@ -3613,17 +3617,16 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context14.prev = _context14.next) {
               case 0:
-                console.log(11111);
                 button = document.getElementsByClassName("porDespacharOndemand");
 
                 if (!(button == null)) {
-                  _context14.next = 4;
+                  _context14.next = 3;
                   break;
                 }
 
                 return _context14.abrupt("return");
 
-              case 4:
+              case 3:
                 [].forEach.call(button, function (btn) {
                   btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
                     var order_id, result, req;
@@ -3671,7 +3674,7 @@ var Orders = /*#__PURE__*/function () {
                   })));
                 });
 
-              case 5:
+              case 4:
               case "end":
                 return _context14.stop();
             }
@@ -3815,9 +3818,13 @@ var Orders = /*#__PURE__*/function () {
                     }
 
                     schedule_time_range.addEventListener("change", function () {
-                      console.log(1);
                       var id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
                       var schedule_time = document.getElementById("schedule_time");
+
+                      if (schedule_time == null) {
+                        return;
+                      }
+
                       schedule_time.value = id;
                     });
                   }
@@ -90504,8 +90511,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

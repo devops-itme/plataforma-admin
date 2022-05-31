@@ -90,6 +90,7 @@ export default class Orders {
         GuidesClass.initialize();
         GuidesClass.sourceAddressHandler();
         addGuideBtn.addEventListener('click', async function () {
+            console.log(11111);
             GuidesClass.addGuide();
         });
         createOrderBtn.addEventListener('click', async function () {
@@ -382,7 +383,6 @@ export default class Orders {
     }
 
     async porDespacharOndemand() {
-        console.log(11111);
         let button = document.getElementsByClassName("porDespacharOndemand");
         if (button == null) {
             return;
@@ -495,14 +495,11 @@ export default class Orders {
                     schedule_time_range.insertAdjacentHTML("beforeend", option);
                 }
                 schedule_time_range.addEventListener("change", () => {
-                    console.log(1)
-
-                    let id =
-                        schedule_time_range.options[
-                            schedule_time_range.selectedIndex
-                        ].id;
-                    let schedule_time =
-                        document.getElementById("schedule_time");
+                    let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
+                    let schedule_time = document.getElementById("schedule_time");
+                    if(schedule_time == null){
+                        return;
+                    }
                     schedule_time.value = id;
                 });
             }

@@ -48,17 +48,17 @@ class ShipmentController extends Controller
                 return redirect()->back()->with('danger', $response['message']);
             }
         }
-        return redirect()->route('shipments.index')->with('success', 'Lote subido correctamente');
+        return redirect()->route('shipments.index', ['order_id' => $id])->with('success', 'Lote subido correctamente');
     }
     public function create(Request $request)
     {
         $order_id = $request->order_id;
-        return view($this->path. 'create', compact('order_id'));
+        return view($this->path . 'create', compact('order_id'));
     }
 
-    public function store (Request $request)
+    public function store(Request $request)
     {
-        
+
         /* $validated = $request->validate([
             'recipient_name' => 'required|max:40',
             'address_name' => 'required|max:35',
@@ -66,29 +66,31 @@ class ShipmentController extends Controller
         $response = $this->storeGuide($request);
         //este no es
         /* dd($response); */
-        if ($response['state'] = 200){
-         return redirect()->route('shipments.index',['order_id'=>$request->order_id])->with('success',$response['message']); 
+        if ($response['state'] = 200) {
+            return redirect()->route('shipments.index', ['order_id' => $request->order_id])->with('success', $response['message']);
         }
-         return redirect()->back()->with('danger', $response['message']);
+        return redirect()->back()->with('danger', $response['message']);
     }
 
-    public function edit($id){
-        
-        
+    public function edit($id)
+    {
+
+
         $guide = Guide::find($id);
         $id_branch_office = $guide['branch_office'];
 
-        if($id_branch_office == null){
+        if ($id_branch_office == null) {
             $branch = new BranchOffice();
-            $branch->name ='Sin seleccionar';
-         }else{
+            $branch->name = 'Sin seleccionar';
+        } else {
             $branch = BranchOffice::find($id_branch_office);
-         }
-        
-        return view($this->path. 'edit', compact('guide', 'branch'));
+        }
+
+        return view($this->path . 'edit', compact('guide', 'branch'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
 
         $dato_guide = Guide::find($id);
         $order_id = $dato_guide->order_id;
@@ -96,9 +98,9 @@ class ShipmentController extends Controller
         $request->guide_id = $id;
         $response = $this->updateGuide($request);
 
-        if($response['state'] = 200){
-            return redirect()->route('shipments.index',['order_id'=>$order_id])->with('success', 'Guia actualizada exitosamente.');
+        if ($response['state'] = 200) {
+            return redirect()->route('shipments.index', ['order_id' => $order_id])->with('success', 'Guia actualizada exitosamente.');
         }
-        return redirect()->back()->with('danger',$response['message']);
+        return redirect()->back()->with('danger', $response['message']);
     }
 }

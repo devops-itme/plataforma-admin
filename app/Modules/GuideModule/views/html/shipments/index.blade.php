@@ -24,7 +24,7 @@
                 
                      
                         <a href="{{ route('shipments.create',['order_id' => $order_id])}}">
-                            <button class="btn btn-light-danger mr-2 px-6"> 
+                            <button class="btn btn-light-primary mr-2 px-6"> 
                         <i class="fas fa-plus"></i>
                         Crear</button>
                     </a>
@@ -185,9 +185,9 @@
             <table class="table table-sm text-center display" id="tabListOrders">
                 <thead class="">
                     <tr>
+                        <th scope="col">ID</th>
                         <th scope="col">NO. GUIA</th>
                         <th scope="col">CLIENTE</th>
-                        <th scope="col">TIPO</th>
                         <th scope="col">FECHA - HORA</th>
                         <th scope="col">CONTACTO</th>
                         <th scope="col">ESTADO</th>
@@ -197,9 +197,9 @@
                 <tbody>
                     @foreach ($shipments as $shipment)
                         <tr>
+                            <td>{{ $shipment->id }}</td>
                             <th>{{ $shipment->external_id ?? 'No registrada' }}</th>
                             <td>{{ $shipment->recipient_name ?? 'No registra' }}</td>
-                            <td>{{ $shipment->getOrder->getOrderType->name }}</td>
                             <td>{{ format_date(date('Y-n-d', strtotime($shipment->created_at))) }}
                                 <b>{{ date('h:m A', strtotime($shipment->created_at)) }}</b>
                             </td>
