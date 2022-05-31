@@ -7,8 +7,10 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RoleModule\Role;
 use App\Modules\UserModule\Controllers\UserTrait;
 use App\Modules\UserModule\User;
+use App\Modules\OrderModule\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notifiable;
 
 class UserController extends Controller
 {
@@ -141,9 +143,12 @@ class UserController extends Controller
 
     public function sendPushNotification(Request $request)
     {
+        $orders = new Order();        
+        $status_matrix_id = $orders->$request->get('status_matrix_id');
         $userToken = $request->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';
-       
         $data = $request->all();
-        return sendCustomNotifications('Notification', 'Notification', $data, $userToken);        
+        if ($status_matrix_id != 1) {
+            return sendCustomNotifications('Notification', 'Se ha cambiado el estado de la orden', $data, $userToken);
+        }             
     }
 }
