@@ -142,13 +142,10 @@ class UserController extends Controller
 
 
     public function sendPushNotification(Request $request)
-    {
-        $orders = new Order();        
-        $status_matrix_id = $orders->$request->get('status_matrix_id');
-        $userToken = $request->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';
+    {        
+        $userToken = $request->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';       
         $data = $request->all();
-        if ($status_matrix_id != 1) {
-            return sendCustomNotifications('Notification', 'Se ha cambiado el estado de la orden', $data, $userToken);
-        }             
+        return sendCustomNotifications('Notification', 'Notification', $data, $userToken);      
+              
     }
 }
