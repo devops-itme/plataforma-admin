@@ -382,7 +382,6 @@ export default class Orders {
     }
 
     async porDespacharOndemand() {
-        console.log(11111);
         let button = document.getElementsByClassName("porDespacharOndemand");
         if (button == null) {
             return;

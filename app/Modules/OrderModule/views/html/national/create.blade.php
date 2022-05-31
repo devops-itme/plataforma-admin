@@ -25,7 +25,7 @@
                             @foreach ($customers as $customer)
                                 <option {{ old('customer') == $customer->getUser->id ? 'selected ' : '' }}
                                     value="{{ $customer->getUser->id }}">
-                                    {{ $customer->tradename }}
+                                    {{ $customer->getUser->name . ' ' . $customer->getUser->last_name }}
                                 </option>
                             @endforeach
                         </select>
@@ -123,7 +123,8 @@
                 </h3>
 
                 <div class="card-toolbar col-2">
-                    <button class="btn btn-primary font-weight-bolder" id="add-guide-btn" type="button" data-tooltip title="CREAR">
+                    <button class="btn btn-primary font-weight-bolder" id="add-guide-btn" type="button" data-tooltip
+                        title="CREAR">
                         <span class="svg-icon svg-icon-md">
                             <i class="fas fa-plus"></i>
                         </span>Añadir destino
@@ -150,7 +151,7 @@
                         <option selected disabled value="">Seleccione Tarifa</option>
                         @foreach ($rates as $item)
                             <option value="{{ $item->id }}" {{ request()->rate == $item->id ? 'selected' : '' }}>
-                                {{ $item->name }}</option>
+                                {{ $item }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -225,4 +226,3 @@
         </form>
     </div>
 @endsection
-

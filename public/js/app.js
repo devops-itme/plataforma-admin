@@ -3613,17 +3613,16 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context14.prev = _context14.next) {
               case 0:
-                console.log(11111);
                 button = document.getElementsByClassName("porDespacharOndemand");
 
                 if (!(button == null)) {
-                  _context14.next = 4;
+                  _context14.next = 3;
                   break;
                 }
 
                 return _context14.abrupt("return");
 
-              case 4:
+              case 3:
                 [].forEach.call(button, function (btn) {
                   btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
                     var order_id, result, req;
@@ -3671,7 +3670,7 @@ var Orders = /*#__PURE__*/function () {
                   })));
                 });
 
-              case 5:
+              case 4:
               case "end":
                 return _context14.stop();
             }
