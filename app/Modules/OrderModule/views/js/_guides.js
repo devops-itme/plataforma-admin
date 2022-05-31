@@ -67,6 +67,7 @@ export default class Guides {
         let guide_description = document.getElementById("guide_description");
         let value = document.getElementById("value");
         let corp_value = document.getElementById("corp_value");
+        let guide_form = document.getElementById("guide_form");
 
         if (guide_address == null || contact == null || phone_contact == null || email_contact == null) {
             return;
@@ -74,7 +75,8 @@ export default class Guides {
         if (same_day_delivery == null || sign == null || take_photo == null || guide_description == null) {
             return;
         }
-        if (value == null || corp_value == null) {
+        if (value == null || corp_value == null || guide_form == null) {
+            console.log(guide_form);
             return;
         }
 
@@ -110,6 +112,7 @@ export default class Guides {
         }
         this.guides.push(response.data);
         this.listGuides();
+        guide_form.reset();
     }
 
     async listGuides() {
