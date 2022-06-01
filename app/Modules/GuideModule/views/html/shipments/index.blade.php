@@ -120,22 +120,22 @@
                         <input type="hidden" name="order_id" value="{{ $order_id }}">
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label>NO. GUIA:</label>
+                                <label>No. guia:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="4700412"
                                     name="external_id" value="{{request()->external_id}}" />
-                                <span class="form-text text-muted">Filtro NO. GUIA</span>
+                                <span class="form-text text-muted">Filtro No. guia</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label for="exampleSelect1">CLIENTE:</label>
+                                <label for="exampleSelect1">Cliente:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Jaime Barrios"
                                     name="recipient_name" value="{{request()->recipient_name}}" />
-                                <span class="form-text text-muted">Filtro CLIENTE</span>
+                                <span class="form-text text-muted">Filtro cliente</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label>CONTACTO:</label>
+                                <label>Contacto:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson"
                                     name="contact" value="{{request()->contact}}" />
-                                <span class="form-text text-muted">Filtro CONTACTO</span>
+                                <span class="form-text text-muted">Filtro contacto</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Desde:</label>
