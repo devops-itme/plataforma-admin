@@ -18,41 +18,45 @@
     </div>
     <div class="card card-custom">
         <div class="card-header">
-            <form class="row g-3" method="post" action="{{ route('shipments.update', $guide->id,['guide_id' => $guide->id]) }}">
-                @csrf {{ method_field('PUT') }}
-                <div class="input-group mt-5">
-                    <div class="input-group-prepend">
+            <form class="row g-3" method="post" action="#">
+                @csrf
+                <div class="container mt-8">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                    </div>
-                    <select name="city"  class="custom-select" id="city" disabled>
-                        <option value="{{$guide->city}}" >{{$guide->city}}</option> selected>{{$guide->city}}</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mt-5">
-                    <label for="inputCountry" class="form-label">Cod País</label>
-                    <input type="text" class="form-control" value="{{$guide->country}}" id="inputCountry" disabled="disabled" >
-                </div>
-                <div class="col-md-6 mt-5">
-                    <label for="inputAddress" class="form-label">Cod Ciudad</label>
-                    <input type="text" value="{{$guide->city}}" class="form-control" id="inputAddress" disabled="disabled">
-                </div>
-                <div class="card-header">
-                    <div class="card-title">
-                        <h2 class="card-label">
-                            Datos del usuario destinatario
-                        </h2>
-                    </div>
+                        <select name="city"  class="custom-select" id="city" disabled>
+                            <option value="{{$guide->city}}" >{{$guide->city}}</option>
+                        </select>
                 </div>
                 <div class="container">
                     <div class="row">
+                        <div class="col mt-5">
+                    <label for="inputCountry" class="form-label">Cod País</label>
+                    <input type="text" class="form-control" value="{{$guide->country}}" id="inputCountry" disabled="disabled" >
+                </div>
+                <div class="col mt-5">
+                    <label for="inputAddress" class="form-label">Cod Ciudad</label>
+                    <input type="text" value="{{$guide->city}}" class="form-control" id="inputAddress" disabled="disabled">
+                </div>
+            </div>
+        </div>
+
+                    <div class="card-title">
+                        <h2 class="card-label">
+                            <hr width="545%" />
+                            Datos del usuario destinatario
+                            <hr width="545%" />
+                        </h2>
+                    </div>
+
+                <div class="container mt-8">
+                    <div class="row">
                         <div class="col">
-                            <label for="exampleInputEmail1">Nombre del destinatario</label>
+                            <label for="recipient_name">Nombre del destinatario</label>
                             <input type="text" class="form-control" value="{{$guide->recipient_name}}" id="exampleInputE1" aria-describedby="emailHelp"
-                                placeholder="Juan Perez" name="recipient_name" required disabled>
+                             placeholder="" name="recipient_name" required disabled>
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Direccion del destinatario</label>
+                            <label for="address_name">Direccion del destinatario</label>
                             <input type="text" class="form-control" value="{{$guide->address_name}}"  id="exampleInputP1" placeholder="Direccion"
                                 name="address_name" required disabled>
                         </div>
@@ -97,18 +101,22 @@
                             </div>
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Tiendas</label>
-                            <input type="text" class="form-control" id="tienda" placeholder="Seleccione una tienda" disabled>
+                            <label for="delivery_office">Tiendas</label>
+                               <select name="delivery_office" disabled class="custom-select"  id="delivery_office">
+                                  <option value="{{$guide->delivery_office}}" disabled selected>{{$guide->delivery_office}}</option>
+                               </select>
                         </div>
                     </div>
                 </div>
-                <div class="card-header">
-                    <div class="card-title">
+
+                    <div class="card-title mt-8">
                         <h2 class="card-label">
+                            <hr width="1000%" />
                             Datos de la Guía
+                            <hr width="1000%" />
                         </h2>
                     </div>
-                </div>
+
                 {{-- datos de la guia --}}
                 <div class="container">
                     <div class="row mt-10">
@@ -159,10 +167,14 @@
     </form>
     </div>
     </div>
+
 @endsection
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 {{-- Styles Section --}}
 @section('styles')
 @endsection
+
