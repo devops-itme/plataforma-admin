@@ -53,10 +53,10 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             $guide->invoice_number,
             $guide->dispatched,
             $guide->contact,
-            $guide->description,
-            $guide->novelty,
+            $guide->description,            
             $guide->app_status,
             $guide->delivery_office,
+            $guide->state,
             Date::dateTimeToExcel($guide->updated_at),
 
         ];
@@ -123,7 +123,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             'contact',
             'description',
             'novelty',
-            'app_status',
+            'app_status',  //Usuario
             'delivery_office',
             'state',
             'updated_at',
