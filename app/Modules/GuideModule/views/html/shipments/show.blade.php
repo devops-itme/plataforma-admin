@@ -1,4 +1,4 @@
-<!-- Formulario Create-->
+<!-- Formulario Show-->
 {{-- Extends layout --}}
 @extends('layouts.app')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -6,40 +6,40 @@
 {{-- Content --}}
 @section('content')
     @include('layouts.breadCrumbs')
-   
+
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
                 <h2 class="card-label">
-                    Guias Individuales
+                    Ver Guias
                 </h2>
             </div>
         </div>
     </div>
     <div class="card card-custom">
         <div class="card-header">
-            <form class="row g-3" method="post" action="{{ route('shipments.store', ['order_id' => $order_id]) }}">
+            <form class="row g-3" method="post" action="#">
                 @csrf
                 <div class="container mt-8">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                    <select name="branch_office" class="custom-select" id="branch_off">
-                        <option value="" disabled selected>Seleccionar</option>
-                    </select>
+                        <select name="city"  class="custom-select" id="city" disabled>
+                            <option value="{{$guide->city}}" >{{$guide->city}}</option>
+                        </select>
                 </div>
                 <div class="container">
                     <div class="row">
                         <div class="col mt-5">
-                    <label for="codpais" class="form-label">Cod País</label>
-                    <input type="number" class="form-control" id="codpais" disabled="disabled" >
+                    <label for="inputCountry" class="form-label">Cod País</label>
+                    <input type="text" class="form-control" value="{{$guide->country}}" id="inputCountry" disabled="disabled" >
                 </div>
                 <div class="col mt-5">
-                    <label for="codciudad" class="form-label">Cod Ciudad</label>
-                    <input type="text" class="form-control" id="codciudad" disabled="disabled">
+                    <label for="inputAddress" class="form-label">Cod Ciudad</label>
+                    <input type="text" value="{{$guide->city}}" class="form-control" id="inputAddress" disabled="disabled">
                 </div>
             </div>
         </div>
-                
+
                     <div class="card-title">
                         <h2 class="card-label">
                             <hr width="545%" />
@@ -47,24 +47,18 @@
                             <hr width="545%" />
                         </h2>
                     </div>
-                
+
                 <div class="container mt-8">
                     <div class="row">
                         <div class="col">
                             <label for="recipient_name">Nombre del destinatario</label>
-                            <input type="text" class="form-control" id="recipient_name" aria-describedby="emailHelp"
-                                placeholder="" name="recipient_name" class="@error('recipient_name') is-invalid @enderror">
-                                @error('recipient_name')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                            <input type="text" class="form-control" value="{{$guide->recipient_name}}" id="exampleInputE1" aria-describedby="emailHelp"
+                             placeholder="" name="recipient_name" required disabled>
                         </div>
                         <div class="col">
                             <label for="address_name">Direccion del destinatario</label>
-                            <input type="text" class="form-control" id="address_name" placeholder="Direccion"
-                                name="address_name" class="@error('address_name') is-invalid @enderror">
-                                @error('address_name')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                            <input type="text" class="form-control" value="{{$guide->address_name}}"  id="exampleInputP1" placeholder="Direccion"
+                                name="address_name" required disabled>
                         </div>
                     </div>
                 </div>
@@ -72,8 +66,8 @@
                     <div class="row mt-10">
                         <div class="col">
                             <label for="exampleInputEmail1">Tipo de documento</label>
-                            <select class="custom-select" id="tipdocumento" name="document_type">
-                                <option selected></option>
+                            <select class="custom-select" id="tipdocumento" name="document_type" disabled>
+                                <option >{{$guide->document_type}}</option>
                                 <option value="CC">CC</option>
                                 <option value="TE">TE</option>
                                 <option value="NN">NN</option>
@@ -81,13 +75,13 @@
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1">Numero de documento</label>
-                            <input type="number" class="form-control" id="numdocument" placeholder="N° de documento"
-                                name="document">
+                            <input type="number" class="form-control" value="{{$guide->document}}" id="numdocument" placeholder="N° de documento"
+                                name="document" disabled>
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1">Telefono</label>
-                            <input type="number" class="form-control" id="telp" placeholder="Telefono"
-                                name="contact">
+                            <input type="number" class="form-control"  value="{{$guide->phone_contact}}" id="telp" placeholder="Telefono" name="phone_contact"
+                                name="contact" disabled>
                         </div>
                     </div>
                 </div>
@@ -95,28 +89,26 @@
                     <div class="row mt-10">
                         <div class="col">
                             <label for="exampleInputPassword1">Correo</label>
-                            <input type="mail" class="form-control" id="mailco" placeholder="mail@mail.com"
-                                name="email_contact">
+                            <input type="mail" class="form-control" value="{{$guide->email_contact}}" id="mailco" placeholder="mail@mail.com"
+                                name="email_contact" disabled>
                         </div>
                         <div class="col">
                             <div class="form-check mt-10">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox" disabled value="" id="flexCheckDefault" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Recoger en tienda?
                                 </label>
                             </div>
                         </div>
                         <div class="col">
-                            {{-- <label for="exampleInputPassword1">Tiendas</label>
-                            <input type="text" class="form-control" id="tienda" placeholder="Seleccione una tienda--"> --}}
                             <label for="delivery_office">Tiendas</label>
-                    <select name="delivery_office" class="custom-select" id="delivery_office">
-                        <option value="" disabled selected>Seleccionar</option>
-                    </select>
+                               <select name="delivery_office" disabled class="custom-select"  id="delivery_office">
+                                  <option value="{{$guide->delivery_office}}" disabled selected>{{$guide->delivery_office}}</option>
+                               </select>
                         </div>
                     </div>
                 </div>
-               
+
                     <div class="card-title mt-8">
                         <h2 class="card-label">
                             <hr width="1000%" />
@@ -124,23 +116,23 @@
                             <hr width="1000%" />
                         </h2>
                     </div>
-              
+
                 {{-- datos de la guia --}}
                 <div class="container">
                     <div class="row mt-10">
                         <div class="col">
                             <label for="numguide">Numero de guía</label>
-                            <input type="number" class="form-control" id="numdguia" placeholder="N° de Guía"
-                                name="pre_guide">
+                            <input type="number" class="form-control" value="{{$guide->pre_guide}}" id="numdguia" placeholder="N° de Guía"
+                                name="pre_guide" disabled>
                         </div>
                         <div class="col">
                             <label for="numfact">Numero de Factura</label>
-                            <input type="text" class="form-control" id="numdfact" placeholder="N° de Factura"
-                                name="invoice_number">
+                            <input type="text" class="form-control" value="{{$guide->invoice_number}}"  id="numdfact" placeholder="N° de Factura"
+                                name="invoice_number" disabled>
                         </div>
                         <div class="col">
                             <label for="venvio">Valor declarado del envió</label>
-                            <input type="number" class="form-control" id="telp" placeholder="Valor" name="declared">
+                            <input type="number" class="form-control" value="{{$guide->declared}}" id="telp" placeholder="Telefono" name="declared" disabled>
                         </div>
                     </div>
                 </div>
@@ -148,28 +140,28 @@
                     <div class="row mt-10">
                         <div class="col">
                             <label for="pieza">Piezas</label>
-                            <input type="number" class="form-control" id="pieces" name="pieces">
+                            <input type="number" class="form-control" value="{{$guide->pieces}}" id="pieces" name="pieces" disabled>
                         </div>
                         <div class="col">
                             <label for="kilo">kilos</label>
-                            <input type="text" class="form-control" id="numeroc" name="kg">
+                            <input type="text" class="form-control" value="{{$guide->kg}}" id="numeroc" name="kg" disabled>
                         </div>
                         <div class="col">
                             <label for="incontact">Nombre del conctacto</label>
-                            <input type="text" class="form-control" id="contact" name="invoice_contact">
+                            <input type="text" class="form-control" value="{{$guide->contact}}" id="contact" name="contact" disabled>
                         </div>
 
                         <div class="container">
                             <div class="row mt-10">
                                 <label for="textarea">Descripción</label>
-                                <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                                <textarea class="form-control" value=""  id="textarea" rows="3" name="description" disabled>{{$guide->description}}</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 mt-5 text-center">
-                    <button type="submit" class="btn btn-primary">Crear Guía</button>
-                </div>
+               {{--<div class="col-12 mt-5 text-center">
+                    <button type="submit" class="btn btn-primary">Actualizar Guia</button>
+                </div> --}}
         </div>
     </div>
     </form>
@@ -185,3 +177,4 @@
 {{-- Styles Section --}}
 @section('styles')
 @endsection
+

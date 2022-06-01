@@ -103,7 +103,7 @@ class OrderController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'address_id' => 'required|numeric|exists:addresses,id',
+                //'address_id' => 'required|numeric|exists:addresses,id',
                 'guides' => 'required'
             ]
         );

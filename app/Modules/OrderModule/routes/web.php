@@ -4,13 +4,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role'], function () {
-     
+
         Route::get('/ordenes/historial', 'OrderModule\Controllers\OrderController@record')->name('orders.record');
         Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
         Route::resource('/ordenes-internacionales', 'OrderModule\Controllers\InternationalOrderController')->names('internationalOrders');
         Route::post('/importBatch', 'OrderModule\Controllers\InternationalOrderController@importBatch')->name('internationalOrders.import');
     });
     
+    Route::get('/exportBatch', 'OrderModule\Controllers\InternationalOrderController@exportBatch')->name('internationalOrders.export');
+    Route::get('/export_incidences', 'OrderModule\Controllers\InternationalOrderController@incidencesExport')->name('internationalOrders.incidencesExport');
     Route::get('getOrder/{id}', 'OrderModule\Controllers\OrderController@getOrder');
     Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
     Route::get('/order_number', 'OrderModule\Controllers\OrderController@orderNumber');
@@ -18,7 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //DELIVERY - DISPATCH
-    
+
     //status matrix
     Route::get('despacho/matriz_estados', 'OrderModule\Controllers\DeliveryController@statusMatrix');
 

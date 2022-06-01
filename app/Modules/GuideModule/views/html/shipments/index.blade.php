@@ -21,14 +21,14 @@
                         <i class="fas fa-arrow-down" aria-hidden="true"></i>
                     </span>Filtro
                 </button>
-                
-                     
-                        <a href="{{ route('shipments.create',['order_id' => $order_id])}}">
-                            <button class="btn btn-light-primary mr-2 px-6"> 
-                        <i class="fas fa-plus"></i>
-                        Crear</button>
-                    </a>
-                    
+
+
+                <a href="{{ route('shipments.create',['order_id' => $order_id])}}">
+                    <button class="btn btn-light-primary mr-2 px-6">
+                <i class="fas fa-plus"></i>
+                Crear Guía</button>
+            </a>
+
 
                 <form action="{{ route('shipments.assign', $order_id) }}" method="POST">
                     @csrf
@@ -36,7 +36,7 @@
                         <span>Enviar lote</span>
                     </button>
                 </form>
-             
+
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
                     {{-- <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -120,22 +120,22 @@
                         <input type="hidden" name="order_id" value="{{ $order_id }}">
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label>NO. GUIA:</label>
+                                <label>No. guia:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="4700412"
                                     name="external_id" value="{{request()->external_id}}" />
-                                <span class="form-text text-muted">Filtro NO. GUIA</span>
+                                <span class="form-text text-muted">Filtro No. guia</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label for="exampleSelect1">CLIENTE:</label>
+                                <label for="exampleSelect1">Cliente:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Jaime Barrios"
                                     name="recipient_name" value="{{request()->recipient_name}}" />
-                                <span class="form-text text-muted">Filtro CLIENTE</span>
+                                <span class="form-text text-muted">Filtro cliente</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
-                                <label>CONTACTO:</label>
+                                <label>Contacto:</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson"
                                     name="contact" value="{{request()->contact}}" />
-                                <span class="form-text text-muted">Filtro CONTACTO</span>
+                                <span class="form-text text-muted">Filtro contacto</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-4">
                                 <label>Desde:</label>
@@ -209,10 +209,11 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                    <a href="#" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
+                                    <a href="{{ route('shipments.show', $shipment->id,'show') }}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
                                         title="Detalle">
                                         <i class="far fa-folder-open"></i>
                                     </a>
+                                    @if ( !isset($shipment->external_id))
                                     <a href="{{ route('shipments.edit', $shipment->id,'edit') }}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                         <i class="fad fa-edit"></i>
                                     </a>
@@ -220,6 +221,8 @@
                                         class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                                         <i class="fad fa-trash-alt"></i>
                                     </button>
+                                    @endif
+
                                 </div>
                             </td>
                         </tr>

@@ -103,4 +103,13 @@ class ShipmentController extends Controller
         }
         return redirect()->back()->with('danger', $response['message']);
     }
+
+    public function show($id){
+        $guide = Guide::find($id);
+        $Tealca = new Tealca();
+        $Tealca->login();
+        $history = $Tealca->requestOrderStatus($guide->external_id);
+
+        return view($this->path. 'show', compact('guide', 'history'));
+    }
 }

@@ -11,8 +11,22 @@
         </div>
 
         <div class="card-toolbar">
+            <a href="{{ route('internationalOrders.export') }}" type="button" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="EXPORTAR ÓRDENES">
+                <span class="svg-icon svg-icon-md">
+                    <i class="fad fa-download"></i>
+                </span>Exportar Órdenes
+            </a>
+            <button type="button" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="IMPORTAR" data-toggle="modal" data-target="#importBatchModal">
+                <span class="svg-icon svg-icon-md">
+                    <i class="fad fa-upload"></i>
+                </span>Importar
+            </button>
+            <a type="button" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="EXPORTAR INCIDENCIAS" href="{{ route('internationalOrders.incidencesExport') }}">
+                <span class="svg-icon svg-icon-md">
+                    <i class="fad fa-download"></i>
+                </span>Exportar Incidencias
+            </a>
             <!--begin::Button filter-->
-
             <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter">
                 <span class="svg-icon svg-icon-md">
                     <i class="fas fa-arrow-down" aria-hidden="true"></i>
@@ -21,11 +35,6 @@
             @include(
             'OrderModule.views.html.international.modals.importBatchModal'
             )
-            <button type="button" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="IMPORTAR" data-toggle="modal" data-target="#importBatchModal">
-                <span class="svg-icon svg-icon-md">
-                    <i class="fad fa-upload"></i>
-                </span>Importar
-            </button>
 
             {{-- <a href="{{ route('orders.record') }}" class="btn btn-light-primary font-weight-bolder mr-2">
             <i class="fas fa-history"></i>
@@ -51,7 +60,7 @@
                             <label>Número de Lote:</label>
                             <input type="text" class="form-control form-control-solid" placeholder="Lote_1" name="number" value="{{ request()->number }}" />
                             <span class="form-text text-muted">Filtro numero</span>
-                        </div>                        
+                        </div>
                         <div class="form-group py-3 m-0 col-md-4">
                             <label>Nombre del cliente:</label>
                             <input type="text" class="form-control form-control-solid" placeholder="Sabrina Jackson" name="name" value="{{ request()->name }}" />
