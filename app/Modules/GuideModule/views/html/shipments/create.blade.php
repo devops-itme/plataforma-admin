@@ -42,9 +42,9 @@
                 
                     <div class="card-title">
                         <h2 class="card-label">
-                            <hr width="570%" />
+                            <hr width="545%" />
                             Datos del usuario destinatario
-                            <hr width="570%" />
+                            <hr width="545%" />
                         </h2>
                     </div>
                 
@@ -53,7 +53,7 @@
                         <div class="col">
                             <label for="recipient_name">Nombre del destinatario</label>
                             <input type="text" class="form-control" id="recipient_name" aria-describedby="emailHelp"
-                                placeholder="Juan Perez" name="recipient_name" class="@error('recipient_name') is-invalid @enderror">
+                                placeholder="" name="recipient_name" class="@error('recipient_name') is-invalid @enderror">
                                 @error('recipient_name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -107,8 +107,12 @@
                             </div>
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Tiendas</label>
-                            <input type="text" class="form-control" id="tienda" placeholder="Seleccione una tienda">
+                            {{-- <label for="exampleInputPassword1">Tiendas</label>
+                            <input type="text" class="form-control" id="tienda" placeholder="Seleccione una tienda--"> --}}
+                            <label for="delivery_office">Tiendas</label>
+                    <select name="delivery_office" class="custom-select" id="delivery_office">
+                        <option value="" disabled selected>Seleccionar</option>
+                    </select>
                         </div>
                     </div>
                 </div>

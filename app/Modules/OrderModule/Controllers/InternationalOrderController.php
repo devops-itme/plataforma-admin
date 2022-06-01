@@ -78,7 +78,9 @@ class InternationalOrderController extends Controller
         $incidences = [];
 
         foreach ($guides as $guide) {
-            $guideTracking = Tealca::requestOrderStatus($guide->external_id);
+            $Tealca = new Tealca();
+            $Tealca->login();
+            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
             $statuses = json_decode($guideTracking)->tracking;
             $order1 = json_decode($guide);

@@ -106,7 +106,10 @@ class ShipmentController extends Controller
 
     public function show($id){
         $guide = Guide::find($id);
+        $Tealca = new Tealca();
+        $Tealca->login();
+        $history = $Tealca->requestOrderStatus($guide->external_id);
 
-        return view($this->path. 'show', compact('guide'));
+        return view($this->path. 'show', compact('guide', 'history'));
     }
 }
