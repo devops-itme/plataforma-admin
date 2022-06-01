@@ -114,8 +114,8 @@ class Tealca
             'http://qaapicore.tealca.com/Tracking?shipment='.$guide
         );
 
-        if ($createShipmentResponse->status() != 200) {
-            return $this->respond(500, $trackingResponse->json(), null , 'Fallo en el servicio. Guía N° ' . $guide);
+        if ($trackingResponse->status() != 200) {
+            return $this->respond(500, null, $trackingResponse , 'Fallo en el servicio. Guía N° ' . $guide);
         };
 
 
