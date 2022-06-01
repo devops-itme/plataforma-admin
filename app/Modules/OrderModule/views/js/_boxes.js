@@ -177,11 +177,11 @@ export default class Boxes {
         }
         corp_value.value = 0;
         value.value = 0;
-
+        
         if (this.rateId == null) {
             return;
         }
-
+        
         let immediate_delivery = same_day_delivery.checked ? 1 : 0;
 
         let rateId = this.rateId;

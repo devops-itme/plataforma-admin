@@ -22,7 +22,9 @@ export default class Guides {
     boxes = new Boxes();
     guides = [];
     rateId;
-    constructor(guides = null, scope = 'creation') {
+    pathname = window.location.pathname;
+
+    constructor(guides = null, scope = '') {
         if (guides) {
             this.guides = guides;
         }
@@ -30,6 +32,10 @@ export default class Guides {
     }
 
     initialize() {
+        if (this.pathname.includes('edit') && this.pathname.includes('guias')) {
+            this.editGuide();
+            return;
+        }
         this.listGuides();
         this.boxes.initialize();
     }
@@ -43,6 +49,7 @@ export default class Guides {
         const setRateId = async () => {
             this.boxes.rateId = null;
             let response = await requestSearchZone(guide_address.value);
+
             if (response.state == 200) {
                 let zone_id = response.data.zone_id;
                 let responseRate = await requestRate(zone_id);
@@ -53,6 +60,7 @@ export default class Guides {
             this.boxes.calculateRate();
         }
 
+        setRateId();
         guide_address.addEventListener('change', () => setRateId());
     }
 
@@ -88,7 +96,7 @@ export default class Guides {
         if (value == null || corp_value == null || guide_form == null) {
             return;
         }
-
+        
         guide_address = guide_address.value;
         contact = contact.value;
         phone_contact = phone_contact.value;
@@ -122,6 +130,27 @@ export default class Guides {
         this.guides.push(response.data);
         this.listGuides();
         guide_form.reset();
+    }
+
+    async editGuide() {
+        let boxes_element = document.getElementById("boxes");
+        let updateGuideBtn = document.getElementById("update-guide-btn");
+        let updateGuideForm = document.getElementById("update-guide-form");
+
+        if (updateGuideBtn == null || boxes_element == null || updateGuideForm == null) {
+            return;
+        }
+        
+        let boxes = JSON.parse(boxes_element.value);
+        this.boxes.boxes = boxes;
+
+        this.sourceAddressHandler();
+        this.boxes.initialize();
+
+        updateGuideBtn.addEventListener('click', () => {
+            boxes_element.value = JSON.stringify(this.boxes.boxes);
+            updateGuideForm.submit();
+        })
     }
 
     async listGuides() {
@@ -189,7 +218,7 @@ export default class Guides {
                 tbody.appendChild(row);
             });
         }
-        this.editGuide();
+        this.goToEditGuide();
         this.removeGuide();
     }
 
@@ -220,7 +249,7 @@ export default class Guides {
         [].forEach.call(removeGuideBtn, (btn) => removeGuideBtnHandler(btn));
     }
 
-    editGuide() {
+    goToEditGuide() {
         let editGuideBtn = document.getElementsByClassName("edit-guide-btn");
         if (editGuideBtn == null) {
             return;

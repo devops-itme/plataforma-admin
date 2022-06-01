@@ -16,6 +16,7 @@ import Hours from '../../app/Modules/PickupHourModule/views/js/_hours';
 import Plans from '../../app/Modules/PlanModule/views/js/_plans';
 import Notifications from './_notifications';
 import Rates from '../../app/Modules/RateModule/views/js/_rates';
+import Guides from '../../app/Modules/OrderModule/views/js/_guides';
 
 //Vue Components
 Vue.component('deliveries-ondemand', require('./components/deliveries/deliveriesOndemand.vue').default);
@@ -30,6 +31,7 @@ let messengers = new Messengers();
 let addresses = new Addresses();
 let customers = new Customers();
 let orders = new Orders();
+let guides = new Guides();
 let general = new General();
 let permissions = new Permissions();
 let zones = new Zones();
@@ -47,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // bootstrapSelect.initialize();
     users.initialize();
     orders.initialize();
+    guides.initialize();
     messengers.initialize();
     addresses.initialize();
     customers.initialize();

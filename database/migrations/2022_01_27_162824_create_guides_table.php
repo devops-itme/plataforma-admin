@@ -22,6 +22,7 @@ class CreateGuidesTable extends Migration
             $table->string('branch_office')->nullable();
             $table->string('transport_type')->nullable();
             $table->string('dispatched')->nullable();
+            $table->integer('address_id')->nullable();
             $table->string('address_name')->nullable();
             $table->string('address_lat')->nullable();
             $table->string('address_lng')->nullable();
