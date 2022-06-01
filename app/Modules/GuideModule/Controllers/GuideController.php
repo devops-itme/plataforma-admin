@@ -70,58 +70,38 @@ class GuideController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->same_day_delivery == 'on') {
-            $request->merge(['same_day_delivery' => 1]);
-        } else {
-            $request->merge(['same_day_delivery' => 0]);
+        $request->merge([
+            'same_day_delivery' => $request->same_day_delivery == 'on' ? 1 : 0,
+            'sign' => $request->sign == 'on' ? 1 : 0,
+            'take_photo' => $request->take_photo == 'on' ? 1 : 0,
+            'return_last_destination' => $request->guide_return_last_destination,
+        ]);
+
+        $address = Address::find($request->guide_address);
+        if (is_null($address)) {
+            return redirect()->back()->with('danger', 'Debe seleccionar una dirección de destino');
         }
-        if ($request->sign == 'on') {
-            $request->merge(['sign' => 1]);
-        } else {
-            $request->merge(['sign' => 0]);
+        $request->merge([
+            'address_id' => $address->id,
+            'address_name' => $address->name,
+            'address_lat' => $address->lat,
+            'address_lng' => $address->lng,
+            'address_description' => $address->description
+        ]);
+
+        $response = $this->storeGuide($request);
+        if ($response['state'] != 200) {
+            return redirect()->back()->with('danger', $response['message']);
         }
-        if ($request->take_photo == 'on') {
-            $request->merge(['take_photo' => 1]);
-        } else {
-            $request->merge(['take_photo' => 0]);
-        }
-        if ($request->zone == 'Seleccione') {
-            $request->merge(['zone' => NULL]);
-        }
-        $request->merge(['return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0]);
-        if ($request->customer_address) {
-            $address = Address::find($request->customer_address);
-            if (!is_null($address)) {
-                $request->merge([
-                    'address_id' => $address->id,
-                    'address_name' => $address->name,
-                    'address_lat' => $address->lat,
-                    'address_lng' => $address->lng,
-                    'address_description' => $address->description
-                ]);
+
+        if (!is_null($request->guides_doc)) {
+            $guidance_docs = $this->GuidanceDocument->saveGuidanceDoc($request->merge(['guide_id' => $response['data']->id]));
+            if ($guidance_docs['state'] != 200) {
+                return redirect()->back()->with('danger', $response['message']);
             }
         }
 
-        $request->merge(['state' => 31]);
-        $response = $this->storeGuide($request);
-        if ($response['state'] == 200) {
-            if (!is_null($request->guides_doc)) {
-                $guidance_docs = $this->GuidanceDocument->saveGuidanceDoc($request->merge(['guide_id' => $response['data']->id]));
-                if ($guidance_docs['state'] != 200) {
-                    return json_encode($response, $response['message']);
-                }
-            }
-            return json_encode([
-                'data' => $response['data'],
-                'state' => $response['state'],
-                'message' => 'Guia guardada exitosamente'
-            ]);
-        } else {
-            return json_encode([
-                'state' => 500,
-                'error' => $response['error']
-            ]);
-        }
+        return redirect()->back()->with('success', $response['message']);
     }
 
     /**

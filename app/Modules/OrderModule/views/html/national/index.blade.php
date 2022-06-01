@@ -148,7 +148,7 @@
                         @endif
                     </td>
                     <td>
-                        <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
+                        <div class="d-flex justify-content-around align-items-center flex-wrap flex-row">
                             <a href="ordenes-listado" class="btn btn-icon btn-light btn-sm mr-2" data-tooltip title="Listado">
                                 <i class="fas fa-eye"></i>
                             </a>

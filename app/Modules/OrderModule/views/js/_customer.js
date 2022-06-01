@@ -6,7 +6,6 @@ export default class Customer {
         this.user_id = customer;
         if (order) {
             this.order = order;
-            console.log(this.order);
         }
     }
 
@@ -46,7 +45,7 @@ export default class Customer {
 
         $('.select2-customers').on('change', async function (e) {
             let customer_id = customer.value;
-            console.log(customer_id);
+            
             let response = await requestCustomerData(customer_id);
             if (response.state != 200) {
                 return;

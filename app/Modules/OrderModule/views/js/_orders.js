@@ -20,17 +20,17 @@ import Guides from "./_guides.js";
 export default class Orders {
 
     order = null;
-
+    pathname = window.location.pathname;
     constructor() {
 
     }
 
     async initialize() {
-        let pathname = window.location.pathname;
-        if (pathname.includes('edit')) {
+        if (this.pathname.includes('edit')) {
             let regex = /(\d+)/g;
-            let order_id = pathname.match(regex);
+            let order_id = this.pathname.match(regex);
             let response = await requestGetOrder(order_id);
+
             if (response.state == 200) {
                 this.order = response.data;
             }
@@ -45,8 +45,7 @@ export default class Orders {
 
 
         this.loadBranches();
-
-        this.saveGuides();
+        
         this.createAddress();
         this.customerAddresses();
         this.loadPickupHours();
@@ -77,6 +76,7 @@ export default class Orders {
         if (addGuideBtn == null) {
             return;
         }
+
         let createOrderBtn = document.getElementById("create-order-btn");
         let order_form = document.getElementById("order-form");
         let guides = document.getElementById("guides");
@@ -85,12 +85,15 @@ export default class Orders {
         }
 
         let guidesArr = this.order?.get_guides;
-        let GuidesClass = new Guides(guidesArr);
+        let scope = this.pathname.includes('edit') ? 'edition' : 'creation';
+        let GuidesClass = new Guides(guidesArr, scope);
         GuidesClass.initialize();
         GuidesClass.sourceAddressHandler();
+
         addGuideBtn.addEventListener('click', async function () {
             GuidesClass.addGuide();
         });
+
         createOrderBtn.addEventListener('click', async function () {
             guides.value = JSON.stringify(GuidesClass.guides);
             order_form.submit();
@@ -125,123 +128,6 @@ export default class Orders {
             });
     }
 
-    saveGuides() {
-        let btnStoreGuide = document.getElementById("btnStoreGuide");
-        if (btnStoreGuide == null) {
-            return;
-        }
-        btnStoreGuide.addEventListener("click", async () => {
-            let branch_office = document.getElementById("branch_off").value;
-            let transport_type = document.getElementById("trans_type").value;
-            // let dispatched = document.getElementById("dispatched").value;
-            let address_name = document.getElementById("address").value;
-            // let address_lat = document.getElementById("lat").value;
-            // let address_lng = document.getElementById("lng").value;
-            let guide_description =
-                document.getElementById("guide_description").value;
-            let concept = document.getElementById("concept").value;
-            let rate = document.getElementById("rate").value;
-            let value = document.getElementById("value").value;
-            let corp_value = document.getElementById("corp_value").value;
-            let customer_document_type = document.getElementById(
-                "customer_document_type"
-            ).value;
-            let contact = document.getElementById("contact").value;
-            let phone_contact = document.getElementById("phone_contact").value;
-            let email_contact = document.getElementById("email_contact").value;
-            let invoice_contact =
-                document.getElementById("invoice_contact").value;
-            let zone = document.getElementById("zone_id").value;
-            let same_day_delivery =
-                document.getElementById("same_day_delivery").value;
-            let sign = document.getElementById("sign").value;
-            let take_photo = document.getElementById("take_photo").value;
-            // let customer_address = document.getElementById("customer_address").value;
-            //Boxes
-            let ids = document.getElementsByName("id[]");
-            let weights = document.getElementsByName("weight[]");
-            let longs = document.getElementsByName("long[]");
-            let broads = document.getElementsByName("broad[]");
-            let highs = document.getElementsByName("high[]");
-            let vol_weights = document.getElementsByName("vol_weight[]");
-            let descriptions = document.getElementsByName("description[]");
-            let boxArr = [];
-            for (let i = 0; i < ids.length; i++) {
-                let individualBoxArr = {
-                    number: ids[i].value,
-                    weight: weights[i].value,
-                    long: longs[i].value,
-                    broad: broads[i].value,
-                    high: highs[i].value,
-                    vol_weight: vol_weights[i].value,
-                    description: descriptions[i].value,
-                };
-                boxArr.push(individualBoxArr);
-            }
-            let formData = new FormData();
-            formData.append("boxes", JSON.stringify(boxArr));
-            formData.append("branch_office", branch_office);
-            formData.append("transport_type", transport_type);
-            // formData.append('dispatched',dispatched);
-            formData.append("address_name", address_name);
-            // formData.append('address_lat',address_lat);
-            // formData.append('address_lng',address_lng);
-            formData.append("guide_description", guide_description);
-            formData.append("concept", concept);
-            formData.append("rate", rate);
-            formData.append("value", value);
-            formData.append("corp_value", corp_value);
-            formData.append("customer_document_type", customer_document_type);
-            formData.append("contact", contact);
-            formData.append("phone_contact", phone_contact);
-            formData.append("email_contact", email_contact);
-            formData.append("invoice_contact", invoice_contact);
-            formData.append("zone", zone);
-            formData.append("same_day_delivery", same_day_delivery);
-            formData.append("sign", sign);
-            formData.append("take_photo", take_photo);
-            // formData.append('customer_address',customer_address);
-
-            let response = await this.sendGuideData(formData);
-            if (response.state == 200) {
-                correct(response.message);
-                let modal = document.getElementById("modalCreate");
-                modal.click();
-                this.initialize();
-            } else {
-                error("Error al crear la guía.");
-                console.log("Error: " + response.error);
-            }
-        });
-    }
-
-    async sendGuideData(formData) {
-        let response = {
-            state: 500,
-        };
-
-        response = await fetch("/guias/store", {
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            method: "POST",
-            body: formData,
-        });
-        return response.json();
-    }
-
-    async sendDataToUpdate(id, requestOptions) {
-        let response = {
-            state: 500,
-        };
-        await fetch("/guias/" + id, requestOptions)
-            .then((response) => response.json())
-            .then((data) => {
-                response = data;
-            })
-            .catch((e) => (response.error = e));
-        return response;
-    }
 
     loadBranches() {
         let branchesSlc = document.getElementsByName("branch_office");
@@ -496,7 +382,7 @@ export default class Orders {
                 schedule_time_range.addEventListener("change", () => {
                     let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
                     let schedule_time = document.getElementById("schedule_time");
-                    if(schedule_time == null){
+                    if (schedule_time == null) {
                         return;
                     }
                     schedule_time.value = id;
