@@ -8,7 +8,7 @@
             </h3>
         </div>
         @include('layouts.alerts')
-        <form action="{{ route('orders.update', $order->id) }}" method="POST">
+        <form id="order-form" action="{{ route('orders.update', $order->id) }}" method="POST">
             @csrf @method('PUT')
 
             <div class="card-body d-flex flex-row flex-wrap pt-2">
@@ -112,7 +112,7 @@
                             Marcar Urgente Despacho
                         </label>
                         <label class="checkbox">
-                            <input type="checkbox" name="return_last_destination"
+                            <input type="checkbox" name="return_last_destination" id="return_last_destination"
                                 {{ $order->return_last_destination == 1 ? 'checked' : '' }} />
                             <span></span>
                             Retorno Ultimo Destino
@@ -120,14 +120,19 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="guides" id="guides">
+        </form>
+
+        <form id="guide_form" action="{{ route('guides.store') }}" method="POST">
+            @csrf
             <div class="card-header row flex-wrap border-0 pt-6 pb-0">
                 <h3 class="card-title col-10">
                     Datos de destino
                 </h3>
 
                 <div class="card-toolbar col-2">
-                    <button class="btn btn-primary font-weight-bolder" id="add-guide-btn" type="button" data-tooltip
-                        title="CREAR">
+                    <button class="btn btn-primary font-weight-bolder" type="submit" id="add-guide-btn" type="button"
+                        data-tooltip title="CREAR">
                         <span class="svg-icon svg-icon-md">
                             <i class="fas fa-plus"></i>
                         </span>Añadir destino
@@ -135,7 +140,8 @@
                 </div>
             </div>
             <div class="card-body d-flex flex-row flex-wrap pt-2">
-
+                <input type="hidden" name="order_id" value="{{ $order->id }}">
+                <input type="hidden" name="guide_return_last_destination" id="guide_return_last_destination" value="0">
                 <div class="form-group col-md-2">
                     <label for="guide_address">Dirección destino <span class="text-danger">*</span></label>
                     <select name="guide_address" class="form-control form-control-solid" id="guide_address">
@@ -221,11 +227,12 @@
                 @include('OrderModule.views.html.national.guideContentTab')
             </div>
             @include('OrderModule.views.html.national.guideList')
-            <input type="hidden" name="guides" id="guides">
-            <div class="card-footer d-flex justify-content-end">
-                <button type="submit" id="create-order-btn" class="btn btn-primary mr-2">Actualizar Orden</button>
-                <button type="reset" class="btn btn-secondary">Limpiar</button>
-            </div>
         </form>
+        <input type="hidden" name="guides" id="guides">
+        <div class="card-footer d-flex justify-content-end">
+            <button type="submit" id="create-order-btn" class="btn btn-primary mr-2">Actualizar Orden</button>
+            <button type="reset" class="btn btn-secondary">Limpiar</button>
+        </div>
+
     </div>
 @endsection
