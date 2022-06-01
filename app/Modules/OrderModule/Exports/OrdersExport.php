@@ -12,16 +12,26 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class OrdersExport implements  FromCollection,WithHeadings, WithStyles 
+
+class OrdersExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize,WithCustomValueBinder
 {
     /**
      * @return \Illuminate\Support\Collection
      */
+
+     // set the preferred date format
+    private $date_format = 'Y-m-d';
+
+    // set the columns to be formatted as dates
+    private $date_columns = ['A'];
 
 
     public function headings(): array
@@ -31,7 +41,7 @@ class OrdersExport implements  FromCollection,WithHeadings, WithStyles
             __('numGuia'),
             __('guiaMe'),
             __('FechaCreacion'),
-             __('Origen'),
+            __('Origen'),
             __('codCustomer'),
             __('nomDes'),
             __('documentTypeDes'),
@@ -62,7 +72,7 @@ class OrdersExport implements  FromCollection,WithHeadings, WithStyles
         //  $from = "2022-05-23 18:07:31";
         //  $to = "2022-05-25 18:07:31";        
 
-        return $guias= Guide::select([
+        return $guias = Guide::select([
             'order_id',
             'external_id',
             'pre_guide',
@@ -84,9 +94,9 @@ class OrdersExport implements  FromCollection,WithHeadings, WithStyles
             'dispatched', // Factura            
             'contact',
             'description',
-            'novelty',                         
+            'novelty',
             'app_status',
-            'delivery_office',  
+            'delivery_office',
             'state',
             'updated_at',
         ])
@@ -102,4 +112,15 @@ class OrdersExport implements  FromCollection,WithHeadings, WithStyles
 
     
 
+    // public function bindValue(Cell $cell, $value)
+    // {
+    //     if (in_array($cell->getColumn(), $this->date_columns)) {
+    //         $cell->setValueExplicit(Date::excelToDateTimeObject($value)->format($this->date_format), DataType::TYPE_STRING);
+
+    //         return true;
+    //     }
+
+    //     // else return default behavior
+    //     return parent::bindValue($cell, $value);
+    // }
 }
