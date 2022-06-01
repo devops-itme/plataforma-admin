@@ -7,13 +7,17 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use App\Modules\GuideModule\Guide;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class OrdersExport implements FromCollection, WithHeadings, WithStyles
+class OrdersExport implements  FromCollection,WithHeadings, WithStyles 
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -23,13 +27,11 @@ class OrdersExport implements FromCollection, WithHeadings, WithStyles
     public function headings(): array
     {
         return [
-           
-
             __('#'),
             __('numGuia'),
             __('guiaMe'),
             __('FechaCreacion'),
-            __('Origen'),
+             __('Origen'),
             __('codCustomer'),
             __('nomDes'),
             __('documentTypeDes'),
@@ -57,16 +59,17 @@ class OrdersExport implements FromCollection, WithHeadings, WithStyles
     public function collection()
     {
 
-        // $from = "2022-05-25 22:38:49";
-        // $to = "2022-05-31 22:38:49";
+        //  $from = "2022-05-23 18:07:31";
+        //  $to = "2022-05-25 18:07:31";        
 
-        return Guide::select([
+        return $guias= Guide::select([
             'order_id',
             'external_id',
             'pre_guide',
             'created_at',
-            'invoice_contact', //Codigo del cliente
-            'recipient_name',           
+            'branch_office', //Origen
+            'invoice_contact',
+            'contact',
             'document_type',
             'document',
             'email_contact',
@@ -81,22 +84,22 @@ class OrdersExport implements FromCollection, WithHeadings, WithStyles
             'dispatched', // Factura            
             'contact',
             'description',
-            'novelty',     //Usuario 
-            'delivery_office',
+            'novelty',                         
+            'app_status',
+            'delivery_office',  
             'state',
             'updated_at',
         ])
-        // ->date($from, $to)        
-        ->get();
+            // ->date($from, $to)
+            ->get();
     }
-
-
-
 
 
     public function styles(Worksheet $sheet)
     {
-        return
-            $sheet->getStyle('1')->getFont()->setBold(true);
+        return  $sheet->getStyle('1')->getFont()->setbold(true);
     }
+
+    
+
 }
