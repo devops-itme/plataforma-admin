@@ -21,18 +21,46 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 
-class OrdersExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize,WithCustomValueBinder
+
+
+class OrdersExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize, WithColumnFormatting, WithMapping
 {
     /**
      * @return \Illuminate\Support\Collection
      */
 
-     // set the preferred date format
-    private $date_format = 'Y-m-d';
 
-    // set the columns to be formatted as dates
-    private $date_columns = ['A'];
+    public function map($guide): array
+    {
+        return [
+            $guide->order_id,
+            $guide->external_id,
+            $guide->pre_guide,
+            Date::dateTimeToExcel($guide->created_at),
+            $guide->branch_office,
+            $guide->invoice_contact,
+            $guide->contact,
+            $guide->document_type,
+            $guide->document,
+            $guide->email_contact,
+            $guide->address_name,
+            $guide->city,
+            $guide->phone_contact,
+            $guide->country,
+            $guide->pieces,
+            $guide->kg,
+            $guide->declared,
+            $guide->invoice_number,
+            $guide->dispatched,
+            $guide->contact,
+            $guide->description,
+            $guide->novelty,
+            $guide->app_status,
+            $guide->delivery_office,
+            Date::dateTimeToExcel($guide->updated_at),
 
+        ];
+    }
 
     public function headings(): array
     {
@@ -110,17 +138,11 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         return  $sheet->getStyle('1')->getFont()->setbold(true);
     }
 
-    
-
-    // public function bindValue(Cell $cell, $value)
-    // {
-    //     if (in_array($cell->getColumn(), $this->date_columns)) {
-    //         $cell->setValueExplicit(Date::excelToDateTimeObject($value)->format($this->date_format), DataType::TYPE_STRING);
-
-    //         return true;
-    //     }
-
-    //     // else return default behavior
-    //     return parent::bindValue($cell, $value);
-    // }
+    public function columnFormats(): array
+    {
+        return [
+            'D' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'Y' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+        ];
+    }
 }
