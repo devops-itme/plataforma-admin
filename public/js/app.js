@@ -2396,7 +2396,7 @@ var source_rate_id = null;
 var Guides = /*#__PURE__*/function () {
   function Guides() {
     var guides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'creation';
+    var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
     _classCallCheck(this, Guides);
 
@@ -2405,6 +2405,8 @@ var Guides = /*#__PURE__*/function () {
     _defineProperty(this, "guides", []);
 
     _defineProperty(this, "rateId", void 0);
+
+    _defineProperty(this, "pathname", window.location.pathname);
 
     if (guides) {
       this.guides = guides;
@@ -2416,6 +2418,11 @@ var Guides = /*#__PURE__*/function () {
   _createClass(Guides, [{
     key: "initialize",
     value: function initialize() {
+      if (this.pathname.includes('edit') && this.pathname.includes('guias')) {
+        this.editGuide();
+        return;
+      }
+
       this.listGuides();
       this.boxes.initialize();
     }
@@ -2486,11 +2493,12 @@ var Guides = /*#__PURE__*/function () {
                   };
                 }();
 
+                setRateId();
                 guide_address.addEventListener('change', function () {
                   return setRateId();
                 });
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -2626,24 +2634,70 @@ var Guides = /*#__PURE__*/function () {
       return addGuide;
     }()
   }, {
-    key: "listGuides",
+    key: "editGuide",
     value: function () {
-      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var _editGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this2 = this;
 
-        var tbody, data;
+        var boxes_element, updateGuideBtn, updateGuideForm, boxes;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                tbody = document.querySelector("#guidesTable tbody");
+                boxes_element = document.getElementById("boxes");
+                updateGuideBtn = document.getElementById("update-guide-btn");
+                updateGuideForm = document.getElementById("update-guide-form");
 
-                if (!(tbody == null)) {
-                  _context4.next = 3;
+                if (!(updateGuideBtn == null || boxes_element == null || updateGuideForm == null)) {
+                  _context4.next = 5;
                   break;
                 }
 
                 return _context4.abrupt("return");
+
+              case 5:
+                boxes = JSON.parse(boxes_element.value);
+                this.boxes.boxes = boxes;
+                this.sourceAddressHandler();
+                this.boxes.initialize();
+                updateGuideBtn.addEventListener('click', function () {
+                  boxes_element.value = JSON.stringify(_this2.boxes.boxes);
+                  updateGuideForm.submit();
+                });
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function editGuide() {
+        return _editGuide.apply(this, arguments);
+      }
+
+      return editGuide;
+    }()
+  }, {
+    key: "listGuides",
+    value: function () {
+      var _listGuides = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var _this3 = this;
+
+        var tbody, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                tbody = document.querySelector("#guidesTable tbody");
+
+                if (!(tbody == null)) {
+                  _context5.next = 3;
+                  break;
+                }
+
+                return _context5.abrupt("return");
 
               case 3:
                 tbody.innerHTML = ""; // let response = await requestGuides();
@@ -2691,22 +2745,22 @@ var Guides = /*#__PURE__*/function () {
                     var buttonsDiv = document.createElement("div");
                     buttonsDiv.setAttribute("class", "d-flex justify-content-around align-items-center flex-wrap flex-row");
                     buttonsDiv.appendChild(guideDetail);
-                    _this2.scope == 'edition' && buttonsDiv.appendChild(guideEdit);
+                    _this3.scope == 'edition' && buttonsDiv.appendChild(guideEdit);
                     buttonsDiv.appendChild(guideDelete);
                     selectCell.appendChild(buttonsDiv);
                     tbody.appendChild(row);
                   });
                 }
 
-                this.editGuide();
+                this.goToEditGuide();
                 this.removeGuide();
 
               case 8:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function listGuides() {
@@ -2718,7 +2772,7 @@ var Guides = /*#__PURE__*/function () {
   }, {
     key: "removeGuide",
     value: function removeGuide() {
-      var _this3 = this;
+      var _this4 = this;
 
       var removeGuideBtn = document.getElementsByClassName("remove-guide-btn");
 
@@ -2727,11 +2781,11 @@ var Guides = /*#__PURE__*/function () {
       }
 
       var removeGuideBtnHandler = function removeGuideBtnHandler(btn) {
-        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
           var guide, parent, index, guide_id, response;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context6.prev = _context6.next) {
                 case 0:
                   guide = btn.parentNode.parentNode.parentNode;
                   parent = guide.parentNode;
@@ -2739,36 +2793,36 @@ var Guides = /*#__PURE__*/function () {
                   guide_id = guide.getAttribute('guide_id');
                   response = true;
 
-                  if (!(_this3.scope == 'edition')) {
-                    _context5.next = 9;
+                  if (!(_this4.scope == 'edition')) {
+                    _context6.next = 9;
                     break;
                   }
 
-                  _context5.next = 8;
+                  _context6.next = 8;
                   return deleteResource('/guias/' + guide_id);
 
                 case 8:
-                  response = _context5.sent;
+                  response = _context6.sent;
 
                 case 9:
                   if (response) {
-                    _context5.next = 11;
+                    _context6.next = 11;
                     break;
                   }
 
-                  return _context5.abrupt("return");
+                  return _context6.abrupt("return");
 
                 case 11:
-                  _this3.guides.splice(index, 1);
+                  _this4.guides.splice(index, 1);
 
                   guide.remove();
 
                 case 13:
                 case "end":
-                  return _context5.stop();
+                  return _context6.stop();
               }
             }
-          }, _callee5);
+          }, _callee6);
         })));
       };
 
@@ -2777,8 +2831,8 @@ var Guides = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "editGuide",
-    value: function editGuide() {
+    key: "goToEditGuide",
+    value: function goToEditGuide() {
       var editGuideBtn = document.getElementsByClassName("edit-guide-btn");
 
       if (editGuideBtn == null) {
@@ -2786,11 +2840,11 @@ var Guides = /*#__PURE__*/function () {
       }
 
       [].forEach.call(editGuideBtn, function (btn) {
-        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
           var guide, guide_id, origin;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
             while (1) {
-              switch (_context6.prev = _context6.next) {
+              switch (_context7.prev = _context7.next) {
                 case 0:
                   guide = btn.parentNode.parentNode.parentNode;
                   guide_id = guide.getAttribute('guide_id');
@@ -2799,10 +2853,10 @@ var Guides = /*#__PURE__*/function () {
 
                 case 4:
                 case "end":
-                  return _context6.stop();
+                  return _context7.stop();
               }
             }
-          }, _callee6);
+          }, _callee7);
         })));
       });
     }
@@ -89425,9 +89479,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_Modules_PlanModule_views_js_plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../app/Modules/PlanModule/views/js/_plans */ "./app/Modules/PlanModule/views/js/_plans.js");
 /* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./_notifications */ "./resources/js/_notifications.js");
 /* harmony import */ var _app_Modules_RateModule_views_js_rates__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../app/Modules/RateModule/views/js/_rates */ "./app/Modules/RateModule/views/js/_rates.js");
+/* harmony import */ var _app_Modules_OrderModule_views_js_guides__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../app/Modules/OrderModule/views/js/_guides */ "./app/Modules/OrderModule/views/js/_guides.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 
 
 
@@ -89454,6 +89510,7 @@ var messengers = new _app_Modules_MessengerModule_views_js_messengers__WEBPACK_I
 var addresses = new _app_Modules_AddressModule_views_js_addresses__WEBPACK_IMPORTED_MODULE_2__["default"]();
 var customers = new _app_Modules_CustomerModule_views_js_customers__WEBPACK_IMPORTED_MODULE_3__["default"]();
 var orders = new _app_Modules_OrderModule_views_js_orders__WEBPACK_IMPORTED_MODULE_4__["default"]();
+var guides = new _app_Modules_OrderModule_views_js_guides__WEBPACK_IMPORTED_MODULE_14__["default"]();
 var general = new _general__WEBPACK_IMPORTED_MODULE_5__["default"]();
 var permissions = new _app_Modules_PermissionModule_views_js_permissions__WEBPACK_IMPORTED_MODULE_6__["default"]();
 var zones = new _app_Modules_ZoneModule_views_js_zones__WEBPACK_IMPORTED_MODULE_7__["default"]();
@@ -89470,6 +89527,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   // bootstrapSelect.initialize();
   users.initialize();
   orders.initialize();
+  guides.initialize();
   messengers.initialize();
   addresses.initialize();
   customers.initialize();

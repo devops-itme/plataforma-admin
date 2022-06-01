@@ -348,6 +348,7 @@ class Order extends Model
                     "sign" => $guide->sign,
                     "take_photo" => $guide->take_photo,
                     "description" => $guide->description,
+                    "address_id" => $guide->address_id,
                     "address_name" => $guide->address_name,
                     "address_lat" => $guide->address_lat,
                     "address_lng" => $guide->address_lng,

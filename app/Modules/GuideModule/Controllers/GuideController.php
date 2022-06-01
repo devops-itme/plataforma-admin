@@ -18,8 +18,8 @@ class GuideController extends Controller
 {
     use GuideTrait;
 
+    protected $path = 'GuideModule.views.html.guides.';
     protected $GuidanceDocument;
-
     public function __construct()
     {
         $this->GuidanceDocument = new GuidanceDocument();
@@ -124,11 +124,10 @@ class GuideController extends Controller
      */
     public function edit($id)
     {
-        $guide = Guide::with('getOrder')->find($id);
-        return json_encode([
-            'state' => 200,
-            'data' => $guide
-        ]);
+        $guide = Guide::find($id);
+        $user_id = $guide->getOrder->getUser->id;
+        $addresses = Address::where('user_id', $user_id)->get();
+        return view($this->path . 'edit', compact('guide', 'addresses'));
     }
 
     /**
@@ -140,38 +139,29 @@ class GuideController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->zone == 'Seleccione') {
-            $request->merge(['zone' => NULL]);
-        }
-        if (!($request->state)) {
-            $request->merge(['state' => 31]);
-        }
-        $request->merge(['return_last_destination' => $request->return_last_destination == 'on' ? 1 : 0]);
+        $request->merge([
+            'same_day_delivery' => $request->same_day_delivery == 'on' ? 1 : 0,
+            'sign' => $request->sign == 'on' ? 1 : 0,
+            'take_photo' => $request->take_photo == 'on' ? 1 : 0,
+            'description' => $request->guide_description,
+        ]);
 
-        if ($request->address_name) {
-            $address = Address::find($request->address_name);
-            if (!is_null($address)) {
-                $request->merge([
-                    'address_name' => $address->name,
-                    'address_lat' => $address->lat,
-                    'address_lng' => $address->lng,
-                    'address_description' => $address->description
-                ]);
-            }
+        $address = Address::find($request->address_id);
+        if (is_null($address)) {
+            return redirect()->back()->with('danger', 'Debe seleccionar una dirección');
         }
+        $request->merge([
+            'address_name' => $address->name,
+            'address_lat' => $address->lat,
+            'address_lng' => $address->lng,
+            'address_description' => $address->description
+        ]);
+      
         $response = $this->updateGuide($request->merge(['guide_id' => $id]));
-        if ($response['state'] == 200) {
-            return json_encode([
-                'data' => $response['data'],
-                'state' => $response['state'],
-                'message' => $response['message']
-            ]);
-        } else {
-            return json_encode([
-                'state' => 500,
-                'message' => $response['error']
-            ]);
+        if ($response['state'] != 200) {
+            return redirect()->back()->with('danger', $response['message']);
         }
+        return redirect()->back()->with('success', $response['message']);
     }
 
     /**

@@ -22,6 +22,7 @@ trait GuideTrait
                 'branch_office' => 'nullable',
                 'transport_type' => 'nullable',
                 'dispatched' => 'nullable',
+                'address_id' => 'nullable',
                 'address_name' => 'nullable',
                 'address_lat' => 'nullable',
                 'address_lng' => 'nullable',
@@ -68,6 +69,7 @@ trait GuideTrait
                 'branch_office' => $request->branch_office,
                 'transport_type' => $request->transport_type,
                 'dispatched' => $request->dispatched,
+                "address_id" => $request->address_id,
                 'address_name' => $request->address_name,
                 'address_lat' => $request->address_lat,
                 'address_lng' => $request->address_lng,
@@ -120,6 +122,7 @@ trait GuideTrait
             $guide->update([
                 // 'dispatched' => $request->dispatched,
                 'branch_office' => $request->branch_office ?? $guide->branch_office,
+                'address_id' => $request->address_id ?? $guide->address_id,
                 'address_name' => $request->address_name ?? $guide->address_name,
                 'address_lat' => $request->address_lat ?? $guide->address_lat,
                 'address_lng' => $request->address_lng ?? $guide->address_lng,
