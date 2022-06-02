@@ -23,7 +23,7 @@
                 <div class="container mt-8">
                     {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                     <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                    <select name="des-city" class="custom-select" id="branch_off">
+                    <select name="city" class="custom-select" id="branch_off">
                         @foreach ($destination['data'] as $destinations)
                             <option value="{{ $destinations['destinationCode'] }}" selected>
                                 {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>
@@ -34,7 +34,7 @@
                     <div class="row">
                         <div class="col mt-5">
                             <label for="codpais" class="form-label">Cod País</label>
-                            <input type="text" class="form-control" id="codpais" disabled="disabled" value="{{ $destinations['parentCode'] }}">
+                            <input type="text" class="form-control" name="country" id="codpais" disabled="disabled" value="{{ $destinations['parentCode'] }}">
                         </div>
                         <div class="col mt-5">
                             <label for="codciudad" class="form-label">Cod Ciudad</label>
