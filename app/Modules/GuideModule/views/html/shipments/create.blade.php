@@ -23,9 +23,11 @@
                 <div class="container mt-8">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                    <select name="branch_office" class="custom-select" id="branch_off">
-                        <option value="" disabled selected>Seleccionar</option>
-                    </select>
+                        <select name="des-city" class="custom-select" id="branch_off">
+                            @foreach ($destination['data'] as $destinations )
+                            <option value="{{$destinations['destinationCode']}}" selected>{{$destinations['destinationCode']}} - {{$destinations['destinationName']}}</option>
+                            @endforeach
+                        </select>
                 </div>
                 <div class="container">
                     <div class="row">
