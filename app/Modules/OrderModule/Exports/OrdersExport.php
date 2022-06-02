@@ -8,14 +8,9 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use App\Modules\GuideModule\Guide;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
-use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
@@ -28,7 +23,6 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     /**
      * @return \Illuminate\Support\Collection
      */
-
 
     public function map($guide): array
     {
@@ -53,7 +47,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             $guide->invoice_number,
             $guide->dispatched,
             $guide->contact,
-            $guide->description,            
+            $guide->description,
             $guide->app_status,
             $guide->delivery_office,
             $guide->state,
@@ -97,8 +91,8 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     public function collection()
     {
 
-        //  $from = "2022-05-23 18:07:31";
-        //  $to = "2022-05-25 18:07:31";        
+        $from = request()->input('from');
+        $to   = request()->input('to');             
 
         return $guias = Guide::select([
             'order_id',
@@ -128,7 +122,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             'state',
             'updated_at',
         ])
-            // ->date($from, $to)
+            ->date(request()->from, request()->to)
             ->get();
     }
 
