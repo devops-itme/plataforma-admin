@@ -53,7 +53,11 @@ class ShipmentController extends Controller
     public function create(Request $request)
     {
         $order_id = $request->order_id;
-        return view($this->path . 'create', compact('order_id'));
+        $Tealca = new Tealca();
+        $Tealca->login();
+        $destination = $Tealca->getDestination();
+        //dd($destination['data']);
+        return view($this->path . 'create', compact('order_id','destination'));
     }
 
     public function store(Request $request)
