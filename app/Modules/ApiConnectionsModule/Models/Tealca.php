@@ -50,6 +50,7 @@ class Tealca
     {
         $body = [
             "UserLogin" => "multi.entrega",
+            "PickingNumber" => $guide->pre_guide,
             "Observations" => $guide->description,
             "TotalPieces" => $guide->pieces,
             "DeclaratedValueCurrency" => "USD",
