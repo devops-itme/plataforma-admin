@@ -83,6 +83,10 @@ class ShipmentController extends Controller
         $guide = Guide::find($id);
         $id_branch_office = $guide['branch_office'];
 
+        $Tealca = new Tealca();
+        $Tealca->login();
+        $destination = $Tealca->getDestination();
+
         if ($id_branch_office == null) {
             $branch = new BranchOffice();
             $branch->name = 'Sin seleccionar';
@@ -90,7 +94,7 @@ class ShipmentController extends Controller
             $branch = BranchOffice::find($id_branch_office);
         }
 
-        return view($this->path . 'edit', compact('guide', 'branch'));
+        return view($this->path . 'edit', compact('guide', 'branch','destination'));
     }
 
     public function update(Request $request, $id)
