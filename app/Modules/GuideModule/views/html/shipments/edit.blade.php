@@ -23,21 +23,22 @@
                 <div class="container mt-8">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                        <select name="city"  class="custom-select" id="city">
-                        @foreach ($destination['data'] as $destinations )
-                            <option value="{{$destinations['destinationCode']}}" selected>{{$destinations['destinationCode']}} - {{$destinations['destinationName']}}</option>
-                        @endforeach
+                        <select name="city" class="custom-select" id="branch_off">
+                            @foreach ($destination['data'] as $destinations)
+                                <option value="{{ $destinations['destinationCode'] }}" selected>
+                                    {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>
+                            @endforeach
                         </select>
                 </div>
                 <div class="container">
                     <div class="row">
                         <div class="col mt-5">
                     <label for="inputCountry" class="form-label">Cod País</label>
-                    <input type="text" class="form-control" value="{{$destinations['parentCode']}}" id="inputCountry" disabled="disabled" >
+                    <input type="text" class="form-control" id="codpais" disabled="disabled" value="{{ $destinations['parentCode'] }}">
                 </div>
                 <div class="col mt-5">
                     <label for="inputAddress" class="form-label">Cod Ciudad</label>
-                    <input type="text" value="{{$destinations['destinationCode']}}" class="form-control" id="inputAddress" disabled="disabled">
+                    <input type="text" class="form-control" id="codciudad" disabled="disabled" value="{{ $destinations['destinationCode'] }}">
                 </div>
             </div>
         </div>
@@ -163,7 +164,7 @@
                 </div>
                 <div class="col-12 mt-5 text-center">
                     <button type="submit" class="btn btn-primary">Actualizar Guia</button>
-                </div> 
+                </div>
         </div>
     </div>
     </form>
@@ -174,6 +175,17 @@
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script>
+	$(function(){
+  	$(document).on('change','#branch_off',function(){ //detectamos el evento change
+    	var value = $(this).val();
+        $('#codciudad').val(value);
+
+    });
+  });
+</script>
+
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 {{-- Styles Section --}}
