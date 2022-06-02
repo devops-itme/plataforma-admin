@@ -66,9 +66,7 @@ class InternationalOrderController extends Controller
 
     public function exportBatch(Request $request)
     {
-             
-        
-       return  Excel::download(new OrdersExport(), 'Órdenes Internacionales.xlsx');
+        return  Excel::download(new OrdersExport(), 'Órdenes Internacionales.xlsx');
     }
 
 
