@@ -6,7 +6,7 @@
 {{-- Content --}}
 @section('content')
     @include('layouts.breadCrumbs')
-   
+
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
@@ -21,42 +21,43 @@
             <form class="row g-3" method="post" action="{{ route('shipments.store', ['order_id' => $order_id]) }}">
                 @csrf
                 <div class="container mt-8">
-                        {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
-                        <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                        <select name="des-city" class="custom-select" id="branch_off">
-                            @foreach ($destination['data'] as $destinations )
-                            <option value="{{$destinations['destinationCode']}}" selected>{{$destinations['destinationCode']}} - {{$destinations['destinationName']}}</option>
-                            @endforeach
-                        </select>
+                    {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
+                    <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
+                    <select name="des-city" class="custom-select" id="branch_off">
+                        @foreach ($destination['data'] as $destinations)
+                            <option value="{{ $destinations['destinationCode'] }}" selected>
+                                {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="container">
                     <div class="row">
                         <div class="col mt-5">
-                    <label for="codpais" class="form-label">Cod País</label>
-                    <input type="number" class="form-control" id="codpais" disabled="disabled" >
-                </div>
-                <div class="col mt-5">
-                    <label for="codciudad" class="form-label">Cod Ciudad</label>
-                    <input type="text" class="form-control" id="codciudad" disabled="disabled">
-                </div>
-            </div>
-        </div>
-                
-                    <div class="card-title">
-                        <h2 class="card-label">
-                            <hr width="545%" />
-                            Datos del usuario destinatario
-                            <hr width="545%" />
-                        </h2>
+                            <label for="codpais" class="form-label">Cod País</label>
+                            <input type="text" class="form-control" id="codpais" disabled="disabled" value="{{ $destinations['parentCode'] }}">
+                        </div>
+                        <div class="col mt-5">
+                            <label for="codciudad" class="form-label">Cod Ciudad</label>
+                            <input type="text" class="form-control" id="codciudad" disabled="disabled" value="{{ $destinations['destinationCode'] }}">
+                        </div>
                     </div>
-                
+                </div>
+
+                <div class="card-title">
+                    <h2 class="card-label">
+                        <hr width="545%" />
+                        Datos del usuario destinatario
+                        <hr width="545%" />
+                    </h2>
+                </div>
+
                 <div class="container mt-8">
                     <div class="row">
                         <div class="col">
                             <label for="recipient_name">Nombre del destinatario</label>
                             <input type="text" class="form-control" id="recipient_name" aria-describedby="emailHelp"
                                 placeholder="" name="recipient_name" class="@error('recipient_name') is-invalid @enderror">
-                                @error('recipient_name')
+                            @error('recipient_name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -64,7 +65,7 @@
                             <label for="address_name">Direccion del destinatario</label>
                             <input type="text" class="form-control" id="address_name" placeholder="Direccion"
                                 name="address_name" class="@error('address_name') is-invalid @enderror">
-                                @error('address_name')
+                            @error('address_name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -88,8 +89,7 @@
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1">Telefono</label>
-                            <input type="number" class="form-control" id="telp" placeholder="Telefono"
-                                name="contact">
+                            <input type="number" class="form-control" id="telp" placeholder="Telefono" name="contact">
                         </div>
                     </div>
                 </div>
@@ -112,21 +112,21 @@
                             {{-- <label for="exampleInputPassword1">Tiendas</label>
                             <input type="text" class="form-control" id="tienda" placeholder="Seleccione una tienda--"> --}}
                             <label for="delivery_office">Tiendas</label>
-                    <select name="delivery_office" class="custom-select" id="delivery_office">
-                        <option value="" disabled selected>Seleccionar</option>
-                    </select>
+                            <select name="delivery_office" class="custom-select" id="delivery_office">
+                                <option value="" disabled selected>Seleccionar</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-               
-                    <div class="card-title mt-8">
-                        <h2 class="card-label">
-                            <hr width="1000%" />
-                            Datos de la Guía
-                            <hr width="1000%" />
-                        </h2>
-                    </div>
-              
+
+                <div class="card-title mt-8">
+                    <h2 class="card-label">
+                        <hr width="1000%" />
+                        Datos de la Guía
+                        <hr width="1000%" />
+                    </h2>
+                </div>
+
                 {{-- datos de la guia --}}
                 <div class="container">
                     <div class="row mt-10">
@@ -177,8 +177,30 @@
     </form>
     </div>
     </div>
-
 @endsection
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	$(function(){
+  	$(document).on('change','#branch_off',function(){ //detectamos el evento change
+    	var value = $(this).val();
+        $('#codciudad').val(value);
+   
+    });
+  }); 
+
+/*   $(function(){
+  $(document).on('change','#branch_off', function() {
+    var value = $(this).val();
+        $("#codpais").val(value);
+            var value = $(this).val();
+            $("#codciudad").val(value);
+        });
+}); */
+</script>
+
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
