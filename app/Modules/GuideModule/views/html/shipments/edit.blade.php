@@ -6,7 +6,7 @@
 {{-- Content --}}
 @section('content')
     @include('layouts.breadCrumbs')
-   
+
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
@@ -19,40 +19,46 @@
     <div class="card card-custom">
         <div class="card-header">
             <form class="row g-3" method="post" action="{{ route('shipments.update', $guide->id,['guide_id' => $guide->id]) }}">
-                @csrf {{ method_field('PUT') }}
-                <div class="input-group mt-5">
-                    <div class="input-group-prepend">
+               @csrf {{ method_field('PUT') }}
+                <div class="container mt-8">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                    </div>
-                    <select name="branch_office"  class="custom-select" id="branch_off">
-                        <option value="{{$guide->branch_office}}" disabled selected>{{$branch->name}}</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mt-5">
-                    <label for="inputPassword4" class="form-label">Cod País</label>
-                    <input type="number" class="form-control" id="inputPassword4" disabled="disabled" >
-                </div>
-                <div class="col-md-6 mt-5">
-                    <label for="inputAddress" class="form-label">Cod Ciudad</label>
-                    <input type="text" class="form-control" id="inputAddress" disabled="disabled">
-                </div>
-                <div class="card-header">
-                    <div class="card-title">
-                        <h2 class="card-label">
-                            Datos del usuario destinatario
-                        </h2>
-                    </div>
+                        <select name="city"  class="custom-select" id="city">
+                        @foreach ($destination['data'] as $destinations )
+                            <option value="{{$destinations['destinationCode']}}" selected>{{$destinations['destinationCode']}} - {{$destinations['destinationName']}}</option>
+                        @endforeach
+                        </select>
                 </div>
                 <div class="container">
                     <div class="row">
+                        <div class="col mt-5">
+                    <label for="inputCountry" class="form-label">Cod País</label>
+                    <input type="text" class="form-control" value="{{$destinations['parentCode']}}" id="inputCountry" disabled="disabled" >
+                </div>
+                <div class="col mt-5">
+                    <label for="inputAddress" class="form-label">Cod Ciudad</label>
+                    <input type="text" value="{{$destinations['destinationCode']}}" class="form-control" id="inputAddress" disabled="disabled">
+                </div>
+            </div>
+        </div>
+
+                    <div class="card-title">
+                        <h2 class="card-label">
+                            <hr width="545%" />
+                            Datos del usuario destinatario
+                            <hr width="545%" />
+                        </h2>
+                    </div>
+
+                <div class="container mt-8">
+                    <div class="row">
                         <div class="col">
-                            <label for="exampleInputEmail1">Nombre del destinatario</label>
+                            <label for="recipient_name">Nombre del destinatario</label>
                             <input type="text" class="form-control" value="{{$guide->recipient_name}}" id="exampleInputE1" aria-describedby="emailHelp"
-                                placeholder="Juan Perez" name="recipient_name" required>
+                             placeholder="" name="recipient_name" required>
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Direccion del destinatario</label>
+                            <label for="address_name">Direccion del destinatario</label>
                             <input type="text" class="form-control" value="{{$guide->address_name}}"  id="exampleInputP1" placeholder="Direccion"
                                 name="address_name" required>
                         </div>
@@ -63,7 +69,7 @@
                         <div class="col">
                             <label for="exampleInputEmail1">Tipo de documento</label>
                             <select class="custom-select" id="tipdocumento" name="document_type">
-                                <option>{{$guide->document_type}}</option>
+                                <option >{{$guide->document_type}}</option>
                                 <option value="CC">CC</option>
                                 <option value="TE">TE</option>
                                 <option value="NN">NN</option>
@@ -90,25 +96,29 @@
                         </div>
                         <div class="col">
                             <div class="form-check mt-10">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Recoger en tienda?
                                 </label>
                             </div>
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Tiendas</label>
-                            <input type="text" class="form-control" id="tienda" placeholder="Seleccione una tienda">
+                            <label for="delivery_office">Tiendas</label>
+                               <select name="delivery_office"  class="custom-select"  id="delivery_office">
+                                  <option value="{{$guide->delivery_office}}" selected>{{$guide->delivery_office}}</option>
+                               </select>
                         </div>
                     </div>
                 </div>
-                <div class="card-header">
-                    <div class="card-title">
+
+                    <div class="card-title mt-8">
                         <h2 class="card-label">
+                            <hr width="1000%" />
                             Datos de la Guía
+                            <hr width="1000%" />
                         </h2>
                     </div>
-                </div>
+
                 {{-- datos de la guia --}}
                 <div class="container">
                     <div class="row mt-10">
@@ -146,20 +156,23 @@
                         <div class="container">
                             <div class="row mt-10">
                                 <label for="textarea">Descripción</label>
-                                <textarea class="form-control" value="" id="textarea" rows="3" name="description">{{$guide->description}}</textarea>
+                                <textarea class="form-control" value="{{$guide->description}}"  id="textarea" rows="3" name="description">{{$guide->description}}</textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 mt-5 text-center">
                     <button type="submit" class="btn btn-primary">Actualizar Guia</button>
-                </div>
+                </div> 
         </div>
     </div>
     </form>
     </div>
     </div>
+
 @endsection
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>

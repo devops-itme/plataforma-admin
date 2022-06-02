@@ -123,4 +123,21 @@ class Tealca
         return $this->respond(200, $trackingResponse->json(), null, 'successful request');
     }
 
+    public function getDestination()
+    {
+        $destination = Http::withHeaders([
+            'Authorization' =>  $this->token,
+        ])->get(
+            'http://qaapicore.tealca.com/v1/Destinations'
+        );
+
+        if ($destination->status() != 200) {
+            return $this->respond(500, null, $destination , 'Fallo en el servicio. Guía N° ');
+        };
+
+
+        return $this->respond(200, $destination->json(), null, 'successful request');
+    }
+
+
 }

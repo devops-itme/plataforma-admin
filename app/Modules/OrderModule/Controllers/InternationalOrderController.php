@@ -9,7 +9,6 @@ use App\Modules\ApiConnectionsModule\Imports\ShipmentTealcaImport;
 use App\Modules\ApiConnectionsModule\Exports\TealcaInformExport;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use App\Modules\GuideModule\Guide;
-use App\Modules\OrderModule\Imports\BatchImport;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\StatusMatrixModule\StatusMatrix;
@@ -66,8 +65,7 @@ class InternationalOrderController extends Controller
 
     public function exportBatch(Request $request)
     {
-        
-        return Excel::download(new OrdersExport, 'Órdenes Internacionales.xlsx');
+        return  Excel::download(new OrdersExport(), 'Órdenes Internacionales.xlsx');
     }
 
 
@@ -76,7 +74,6 @@ class InternationalOrderController extends Controller
         $guides = Guide::select('id', 'external_id', 'contact')->where('external_id', '<>', null)
             ->where('state', '1')->get();
         $incidences = [];
-
         foreach ($guides as $guide) {
             $Tealca = new Tealca();
             $Tealca->login();

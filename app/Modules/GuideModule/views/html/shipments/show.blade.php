@@ -159,9 +159,27 @@
                         </div>
                     </div>
                 </div>
-               {{--<div class="col-12 mt-5 text-center">
-                    <button type="submit" class="btn btn-primary">Actualizar Guia</button>
-                </div> --}}
+               <div class="card-body">
+                            @if ($history['state'] == 200)
+                            <hr>
+                        <table class="table table-sm text-center display">
+                            <thead class="">
+                                <tr>
+                                    <th scope="col">Fecha - Hora</th>
+                                    <th scope="col">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($history as $historys)
+                                    <tr>
+                                        <td>{{$historys->date}}</td>
+                                        <th>{{$historys->status}}</th>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div> 
         </div>
     </div>
     </form>
