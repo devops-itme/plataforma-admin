@@ -37,7 +37,7 @@ class GuidanceDocumentController extends Controller
         try {
             $validator =  Validator::make(
                 $request->all(),
-                ['document' => ['required', $request->base64 == 1 ? 'string' : 'file'],]
+                ['document' => ['required', 'file'],]
             );
             if ($validator->fails()) {
                 return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
@@ -54,19 +54,9 @@ class GuidanceDocumentController extends Controller
                 $request->merge(['type' => $type->id]);
             }
 
-            if ($request->base64 == 1) {
-                $img = str_replace('data:image/png;base64,', '', $request->document);
-                $img = str_replace(' ', '+', $img);
-                $file = base64_decode($img);
-                $imageName = Carbon::now() . '.' . $request->file_type;
-                Storage::disk('local')->put('/guidance_doc' . $imageName, $file, 'public');
-                $image_url = Storage::disk('local')->url($imageName);
-                return $this->respond(500, $image_url , '', 'Documento almacenado de forma exitosa.');
-                $path = 'guidance_doc/' . $imageName;
-            } else {
-                $file = $request->file('document');
-                $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
-            }
+            $file = $request->file('document');
+            $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
+
             $request->merge(['url_document' => $path]);
 
             $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);
