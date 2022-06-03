@@ -33,13 +33,13 @@ class GuidanceDocumentController extends Controller
         try {
             $validator =  Validator::make(
                 $request->all(),
-                ['document' => 'required|file',]
+                ['document' => ['required', $request->base64 == 1 ? 'string' : 'file'],]
             );
             if ($validator->fails()) {
                 return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
             }
             DB::beginTransaction();
-            // foreach ($request->document as $file) {
+
             if (!is_numeric($request->type)) {
                 $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
                     $query->where('name', 'guide_document_type');
@@ -49,9 +49,14 @@ class GuidanceDocumentController extends Controller
                 }
                 $request->merge(['type' => $type->id]);
             }
-            // if (File($request->document)) {
-            $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'), 'public');
-            // }
+            $file = null;
+            if (File($request->base64 == 1)) {
+                $img = str_replace(' ', '+', $request->document);
+                $file = base64_decode($img);
+            } else {
+                $file = $request->file('document');
+            }
+            $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
             $request->merge(['url_document' => $path]);
 
             $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);
@@ -59,9 +64,9 @@ class GuidanceDocumentController extends Controller
                 DB::rollBack();
                 return $store_doc;
             }
-            // }
+
             DB::commit();
-            // }
+
             return $this->respond(200, [], '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . ' Line: ' . $e->getLine(), 'Error del servidor');
