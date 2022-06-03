@@ -56,7 +56,7 @@ class GuidanceDocumentController extends Controller
                 $file = base64_decode($img);
                 $imageName = Carbon::now()->toDateString() . '.' . $request->file_type;
                 Storage::disk('s3')->put('/guidance_doc' . $imageName, $file, 'public');
-                $path = '/guidance_doc' . $imageName;
+                $path = 'guidance_doc/' . $imageName;
             } else {
                 $file = $request->file('document');
                 $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');

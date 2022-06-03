@@ -234,7 +234,7 @@ class OrderController extends Controller
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
                             'document' => $img,
-                            'file_type' => $picture['type'],
+                            'file_type' => str_replace('', 'image/', $picture['type']),
                             'base64' => 1,
                         ]);
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
