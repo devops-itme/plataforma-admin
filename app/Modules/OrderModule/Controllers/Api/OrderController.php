@@ -217,32 +217,28 @@ class OrderController extends Controller
                         return $storeGuideResponse;
                     }
 
-                    // $guide_id = $storeGuideResponse['data']->id;
-                    // $guidance_document = $guide['guidance_doc'];
+                    $guide_id = $storeGuideResponse['data']->id;
+                    $pictures = $guide['pictures'];
 
-                    // foreach ($guidance_document as $document) {
+                    foreach ($pictures as $picture) {
 
-                    //     // dd($document['document']);
+                        $GuidanceDocumentController = new GuidanceDocumentController();
 
-                    //     $guidance_doc = new GuidanceDocumentController();
+                        if (is_null($picture)) {
+                            return $this->respond(500, null, 'not found', 'No hay imágenes para esta guía');
+                        }
 
-                    //     if (is_null($document)) {
-                    //         return $this->respond(500, null, 'not found', 'No hay imágenes para esta guía');
-                    //     }
+                        $request->merge([
+                            'guide_id' => $guide_id,
+                            'type' => 'package_picture',
+                            'document' => $picture,
+                        ]);
 
-                    //     $request->merge([
-                    //         'guide_id' => $guide_id,
-                    //         'type' => $document['type'],
-                    //         'document' => $document['document'],
-                    //     ]);
-
-                    //     // dd($request->all());
-
-                    //     $storeDocumentResponse = $guidance_doc->store($request);
-                    //     if ($storeDocumentResponse['state'] != 200) {
-                    //         return $storeDocumentResponse;
-                    //     }
-                    // }
+                        $storeDocumentResponse = $guidance_doc->store($request);
+                        if ($storeDocumentResponse['state'] != 200) {
+                            return $storeDocumentResponse;
+                        }
+                    }
                 }
 
                 $order = Order::find($order_id);
