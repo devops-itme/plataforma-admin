@@ -52,7 +52,8 @@ class GuidanceDocumentController extends Controller
             }
 
             if ($request->base64 == 1) {
-                $img = str_replace(' ', '+', $request->document);
+                $img = str_replace('data:image/png;base64,', '', $request->document);
+                $img = str_replace(' ', '+', $img);
                 $file = base64_decode($img);
                 $imageName = Carbon::now()->toDateString() . '.' . $request->file_type;
                 Storage::disk('s3')->put('/guidance_doc' . $imageName, $file, 'public');
