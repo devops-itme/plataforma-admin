@@ -157,7 +157,7 @@ class OrderController extends Controller
                 $rate_value = 0;
                 foreach ($guides as $guide) {
                     $guide = json_decode($guide, true);
-                    
+
                     $address = null;
                     if (!is_null($guide['address_id'])) {
                         $address = Address::find($guide['address_id']);
@@ -228,8 +228,12 @@ class OrderController extends Controller
                         if (is_null($picture)) {
                             continue;
                         }
-                        return $this->respond(500, $picture['base64'], 'not found', 'test de imagen');
-                   
+                        $img = $picture['base64'];
+                        $img = str_replace(' ', '+', $img);
+                        $data = base64_decode($img);
+                        $file = "images/" . uniqid() . '.png';
+                        $success = file_put_contents($file, $data);
+                        return $this->respond(500, $success, 'not found', 'test de imagen');
                         $request->merge([
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
