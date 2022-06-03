@@ -51,7 +51,7 @@ class GuidanceDocumentController extends Controller
             }
 
             $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'), 'public');
-            return $this->respond(500, $request->file('document'), '', 'test.');
+            return $this->respond(500, $request->document, '', 'test.');
             $request->merge(['url_document' => $path]);
 
             $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);
