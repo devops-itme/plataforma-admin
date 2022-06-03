@@ -99,6 +99,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        return $this->respond(500, $request->all(), 'not found', 'test');
         try {
             if (Auth()->user()->role != 1) {
                 $request->merge(['user_id' => Auth()->user()->id]);
@@ -115,7 +116,7 @@ class OrderController extends Controller
                 })->first();
 
                 if (is_null($rate)) {
-                    return $this->respond(404, null, 'not found', 'No existen tarifas para esta orden');
+                    return $this->respond(404, $request->all(), 'not found', 'No existen tarifas para esta orden');
                 }
 
                 $source_rate = $Rate->calculateRate($rate->id);
