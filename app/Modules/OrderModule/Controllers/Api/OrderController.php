@@ -115,7 +115,7 @@ class OrderController extends Controller
                 })->first();
 
                 if (is_null($rate)) {
-                    return $this->respond(404, $source_zone_id, 'not found', 'No existen tarifas para esta orden');
+                    return $this->respond(404, $request->all(), 'not found', 'No existen tarifas para esta orden');
                 }
 
                 $source_rate = $Rate->calculateRate($rate->id);
