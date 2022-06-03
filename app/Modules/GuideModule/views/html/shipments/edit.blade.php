@@ -83,8 +83,7 @@
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1">Telefono</label>
-                            <input type="number" class="form-control"  value="{{$guide->phone_contact}}" id="telp" placeholder="Telefono" name="phone_contact"
-                                name="contact">
+                            <input type="number" class="form-control"  value="{{$guide->phone_contact}}" id="telp" placeholder="Telefono" name="phone_contact">
                         </div>
                     </div>
                 </div>
@@ -97,7 +96,7 @@
                         </div>
                         <div class="col">
                             <div class="form-check mt-10">
-                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault" disabled>
+                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Recoger en tienda?
                                 </label>
