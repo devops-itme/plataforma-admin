@@ -67,7 +67,7 @@ class GuidanceDocumentController extends Controller
 
             DB::commit();
 
-            return $this->respond(200, [], '', 'Documento almacenado de forma exitosa.');
+            return $this->respond(200, $path, '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . ' Line: ' . $e->getLine(), 'Error del servidor');
         }
