@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="card card-custom">
-        <div class="card-header">
+        <div class="card-header" style="padding-bottom: 25px">
             <form class="row g-3" method="post" action="#">
                 @csrf
                 <div class="container mt-8">
@@ -159,8 +159,9 @@
                         </div>
                     </div>
                 </div>
+
+             @if ($history['state'] == 200)
                <div class="card-body">
-                            @if ($history['state'] == 200)
                             <hr>
                         <table class="table table-sm text-center display">
                             <thead class="">
@@ -176,8 +177,8 @@
                                     </tr>
                             </tbody>
                         </table>
-                    @endif
-                </div> 
+                </div>
+             @endif
         </div>
     </div>
     </form>
