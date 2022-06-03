@@ -170,12 +170,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($history as $historys)
                                     <tr>
-                                        <td>{{$historys->date}}</td>
-                                        <th>{{$historys->status}}</th>
+                                        <td>{{$info['date']}}</td>
+                                        <th>{{$info['status']}}</th>
                                     </tr>
-                                @endforeach
                             </tbody>
                         </table>
                     @endif
