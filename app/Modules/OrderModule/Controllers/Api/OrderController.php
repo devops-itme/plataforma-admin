@@ -229,7 +229,7 @@ class OrderController extends Controller
                             continue;
                         }
 
-                        return $this->respond(500, $picture, 'not found', 'test de imagen');
+                        return $this->respond(500, $request->hasFile('picture'), 'not found', 'test de imagen');
                         $request->merge([
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
