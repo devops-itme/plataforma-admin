@@ -99,7 +99,6 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        // return $this->respond(500, $request->all(), 'not found', 'test');
         try {
             if (Auth()->user()->role != 1) {
                 $request->merge(['user_id' => Auth()->user()->id]);
@@ -156,7 +155,7 @@ class OrderController extends Controller
                 // $guides = json_decode($guides, true);
 
                 $rate_value = 0;
-
+                return $this->respond(500, $guides, 'not found', 'test');
                 foreach ($guides as $guide) {
                     $address = null;
                     if (!is_null($guide['address_id'])) {
