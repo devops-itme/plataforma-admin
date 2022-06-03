@@ -18,8 +18,7 @@ class CreateStatusMatrixTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('scope_id')->nullable();
             $table->foreign('scope_id')->references('id')->on('parameter_values');
-            $table->unsignedBigInteger('issue_id')->nullable();
-            $table->foreign('issue_id')->references('id')->on('parameter_values');
+            $table->json('issues')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
