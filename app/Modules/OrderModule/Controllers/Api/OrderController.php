@@ -220,8 +220,8 @@ class OrderController extends Controller
 
                     $guide_id = $storeGuideResponse['data']->id;
                     $pictures = $guide['pictures'];
-                    
-                    return $this->respond(500, $request->hasFile('picture'), 'not found', 'test de imagen');
+                    $image = $request->file('picture');
+                    return $this->respond(500, $image, 'not found', 'test de imagen');
                     $GuidanceDocumentController = new GuidanceDocumentController();
                     $request->merge([
                         'guide_id' => $guide_id,
