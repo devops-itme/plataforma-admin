@@ -98,17 +98,20 @@
                         </div>
                         <div class="col">
                             <div class="form-check mt-10">
-                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault">
+                                <input type="checkbox" id="check" onchange="habilitar(this.checked);" checked>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Recoger en tienda?
                                 </label>
                             </div>
                         </div>
                         <div class="col">
-                            <label for="delivery_office">Tiendas</label>
-                               <select name="delivery_office"  class="custom-select"  id="delivery_office">
-                                  <option value="{{$guide->delivery_office}}" selected>{{$guide->delivery_office}}</option>
-                               </select>
+                               <label for="delivery_office">Tiendas</label>
+                            <select name="delivery_office" class="custom-select" id="delivery_office">
+                                @foreach ($tiendas['data'] as $tienda)
+                                    <option value="{{ $tienda['name'] }}" selected>{{ $tienda['name'] }}</option>
+                                @endforeach
+                                <option value="{{$guide->delivery_office}}" selected="selected">{{$guide->delivery_office}}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -181,14 +184,26 @@
 	$(function(){
   	$(document).on('change','#branch_off',function(){ //detectamos el evento change
          var value = $(this).val();
-        $('#codciudad').val(value); 
+        $('#codciudad').val(value);
 
 /*         $(document).ready(function(){
-   $('#branch_off > option[value="0"]').attr('selected', 'selected'); */ 
+   $('#branch_off > option[value="0"]').attr('selected', 'selected'); */
 });
-   
+
     });
- /*  }); */ 
+ /*  }); */
+</script>
+
+<script>
+    function habilitar(value) {
+        if (value == true) {
+            // habilitamos
+            document.getElementById("delivery_office").disabled = false;
+        } else if (value == false) {
+            // deshabilitamos
+            document.getElementById("delivery_office").disabled = true;
+        }
+    }
 </script>
 
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
