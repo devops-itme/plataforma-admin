@@ -234,7 +234,7 @@ class OrderController extends Controller
                             'document' => $picture,
                         ]);
 
-                        $storeDocumentResponse = $guidance_doc->store($request);
+                        $storeDocumentResponse = $GuidanceDocumentController->store($request);
                         if ($storeDocumentResponse['state'] != 200) {
                             return $storeDocumentResponse;
                         }
