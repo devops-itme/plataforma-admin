@@ -233,7 +233,7 @@ class OrderController extends Controller
                         $data = base64_decode($img);
                         $file = "images/" . uniqid() . '.png';
                         $success = file_put_contents($file, $data);
-                        return $this->respond(500, $success, 'not found', 'test de imagen');
+                        return $this->respond(500, $data, 'not found', 'test de imagen');
                         $request->merge([
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
