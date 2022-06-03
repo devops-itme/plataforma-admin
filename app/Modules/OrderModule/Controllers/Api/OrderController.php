@@ -170,7 +170,7 @@ class OrderController extends Controller
                     })->first();
 
                     if (is_null($rate)) {
-                        return $this->respond(404,  $destination_zone_id, 'not found', 'No existen tarifas para esta orden');
+                        return $this->respond(404,  $guide['zone_id'], 'not found', 'No existen tarifas para esta orden');
                     }
                     $destination_rate = $Rate->calculateRate($rate->id);
 
