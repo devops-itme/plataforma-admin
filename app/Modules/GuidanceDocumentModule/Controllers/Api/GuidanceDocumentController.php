@@ -25,6 +25,7 @@ class GuidanceDocumentController extends Controller
 
     public function getDocumentsByGuide(Request $request)
     {
+        return Storage::disk('s3')->exists('guidance_doc/2022-06-03.jpeg');
         $guide_id = $request->guide_id;
         return $this->GuidanceDocument->getDocumentsByGuide($guide_id);
     }
