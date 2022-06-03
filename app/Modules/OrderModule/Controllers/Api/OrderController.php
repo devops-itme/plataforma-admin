@@ -225,7 +225,7 @@ class OrderController extends Controller
                         $GuidanceDocumentController = new GuidanceDocumentController();
 
                         if (is_null($picture)) {
-                            return $this->respond(500, null, 'not found', 'No hay imágenes para esta guía');
+                            continue;
                         }
 
                         $request->merge([
@@ -233,7 +233,7 @@ class OrderController extends Controller
                             'type' => 'package_picture',
                             'document' => $picture,
                         ]);
-                        return $this->respond(500, $picture, 'not found', 'No hay imágenes para esta guía');
+                        return $this->respond(500, $picture, 'not found', 'test de imagen');
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
                         if ($storeDocumentResponse['state'] != 200) {
                             return $storeDocumentResponse;
