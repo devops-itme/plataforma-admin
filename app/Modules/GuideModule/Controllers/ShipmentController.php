@@ -56,8 +56,11 @@ class ShipmentController extends Controller
         $Tealca = new Tealca();
         $Tealca->login();
         $destination = $Tealca->getDestination();
-        //dd($destination['data']);
-        return view($this->path . 'create', compact('order_id','destination'));
+        //dd($destination);
+        $tiendas=$Tealca->getTiendas();
+        /* $tienda = $tiendas['data']; */
+        //dd($tienda);
+        return view($this->path . 'create', compact('order_id','destination','tiendas'));
     }
 
     public function store(Request $request)
@@ -113,11 +116,19 @@ class ShipmentController extends Controller
     }
 
     public function show($id){
+
         $guide = Guide::find($id);
         $Tealca = new Tealca();
         $Tealca->login();
+        
         $history = $Tealca->requestOrderStatus($guide->external_id);
-
-        return view($this->path. 'show', compact('guide', 'history'));
+        if($history['data'] == null){
+            $history['state']=500;
+            return view($this->path. 'show', compact('guide','history'));
+        }else{
+            $info = $history['data'][0]['tracking'][0];
+            return view($this->path. 'show', compact('guide', 'history', 'info'));
+        }
+        
     }
 }

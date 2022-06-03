@@ -23,21 +23,24 @@
                 <div class="container mt-8">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                        <select name="city"  class="custom-select" id="city">
-                        @foreach ($destination['data'] as $destinations )
-                            <option value="{{$destinations['destinationCode']}}" selected>{{$destinations['destinationCode']}} - {{$destinations['destinationName']}}</option>
-                        @endforeach
+                        <select name="city" class="custom-select" id="branch_off">
+
+                            @foreach ($destination['data'] as $destinations)
+                                <option value="{{ $destinations['destinationCode'] }}" selected>
+                                    {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>
+                            @endforeach
+                            <option value="{{$guide->city}}" selected="selected">{{$guide->city}}</option>
                         </select>
                 </div>
                 <div class="container">
                     <div class="row">
                         <div class="col mt-5">
                     <label for="inputCountry" class="form-label">Cod País</label>
-                    <input type="text" class="form-control" value="{{$destinations['parentCode']}}" id="inputCountry" disabled="disabled" >
+                    <input type="text" class="form-control" id="codpais" disabled="disabled" value="{{ $destinations['parentCode'] }}">
                 </div>
                 <div class="col mt-5">
-                    <label for="inputAddress" class="form-label">Cod Ciudad</label>
-                    <input type="text" value="{{$destinations['destinationCode']}}" class="form-control" id="inputAddress" disabled="disabled">
+                <label for="codciudad" class="form-label">Cod Ciudad</label>
+                    <input type="text" class="form-control" id="codciudad" disabled="disabled" value="{{$guide->city}}">
                 </div>
             </div>
         </div>
@@ -82,8 +85,7 @@
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1">Telefono</label>
-                            <input type="number" class="form-control"  value="{{$guide->phone_contact}}" id="telp" placeholder="Telefono" name="phone_contact"
-                                name="contact">
+                            <input type="number" class="form-control"  value="{{$guide->phone_contact}}" id="telp" placeholder="Telefono" name="phone_contact">
                         </div>
                     </div>
                 </div>
@@ -96,7 +98,7 @@
                         </div>
                         <div class="col">
                             <div class="form-check mt-10">
-                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault" disabled>
+                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Recoger en tienda?
                                 </label>
@@ -163,7 +165,7 @@
                 </div>
                 <div class="col-12 mt-5 text-center">
                     <button type="submit" class="btn btn-primary">Actualizar Guia</button>
-                </div> 
+                </div>
         </div>
     </div>
     </form>
@@ -174,6 +176,21 @@
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script>
+	$(function(){
+  	$(document).on('change','#branch_off',function(){ //detectamos el evento change
+         var value = $(this).val();
+        $('#codciudad').val(value); 
+
+/*         $(document).ready(function(){
+   $('#branch_off > option[value="0"]').attr('selected', 'selected'); */ 
+});
+   
+    });
+ /*  }); */ 
+</script>
+
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 {{-- Styles Section --}}

@@ -9,7 +9,8 @@
         <div class="card-title">
             <h2 class="card-label h1">Ordenes Internacionales</h2>
         </div>
-        <form method="get" action="{{ route('internationalOrders.export') }}">            
+        <form method="post" action="{{ route('internationalOrders.export') }}"> 
+            @csrf           
                     <input type="hidden" class="form-control form-control-solid" placeholder="" name="from" value="{{ request()->from }}" />        
                     <input type="hidden" class="form-control form-control-solid" placeholder="" name="to" value="{{ request()->to }}" />              
             
