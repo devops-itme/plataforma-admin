@@ -90,24 +90,13 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
 
     public function collection()
     {
-        $from = request()->input('from');
-        $to   = request()->input('to');
-
-        $orders = Order::select('id')->where('order_type', 37)->get();
-        $vector = [];
-        foreach ($orders as $order) {
-            $vector[] = $order->id;
-        }       
-
-        $firstElement = head($vector);
-        $lastElement = last($vector);       
 
         $guias = Guide::select([
             'order_id',
             'external_id',
             'pre_guide',
             'created_at',
-            'branch_office',//Origen
+            'branch_office', //Origen
             'invoice_contact',
             'contact',
             'document_type',
@@ -120,20 +109,19 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             'pieces',
             'kg',
             'declared',
-            'invoice_number',//Guia
+            'invoice_number', //Guia
             'dispatched', // Factura            
             'contact',
             'description',
             'novelty',
-            'app_status',//Usuario
+            'app_status', //Usuario
             'delivery_office',
             'state',
             'updated_at',
-        ])->whereBetween('order_id', [$firstElement,$lastElement])
+        ])
+            ->where('country', '<>', 'PAN')
             ->date(request()->from, request()->to)
             ->get();
-
-
 
         return $guias;
     }
