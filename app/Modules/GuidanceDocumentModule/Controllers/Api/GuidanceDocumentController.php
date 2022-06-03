@@ -49,7 +49,7 @@ class GuidanceDocumentController extends Controller
                 }
                 $request->merge(['type' => $type->id]);
             }
-            $file_name = $request->file('document')->getClientOriginalName();
+            $file_name = $request->file('document')->name;
             $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'), 'public');
             return $this->respond(500, $file_name, '', 'test.');
             $request->merge(['url_document' => $path]);
