@@ -90,6 +90,8 @@ class ShipmentController extends Controller
         $Tealca->login();
         $destination = $Tealca->getDestination();
 
+        $tiendas=$Tealca->getTiendas();
+
         if ($id_branch_office == null) {
             $branch = new BranchOffice();
             $branch->name = 'Sin seleccionar';
@@ -97,7 +99,7 @@ class ShipmentController extends Controller
             $branch = BranchOffice::find($id_branch_office);
         }
 
-        return view($this->path . 'edit', compact('guide', 'branch','destination'));
+        return view($this->path . 'edit', compact('guide', 'branch','destination', 'tiendas'));
     }
 
     public function update(Request $request, $id)
@@ -120,7 +122,7 @@ class ShipmentController extends Controller
         $guide = Guide::find($id);
         $Tealca = new Tealca();
         $Tealca->login();
-        
+
         $history = $Tealca->requestOrderStatus($guide->external_id);
         if($history['data'] == null){
             $history['state']=500;
@@ -129,6 +131,6 @@ class ShipmentController extends Controller
             $info = $history['data'][0]['tracking'][0];
             return view($this->path. 'show', compact('guide', 'history', 'info'));
         }
-        
+
     }
 }
