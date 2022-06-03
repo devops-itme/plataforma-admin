@@ -12,7 +12,7 @@ class StatusMatrix extends Model
     protected $fillable = [
         'name',
         'scope_id',
-        'issue_id',
+        'issues',
     ];
 
 
