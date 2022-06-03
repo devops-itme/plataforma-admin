@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderLog extends Model
 {
     use SoftDeletes;
-    protected $table = 'orders_log';
+    protected $table = 'order_logs';
     protected $fillable = [
-        'state',
-        'datetime',
-        'url_document',
+        'order_id',
         'user_id',
-        'order_id'
+        'status_matrix_id',
+        'url_document',
+        'active',
     ];
 
     public function getState()
     {
-        return $this->belongsTo(StatusMatrix::class, 'state');
+        return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
     }
 }
