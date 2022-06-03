@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
 use App\Modules\ParameterValueModule\ParameterValue;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -49,14 +50,16 @@ class GuidanceDocumentController extends Controller
                 }
                 $request->merge(['type' => $type->id]);
             }
-            $file = null;
+
             if ($request->base64 == 1) {
                 $img = str_replace(' ', '+', $request->document);
                 $file = base64_decode($img);
+                $imageName = Carbon::now()->toDateString() . '.' . $request->file_type;
+                $path = Storage::disk('s3')->put('/guidance_doc' . $imageName, $file, 'public');
             } else {
                 $file = $request->file('document');
+                $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
             }
-            $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
             $request->merge(['url_document' => $path]);
 
             $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);

@@ -229,11 +229,12 @@ class OrderController extends Controller
                             continue;
                         }
                         $img = $picture['base64'];
-                        
+
                         $request->merge([
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
                             'document' => $img,
+                            'file_type' => $picture['type'],
                             'base64' => 1,
                         ]);
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
