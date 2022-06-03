@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="card-title">
                 <h2 class="card-label">
-                    Envios
+                    Guias
                 </h2>
             </div>
             <div class="card-toolbar">
