@@ -50,7 +50,7 @@ class GuidanceDocumentController extends Controller
                 $request->merge(['type' => $type->id]);
             }
             $file = null;
-            if (File($request->base64 == 1)) {
+            if ($request->base64 == 1) {
                 $img = str_replace(' ', '+', $request->document);
                 $file = base64_decode($img);
             } else {
