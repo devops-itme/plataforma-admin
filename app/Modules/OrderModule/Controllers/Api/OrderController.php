@@ -221,7 +221,7 @@ class OrderController extends Controller
                     $guide_id = $storeGuideResponse['data']->id;
                     $pictures = $guide['pictures'];
 
-                    foreach ($pictures as $picture) {
+                    foreach ($pictures["_parts"] as $picture) {
 
                         $GuidanceDocumentController = new GuidanceDocumentController();
 
@@ -234,7 +234,7 @@ class OrderController extends Controller
                             'type' => 'package_picture',
                             'document' => $picture,
                         ]);
-                        return $this->respond(500, $pictures["_parts"], 'not found', 'test de imagen');
+                        return $this->respond(500, $picture, 'not found', 'test de imagen');
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
                         if ($storeDocumentResponse['state'] != 200) {
                             return $storeDocumentResponse;
