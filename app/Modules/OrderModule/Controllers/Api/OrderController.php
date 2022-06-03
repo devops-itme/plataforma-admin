@@ -234,7 +234,7 @@ class OrderController extends Controller
                             'type' => 'package_picture',
                             'document' => $picture,
                         ]);
-                        return $this->respond(500, $pictures, 'not found', 'test de imagen');
+                        return $this->respond(500, $pictures["_parts"], 'not found', 'test de imagen');
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
                         if ($storeDocumentResponse['state'] != 200) {
                             return $storeDocumentResponse;
