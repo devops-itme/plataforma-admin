@@ -156,7 +156,7 @@ class OrderController extends Controller
 
                 $rate_value = 0;
                 foreach ($guides as $guide) {
-                    $guide = json_decode($guide);
+                    $guide = json_decode($guide, true);
                     // return $this->respond(500, $guide, 'not found', 'test');
                     $address = null;
                     if (!is_null($guide['address_id'])) {
