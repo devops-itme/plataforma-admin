@@ -23,10 +23,10 @@
                 <div class="container mt-8">
                     {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                     <label for="branch_off">Ciudades Destino</label>
-                    <select name="city" class="custom-select" id="branch_off">          
+                    <select name="city" class="custom-select" id="branch_off">
                         @foreach ($destination['data'] as $destinations)
                             <option value="{{ $destinations['destinationCode'] }}" selected>
-                                {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>      
+                                {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>
                         @endforeach
                         <option value="" selected="selected">Seleccionar</option>
                     </select>
@@ -35,11 +35,13 @@
                     <div class="row">
                         <div class="col mt-5">
                             <label for="codpais" class="form-label">Cod País</label>
-                            <input type="text" class="form-control" name="country" id="codpais" disabled="disabled" value="{{ $destinations['parentCode'] }}">
+                            <input type="text" class="form-control" name="country" id="codpais" disabled="disabled"
+                                value="{{ $destinations['parentCode'] }}">
                         </div>
                         <div class="col mt-5">
                             <label for="codciudad" class="form-label">Cod Ciudad</label>
-                            <input type="text" class="form-control" id="codciudad" disabled="disabled"{{--  value="{{ $destinations['destinationCode'] }}" --}}>
+                            <input type="text" class="form-control" id="codciudad" disabled="disabled"
+                                {{-- value="{{ $destinations['destinationCode'] }}" --}}>
                         </div>
                     </div>
                 </div>
@@ -90,7 +92,8 @@
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1">Teléfono</label>
-                            <input type="number" class="form-control" id="telp" placeholder="Telefono" name="phone_contact">
+                            <input type="number" class="form-control" id="telp" placeholder="Telefono"
+                                name="phone_contact">
                         </div>
                     </div>
                 </div>
@@ -103,7 +106,7 @@
                         </div>
                         <div class="col">
                             <div class="form-check mt-10">
-                                <input class="form-check-input" type="checkbox" value="" name="chec" id="chec" onchange="comprobar();"/>
+                                <input type="checkbox" id="check" onchange="habilitar(this.checked);" checked>
                                 {{-- <input name="chec" type="checkbox" id="chec" onchange="comprobar();"/> --}}
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Recoger en tienda?
@@ -114,16 +117,16 @@
                             {{-- <label for="exampleInputPassword1">Tiendas</label>
                             <input type="text" class="form-control" id="tienda" placeholder="Seleccione una tienda--"> --}}
                             <label for="delivery_office">Tiendas</label>
-                            <select name="delivery_office" class="custom-select" id="boton">          
+                            <select name="delivery_office" class="custom-select" id="delivery_office">
                                 @foreach ($tiendas['data'] as $tienda)
-                                    <option value="{{ $tienda['name'] }}" selected>{{ $tienda['name'] }}</option>      
+                                    <option value="{{ $tienda['name'] }}" selected>{{ $tienda['name'] }}</option>
                                 @endforeach
                                 <option value="" selected="selected">Seleccionar</option>
                             </select>
                             {{-- <input type="text" class="form-control" id="boton">Este es el input anterior con js --}}
                             {{-- <select name="boton" class="custom-select" id="boton" readonly />
                                 <option value="" disabled selected>Seleccionar</option>
-                            </select>  --}}
+                            </select> --}}
                             {{-- <input name="text" id="boton" readonly /> --}}
                         </div>
                     </div>
@@ -164,7 +167,7 @@
                         </div>
                         <div class="col">
                             <label for="kilo">Kilos</label>
-                            <input type="text" class="form-control" id="numeroc" name="kg">
+                            <input type="number" class="form-control" id="numeroc" name="kg">
                         </div>
                         <div class="col">
                             <label for="incontact">Nombre del contactó</label>
@@ -172,9 +175,9 @@
                         </div>
 
                         <div class="container">
-                            <div class="row mt-10" >
+                            <div class="row mt-10">
                                 <label for="textarea">Descripción</label>
-                                <textarea class="form-control"  id="textarea" rows="3" name="description"></textarea>
+                                <textarea class="form-control" id="textarea" rows="3" name="description"></textarea>
                             </div>
                         </div>
                     </div>
@@ -191,37 +194,29 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-	$(function(){
-  	$(document).on('change','#branch_off',function(){ //detectamos el evento change
-         var value = $(this).val();
-        $('#codciudad').val(value); 
+    $(function() {
+        $(document).on('change', '#branch_off', function() { //detectamos el evento change
+            var value = $(this).val();
+            $('#codciudad').val(value);
 
-/*         $(document).ready(function(){
-   $('#branch_off > option[value="0"]').attr('selected', 'selected'); */ 
-});
-   
+            /*         $(document).ready(function(){
+               $('#branch_off > option[value="0"]').attr('selected', 'selected'); */
+        });
+
     });
- /*  }); */ 
 </script>
 
 <script>
-function comprobar()
-{   
-    if (document.getElementById("chec").checked)
-      document.getElementById('boton').readOnly = false;
-        
-    else
-      document.getElementById('boton').readOnly = true;
-        
-}
+    function habilitar(value) {
+        if (value == true) {
+            // habilitamos
+            document.getElementById("delivery_office").disabled = false;
+        } else if (value == false) {
+            // deshabilitamos
+            document.getElementById("delivery_office").disabled = true;
+        }
+    }
 </script>
-
-{{-- <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $('#branch_off > option[value=""]').attr('selected', 'selected');
-});
-</script> --}}
 
 
 
