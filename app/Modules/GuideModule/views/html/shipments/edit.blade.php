@@ -24,10 +24,12 @@
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
                         <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
                         <select name="city" class="custom-select" id="branch_off">
+
                             @foreach ($destination['data'] as $destinations)
                                 <option value="{{ $destinations['destinationCode'] }}" selected>
                                     {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>
                             @endforeach
+                            <option value="{{$guide->city}}" selected="selected">{{$guide->city}}</option>
                         </select>
                 </div>
                 <div class="container">
@@ -37,8 +39,8 @@
                     <input type="text" class="form-control" id="codpais" disabled="disabled" value="{{ $destinations['parentCode'] }}">
                 </div>
                 <div class="col mt-5">
-                    <label for="inputAddress" class="form-label">Cod Ciudad</label>
-                    <input type="text" class="form-control" id="codciudad" disabled="disabled" value="{{ $destinations['destinationCode'] }}">
+                <label for="codciudad" class="form-label">Cod Ciudad</label>
+                    <input type="text" class="form-control" id="codciudad" disabled="disabled" value="{{$guide->city}}">
                 </div>
             </div>
         </div>
@@ -178,11 +180,15 @@
 <script>
 	$(function(){
   	$(document).on('change','#branch_off',function(){ //detectamos el evento change
-    	var value = $(this).val();
-        $('#codciudad').val(value);
+         var value = $(this).val();
+        $('#codciudad').val(value); 
 
+/*         $(document).ready(function(){
+   $('#branch_off > option[value="0"]').attr('selected', 'selected'); */ 
+});
+   
     });
-  });
+ /*  }); */ 
 </script>
 
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
