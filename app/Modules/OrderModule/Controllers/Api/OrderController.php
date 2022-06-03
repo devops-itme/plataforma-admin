@@ -221,6 +221,7 @@ class OrderController extends Controller
                     $guide_id = $storeGuideResponse['data']->id;
                     $pictures = $guide['pictures'];
                     
+                    return $this->respond(500, $request->file('picture'), 'not found', 'test de imagen');
                     $GuidanceDocumentController = new GuidanceDocumentController();
                     $request->merge([
                         'guide_id' => $guide_id,
@@ -231,7 +232,6 @@ class OrderController extends Controller
                     // if ($storeDocumentResponse['state'] != 200) {
                         return $storeDocumentResponse;
                     // }
-                    return $this->respond(500, $request->file('picture'), 'not found', 'test de imagen');
                     foreach ($pictures as $picture) {
 
                         if (is_null($picture)) {
