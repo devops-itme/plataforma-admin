@@ -139,5 +139,21 @@ class Tealca
         return $this->respond(200, $destination->json(), null, 'successful request');
     }
 
+    public function getTiendas()
+    {
+        $tiendas = Http::withHeaders([
+            'Authorization' =>  $this->token,
+        ])->get(
+            'http://qaapicore.tealca.com/BusinessUnit?Status=1' 
+        );
+
+        if ($tiendas->status() != 200) {
+            return $this->respond(500, null, $tiendas , 'Fallo en el servicio. Guía N° ');
+        };
+
+
+        return $this->respond(200, $tiendas->json(), null, 'successful request');
+    }
+
 
 }

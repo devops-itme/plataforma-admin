@@ -22,12 +22,13 @@
                 @csrf
                 <div class="container mt-8">
                     {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
-                    <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
-                    <select name="city" class="custom-select" id="branch_off">
+                    <label for="branch_off">Ciudades Destino</label>
+                    <select name="city" class="custom-select" id="branch_off">          
                         @foreach ($destination['data'] as $destinations)
                             <option value="{{ $destinations['destinationCode'] }}" selected>
-                                {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>
+                                {{ $destinations['destinationCode'] }} - {{ $destinations['destinationName'] }}</option>      
                         @endforeach
+                        <option value="" selected="selected">Seleccionar</option>
                     </select>
                 </div>
                 <div class="container">
@@ -38,7 +39,7 @@
                         </div>
                         <div class="col mt-5">
                             <label for="codciudad" class="form-label">Cod Ciudad</label>
-                            <input type="text" class="form-control" id="codciudad" disabled="disabled" value="{{ $destinations['destinationCode'] }}">
+                            <input type="text" class="form-control" id="codciudad" disabled="disabled"{{--  value="{{ $destinations['destinationCode'] }}" --}}>
                         </div>
                     </div>
                 </div>
@@ -62,7 +63,7 @@
                             @enderror
                         </div>
                         <div class="col">
-                            <label for="address_name">Direccion del destinatario</label>
+                            <label for="address_name">Dirección del destinatario</label>
                             <input type="text" class="form-control" id="address_name" placeholder="Direccion"
                                 name="address_name" class="@error('address_name') is-invalid @enderror">
                             @error('address_name')
@@ -83,13 +84,13 @@
                             </select>
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Numero de documento</label>
+                            <label for="exampleInputPassword1">Número de documento</label>
                             <input type="number" class="form-control" id="numdocument" placeholder="N° de documento"
                                 name="document">
                         </div>
                         <div class="col">
-                            <label for="exampleInputPassword1">Telefono</label>
-                            <input type="number" class="form-control" id="telp" placeholder="Telefono" name="contact">
+                            <label for="exampleInputPassword1">Teléfono</label>
+                            <input type="number" class="form-control" id="telp" placeholder="Telefono" name="phone_contact">
                         </div>
                     </div>
                 </div>
@@ -102,7 +103,8 @@
                         </div>
                         <div class="col">
                             <div class="form-check mt-10">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <input class="form-check-input" type="checkbox" value="" name="chec" id="chec" onchange="comprobar();"/>
+                                {{-- <input name="chec" type="checkbox" id="chec" onchange="comprobar();"/> --}}
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Recoger en tienda?
                                 </label>
@@ -112,9 +114,17 @@
                             {{-- <label for="exampleInputPassword1">Tiendas</label>
                             <input type="text" class="form-control" id="tienda" placeholder="Seleccione una tienda--"> --}}
                             <label for="delivery_office">Tiendas</label>
-                            <select name="delivery_office" class="custom-select" id="delivery_office">
-                                <option value="" disabled selected>Seleccionar</option>
+                            <select name="delivery_office" class="custom-select" id="boton">          
+                                @foreach ($tiendas['data'] as $tienda)
+                                    <option value="{{ $tienda['name'] }}" selected>{{ $tienda['name'] }}</option>      
+                                @endforeach
+                                <option value="" selected="selected">Seleccionar</option>
                             </select>
+                            {{-- <input type="text" class="form-control" id="boton">Este es el input anterior con js --}}
+                            {{-- <select name="boton" class="custom-select" id="boton" readonly />
+                                <option value="" disabled selected>Seleccionar</option>
+                            </select>  --}}
+                            {{-- <input name="text" id="boton" readonly /> --}}
                         </div>
                     </div>
                 </div>
@@ -131,12 +141,12 @@
                 <div class="container">
                     <div class="row mt-10">
                         <div class="col">
-                            <label for="numguide">Numero de guía</label>
+                            <label for="numguide">Número de guía</label>
                             <input type="number" class="form-control" id="numdguia" placeholder="N° de Guía"
                                 name="pre_guide">
                         </div>
                         <div class="col">
-                            <label for="numfact">Numero de Factura</label>
+                            <label for="numfact">Número de Factura</label>
                             <input type="text" class="form-control" id="numdfact" placeholder="N° de Factura"
                                 name="invoice_number">
                         </div>
@@ -153,18 +163,18 @@
                             <input type="number" class="form-control" id="pieces" name="pieces">
                         </div>
                         <div class="col">
-                            <label for="kilo">kilos</label>
+                            <label for="kilo">Kilos</label>
                             <input type="text" class="form-control" id="numeroc" name="kg">
                         </div>
                         <div class="col">
-                            <label for="incontact">Nombre del conctacto</label>
-                            <input type="text" class="form-control" id="contact" name="invoice_contact">
+                            <label for="incontact">Nombre del contactó</label>
+                            <input type="text" class="form-control" id="contact" name="contact">
                         </div>
 
                         <div class="container">
-                            <div class="row mt-10">
+                            <div class="row mt-10" >
                                 <label for="textarea">Descripción</label>
-                                <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                                <textarea class="form-control"  id="textarea" rows="3" name="description"></textarea>
                             </div>
                         </div>
                     </div>
@@ -183,23 +193,35 @@
 <script>
 	$(function(){
   	$(document).on('change','#branch_off',function(){ //detectamos el evento change
-    	var value = $(this).val();
-        $('#codciudad').val(value);
+         var value = $(this).val();
+        $('#codciudad').val(value); 
+
+/*         $(document).ready(function(){
+   $('#branch_off > option[value="0"]').attr('selected', 'selected'); */ 
+});
    
     });
-  }); 
-
-/*   $(function(){
-  $(document).on('change','#branch_off', function() {
-    var value = $(this).val();
-        $("#codpais").val(value);
-            var value = $(this).val();
-            $("#codciudad").val(value);
-        });
-}); */
+ /*  }); */ 
 </script>
 
+<script>
+function comprobar()
+{   
+    if (document.getElementById("chec").checked)
+      document.getElementById('boton').readOnly = false;
+        
+    else
+      document.getElementById('boton').readOnly = true;
+        
+}
+</script>
 
+{{-- <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#branch_off > option[value=""]').attr('selected', 'selected');
+});
+</script> --}}
 
 
 

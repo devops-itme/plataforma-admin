@@ -329,4 +329,13 @@ class OrderController extends Controller
         $Order = new Order();
         return $Order->showOrder($id);
     }
+
+    // mostrar guía del modal
+    public function showModGuide($id){
+        $data= Guide::find($id);
+
+        return view($this->path . 'modals.showModal', compact('data'));
+
+
+    }
 }

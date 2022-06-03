@@ -56,8 +56,11 @@ class ShipmentController extends Controller
         $Tealca = new Tealca();
         $Tealca->login();
         $destination = $Tealca->getDestination();
-        //dd($destination['data']);
-        return view($this->path . 'create', compact('order_id','destination'));
+        //dd($destination);
+        $tiendas=$Tealca->getTiendas();
+        /* $tienda = $tiendas['data']; */
+        //dd($tienda);
+        return view($this->path . 'create', compact('order_id','destination','tiendas'));
     }
 
     public function store(Request $request)
