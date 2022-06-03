@@ -232,9 +232,9 @@ class OrderController extends Controller
                         $request->merge([
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
-                            'document' => $picture,
+                            'document' => $picture[1],
                         ]);
-                        return $this->respond(500, $picture[1], 'not found', 'test de imagen');
+                        // return $this->respond(500, $picture[1], 'not found', 'test de imagen');
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
                         if ($storeDocumentResponse['state'] != 200) {
                             return $storeDocumentResponse;
