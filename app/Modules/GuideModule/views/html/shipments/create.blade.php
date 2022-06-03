@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col mt-5">
                             <label for="codpais" class="form-label">Cod País</label>
-                            <input type="text" class="form-control" name="country" id="codpais" disabled="disabled"
+                            <input type="text" name="country" class="form-control"  id="codpais" readonly
                                 value="{{ $destinations['parentCode'] }}">
                         </div>
                         <div class="col mt-5">
