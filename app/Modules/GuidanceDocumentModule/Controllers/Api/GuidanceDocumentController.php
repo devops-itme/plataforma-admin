@@ -60,8 +60,8 @@ class GuidanceDocumentController extends Controller
                 $file = base64_decode($img);
                 // $imageName = Carbon::now()->toDateString() . '.' . $request->file_type;
                 $imageName = Carbon::now()->toDateString() . '.jpg';
-                Storage::disk('s3')->put('/guidance_doc' . $imageName, $file, 'public');
-                $image_url = Storage::disk('s3')->url($imageName);
+                Storage::disk('local')->put('/guidance_doc' . $imageName, $file, 'public');
+                $image_url = Storage::disk('local')->url($imageName);
                 return $this->respond(500, $image_url , '', 'Documento almacenado de forma exitosa.');
                 $path = 'guidance_doc/' . $imageName;
             } else {
