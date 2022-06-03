@@ -155,8 +155,9 @@ class OrderController extends Controller
                 // $guides = json_decode($guides, true);
 
                 $rate_value = 0;
-                return $this->respond(500, $guides, 'not found', 'test');
                 foreach ($guides as $guide) {
+                    $guide = json_decode($guide);
+                    return $this->respond(500, $guide, 'not found', 'test');
                     $address = null;
                     if (!is_null($guide['address_id'])) {
                         $address = Address::find($guide['address_id']);
