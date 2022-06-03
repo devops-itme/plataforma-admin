@@ -9,6 +9,7 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class GuidanceDocumentController extends Controller
 {
@@ -30,6 +31,13 @@ class GuidanceDocumentController extends Controller
     public function store(Request $request)
     {
         try {
+            $validator =  Validator::make(
+                $request->all(),
+                ['document' => 'required|file',]
+            );
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
             DB::beginTransaction();
             // foreach ($request->document as $file) {
             if (!is_numeric($request->type)) {
@@ -41,9 +49,9 @@ class GuidanceDocumentController extends Controller
                 }
                 $request->merge(['type' => $type->id]);
             }
-            if (file($request->document)) {
-                $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'), 'public');
-            }
+
+            $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'), 'public');
+
             $request->merge(['url_document' => $path]);
 
             $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);
