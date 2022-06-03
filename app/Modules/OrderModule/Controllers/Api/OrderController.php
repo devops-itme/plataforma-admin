@@ -220,30 +220,21 @@ class OrderController extends Controller
 
                     $guide_id = $storeGuideResponse['data']->id;
                     $pictures = $guide['pictures'];
-                    
-                    return $this->respond(500, $request->file('picture'), 'not found', 'test de imagen');
-                    $GuidanceDocumentController = new GuidanceDocumentController();
-                    $request->merge([
-                        'guide_id' => $guide_id,
-                        'type' => 'package_picture',
-                        'document' => $request->picture,
-                    ]);
-                    $storeDocumentResponse = $GuidanceDocumentController->store($request);
-                    // if ($storeDocumentResponse['state'] != 200) {
-                        return $storeDocumentResponse;
-                    // }
+
                     foreach ($pictures as $picture) {
+
+                        $GuidanceDocumentController = new GuidanceDocumentController();
 
                         if (is_null($picture)) {
                             continue;
                         }
 
+                        return $this->respond(500, $picture, 'not found', 'test de imagen');
                         $request->merge([
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
                             'document' => $picture,
                         ]);
-                        return $this->respond(500, $request->file('picture'), 'not found', 'test de imagen');
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
                         if ($storeDocumentResponse['state'] != 200) {
                             return $storeDocumentResponse;
