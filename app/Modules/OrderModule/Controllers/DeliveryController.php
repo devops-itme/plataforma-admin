@@ -35,8 +35,7 @@ class DeliveryController extends Controller
         $response = $this->storeRouteOndemand($request);
         if ($response['state'] == 200) {
             OrderLog::create([
-                'state' => 3,
-                'datetime' => now(),
+                'status_matrix_id' => 3,
                 'user_id' => Auth::user()->id,
                 'order_id' => $response['data']->id
             ]);

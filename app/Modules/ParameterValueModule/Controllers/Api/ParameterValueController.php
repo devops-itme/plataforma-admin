@@ -42,4 +42,22 @@ class ParameterValueController extends Controller
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }
     }
+
+    public function getIssues(Request $request)
+    {
+        try {
+            $status_matrix_id = $request->status_matrix_id;
+            $issues_array = StatusMatrix::where('id', $status_matrix_id)->first(['issues']);
+            if (is_null($issues_array)) {
+                return $this->respond(500, [], 'not found', 'No se encontraron incidencias');
+            }
+            
+            $issues_array = explode(",", str_replace(']"}', "", str_replace('{"issues":"[', "", $issues_array)));
+            $issues = ParameterValue::whereIn('id', $issues_array)->get(['id', 'name']);
+            
+            return $this->respond(200, $issues, null, 'Incidencias');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
+        }
+    }
 }

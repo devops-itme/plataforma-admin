@@ -332,7 +332,8 @@ return [
             'ENTREGADO',
             'NO ENTREGADO- DIRECCIÓN EQUIVOCADA',
             'NO ENTREGADO AUSENTE',
-            'OTROS'
+            'OTROS',
+            'CAMBIO DE ESTADO'
         ],
         'days' => [
             'Domingo',

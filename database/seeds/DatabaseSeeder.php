@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             DistrictSeeder::class,
             CorregimientoSeeder::class,
             NeighborhoodSeeder::class,
+            CustomerSeeder::class,
         ]);
     }
 }

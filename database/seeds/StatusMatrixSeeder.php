@@ -14,7 +14,14 @@ class StatusMatrixSeeder extends Seeder
      */
     public function run()
     {
+        StatusMatrix::query()->delete();
         $system_status = Config::get('const.system_status');
+        $issues_array = Config::get('const.parameters.issues');
+
+        $issues = ParameterValue::whereIn('name', $issues_array)->get(['id']);
+        $times = count($issues);
+        $issues = str_replace('}', "", str_replace('id":', "", str_replace('{"', "", $issues, $times), $times), $times);
+        
         foreach ($system_status as $key => $values) {
             $scope = ParameterValue::where('name', $key)
                 ->whereHas('getParameter', function ($q) {
@@ -24,7 +31,7 @@ class StatusMatrixSeeder extends Seeder
                 StatusMatrix::create([
                     'name' => $value,
                     'scope_id' => $scope->id,
-                    'issue_id' => null,
+                    'issues' =>  $issues,
                 ]);
             }
         }

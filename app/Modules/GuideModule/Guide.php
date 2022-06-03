@@ -6,6 +6,7 @@ use App\Http\Controllers\Traits\RestActions;
 use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
+use App\Modules\GuideLogModule\GuideLog;
 use App\Modules\OrderModule\Order;
 use App\Modules\ZoneModule\Zone;
 use App\Modules\ParameterValueModule\ParameterValue;
@@ -104,6 +105,12 @@ class Guide extends Model
     {
         return $this->belongsTo(ParameterValue::class, 'transport_type');
     }
+
+    public function getGuideLogs()
+    {
+        return $this->hasMany(GuideLog::class, 'guide_id');
+    }
+
     public function getBranchOffice()
     {
         return $this->belongsTo(BranchOffice::class, 'branch_office');
