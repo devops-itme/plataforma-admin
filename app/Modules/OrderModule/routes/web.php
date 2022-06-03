@@ -35,5 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //PACKING
     Route::get('despachos-packing', 'OrderModule\Controllers\DeliveryController@indexPacking')->name('deliveryPacking.index');
+
+    //RUTASHOWGUIDE
+    //Route::get('/mostrar/{id}/show','OrderModule\Controllers\OrderController@showModGuide')->name('shipments.show');
 });
 
