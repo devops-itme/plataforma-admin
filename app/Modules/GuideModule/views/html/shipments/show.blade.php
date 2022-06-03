@@ -22,7 +22,7 @@
                 @csrf
                 <div class="container mt-8">
                         {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
-                        <label for="branch_off">ciudades destino <span class="text-danger">*</span></label>
+                        <label for="branch_off">Ciudades destino <span class="text-danger"></span></label>
                         <select name="city"  class="custom-select" id="city" disabled>
                             <option value="{{$guide->city}}" >{{$guide->city}}</option>
                         </select>
