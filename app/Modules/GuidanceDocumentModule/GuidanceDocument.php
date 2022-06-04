@@ -69,17 +69,17 @@ class GuidanceDocument extends Model
                     $q->where('name', 'guide_document_type');
                 })
                     ->where('name', $type)
-                    ->first()->id;
+                    ->first()->id ?? null;
                 if (is_null($type)) {
-                    return $this->respond(500, [], 'not found' . 'Error al encontrar tipo de documento');
+                    return $this->respond(500, [], 'not found', 'Error al encontrar tipo de documento');
                 }
             }
-            
+
             $guide_id = $request->guide_id;
             $guidance_docs = $this::whereGuide($guide_id)->whereType($type)->get();
             return $this->respond(200, $guidance_docs, null, 'Documentos de la guía n° ' . $guide_id);
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . 'Error al encontrar los documentos');
+            return $this->respond(500, [], $e->getMessage(), 'Error al encontrar los documentos');
         }
     }
 
