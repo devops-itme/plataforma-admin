@@ -125,7 +125,7 @@ class GuidanceDocument extends Model
     {
         try {
             $validator = Validator::make(
-                ['guide_id' => $guide_id],
+                ['guide_id' => 1000],
                 ['guide_id' => 'required|exists:guides,id',]
             );
             if ($validator->fails()) {
