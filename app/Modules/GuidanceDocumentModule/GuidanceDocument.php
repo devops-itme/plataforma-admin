@@ -133,13 +133,9 @@ class GuidanceDocument extends Model
             }
             $guidance_documents = $this::whereIn('id', $guidance_document_ids)->get();
             foreach ($guidance_documents as $guidance_document) {
-                $guidance_document->guide_id = $guide_id;
-                if($guidance_document->update()){
-                    continue;
-                }
-                return $this->respond(500, [], 'error in the process', 'Error al asociar documento');
+                $guidance_document->update(['guide_id' => $guide_id]);
             }
-            return $this->respond(200, $guidance_documents, null, 'Documentos asociados correctamente');
+            return $this->respond(500, $guidance_documents, null, 'Documentos asociados correctamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al asociar documento');
         }
