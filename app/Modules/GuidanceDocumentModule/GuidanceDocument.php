@@ -56,7 +56,7 @@ class GuidanceDocument extends Model
                 $request->all(),
                 [
                     'guide_id' => 'required|exists:guides,id',
-                    'type' => ['required', is_numeric($request->type) ? 'exists:parameter_values,id' : 'string']
+                    'type' => ['nullable', is_numeric($request->type) ? 'exists:parameter_values,id' : 'string']
                 ]
             );
             if ($validator->fails()) {
