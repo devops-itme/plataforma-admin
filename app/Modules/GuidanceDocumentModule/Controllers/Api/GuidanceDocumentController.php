@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
 use App\Modules\ParameterValueModule\ParameterValue;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -24,6 +25,9 @@ class GuidanceDocumentController extends Controller
 
     public function getDocumentsByGuide(Request $request)
     {
+        if ($request->path) {
+            return Storage::disk('s3')->exists($request->path);
+        }
         $guide_id = $request->guide_id;
         return $this->GuidanceDocument->getDocumentsByGuide($guide_id);
     }
@@ -33,13 +37,13 @@ class GuidanceDocumentController extends Controller
         try {
             $validator =  Validator::make(
                 $request->all(),
-                ['document' => 'required|file',]
+                ['document' => ['required', 'file'],]
             );
             if ($validator->fails()) {
                 return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
             }
             DB::beginTransaction();
-            // foreach ($request->document as $file) {
+
             if (!is_numeric($request->type)) {
                 $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
                     $query->where('name', 'guide_document_type');
@@ -50,8 +54,9 @@ class GuidanceDocumentController extends Controller
                 $request->merge(['type' => $type->id]);
             }
 
-            $path = Storage::disk('s3')->put('/guidance_doc', $request->file('document'), 'public');
-            return $this->respond(500, $request->document, '', 'test.');
+            $file = $request->file('document');
+            $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
+
             $request->merge(['url_document' => $path]);
 
             $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);
@@ -59,10 +64,10 @@ class GuidanceDocumentController extends Controller
                 DB::rollBack();
                 return $store_doc;
             }
-            // }
+
             DB::commit();
-            // }
-            return $this->respond(200, [], '', 'Documento almacenado de forma exitosa.');
+
+            return $this->respond(200, $path, '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . ' Line: ' . $e->getLine(), 'Error del servidor');
         }

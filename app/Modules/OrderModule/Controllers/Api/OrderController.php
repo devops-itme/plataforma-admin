@@ -157,7 +157,7 @@ class OrderController extends Controller
                 $rate_value = 0;
                 foreach ($guides as $guide) {
                     $guide = json_decode($guide, true);
-                    
+
                     $address = null;
                     if (!is_null($guide['address_id'])) {
                         $address = Address::find($guide['address_id']);
@@ -220,30 +220,23 @@ class OrderController extends Controller
 
                     $guide_id = $storeGuideResponse['data']->id;
                     $pictures = $guide['pictures'];
-                    
-                    return $this->respond(500, $request->file('picture'), 'not found', 'test de imagen');
-                    $GuidanceDocumentController = new GuidanceDocumentController();
-                    $request->merge([
-                        'guide_id' => $guide_id,
-                        'type' => 'package_picture',
-                        'document' => $request->picture,
-                    ]);
-                    $storeDocumentResponse = $GuidanceDocumentController->store($request);
-                    // if ($storeDocumentResponse['state'] != 200) {
-                        return $storeDocumentResponse;
-                    // }
+
                     foreach ($pictures as $picture) {
+
+                        $GuidanceDocumentController = new GuidanceDocumentController();
 
                         if (is_null($picture)) {
                             continue;
                         }
+                        $img = $picture['base64'];
 
                         $request->merge([
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
-                            'document' => $picture,
+                            'document' => $img,
+                            'file_type' => str_replace('image/', '', $picture['type']),
+                            'base64' => 1,
                         ]);
-                        return $this->respond(500, $request->file('picture'), 'not found', 'test de imagen');
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
                         if ($storeDocumentResponse['state'] != 200) {
                             return $storeDocumentResponse;
