@@ -128,7 +128,7 @@ class OrderController extends Controller
                 if (!is_null($request->address_id)) {
                     $address = Address::find($request->address_id);
                     if (is_null($address)) {
-                        return $this->respond(500, null, 'not found', 'Dirección no encontrada xd');
+                        return $this->respond(500, null, 'not found', 'Dirección no encontrada');
                     }
                 } else if ((bool)$request->add_address_favorite) {
                     $saveAddressResponse = $this->saveAddress($request);
@@ -163,7 +163,7 @@ class OrderController extends Controller
                     if (!is_null($guide['address_id'])) {
                         $address = Address::find($guide['address_id']);
                         if (is_null($address)) {
-                            return $this->respond(500, null, 'not found', 'Dirección no encontrada');
+                            return $this->respond(500, null, 'not found', 'Dirección no encontrada xd');
                         }
                     }
                     $destination_zone_id = $guide['zone_id'];
