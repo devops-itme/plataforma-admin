@@ -160,7 +160,7 @@ class OrderController extends Controller
                     $guide = json_decode($guide, true);
 
                     $address = null;
-                    if (!is_null($guide['address_id']) || $guide['address_id'] != '') {
+                    if ($guide['address_id'] != '') {
                         $address = Address::find($guide['address_id']);
                         if (is_null($address)) {
                             return $this->respond(500, null, 'not found', 'Dirección no encontrada');
