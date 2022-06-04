@@ -34,7 +34,7 @@
         <!--begin: Search Form-->
         <!--begin::Search Form-->
         <div class="mb-7">
-            <div class="form-filter" style="display:none">
+            <div class="form-filter" style="display:block">
                 <form action="">
                     <div class="row align-items-center">
                         <div class="form-group py-3 m-0 col-md-4">
