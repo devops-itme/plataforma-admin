@@ -51,11 +51,12 @@ class GuidanceDocumentController extends Controller
             }
 
             DB::beginTransaction();
+            $guidance_document_ids = [];
             foreach ($document as $file) {
                 if (!is_file($file)) {
                     return $this->respond(500, $request->all(), 'is not file', 'Debe subir un archivo');
                 }
-                
+
                 $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
                 $request->merge(['url_document' => $path]);
 
@@ -64,11 +65,12 @@ class GuidanceDocumentController extends Controller
                     DB::rollBack();
                     return $response;
                 }
+                $guidance_document_ids[] = $response['data']->id;
             }
 
             DB::commit();
 
-            return $this->respond(200, $path, '', 'Documento almacenado de forma exitosa.');
+            return $this->respond(200, $guidance_document_ids, '', 'Documento almacenado de forma exitosa.');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . ' Line: ' . $e->getLine(), 'Error del servidor');
         }
