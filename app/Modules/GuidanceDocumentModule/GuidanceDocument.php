@@ -125,7 +125,7 @@ class GuidanceDocument extends Model
     {
         try {
             $validator = Validator::make(
-                ['guide_id' => 1000],
+                ['guide_id' => $guide_id],
                 ['guide_id' => 'required|exists:guides,id',]
             );
             if ($validator->fails()) {
@@ -134,7 +134,7 @@ class GuidanceDocument extends Model
             $guidance_documents = $this::whereIn('id', $guidance_document_ids)->get();
             foreach ($guidance_documents as $guidance_document) {
                 $guidance_document->guide_id = $guide_id;
-                if($guidance_document->save()){
+                if($guidance_document->update()){
                     continue;
                 }
                 return $this->respond(500, [], 'error in the process', 'Error al asociar documento');
