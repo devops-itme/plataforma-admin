@@ -27,6 +27,18 @@ class CustomerSeeder extends Seeder
                 'business_name' => 'Er Clint',
                 'tradename' => 'Er Clint',
             ],
+            [
+                'name' => 'Cliente',
+                'last_name' => 'Test',
+                'document_type' => 2,
+                'document_number' => '1478253691',
+                'email' => 'customer@test.com',
+                'phone' => '3012345678',
+                'password' => 'secret',
+                'role' => 4,
+                'business_name' => 'Test',
+                'tradename' => 'Test',
+            ],
         ];
         foreach ($customers as $customer) {
             $user = User::create([

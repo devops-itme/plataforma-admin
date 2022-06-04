@@ -16,6 +16,22 @@ class MessengerSeeder extends Seeder
     {
         $messengers = [
             [
+                'name' => 'MENSAJERO',
+                'last_name' => 'PRUEBA',
+                'document_type' => 2,
+                'document_number' => '1193685265',
+                'email' => 'pmanager2@developapp.co',
+                'phone' => '3027140176',
+                'password' => '123456',
+                'role' => 3,
+                'vehicle_plate' => 'M3N54J3R0',
+                'admission_date' =>null,
+                'birth_date' => null,
+                'production_percentage' => 10.5,
+                'exclusive' => 15,
+                'contract_type_id' => 0,
+            ],
+            [
                 'name' => 'Jaimito',
                 'last_name' => 'Cartero',
                 'document_type' => 2,
