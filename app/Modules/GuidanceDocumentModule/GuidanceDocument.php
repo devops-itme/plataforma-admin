@@ -74,9 +74,10 @@ class GuidanceDocument extends Model
                     return $this->respond(500, [], 'not found' . 'Error al encontrar tipo de documento');
                 }
             }
+
             $guide_id = $request->guide_id;
             $guidance_docs = $this::whereGuide($guide_id)->whereType($type)->get();
-            return $this->respond(200, $guidance_docs, null, 'Documentos de la guía n° ' . $guide_id);
+            return $this->respond(200, $guidance_docs, $type, 'Documentos de la guía n° ' . $guide_id);
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage() . 'Error al encontrar los documentos');
         }
