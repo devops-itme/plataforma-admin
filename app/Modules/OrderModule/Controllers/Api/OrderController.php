@@ -219,25 +219,10 @@ class OrderController extends Controller
                     }
 
                     $guide_id = $storeGuideResponse['data']->id;
-                    $pictures = $guide['pictures'];
+                    $guidance_document_ids = $guide['guidance_document_ids'];
 
-                    foreach ($pictures as $picture) {
-
-                        $GuidanceDocumentController = new GuidanceDocumentController();
-
-                        if (is_null($picture)) {
-                            continue;
-                        }
-
-                        $request->merge([
-                            'guide_id' => $guide_id,
-                            'type' => 'package_picture',
-                            'document' => $picture,
-                        ]);
-                        $storeDocumentResponse = $GuidanceDocumentController->store($request);
-                        if ($storeDocumentResponse['state'] != 200) {
-                            return $storeDocumentResponse;
-                        }
+                    if ($guidance_document_ids) {
+                        return $this->respond(500, $guidance_document_ids, null, 'asd');
                     }
                 }
 
