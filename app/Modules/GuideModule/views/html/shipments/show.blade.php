@@ -162,21 +162,23 @@
 
              @if ($history['state'] == 200)
                <div class="card-body">
-                            <hr>
-                        <table class="table table-sm text-center display">
-                            <thead class="">
+               <hr>
+                   <div class="table-responsive" style="overflow: auto;">
+                        <table class="table align-items-center text-center table-flush  table-hover"   >
+                            <thead style="position:relative; right:150px;">
                                 <tr>
                                     <th scope="col">Fecha - Hora</th>
                                     <th scope="col">Estado</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="position:relative; right:150px;">
                                     <tr>
                                         <td>{{$info['date']}}</td>
-                                        <th>{{$info['status']}}</th>
+                                        <th class="badge badge-pill badge-success">{{$info['status']}}</th>
                                     </tr>
                             </tbody>
                         </table>
+                    </div>
                 </div>
              @endif
         </div>
