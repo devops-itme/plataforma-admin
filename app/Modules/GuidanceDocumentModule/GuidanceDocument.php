@@ -64,7 +64,7 @@ class GuidanceDocument extends Model
             }
 
             $type = $request->type;
-            if (!is_numeric($type)) {
+            if (!is_null($type) && !is_numeric($type)) {
                 $type = ParameterValue::whereHas('getParameter', function ($q) {
                     $q->where('name', 'guide_document_type');
                 })
