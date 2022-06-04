@@ -8,13 +8,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="modal_body"></div>
+                <div hidden id="modal_body"></div>
                 <form action="{{ route('addresses.store') }}" method="POST" id="formCreateAddress" name="myform">
                     @csrf
                     {{-- <input type="text"  id="user_code" hidden name="user_id" value="{{$customer->user_id}}"> --}}
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label> id </label>
                             <input type="text" hidden id="user_code" name="user_code" class="form-control">
                             <label> Descripción </label>
                             <input type="text" name="description" class="form-control" value="{{old('description')}}" placeholder="Descripción" id="add_description">
@@ -40,7 +39,8 @@
 <script type="text/javascript">
     function save() {
         var $popup = $('#modal_body').text();
-        // window.alert($popup);
+        // window.alert($popup); 
+
         var myvalue = $popup;
         $("#user_code").val(myvalue);
     }
