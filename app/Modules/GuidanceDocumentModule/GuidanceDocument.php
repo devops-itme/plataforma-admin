@@ -135,7 +135,7 @@ class GuidanceDocument extends Model
             foreach ($guidance_documents as $guidance_document) {
                 $guidance_document->update(['guide_id' => $guide_id]);
             }
-            return $this->respond(500, $guidance_documents, null, 'Documentos asociados correctamente');
+            return $this->respond(200, $guidance_documents, null, 'Documentos asociados correctamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al asociar documento');
         }
