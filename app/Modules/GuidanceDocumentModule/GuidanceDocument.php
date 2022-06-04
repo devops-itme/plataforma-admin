@@ -19,13 +19,13 @@ class GuidanceDocument extends Model
         'url_document',
         'type'
     ];
-    
+
     protected $appends = ['file_url'];
 
     public function getFileUrlAttribute()
     {
         $link = "";
-        if(!empty($this->url_document)){
+        if (!empty($this->url_document)) {
             $link = Storage::disk('s3')->url($this->url_document);
         }
         return $link;
@@ -118,6 +118,30 @@ class GuidanceDocument extends Model
             return $this->respond(200, $guidance_doc, null, 'Documento eliminado exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al eliminar documento');
+        }
+    }
+
+    public function associateGuideDocuments($guide_id, $guidance_document_ids = [])
+    {
+        try {
+            $validator = Validator::make(
+                ['guide_id' => $guide_id],
+                ['guide_id' => 'required|exists:guides,id',]
+            );
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
+            $guidance_documents = $this::whereIn('id', $guidance_document_ids)->get();
+            foreach ($guidance_documents as $guidance_document) {
+                $guidance_document->guide_id = $guide_id;
+                if($guidance_document->save()){
+                    continue;
+                }
+                return $this->respond(500, [], 'error in the process', 'Error al asociar documento');
+            }
+            return $this->respond(200, $guidance_documents, null, 'Documentos asociados correctamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al asociar documento');
         }
     }
 }

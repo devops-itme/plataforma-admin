@@ -223,8 +223,11 @@ class OrderController extends Controller
                     $guidance_document_ids = $guide['guidance_document_ids'];
 
                     if ($guidance_document_ids) {
-                        $GuidanceDocument = GuidanceDocument::whereIn('id', $guidance_document_ids)->get();
-                        return $this->respond(500, $GuidanceDocument, null, 'asd');
+                        $GuidanceDocument = new GuidanceDocument();
+                        $response = $GuidanceDocument->associateGuideDocuments($guide_id, $guidance_document_ids);
+                        if ($response['state'] != 200) {
+                            return $response;
+                        }
                     }
                 }
 
