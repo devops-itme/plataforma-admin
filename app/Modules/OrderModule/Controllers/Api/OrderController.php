@@ -292,7 +292,7 @@ class OrderController extends Controller
     {
 
         $host = $request->getHost();
-        $fcm_token =  Auth::user()->fcm_token;
+        $fcm_token = $request->fcm_token ??  Auth::user()->fcm_token;
         $order_id = $request->order_id;
         $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=" . $fcm_token . "&order_id=" . $order_id;
         $cclw = env('PAGUELOFACIL_CCLW');
