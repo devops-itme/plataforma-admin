@@ -14,26 +14,32 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Maatwebsite\Excel\Concerns\FromArray;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use App\Modules\ApiConnectionsModule\Models\Tealca;
 
 
 
 
-class OrdersExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize, WithColumnFormatting, WithMapping
+
+class OrdersExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize, WithColumnFormatting
 {
     /**
      * @return \Illuminate\Support\Collection
      */
-
+    
+     
+    
+     
     public function map($guide): array
     {
         return [
-            $guide->order_id,
             $guide->external_id,
             $guide->pre_guide,
-            Date::dateTimeToExcel($guide->created_at),
+            $guide->created_at,            
             $guide->branch_office,
             $guide->invoice_contact,
-            $guide->contact,
+            $guide->recipient_name,
             $guide->document_type,
             $guide->document,
             $guide->email_contact,
@@ -48,10 +54,8 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             $guide->dispatched,
             $guide->contact,
             $guide->description,
-            $guide->app_status,
+            $guide->novelty,
             $guide->delivery_office,
-            $guide->state,
-            Date::dateTimeToExcel($guide->updated_at),
 
         ];
     }
@@ -59,7 +63,6 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     public function headings(): array
     {
         return [
-            __('#'),
             __('numGuia'),
             __('guiaMe'),
             __('FechaCreacion'),
@@ -88,17 +91,16 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         ];
     }
 
-    public function collection()
-    {
+    public function collection() 
+    {        
 
-        $guias = Guide::select([
-            'order_id',
+        $guides = Guide::select(
             'external_id',
             'pre_guide',
             'created_at',
             'branch_office', //Origen
             'invoice_contact',
-            'contact',
+            'recipient_name',
             'document_type',
             'document',
             'email_contact',
@@ -114,16 +116,36 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             'contact',
             'description',
             'novelty',
-            'app_status', //Usuario
             'delivery_office',
-            'state',
-            'updated_at',
-        ])
+        )         
+            ->where('external_id', '<>', null)
             ->where('country', '<>', 'PAN')
             ->date(request()->from, request()->to)
             ->get();
 
-        return $guias;
+        foreach ($guides as $guide) {
+            $order1 = json_decode($guide);
+            $Tealca = new Tealca();
+            $Tealca->login();
+            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+
+            // $statuses = json_decode($guideTracking)->tracking;
+            $statuses = $guideTracking['data'][0]['tracking'][0];
+            // dd($statuses);
+            $status   = $guideTracking['data'][0]['tracking'][0]['status'];
+
+            foreach ($statuses as $status) {
+                if ($status ==   'Creacion') {
+                    // $order1->state = $statuses['description'];                   
+                    $v1=$order1->Status = $statuses['status'];
+                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($statuses['date']));
+                    // $order1->description = $statuses['description'];
+                    $vector[] = $order1;
+                }
+            }
+        }
+        return collect($vector);
+        // return $guides;
     }
 
 
@@ -135,8 +157,8 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     public function columnFormats(): array
     {
         return [
-            'D' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'Y' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,            
+
         ];
     }
 }
