@@ -232,7 +232,7 @@
 
 <script type="text/javascript">
     function submit() {
-        window.alert("MODAL ABIERTO");
+        // window.alert("MODAL ABIERTO");
         var user_id = $("#user_id").val();
         var marks = $("#marks").val();
         var str = user_id;           
