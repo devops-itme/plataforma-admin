@@ -15,6 +15,7 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RateModule\Rate;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\GuidanceDocumentModule\Controllers\Api\GuidanceDocumentController;
+use App\Modules\GuidanceDocumentModule\GuidanceDocument;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -222,7 +223,8 @@ class OrderController extends Controller
                     $guidance_document_ids = $guide['guidance_document_ids'];
 
                     if ($guidance_document_ids) {
-                        return $this->respond(500, $guidance_document_ids, null, 'asd');
+                        $GuidanceDocument = GuidanceDocument::whereIn('id', $guidance_document_ids)->get();
+                        return $this->respond(500, $GuidanceDocument, null, 'asd');
                     }
                 }
 
