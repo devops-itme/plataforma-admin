@@ -35,15 +35,6 @@ class GuidanceDocumentController extends Controller
     public function store(Request $request)
     {
         try {
-            $validator =  Validator::make(
-                $request->all(),
-                ['document' => ['required', 'file'],]
-            );
-            if ($validator->fails()) {
-                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
-            }
-            DB::beginTransaction();
-
             if (!is_numeric($request->type)) {
                 $type = ParameterValue::where('name', $request->type)->whereHas('getParameter', function ($query) {
                     $query->where('name', 'guide_document_type');
@@ -54,15 +45,25 @@ class GuidanceDocumentController extends Controller
                 $request->merge(['type' => $type->id]);
             }
 
-            $file = $request->file('document');
-            $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
+            $document = $request->document;
+            if (!is_array($document)) {
+                $document = [$document];
+            }
 
-            $request->merge(['url_document' => $path]);
+            DB::beginTransaction();
+            foreach ($document as $file) {
+                if (!is_file($file)) {
+                    return $this->respond(500, $request->all(), 'is not file', 'Debe subir un archivo');
+                }
+                
+                $path = Storage::disk('s3')->put('/guidance_doc', $file, 'public');
+                $request->merge(['url_document' => $path]);
 
-            $store_doc = $this->GuidanceDocument->saveGuidanceDoc($request);
-            if ($store_doc['state'] != 200) {
-                DB::rollBack();
-                return $store_doc;
+                $response = $this->GuidanceDocument->saveGuidanceDoc($request);
+                if ($response['state'] != 200) {
+                    DB::rollBack();
+                    return $response;
+                }
             }
 
             DB::commit();

@@ -228,14 +228,11 @@ class OrderController extends Controller
                         if (is_null($picture)) {
                             continue;
                         }
-                        $img = $picture['base64'];
 
                         $request->merge([
                             'guide_id' => $guide_id,
                             'type' => 'package_picture',
-                            'document' => $img,
-                            'file_type' => str_replace('image/', '', $picture['type']),
-                            'base64' => 1,
+                            'document' => $picture,
                         ]);
                         $storeDocumentResponse = $GuidanceDocumentController->store($request);
                         if ($storeDocumentResponse['state'] != 200) {

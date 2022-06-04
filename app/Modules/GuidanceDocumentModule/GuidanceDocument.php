@@ -57,7 +57,7 @@ class GuidanceDocument extends Model
         return Validator::make(
             $request->all(),
             [
-                'guide_id' => 'required|exists:guides,id',
+                'guide_id' => 'nullable|exists:guides,id',
                 'url_document' => [
                     Rule::requiredIf($action == 'create'), 'string'
                 ],

@@ -15,7 +15,9 @@ class CreateGuidanceDocumentsTable extends Migration
     {
         Schema::create('guidance_documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('guide_id')->references('id')->on('guides')->nullable();
+            $table->unsignedBigInteger('guide_id')->nullable();
+            $table->foreign('guide_id')->references('id')->on('guides');
+            // $table->foreignId('guide_id')->references('id')->on('guides');
             $table->string('url_document')->nullable();
             $table->foreignId('type')->references('id')->on('parameter_values')->nullable();
             $table->softDeletes();
