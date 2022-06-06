@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div hidden id="modal_body"></div>
+                <div hidden id="modal_data_user_id"></div> <!-- Capture user_id from view Orders(Create) -->
                 <form action="{{ route('addresses.store') }}" method="POST" id="formCreateAddress" name="myform">
                     @csrf
                     {{-- <input type="text"  id="user_code" hidden name="user_id" value="{{$customer->user_id}}"> --}}
@@ -34,14 +34,3 @@
         </div>
     </div>
 </div>
-
-
-<script type="text/javascript">
-    function save() {
-        var $popup = $('#modal_body').text();
-        // window.alert($popup); 
-
-        var myvalue = $popup;
-        $("#user_code").val(myvalue);
-    }
-</script>
