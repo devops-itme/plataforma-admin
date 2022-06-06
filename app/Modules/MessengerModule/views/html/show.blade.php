@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="font-weight-bolder mb-3">Contrato:</div>
-                        <div class="line-height-xl"><a href="#" target="_blank" download="contrato-mensajero.pdf">Descargar contrato</a></div>
+                        <div class="line-height-xl"><a href="{{route('contra.download',$messenger->id)}}" target="_blank" >Descargar contrato</a></div>
                     </div>
                 </div>
             </div>

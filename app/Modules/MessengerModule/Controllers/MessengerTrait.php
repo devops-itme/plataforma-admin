@@ -5,6 +5,7 @@ namespace App\Modules\MessengerModule\Controllers;
 use App\Modules\MessengerModule\Messenger;
 use App\Modules\UserModule\Controllers\UserTrait;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 
 trait MessengerTrait
@@ -78,7 +79,7 @@ trait MessengerTrait
             if ($request->hasFile('contract')) {
                 $contract = $request->file('contract');
                 $contract_file = time() . '-' . $contract->getClientOriginalName();
-                // \Storage::disk('local')->put($document_file,  \File::get($contract));
+                Storage::disk('local')->putFileAs('document_file', $contract, $contract_file );
             }
             $messenger = Messenger::create([
                 'user_id' => $user->id,

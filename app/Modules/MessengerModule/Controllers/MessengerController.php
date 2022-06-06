@@ -129,4 +129,12 @@ class MessengerController extends Controller
             return $this->respond(500, [], $e->getMessage());
         }
     }
+
+    public function download($id)
+    {
+
+       $messe = Messenger::find($id);
+       $PathToFile = storage_path("app/document_file/".$messe->contract);
+       return response()->download($PathToFile, 'contrato-mensajero.pdf');
+    }
 }
