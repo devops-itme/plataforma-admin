@@ -10,7 +10,7 @@
             <form action="{{ route('internationalOrders.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <p>Cargar excel.</p>
+                    <p>Cargar Excel.</p>
                     <div class="row mx-2">
                         <input class="form-input" type="checkbox" value="true" name="unique_phone" id="">
                         <p class="ml-2">Permitir datos repetidos</p>
