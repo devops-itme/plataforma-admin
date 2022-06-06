@@ -199,7 +199,7 @@ export default class Guides {
                     return btn;
                 }
 
-                const guideDetail = createBtn('primary', 'fa-folder-open',);
+                const guideDetail = createBtn('primary', 'fa-folder-open','show-guide-btn');
 
                 const guideEdit = createBtn('success', 'fa-edit', 'edit-guide-btn');
 
@@ -218,6 +218,7 @@ export default class Guides {
                 tbody.appendChild(row);
             });
         }
+        this.goToShowGuide();
         this.goToEditGuide();
         this.removeGuide();
     }
@@ -264,4 +265,21 @@ export default class Guides {
             });
         });
     }
+
+
+    goToShowGuide() {
+        let showGuideBtn = document.getElementsByClassName("show-guide-btn");
+        if (showGuideBtn == null) {
+            return;
+        }
+
+        [].forEach.call(showGuideBtn, (btn) => {
+            btn.addEventListener("click", async () => {
+                let guide = btn.parentNode.parentNode.parentNode;
+                let guide_id = guide.getAttribute('guide_id');
+                let origin = window.location.origin;
+                window.location.replace(`${origin}/details/${guide_id}/show`);
+            });
+        });
+    } 
 }

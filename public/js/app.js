@@ -2738,7 +2738,7 @@ var Guides = /*#__PURE__*/function () {
                       return btn;
                     };
 
-                    var guideDetail = createBtn('primary', 'fa-folder-open');
+                    var guideDetail = createBtn('primary', 'fa-folder-open', 'show-guide-btn');
                     var guideEdit = createBtn('success', 'fa-edit', 'edit-guide-btn');
                     var guideDelete = createBtn('danger', 'fa-trash-alt', 'remove-guide-btn'); //Div
 
@@ -2752,10 +2752,11 @@ var Guides = /*#__PURE__*/function () {
                   });
                 }
 
+                this.goToShowGuide();
                 this.goToEditGuide();
                 this.removeGuide();
 
-              case 8:
+              case 9:
               case "end":
                 return _context5.stop();
             }
@@ -2857,6 +2858,36 @@ var Guides = /*#__PURE__*/function () {
               }
             }
           }, _callee7);
+        })));
+      });
+    }
+  }, {
+    key: "goToShowGuide",
+    value: function goToShowGuide() {
+      var showGuideBtn = document.getElementsByClassName("show-guide-btn");
+
+      if (showGuideBtn == null) {
+        return;
+      }
+
+      [].forEach.call(showGuideBtn, function (btn) {
+        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+          var guide, guide_id, origin;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+            while (1) {
+              switch (_context8.prev = _context8.next) {
+                case 0:
+                  guide = btn.parentNode.parentNode.parentNode;
+                  guide_id = guide.getAttribute('guide_id');
+                  origin = window.location.origin;
+                  window.location.replace("".concat(origin, "/details/").concat(guide_id, "/show"));
+
+                case 4:
+                case "end":
+                  return _context8.stop();
+              }
+            }
+          }, _callee8);
         })));
       });
     }
@@ -90281,8 +90312,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\omarm\Desktop\Developp\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
