@@ -3,6 +3,7 @@
 namespace App\Modules\GuidanceDocumentModule;
 
 use App\Http\Controllers\Traits\RestActions;
+use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
@@ -42,13 +43,43 @@ class GuidanceDocument extends Model
             return $query->where('guide_id', $value);
     }
 
-    public function getDocumentsByGuide($guide_id)
+    public function scopeWhereType($query, $value)
+    {
+        if (!is_null($value))
+            return $query->where('type', $value);
+    }
+
+    public function getDocumentsByGuide($request)
     {
         try {
-            $guidance_docs = $this::whereGuide($guide_id)->get();
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'guide_id' => 'required|exists:guides,id',
+                    'type' => ['nullable', is_numeric($request->type) ? 'exists:parameter_values,id' : 'string']
+                ]
+            );
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
+
+            $type = $request->type;
+            if (!is_null($type) && !is_numeric($type)) {
+                $type = ParameterValue::whereHas('getParameter', function ($q) {
+                    $q->where('name', 'guide_document_type');
+                })
+                    ->where('name', $type)
+                    ->first()->id ?? null;
+                if (is_null($type)) {
+                    return $this->respond(500, [], 'not found', 'Error al encontrar tipo de documento');
+                }
+            }
+
+            $guide_id = $request->guide_id;
+            $guidance_docs = $this::whereGuide($guide_id)->whereType($type)->get();
             return $this->respond(200, $guidance_docs, null, 'Documentos de la guía n° ' . $guide_id);
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . 'Error al encontrar los documentos');
+            return $this->respond(500, [], $e->getMessage(), 'Error al encontrar los documentos');
         }
     }
 

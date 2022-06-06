@@ -25,11 +25,7 @@ class GuidanceDocumentController extends Controller
 
     public function getDocumentsByGuide(Request $request)
     {
-        if ($request->path) {
-            return Storage::disk('s3')->exists($request->path);
-        }
-        $guide_id = $request->guide_id;
-        return $this->GuidanceDocument->getDocumentsByGuide($guide_id);
+        return $this->GuidanceDocument->getDocumentsByGuide($request);
     }
 
     public function store(Request $request)
