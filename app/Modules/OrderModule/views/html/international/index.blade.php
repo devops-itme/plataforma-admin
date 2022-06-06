@@ -132,7 +132,7 @@
                 <td>{{ $order->getUser ? $order->getUser->name . ' ' . $order->getUser->last_name : 'No registra' }}
                 </td>
                 <td>{{ format_date(date('Y-n-d', strtotime($order->created_at))) }}
-                    <b>{{ date('h:m A', strtotime($order->created_at)) }}</b>
+                    <b>{{ date('g:i a', strtotime($order->created_at)) }}</b>
                 </td>
                 <td>
                     {{ $order->getStatusMatrix->name ?? 'No registra' }}
