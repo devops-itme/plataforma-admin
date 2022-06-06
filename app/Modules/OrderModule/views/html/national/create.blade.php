@@ -19,7 +19,7 @@
             @if (Auth::user()->getRole->name == 'Admin')            
             <div class="form-group col-md-3">
                 <label for="customer">Cliente <span class="text-danger">*</span></label>
-                <select id="user_id" name="user_id" class="select2-customers form-control form-control-solid" id="customer">
+                <select  name="user_id" class="select2-customers form-control form-control-solid" id="customer">
                     <option id="user_id" value="" selected disabled>Seleccione un cliente</option>
                     @foreach ($customers as $customer)
                     <option {{ old('customer') == $customer->getUser->id ? 'selected ' : '' }} value="{{ $customer->getUser->id }}">
@@ -136,14 +136,7 @@
                     <option disabled selected>Seleccione </option>
                 </select>
             </div>
-            <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
-                <a class="btn" data-tooltip title="Agregar dirección" onclick="submit()" data-username="{{ $order->user_id }}" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
-                    <i class="fad fa-plus-circle text-info"></i>
-                    </span>
-                </a>
-            </div>
-            @include(
-            'OrderModule.views.html.modals.createAddressModal')
+          
 
             <div class="form-group col-md-3">
                 <label for="district">Tarifa <span class="text-danger">*</span></label>
@@ -223,19 +216,3 @@
 </div>
 @endsection
 
-<script type="text/javascript">
-    function submit() {
-        // window.alert("MODAL ABIERTO");
-        var user_id = $("#user_id").val();
-        var str = user_id;           
-         $("#modal_data_user_id").html(str);
-    }
-
-    function save() {
-        var $popup = $('#modal_data_user_id').text();
-        // window.alert($popup); 
-
-        var myvalue = $popup;
-        $("#user_code").val(myvalue);
-    }
-</script>
