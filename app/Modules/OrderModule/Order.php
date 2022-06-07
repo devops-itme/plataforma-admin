@@ -89,8 +89,8 @@ class Order extends Model
         if (isset($activity->properties['attributes']['status_matrix_id'])) {
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
             $status_matrix = $this::find($status_matrix_id);
-            $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->first();
-            if (count($status_descriptor) > 0) {
+            $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->firstOrFail();
+            if (!is_null($status_descriptor)) {
                 $status_matrix->name = $status_descriptor->description;
             }
             $title = 'Cambio de estado';
