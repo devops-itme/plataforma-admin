@@ -31,7 +31,7 @@
                 <div class="form-group col-md-2">
                     <label for="guide_address">Dirección destino <span class="text-danger">*</span></label>
                     <select name="guide_address" class="form-control form-control-solid" id="guide_address" disabled>
-                        <option  selected >{{$guide->address_name}}</option>
+                        <option  selected >{{$guide->address_name ?? 'sin datos'}}</option>
                         {{-- <option disabled selected>{{$guide->guide_address== null ? 'Sin datos': $guide->guide_address}}</option> --}}
                     </select>
                 </div>
@@ -115,13 +115,18 @@
 
 {{--                 @include('OrderModule.views.html.national.guideContentTab')
             </div>
-            @include('OrderModule.views.html.national.guideList')
+            @include('OrderModule.views.html.national.guideList') --}}
         </form>
-        <input type="hidden" name="guides" id="guides"> --}}
+       {{-- <input type="hidden" name="guides" id="guides"> --}}
         {{-- <div class="card-footer d-flex justify-content-end">
             <button type="submit" id="create-order-btn" class="btn btn-primary mr-2">Actualizar Orden</button>
             <button type="reset" class="btn btn-secondary">Limpiar</button>
         </div> --}}
 
+    </div>
+
+    <div class="card-footer d-flex justify-content-end">
+        <button type="reset" class="btn btn-secondary"><a href={{ route('orders.index') }}
+                class="text-muted">Volver</a></button>
     </div>
 @endsection

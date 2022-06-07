@@ -2744,7 +2744,9 @@ var Guides = /*#__PURE__*/function () {
 
                     var buttonsDiv = document.createElement("div");
                     buttonsDiv.setAttribute("class", "d-flex justify-content-around align-items-center flex-wrap flex-row");
+                    _this3.scope == 'edition' && buttonsDiv.appendChild(guideEdit);
                     buttonsDiv.appendChild(guideDetail);
+                    selectCell.appendChild(buttonsDiv);
                     _this3.scope == 'edition' && buttonsDiv.appendChild(guideEdit);
                     buttonsDiv.appendChild(guideDelete);
                     selectCell.appendChild(buttonsDiv);
@@ -2861,34 +2863,102 @@ var Guides = /*#__PURE__*/function () {
         })));
       });
     }
+    /*      goToShowGuide() {
+            let showGuideBtn = document.getElementsByClassName("show-guide-btn");
+            if (showGuideBtn == null) {
+                return;
+            }
+    
+            [].forEach.call(showGuideBtn, (btn) => {
+                btn.addEventListener("click", async () => {
+                    let guide = btn.parentNode.parentNode.parentNode;
+                    let guide_id = guide.getAttribute('guide_id');
+                    let origin = window.location.origin;
+                    let response = true;
+                    if (this.scope == 'edition') {
+                        response = await showResource('/guias/' + guide_id);
+                    }
+                    if (!response) {
+                        window.location.replace(`${origin}/details/${guide_id}/show`);
+                    }
+                   
+                });
+            });
+        } */
+
   }, {
     key: "goToShowGuide",
     value: function goToShowGuide() {
+      var _this5 = this;
+
       var showGuideBtn = document.getElementsByClassName("show-guide-btn");
 
       if (showGuideBtn == null) {
         return;
       }
 
-      [].forEach.call(showGuideBtn, function (btn) {
-        btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-          var guide, guide_id, origin;
+      var showGuideBtnHandler = function showGuideBtnHandler(btn) {
+        btn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+          var guide, parent, index, guide_id, response, guia;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
             while (1) {
               switch (_context8.prev = _context8.next) {
                 case 0:
                   guide = btn.parentNode.parentNode.parentNode;
+                  parent = guide.parentNode;
+                  index = Array.prototype.indexOf.call(parent.children, guide);
                   guide_id = guide.getAttribute('guide_id');
-                  origin = window.location.origin;
-                  window.location.replace("".concat(origin, "/details/").concat(guide_id, "/show"));
+                  response = true;
+                  _context8.next = 7;
+                  return _this5.guides[index];
 
-                case 4:
+                case 7:
+                  guia = _context8.sent;
+
+                  if (_this5.scope == 'creation') {
+                    $('#modalDestino').modal('show');
+                    document.querySelector('#modalDestino #description').value = guia.description;
+                    document.querySelector('#modalDestino #guide_address').value = guia.guide_address;
+                    console.log(guide_address);
+                    document.querySelector('#modalDestino #email_contact').value = guia.email_contact;
+                    document.querySelector('#modalDestino #rate').value = guia.rate;
+                    document.querySelector('#modalDestino #take_photo').value = guia.take_photo;
+                    document.querySelector('#modalDestino #sign').value = guia.sign;
+                    document.querySelector('#modalDestino #same_day_delivery').value = guia.same_day_delivery;
+                    document.querySelector('#modalDestino #contact').value = guia.contact;
+                    document.querySelector('#modalDestino #value').value = guia.value;
+                    document.querySelector('#modalDestino #phone_contact').value = guia.phone_contact;
+                    document.querySelector('#modalDestino #corp_value').value = guia.corp_value;
+                    document.querySelector('#modalDestino #boxes').value = guia.boxes;
+                    document.querySelector('#modalDestino #address_id').value = guia.address_id;
+                    /*                 console.log(guia.boxes); */
+                  }
+
+                  if (response) {
+                    _context8.next = 11;
+                    break;
+                  }
+
+                  return _context8.abrupt("return");
+
+                case 11:
+                  if (_this5.scope == 'edition') {
+                    _this5.guides.splice(index, 1);
+
+                    window.location.replace("".concat(origin, "/details/").concat(guide_id, "/show"));
+                  }
+
+                case 12:
                 case "end":
                   return _context8.stop();
               }
             }
           }, _callee8);
         })));
+      };
+
+      [].forEach.call(showGuideBtn, function (btn) {
+        return showGuideBtnHandler(btn);
       });
     }
   }]);
@@ -8386,10 +8456,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return _defineProperty({
       selected: 56,
       delivery_types: [{
-        value: 56,
+        value: 57,
         text: "Entregas"
       }, {
-        value: 57,
+        value: 56,
         text: "Recogidas"
       }],
       showModal: false,
@@ -8452,8 +8522,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.tabs[2].href = "consultas"; //NAME TABS
 
                 _this2.tabs[2].name = "CONSULTA Y EDICIÓN";
-                _this2.selected == 57 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
-                _this2.selected == 57 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
+                _this2.selected == 56 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
+                _this2.selected == 56 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
               case 13:
               case "end":
@@ -70962,7 +71032,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Destinos por\n                        " +
-                      _vm._s(_vm.selected == 56 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 57 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
@@ -71087,7 +71157,7 @@ var render = function () {
                 _c("h5", { staticClass: "font-weight-bold text-dark" }, [
                   _vm._v(
                     "\n                        Seleccionados por\n                        " +
-                      _vm._s(_vm.selected == 56 ? "Entregar" : "Recoger") +
+                      _vm._s(_vm.selected == 57 ? "Entregar" : "Recoger") +
                       "\n                    "
                   ),
                 ]),
