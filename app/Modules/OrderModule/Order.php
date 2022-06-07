@@ -90,7 +90,7 @@ class Order extends Model
         if (isset($activity->properties['attributes']['status_matrix_id'])) {
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
             $status_matrix = $this::find($status_matrix_id);
-            $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->first();
+            $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->where('role_id', 4)->first();
             if (!is_null($status_descriptor)) {
                 $status_matrix->name = $status_descriptor->description;
             }
