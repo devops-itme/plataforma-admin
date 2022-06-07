@@ -45,7 +45,7 @@ export default class Orders {
 
 
         this.loadBranches();
-        
+
         this.createAddress();
         this.customerAddresses();
         this.loadPickupHours();
@@ -292,11 +292,13 @@ export default class Orders {
                                 accept: "application/json",
                             },
                         }
-                    );
-                    if (req.ok) {
+                    )
+                        .then(response => response.json());
+                    if (req.state == 200) {
                         correct("Estado actualizado!");
                         window.location.reload();
                     } else {
+                        console.log(req);
                         error("Error al actualizar estado");
                     }
                 }
@@ -333,8 +335,10 @@ export default class Orders {
                     let req = await fetch(
                         `/pordespachar/packaging/${order_id.id}`,
                         requestOptions
-                    );
-                    if (req.ok) {
+                    )
+                        .then(response => response.json());
+                    console.log(req);
+                    if (req.state == 200) {
                         correct("Estado actualizado!");
                         window.location.reload();
                     } else {

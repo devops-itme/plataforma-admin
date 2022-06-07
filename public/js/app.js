@@ -3520,15 +3520,18 @@ var Orders = /*#__PURE__*/function () {
                                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
                                 accept: "application/json"
                               }
+                            }).then(function (response) {
+                              return response.json();
                             });
 
                           case 7:
                             req = _context10.sent;
 
-                            if (req.ok) {
+                            if (req.state == 200) {
                               correct("Estado actualizado!");
                               window.location.reload();
                             } else {
+                              console.log(req);
                               error("Error al actualizar estado");
                             }
 
@@ -3589,7 +3592,7 @@ var Orders = /*#__PURE__*/function () {
                             result = _context12.sent;
 
                             if (!(result == 3 || result == 7)) {
-                              _context12.next = 18;
+                              _context12.next = 19;
                               break;
                             }
 
@@ -3609,19 +3612,22 @@ var Orders = /*#__PURE__*/function () {
                               type: result
                             };
                             _context12.next = 16;
-                            return fetch("/pordespachar/packaging/".concat(order_id.id), requestOptions);
+                            return fetch("/pordespachar/packaging/".concat(order_id.id), requestOptions).then(function (response) {
+                              return response.json();
+                            });
 
                           case 16:
                             req = _context12.sent;
+                            console.log(req);
 
-                            if (req.ok) {
+                            if (req.state == 200) {
                               correct("Estado actualizado!");
                               window.location.reload();
                             } else {
                               error("Error al actualizar estado");
                             }
 
-                          case 18:
+                          case 19:
                           case "end":
                             return _context12.stop();
                         }
@@ -90382,8 +90388,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -3,6 +3,7 @@
 namespace App\Modules\OrderModule;
 
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Resources\OrderResource;
 use App\Modules\OrderLogModule\OrderLog;
 use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
@@ -10,11 +11,13 @@ use App\Modules\DepartmentModule\Department;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\PickupHourModule\PickupHour;
+use App\Modules\StatusDescriptorModule\StatusDescriptor;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\UserModule\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -68,16 +71,41 @@ class Order extends Model
     /* Logs Config */
     protected static $logFillable = true;
     protected static $submitEmptyLogs = false;
+    protected static $logOnlyDirty  = true;
 
     public function tapActivity(Activity $activity, string $eventName)
     {
-        // dd($activity);
         $activity->log_name = __($eventName);
         if ($activity->causer) {
-            $activity->description = "Se ha " . __($eventName) . " la orden " . $activity->subject->fullName;
+            $activity->description = ($activity->subject->order_number ?? ('Orden')) . ' ' . "se ha " . __($eventName);
+        }
+        if ($eventName == 'updated') {
+            $this->eventHandler($activity);
         }
     }
     /*End logs config */
+
+    public function eventHandler($activity)
+    {
+        if (isset($activity->properties['attributes']['status_matrix_id'])) {
+            $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
+            $status_matrix = $this::find($status_matrix_id);
+            $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->where('role_id', 4)->first();
+            if (!is_null($status_descriptor)) {
+                $status_matrix->name = $status_descriptor->description;
+            }
+            $title = 'Cambio de estado';
+            $message = 'Estado de ' . $activity->subject->order_number . ' actualizado a: ' . $status_matrix->name;
+            $order = $activity->subject;
+            $order = OrderResource::collection([$order])[0];
+            $data = [
+                'order' => $order,
+                'notification_type' => 'order_updated_notification'
+            ];
+            $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
+            sendCustomNotifications($title, $message, $data, $userToken);
+        }
+    }
 
     public function getUser()
     {
@@ -155,10 +183,17 @@ class Order extends Model
         if (!is_null($value))
             return $query->where('order_number', 'like', '%' . $value . '%');
     }
-    public function scopeOrder_type($query, $value)
+    public function scopeWhereOrderType($query, $value)
     {
         if (!is_null($value))
             return $query->where('order_type', $value);
+    }
+    public function scopeWhereOrderTypeName($query, $value)
+    {
+        if (!is_null($value))
+            return $query->whereHas('getOrderType', function ($q) use ($value) {
+                $q->where('name', 'like', '%' . $value . '%');
+            });
     }
     public function scopeCustomer($query, $value)
     {
@@ -379,6 +414,33 @@ class Order extends Model
             return $this->respond(200, $orderNumber);
         } else {
             return $this->respond(500, 'Orden_1');
+        }
+    }
+
+    public function updateStatusMatrix($id, $request)
+    {
+        try {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'status_matrix_id' => ['required', is_numeric($request->status_matrix_id) ? 'exists:status_matrix,id' : 'string']
+                ]
+            );
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
+            DB::beginTransaction();
+            $order = $this::where('id', $id)
+                ->whereOrderTypeName('Ondemand')
+                ->first();
+            $order->update([
+                'status_matrix_id' => $request->status_matrix_id
+            ]);
+            DB::commit();
+            return $this->respond(200, $order, null, 'Estado actualizado');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->respond(500, [], $th->getMessage() . ' ' . $th->getLine(), 'Error al actualizar orden');
         }
     }
 }

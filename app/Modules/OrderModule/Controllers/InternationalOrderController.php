@@ -24,7 +24,7 @@ class InternationalOrderController extends Controller
     public function index(Request $request)
     {
         $orders = Order::number($request->get('number'))
-            ->order_type(request()->order_type)
+            ->whereOrderType(request()->order_type)
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->whereStatusMatrix([request()->state])
