@@ -16,11 +16,11 @@
         @csrf
 
         <div class="card-body d-flex flex-row flex-wrap pt-2">
-            @if (Auth::user()->getRole->name == 'Admin')            
+            @if (Auth::user()->getRole->name == 'Admin')
             <div class="form-group col-md-3">
                 <label for="customer">Cliente <span class="text-danger">*</span></label>
-                <select  name="user_id" class="select2-customers form-control form-control-solid" id="customer">
-                    <option  value="" selected disabled>Seleccione un cliente</option>
+                <select name="user_id" class="select2-customers form-control form-control-solid" id="customer">
+                    <option value="" selected disabled>Seleccione un cliente</option>
                     @foreach ($customers as $customer)
                     <option {{ old('customer') == $customer->getUser->id ? 'selected ' : '' }} value="{{ $customer->getUser->id }}">
                         {{ $customer->getUser->name . ' ' . $customer->getUser->last_name }}
@@ -137,7 +137,7 @@
                 </select>
             </div>
             <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
-                <a class="btn" data-tooltip title="Agregar dirección" data-username="{{ $order->user_id }}" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
+                <a class="btn" data-tooltip title="Agregar dirección" onclick="submit()" data-username="{{ $order->user_id }}" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
                     <i class="fad fa-plus-circle text-info"></i>
                     </span>
                 </a>
@@ -221,5 +221,5 @@
         <button type="reset" class="btn btn-secondary">Limpiar</button>
     </div>
 </div>
-@endsection
 
+@endsection
