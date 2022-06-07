@@ -328,8 +328,8 @@ class OrderController extends Controller
     public function showModGuide($id)
     {
         //dd($id);
-        $guide = Guide::find($id);
 
+        $guide = Guide::find($id);
         return view($this->path . 'national.showGuide', compact('guide'));
     }
 }
