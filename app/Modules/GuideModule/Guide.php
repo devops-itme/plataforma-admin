@@ -85,6 +85,9 @@ class Guide extends Model
         if ($activity->causer) {
             $activity->description = "Se ha " . __($eventName) . " la guía N°" . $activity->subject->id;
         }
+        if ($eventName == 'updated') {
+            $this->eventHandler($activity);
+        }
     }
     /*End logs config */
     public function eventHandler($activity)
@@ -93,7 +96,7 @@ class Guide extends Model
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
             $status_matrix = $this::find($status_matrix_id);
             $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->first();
-            if (!is_null($status_descriptor->description)) {
+            if (count($status_descriptor) > 0) {
                 $status_matrix->name = $status_descriptor->description;
             }
             $title = 'Cambio de estado';

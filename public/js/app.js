@@ -3458,7 +3458,8 @@ var Orders = /*#__PURE__*/function () {
                             req = _context10.sent;
 
                             if (req.state == 200) {
-                              correct("Estado actualizado!"); // window.location.reload();
+                              correct("Estado actualizado!");
+                              window.location.reload();
                             } else {
                               console.log(req);
                               error("Error al actualizar estado");

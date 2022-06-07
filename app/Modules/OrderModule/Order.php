@@ -74,13 +74,10 @@ class Order extends Model
 
     public function tapActivity(Activity $activity, string $eventName)
     {
-        // $this::first()->update(['description' => rand(0, 100)]);
         $activity->log_name = __($eventName);
         if ($activity->causer) {
             $activity->description = ($activity->subject->order_number ?? ('Orden')) . ' ' . "se ha " . __($eventName);
         }
-        // dd($activity->subject->getUser->fcm_token);
-        // if ($activity->properties['attributes']['status_matrix_id'] != $activity->properties['old']['status_matrix_id']) {
         if ($eventName == 'updated') {
             $this->eventHandler($activity);
         }
@@ -93,7 +90,7 @@ class Order extends Model
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
             $status_matrix = $this::find($status_matrix_id);
             $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->first();
-            if (!is_null($status_descriptor->description)) {
+            if (count($status_descriptor) > 0) {
                 $status_matrix->name = $status_descriptor->description;
             }
             $title = 'Cambio de estado';
