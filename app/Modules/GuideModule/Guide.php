@@ -3,6 +3,7 @@
 namespace App\Modules\GuideModule;
 
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Resources\GuideResource;
 use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
@@ -102,8 +103,12 @@ class Guide extends Model
             }
             $title = 'Cambio de estado';
             $message = 'Estado de la guía N°' . $activity->subject->id . ' actualizado a: ' . $status_matrix->name;
-            $data = $activity->subject;
-            $data->setAttribute('notification_type', 'guide_updated_notification');
+            $guide = $activity->subject;
+            $guide = GuideResource::collection([$guide])[0];
+            $data = [
+                'guide' => $guide,
+                'notification_type' => 'guide_updated_notification'
+            ];
             $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             sendCustomNotifications($title, $message, $data, $userToken);
         }
