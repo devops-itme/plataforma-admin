@@ -3,6 +3,7 @@
 namespace App\Modules\GuideModule;
 
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Resources\GuideResource;
 use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
@@ -11,9 +12,11 @@ use App\Modules\OrderModule\Order;
 use App\Modules\ZoneModule\Zone;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RouteModule\Route;
+use App\Modules\StatusDescriptorModule\StatusDescriptor;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
@@ -76,15 +79,40 @@ class Guide extends Model
     /* Logs Config */
     protected static $logFillable = true;
     protected static $submitEmptyLogs = false;
+    protected static $logOnlyDirty  = true;
 
     public function tapActivity(Activity $activity, string $eventName)
     {
         $activity->log_name = __($eventName);
         if ($activity->causer) {
-            $activity->description = "Se ha " . __($eventName) . " la guiá " . $activity->subject->fullName;
+            $activity->description = "Se ha " . __($eventName) . " la guía N°" . $activity->subject->id;
+        }
+        if ($eventName == 'updated') {
+            $this->eventHandler($activity);
         }
     }
     /*End logs config */
+    public function eventHandler($activity)
+    {
+        if (isset($activity->properties['attributes']['status_matrix_id'])) {
+            $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
+            $status_matrix = $this::find($status_matrix_id);
+            $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->where('role_id', 4)->first();
+            if (!is_null($status_descriptor)) {
+                $status_matrix->name = $status_descriptor->description;
+            }
+            $title = 'Cambio de estado';
+            $message = 'Estado de la guía N°' . $activity->subject->id . ' actualizado a: ' . $status_matrix->name;
+            $guide = $activity->subject;
+            $guide = GuideResource::collection([$guide])[0];
+            $data = [
+                'guide' => $guide,
+                'notification_type' => 'guide_updated_notification'
+            ];
+            $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
+            sendCustomNotifications($title, $message, $data, $userToken);
+        }
+    }
 
     public function getOrder()
     {

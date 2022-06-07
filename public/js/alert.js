@@ -99,7 +99,7 @@ function correct(message) {
 }
 
 function porDespacharPackagingAlert() {
-    return swal("Seleccione el estado de la orden?", {
+    return swal("Seleccione el estado de la orden", {
         buttons: {
             delivery: {
                 text: "Entrega!",

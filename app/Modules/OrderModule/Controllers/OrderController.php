@@ -33,7 +33,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::number(request()->number)
-            ->order_type(request()->order_type)
+            ->whereOrderType(request()->order_type)
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->whereStatusMatrix([request()->state])
@@ -208,7 +208,7 @@ class OrderController extends Controller
 
         $user_id = $order->getUser->id;
 
-       
+
         $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'payment_method');
         })->get();
@@ -251,7 +251,7 @@ class OrderController extends Controller
             }
             return redirect()->route('orders.index')->with('success', 'Orden actualizada exitosamente.');
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return redirect()->back()->with('danger', $response['message'] . $response['error']);
         }
     }
 
@@ -296,14 +296,8 @@ class OrderController extends Controller
     public function porDespacharOndemand($id)
     {
         try {
-            $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
-                $query->where('name', 'order_types');
-            })->get();
-
-            $order = Order::where('id', $id)->where('order_type', $order_type[0]->id)->update([
-                'status_matrix_id' => 3
-            ]);
-            return $this->respond(200, [], null, 'Estado actualizado');
+            $Order = new Order();
+            return $Order->updateStatusMatrix($id, new Request(array('status_matrix_id' => 3)));
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }
@@ -314,7 +308,7 @@ class OrderController extends Controller
         $orders = Order::with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
             $query->where('name', 'ENTREGADO');
         })->number(request()->number)
-            ->order_type(request()->order_type)
+            ->whereOrderType(request()->order_type)
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->with('getUser')->get();
@@ -331,11 +325,11 @@ class OrderController extends Controller
     }
 
     // mostrar guía del modal
-     public function showModGuide($id){
+    public function showModGuide($id)
+    {
         //dd($id);
-        $guide= Guide::find($id);
+        $guide = Guide::find($id);
+
         return view($this->path . 'national.showGuide', compact('guide'));
-
-
-    } 
+    }
 }

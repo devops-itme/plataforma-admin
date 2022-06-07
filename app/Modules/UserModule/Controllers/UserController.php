@@ -139,13 +139,4 @@ class UserController extends Controller
             return redirect()->back()->with('danger', $response['message']);
         }
     }
-
-
-    public function sendPushNotification(Request $request)
-    {        
-        $userToken = $request->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';       
-        $data = $request->all();
-        return sendCustomNotifications('Notification', 'Notification', $data, $userToken);      
-              
-    }
 }
