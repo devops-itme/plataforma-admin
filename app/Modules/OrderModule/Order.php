@@ -70,16 +70,18 @@ class Order extends Model
     /* Logs Config */
     protected static $logFillable = true;
     protected static $submitEmptyLogs = false;
-    protected static $logOnlyDirty  = true;
+    // protected static $logOnlyDirty  = true;
 
     public function tapActivity(Activity $activity, string $eventName)
     {
         $activity->log_name = __($eventName);
 
         if ($activity->causer) {
-            $activity->description = "Se ha " . __($eventName) . " la orden " . $activity->subject->fullName;
+            $activity->description = $activity->subject->order_number . ' ' . "se ha " . __($eventName);
         }
-        if (isset($activity->properties['attributes']['status_matrix_id'])) {
+        // dd($activity->subject->getUser->fcm_token);
+        // if (isset($activity->properties['attributes']['status_matrix_id'])) {
+        if ($activity->properties['attributes']['status_matrix_id'] != $activity->properties['old']['status_matrix_id']) {
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id '];
             $status_matrix = $this::find($status_matrix_id);
             $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->first();
@@ -87,9 +89,9 @@ class Order extends Model
                 $status_matrix->name = $status_descriptor->description;
             }
             $title = 'Cambio de estado';
-            $message = 'Estado actualizado a: ' . $status_matrix->name;
-            $data = $activity;
-            $userToken = Auth::user()->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';
+            $message = 'Estado de ' . $activity->subject->order_number . 'actualizado a: ' . $status_matrix->name;
+            $data = $activity->subject;
+            $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             sendCustomNotifications($title, $message, $data, $userToken);
         }
     }
