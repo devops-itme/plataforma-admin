@@ -96,6 +96,7 @@ class Order extends Model
             $title = 'Cambio de estado';
             $message = 'Estado de ' . $activity->subject->order_number . ' actualizado a: ' . $status_matrix->name;
             $data = $activity->subject;
+            $data->setAttribute('notification_type', 'order_updated_notification');
             $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             sendCustomNotifications($title, $message, $data, $userToken);
         }

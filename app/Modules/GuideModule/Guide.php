@@ -103,6 +103,7 @@ class Guide extends Model
             $title = 'Cambio de estado';
             $message = 'Estado de la guía N°' . $activity->subject->id . ' actualizado a: ' . $status_matrix->name;
             $data = $activity->subject;
+            $data->setAttribute('notification_type', 'guide_updated_notification');
             $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             sendCustomNotifications($title, $message, $data, $userToken);
         }
