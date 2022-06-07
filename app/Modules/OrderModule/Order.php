@@ -81,7 +81,7 @@ class Order extends Model
         }
         // dd($activity->subject->getUser->fcm_token);
         // if ($activity->properties['attributes']['status_matrix_id'] != $activity->properties['old']['status_matrix_id']) {
-        if (isset($activity->properties['attributes']['status_matrix_id'])) {
+        if ($eventName == 'updated' && isset($activity->properties['attributes']['status_matrix_id'])) {
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id '];
             $status_matrix = $this::find($status_matrix_id);
             $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->first();
