@@ -3,6 +3,7 @@
 namespace App\Modules\OrderModule;
 
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Resources\OrderResource;
 use App\Modules\OrderLogModule\OrderLog;
 use App\Modules\AddressModule\Address;
 use App\Modules\BranchOfficeModule\BranchOffice;
@@ -96,6 +97,7 @@ class Order extends Model
             $title = 'Cambio de estado';
             $message = 'Estado de ' . $activity->subject->order_number . ' actualizado a: ' . $status_matrix->name;
             $data = $activity->subject;
+            $data = OrderResource::collection([$data])[0];
             $data->setAttribute('notification_type', 'order_updated_notification');
             $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             sendCustomNotifications($title, $message, $data, $userToken);
