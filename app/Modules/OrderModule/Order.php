@@ -77,11 +77,11 @@ class Order extends Model
         $activity->log_name = __($eventName);
 
         if ($activity->causer) {
-            $activity->description = $activity->subject->order_number . ' ' . "se ha " . __($eventName) . $activity->subject->getUser->fcm_token;
+            $activity->description = $activity->subject->order_number ?? ('Orden') . ' ' . "se ha " . __($eventName);
         }
         // dd($activity->subject->getUser->fcm_token);
-        // if (isset($activity->properties['attributes']['status_matrix_id'])) {
-        if ($activity->properties['attributes']['status_matrix_id'] != $activity->properties['old']['status_matrix_id']) {
+        // if ($activity->properties['attributes']['status_matrix_id'] != $activity->properties['old']['status_matrix_id']) {
+        if (isset($activity->properties['attributes']['status_matrix_id'])) {
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id '];
             $status_matrix = $this::find($status_matrix_id);
             $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->first();
@@ -173,10 +173,17 @@ class Order extends Model
         if (!is_null($value))
             return $query->where('order_number', 'like', '%' . $value . '%');
     }
-    public function scopeOrder_type($query, $value)
+    public function scopeWhereOrderType($query, $value)
     {
         if (!is_null($value))
             return $query->where('order_type', $value);
+    }
+    public function scopeWhereOrderTypeName($query, $value)
+    {
+        if (!is_null($value))
+            return $query->whereHas('getOrderType', function ($q) use ($value) {
+                $q->where('name', 'like', '%' . $value . '%');
+            });
     }
     public function scopeCustomer($query, $value)
     {
@@ -397,6 +404,32 @@ class Order extends Model
             return $this->respond(200, $orderNumber);
         } else {
             return $this->respond(500, 'Orden_1');
+        }
+    }
+
+    public function updateStatusMatrix($id, $request)
+    {
+        try {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'status_matrix_id' => ['required', is_numeric($request->status_matrix_id) ? 'exists:status_matrix,id' : 'string']
+                ]
+            );
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
+            DB::beginTransaction();
+            $order = $this::where('id', $id)
+                ->whereOrderTypeName('Ondemand')
+                ->update([
+                    'status_matrix_id' => $request->status_matrix_id
+                ]);
+            DB::commit();
+            return $this->respond(200, $order, null, 'Estado actualizado');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->respond(500, [], $th->getMessage() . ' ' . $th->getLine(), 'Error al actualizar orden');
         }
     }
 }
