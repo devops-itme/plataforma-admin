@@ -45,7 +45,7 @@ export default class Orders {
 
 
         this.loadBranches();
-        
+
         this.createAddress();
         this.customerAddresses();
         this.loadPickupHours();
@@ -293,7 +293,7 @@ export default class Orders {
                             },
                         }
                     )
-                    .then(response => response.json());
+                        .then(response => response.json());
                     if (req.state == 200) {
                         correct("Estado actualizado!");
                         window.location.reload();
@@ -335,8 +335,10 @@ export default class Orders {
                     let req = await fetch(
                         `/pordespachar/packaging/${order_id.id}`,
                         requestOptions
-                    );
-                    if (req.ok) {
+                    )
+                        .then(response => response.json());
+                    console.log(req);
+                    if (req.state == 200) {
                         correct("Estado actualizado!");
                         window.location.reload();
                     } else {

@@ -3522,7 +3522,7 @@ var Orders = /*#__PURE__*/function () {
                             result = _context12.sent;
 
                             if (!(result == 3 || result == 7)) {
-                              _context12.next = 18;
+                              _context12.next = 19;
                               break;
                             }
 
@@ -3542,19 +3542,22 @@ var Orders = /*#__PURE__*/function () {
                               type: result
                             };
                             _context12.next = 16;
-                            return fetch("/pordespachar/packaging/".concat(order_id.id), requestOptions);
+                            return fetch("/pordespachar/packaging/".concat(order_id.id), requestOptions).then(function (response) {
+                              return response.json();
+                            });
 
                           case 16:
                             req = _context12.sent;
+                            console.log(req);
 
-                            if (req.ok) {
+                            if (req.state == 200) {
                               correct("Estado actualizado!");
                               window.location.reload();
                             } else {
                               error("Error al actualizar estado");
                             }
 
-                          case 18:
+                          case 19:
                           case "end":
                             return _context12.stop();
                         }

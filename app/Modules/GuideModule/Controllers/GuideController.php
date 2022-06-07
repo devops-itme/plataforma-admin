@@ -156,7 +156,7 @@ class GuideController extends Controller
             'address_lng' => $address->lng,
             'address_description' => $address->description
         ]);
-      
+
         $response = $this->updateGuide($request->merge(['guide_id' => $id]));
         if ($response['state'] != 200) {
             return redirect()->back()->with('danger', $response['message']);
@@ -205,17 +205,15 @@ class GuideController extends Controller
     {
         try {
             $type = $request->type;
-            // $order_type = Order::with('getGuides')->whereHas('getGuides', function ($query) use ($id, $type) {
-            //     $query->where('order_id', $id)->update([
-            //         'status_matrix_id' => $type
-            //     ]);
-            // })->update([
-            //     'status_matrix_id' => $type
-            // ]);
-            $guides = Guide::where('order_id', $id)->update([
-                'status_matrix_id' => $type
-            ]);
-            $order = Order::where('id', $id)->update([
+           
+            $guides = Guide::where('order_id', $id)->get();
+            foreach ($guides as $guide) {
+                $guide->update([
+                    'status_matrix_id' => $type
+                ]);
+            }
+            $order = Order::where('id', $id)->first();
+            $order->update([
                 'status_matrix_id' => $type
             ]);
             return $this->respond(200, [], null, 'Estado actualizado');
