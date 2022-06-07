@@ -77,7 +77,7 @@ class Order extends Model
         $activity->log_name = __($eventName);
 
         if ($activity->causer) {
-            $activity->description = $activity->subject->order_number . ' ' . "se ha " . __($eventName);
+            $activity->description = $activity->subject->order_number . ' ' . "se ha " . __($eventName) . $activity->subject->getUser->fcm_token;
         }
         // dd($activity->subject->getUser->fcm_token);
         // if (isset($activity->properties['attributes']['status_matrix_id'])) {
