@@ -77,7 +77,7 @@ class Order extends Model
         // $this::first()->update(['description' => rand(0, 100)]);
         $activity->log_name = __($eventName);
         if ($activity->causer) {
-            $activity->description = $activity->subject->order_number ?? ('Orden') . ' ' . "se ha " . __($eventName);
+            $activity->description = ($activity->subject->order_number ?? ('Orden')) . ' ' . "se ha " . __($eventName);
         }
         // dd($activity->subject->getUser->fcm_token);
         // if ($activity->properties['attributes']['status_matrix_id'] != $activity->properties['old']['status_matrix_id']) {
