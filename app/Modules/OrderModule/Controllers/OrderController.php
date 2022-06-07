@@ -208,7 +208,7 @@ class OrderController extends Controller
 
         $user_id = $order->getUser->id;
 
-       
+
         $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'payment_method');
         })->get();
@@ -251,7 +251,7 @@ class OrderController extends Controller
             }
             return redirect()->route('orders.index')->with('success', 'Orden actualizada exitosamente.');
         } else {
-            return redirect()->back()->with('danger', $response['message']);
+            return redirect()->back()->with('danger', $response['message'] . $response['error']);
         }
     }
 
@@ -331,12 +331,11 @@ class OrderController extends Controller
     }
 
     // mostrar guía del modal
-     public function showModGuide($id){
+    public function showModGuide($id)
+    {
         //dd($id);
-        $guide= Guide::find($id);
+        $guide = Guide::find($id);
 
         return view($this->path . 'national.showGuide', compact('guide'));
-
-
-    } 
+    }
 }

@@ -10,11 +10,13 @@ use App\Modules\DepartmentModule\Department;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\PickupHourModule\PickupHour;
+use App\Modules\StatusDescriptorModule\StatusDescriptor;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\UserModule\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -68,13 +70,27 @@ class Order extends Model
     /* Logs Config */
     protected static $logFillable = true;
     protected static $submitEmptyLogs = false;
+    protected static $logOnlyDirty  = true;
 
     public function tapActivity(Activity $activity, string $eventName)
     {
-        // dd($activity);
         $activity->log_name = __($eventName);
+
         if ($activity->causer) {
             $activity->description = "Se ha " . __($eventName) . " la orden " . $activity->subject->fullName;
+        }
+        if (isset($activity->properties['attributes']['status_matrix_id'])) {
+            $status_matrix_id = $activity->properties['attributes']['status_matrix_id '];
+            $status_matrix = $this::find($status_matrix_id);
+            $status_descriptor = StatusDescriptor::where('status_matrix_id', $status_matrix_id)->first();
+            if (!is_null($status_descriptor)) {
+                $status_matrix->name = $status_descriptor->description;
+            }
+            $title = 'Cambio de estado';
+            $message = 'Estado actualizado a: ' . $status_matrix->name;
+            $data = $activity;
+            $userToken = Auth::user()->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';
+            sendCustomNotifications($title, $message, $data, $userToken);
         }
     }
     /*End logs config */
