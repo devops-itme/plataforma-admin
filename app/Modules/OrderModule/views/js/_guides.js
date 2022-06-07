@@ -210,7 +210,9 @@ export default class Guides {
                     "class",
                     "d-flex justify-content-around align-items-center flex-wrap flex-row"
                 );
+                this.scope == 'edition' && buttonsDiv.appendChild(guideEdit);
                 buttonsDiv.appendChild(guideDetail);
+                selectCell.appendChild(buttonsDiv);
                 this.scope == 'edition' && buttonsDiv.appendChild(guideEdit);
                 buttonsDiv.appendChild(guideDelete);
                 selectCell.appendChild(buttonsDiv);
@@ -267,7 +269,7 @@ export default class Guides {
     }
 
 
-    goToShowGuide() {
+/*      goToShowGuide() {
         let showGuideBtn = document.getElementsByClassName("show-guide-btn");
         if (showGuideBtn == null) {
             return;
@@ -278,8 +280,73 @@ export default class Guides {
                 let guide = btn.parentNode.parentNode.parentNode;
                 let guide_id = guide.getAttribute('guide_id');
                 let origin = window.location.origin;
-                window.location.replace(`${origin}/details/${guide_id}/show`);
+                let response = true;
+                if (this.scope == 'edition') {
+                    response = await showResource('/guias/' + guide_id);
+                }
+                if (!response) {
+                    window.location.replace(`${origin}/details/${guide_id}/show`);
+                }
+               
             });
         });
-    } 
+    } */ 
+
+
+
+    goToShowGuide() {
+        let showGuideBtn = document.getElementsByClassName("show-guide-btn");
+        if (showGuideBtn == null) {
+            return;
+        }
+
+        const showGuideBtnHandler = (btn) => {
+            btn.addEventListener('click', async () => {
+                let guide = btn.parentNode.parentNode.parentNode;
+                let parent = guide.parentNode;
+                let index = Array.prototype.indexOf.call(parent.children, guide);
+                let guide_id = guide.getAttribute('guide_id');
+                let response = true;
+                let guia = await this.guides[index];
+                
+                if (this.scope == 'creation') {
+
+                    
+                $('#modalDestino').modal('show');
+                
+                
+                document.querySelector('#modalDestino #description').value = guia.description;
+                document.querySelector('#modalDestino #guide_address').value = guia.guide_address;
+                console.log(guide_address);
+                document.querySelector('#modalDestino #email_contact').value = guia.email_contact;
+                document.querySelector('#modalDestino #rate').value = guia.rate;
+                document.querySelector('#modalDestino #take_photo').value = guia.take_photo;
+                document.querySelector('#modalDestino #sign').value = guia.sign;
+                document.querySelector('#modalDestino #same_day_delivery').value = guia.same_day_delivery;
+                document.querySelector('#modalDestino #contact').value = guia.contact;
+                document.querySelector('#modalDestino #value').value = guia.value;
+                document.querySelector('#modalDestino #phone_contact').value = guia.phone_contact;
+                document.querySelector('#modalDestino #corp_value').value = guia.corp_value;
+                document.querySelector('#modalDestino #boxes').value = guia.boxes;
+                document.querySelector('#modalDestino #address_id').value = guia.address_id;
+                
+/*                 console.log(guia.boxes); */
+                
+                
+                
+                
+                }
+                if (!response) {
+                    return;
+                }
+                if (this.scope == 'edition') {
+
+                 this.guides.splice(index, 1);
+                  window.location.replace(`${origin}/details/${guide_id}/show`);
+                }
+            });
+        }
+
+        [].forEach.call(showGuideBtn, (btn) => showGuideBtnHandler(btn));
+    }
 }

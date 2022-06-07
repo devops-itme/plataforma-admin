@@ -103,11 +103,11 @@ function porDespacharPackagingAlert() {
         buttons: {
             delivery: {
                 text: "Entrega!",
-                value: 3,
+                value: 7,
             },
             pickup: {
                 text: "Recogida!",
-                value: 7,
+                value: 3,
             },
             cancel: "Cancelar",
         },

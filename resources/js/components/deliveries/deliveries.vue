@@ -373,8 +373,8 @@ export default {
 
             selected: 56,
             delivery_types: [
-                { value: 56, text: "Entregas" },
-                { value: 57, text: "Recogidas" },
+                { value: 57, text: "Entregas" },
+                { value: 56, text: "Recogidas" },
             ],
             showModal: false,
             columns:{
@@ -425,8 +425,8 @@ export default {
 
             //NAME TABS
             this.tabs[2].name = "CONSULTA Y EDICIÓN";
-            this.selected == 57?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
-            this.selected == 57?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
+            this.selected == 56?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
+            this.selected == 56?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
         },
 
 
