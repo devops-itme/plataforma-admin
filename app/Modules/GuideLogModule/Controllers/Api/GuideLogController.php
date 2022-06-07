@@ -19,4 +19,14 @@ class GuideLogController extends Controller
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
     }
+
+    public function store(Request $request)
+    {
+        try {
+            $GuideLog = new GuideLog();
+            return $GuideLog->saveGuideLog($request);
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
 }
