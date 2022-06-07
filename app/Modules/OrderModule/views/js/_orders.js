@@ -292,11 +292,13 @@ export default class Orders {
                                 accept: "application/json",
                             },
                         }
-                    );
-                    if (req.ok) {
+                    )
+                    .then(response => response.json());
+                    if (req.state == 200) {
                         correct("Estado actualizado!");
-                        window.location.reload();
+                        // window.location.reload();
                     } else {
+                        console.log(req);
                         error("Error al actualizar estado");
                     }
                 }

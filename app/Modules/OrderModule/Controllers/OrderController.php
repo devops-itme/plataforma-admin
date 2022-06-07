@@ -297,18 +297,7 @@ class OrderController extends Controller
     {
         try {
             $Order = new Order();
-
             return $Order->updateStatusMatrix($id, new Request(array('status_matrix_id' => 3)));
-            // $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
-            //     $query->where('name', 'order_types');
-            // })->get();
-
-            // $order = Order::where('id', $id)
-            //     ->where('order_type', $order_type[0]->id)
-            //     ->update([
-            //         'status_matrix_id' => 3
-            //     ]);
-            // return $this->respond(200, [], null, 'Estado actualizado');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }

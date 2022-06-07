@@ -3450,15 +3450,17 @@ var Orders = /*#__PURE__*/function () {
                                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
                                 accept: "application/json"
                               }
+                            }).then(function (response) {
+                              return response.json();
                             });
 
                           case 7:
                             req = _context10.sent;
 
-                            if (req.ok) {
-                              correct("Estado actualizado!");
-                              window.location.reload();
+                            if (req.state == 200) {
+                              correct("Estado actualizado!"); // window.location.reload();
                             } else {
+                              console.log(req);
                               error("Error al actualizar estado");
                             }
 
