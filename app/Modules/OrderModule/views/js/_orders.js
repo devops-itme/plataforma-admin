@@ -340,7 +340,7 @@ export default class Orders {
                     console.log(req);
                     if (req.state == 200) {
                         correct("Estado actualizado!");
-                        // window.location.reload();
+                        window.location.reload();
                     } else {
                         error("Error al actualizar estado");
                     }
