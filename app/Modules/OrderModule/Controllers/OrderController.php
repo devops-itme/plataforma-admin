@@ -327,13 +327,7 @@ class OrderController extends Controller
     // mostrar guía del modal
     public function showModGuide($id)
     {
-        //dd($id);
-<<<<<<< HEAD
         $guide= Guide::find($id);
-=======
-        $guide = Guide::find($id);
-
->>>>>>> 9ad7510aaadb1ea337602dcabe1512cc4254d2c9
         return view($this->path . 'national.showGuide', compact('guide'));
     }
 }
