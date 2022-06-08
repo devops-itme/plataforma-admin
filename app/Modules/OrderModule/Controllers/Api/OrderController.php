@@ -346,7 +346,7 @@ class OrderController extends Controller
             $userToken = $request->fcm_token;
             $data = $request->all();
 
-            return sendCustomNotifications('Notification', 'Estado cambiado', $data, $userToken);
+            return sendCustomNotifications('Multientrega', 'Pasarela de pago', $data, $userToken);
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
