@@ -106,26 +106,25 @@ export default class Orders {
     //////////////////////////////////////
     async sendPushNotification() {
         let state = document.getElementById("state");
+        let total = document.getElementById("total");
         let notification_type = document.getElementById("notification_type");
         let fcm_token = document.getElementById("fcm_token");
         
-        if (state == null || notification_type == null || fcm_token == null) {
+        if (state == null || total == null || notification_type == null || fcm_token == null) {
             return;
         }
         
         state = state.value;
+        total = total.value;
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
-        alert(fcm_token);
-        let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`;
+        let url = `${window.location.origin}/api/sendPushNotification?state=${state}&total=${total}&notification_type=${notification_type}&fcm_token=${fcm_token}`;
         await fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                alert('yes',fcm_token)
                 console.log(data);
             })
             .catch((e) => {
-                alert('no',e)
                 console.log(e);
             });
     }

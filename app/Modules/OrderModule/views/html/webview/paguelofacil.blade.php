@@ -61,6 +61,7 @@
                                 <h5 class="card-title">Transferencia {{ $response['Estado'] }}</h5>
 
                                 <input type="hidden" name="state" id="state" value="{{ $response['Estado'] }}">
+                                <input type="hidden" name="total" id="total" value="{{ $response['total'] }}">
                                 <input type="hidden" name="fcm_token" id="fcm_token" value="{{ $response['fcm_token'] }}">
                                 <input type="hidden" name="notification_type" id="notification_type"
                                     value="payment_notification">
