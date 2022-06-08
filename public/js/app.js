@@ -70712,7 +70712,7 @@ var render = function () {
                     _c("input", {
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "contact_phone", type: "tel" },
-                      domProps: { value: _vm.guide.contact_email },
+                      domProps: { value: _vm.guide.contact_phone },
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "form-text text-muted" }),
@@ -70726,13 +70726,13 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.contact_phone,
-                          expression: "guide.contact_phone",
+                          value: _vm.guide.contact_email,
+                          expression: "guide.contact_email",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "contact_mail", type: "email" },
-                      domProps: { value: _vm.guide.contact_phone },
+                      domProps: { value: _vm.guide.contact_email },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
@@ -70740,7 +70740,7 @@ var render = function () {
                           }
                           _vm.$set(
                             _vm.guide,
-                            "contact_phone",
+                            "contact_email",
                             $event.target.value
                           )
                         },
@@ -70751,30 +70751,27 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Programado (Fecha-Hora): ")]),
+                    _c("label", [_vm._v("Programado (Fecha): ")]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.programming,
-                          expression: "guide.programming",
+                          value: this.showDataGuide.programming,
+                          expression: "this.showDataGuide.programming",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "programming_date",
-                        type: "datetime-local",
-                      },
-                      domProps: { value: _vm.guide.programming },
+                      attrs: { name: "programming_date", type: "date" },
+                      domProps: { value: this.showDataGuide.programming },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.guide,
+                            this.showDataGuide,
                             "programming",
                             $event.target.value
                           )
@@ -71601,19 +71598,27 @@ var render = function () {
                     },
                   },
                   [
-                    _c("td", [_vm._v("Normal")]),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(
+                          tblItem.get_order.order_type == 36
+                            ? "Packaging"
+                            : tblItem.get_order.order_type
+                        )
+                      ),
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Recogido")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_status_matrix.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("18/02/2022")]),
+                    _c("td", [_vm._v(_vm._s("///fecha-evento///"))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("9988383")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.dispatched))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("0084774")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.id))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("17/02/2022")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_order.schedule_date))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("9013")]),
+                    _c("td", [_vm._v(_vm._s("///mensajero///"))]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
@@ -71621,13 +71626,13 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Marta ayega")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_order.get_user.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("5757848")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.contact))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("City:Malambo")]),
+                    _c("td", [_vm._v(_vm._s("///barrio///"))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Calle Siempreviva")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                   ]
                 )
               }),
