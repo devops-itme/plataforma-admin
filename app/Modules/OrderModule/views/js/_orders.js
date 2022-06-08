@@ -121,7 +121,7 @@ export default class Orders {
         await fetch(url)
             .then((response) => response.json())
             .then((data) => {
-                alert('yes',data.message)
+                alert('yes',fcm_token)
                 console.log(data);
             })
             .catch((e) => {
