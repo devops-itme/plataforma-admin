@@ -70712,7 +70712,7 @@ var render = function () {
                     _c("input", {
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "contact_phone", type: "tel" },
-                      domProps: { value: _vm.guide.contact_email },
+                      domProps: { value: _vm.guide.contact_phone },
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "form-text text-muted" }),
@@ -70726,13 +70726,13 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.contact_phone,
-                          expression: "guide.contact_phone",
+                          value: _vm.guide.contact_email,
+                          expression: "guide.contact_email",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "contact_mail", type: "email" },
-                      domProps: { value: _vm.guide.contact_phone },
+                      domProps: { value: _vm.guide.contact_email },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
@@ -70740,7 +70740,7 @@ var render = function () {
                           }
                           _vm.$set(
                             _vm.guide,
-                            "contact_phone",
+                            "contact_email",
                             $event.target.value
                           )
                         },
@@ -70751,30 +70751,27 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Programado (Fecha-Hora): ")]),
+                    _c("label", [_vm._v("Programado (Fecha): ")]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.programming,
-                          expression: "guide.programming",
+                          value: this.showDataGuide.programming,
+                          expression: "this.showDataGuide.programming",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "programming_date",
-                        type: "datetime-local",
-                      },
-                      domProps: { value: _vm.guide.programming },
+                      attrs: { name: "programming_date", type: "date" },
+                      domProps: { value: this.showDataGuide.programming },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.guide,
+                            this.showDataGuide,
                             "programming",
                             $event.target.value
                           )
@@ -90396,8 +90393,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
