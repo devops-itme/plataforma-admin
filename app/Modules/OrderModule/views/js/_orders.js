@@ -102,7 +102,7 @@ export default class Orders {
 
 
 
-    /////////////////////////////////////
+    //////////////////////////////////////
 
     async sendPushNotification() {
         let state = document.getElementById("state");
@@ -112,11 +112,11 @@ export default class Orders {
         if (state == null || notification_type == null || fcm_token == null) {
             return;
         }
-
+        alert(115)
         state = state.value;
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
-
+        alert(119)
         let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`;
         await fetch(url)
             .then((response) => response.json())
@@ -126,6 +126,7 @@ export default class Orders {
             .catch((e) => {
                 console.log(e);
             });
+            alert(129)
     }
 
 

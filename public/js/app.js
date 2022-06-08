@@ -3157,7 +3157,7 @@ var Orders = /*#__PURE__*/function () {
           }
         }, _callee3);
       })));
-    } /////////////////////////////////////
+    } //////////////////////////////////////
 
   }, {
     key: "sendPushNotification",
@@ -3180,11 +3180,13 @@ var Orders = /*#__PURE__*/function () {
                 return _context4.abrupt("return");
 
               case 5:
+                alert(115);
                 state = state.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
+                alert(119);
                 url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context4.next = 11;
+                _context4.next = 13;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3193,7 +3195,10 @@ var Orders = /*#__PURE__*/function () {
                   console.log(e);
                 });
 
-              case 11:
+              case 13:
+                alert(129);
+
+              case 14:
               case "end":
                 return _context4.stop();
             }

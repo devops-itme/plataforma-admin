@@ -343,7 +343,7 @@ class OrderController extends Controller
     public function sendPushNotification(Request $request)
     {
         try {
-            $userToken = $request->fcm_token ?? 'fq96_KAlSoO0H1Jv52DaBY:APA91bFevvzNsyomaa6hRCmfq-T2DGPbmqmGAPKlFuTESdClheg4tPXpSHv4nvFYQECAWzpA3xF8I9qAHmDa44oQ7aGY-iI_MLB-mORazXZDsnWV1_ACtTPNEfh5UB4KNi-ZAMblPjXi';
+            $userToken = $request->fcm_token;
             $data = $request->all();
 
             return sendCustomNotifications('Notification', 'Estado cambiado', $data, $userToken);
