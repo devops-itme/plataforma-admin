@@ -87,6 +87,7 @@ class OrderController extends Controller
 
         $zones = Zone::get();
         $rates = Rate::get();
+        /* dd($rates); */
         $customer_addresses = [];
         $tax_percentage = 7;
         return view($this->path . 'national.create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses', 'tax_percentage'));
@@ -328,6 +329,7 @@ class OrderController extends Controller
     public function showModGuide($id)
     {
         $guide = Guide::find($id);
+        
         return view($this->path . 'national.showGuide', compact('guide'));
     }
 }

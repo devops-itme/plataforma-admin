@@ -144,6 +144,10 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 }
             }
         }
+
+        if(!isset($vector)){
+           $vector=null;
+        }
         return collect($vector);
         // return $guides;
     }

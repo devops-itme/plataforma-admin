@@ -290,13 +290,13 @@ class OrderController extends Controller
 
     public function webviewPagueloFacil(Request $request)
     {
-
         $host = $request->getHost();
-        $fcm_token = $request->fcm_token ??  Auth::user()->fcm_token;
+        $fcm_token = $request->fcm_token;
         $order_id = $request->order_id;
+        $order = Order::find($order_id);
         $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=" . $fcm_token . "&order_id=" . $order_id;
         $cclw = env('PAGUELOFACIL_CCLW');
-        $amount = (float) $request->totalValue;
+        $amount = (float) $order->order_value;
         $description = 'Pago orden multientrega';
         $data = array(
             "CCLW" => $cclw,
@@ -323,8 +323,7 @@ class OrderController extends Controller
         ])->post(env('PAGUELOFACIL_URL') . $postR);
         $response = $sendOrder->json();
 
-        $total = $request->totalValue;
-
+        $total = $order->order_value;
 
         return view('OrderModule.views.html.webview.paguelofacil', compact('response', 'total'));
     }
@@ -336,6 +335,7 @@ class OrderController extends Controller
             $order = Order::find($request->order_id);
             $order->update(['paid' => 1]);
         }
+        $response['order_id'] = $request->order_id;
         $response['fcm_token'] = $response['fcm_token'] ?? Auth::user()->fcm_token;
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
@@ -343,10 +343,10 @@ class OrderController extends Controller
     public function sendPushNotification(Request $request)
     {
         try {
-            $userToken = $request->fcm_token ?? 'fq96_KAlSoO0H1Jv52DaBY:APA91bFevvzNsyomaa6hRCmfq-T2DGPbmqmGAPKlFuTESdClheg4tPXpSHv4nvFYQECAWzpA3xF8I9qAHmDa44oQ7aGY-iI_MLB-mORazXZDsnWV1_ACtTPNEfh5UB4KNi-ZAMblPjXi';
+            $userToken = $request->fcm_token;
             $data = $request->all();
 
-            return sendCustomNotifications('Notification', 'Estado cambiado', $data, $userToken);
+            return sendCustomNotifications('Multientrega', 'Pasarela de pago', $data, $userToken);
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
