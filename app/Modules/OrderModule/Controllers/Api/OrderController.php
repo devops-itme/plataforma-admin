@@ -336,17 +336,17 @@ class OrderController extends Controller
             $order = Order::find($request->order_id);
             $order->update(['paid' => 1]);
         }
-        // $response['fcm_token'] = Auth::user()->fcm_token;
+        $response['fcm_token'] = $response['fcm_token'] ?? Auth::user()->fcm_token;
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
 
     public function sendPushNotification(Request $request)
     {
         try {
-            $userToken = $request->fcm_token ?? 'cIf9y81ERbKO8AIc6YVgIv:APA91bEl-srTK43xGrQZCyfh3G2GFH62jNNnH48vQf6UaqJWNNxgkz-GvYCiXAADKEy-mmG5-vxeZtM7m8sMgbVg_oNjnHmqoy3mYW5y3FCvAf2vwWgLx1N6F9LGFgtuDjeLPHmPeaJS';
+            $userToken = $request->fcm_token;
             $data = $request->all();
 
-            return sendCustomNotifications('Notification', 'Estado cambiado', $data, $userToken);
+            return sendCustomNotifications('Multientrega', 'Pasarela de pago', $data, $userToken);
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }

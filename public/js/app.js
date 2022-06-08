@@ -3037,24 +3037,26 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                this.sendPushNotification();
+
                 if (!this.pathname.includes('edit')) {
-                  _context.next = 7;
+                  _context.next = 8;
                   break;
                 }
 
                 regex = /(\d+)/g;
                 order_id = this.pathname.match(regex);
-                _context.next = 5;
+                _context.next = 6;
                 return Object(_request_requestGetOrder_js__WEBPACK_IMPORTED_MODULE_6__["requestGetOrder"])(order_id);
 
-              case 5:
+              case 6:
                 response = _context.sent;
 
                 if (response.state == 200) {
                   this.order = response.data;
                 }
 
-              case 7:
+              case 8:
                 this.porDespacharOndemand();
                 this.porDespacharPackaging();
                 this.loadCustomer();
@@ -3064,7 +3066,6 @@ var Orders = /*#__PURE__*/function () {
                 this.customerAddresses();
                 this.loadPickupHours();
                 this.loadHoursInEditOrShow();
-                this.sendPushNotification();
                 Object(_importModal__WEBPACK_IMPORTED_MODULE_7__["importModal"])();
 
               case 18:
@@ -3156,7 +3157,7 @@ var Orders = /*#__PURE__*/function () {
           }
         }, _callee3);
       })));
-    } /////////////////////////////////////
+    } //////////////////////////////////////
 
   }, {
     key: "sendPushNotification",
@@ -3167,23 +3168,27 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
+                alert(109);
                 state = document.getElementById("state");
                 notification_type = document.getElementById("notification_type");
                 fcm_token = document.getElementById("fcm_token");
+                alert(113);
 
                 if (!(state == null || notification_type == null || fcm_token == null)) {
-                  _context4.next = 5;
+                  _context4.next = 7;
                   break;
                 }
 
                 return _context4.abrupt("return");
 
-              case 5:
+              case 7:
+                alert(118);
                 state = state.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
+                alert(122);
                 url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context4.next = 11;
+                _context4.next = 15;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -3192,7 +3197,10 @@ var Orders = /*#__PURE__*/function () {
                   console.log(e);
                 });
 
-              case 11:
+              case 15:
+                alert(132);
+
+              case 16:
               case "end":
                 return _context4.stop();
             }
@@ -70711,7 +70719,7 @@ var render = function () {
                     _c("input", {
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "contact_phone", type: "tel" },
-                      domProps: { value: _vm.guide.contact_email },
+                      domProps: { value: _vm.guide.contact_phone },
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "form-text text-muted" }),
@@ -70725,13 +70733,13 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.contact_phone,
-                          expression: "guide.contact_phone",
+                          value: _vm.guide.contact_email,
+                          expression: "guide.contact_email",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "contact_mail", type: "email" },
-                      domProps: { value: _vm.guide.contact_phone },
+                      domProps: { value: _vm.guide.contact_email },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
@@ -70739,7 +70747,7 @@ var render = function () {
                           }
                           _vm.$set(
                             _vm.guide,
-                            "contact_phone",
+                            "contact_email",
                             $event.target.value
                           )
                         },
@@ -70750,30 +70758,27 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-4" }, [
-                    _c("label", [_vm._v("Programado (Fecha-Hora): ")]),
+                    _c("label", [_vm._v("Programado (Fecha): ")]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.programming,
-                          expression: "guide.programming",
+                          value: this.showDataGuide.programming,
+                          expression: "this.showDataGuide.programming",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
-                      attrs: {
-                        name: "programming_date",
-                        type: "datetime-local",
-                      },
-                      domProps: { value: _vm.guide.programming },
+                      attrs: { name: "programming_date", type: "date" },
+                      domProps: { value: this.showDataGuide.programming },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.guide,
+                            this.showDataGuide,
                             "programming",
                             $event.target.value
                           )
@@ -71600,19 +71605,35 @@ var render = function () {
                     },
                   },
                   [
-                    _c("td", [_vm._v("Normal")]),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(
+                          tblItem.get_order.order_type == 36
+                            ? "Packaging"
+                            : tblItem.get_order.order_type
+                        )
+                      ),
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Recogido")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_status_matrix.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("18/02/2022")]),
+                    _c("td", [_vm._v(_vm._s(""))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("9988383")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.dispatched))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("0084774")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.id))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("17/02/2022")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_order.schedule_date))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("9013")]),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(
+                          tblItem.get_route.get_messenger.name +
+                            " " +
+                            tblItem.get_route.get_messenger.last_name
+                        )
+                      ),
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
@@ -71620,13 +71641,13 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Marta ayega")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_order.get_user.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("5757848")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.contact))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("City:Malambo")]),
+                    _c("td", [_vm._v(_vm._s(""))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Calle Siempreviva")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                   ]
                 )
               }),

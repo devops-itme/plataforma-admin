@@ -29,18 +29,18 @@
                         v-bind:key="tblItem.id"
                         @click="rowClick(tblItem, index)"
                         class="text-center">
-                        <td>Normal</td>
-                        <td>Recogido</td>
-                        <td>18/02/2022</td>
-                        <td>9988383</td>
-                        <td>0084774</td>
-                        <td>17/02/2022</td>
-                        <td>9013</td>
+                        <td>{{tblItem.get_order.order_type == 36 ? 'Packaging': tblItem.get_order.order_type}}</td>
+                        <td>{{tblItem.get_status_matrix.name}}</td>  
+                        <td>{{''}}</td>
+                        <td>{{tblItem.dispatched}}</td>
+                        <td>{{tblItem.id}}</td>
+                        <td>{{tblItem.get_order.schedule_date}}</td> 
+                        <td>{{tblItem.get_route.get_messenger.name +' '+ tblItem.get_route.get_messenger.last_name}}</td>
                         <td>{{tblItem.app_status == 0 ? 'Pendiente' : 'Leido'}}</td>
-                        <td>Marta ayega</td>
-                        <td>5757848</td>
-                        <td>City:Malambo</td>
-                        <td>Calle Siempreviva</td>
+                        <td>{{tblItem.get_order.get_user.name}}</td>
+                        <td>{{tblItem.contact}}</td>
+                        <td>{{''}}</td>
+                        <td>{{tblItem.address_name}}</td>
                     </tr>
                 </tbody>
             </table>
