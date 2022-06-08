@@ -71613,7 +71613,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.get_status_matrix.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s("///fecha-evento///"))]),
+                    _c("td", [_vm._v(_vm._s(""))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.dispatched))]),
                     _vm._v(" "),
@@ -71621,7 +71621,15 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.get_order.schedule_date))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s("///mensajero///"))]),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(
+                          tblItem.get_route.get_messenger.name +
+                            " " +
+                            tblItem.get_route.get_messenger.last_name
+                        )
+                      ),
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
@@ -71633,7 +71641,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.contact))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s("///barrio///"))]),
+                    _c("td", [_vm._v(_vm._s(""))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                   ]
