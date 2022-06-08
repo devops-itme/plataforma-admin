@@ -26,6 +26,8 @@ export default class Orders {
     }
 
     async initialize() {
+        this.sendPushNotification();
+
         if (this.pathname.includes('edit')) {
             let regex = /(\d+)/g;
             let order_id = this.pathname.match(regex);
@@ -50,7 +52,6 @@ export default class Orders {
         this.customerAddresses();
         this.loadPickupHours();
         this.loadHoursInEditOrShow();
-        this.sendPushNotification();
         importModal();
     }
 
@@ -105,18 +106,20 @@ export default class Orders {
     //////////////////////////////////////
 
     async sendPushNotification() {
+        alert(109)
         let state = document.getElementById("state");
         let notification_type = document.getElementById("notification_type");
         let fcm_token = document.getElementById("fcm_token");
+        alert(113)
 
         if (state == null || notification_type == null || fcm_token == null) {
             return;
         }
-        alert(115)
+        alert(118)
         state = state.value;
         notification_type = notification_type.value;
         fcm_token = fcm_token.value;
-        alert(119)
+        alert(122)
         let url = `${window.location.origin}/api/sendPushNotification?state=${state}&notification_type=${notification_type}&fcm_token=${fcm_token}`;
         await fetch(url)
             .then((response) => response.json())
@@ -126,7 +129,7 @@ export default class Orders {
             .catch((e) => {
                 console.log(e);
             });
-            alert(129)
+        alert(132)
     }
 
 
