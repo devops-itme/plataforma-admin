@@ -306,17 +306,17 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Contacto Teléfono: </label>
-                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-bind:value="guide.contact_email"  />
+                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-bind:value=" guide.contact_phone "  />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
                     <label>Contacto email: </label>
-                    <input name="contact_mail" type="email" class="form-control form-control-solid" v-model="guide.contact_phone" />
+                    <input name="contact_mail" type="email" class="form-control form-control-solid" v-model="guide.contact_email" />
                     <span class="form-text text-muted"></span>
                 </div>
                  <div class="form-group col-md-4">
-                    <label>Programado (Fecha-Hora): </label>
-                    <input name="programming_date" type="datetime-local"  v-model="guide.programming" class="form-control form-control-solid" />
+                    <label>Programado (Fecha): </label>
+                    <input name="programming_date" type="date"  v-model="this.showDataGuide.programming" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">

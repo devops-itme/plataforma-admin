@@ -327,8 +327,6 @@ class OrderController extends Controller
     // mostrar guía del modal
     public function showModGuide($id)
     {
-        //dd($id);
-
         $guide = Guide::find($id);
         return view($this->path . 'national.showGuide', compact('guide'));
     }
