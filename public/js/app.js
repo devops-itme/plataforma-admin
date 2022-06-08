@@ -3168,39 +3168,35 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                alert(109);
                 state = document.getElementById("state");
                 notification_type = document.getElementById("notification_type");
                 fcm_token = document.getElementById("fcm_token");
-                alert(113);
 
                 if (!(state == null || notification_type == null || fcm_token == null)) {
-                  _context4.next = 7;
+                  _context4.next = 5;
                   break;
                 }
 
                 return _context4.abrupt("return");
 
-              case 7:
-                alert(118);
+              case 5:
                 state = state.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
-                alert(122);
+                alert(fcm_token);
                 url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context4.next = 15;
+                _context4.next = 12;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
+                  alert('yes', fcm_token);
                   console.log(data);
                 })["catch"](function (e) {
+                  alert('no', e);
                   console.log(e);
                 });
 
-              case 15:
-                alert(132);
-
-              case 16:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -90408,8 +90404,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
