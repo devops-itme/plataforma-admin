@@ -9634,7 +9634,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.searchMessenger) {
         return this.messengers.filter(function (item) {
           return _this2.searchMessenger.toString().toLowerCase().split(" ").every(function (v) {
-            return item.user.document_number.toLowerCase().includes(v);
+            return item.user.document_number.toLowerCase().includes(v) || item.user.name.toLowerCase().includes(v);
           });
         });
       }
@@ -90401,8 +90401,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
