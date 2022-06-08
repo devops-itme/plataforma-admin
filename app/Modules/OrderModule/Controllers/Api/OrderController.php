@@ -331,11 +331,11 @@ class OrderController extends Controller
     public function responseViewPagueloFacil(Request $request)
     {
         $response = $request->all();
-        $order = Order::find($request->order_id);
         if ($response['Estado'] != 'Denegada') {
+            $order = Order::find($request->order_id);
             $order->update(['paid' => 1]);
         }
-        $response['total'] = $order->order_value;
+        $response['order_id'] = $request->order_id;
         $response['fcm_token'] = $response['fcm_token'] ?? Auth::user()->fcm_token;
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
