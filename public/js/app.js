@@ -3163,40 +3163,39 @@ var Orders = /*#__PURE__*/function () {
     key: "sendPushNotification",
     value: function () {
       var _sendPushNotification = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var state, notification_type, fcm_token, url;
+        var state, order_id, notification_type, fcm_token, url;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 state = document.getElementById("state");
+                order_id = document.getElementById("order_id");
                 notification_type = document.getElementById("notification_type");
                 fcm_token = document.getElementById("fcm_token");
 
-                if (!(state == null || notification_type == null || fcm_token == null)) {
-                  _context4.next = 5;
+                if (!(state == null || order_id == null || notification_type == null || fcm_token == null)) {
+                  _context4.next = 6;
                   break;
                 }
 
                 return _context4.abrupt("return");
 
-              case 5:
+              case 6:
                 state = state.value;
+                order_id = order_id.value;
                 notification_type = notification_type.value;
                 fcm_token = fcm_token.value;
-                alert(fcm_token);
-                url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
-                _context4.next = 12;
+                url = "".concat(window.location.origin, "/api/sendPushNotification?state=").concat(state, "&order_id=").concat(order_id, "&notification_type=").concat(notification_type, "&fcm_token=").concat(fcm_token);
+                _context4.next = 13;
                 return fetch(url).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  alert('yes', fcm_token);
                   console.log(data);
                 })["catch"](function (e) {
-                  alert('no', e);
                   console.log(e);
                 });
 
-              case 12:
+              case 13:
               case "end":
                 return _context4.stop();
             }

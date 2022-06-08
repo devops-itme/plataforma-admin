@@ -55,12 +55,13 @@
                     <div class="card-body">
                         @if (!is_null($response ?? null))
                             @if (!is_null($total ?? null))
-                                <h5 class="card-title">Total a pagar: US${{ $total }} {{ $response['data'] }}</h5>
+                                <h5 class="card-title">Total a pagar: US${{ $total }}</h5>
                             @endif
                             @if (!is_null($response['Estado'] ?? null))
                                 <h5 class="card-title">Transferencia {{ $response['Estado'] }}</h5>
 
                                 <input type="hidden" name="state" id="state" value="{{ $response['Estado'] }}">
+                                <input type="hidden" name="order_id" id="order_id" value="{{ $response['order_id'] }}">
                                 <input type="hidden" name="fcm_token" id="fcm_token" value="{{ $response['fcm_token'] }}">
                                 <input type="hidden" name="notification_type" id="notification_type"
                                     value="payment_notification">

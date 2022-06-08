@@ -290,13 +290,13 @@ class OrderController extends Controller
 
     public function webviewPagueloFacil(Request $request)
     {
-        sendCustomNotifications('test', 'test', $request->all(), $request->fcm_token);
         $host = $request->getHost();
-        $fcm_token = $request->fcm_token ??  Auth::user()->fcm_token;
+        $fcm_token = $request->fcm_token;
         $order_id = $request->order_id;
+        $order = Order::find($order_id);
         $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=" . $fcm_token . "&order_id=" . $order_id;
         $cclw = env('PAGUELOFACIL_CCLW');
-        $amount = (float) $request->totalValue;
+        $amount = (float) $order->order_value;
         $description = 'Pago orden multientrega';
         $data = array(
             "CCLW" => $cclw,
@@ -323,20 +323,19 @@ class OrderController extends Controller
         ])->post(env('PAGUELOFACIL_URL') . $postR);
         $response = $sendOrder->json();
 
-        $total = $request->totalValue;
-
+        $total = $order->order_value;
 
         return view('OrderModule.views.html.webview.paguelofacil', compact('response', 'total'));
     }
 
     public function responseViewPagueloFacil(Request $request)
     {
-        sendCustomNotifications('test', 'test', $request->all(), $request->fcm_token);
         $response = $request->all();
         if ($response['Estado'] != 'Denegada') {
             $order = Order::find($request->order_id);
             $order->update(['paid' => 1]);
         }
+        $response['order_id'] = $request->order_id;
         $response['fcm_token'] = $response['fcm_token'] ?? Auth::user()->fcm_token;
         return view('OrderModule.views.html.webview.paguelofacil', compact('response'));
     }
