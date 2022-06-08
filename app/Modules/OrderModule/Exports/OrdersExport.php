@@ -8,18 +8,12 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use App\Modules\GuideModule\Guide;
-use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use Maatwebsite\Excel\Concerns\FromArray;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use Illuminate\Support\Facades\DB;
-
-
 
 
 
@@ -28,16 +22,13 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     /**
      * @return \Illuminate\Support\Collection
      */
-    
-     
-    
-     
+
     public function map($guide): array
     {
         return [
             $guide->external_id,
             $guide->pre_guide,
-            $guide->created_at,            
+            $guide->created_at,
             $guide->branch_office,
             $guide->invoice_contact,
             $guide->recipient_name,
@@ -92,8 +83,8 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         ];
     }
 
-    public function collection() 
-    {        
+    public function collection()
+    {
 
         $guides = Guide::select(
             'external_id',
@@ -118,7 +109,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             'description',
             'novelty',
             'delivery_office',
-        )         
+        )
             ->where('external_id', '<>', null)
             ->where('country', '<>', 'PAN')
             ->date(request()->from, request()->to)
@@ -126,32 +117,45 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
 
         foreach ($guides as $guide) {
             $order1 = json_decode($guide);
-            // dd($order1['created_at']);
             $Tealca = new Tealca();
             $Tealca->login();
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-            // $statuses = json_decode($guideTracking)->tracking;
-            $statuses = $guideTracking['data'][0]['tracking'][0];
-            // dd($statuses);
-            $status   = $guideTracking['data'][0]['tracking'][0]['status'];
+            foreach ($guideTracking['data'] as $elements) {
+                foreach ($elements['tracking'] as $tracking) {
+                    switch ($tracking['status']) {
+                        case 'Creacion':
+                            $order1->Status = 'VERIFICACION';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
+                            break;
 
-            foreach ($statuses as $status) {
-                if ($status ==   'Creacion') {
-                    // $order1->state = $statuses['description'];                   
-                    $v1=$order1->Status = $statuses['status'];
-                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($statuses['date']));
-                    // $order1->description = $statuses['description'];
-                    $vector[] = $order1;
+                        case 'Recepcion desde plataforma':
+                            $order1->Status = 'RECEPTADO A BODEGA';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
+                            break;
+
+                        case 'Recepcion desde tienda':
+                            $order1->Status = 'RECEPCION EN SUCURSAL';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
+                            break;
+
+                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                            $order1->Status = 'DESPACHO A SUCURSAL';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
+                            break;
+                    }
                 }
             }
         }
 
-        if(!isset($vector)){
-           $vector=null;
+        if (!isset($vector)) {
+            $vector = null;
         }
         return collect($vector);
-        //  return $guides;
     }
 
 
@@ -163,8 +167,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     public function columnFormats(): array
     {
         return [
-            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,            
-
+            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 }
