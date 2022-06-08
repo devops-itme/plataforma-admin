@@ -132,6 +132,15 @@
                         <option disabled selected>Seleccione </option>
                     </select>
                 </div>
+                <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
+                <a class="btn" data-tooltip title="Agregar dirección" onclick="submit()" data-username="{{ $order->user_id }}" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
+                    <i class="fad fa-plus-circle text-info"></i>
+                    </span>
+                </a>
+            </div>
+            @include(
+            'OrderModule.views.html.modals.createAddressModal')
+
                {{--  <div class="form-group col-md-3">
                     <label for="district">Tarifa <span class="text-danger">*</span></label>
                     <select name="rate" class="form-control form-control-solid" id="rate">
