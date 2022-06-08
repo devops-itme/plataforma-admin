@@ -2917,11 +2917,10 @@ var Guides = /*#__PURE__*/function () {
 
                   if (_this5.scope == 'creation') {
                     $('#modalDestino').modal('show');
+                    document.querySelector('#modalDestino #address_name').value = guia.address_name;
                     document.querySelector('#modalDestino #description').value = guia.description;
-                    document.querySelector('#modalDestino #guide_address').value = guia.guide_address;
                     console.log(guide_address);
                     document.querySelector('#modalDestino #email_contact').value = guia.email_contact;
-                    document.querySelector('#modalDestino #rate').value = guia.rate;
                     document.querySelector('#modalDestino #take_photo').value = guia.take_photo;
                     document.querySelector('#modalDestino #sign').value = guia.sign;
                     document.querySelector('#modalDestino #same_day_delivery').value = guia.same_day_delivery;
@@ -90404,8 +90403,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

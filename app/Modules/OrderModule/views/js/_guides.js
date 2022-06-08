@@ -314,12 +314,10 @@ export default class Guides {
                     
                 $('#modalDestino').modal('show');
                 
-                
+                document.querySelector('#modalDestino #address_name').value = guia.address_name;
                 document.querySelector('#modalDestino #description').value = guia.description;
-                document.querySelector('#modalDestino #guide_address').value = guia.guide_address;
                 console.log(guide_address);
                 document.querySelector('#modalDestino #email_contact').value = guia.email_contact;
-                document.querySelector('#modalDestino #rate').value = guia.rate;
                 document.querySelector('#modalDestino #take_photo').value = guia.take_photo;
                 document.querySelector('#modalDestino #sign').value = guia.sign;
                 document.querySelector('#modalDestino #same_day_delivery').value = guia.same_day_delivery;
