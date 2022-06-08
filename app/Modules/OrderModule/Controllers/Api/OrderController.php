@@ -326,7 +326,7 @@ class OrderController extends Controller
         $total = $request->totalValue;
 
 
-        return view('OrderModule.views.html.webview.paguelofacil', compact('response', 'total', 'fcm_token'));
+        return view('OrderModule.views.html.webview.paguelofacil', compact('response', 'total'));
     }
 
     public function responseViewPagueloFacil(Request $request)
