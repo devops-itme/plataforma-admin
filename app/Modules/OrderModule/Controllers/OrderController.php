@@ -101,11 +101,30 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+/*         $request->validate([
+            'address_id' => 'required|numeric|exists:addresses,id',
+            'guides' => 'required',
+            'vehicle_type_id' => 'required',
+            'order_type' => 'required',
+            'user_id' => 'required',
+            'schedule_date' => 'required',
+            'schedule_time_range' => 'required', 
+        ]); */
         $validator = Validator::make(
             $request->all(),
             [
                 'address_id' => 'required|numeric|exists:addresses,id',
-                'guides' => 'required'
+                'guides' => 'required',
+                'vehicle_type_id' => 'required',
+                'order_type' => 'required',
+                'user_id' => 'required',
+                'schedule_date' => 'required',
+                'schedule_time_range' => 'required',
+                'guide_address' => 'required',
+                'phone_contact' => 'required',
+                'contact' => 'required',
+                'guide_description' => 'required'
+
             ]
         );
 

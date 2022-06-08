@@ -76,7 +76,12 @@
                 <div class="form-group col-md-3">
                     <label>Fecha de programación: <span class="text-danger">*</span></label>
                     <input name="schedule_date" id="schedule_date" type="date" class="form-control form-control-solid"
-                        placeholder="" />
+                        placeholder="" required/>
+{{--                         @error('schedule_date')
+                        <small>
+                            <strong>{{ $message }}</strong>
+                        </small>
+                    @enderror --}}
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-3">
@@ -88,8 +93,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="description">Descripción <span class="text-danger">*</span></label>
-                    <textarea name="order_description" cols="10" rows="2"
-                        class="form-control form-control-solid">{{ $order->description }}</textarea>
+                    <textarea name="order_description" cols="10" rows="2" class="form-control form-control-solid">{{ $order->description }}</textarea>
                 </div>
 
 
@@ -133,15 +137,16 @@
                     </select>
                 </div>
                 <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
-                <a class="btn" data-tooltip title="Agregar dirección" onclick="submit()" data-username="{{ $order->user_id }}" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
-                    <i class="fad fa-plus-circle text-info"></i>
-                    </span>
-                </a>
-            </div>
-            @include(
-            'OrderModule.views.html.modals.createAddressModal')
+                    <a class="btn" data-tooltip title="Agregar dirección" onclick="submit()"
+                        data-username="{{ $order->user_id }}" data-toggle="modal" data-target="#modalCreateAddress"
+                        data-dismiss="modal">
+                        <i class="fad fa-plus-circle text-info"></i>
+                        </span>
+                    </a>
+                </div>
+                @include('OrderModule.views.html.modals.createAddressModal')
 
-               {{--  <div class="form-group col-md-3">
+                {{-- <div class="form-group col-md-3">
                     <label for="district">Tarifa <span class="text-danger">*</span></label>
                     <select name="rate" class="form-control form-control-solid" id="rate">
                         <option selected disabled value="">Seleccione Tarifa</option>
@@ -170,7 +175,7 @@
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-3 pt-2">
-                    <label>Teléfono contacto </label>
+                    <label>Teléfono contacto <span class="text-danger"> *</span></label>
                     <input name="phone_contact" type="tel" id="phone_contact" class="form-control form-control-solid"
                         placeholder="" />
                     <span class="form-text text-muted"></span>
@@ -202,8 +207,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="description">Descripción <span class="text-danger">*</span></label>
-                    <textarea name="guide_description" id="guide_description" cols="10" rows="2"
-                        class="form-control form-control-solid">{{ $order->description }}</textarea>
+                    <textarea name="guide_description" id="guide_description" cols="10" rows="2" class="form-control form-control-solid">{{ $order->description }}</textarea>
                 </div>
                 @include('OrderModule.views.html.national.guideContentTab')
             </div>
