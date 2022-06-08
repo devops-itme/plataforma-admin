@@ -164,17 +164,34 @@
                <div class="card-body">
                <hr>
                    <div class="table-responsive" style="overflow: auto;">
-                        <table class="table align-items-center text-center table-flush  table-hover"   >
-                            <thead style="position:relative; right:150px;">
+                        <table class="table align-items-center text-center table-flush  table-hover" >
+                            <thead>
                                 <tr>
                                     <th scope="col">Fecha - Hora</th>
-                                    <th scope="col">Estado</th>
+                                    <th style="position: relative; left:-14.1em;" scope="col">Estado</th>
                                 </tr>
                             </thead>
-                            <tbody style="position:relative; right:150px;">
+                            <tbody>
                                     <tr>
-                                        <td>{{$info['date']}}</td>
-                                        <th class="badge badge-pill badge-success">{{$info['status']}}</th>
+                                        <td>{{ date('Y-m-d h:i:s', strtotime($info['date'])) }}</td>
+                                        <td style="padding: 0 70% 0 0">
+                                                @switch($info['status'])
+                                                    @case('Creacion')
+                                                        <span class="badge badge-pill badge-success">VERIFICACION</span>
+                                                        @break
+                                                    @case('Recepcion desde plataforma')
+                                                        <span class="badge badge-pill badge-success">RECEPTADO EN BODEGA</span>
+                                                        @break
+                                                    @case('Recepcion desde tienda')
+                                                        <span class="badge badge-pill badge-success">RECEPCION EN SUCURSAL</span>
+                                                        @break
+                                                    @case('Despacho a tienda (tienda destino para entrega al cliente)')
+                                                        <span class="badge badge-pill badge-success">DESPACHO A SUCURSAL</span>
+                                                        @break
+                                                    @default
+                                                        <span class="badge badge-pill badge-success">{{$info['status']}}</span>
+                                                @endswitch
+                                            </td>
                                     </tr>
                             </tbody>
                         </table>
@@ -188,7 +205,6 @@
     </div>
 
 @endsection
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
