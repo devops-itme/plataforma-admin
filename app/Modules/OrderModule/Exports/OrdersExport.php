@@ -17,6 +17,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\FromArray;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -97,7 +98,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         $guides = Guide::select(
             'external_id',
             'pre_guide',
-            'created_at',
+            DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d %H:%i:%s") as formatted_dob'),
             'branch_office', //Origen
             'invoice_contact',
             'recipient_name',
@@ -125,6 +126,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
 
         foreach ($guides as $guide) {
             $order1 = json_decode($guide);
+            // dd($order1['created_at']);
             $Tealca = new Tealca();
             $Tealca->login();
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
@@ -149,7 +151,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
            $vector=null;
         }
         return collect($vector);
-        // return $guides;
+        //  return $guides;
     }
 
 

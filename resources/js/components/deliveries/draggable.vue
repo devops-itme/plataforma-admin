@@ -206,7 +206,7 @@ export default {
                         .toLowerCase()
                         .split(" ")
                         .every((v) =>
-                            item.user.document_number.toLowerCase().includes(v)
+                            item.user.document_number.toLowerCase().includes(v) || item.user.name.toLowerCase().includes(v)
                         );
                 });
             }
