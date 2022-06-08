@@ -292,7 +292,7 @@ class OrderController extends Controller
     {
         sendCustomNotifications('test', 'test', $request->all(), $request->fcm_token);
         $host = $request->getHost();
-        $fcm_token = $request->fcm_token ??  Auth::user()->fcm_token;
+        $fcm_token = $request->fcm_token;
         $order_id = $request->order_id;
         $confirmationUrl = "http://" . $host . "/api/order/webview/paguelo-facil/response?fcm_token=" . $fcm_token . "&order_id=" . $order_id;
         $cclw = env('PAGUELOFACIL_CCLW');
@@ -326,7 +326,7 @@ class OrderController extends Controller
         $total = $request->totalValue;
 
 
-        return view('OrderModule.views.html.webview.paguelofacil', compact('response', 'total'));
+        return view('OrderModule.views.html.webview.paguelofacil', compact('response', 'total', 'fcm_token'));
     }
 
     public function responseViewPagueloFacil(Request $request)
