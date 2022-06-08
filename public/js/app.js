@@ -71601,19 +71601,27 @@ var render = function () {
                     },
                   },
                   [
-                    _c("td", [_vm._v("Normal")]),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(
+                          tblItem.get_order.order_type == 36
+                            ? "Packaging"
+                            : tblItem.get_order.order_type
+                        )
+                      ),
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Recogido")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_status_matrix.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("18/02/2022")]),
+                    _c("td", [_vm._v(_vm._s("///fecha-evento///"))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("9988383")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.dispatched))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("0084774")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.id))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("17/02/2022")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_order.schedule_date))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("9013")]),
+                    _c("td", [_vm._v(_vm._s("///mensajero///"))]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
@@ -71621,13 +71629,13 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Marta ayega")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.get_order.get_user.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("5757848")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.contact))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("City:Malambo")]),
+                    _c("td", [_vm._v(_vm._s("///barrio///"))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v("Calle Siempreviva")]),
+                    _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                   ]
                 )
               }),
@@ -90388,8 +90396,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
