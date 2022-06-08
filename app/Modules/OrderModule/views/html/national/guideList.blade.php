@@ -10,7 +10,7 @@
                 <th scope="col">Contacto</th>
                 <th scope="col">Teléfono</th>
                 <th scope="col">Correo</th>
-                <th scope="col">Tarifa</th>
+                {{-- <th scope="col">Tarifa</th> --}}
                 <th scope="col">
                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                         {{-- <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal"
