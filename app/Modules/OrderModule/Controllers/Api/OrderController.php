@@ -290,7 +290,6 @@ class OrderController extends Controller
 
     public function webviewPagueloFacil(Request $request)
     {
-        sendCustomNotifications('test', 'test', $request->all(), $request->fcm_token);
         $host = $request->getHost();
         $fcm_token = $request->fcm_token;
         $order_id = $request->order_id;
@@ -331,7 +330,6 @@ class OrderController extends Controller
 
     public function responseViewPagueloFacil(Request $request)
     {
-        sendCustomNotifications('test', 'test', $request->all(), $request->fcm_token);
         $response = $request->all();
         if ($response['Estado'] != 'Denegada') {
             $order = Order::find($request->order_id);
