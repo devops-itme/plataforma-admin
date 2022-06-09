@@ -135,6 +135,9 @@ class MessengerController extends Controller
 
        $messe = Messenger::find($id);
        $PathToFile = storage_path("app/document_file/".$messe->contract);
-       return response()->download($PathToFile, 'contrato-mensajero.pdf');
+       $ext = pathinfo($PathToFile, PATHINFO_EXTENSION);
+       return response()->download($PathToFile, 'contrato-mensajero.'.$ext);
     }
+   
 }
+
