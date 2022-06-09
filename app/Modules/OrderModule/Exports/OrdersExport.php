@@ -89,7 +89,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         $guides = Guide::select(
             'external_id',
             'pre_guide',
-            DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d %H:%i:%s") as formatted_dob'),
+             DB::raw("DATE_FORMAT(created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),            
             'branch_office', //Origen
             'invoice_contact',
             'recipient_name',
@@ -111,7 +111,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             'delivery_office',
         )
             ->where('external_id', '<>', null)
-            ->where('country', '<>', 'PAN')
+            ->where('country', '<>', 'PAN')            
             ->date(request()->from, request()->to)
             ->get();
 
