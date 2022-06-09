@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
+use Illuminate\Support\Facades\DB;
 
 class Guide extends Model
 {
@@ -187,7 +188,7 @@ class Guide extends Model
     public function scopeDate($query, $from, $to)
     {
         if (!is_null($from) && !is_null($to)) {
-            return $query->whereBetween('created_at', [$from, $to]);
+            return $query->whereBetween(DB::raw('DATE(created_at)'), [$from, $to]);
         }
     }
 
