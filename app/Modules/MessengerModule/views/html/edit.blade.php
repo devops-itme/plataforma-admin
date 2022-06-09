@@ -69,7 +69,7 @@
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Fecha de nacimiento: <span class="text-danger">*</span></label>
+                    <label>Fecha de nacimiento: <span class="text-danger"></span></label>
                     <input name="birth_date" type="date" class="form-control form-control-solid" placeholder=""
                         value="{{ $messenger->birth_date }}" />
                     <span class="form-text text-muted"></span>
@@ -108,9 +108,9 @@
                     </select>
                 </div>
                 <div class="form-group py-3 m-0 col-md-4">
-                    <label>Contrato <span class="text-danger">*</span></label>
+                    <label>Contrato <span class="text-danger"></span></label>
                     <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="file"
-                        name="contract" value="{{ $messenger->contrat }}" />
+                        name="contract" value="{{ $messenger->contract }}" />
                 </div>
                 <div class="form-group py-3 m-0 col-md-4">
                     <label>Contraseña <span class="text-danger">*</span></label>

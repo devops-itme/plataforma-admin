@@ -104,12 +104,15 @@ trait MessengerTrait
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
         }
-
+        //dd($request);
         try {
             if ($request->hasFile('contract')) {
                 $contract = $request->file('contract');
                 $contract_file = time() . '-' . $contract->getClientOriginalName();
                 Storage::disk('local')->putFileAs('document_file', $contract, $contract_file );
+            }else{
+                $data =  Messenger::find($id);
+                $contract_file = $data->contract;
             }
             
             //if (!empty($contract_file)) {
