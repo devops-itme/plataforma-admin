@@ -27,7 +27,7 @@
                             @foreach ($customers as $customer)
                                 <option {{ $order->user_id == $customer->getUser->id ? 'selected ' : '' }}
                                     value="{{ $customer->getUser->id }}">
-                                    {{ $customer->tradename }}
+                                    {{ $customer->getUser->name . ' ' . $customer->getUser->last_name }}
                                 </option>
                             @endforeach
                         </select>
@@ -90,12 +90,13 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label>Hora de programación: <span class="text-danger">*</span></label>
-                    <select name="schedule_time_range" class="form-control form-control-solid" id="schedule_time_range">
-                        <option value="" disabled selected>Seleccione </option>
-                    </select>
-                    <span class="form-text text-muted"></span>
-                </div>
+                <label>Hora de programación: <span class="text-danger">*</span></label>
+                <select name="schedule_time_range" class="form-control form-control-solid" id="schedule_time_range">
+                    <option disabled>Seleccione </option>
+                    <option value="{{$order->schedule_time_range}}" selected>{{$order->schedule_time_range}}</option>
+                </select>
+                <span class="form-text text-muted"></span>
+            </div>
 
                 <div class="form-group col-md-6">
                     <label for="description">Descripción <span class="text-danger">*</span></label>
