@@ -162,7 +162,7 @@ return [
         'address' => 'dirección', 
         'address_id' => 'dirección',        
         'document_type' => 'tipo de documento',
-        'document_number' => 'número de documento',
+        'document_number' => 'número de identificación',
         'client_type' => 'tipo de cliente',
         'start_date' => 'fecha inicial',
         'end_date' => 'fecha final',
