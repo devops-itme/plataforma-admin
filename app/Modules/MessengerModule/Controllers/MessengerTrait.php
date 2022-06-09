@@ -104,19 +104,36 @@ trait MessengerTrait
         if ($validator->fails()) {
             return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
         }
-
+        //dd($request);
         try {
             if ($request->hasFile('contract')) {
                 $contract = $request->file('contract');
                 $contract_file = time() . '-' . $contract->getClientOriginalName();
-                // \Storage::disk('local')->put($document_file,  \File::get($contract));
+                Storage::disk('local')->putFileAs('document_file', $contract, $contract_file );
+            }else{
+                $data =  Messenger::find($id);
+                $contract_file = $data->contract;
             }
-            if (!empty($contract_file)) {
-                $request->contract = $contract_file;
-            }
+            
+            //if (!empty($contract_file)) {
+               
+             //   $request->contract = $contract_file;
+           // }
+            
 
             $messenger = Messenger::find($id);
-            $messenger->update($request->all());
+            //dd($request->contract);
+            $messenger->update([
+                'vehicle_plate' => $request->vehicle_plate ?? $messenger->vehicle_plate,
+                'admission_date' => $request->admission_date ?? $messenger->admission_date,
+                'production_percentage' => $request->production_percentage ?? $messenger->production_percentage,
+                'exclusive' => $request->exclusive ?? $messenger->exclusive,
+                'birth_date' => $request->birth_date ?? $messenger->birth_date,
+                'contract' => $contract_file ?? $messenger-> $contract_file,
+                'contract_type_id' => $request->contract_type_id ?? $messenger-> contract_type_id
+            ]);
+            //$messenger->update($request->all());
+            //dd($messenger);
 
             $updateUser = $this->updateUser($request->merge(['user_id' => $messenger->user_id]), $id);
             if ($updateUser['state'] == 500) {
