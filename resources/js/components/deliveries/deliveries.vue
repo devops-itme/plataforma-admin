@@ -184,6 +184,10 @@
                         <div class="font-weight-bolder mb-1">Novedades:</div>
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.novelty ? showDataGuide.novelty : 'No registra' "></div>
                     </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Incidencias:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="'No registra' "></div>
+                    </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>

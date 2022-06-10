@@ -8450,6 +8450,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -70163,6 +70167,19 @@ var render = function () {
                       })
                     : _vm._e(),
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Incidencias:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: { textContent: _vm._s("No registra") },
+                      })
+                    : _vm._e(),
+                ]),
               ]
             ),
             _vm._v(" "),
@@ -90403,8 +90420,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
