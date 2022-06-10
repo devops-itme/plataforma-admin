@@ -186,7 +186,6 @@ class GuideController extends Controller
 
     public function guidesForDeliveryPacking($state)
     {
-
         try {
 
             $state == 5 ? $state = [3, 4, 5, 6] : ($state == 9 ?  $state = [7, 8, 9, 10] : $state = [intval($state)]);
@@ -196,7 +195,7 @@ class GuideController extends Controller
                 ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments'])
                 ->get();
 
-            return $this->respond(200, $guides, null, 'Lista de guiás packing');
+            return $this->respond(200, $guides, null, 'Lista de guías packing');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }

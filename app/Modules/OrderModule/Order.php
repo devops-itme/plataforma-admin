@@ -363,6 +363,7 @@ class Order extends Model
                 'address_id' => $request->address_id,
                 'vehicle_type_id' => $request->vehicle_type_id,
                 'schedule_date' => $request->schedule_date,
+                'schedule_time_range' => $request->schedule_time_range,
                 'description' => $request->description,
                 'urgent_dispatch' => $request->urgent_dispatch,
                 'order_number' => $request->order_number,
