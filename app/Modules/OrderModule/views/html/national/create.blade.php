@@ -39,25 +39,42 @@
                             </option>
                         @endforeach
                     </select>
+                    @error('order_type')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 </div>
 
                 <div class="form-group col-md-3">
                     <label for="address">Dirección origen <span class="text-danger">*</span></label>
                     <select name="address_id" class="form-control form-control-solid" id="address">
-                        <option value="" disabled selected>Seleccione</option>
+                        <option value="{{old('address_id')}}"selected disabled>{{old('address_id')}}Seleccione tipo de orden</option>
+                       {{--  @foreach ($address_id as $address) --}}
+                       {{--  <option {{old('address_id') == $address->id ? 'selected' : '' }} value="{{ $address->id }}">
+                            {{$address->name }}
+                        </option> --}}
+                      {{--  @endforeach --}}
                     </select>
+                    @error('address_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 </div>
                 <div class="form-group col-md-3">
                     <label for="user_departments">Departamento</label>
                     <select name="department_id" id="user_departments" class="form-control form-control-solid">
-                        <option value="" selected disabled> Seleccione </option>
+                        <option value="" selected disabled>{{old('department_id')}} Seleccione </option>
                     </select>
+                    @error('department_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
                 </div>
                 <div class="form-group col-md-3">
                     <label for="user_branch_office">Sucursal</label>
                     <select name="branch_office_id" id="user_branch_office" class="form-control form-control-solid">
                         <option value="" selected disabled> Seleccione </option>
                     </select>
+                    @error('branch_office_id')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 @if (Auth::user()->getRole->name == 'Admin')
                     <div class="form-group col-md-3">
@@ -66,34 +83,42 @@
                             <option value="" selected disabled>Seleccione tipo de transporte</option>
                             @foreach ($transport_type as $item)
                                 <option value="{{ $item->id }}"
-                                    {{ $order->vehicle_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                {{ $order->vehicle_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}
                                 </option>
                             @endforeach
                         </select>
+                        @error('vehicle_type_id')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                     </div>
                 @endif
 
                 <div class="form-group col-md-3">
                     <label>Fecha de programación: <span class="text-danger">*</span></label>
                     <input name="schedule_date" id="schedule_date" type="date" class="form-control form-control-solid"
-                        placeholder="" required/>
-{{--                         @error('schedule_date')
-                        <small>
-                            <strong>{{ $message }}</strong>
-                        </small>
-                    @enderror --}}
+                        placeholder="" required />
+                        @error('schedule_date')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-3">
                     <label>Hora de programación: <span class="text-danger">*</span></label>
                     <select name="schedule_time_range" class="form-control form-control-solid" id="schedule_time_range">
-                        <option value="" disabled selected>Seleccione </option>
+                        <option value="" disabled selected>seleccione</option>
+                        <option value="" disabled selected>{{ old('schedule_time_range')}}</option>
                     </select>
+                    @error('schedule_time_range')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="description">Descripción <span class="text-danger">*</span></label>
-                    <textarea name="order_description" cols="10" rows="2" class="form-control form-control-solid">{{ $order->description }}</textarea>
+                    <textarea name="order_description" cols="10" rows="2" class="form-control form-control-solid">{{ $order->description }}{{ old('order_description')}}</textarea>
+                    @error('order_description')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
 

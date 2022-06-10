@@ -127,7 +127,8 @@ class GuideController extends Controller
         $guide = Guide::find($id);
         $user_id = $guide->getOrder->getUser->id;
         $addresses = Address::where('user_id', $user_id)->get();
-        return view($this->path . 'edit', compact('guide', 'addresses'));
+        $guide_id = $guide->getOrder->id;
+        return view($this->path . 'edit', compact('guide', 'addresses','guide_id'));
     }
 
     /**

@@ -9,14 +9,20 @@
                     Datos de destino
                 </h3>
 
-                <div class="card-toolbar col-2">
-                    <button class="btn btn-primary font-weight-bolder" id="update-guide-btn" type="button"
-                        data-tooltip title="CREAR">
+                <div class="card-toolbar" >
+                    <a href="{{ route('orders.edit', $guide_id) }}">
+                    <button class="btn btn-light-primary"
+                            type="button" data-tooltip title="Volver a la orden">
+                            Volver</button></a>
+
+                    <button class="btn btn-primary font-weight-bolder" id="update-guide-btn" type="button" data-tooltip
+                        title="CREAR">
                         <span class="svg-icon svg-icon-md">
                         </span>Actualizar destino
                     </button>
                 </div>
             </div>
+
             @include('layouts.alerts')
             <div class="card-body d-flex flex-row flex-wrap pt-2">
                 <div class="form-group col-md-2">
@@ -105,8 +111,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="guide_description">Descripción <span class="text-danger">*</span></label>
-                    <textarea name="guide_description" cols="10" rows="2"
-                        class="form-control form-control-solid"> {{ $guide->description }}</textarea>
+                    <textarea name="guide_description" cols="10" rows="2" class="form-control form-control-solid"> {{ $guide->description }}</textarea>
                 </div>
 
                 <input type="hidden" name="boxes" id="boxes" value="{{ $guide->boxes }}">

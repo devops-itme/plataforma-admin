@@ -228,7 +228,7 @@ return [
         'diligence_expenses' => 'Gastos de diligencia',
         'internal_product' => 'Producto interno',
         'tax_total' => 'Total tax',
-        'vehicle_type_id' => 'Tipo de vehículo',
+        'vehicle_type_id' => 'Tipo de transporte',
         'payment_method' => 'Método de pago',
         'schedule_date' => 'Fecha de programación',
         'schedule_time_range' => 'Hora de programación',

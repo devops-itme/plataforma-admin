@@ -101,7 +101,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-/*         $request->validate([
+        $request->validate([
             'address_id' => 'required|numeric|exists:addresses,id',
             'guides' => 'required',
             'vehicle_type_id' => 'required',
@@ -109,7 +109,7 @@ class OrderController extends Controller
             'user_id' => 'required',
             'schedule_date' => 'required',
             'schedule_time_range' => 'required', 
-        ]); */
+        ]); 
         $validator = Validator::make(
             $request->all(),
             [
