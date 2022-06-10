@@ -21,7 +21,8 @@ trait RouteTrait
         return Validator::make(
             $request->all(),
             [
-                'guide_id' => [$action == 'create' ? 'confirmed' : 'nullable',
+                'guide_id' => [
+                    $action == 'create' ? 'confirmed' : 'nullable',
                     Rule::requiredIf($action == 'create'), 'exists:guides,id'
                 ],
                 'messenger_user_id' => 'required|exists:users,id',
@@ -34,7 +35,7 @@ trait RouteTrait
     {
         $validator = $this->RouteValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
             $route = Route::create([
@@ -52,7 +53,7 @@ trait RouteTrait
     {
         $validator = $this->RouteValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
             $dispatch_code = strtotime(Carbon::now());
@@ -68,13 +69,13 @@ trait RouteTrait
             }
 
             $order->update([
-                'status_matrix_id'=>$request->state,
-                'dispatched'=>$dispatch_code
+                'status_matrix_id' => $request->state,
+                'dispatched' => $dispatch_code
             ]);
 
             return $this->respond(200, $order, null, 'Orden asignada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() , 'Error al crear la ruta');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear la ruta');
         }
     }
 
@@ -83,29 +84,30 @@ trait RouteTrait
 
         $validator = $this->RouteValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error' , $validator->errors()->first());
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
             $dispatch_code = strtotime(Carbon::now());
             $guides = $request->guides;
             foreach ($guides as $guide) {
 
-                $route = Route::create([
+                Route::create([
                     'guide_id' => $guide['id'],
                     'messenger_user_id' => $request->messenger_user_id,
                     'date' => $request->date
                 ]);
 
 
-                $route = Guide::where('id', $guide['id'])->update([
+                $guide_to_update = Guide::where('id', $guide['id'])->first();
+                $guide_to_update->update([
                     'status_matrix_id' => $request->state_order,
-                    'dispatched'=>$dispatch_code
+                    'dispatched' => $dispatch_code
                 ]);
             }
 
-            return $this->respond(200, $route, null, 'Orden asignada exitosamente');
+            return $this->respond(200, $guide_to_update, null, 'Orden asignada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() , 'Error al crear la ruta');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear la ruta');
         }
     }
 

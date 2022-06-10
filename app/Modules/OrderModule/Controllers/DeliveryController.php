@@ -22,12 +22,12 @@ class DeliveryController extends Controller
     protected $path = 'OrderModule.views.html.';
     public function indexOndemand()
     {
-        return view($this->path .'deliveries.index');
+        return view($this->path . 'deliveries.index');
     }
 
     public function indexPacking()
     {
-        return view($this->path.'deliveriesPacking.index');
+        return view($this->path . 'deliveriesPacking.index');
     }
 
     public function assignOndemad(Request $request)
@@ -66,10 +66,11 @@ class DeliveryController extends Controller
 
     public function updateStateOrders(Request $request)
     {
-        $order = Order::where('id', $request->order_id)->update([
+        $order = Order::where('id', $request->order_id)->first();
+        $order->update([
             'status_matrix_id' => $request->state
         ]);
-        return $this->respond(200, $order, null, 'estado actualizado');
+        return $this->respond(200, $order, null, 'Estado de la orden actualizado');
     }
 
     public function statusMatrix()
@@ -83,7 +84,6 @@ class DeliveryController extends Controller
                 $item->name = $descriptor->description;
             }
             return $item;
-
         });
 
         return $this->respond(200, $data, null, 'matriz de estados');
