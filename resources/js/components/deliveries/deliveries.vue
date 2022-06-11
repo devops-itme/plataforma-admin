@@ -184,6 +184,10 @@
                         <div class="font-weight-bolder mb-1">Novedades:</div>
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.novelty ? showDataGuide.novelty : 'No registra' "></div>
                     </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Incidencias:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="'No registra' "></div>
+                    </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
@@ -316,7 +320,7 @@
                 </div>
                  <div class="form-group col-md-4">
                     <label>Programado (Fecha): </label>
-                    <input name="programming_date" type="date"  v-model="this.showDataGuide.programming" class="form-control form-control-solid" />
+                    <input name="schedule_date" type="date"  v-model="guide.schedule_date" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
@@ -535,6 +539,7 @@ export default {
             this.guide.contact_phone = this.showGuide.phone_contact;
             this.guide.contact_email = this.showGuide.email_contact;
             this.guide.programming = moment(programming_date).format("YYYY-MM-DDTHH:mm");
+            this.guide.schedule_date = this.showGuide.get_order.schedule_date
             this.guide.additional_phone = this.showGuide.additional_phone;
             this.guide.additional_email = this.showGuide.additional_email;
             this.guide.additional_address = this.showGuide.additional_address;
