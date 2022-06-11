@@ -90,12 +90,16 @@ export default class Orders {
         let GuidesClass = new Guides(guidesArr, scope);
         GuidesClass.initialize();
         GuidesClass.sourceAddressHandler();
-
         addGuideBtn.addEventListener('click', async function () {
             GuidesClass.addGuide();
         });
 
         createOrderBtn.addEventListener('click', async function () {
+            if(GuidesClass.guides.length == 0) {
+                swal("Importante!", "Debes agregar un destino como mínimo","info");
+             
+                return;
+            }
             guides.value = JSON.stringify(GuidesClass.guides);
             order_form.submit();
         });

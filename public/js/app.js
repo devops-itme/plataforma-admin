@@ -3147,10 +3147,19 @@ var Orders = /*#__PURE__*/function () {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                if (!(GuidesClass.guides.length == 0)) {
+                  _context3.next = 3;
+                  break;
+                }
+
+                swal("Importante!", "Debes agregar un destino como mínimo", "info");
+                return _context3.abrupt("return");
+
+              case 3:
                 guides.value = JSON.stringify(GuidesClass.guides);
                 order_form.submit();
 
-              case 2:
+              case 5:
               case "end":
                 return _context3.stop();
             }

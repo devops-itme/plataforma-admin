@@ -17,7 +17,7 @@
                     <div class="form-group col-md-3">
                         <label for="customer">Cliente <span class="text-danger">*</span></label>
                         <select name="user_id" class="select2-customers form-control form-control-solid" id="customer">
-                            <option id="user_id" value="" selected disabled>Seleccione un cliente</option>
+                            <option value="" id="user_id" selected disabled>Seleccione un cliente</option>
                             @foreach ($customers as $customer)
                                 <option {{ old('customer') == $customer->getUser->id ? 'selected ' : '' }}
                                     value="{{ $customer->getUser->id }}">
@@ -61,7 +61,7 @@
                 <div class="form-group col-md-3">
                     <label for="user_departments">Departamento</label>
                     <select name="department_id" id="user_departments" class="form-control form-control-solid">
-                        <option value="" selected disabled>{{old('department_id')}} Seleccione </option>
+                        <option  selected disabled >{{old('department_id')}} Seleccione </option>
                     </select>
                     @error('department_id')
                     <div class="text-danger">{{ $message }}</div>
@@ -70,7 +70,7 @@
                 <div class="form-group col-md-3">
                     <label for="user_branch_office">Sucursal</label>
                     <select name="branch_office_id" id="user_branch_office" class="form-control form-control-solid">
-                        <option value="" selected disabled> Seleccione </option>
+                        <option value="" selected disabled>{{old('branch_office_id')}}Seleccione </option>
                     </select>
                     @error('branch_office_id')
                         <div class="text-danger">{{ $message }}</div>
@@ -82,8 +82,8 @@
                         <select name="vehicle_type_id" class="form-control form-control-solid" id="vehicle_type_id">
                             <option value="" selected disabled>Seleccione tipo de transporte</option>
                             @foreach ($transport_type as $item)
-                                <option value="{{ $item->id }}"
-                                {{ $order->vehicle_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                <option {{ old('vehicle_type_id') == $item->id ? 'selected' : '' }} value="{{ $item->id }}">
+                                {{ $item->name}}
                                 </option>
                             @endforeach
                         </select>
