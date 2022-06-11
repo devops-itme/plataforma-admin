@@ -8729,6 +8729,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.guide.contact_phone = _this6.showGuide.phone_contact;
                 _this6.guide.contact_email = _this6.showGuide.email_contact;
                 _this6.guide.programming = moment__WEBPACK_IMPORTED_MODULE_1___default()(programming_date).format("YYYY-MM-DDTHH:mm");
+                _this6.guide.schedule_date = _this6.showGuide.get_order.schedule_date;
                 _this6.guide.additional_phone = _this6.showGuide.additional_phone;
                 _this6.guide.additional_email = _this6.showGuide.additional_email;
                 _this6.guide.additional_address = _this6.showGuide.additional_address;
@@ -8736,7 +8737,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.guide.status = _this6.showGuide.get_status_matrix.name;
                 _this6.guide.novelty = _this6.showGuide.novelty;
 
-              case 27:
+              case 28:
               case "end":
                 return _context5.stop();
             }
@@ -70777,21 +70778,21 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: this.showDataGuide.programming,
-                          expression: "this.showDataGuide.programming",
+                          value: _vm.guide.schedule_date,
+                          expression: "guide.schedule_date",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
-                      attrs: { name: "programming_date", type: "date" },
-                      domProps: { value: this.showDataGuide.programming },
+                      attrs: { name: "schedule_date", type: "date" },
+                      domProps: { value: _vm.guide.schedule_date },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            this.showDataGuide,
-                            "programming",
+                            _vm.guide,
+                            "schedule_date",
                             $event.target.value
                           )
                         },
@@ -90420,8 +90421,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

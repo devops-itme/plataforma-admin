@@ -263,7 +263,15 @@ class GuideController extends Controller
                 'value_corp' => $request->corp_value,
                 'novelty' => $request->novelty
             ]);
-            return $this->respond(200, $guide, '', 'Guía actualizada exitosamente');
+
+            $order_id = $guide->order_id;                        
+            $order = Order::findOrFail($order_id);
+ 
+            $order->update([
+             'schedule_date' => $request->schedule_date,
+         ]);
+
+            return $this->respond(200,$guide,$order,'Guía actualizada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar guía');
         }
