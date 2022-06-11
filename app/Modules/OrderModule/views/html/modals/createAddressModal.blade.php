@@ -36,6 +36,8 @@
 </div>
 
 
+
+
 <!--SCRIPT-->
 <script type="application/javascript">
     function submit() {        
@@ -45,12 +47,9 @@
     }
 
     function save() {
-        var $popup = $('#data_user_id').text();
-        // window.alert($popup);
+        var $popup = $('#data_user_id').text();        
         var myvalue = $popup;
-        $("#user_code").val(myvalue);        
-        e.preventDefault();
-    }
-    
+        $("#user_code").val(myvalue);  
+    }    
 </script>
 
