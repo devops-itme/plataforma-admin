@@ -133,10 +133,25 @@ class MessengerController extends Controller
     public function download($id)
     {
 
-       $messe = Messenger::find($id);
-       $PathToFile = storage_path("app/document_file/".$messe->contract);
-       $ext = pathinfo($PathToFile, PATHINFO_EXTENSION);
-       return response()->download($PathToFile, 'contrato-mensajero.'.$ext);
+        $messe = Messenger::find($id);
+        if(isset($messe->contract)){
+
+            $PathToFile = storage_path("app/document_file/".$messe->contract);
+            if(file_exists($PathToFile)){
+    
+            $ext = pathinfo($PathToFile, PATHINFO_EXTENSION);
+            return response()->download($PathToFile, 'contrato-mensajero.'.$ext);
+    
+            }else{
+            return  ' <script>alert("No hay archivos en la ruta especificada")</script>';
+            }
+
+        }else{
+
+            return  ' <script>alert("No hay registro de este archivo en la base de datos")</script>';
+        }
+      
+       
     }
    
 }
