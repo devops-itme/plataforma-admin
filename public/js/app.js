@@ -3403,7 +3403,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnSaveAddress.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        var formData, description, address, lat, lng, user_id, response, modal;
+        var formData, description, address, lat, lng, user_id, response, myVal, sum, newAddress, modal;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
@@ -3428,6 +3428,11 @@ var Orders = /*#__PURE__*/function () {
 
                 if (response.state == 200) {
                   correct(response.message);
+                  myVal = Math.floor($('#guide_address option:last').val());
+                  sum = myVal + 1;
+                  console.log('nuevo valor' + sum);
+                  newAddress = $("#add_name").val();
+                  $("#guide_address").append("<option value=" + sum + ">" + newAddress + "</option>");
                   modal = document.getElementById("modalCreateAddress");
                   modal.click();
 
@@ -90430,8 +90435,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

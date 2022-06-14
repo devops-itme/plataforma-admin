@@ -244,6 +244,11 @@ export default class Orders {
             let response = await this.sendAddressData(formData);
             if (response.state == 200) {
                 correct(response.message);
+                var myVal = Math.floor($('#guide_address option:last').val());
+                var sum = myVal + 1; 
+                console.log('nuevo valor' +sum);         
+                var newAddress = $("#add_name").val(); 
+                $("#guide_address").append("<option value="+sum+">" + newAddress + "</option>");
                 let modal = document.getElementById("modalCreateAddress");
                 modal.click();
                 this.listGuides();
