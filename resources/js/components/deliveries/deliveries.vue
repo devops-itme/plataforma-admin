@@ -383,7 +383,7 @@ export default {
             showModal: false,
             columns:{
                 inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
-                inEdit:["Tipo", "Estado", "Estado Web", "Estado Web Cont", "Fecha evento", "Despacho", "Destino", "ExtRef", "F.Prog", "Tipo Doc", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
+                inEdit:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
             },
             guides: [],
             guides2: [],
