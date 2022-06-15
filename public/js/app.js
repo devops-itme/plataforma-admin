@@ -3429,14 +3429,12 @@ var Orders = /*#__PURE__*/function () {
                 response = _context8.sent;
 
                 if (response.state == 200) {
-                  correct(response.message);
+                  correct(response.message); // modal.click();
+
                   $("#modalCreateAddress").modal('hide');
 
-                  _this.refreshAddresses();
+                  _this.refreshAddresses(); // this.listGuides();
 
-                  modal.click();
-
-                  _this.listGuides();
 
                   _this.customerAddresses(document.getElementById("user_code").value);
                 } else {
@@ -3880,10 +3878,9 @@ var loadSelect = function loadSelect(data, element) {
               option.value = item.id;
               option.label = item.name;
               option.selected = item.id == selected;
-              element.appendChild(option);
-              console.log("La opcion es: " + option.value);
+              element.appendChild(option); // console.log("La opcion es: "+option.value);
 
-            case 6:
+            case 5:
             case "end":
               return _context17.stop();
           }

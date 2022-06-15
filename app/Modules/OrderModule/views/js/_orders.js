@@ -245,10 +245,10 @@ export default class Orders {
             let response = await this.sendAddressData(formData);
             if (response.state == 200) {
                 correct(response.message);
+                // modal.click();
                 $("#modalCreateAddress").modal('hide');
-                this.refreshAddresses();
-                modal.click();
-                this.listGuides();
+                this.refreshAddresses();                
+                // this.listGuides();
                 this.customerAddresses(
                     document.getElementById("user_code").value
                 );
@@ -495,6 +495,6 @@ const loadSelect = (data, element, selected = null) => {
         option.label = item.name;
         option.selected = item.id == selected;
         element.appendChild(option);
-        console.log("La opcion es: "+option.value);
+        // console.log("La opcion es: "+option.value);
     });
 }
