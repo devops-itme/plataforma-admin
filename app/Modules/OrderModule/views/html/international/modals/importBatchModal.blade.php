@@ -10,6 +10,22 @@
             <form action="{{ route('internationalOrders.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
+                @if (Auth::user()->getRole->name == 'Admin')
+                    <div class="form-group col-md-3">
+                        <label for="customer">Cliente <span class="text-danger">*</span></label>
+                        <select name="user_id" class="select2-customers form-control form-control-solid" id="customer">
+                            <option value="" id="user_id" selected disabled>Seleccione un cliente</option>
+                            @foreach ($customers as $customer)
+                                <option {{ old('customer') == $customer->getUser->id ? 'selected ' : '' }}
+                                    value="{{ $customer->getUser->id }}">
+                                    {{ $customer->getUser->name . ' ' . $customer->getUser->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                @else
+                    <input type="hidden" name="user_id" id="customer_id" value="{{ Auth::user()->id }}">
+                @endif
                     <p>Cargar Excel.</p>
                     <div class="row mx-2">
                         <input class="form-input" type="checkbox" value="true" name="unique_phone" id="">

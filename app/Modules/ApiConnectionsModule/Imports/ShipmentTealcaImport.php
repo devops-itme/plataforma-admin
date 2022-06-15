@@ -21,8 +21,9 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
 
     protected $unique_phone;
 
-    public function __construct(bool $unique_phone = false)
+    public function __construct(bool $unique_phone = false,$user_id)
     {
+        $this->user_id = $user_id;
         $this->unique_phone = $unique_phone;
     }
 
@@ -55,7 +56,8 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
 
         DB::beginTransaction();
         $orderResponse = $this->storeOrder(new Request(array(
-            'user_id' => Auth::user()->id,
+            // 'user_id' => Auth::user()->id,
+            'user_id' => $this->user_id,
             'order_number' => $lot_number,
             'order_type' => $order_type,
             'creator_user_id' => Auth::user()->id,
