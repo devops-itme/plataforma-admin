@@ -56,7 +56,7 @@ class InternationalOrderController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'user_id' => 'required',
+                'customer_id' => 'required',
                 'excel' => 'required|mimes:xlsx',
             ]
         );
@@ -64,9 +64,9 @@ class InternationalOrderController extends Controller
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
         $unique_phone = $request->unique_phone === 'true';
-        $user_id = $request->user_id;
+        $customer_id = $request->customer_id;
         $file = $request->file('excel');
-        $excelResponse = Excel::import(new ShipmentTealcaImport($unique_phone,$user_id), $file);
+        $excelResponse = Excel::import(new ShipmentTealcaImport($unique_phone,$customer_id), $file);
         // dd($excelResponse);
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
     }
