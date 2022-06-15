@@ -3430,6 +3430,7 @@ var Orders = /*#__PURE__*/function () {
 
                 if (response.state == 200) {
                   correct(response.message);
+                  $("#modalCreateAddress").modal('hide');
 
                   _this.refreshAddresses();
 
@@ -3879,7 +3880,7 @@ var loadSelect = function loadSelect(data, element) {
               option.value = item.id;
               option.label = item.name;
               option.selected = item.id == selected;
-              element.append(option);
+              element.appendChild(option);
               console.log("La opcion es: " + option.value);
 
             case 6:
