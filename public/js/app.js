@@ -9716,6 +9716,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 // import { Sortable, MultiDrag } from 'sortablejs';
 
  //  Sortable.mount(new MultiDrag());
@@ -9754,10 +9758,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     setMessenger: function setMessenger() {
       if (this.searchMessenger) {
-        var _this$filterMessenger, _this$filterMessenger2;
-
-        this.messengerName = ((_this$filterMessenger = this.filterMessengers[0]) === null || _this$filterMessenger === void 0 ? void 0 : _this$filterMessenger.user.name) + " " + ((_this$filterMessenger2 = this.filterMessengers[0]) === null || _this$filterMessenger2 === void 0 ? void 0 : _this$filterMessenger2.user.last_name);
-        return this.messenger = this.filterMessengers[0];
+        this.seleccionado = this.$refs.seleccionado.value;
+        return this.messenger = this.seleccionado;
       }
     }
   },
@@ -9816,7 +9818,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    messenger_user_id: _this3.setMessenger.user_id,
+                    messenger_user_id: _this3.setMessenger,
                     guides: _this3.guides2,
                     state_order: _this3.tabs[1].id
                   })
@@ -71422,29 +71424,19 @@ var render = function () {
                     },
                   }),
                   _vm._v(" "),
-                  _vm.setMessenger
-                    ? _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.messengerName,
-                            expression: "messengerName",
-                          },
-                        ],
-                        staticClass: "form-control col-md-5",
-                        attrs: { type: "text", disabled: "" },
-                        domProps: { value: _vm.messengerName },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.messengerName = $event.target.value
-                          },
-                        },
-                      })
-                    : _vm._e(),
+                  _c(
+                    "select",
+                    {
+                      ref: "seleccionado",
+                      staticClass: "form-control col-md-5",
+                    },
+                    _vm._l(this.filterMessengers, function (a) {
+                      return _c("option", { domProps: { value: a.user.id } }, [
+                        _vm._v(_vm._s(a.user.name + " " + a.user.last_name)),
+                      ])
+                    }),
+                    0
+                  ),
                   _vm._v(" "),
                   _c(
                     "a",
@@ -90527,8 +90519,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
