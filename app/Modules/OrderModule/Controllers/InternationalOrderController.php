@@ -8,6 +8,7 @@ use App\Modules\OrderModule\Exports\OrdersExport;
 use App\Modules\ApiConnectionsModule\Imports\ShipmentTealcaImport;
 use App\Modules\ApiConnectionsModule\Exports\TealcaInformExport;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
+use App\Modules\CustomerModule\Customer;
 use App\Modules\GuideModule\Guide;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
@@ -37,7 +38,13 @@ class InternationalOrderController extends Controller
             $query->where('name', 'order_types');
         })->get();
         $status_matrix = StatusMatrix::get();
-        return view($this->path . 'index', compact('orders', 'order_type', 'status_matrix'));
+        $customers = Customer::whereHas('getUser', function ($query) {
+            $query->whereHas('getRole', function ($query) {
+                $query->where('name', 'Cliente');
+            });
+        })->get();
+
+        return view($this->path . 'index', compact('orders', 'order_type', 'status_matrix','customers'));
     }
 
     public function show($id)
@@ -49,6 +56,7 @@ class InternationalOrderController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
+                'customer_id' => 'required',
                 'excel' => 'required|mimes:xlsx',
             ]
         );
@@ -56,8 +64,9 @@ class InternationalOrderController extends Controller
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
         $unique_phone = $request->unique_phone === 'true';
+        $customer_id = $request->customer_id;
         $file = $request->file('excel');
-        $excelResponse = Excel::import(new ShipmentTealcaImport($unique_phone), $file);
+        $excelResponse = Excel::import(new ShipmentTealcaImport($unique_phone,$customer_id), $file);
         // dd($excelResponse);
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
     }

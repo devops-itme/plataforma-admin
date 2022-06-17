@@ -2987,10 +2987,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _request_requestCalculatePackingRates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./request/requestCalculatePackingRates */ "./app/Modules/OrderModule/views/js/request/requestCalculatePackingRates.js");
 /* harmony import */ var _request_requestPickupHours_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./request/requestPickupHours.js */ "./app/Modules/OrderModule/views/js/request/requestPickupHours.js");
 /* harmony import */ var _request_requestGetOrder_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./request/requestGetOrder.js */ "./app/Modules/OrderModule/views/js/request/requestGetOrder.js");
-/* harmony import */ var _importModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./importModal */ "./app/Modules/OrderModule/views/js/importModal.js");
-/* harmony import */ var _src_getDayReference_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./src/getDayReference.js */ "./app/Modules/OrderModule/views/js/src/getDayReference.js");
-/* harmony import */ var _customer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_customer */ "./app/Modules/OrderModule/views/js/_customer.js");
-/* harmony import */ var _guides_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_guides.js */ "./app/Modules/OrderModule/views/js/_guides.js");
+/* harmony import */ var _request_requestCustomerData__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./request/requestCustomerData */ "./app/Modules/OrderModule/views/js/request/requestCustomerData.js");
+/* harmony import */ var _importModal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./importModal */ "./app/Modules/OrderModule/views/js/importModal.js");
+/* harmony import */ var _src_getDayReference_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/getDayReference.js */ "./app/Modules/OrderModule/views/js/src/getDayReference.js");
+/* harmony import */ var _customer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_customer */ "./app/Modules/OrderModule/views/js/_customer.js");
+/* harmony import */ var _guides_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_guides.js */ "./app/Modules/OrderModule/views/js/_guides.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3006,6 +3007,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //requests
+
 
 
 
@@ -3066,7 +3068,7 @@ var Orders = /*#__PURE__*/function () {
                 this.customerAddresses();
                 this.loadPickupHours();
                 this.loadHoursInEditOrShow();
-                Object(_importModal__WEBPACK_IMPORTED_MODULE_7__["importModal"])();
+                Object(_importModal__WEBPACK_IMPORTED_MODULE_8__["importModal"])();
 
               case 18:
               case "end":
@@ -3090,7 +3092,7 @@ var Orders = /*#__PURE__*/function () {
 
       if (customer != null) {
         var customer_id = customer.value;
-        CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_9__["default"](customer_id, this.order);
+        CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_10__["default"](customer_id, this.order);
       } else {
         var _customer = document.getElementById("customer");
 
@@ -3099,7 +3101,7 @@ var Orders = /*#__PURE__*/function () {
         }
 
         var _customer_id = _customer.value;
-        CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_9__["default"](_customer_id, this.order);
+        CustomerClass = new _customer__WEBPACK_IMPORTED_MODULE_10__["default"](_customer_id, this.order);
       }
 
       CustomerClass.initialize();
@@ -3125,7 +3127,7 @@ var Orders = /*#__PURE__*/function () {
 
       var guidesArr = (_this$order = this.order) === null || _this$order === void 0 ? void 0 : _this$order.get_guides;
       var scope = this.pathname.includes('edit') ? 'edition' : 'creation';
-      var GuidesClass = new _guides_js__WEBPACK_IMPORTED_MODULE_10__["default"](guidesArr, scope);
+      var GuidesClass = new _guides_js__WEBPACK_IMPORTED_MODULE_11__["default"](guidesArr, scope);
       GuidesClass.initialize();
       GuidesClass.sourceAddressHandler();
       addGuideBtn.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -3403,7 +3405,7 @@ var Orders = /*#__PURE__*/function () {
       }
 
       btnSaveAddress.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        var formData, description, address, lat, lng, user_id, response, modal;
+        var formData, description, address, lat, lng, user_id, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
@@ -3427,11 +3429,12 @@ var Orders = /*#__PURE__*/function () {
                 response = _context8.sent;
 
                 if (response.state == 200) {
-                  correct(response.message);
-                  modal = document.getElementById("modalCreateAddress");
-                  modal.click();
+                  correct(response.message); // modal.click();
 
-                  _this.listGuides();
+                  $("#modalCreateAddress").modal('hide');
+
+                  _this.refreshAddresses(); // this.listGuides();
+
 
                   _this.customerAddresses(document.getElementById("user_code").value);
                 } else {
@@ -3448,18 +3451,76 @@ var Orders = /*#__PURE__*/function () {
       })));
     }
   }, {
+    key: "refreshAddresses",
+    value: function refreshAddresses() {
+      var customer = document.getElementById("customer");
+
+      if (customer == null) {
+        return;
+      }
+
+      $('#guide_address').one('click', /*#__PURE__*/function () {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(e) {
+          var customer_id, response, address, guide_address, user_departments, user_branch_office;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+            while (1) {
+              switch (_context9.prev = _context9.next) {
+                case 0:
+                  customer_id = customer.value;
+                  _context9.next = 3;
+                  return Object(_request_requestCustomerData__WEBPACK_IMPORTED_MODULE_7__["requestCustomerData"])(customer_id);
+
+                case 3:
+                  response = _context9.sent;
+
+                  if (!(response.state != 200)) {
+                    _context9.next = 6;
+                    break;
+                  }
+
+                  return _context9.abrupt("return");
+
+                case 6:
+                  this.user = response.data.customer;
+                  this.branches = response.data.branches;
+                  this.departments = response.data.departments;
+                  this.addresses = response.data.addresses;
+                  address = document.getElementById("address");
+                  guide_address = document.getElementById("guide_address");
+                  loadSelect(this.addresses, address);
+                  loadSelect(this.addresses, guide_address);
+                  user_departments = document.getElementById("user_departments");
+                  loadSelect(this.departments, user_departments);
+                  user_branch_office = document.getElementById("user_branch_office");
+                  loadSelect(this.branches, user_branch_office);
+                  this.key = false;
+
+                case 19:
+                case "end":
+                  return _context9.stop();
+              }
+            }
+          }, _callee9, this);
+        }));
+
+        return function (_x2) {
+          return _ref5.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
     key: "sendAddressData",
     value: function () {
-      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(formData) {
+      var _sendAddressData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(formData) {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
                 response = {
                   state: 500
                 };
-                _context9.next = 3;
+                _context10.next = 3;
                 return fetch("/direcciones", {
                   headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -3469,18 +3530,18 @@ var Orders = /*#__PURE__*/function () {
                 });
 
               case 3:
-                response = _context9.sent;
-                return _context9.abrupt("return", response.json());
+                response = _context10.sent;
+                return _context10.abrupt("return", response.json());
 
               case 5:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9);
+        }, _callee10);
       }));
 
-      function sendAddressData(_x2) {
+      function sendAddressData(_x3) {
         return _sendAddressData.apply(this, arguments);
       }
 
@@ -3489,42 +3550,42 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "porDespacharOndemand",
     value: function () {
-      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+      var _porDespacharOndemand = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
         var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
                 button = document.getElementsByClassName("porDespacharOndemand");
 
                 if (!(button == null)) {
-                  _context11.next = 3;
+                  _context12.next = 3;
                   break;
                 }
 
-                return _context11.abrupt("return");
+                return _context12.abrupt("return");
 
               case 3:
                 [].forEach.call(button, function (btn) {
-                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
                     var order_id, result, req;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
                       while (1) {
-                        switch (_context10.prev = _context10.next) {
+                        switch (_context11.prev = _context11.next) {
                           case 0:
                             order_id = btn.parentNode.parentNode;
-                            _context10.next = 3;
+                            _context11.next = 3;
                             return confirmation("¿Esta seguro?", "Se pasara a orden a por despachar", "info");
 
                           case 3:
-                            result = _context10.sent;
+                            result = _context11.sent;
 
                             if (!(result == true)) {
-                              _context10.next = 9;
+                              _context11.next = 9;
                               break;
                             }
 
-                            _context10.next = 7;
+                            _context11.next = 7;
                             return fetch("/pordespachar/ondemand/".concat(order_id.id), {
                               method: "POST",
                               headers: {
@@ -3536,7 +3597,7 @@ var Orders = /*#__PURE__*/function () {
                             });
 
                           case 7:
-                            req = _context10.sent;
+                            req = _context11.sent;
 
                             if (req.state == 200) {
                               correct("Estado actualizado!");
@@ -3548,19 +3609,19 @@ var Orders = /*#__PURE__*/function () {
 
                           case 9:
                           case "end":
-                            return _context10.stop();
+                            return _context11.stop();
                         }
                       }
-                    }, _callee10);
+                    }, _callee11);
                   })));
                 });
 
               case 4:
               case "end":
-                return _context11.stop();
+                return _context12.stop();
             }
           }
-        }, _callee11);
+        }, _callee12);
       }));
 
       function porDespacharOndemand() {
@@ -3572,38 +3633,38 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "porDespacharPackaging",
     value: function () {
-      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+      var _porDespacharPackaging = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         var button;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
                 button = document.getElementsByClassName("porDespacharPackaging");
 
                 if (!(button == null)) {
-                  _context13.next = 3;
+                  _context14.next = 3;
                   break;
                 }
 
-                return _context13.abrupt("return");
+                return _context14.abrupt("return");
 
               case 3:
                 [].forEach.call(button, function (btn) {
-                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+                  btn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
                     var order_id, result, formData, token, myHeaders, requestOptions, data, req;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
                       while (1) {
-                        switch (_context12.prev = _context12.next) {
+                        switch (_context13.prev = _context13.next) {
                           case 0:
                             order_id = btn.parentNode.parentNode;
-                            _context12.next = 3;
+                            _context13.next = 3;
                             return porDespacharPackagingAlert();
 
                           case 3:
-                            result = _context12.sent;
+                            result = _context13.sent;
 
                             if (!(result == 3 || result == 7)) {
-                              _context12.next = 19;
+                              _context13.next = 19;
                               break;
                             }
 
@@ -3622,13 +3683,13 @@ var Orders = /*#__PURE__*/function () {
                             data = {
                               type: result
                             };
-                            _context12.next = 16;
+                            _context13.next = 16;
                             return fetch("/pordespachar/packaging/".concat(order_id.id), requestOptions).then(function (response) {
                               return response.json();
                             });
 
                           case 16:
-                            req = _context12.sent;
+                            req = _context13.sent;
                             console.log(req);
 
                             if (req.state == 200) {
@@ -3640,19 +3701,19 @@ var Orders = /*#__PURE__*/function () {
 
                           case 19:
                           case "end":
-                            return _context12.stop();
+                            return _context13.stop();
                         }
                       }
-                    }, _callee12);
+                    }, _callee13);
                   })));
                 });
 
               case 4:
               case "end":
-                return _context13.stop();
+                return _context14.stop();
             }
           }
-        }, _callee13);
+        }, _callee14);
       }));
 
       function porDespacharPackaging() {
@@ -3664,30 +3725,30 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadPickupHours",
     value: function () {
-      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
+      var _loadPickupHours = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
         var date_selector, response, days;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
-            switch (_context14.prev = _context14.next) {
+            switch (_context15.prev = _context15.next) {
               case 0:
                 date_selector = document.getElementById("schedule_date");
 
                 if (!(date_selector == null)) {
-                  _context14.next = 3;
+                  _context15.next = 3;
                   break;
                 }
 
-                return _context14.abrupt("return");
+                return _context15.abrupt("return");
 
               case 3:
-                _context14.next = 5;
+                _context15.next = 5;
                 return Object(_request_requestPickupHours_js__WEBPACK_IMPORTED_MODULE_5__["requestPickupHours"])();
 
               case 5:
-                response = _context14.sent;
+                response = _context15.sent;
                 days = response.data;
                 date_selector.addEventListener("change", function () {
-                  var day = Object(_src_getDayReference_js__WEBPACK_IMPORTED_MODULE_8__["getDayReference"])(date_selector.value);
+                  var day = Object(_src_getDayReference_js__WEBPACK_IMPORTED_MODULE_9__["getDayReference"])(date_selector.value);
                   var day_data = days[day];
                   var schedule_time_range = document.getElementById("schedule_time_range");
                   schedule_time_range.selectedIndex = 0;
@@ -3716,10 +3777,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 8:
               case "end":
-                return _context14.stop();
+                return _context15.stop();
             }
           }
-        }, _callee14);
+        }, _callee15);
       }));
 
       function loadPickupHours() {
@@ -3731,30 +3792,30 @@ var Orders = /*#__PURE__*/function () {
   }, {
     key: "loadHoursInEditOrShow",
     value: function () {
-      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+      var _loadHoursInEditOrShow = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
         var route, date_selector, response, days, day, day_data, schedule_time_range, i, element, text, option;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
           while (1) {
-            switch (_context15.prev = _context15.next) {
+            switch (_context16.prev = _context16.next) {
               case 0:
                 route = window.location.pathname;
 
                 if (route.includes("create") && route.includes("edit")) {
-                  _context15.next = 3;
+                  _context16.next = 3;
                   break;
                 }
 
-                return _context15.abrupt("return");
+                return _context16.abrupt("return");
 
               case 3:
                 date_selector = document.getElementById("schedule_date");
-                _context15.next = 6;
+                _context16.next = 6;
                 return this.requestPickupHours();
 
               case 6:
-                response = _context15.sent;
+                response = _context16.sent;
                 days = response.data;
-                day = Object(_src_getDayReference_js__WEBPACK_IMPORTED_MODULE_8__["getDayReference"])(date_selector.value);
+                day = Object(_src_getDayReference_js__WEBPACK_IMPORTED_MODULE_9__["getDayReference"])(date_selector.value);
                 day_data = days[day];
 
                 if (day_data) {
@@ -3778,10 +3839,10 @@ var Orders = /*#__PURE__*/function () {
 
               case 11:
               case "end":
-                return _context15.stop();
+                return _context16.stop();
             }
           }
-        }, _callee15, this);
+        }, _callee16, this);
       }));
 
       function loadHoursInEditOrShow() {
@@ -3793,9 +3854,45 @@ var Orders = /*#__PURE__*/function () {
   }]);
 
   return Orders;
-}();
+}(); //LOAD THE NEWS ADDRESSES WHEN CLIENT CLICK IT ON SELECT OPTION!
 
 
+
+
+var loadSelect = function loadSelect(data, element) {
+  var selected = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  if (element == null) {
+    return;
+  }
+
+  element.innerHTML = '<option value="" disabled selected>Seleccione</option>';
+  [].forEach.call(data, /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17(item) {
+      var option;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+        while (1) {
+          switch (_context17.prev = _context17.next) {
+            case 0:
+              option = document.createElement('option');
+              option.value = item.id;
+              option.label = item.name;
+              option.selected = item.id == selected;
+              element.appendChild(option); // console.log("La opcion es: "+option.value);
+
+            case 5:
+            case "end":
+              return _context17.stop();
+          }
+        }
+      }, _callee17);
+    }));
+
+    return function (_x4) {
+      return _ref8.apply(this, arguments);
+    };
+  }());
+};
 
 /***/ }),
 
@@ -9619,6 +9716,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 // import { Sortable, MultiDrag } from 'sortablejs';
 
  //  Sortable.mount(new MultiDrag());
@@ -9657,10 +9758,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     setMessenger: function setMessenger() {
       if (this.searchMessenger) {
-        var _this$filterMessenger, _this$filterMessenger2;
-
-        this.messengerName = ((_this$filterMessenger = this.filterMessengers[0]) === null || _this$filterMessenger === void 0 ? void 0 : _this$filterMessenger.user.name) + " " + ((_this$filterMessenger2 = this.filterMessengers[0]) === null || _this$filterMessenger2 === void 0 ? void 0 : _this$filterMessenger2.user.last_name);
-        return this.messenger = this.filterMessengers[0];
+        this.seleccionado = this.$refs.seleccionado.value;
+        return this.messenger = this.seleccionado;
       }
     }
   },
@@ -9719,7 +9818,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    messenger_user_id: _this3.setMessenger.user_id,
+                    messenger_user_id: _this3.setMessenger,
                     guides: _this3.guides2,
                     state_order: _this3.tabs[1].id
                   })
@@ -71364,29 +71463,19 @@ var render = function () {
                     },
                   }),
                   _vm._v(" "),
-                  _vm.setMessenger
-                    ? _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.messengerName,
-                            expression: "messengerName",
-                          },
-                        ],
-                        staticClass: "form-control col-md-5",
-                        attrs: { type: "text", disabled: "" },
-                        domProps: { value: _vm.messengerName },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.messengerName = $event.target.value
-                          },
-                        },
-                      })
-                    : _vm._e(),
+                  _c(
+                    "select",
+                    {
+                      ref: "seleccionado",
+                      staticClass: "form-control col-md-5",
+                    },
+                    _vm._l(this.filterMessengers, function (a) {
+                      return _c("option", { domProps: { value: a.user.id } }, [
+                        _vm._v(_vm._s(a.user.name + " " + a.user.last_name)),
+                      ])
+                    }),
+                    0
+                  ),
                   _vm._v(" "),
                   _c(
                     "a",
@@ -90452,8 +90541,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Adonis Xavier\Documents\newmlt\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

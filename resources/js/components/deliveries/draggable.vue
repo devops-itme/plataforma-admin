@@ -152,7 +152,11 @@
                             class="d-flex flex-row flex-wrap justify-content-around px-0"
                         >
                             <input type="text" class="form-control col-md-3" v-model="searchMessenger" />
-                            <input type="text" class="form-control col-md-5" disabled v-if="setMessenger" v-model="messengerName" />
+                            
+                           <select class="form-control col-md-5" ref="seleccionado">
+                             <option  v-for="a in this.filterMessengers" :value="a.user.id"  >{{a.user.name+ " " +a.user.last_name}}</option>
+                           </select>
+
                             <a
                                 href="#"
                                 class="btn btn-light-primary font-weight-bold col-md-3" @click="assignateDelivery()"
@@ -214,11 +218,9 @@ export default {
 
         setMessenger() {
             if (this.searchMessenger) {
-                this.messengerName =
-                    this.filterMessengers[0]?.user.name +
-                    " " +
-                    this.filterMessengers[0]?.user.last_name;
-                return (this.messenger = this.filterMessengers[0]);
+
+                this.seleccionado = this.$refs.seleccionado.value;
+                return (this.messenger = this.seleccionado);
             }
         },
     },
@@ -256,7 +258,7 @@ export default {
                 method: "POST",
                 headers: myHeaders,
                 body: JSON.stringify({
-                    messenger_user_id: this.setMessenger.user_id,
+                    messenger_user_id: this.setMessenger,
                     guides: this.guides2,
                     state_order: this.tabs[1].id
                 }),

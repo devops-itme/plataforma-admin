@@ -5,6 +5,7 @@ import { requestSearchZone } from "./request/requestSearchZone";
 import { requestCalculatePackingRates } from "./request/requestCalculatePackingRates";
 import { requestPickupHours } from "./request/requestPickupHours.js";
 import { requestGetOrder } from "./request/requestGetOrder.js";
+import { requestCustomerData } from "./request/requestCustomerData";
 
 
 //functions
@@ -244,9 +245,10 @@ export default class Orders {
             let response = await this.sendAddressData(formData);
             if (response.state == 200) {
                 correct(response.message);
-                let modal = document.getElementById("modalCreateAddress");
-                modal.click();
-                this.listGuides();
+                // modal.click();
+                $("#modalCreateAddress").modal('hide');
+                this.refreshAddresses();                
+                // this.listGuides();
                 this.customerAddresses(
                     document.getElementById("user_code").value
                 );
@@ -255,6 +257,40 @@ export default class Orders {
                 console.log("Error: " + response.error);
             }
         });
+    }
+
+    refreshAddresses() {
+        let customer = document.getElementById("customer");
+
+        if (customer == null) {
+            return;
+        }
+
+            $('#guide_address').one('click', async function (e) {
+                let customer_id = customer.value;
+                
+                let response = await requestCustomerData(customer_id);
+                if (response.state != 200) {
+                    return;
+                }
+                this.user = response.data.customer;
+                this.branches = response.data.branches;
+                this.departments = response.data.departments;
+                this.addresses = response.data.addresses;
+    
+                let address = document.getElementById("address");
+                let guide_address = document.getElementById("guide_address");
+                loadSelect(this.addresses, address);
+                loadSelect(this.addresses, guide_address);
+    
+                let user_departments = document.getElementById("user_departments");
+                loadSelect(this.departments, user_departments);
+    
+                let user_branch_office = document.getElementById("user_branch_office");
+                loadSelect(this.branches, user_branch_office);
+                this.key =false;              
+                
+            });       
     }
 
     async sendAddressData(formData) {
@@ -445,4 +481,20 @@ export default class Orders {
         }
     }
 
+}
+
+//LOAD THE NEWS ADDRESSES WHEN CLIENT CLICK IT ON SELECT OPTION!
+const loadSelect = (data, element, selected = null) => {
+    if (element == null) {
+        return;
+    }
+    element.innerHTML = '<option value="" disabled selected>Seleccione</option>';
+    [].forEach.call(data, async (item) => {
+        let option = document.createElement('option');
+        option.value = item.id;
+        option.label = item.name;
+        option.selected = item.id == selected;
+        element.appendChild(option);
+        // console.log("La opcion es: "+option.value);
+    });
 }
