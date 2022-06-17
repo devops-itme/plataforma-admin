@@ -126,10 +126,8 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                     'delivery_office',
                 )
                 ->where('external_id', '<>', null)
-                ->where('country', '<>', 'PAN')
-                // ->date(request()->from, request()->to)
-                ->whereBetween(DB::raw('DATE(created_at)'), [request()->from, request()->to])
-                // ->customer(request()->name)
+                ->where('country', '<>', 'PAN')                
+                ->whereBetween(DB::raw('DATE(created_at)'), [request()->from, request()->to])               
                 ->get();
 
             foreach ($guides as $guide) {
@@ -172,7 +170,6 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         }
 
         if ($from == false and $to == false and $name == false) {
-
             $guides = DB::table('guides')
             ->select(           
                'external_id',
@@ -200,9 +197,6 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
            )
                ->where('external_id', '<>', null)
                ->where('country', '<>', 'PAN')            
-               // ->date(request()->from, request()->to)
-            //    ->whereBetween(DB::raw('DATE(created_at)'), [request()->from, request()->to])
-               // ->customer(request()->name)
                ->get();
 
            foreach ($guides as $guide) {
@@ -276,8 +270,6 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->join('orders as o', 'o.id', '=', 'g.order_id')
                 ->join('users as u', 'u.id', '=', 'o.user_id')
                 ->where('u.name', 'LIKE', '%' . request()->name . '%')
-
-
                 ->get();
 
             foreach ($guides as $guide) {
@@ -318,9 +310,6 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 }
             }
         }
-
-
-
 
         return collect($vector);
     }
