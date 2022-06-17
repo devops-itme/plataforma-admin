@@ -55,6 +55,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     public function headings(): array
     {
         return [
+
             __('numGuia'),
             __('guiaMe'),
             __('FechaCreacion'),
@@ -86,75 +87,241 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     public function collection()
     {
 
-        $guides = Guide::select(
-            'external_id',
-            'pre_guide',
-             DB::raw("DATE_FORMAT(created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),            
-            'branch_office', //Origen
-            'invoice_contact',
-            'recipient_name',
-            'document_type',
-            'document',
-            'email_contact',
-            'address_name',
-            'city',
-            'phone_contact',
-            'country',
-            'pieces',
-            'kg',
-            'declared',
-            'invoice_number', //Guia
-            'dispatched', // Factura            
-            'contact',
-            'description',
-            'novelty',
-            'delivery_office',
-        )
-            ->where('external_id', '<>', null)
-            ->where('country', '<>', 'PAN')            
-            ->date(request()->from, request()->to)
-            ->get();
 
-        foreach ($guides as $guide) {
-            $order1 = json_decode($guide);
-            $Tealca = new Tealca();
-            $Tealca->login();
-            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+        $from = request()->from;
+        $to = request()->to;
+        $name = request()->name;
 
-            foreach ($guideTracking['data'] as $elements) {
-                foreach ($elements['tracking'] as $tracking) {
-                    switch ($tracking['status']) {
-                        case 'Creacion':
-                            $order1->Status = 'VERIFICACION';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
+        // dd($name);
 
-                        case 'Recepcion desde plataforma':
-                            $order1->Status = 'RECEPTADO A BODEGA';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
+        if (!isset($vector)) {
+            $vector = null;
+        }
 
-                        case 'Recepcion desde tienda':
-                            $order1->Status = 'RECEPCION EN SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
+        if ($from and $to) {
 
-                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                            $order1->Status = 'DESPACHO A SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
+            $guides = DB::table('guides')
+                ->select(
+                    'external_id',
+                    'pre_guide',
+                    DB::raw("DATE_FORMAT(created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
+                    'branch_office', //Origen
+                    'invoice_contact',
+                    'recipient_name',
+                    'document_type',
+                    'document',
+                    'email_contact',
+                    'address_name',
+                    'city',
+                    'phone_contact',
+                    'country',
+                    'pieces',
+                    'kg',
+                    'declared',
+                    'invoice_number', //Guia
+                    'dispatched', // Factura            
+                    'contact',
+                    'description',
+                    'novelty',
+                    'delivery_office',
+                )
+                ->where('external_id', '<>', null)
+                ->where('country', '<>', 'PAN')
+                // ->date(request()->from, request()->to)
+                ->whereBetween(DB::raw('DATE(created_at)'), [request()->from, request()->to])
+                // ->customer(request()->name)
+                ->get();
+
+            foreach ($guides as $guide) {
+                // dd($guide);
+                $order1 = $guide;
+                $Tealca = new Tealca();
+                $Tealca->login();
+                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+
+                foreach ($guideTracking['data'] as $elements) {
+                    foreach ($elements['tracking'] as $tracking) {
+                        switch ($tracking['status']) {
+                            case 'Creacion':
+                                $order1->Status = 'VERIFICACION';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+
+                            case 'Recepcion desde plataforma':
+                                $order1->Status = 'RECEPTADO A BODEGA';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+
+                            case 'Recepcion desde tienda':
+                                $order1->Status = 'RECEPCION EN SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+
+                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                                $order1->Status = 'DESPACHO A SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+                        }
                     }
                 }
             }
         }
 
-        if (!isset($vector)) {
-            $vector = null;
+        if ($from == false and $to == false and $name == false) {
+
+            $guides = DB::table('guides')
+            ->select(           
+               'external_id',
+               'pre_guide',
+                DB::raw("DATE_FORMAT(created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),            
+               'branch_office', //Origen
+               'invoice_contact',
+               'recipient_name',
+               'document_type',
+               'document',
+               'email_contact',
+               'address_name',
+               'city',
+               'phone_contact',
+               'country',
+               'pieces',
+               'kg',
+               'declared',
+               'invoice_number', //Guia
+               'dispatched', // Factura            
+               'contact',
+               'description',
+               'novelty',
+               'delivery_office',
+           )
+               ->where('external_id', '<>', null)
+               ->where('country', '<>', 'PAN')            
+               // ->date(request()->from, request()->to)
+            //    ->whereBetween(DB::raw('DATE(created_at)'), [request()->from, request()->to])
+               // ->customer(request()->name)
+               ->get();
+
+           foreach ($guides as $guide) {
+               // dd($guide);
+               $order1 = $guide;
+               $Tealca = new Tealca();
+               $Tealca->login();
+               $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+
+               foreach ($guideTracking['data'] as $elements) {
+                   foreach ($elements['tracking'] as $tracking) {
+                       switch ($tracking['status']) {
+                           case 'Creacion':
+                               $order1->Status = 'VERIFICACION';
+                               $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                               $vector[] = $order1;
+                               break;
+
+                           case 'Recepcion desde plataforma':
+                               $order1->Status = 'RECEPTADO A BODEGA';
+                               $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                               $vector[] = $order1;
+                               break;
+
+                           case 'Recepcion desde tienda':
+                               $order1->Status = 'RECEPCION EN SUCURSAL';
+                               $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                               $vector[] = $order1;
+                               break;
+
+                           case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                               $order1->Status = 'DESPACHO A SUCURSAL';
+                               $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                               $vector[] = $order1;
+                               break;
+                       }
+                   }
+               }
+           }
         }
+
+        if ($from == false and $to == false and $name == true) {
+            // dd($name);
+            $guides = DB::table('guides AS g')
+                ->select(
+                    'external_id',
+                    'pre_guide',
+                    DB::raw("DATE_FORMAT(g.created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
+                    'g.branch_office', //Origen
+                    'invoice_contact',
+                    'recipient_name',
+                    'g.document_type',
+                    'document',
+                    'email_contact',
+                    'g.address_name',
+                    'city',
+                    'phone_contact',
+                    'country',
+                    'pieces',
+                    'kg',
+                    'declared',
+                    'invoice_number', //Guia
+                    'g.dispatched', // Factura            
+                    'contact',
+                    'g.description',
+                    'novelty',
+                    'delivery_office',
+                )
+                ->where('external_id', '<>', null)
+                ->where('country', '<>', 'PAN')
+                ->join('orders as o', 'o.id', '=', 'g.order_id')
+                ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where('u.name', 'LIKE', '%' . request()->name . '%')
+
+
+                ->get();
+
+            foreach ($guides as $guide) {
+                // dd($guide);
+                $order1 = $guide;
+                $Tealca = new Tealca();
+                $Tealca->login();
+                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+
+                foreach ($guideTracking['data'] as $elements) {
+                    foreach ($elements['tracking'] as $tracking) {
+                        switch ($tracking['status']) {
+                            case 'Creacion':
+                                $order1->Status = 'VERIFICACION';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+
+                            case 'Recepcion desde plataforma':
+                                $order1->Status = 'RECEPTADO A BODEGA';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+
+                            case 'Recepcion desde tienda':
+                                $order1->Status = 'RECEPCION EN SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+
+                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                                $order1->Status = 'DESPACHO A SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
         return collect($vector);
     }
 
