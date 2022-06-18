@@ -192,7 +192,7 @@ class GuideController extends Controller
             $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query) {
                 $query->where('order_type', 36);
             })->whereIn('status_matrix_id', $state)
-                ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments'])
+                ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments','getGuideLogs.getIssue'])
                 ->get();
 
             return $this->respond(200, $guides, null, 'Lista de guías packing');

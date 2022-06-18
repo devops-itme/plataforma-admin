@@ -186,7 +186,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Incidencias:</div>
-                        <div class="line-height-xl" v-if="showDataGuide" v-text="'No registra' "></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.issue ? showDataGuide.issue : 'No registra'"></div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
@@ -456,6 +456,8 @@ export default {
             this.showDataGuide.status = data.get_status_matrix.name;
             this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.get_documents;
+            this.showDataGuide.issue = data.get_guide_logs.pop().get_issue.name ?? 'sin incidencias';
+
         },
         async getGuides(type) {
             this.guides2 = [];
