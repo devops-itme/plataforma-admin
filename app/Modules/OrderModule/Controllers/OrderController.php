@@ -108,7 +108,8 @@ class OrderController extends Controller
             'order_type' => 'required',
             'user_id' => 'required',
             'schedule_date' => 'required',
-            'schedule_time_range' => 'required', 
+            'schedule_time_range' => 'required',
+            'order_description' => 'required' 
         ]); 
         $validator = Validator::make(
             $request->all(),
@@ -120,10 +121,10 @@ class OrderController extends Controller
                 'user_id' => 'required',
                 'schedule_date' => 'required',
                 'schedule_time_range' => 'required',
+                'order_description' => 'required' 
                 /* 'guide_address' => 'required', */
                 /* 'phone_contact' => 'required',
-                'contact' => 'required',
-                'guide_description' => 'required' */
+                'contact' => 'required' */
 
             ]
         );

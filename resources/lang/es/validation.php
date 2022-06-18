@@ -251,6 +251,7 @@ return [
         'email_contact' => 'Email contacto',
         'invoice_contact' => 'Factura contacto',
         'same_day_delivery' => 'Some day delivery',
+        'order_description' => 'Descripción',
         'sign' => 'firmar',
         'take_photo' => 'Tomar foto',
         'neighborhood_id' => 'Barrio',
