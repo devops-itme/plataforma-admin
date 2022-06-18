@@ -8675,7 +8675,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.status = data.get_status_matrix.name;
       this.showDataGuide.novelty = data.novelty;
       this.showDataGuide.files = data.get_documents;
-      this.showDataGuide.issue = (_data$get_guide_logs$ = data.get_guide_logs.pop().get_issue.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
+      this.showDataGuide.issue = (_data$get_guide_logs$ = data.get_guide_logs[data.get_guide_logs.length - 1].get_issue.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
     },
     getGuides: function getGuides(type) {
       var _this3 = this;

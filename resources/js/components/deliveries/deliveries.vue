@@ -456,7 +456,7 @@ export default {
             this.showDataGuide.status = data.get_status_matrix.name;
             this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.get_documents;
-            this.showDataGuide.issue = data.get_guide_logs.pop().get_issue.name ?? 'sin incidencias';
+            this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1].get_issue.name ?? 'sin incidencias';
 
         },
         async getGuides(type) {
