@@ -3,6 +3,7 @@
 namespace App\Modules\GuideLogModule;
 
 use App\Http\Controllers\Traits\RestActions;
+use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +28,11 @@ class GuideLog extends Model
     public function getState()
     {
         return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
+    }
+
+    public function getIssue()
+    {
+        return $this->belongsTo(ParameterValue::class, 'issue_id');
     }
 
     public function validateGuideLog($request)

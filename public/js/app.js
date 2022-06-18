@@ -8652,7 +8652,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getGuide: function getGuide(data) {
-      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$get_guide_logs$;
 
       this.showGuide = data;
       this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
@@ -8675,6 +8675,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.status = data.get_status_matrix.name;
       this.showDataGuide.novelty = data.novelty;
       this.showDataGuide.files = data.get_documents;
+      this.showDataGuide.issue = (_data$get_guide_logs$ = data.get_guide_logs[data.get_guide_logs.length - 1].get_issue.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
     },
     getGuides: function getGuides(type) {
       var _this3 = this;
@@ -70324,7 +70325,13 @@ var render = function () {
                   _vm.showDataGuide
                     ? _c("div", {
                         staticClass: "line-height-xl",
-                        domProps: { textContent: _vm._s("No registra") },
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.issue
+                              ? _vm.showDataGuide.issue
+                              : "No registra"
+                          ),
+                        },
                       })
                     : _vm._e(),
                 ]),
