@@ -9963,10 +9963,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -9977,8 +9973,51 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      activeIndex: null
+      activeIndex: null,
+
+      /*  lists: [
+           {
+               additional_address: 'no',
+               additional_email: 'mailcom@gamil.com',
+               additional_phone: '213',
+               address_description: 'Casa Central',
+               address_id: 1,
+               address_lat: '8.537981',
+               address_lng: '-80.782127',
+               address_name: 'Panamá',
+               app_status: 0,
+               branch_office: null,
+               city: null,
+               concept: 'adad',
+               contact: '77777777',
+               corp_value: 0,
+               country: null,
+               created_at: '2022-06-04T20:04:26.000000Z',
+               customer_document_type: '53',
+               declared: null,
+               deleted_at: null,
+           }
+       ], */
+      contact: ''
     };
+  },
+  computed: {
+    guidess: function guidess() {
+      var _this = this;
+
+      console.log(this.contact);
+      return this.guides.filter(function (tblItem) {
+        return _this.contact.toString().toLowerCase().split(" ").every(function (v) {
+          return tblItem.address_name.toLowerCase().includes(v) || tblItem.contact.toLowerCase().includes(v) || tblItem.get_order.schedule_date.toLowerCase().includes(v) || tblItem.get_status_matrix.name.toLowerCase().includes(v) || tblItem.dispatched.toLowerCase().includes(v) || tblItem.get_route.get_messenger.name.toLowerCase().includes(v) || tblItem.get_route.get_messenger.last_name.toLowerCase().includes(v) || tblItem.get_order.get_user.name.toLowerCase().includes(v);
+        }
+        /* tblItem.id.toLowerCase().includes(v) || */
+
+        /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
+        tblItem.app_status.toLowerCase().includes(v) ||                        
+         */
+        );
+      });
+    }
   },
   methods: {
     rowClick: function rowClick(data, index) {
@@ -15342,7 +15381,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
 
 // exports
 
@@ -71680,12 +71719,37 @@ var render = function () {
       _vm._v(" Lista de Destinos"),
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "d-flex flex-row flex-wrap col-md-12 px-0" }),
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "table-responsive col-md-12 px-0 border rounded h-400px" },
+      {
+        staticClass: "table-responsive col-md-12 px-0 border rounded h-400px",
+        attrs: { id: "fil" },
+      },
       [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.contact,
+              expression: "contact",
+            },
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Filtro" },
+          domProps: { value: _vm.contact },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.contact = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
         _c(
           "table",
           {
@@ -71708,13 +71772,11 @@ var render = function () {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.guides, function (tblItem, index) {
+              _vm._l(this.guidess, function (tblItem, index) {
                 return _c(
                   "tr",
                   {
-                    key: tblItem.id,
                     staticClass: "text-center",
-                    class: [{ sortableSelected: index === _vm.activeIndex }],
                     staticStyle: { cursor: "pointer" },
                     on: {
                       click: function ($event) {
@@ -71749,7 +71811,7 @@ var render = function () {
                           tblItem.get_route.get_messenger.name +
                             " " +
                             tblItem.get_route.get_messenger.last_name
-                        )
+                        ) + "\n                    "
                       ),
                     ]),
                     _vm._v(" "),
@@ -71777,47 +71839,7 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "d-flex flex-row flex-wrap col-md-12 px-0" },
-      [
-        _c("div", { staticClass: "form-group col-md-6 pl-0" }, [
-          _c("label", { staticClass: "font-weight-bolder" }, [
-            _vm._v("Filtro"),
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Filtro" },
-          }),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group col-md-6 pr-0" }, [
-          _c("label", { staticClass: "font-weight-bolder" }, [
-            _vm._v("Fecha de evento Desde/Hasta"),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-flex flex-row flex-wrap" }, [
-            _c("input", {
-              staticClass: "form-control col-5 mr-2",
-              attrs: { type: "date" },
-            }),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control col-5",
-              attrs: { type: "date" },
-            }),
-          ]),
-        ]),
-      ]
-    )
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

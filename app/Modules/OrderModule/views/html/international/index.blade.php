@@ -12,7 +12,8 @@
         <form method="post" action="{{ route('internationalOrders.export') }}"> 
             @csrf           
                     <input type="hidden" class="form-control form-control-solid" placeholder="" name="from" value="{{ request()->from }}" />        
-                    <input type="hidden" class="form-control form-control-solid" placeholder="" name="to" value="{{ request()->to }}" />              
+                    <input type="hidden" class="form-control form-control-solid" placeholder="" name="to" value="{{ request()->to }}" />
+                    <input type="hidden" class="form-control form-control-solid" placeholder="" name="name" value="{{ request()->name }}" />              
             
             <div class="card-toolbar">
                 <button type="submit" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="EXPORTAR ÓRDENES">
