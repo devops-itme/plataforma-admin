@@ -100,18 +100,18 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
 
         if ($from and $to) {
 
-            $guides = DB::table('guides')
+            $guides = DB::table('guides AS g')
                 ->select(
                     'external_id',
                     'pre_guide',
-                    DB::raw("DATE_FORMAT(created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
-                    'branch_office', //Origen
+                    DB::raw("DATE_FORMAT(g.created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
+                    'g.branch_office', //Origen
                     'invoice_contact',
                     'recipient_name',
-                    'document_type',
+                    'g.document_type',
                     'document',
                     'email_contact',
-                    'address_name',
+                    'g.address_name',
                     'city',
                     'phone_contact',
                     'country',
@@ -119,15 +119,18 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                     'kg',
                     'declared',
                     'invoice_number', //Guia
-                    'dispatched', // Factura            
+                    'g.dispatched', // Factura            
                     'contact',
-                    'description',
+                    'g.description',
                     'novelty',
                     'delivery_office',
                 )
                 ->where('external_id', '<>', null)
-                ->where('country', '<>', 'PAN')                
-                ->whereBetween(DB::raw('DATE(created_at)'), [request()->from, request()->to])               
+                ->where('country', '<>', 'PAN')
+                ->join('orders as o', 'o.id', '=', 'g.order_id')
+                ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')                 
+                ->whereBetween(DB::raw('DATE(g.created_at)'), [request()->from, request()->to])               
                 ->get();
 
             foreach ($guides as $guide) {
@@ -170,33 +173,36 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         }
 
         if ($from == false and $to == false and $name == false) {
-            $guides = DB::table('guides')
+            $guides = DB::table('guides AS g')
             ->select(           
-               'external_id',
-               'pre_guide',
-                DB::raw("DATE_FORMAT(created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),            
-               'branch_office', //Origen
-               'invoice_contact',
-               'recipient_name',
-               'document_type',
-               'document',
-               'email_contact',
-               'address_name',
-               'city',
-               'phone_contact',
-               'country',
-               'pieces',
-               'kg',
-               'declared',
-               'invoice_number', //Guia
-               'dispatched', // Factura            
-               'contact',
-               'description',
-               'novelty',
-               'delivery_office',
+                'external_id',
+                'pre_guide',
+                DB::raw("DATE_FORMAT(g.created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
+                'g.branch_office', //Origen
+                'invoice_contact',
+                'recipient_name',
+                'g.document_type',
+                'document',
+                'email_contact',
+                'g.address_name',
+                'city',
+                'phone_contact',
+                'country',
+                'pieces',
+                'kg',
+                'declared',
+                'invoice_number', //Guia
+                'g.dispatched', // Factura            
+                'contact',
+                'g.description',
+                'novelty',
+                'delivery_office',
            )
                ->where('external_id', '<>', null)
-               ->where('country', '<>', 'PAN')            
+               ->where('country', '<>', 'PAN')
+               ->join('orders as o', 'o.id', '=', 'g.order_id')
+               ->join('users as u', 'u.id', '=', 'o.user_id')
+               ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')             
                ->get();
 
            foreach ($guides as $guide) {
@@ -266,10 +272,11 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                     'delivery_office',
                 )
                 ->where('external_id', '<>', null)
-                ->where('country', '<>', 'PAN')
+                ->where('country', '<>', 'PAN')                
                 ->join('orders as o', 'o.id', '=', 'g.order_id')
                 ->join('users as u', 'u.id', '=', 'o.user_id')
-                ->where('u.name', 'LIKE', '%' . request()->name . '%')
+                ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')               
+                ->where(DB::raw('concat(u.name," ",u.last_name)'), 'like', '%' . request()->name . '%')
                 ->get();
 
             foreach ($guides as $guide) {
