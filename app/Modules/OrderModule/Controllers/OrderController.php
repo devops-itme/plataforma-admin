@@ -335,6 +335,7 @@ class OrderController extends Controller
             ->whereOrderType(request()->order_type)
             ->customer(request()->name)
             ->date(request()->from, request()->to)
+            ->whereStatusMatrix([request()->state])
             ->with('getUser')->get();
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');

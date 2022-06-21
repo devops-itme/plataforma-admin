@@ -70,9 +70,9 @@
                                 <label for="exampleSelect1">Estado: </label>
                                 <select class="form-control form-control-solid" id="zone" name="state">
                                     <option selected disabled> Seleccione </option>
-                                    <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                    <option value="0"
-                                        {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
+                                    <option value="6" {{ request()->state == 6 ? 'selected' : '' }}>RECOGIDO</option>
+                                    <option value="10"
+                                        {{ request()->state != '' && request()->state == 10 ? 'selected' : '' }}>ENTREGADO
                                     </option>
                                 </select>
                                 <span class="form-text text-muted">Filtro estado</span>
