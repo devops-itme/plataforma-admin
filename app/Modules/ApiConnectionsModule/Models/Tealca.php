@@ -17,10 +17,10 @@ class Tealca
     public function login()
     {
         $loginResponse = Http::post(
-            'http://qaapicore.tealca.com/Account/Login',
+            env("TEALCA_URL") . 'Account/Login',
             [
-                "login"  => "multi.entrega",
-                "password" =>  "KIPWoMOoMAIpWz8MPYgUj2zZc6JUfvmCAM9HLPVw7/M"
+                "login"  => env("TEALCA_USER"),
+                "password" =>  env("TEALCA_PASSWORD")
             ]
         );
         if ($loginResponse->status() != 200) {
@@ -37,7 +37,7 @@ class Tealca
     {
         $response = Http::withHeaders([
             'Authorization' =>  $this->token,
-        ])->get('http://qaapicore.tealca.com/v1/Destinations/' . $destination);
+        ])->get(env("TEALCA_URL") . 'v1/Destinations/' . $destination);
 
         if ($response->status() != 200) {
             return $this->respond(500, null, $response->json(), 'Fallo en el servicio');
@@ -92,7 +92,7 @@ class Tealca
         $createShipmentResponse = Http::withHeaders([
             'Authorization' =>  $this->token,
         ])->post(
-            'http://qaapicore.tealca.com/v1/Shipment/',
+            env("TEALCA_URL") . 'v1/Shipment/',
             $body
         );
 
@@ -112,11 +112,11 @@ class Tealca
         $trackingResponse = Http::withHeaders([
             'Authorization' =>  $this->token,
         ])->get(
-            'http://qaapicore.tealca.com/Tracking?shipment='.$guide
+            env("TEALCA_URL") . 'Tracking?shipment=' . $guide
         );
 
         if ($trackingResponse->status() != 200) {
-            return $this->respond(500, null, $trackingResponse , 'Fallo en el servicio. Guía N° ' . $guide);
+            return $this->respond(500, null, $trackingResponse, 'Fallo en el servicio. Guía N° ' . $guide);
         };
 
 
@@ -128,11 +128,11 @@ class Tealca
         $destination = Http::withHeaders([
             'Authorization' =>  $this->token,
         ])->get(
-            'http://qaapicore.tealca.com/v1/Destinations'
+            env("TEALCA_URL") . 'v1/Destinations'
         );
 
         if ($destination->status() != 200) {
-            return $this->respond(500, null, $destination , 'Fallo en el servicio. Guía N° ');
+            return $this->respond(500, null, $destination, 'Fallo en el servicio. Guía N° ');
         };
 
 
@@ -144,16 +144,14 @@ class Tealca
         $tiendas = Http::withHeaders([
             'Authorization' =>  $this->token,
         ])->get(
-            'http://qaapicore.tealca.com/BusinessUnit?Status=1' 
+            env("TEALCA_URL") . 'BusinessUnit?Status=1'
         );
 
         if ($tiendas->status() != 200) {
-            return $this->respond(500, null, $tiendas , 'Fallo en el servicio. Guía N° ');
+            return $this->respond(500, null, $tiendas, 'Fallo en el servicio. Guía N° ');
         };
 
 
         return $this->respond(200, $tiendas->json(), null, 'successful request');
     }
-
-
 }
