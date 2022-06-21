@@ -38,7 +38,9 @@ class OrderController extends Controller
             ->date(request()->from, request()->to)
             ->whereStatusMatrix([request()->state])
             ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
-                $query->where('name', '!=', 'ENTREGADO');
+                $query->where('name', '!=', 'RECOGIDO')
+                ->where('name', '!=', 'ENTREGADO');
+               
             })
             ->national();
 
@@ -327,7 +329,8 @@ class OrderController extends Controller
     public function record()
     {
         $orders = Order::with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
-            $query->where('name', 'ENTREGADO');
+            $query->where('name', 'ENTREGADO')
+            ->orWhere('name', 'RECOGIDO');
         })->number(request()->number)
             ->whereOrderType(request()->order_type)
             ->customer(request()->name)
