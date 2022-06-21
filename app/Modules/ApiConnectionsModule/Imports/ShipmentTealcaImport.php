@@ -32,13 +32,13 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         $phones = [];
         $messages = [];
         $failed_validation = false;
-        foreach ($rows as $key => $row) {
-            if (count($rows) == ($key + 1) && $failed_validation) {
-                throw ValidationException::withMessages($messages);
-            }
+        foreach ($rows as $key => $row) {            
             if (in_array($row['teldes'], $phones)) {
                 $failed_validation = true;
                 $messages[] = 'Hubo un error en la fila  ' . ($key + 1) . '. El campo teldes(Teléfono de destino) se encuentra repetido.';
+            }
+            if (count($rows) == ($key + 1) && $failed_validation) {
+                throw ValidationException::withMessages($messages);
             }
             $phones[] = $row['teldes'];
         }
