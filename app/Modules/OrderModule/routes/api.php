@@ -12,3 +12,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 Route::get('order/webview/paguelo-facil/response', 'OrderModule\Controllers\Api\OrderController@responseViewPagueloFacil')->name('order.webview.response');
 Route::get('sendPushNotification', 'OrderModule\Controllers\Api\OrderController@sendPushNotification')->name('order.sendPushNotification');
+
+
+//INTERNATIONAL ORDER
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::resource('internationalorders', 'OrderModule\Controllers\Api\InternationalOrderController')->names('internationalorder');
+});
+
+Route::post('enviarlote/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@enviarlote')->name('shipments.assignss');
