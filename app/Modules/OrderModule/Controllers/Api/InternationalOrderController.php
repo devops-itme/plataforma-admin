@@ -175,7 +175,7 @@ class InternationalOrderController extends Controller
     }
     
 
-    public function enviarlote($id)
+    public function enviarlote($id) //ID Order
     {
         $Guide = new Guide();
         $Tealca = new Tealca();
