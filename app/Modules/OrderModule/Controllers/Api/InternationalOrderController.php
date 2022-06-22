@@ -20,6 +20,7 @@ use App\Modules\ZoneModule\Zone;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -69,7 +70,7 @@ class InternationalOrderController extends Controller
 
             $scopes = ParameterValue::whereIn('name', $scope_name)->get(['id']);
             $status = StatusMatrix::whereIn('scope_id', $scopes)->get(['id']);
-            count($status) == 0 && $status = null;          
+            count($status) == 0 && $status = null;
 
             if ($role_name == 'Admin') {
                 // $orders = Order::where('user_id', $user_id)
@@ -126,8 +127,61 @@ class InternationalOrderController extends Controller
             };
             $order_id = $orderResponse['data']['id'];
 
+
+
+            $request->validate([
+                'contact' => 'required|string',
+                'recipient_name' => 'required|string',
+                'address_name' => 'required|string|max:200',
+                'invoice_number' => 'required|alpha_num',
+                'declared' => 'required|numeric',
+                'email_contact' => 'required|email',
+                'pre_guide' => 'required|numeric',
+                'pieces' => 'required|numeric',
+                'kg' => 'required|numeric',
+                'phone_contact' => 'required|numeric',
+                'country' => 'required|string|size:3' ,
+                'city' => 'required|string|size:3',
+                'document_type' => 'required|string',
+                'document' => 'required|numeric',
+                'delivery_office' => 'required|string',
+                'description' => 'nullable',
+
+
+            ]);
+
+            $validator = Validator::make(
+                $request->all(),
+                [
+                'contact' => 'required|string',
+                'recipient_name' => 'required|string',
+                'address_name' => 'required|string|max:200',
+                'invoice_number' => 'required|alpha_num',
+                'declared' => 'required|numeric',
+                'email_contact' => 'required|email',
+                'pre_guide' => 'required|numeric',
+                'pieces' => 'required|numeric',
+                'kg' => 'required|numeric',
+                'phone_contact' => 'required|numeric',
+                'country' => 'required|string|size:3' ,
+                'city' => 'required|string|size:3',
+                'document_type' => 'required|string',
+                'document' => 'required|numeric',
+                'delivery_office' => 'required|string',
+                'description' => 'nullable',
+
+                ]
+            );
+
+            if ($validator->fails()) {
+                // return $this->respond('danger', 'Hace falta 1 o mas campos obligatorios');
+                return redirect()->back()->with('danger', $validator->errors()->first());
+            }
+
+            $order_id = $order->id + 1;
+
             $Order = Guide::create([
-                'order_id' => $order->id + 1,                
+                'order_id' => $order_id,
                 'description' => $request->description,
                 'branch_office' => $request->branch_office,
                 'transport_type' => $request->transport_type,
@@ -167,20 +221,13 @@ class InternationalOrderController extends Controller
                 'boxes' => $request->boxes
             ]);
             DB::commit();
-    
-            return $this->respond(200, $Order, null, 'Orden Internacional creada exitosamente');
-        } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
-        }
-    }
-    
 
-    public function enviarlote($id) //ID Order
-    {
+
+
         $Guide = new Guide();
         $Tealca = new Tealca();
         $Tealca->login();
-        $guideResponse = $Guide->getGuidesByOrder($id, false);
+        $guideResponse = $Guide->getGuidesByOrder($order_id, false);
         if ($guideResponse['state'] != 200) {
             return $guideResponse;
         }
@@ -191,9 +238,15 @@ class InternationalOrderController extends Controller
             }
             $response = $Tealca->requestCreateShipment($guide);
             if ($response['state'] == 200) {
-                return $this->respond(200, $response, null, $response['message']);               
+                return $this->respond(200, $response, null, $response['message']);
             }
-        }       
+        }
+
+            // return $this->respond(200, $Order, null, 'Orden Internacional creada exitosamente');
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
+            //   return $this->respond('danger', 'Hace falta 1 o mas campos obligatorios');
+        }
     }
 
     public function update(Request $request, $id)
@@ -205,6 +258,4 @@ class InternationalOrderController extends Controller
             return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
         }
     }
-
-    
 }

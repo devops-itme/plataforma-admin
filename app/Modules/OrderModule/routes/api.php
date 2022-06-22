@@ -19,4 +19,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('internationalorders', 'OrderModule\Controllers\Api\InternationalOrderController')->names('internationalorder');
 });
 
-Route::post('enviarlote/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@enviarlote')->name('shipments.assignss');
+
