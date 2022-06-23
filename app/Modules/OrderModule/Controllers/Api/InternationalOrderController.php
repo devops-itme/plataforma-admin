@@ -160,15 +160,8 @@ class InternationalOrderController extends Controller
             if (!is_null($order)) {
                 $last_batch = explode('_', $order->order_number)[1];
                 $lot_number = 'Lote_' . ($last_batch + 1);
-                $num = $order->id;
-                $order_id = $num + 1;
             }
-
-            if (is_null($order)) {
-                $order_id = 1;
-            }
-
-
+            
             DB::beginTransaction();
             $orderResponse = $this->storeOrder(new Request(array(
                 // 'user_id' => Auth::user()->id,
@@ -181,7 +174,7 @@ class InternationalOrderController extends Controller
             if ($orderResponse['state'] != 200) {
                 return 0;
             };
-            // $order_id = $orderResponse['data']['id'];
+            $order_id = $orderResponse['data']['id'];
 
             $Order = Guide::create([
                 'order_id' => $order_id,
