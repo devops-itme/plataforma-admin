@@ -57,7 +57,7 @@ class InternationalOrderController extends Controller
 
     public function index(Request $request)
     {
-        $user_id = $request->user_id ?? Auth::user()->id;
+        $user_id = Auth::user()->id;
         $role_name = $request->role_name ?? Auth::user()->getRole->name;
         $scope_name = $request->scope_name ?? [];
         $status_matrix = $request->status_matrix ?? [];
@@ -73,6 +73,15 @@ class InternationalOrderController extends Controller
             count($status) == 0 && $status = null;
 
             if ($role_name == 'Admin') {
+                // $orders = Order::where('user_id', $user_id)
+                $orders = Order::whereStatusMatrix($status_matrix)
+                    ->where('user_id', $user_id)
+                    ->whereStatusMatrix($status)
+                    ->international($order_type)
+                    ->with($this->customerRelationships)->get();
+            }
+
+            if ($role_name == 'Cliente') {
                 // $orders = Order::where('user_id', $user_id)
                 $orders = Order::whereStatusMatrix($status_matrix)
                     ->where('user_id', $user_id)
@@ -106,7 +115,7 @@ class InternationalOrderController extends Controller
 
             $validator = $this->GuideValidate($request);
             if ($validator->fails()) {
-                return $this->respond(500, null, $validator->errors(), "Verfique los campos");
+                return $this->respond(500, null, $validator->errors(), "Verifique los campos");
             }
 
             $user_id = $request->user_id;
@@ -120,16 +129,13 @@ class InternationalOrderController extends Controller
 
             DB::beginTransaction();
             $orderResponse = $this->storeOrder(new Request(array(
-                // 'user_id' => Auth::user()->id,
-                'user_id' => $user_id,
+                'user_id' => Auth::user()->id,
                 'guides' => json_decode($request->guides),
                 'order_number' => $lot_number,
                 'order_type' => $order_type,
                 'creator_user_id' => Auth::user()->id,
             )));
-            if ($orderResponse['state'] != 200) {
-                return 0;
-            };
+
             $order_id = $orderResponse['data']['id'];
 
             $Order = Guide::create([
@@ -193,8 +199,6 @@ class InternationalOrderController extends Controller
             }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
-            //   return $this->respond('danger',null, 'Verfique los campos');
-            // return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
     }
 

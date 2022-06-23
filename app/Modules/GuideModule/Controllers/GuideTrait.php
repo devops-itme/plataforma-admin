@@ -28,7 +28,7 @@ trait GuideTrait
                 'address_lng' => 'nullable',
                 'address_description' => 'nullable',
                 'zone' => 'nullable',
-                'country' => 'required|string|size:3',
+                'country' => 'required|string|size:2',
                 'city' => 'required|string|size:3',
                 'recipient_name' => 'required|string',
                 'document_type' => 'required|string',
@@ -60,7 +60,7 @@ trait GuideTrait
     {
         $validator = $this->GuideValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            return $this->respond(400,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
             $order = Guide::create([
