@@ -251,4 +251,62 @@ class AuthController extends Controller
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
         }
     }
+
+
+
+//LOGIN FOR INTERNATIONAL ORDERS WITHOUT ROLE TYPE(REQUEST)
+
+public function LoginClient(Request $request)
+    {
+        $is_numeric = is_numeric($request->user);
+
+        $validator = Validator::make($request->all(), [
+            'user' => [
+                'required',
+                ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
+                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+            ],
+            'password' => ['required']
+        ]);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+
+        $access_type = $is_numeric ? 'phone' : 'email';
+        $request->merge([$access_type => $request->user]);
+        $credentials = request([$access_type, 'password']);
+
+        if (!Auth::attempt($credentials)) {
+            return $this->respond(401,  $credentials, 'Unauthorized', 'Credenciales invalidas');
+        }
+
+        try {
+            $user = User::where(($is_numeric ? 'phone' : 'email'), $request->user)->first();
+
+            $user_role = Role::where('name', 'Cliente')
+            // ->Orwhere('name', 'Admin')
+            ->first();
+            $user_role_id = $user_role->id;
+
+            if ($user->role != $user_role_id) {
+                return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado' );
+            }
+
+            if ($user->state != 1) {
+                return $this->respond(401,  null, 'Unauthorized', 'Usuario inactivo');
+            }
+            $user->fcm_token = $request->fcm_token ?? NULL;
+            $user->save();
+
+            $token = $user->createToken('authToken')->plainTextToken;
+            return $this->respond(200, $token, null, 'Acceso permitido');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage() . ' Line:' . $e->getLine(), 'Ha ocurrido un error de servidor');
+        }
+    }
+
 }
+
+
+
