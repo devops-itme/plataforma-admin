@@ -104,53 +104,9 @@ class InternationalOrderController extends Controller
     {
         try {
 
-            $request->validate([
-                'contact' => 'required|string',
-                'recipient_name' => 'required|string',
-                'address_name' => 'required|string|max:200',
-                'invoice_number' => 'required|alpha_num',
-                'declared' => 'required|numeric',
-                'email_contact' => 'required|email',
-                'pre_guide' => 'required|numeric',
-                'pieces' => 'required|numeric',
-                'kg' => 'required|numeric',
-                'phone_contact' => 'required|numeric',
-                'country' => 'required|string|size:3',
-                'city' => 'required|string|size:3',
-                'document_type' => 'required|string',
-                'document' => 'required|numeric',
-                'delivery_office' => 'required|string',
-                'description' => 'nullable',
-
-
-            ]);
-
-            $validator = Validator::make(
-                $request->all(),
-                [
-                    'contact' => 'required|string',
-                    'recipient_name' => 'required|string',
-                    'address_name' => 'required|string|max:200',
-                    'invoice_number' => 'required|alpha_num',
-                    'declared' => 'required|numeric',
-                    'email_contact' => 'required|email',
-                    'pre_guide' => 'required|numeric',
-                    'pieces' => 'required|numeric',
-                    'kg' => 'required|numeric',
-                    'phone_contact' => 'required|numeric',
-                    'country' => 'required|string|size:3',
-                    'city' => 'required|string|size:3',
-                    'document_type' => 'required|string',
-                    'document' => 'required|numeric',
-                    'delivery_office' => 'required|string',
-                    'description' => 'nullable',
-
-                ]
-            );
-
+            $validator = $this->GuideValidate($request);
             if ($validator->fails()) {
-                // return $this->respond('danger', 'Hace falta 1 o mas campos obligatorios');
-                return redirect()->back()->with('danger', $validator->errors()->first());
+                return $this->respond(500, null, $validator->errors(), "Verfique los campos");
             }
 
             $user_id = $request->user_id;
@@ -161,7 +117,7 @@ class InternationalOrderController extends Controller
                 $last_batch = explode('_', $order->order_number)[1];
                 $lot_number = 'Lote_' . ($last_batch + 1);
             }
-            
+
             DB::beginTransaction();
             $orderResponse = $this->storeOrder(new Request(array(
                 // 'user_id' => Auth::user()->id,
@@ -232,12 +188,13 @@ class InternationalOrderController extends Controller
                 }
                 $response = $Tealca->requestCreateShipment($guide);
                 if ($response['state'] == 200) {
-                    return $this->respond(200, $response, null, $response['message']);
+                    return $this->respond(200, $response['data'], null, 'Orden internacional creada exitosamente');
                 }
             }
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
-            //   return $this->respond('danger', 'Hace falta 1 o mas campos obligatorios');
+            //   return $this->respond('danger',null, 'Verfique los campos');
+            // return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
     }
 
