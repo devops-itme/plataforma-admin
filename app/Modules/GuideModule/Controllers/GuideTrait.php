@@ -28,7 +28,7 @@ trait GuideTrait
                 'address_lng' => 'nullable',
                 'address_description' => 'nullable',
                 'zone' => 'nullable',
-                'country' => 'required|string|size:2',
+                'country' => 'required|string|size:3',
                 'city' => 'required|string|size:3',
                 'recipient_name' => 'required|string',
                 'document_type' => 'required|string',
