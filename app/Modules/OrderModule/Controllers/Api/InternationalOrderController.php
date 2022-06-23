@@ -242,10 +242,6 @@ class InternationalOrderController extends Controller
                     return $this->respond(200, $response, null, $response['message']);
                 }
             }
-
-
-
-            // return $this->respond(200, $Order, null, 'Orden Internacional creada exitosamente');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
             //   return $this->respond('danger', 'Hace falta 1 o mas campos obligatorios');
