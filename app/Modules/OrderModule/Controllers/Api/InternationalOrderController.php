@@ -1,32 +1,21 @@
 <?php
 
 namespace App\Modules\OrderModule\Controllers\Api;
-
 use App\Http\Controllers\Controller;
-
 use App\Http\Resources\OrderResource;
 use App\Modules\AddressModule\Address;
 use App\Modules\AddressModule\Controllers\AddressTrait;
-use App\Modules\GuidanceDocumentModule\Controllers\GuidanceDocsTrait;
 use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\OrderModule\Controllers\OrderTrait;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
-use App\Modules\RateModule\Rate;
 use App\Modules\StatusMatrixModule\StatusMatrix;
-use App\Modules\GuidanceDocumentModule\Controllers\Api\GuidanceDocumentController;
-use App\Modules\GuidanceDocumentModule\GuidanceDocument;
-use App\Modules\ZoneModule\Zone;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Collection;
-use Illuminate\Validation\ValidationException;
 
 class InternationalOrderController extends Controller
 {
@@ -113,9 +102,78 @@ class InternationalOrderController extends Controller
     {
         try {
 
-            $validator = $this->GuideValidate($request);
+            // $validator = $this->GuideValidate($request);
+
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    // 'order_id' => [$action == 'create' ? 'confirmed' : 'nullable',
+                    //         Rule::requiredIf($action == 'create'), 'exists:orders,id'
+                    // ],
+                    'order_id' => 'nullable',
+                    'branch_office' => 'nullable',
+                    'transport_type' => 'nullable',
+                    'dispatched' => 'nullable',
+                    'address_id' => 'nullable',
+                    'address_name' => 'required|string|max:200',
+                    'address_lat' => 'nullable',
+                    'address_lng' => 'nullable',
+                    'address_description' => 'nullable',
+                    'zone' => 'nullable',
+                    // 'country' => 'required|string|size:2',
+                    'city' => 'required|string|size:3',
+                    'recipient_name' => 'required|string',
+                    'document_type' => 'required|string',
+                    'document' => 'required|numeric',
+                    'delivery_office' => 'required|string',
+                    'pre_guide' => 'required|numeric',
+                    'invoice_number' => 'required|alpha_num',
+                    'declared' => 'required|numeric',
+                    'pieces' => 'required|numeric',
+                    'kg' => 'required|numeric',
+                    'concept' => 'nullable',
+                    'rate' => 'nullable',
+                    'value' => 'nullable',
+                    'corp_value' => 'nullable',
+                    'customer_document_type' => 'nullable',
+                    'contact' => 'required|string',
+                    'phone_contact' => 'required|numeric',
+                    'email_contact' => 'required|email',
+                    'invoice_contact' => 'nullable',
+                    'same_day_delivery' => 'nullable',
+                    'sign' => 'nullable',
+                    'take_photo' => 'nullable',
+                    'packaging' => 'nullable',
+                    'return_last_destination' => 'nullable',
+
+                    //EMPTY TEALCA FIELDS
+                    'DeclaratedValueCurrency' => 'required',
+                    'IsSafeKeeping' => 'required',
+                    'CustomerCode' => 'required',
+                    'BUCodeSource' => 'required',
+                    'ConsigneeCountry' => 'required|string|size:2',
+                    'ConsigneePhoneCode' => 'required',
+                    'EmailType' => 'required',
+                    'ConsigneeTaxIdentTypeCode' => 'required',
+                    'ShipperCountry' => 'required|string|size:2',
+                    'ShipperCity' => 'required',
+                    'ShipperAddress' => 'required',
+                    'ShippingMethodID' => 'required',
+                    'ShipperIdentification' => 'required',
+                    'ShipperName' => 'required',
+                    'ShipperPhoneCode' => 'required',
+                    'ShipperPhone' => 'required',
+                    'ShipperTaxIdentTypeCode' => 'required',
+                    'DeliveryTypeID' => 'required',
+                    'MeasureUnitTypeID' => 'required',
+                    'WeightUnitID' => 'required',
+                    'PackageTypeID' => 'required',
+                ]
+            );
+
+
             if ($validator->fails()) {
-                return $this->respond(400, null, $validator->errors(), "Verifique los campos");
+                return $this->respond(400, null, $validator->errors(), "Solicitud incorrecta");
             }
 
             $user_id = $request->user_id;
@@ -194,7 +252,7 @@ class InternationalOrderController extends Controller
                 }
                 $response = $Tealca->requestCreateShipment($guide);
                 if ($response['state'] == 200) {
-                    return $this->respond(200, $response['data'], null, 'Orden internacional creada exitosamente');
+                    return $this->respond(200, $response['data'], null, 'OK');
                 }
             }
         } catch (\Throwable $e) {

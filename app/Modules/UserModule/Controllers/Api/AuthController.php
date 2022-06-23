@@ -270,7 +270,7 @@ public function LoginClient(Request $request)
         ]);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            return $this->respond(400,$validator->errors(),'Bad Request','Error de validacion');
         }
 
         $access_type = $is_numeric ? 'phone' : 'email';
@@ -300,7 +300,7 @@ public function LoginClient(Request $request)
             $user->save();
 
             $token = $user->createToken('authToken')->plainTextToken;
-            return $this->respond(200, $token, null, 'Acceso permitido');
+            return $this->respond(200, $token, null, 'OK');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage() . ' Line:' . $e->getLine(), 'Ha ocurrido un error de servidor');
         }
