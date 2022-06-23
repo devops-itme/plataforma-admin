@@ -115,7 +115,7 @@ class InternationalOrderController extends Controller
 
             $validator = $this->GuideValidate($request);
             if ($validator->fails()) {
-                return $this->respond(500, null, $validator->errors(), "Verifique los campos");
+                return $this->respond(400, null, $validator->errors(), "Verifique los campos");
             }
 
             $user_id = $request->user_id;
