@@ -285,7 +285,7 @@ public function LoginClient(Request $request)
             $user = User::where(($is_numeric ? 'phone' : 'email'), $request->user)->first();
 
             $user_role = Role::where('name', 'Cliente')
-            // ->Orwhere('name', 'Admin')
+            ->Orwhere('name', 'Admin')
             ->first();
             $user_role_id = $user_role->id;
 
