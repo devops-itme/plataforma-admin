@@ -254,9 +254,9 @@ class AuthController extends Controller
 
 
 
-//LOGIN FOR INTERNATIONAL ORDERS WITHOUT ROLE TYPE(REQUEST)
+    //LOGIN FOR INTERNATIONAL ORDERS WITHOUT ROLE TYPE(REQUEST)
 
-public function LoginClient(Request $request)
+    public function LoginClient(Request $request)
     {
         $is_numeric = is_numeric($request->user);
 
@@ -270,7 +270,7 @@ public function LoginClient(Request $request)
         ]);
 
         if ($validator->fails()) {
-            return $this->respond(400,$validator->errors(),'Bad Request','Error de validacion');
+            return $this->respond(400, $validator->errors(), 'Bad Request', 'Error de validacion');
         }
 
         $access_type = $is_numeric ? 'phone' : 'email';
@@ -284,13 +284,25 @@ public function LoginClient(Request $request)
         try {
             $user = User::where(($is_numeric ? 'phone' : 'email'), $request->user)->first();
 
-            $user_role = Role::where('name', 'Cliente')
-            ->Orwhere('name', 'Admin')
-            ->first();
-            $user_role_id = $user_role->id;
+            $user_role_c = Role::where('name', 'Cliente')
+                ->first();
 
-            if ($user->role != $user_role_id) {
-                return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado' );
+            $user_role_a = Role::where('name', 'Admin')
+                ->first();
+                
+            $user_role_id_c = $user_role_c->id;
+            $user_role_id_a = $user_role_a->id;
+
+            if ($user_role_id_c == null) {
+                if ($user->role != $user_role_id_a) {
+                    return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado');
+                }
+            }
+
+            if ($user_role_id_a == null) {
+                if ($user->role != $user_role_id_c) {
+                    return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado');
+                }
             }
 
             if ($user->state != 1) {
@@ -305,8 +317,4 @@ public function LoginClient(Request $request)
             return $this->respond(500, [], $e->getMessage() . ' Line:' . $e->getLine(), 'Ha ocurrido un error de servidor');
         }
     }
-
 }
-
-
-

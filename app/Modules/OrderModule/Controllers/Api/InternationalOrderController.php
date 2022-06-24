@@ -161,7 +161,7 @@ class InternationalOrderController extends Controller
                     'ConsigneeTaxIdentTypeCode' => 'required|string|max:10',
                     'ShipperCountry' => 'required|string|size:2',
                     'ShipperCity' => 'required|string|size:3',
-                    'ShipperAddress' => 'nullable|string|max:200',
+                    'ShipperAddress' => 'required|string|max:200',
                     'ShippingMethodID' => 'required|numeric|size:10',
                     'ShipperIdentification' => 'required|numeric|digits_between:1,15',
                     'ShipperName' => 'required|max:100',
