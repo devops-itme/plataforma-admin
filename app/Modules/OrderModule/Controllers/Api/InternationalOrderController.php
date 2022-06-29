@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Modules\OrderModule\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Modules\AddressModule\Address;
@@ -47,40 +48,56 @@ class InternationalOrderController extends Controller
     public function index(Request $request)
     {
         $user_id = Auth::user()->id;
-        $role_name = $request->role_name ?? Auth::user()->getRole->name;
-        $scope_name = $request->scope_name ?? [];
-        $status_matrix = $request->status_matrix ?? [];
-        $order_type = "International";
-        $orders = [];
 
         try {
-            $status_matrix = StatusMatrix::whereIn('name', $status_matrix)->get(['id']);
-            count($status_matrix) == 0 && $status_matrix = null;
 
-            $scopes = ParameterValue::whereIn('name', $scope_name)->get(['id']);
-            $status = StatusMatrix::whereIn('scope_id', $scopes)->get(['id']);
-            count($status) == 0 && $status = null;
+            $guides = DB::table('guides AS g')->select('g.id', 'g.external_id', 'g.contact')
+                ->where('g.external_id', '<>', null)
+                ->where('g.state', '1')
+                ->join('orders as o', 'o.id', '=', 'order_id')
+                ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where('u.id', $user_id)
+                ->get();
+            $info_tealca = [];
+            foreach ($guides as $guide) {
+                // dd($guide);
+                $order1 = $guide;
+                $Tealca = new Tealca();
+                $Tealca->login();
+                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-            if ($role_name == 'Admin') {
-                // $orders = Order::where('user_id', $user_id)
-                $orders = Order::whereStatusMatrix($status_matrix)
-                    ->where('user_id', $user_id)
-                    ->whereStatusMatrix($status)
-                    ->international($order_type)
-                    ->with($this->customerRelationships)->get();
+                foreach ($guideTracking['data'] as $elements) {
+                    foreach ($elements['tracking'] as $tracking) {
+                        switch ($tracking['status']) {
+                            case 'Creacion':
+                                $order1->Status = 'VERIFICACION';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $info_tealca[] = $order1;
+                                break;
+
+                            case 'Recepcion desde plataforma':
+                                $order1->Status = 'RECEPTADO A BODEGA';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $info_tealca[] = $order1;
+                                break;
+
+                            case 'Recepcion desde tienda':
+                                $order1->Status = 'RECEPCION EN SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $info_tealca[] = $order1;
+                                break;
+
+                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                                $order1->Status = 'DESPACHO A SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $info_tealca[] = $order1;
+                                break;
+                        }
+                    }
+                }
             }
 
-            if ($role_name == 'Cliente') {
-                // $orders = Order::where('user_id', $user_id)
-                $orders = Order::whereStatusMatrix($status_matrix)
-                    ->where('user_id', $user_id)
-                    ->whereStatusMatrix($status)
-                    ->international($order_type)
-                    ->with($this->customerRelationships)->get();
-            }
-
-            $orders = OrderResource::collection($orders);
-            return $this->respond(200, $orders, null, 'Lista de ordenes');
+            return $this->respond(200, $info_tealca, null, 'Ordenes Internacionales');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
@@ -88,9 +105,8 @@ class InternationalOrderController extends Controller
 
     public function show($order_id)
     {
-        $order_type = "International";
         try {
-            $order = Order::find($order_id)->where('order_type', $order_type)->get();
+            $order = Order::find($order_id);
             $order = OrderResource::collection([$order])[0];
             return $this->respond(200, $order, null, 'Detalle de la orden');
         } catch (\Throwable $e) {
@@ -273,6 +289,8 @@ class InternationalOrderController extends Controller
             return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
         }
     }
+
+    
 
     public function update(Request $request, $id)
     {
