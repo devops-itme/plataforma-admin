@@ -129,6 +129,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->where('country', '<>', 'PAN')
                 ->join('orders as o', 'o.id', '=', 'g.order_id')
                 ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where ('o.deleted_at',null)
                 ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')                 
                 ->whereBetween(DB::raw('DATE(g.created_at)'), [request()->from, request()->to])               
                 ->get();
@@ -202,6 +203,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                ->where('country', '<>', 'PAN')
                ->join('orders as o', 'o.id', '=', 'g.order_id')
                ->join('users as u', 'u.id', '=', 'o.user_id')
+               ->where ('o.deleted_at',null)
                ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')             
                ->get();
 
@@ -275,6 +277,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->where('country', '<>', 'PAN')                
                 ->join('orders as o', 'o.id', '=', 'g.order_id')
                 ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where ('o.deleted_at',null)
                 ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')               
                 ->where(DB::raw('concat(u.name," ",u.last_name)'), 'like', '%' . request()->name . '%')
                 ->get();
