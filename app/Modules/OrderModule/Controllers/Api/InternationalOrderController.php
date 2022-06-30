@@ -56,6 +56,7 @@ class InternationalOrderController extends Controller
                 ->where('g.state', '1')
                 ->join('orders as o', 'o.id', '=', 'order_id')
                 ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where ('o.deleted_at',null)
                 ->where('u.id', $user_id)
                 ->get();
             $info_tealca = [];
