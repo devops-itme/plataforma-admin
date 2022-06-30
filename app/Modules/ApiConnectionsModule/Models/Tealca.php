@@ -49,7 +49,7 @@ class Tealca
     public function requestCreateShipment($guide)
     {
         $body = [
-            "UserLogin" => "multi.entrega",
+            "UserLogin" => env("TEALCA_USER"),
             "PickingNumber" => $guide->pre_guide,
             "Observations" => $guide->description,
             "TotalPieces" => $guide->pieces,
