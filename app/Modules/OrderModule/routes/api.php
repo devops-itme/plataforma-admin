@@ -16,7 +16,9 @@ Route::get('sendPushNotification', 'OrderModule\Controllers\Api\OrderController@
 
 //INTERNATIONAL ORDER
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::resource('internationalOrders', 'OrderModule\Controllers\Api\InternationalOrderController')->names('internationalOrder');
+    // Route::resource('internationalOrders', 'OrderModule\Controllers\Api\InternationalOrderController')->names('internationalOrder');
+    Route::get('internationalOrder/index', 'OrderModule\Controllers\Api\InternationalOrderController@index')->name('internationalOrder.index');
+    Route::post('internationalOrder/create', 'OrderModule\Controllers\Api\InternationalOrderController@store')->name('internationalOrder.create');
 });
 
 
