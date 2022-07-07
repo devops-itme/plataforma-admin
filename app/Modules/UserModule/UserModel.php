@@ -3,6 +3,7 @@
 namespace App\Modules\UserModule;
 
 use App\Http\Controllers\Traits\RestActions;
+use App\Modules\CustomerModule\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -20,12 +21,14 @@ class UserModel extends User
         }
         try {
             $user = User::find($user_id);
-            if (is_null($user)) {
+            $customer = Customer::where('user_id', $user_id)->first();
+            if (is_null($user) || is_null($customer)) {
                 $this->respond(404, $user, 'user not found', 'Usuario no encontrado');
             }
             DB::beginTransaction();
             $user->update(['deleted_by' => $eliminator_user_id]);
             $user->delete();
+            $customer->delete();
             $user->tokens()->delete();
             DB::commit();
             return $this->respond(200, $user, null, 'Cuenta eliminada exitosamente');
