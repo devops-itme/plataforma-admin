@@ -222,30 +222,10 @@
                                         </span>
                                     </td>
                                 @endif
+                                @if ($customer->getUser->deleted_at == null)
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                        {{-- <div class="dropdown dropdown-inline">
-                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip title="Acciones">
-                                                <i class="fad fa-ellipsis-v-alt"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a href="{{route('customers.show', $customer->id)}}" class="dropdown-item align-items-center">
-                            <div class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                <i class="fad fa-folder-open"></i>
-                            </div> Detalle
-                            </a>
-                            <a href="{{route('customers.edit', $customer->id)}}" class="dropdown-item align-items-center">
-                                <div class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fad fa-edit"></i>
-                                </div> Editar
-                            </a>
-                            <button type="button" onclick="deleteResource('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
-                                <div class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fad fa-trash-alt"></i>
-                                </div> Eliminar
-                            </button>
-                        </div>
-    </div> --}}
+
                                         <a href="{{ route('customers.show', $customer->id) }}"
                                             class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
                                             <i class="fad fa-folder-open"></i>
@@ -258,13 +238,10 @@
                                             class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
-
-                                        {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">
-    <i class="fad fa-warehouse"></i>
-    </button> --}}
-                                        {{-- </form> --}}
                                     </div>
                                 </td>
+                                @endif
+
                             </tr>
                         @endforeach
                     @else
