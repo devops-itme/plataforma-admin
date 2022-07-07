@@ -8,6 +8,7 @@ use App\Modules\CustomerModule\Controllers\CustomerTrait;
 use App\Mail\CodeMail;
 use App\Modules\RoleModule\Role;
 use App\Modules\UserModule\User;
+use App\Modules\UserModule\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -80,7 +81,7 @@ class AuthController extends Controller
     {
         // $user = Auth::user();
         // $user->tokens()->delete();
-        return $this->respond(200, null, null, 'Session cerrada con exito');
+        return $this->respond(200, null, null, 'Session cerrada con éxito');
     }
 
     public function recovery(Request $request)
@@ -252,6 +253,11 @@ class AuthController extends Controller
         }
     }
 
+    public function deleteAccount()
+    {
+        $UserModel = new UserModel();
+        return $UserModel->deleteAccount();
+    }
 
 
     //LOGIN FOR INTERNATIONAL ORDERS WITHOUT ROLE TYPE(REQUEST)
@@ -289,7 +295,7 @@ class AuthController extends Controller
 
             $user_role_a = Role::where('name', 'Admin')
                 ->first();
-                
+
             $user_role_id_c = $user_role_c->id;
             $user_role_id_a = $user_role_a->id;
 
