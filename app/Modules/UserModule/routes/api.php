@@ -11,7 +11,9 @@ Route::post('restorePassword', 'UserModule\Controllers\Api\AuthController@restor
 Route::post('resendCode', 'UserModule\Controllers\Api\AuthController@forward');
 Route::post('customer/signIn', 'UserModule\Controllers\Api\AuthController@registerCustomer');
 Route::get('sendPushNotification', 'UserModule\Controllers\UserController@sendPushNotification');
-
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('deleteAccount', 'UserModule\Controllers\Api\AuthController@deleteAccount');
+});
 
 // Auth International Orders API
 Route::post('loginClient', 'UserModule\Controllers\Api\AuthController@LoginClient');

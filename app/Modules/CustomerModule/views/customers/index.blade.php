@@ -112,26 +112,26 @@
                         <div class="row align-items-center">
                             <div class="form-group py-3 m-0 col-md-3">
                                 <label>Nombre del cliente:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Nombre" name="name"
-                                    value="{{ request()->name }}" />
+                                <input type="text" class="form-control form-control-solid" placeholder="Nombre"
+                                    name="name" value="{{ request()->name }}" />
                                 <span class="form-text text-muted">Filtro nombre</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
                                 <label>Número de documento del cliente:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Número de documento"
-                                    name="document" value="{{ request()->document }}" />
+                                <input type="text" class="form-control form-control-solid"
+                                    placeholder="Número de documento" name="document" value="{{ request()->document }}" />
                                 <span class="form-text text-muted">Filtro documento</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
                                 <label>Correo del cliente:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="email@example.com"
-                                    name="email" value="{{ request()->email }}" />
+                                <input type="text" class="form-control form-control-solid"
+                                    placeholder="email@example.com" name="email" value="{{ request()->email }}" />
                                 <span class="form-text text-muted">Filtro correo</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
                                 <label>Teléfono del cliente:</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="+1 (616) 337-9576"
-                                    name="phone" value="{{ request()->phone }}" />
+                                <input type="text" class="form-control form-control-solid"
+                                    placeholder="+1 (616) 337-9576" name="phone" value="{{ request()->phone }}" />
                                 <span class="form-text text-muted">Filtro teléfono</span>
                             </div>
                             <div class="form-group py-3 m-0 col-md-3">
@@ -139,7 +139,9 @@
                                 <select class="form-control form-control-solid" id="zone" name="zone">
                                     <option selected disabled> Seleccione </option>
                                     @foreach ($zones as $item)
-                                        <option value="{{$item->id}}" {{ request()->zone == $item->id ? 'selected' : '' }}>{{$item->name}}</option>
+                                        <option value="{{ $item->id }}"
+                                            {{ request()->zone == $item->id ? 'selected' : '' }}>{{ $item->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <span class="form-text text-muted">Filtro zona</span>
@@ -193,49 +195,37 @@
                             <tr>
                                 {{-- <th scope="row">{{$customer->id}}</th> --}}
                                 {{-- <td>{{$customer->display_name}}</td> --}}
-                                <td>{{ $customer->business_name ?? ($customer->getUser->name ?? '' . ' ' . $customer->getUser->last_name ?? '') }}
+                                <td>{{ $customer->business_name ?? ($customer->getUser->name ?? ('' . ' ' . $customer->getUser->last_name ?? '')) }}
                                 </td>
-                                <td>{{ $customer->getUser->document_number??'' }}</td>
-                                <td>{{ $customer->getUser->email??'' }}</td>
-                                <td>{{ $customer->getUser->phone??'' }}</td>
-                                <td>{{ $customer->getZone->name??'' }}</td>
-                                @if ($customer->state == 1)
+                                <td>{{ $customer->getUser->document_number ?? '' }}</td>
+                                <td>{{ $customer->getUser->email ?? '' }}</td>
+                                <td>{{ $customer->getUser->phone ?? '' }}</td>
+                                <td>{{ $customer->getZone->name ?? '' }}</td>
+                                @if ($customer->state == 1 && $customer->getUser->deleted_at == null)
                                     <td>
                                         <span class="label label-inline label-light-success font-weight-bold">
                                             Activo
                                         </span>
                                     </td>
-                                @else
+                                @endif
+                                @if ($customer->state == 0 && $customer->getUser->deleted_at == null)
                                     <td>
                                         <span class="label label-inline label-light-danger font-weight-bold">
                                             Inactivo
                                         </span>
                                     </td>
                                 @endif
+                                @if ($customer->getUser->deleted_at && $customer->getUser->deleted_by == $customer->getUser->id)
+                                    <td>
+                                        <span class="label label-inline label-light-warning font-weight-bold">
+                                            Eliminado por usuario
+                                        </span>
+                                    </td>
+                                @endif
+                                @if ($customer->getUser->deleted_at == null)
                                 <td>
                                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
-                                        {{-- <div class="dropdown dropdown-inline">
-                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-tooltip title="Acciones">
-                                                <i class="fad fa-ellipsis-v-alt"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a href="{{route('customers.show', $customer->id)}}" class="dropdown-item align-items-center">
-                            <div class="btn btn-icon btn-light-primary btn-sm mr-2">
-                                <i class="fad fa-folder-open"></i>
-                            </div> Detalle
-                            </a>
-                            <a href="{{route('customers.edit', $customer->id)}}" class="dropdown-item align-items-center">
-                                <div class="btn btn-icon btn-light-success btn-sm mr-2">
-                                    <i class="fad fa-edit"></i>
-                                </div> Editar
-                            </a>
-                            <button type="button" onclick="deleteResource('/clientes/'+{{$customer->id}})" class="dropdown-item align-items-center">
-                                <div class="btn btn-icon btn-light-danger btn-sm mr-2">
-                                    <i class="fad fa-trash-alt"></i>
-                                </div> Eliminar
-                            </button>
-                        </div>
-    </div> --}}
+
                                         <a href="{{ route('customers.show', $customer->id) }}"
                                             class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
                                             <i class="fad fa-folder-open"></i>
@@ -248,13 +238,10 @@
                                             class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
                                             <i class="fad fa-trash-alt"></i>
                                         </button>
-
-                                        {{-- <button typer="button" class="btnDepartament btn btn-icon btn-light-primary btn-sm mr-2" onclick="selectBranchOffice({{$customer->user_id}})">
-    <i class="fad fa-warehouse"></i>
-    </button> --}}
-                                        {{-- </form> --}}
                                     </div>
                                 </td>
+                                @endif
+
                             </tr>
                         @endforeach
                     @else
@@ -265,7 +252,7 @@
                 </tbody>
             </table>
             <div class="col-md-12 d-flex align-items-center justify-content-end">
-                {{$customers->links()}}
+                {{ $customers->links() }}
             </div>
             @include('CustomerModule.views.customers.modals.branches.selectBranchOffice')
 

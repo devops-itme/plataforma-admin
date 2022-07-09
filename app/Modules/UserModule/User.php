@@ -35,6 +35,7 @@ class User extends Model implements AuthenticatableContract
         'role',
         'fcm_token',
         'state',
+        'deleted_by'
     ];
 
     /* Logs Config */
