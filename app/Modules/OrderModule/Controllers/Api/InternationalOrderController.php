@@ -49,59 +49,82 @@ class InternationalOrderController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        try {
+        $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
+        $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
 
-            $guides = DB::table('guides AS g')->select('g.id', 'g.external_id', 'g.contact')
-                ->where('g.external_id', '<>', null)
-                ->where('g.state', '1')
-                ->join('orders as o', 'o.id', '=', 'order_id')
-                ->join('users as u', 'u.id', '=', 'o.user_id')
-                ->where ('o.deleted_at',null)
-                ->where('u.id', $user_id)
-                ->get();
-            $info_tealca = [];
-            foreach ($guides as $guide) {
-                // dd($guide);
-                $order1 = $guide;
-                $Tealca = new Tealca();
-                $Tealca->login();
-                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+       $query = DB::select(DB::raw("SELECT g.external_id as external_id, g.contact as contact, g.created_at as AppEventDate
+       FROM guides g
+      JOIN orders o
+      on o.id = g.order_id
+      JOIN users as u
+      on u.id = o.user_id
+      WHERE u.id = '$user_id' and g.state = '1' and g.external_id is not null and o.deleted_at is null and g.created_at between '$fecha_begin' and '$fecha_end' " ));
 
-                foreach ($guideTracking['data'] as $elements) {
-                    foreach ($elements['tracking'] as $tracking) {
-                        switch ($tracking['status']) {
-                            case 'Creacion':
-                                $order1->Status = 'VERIFICACION';
-                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                                $info_tealca[] = $order1;
-                                break;
+foreach ($query as $guide) {
+    // dd($guide);
+    $order1 = $guide;
+    $Tealca = new Tealca();
+    $Tealca->login();
+    $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-                            case 'Recepcion desde plataforma':
-                                $order1->Status = 'RECEPTADO A BODEGA';
-                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                                $info_tealca[] = $order1;
-                                break;
+    foreach ($guideTracking['data'] as $elements) {
+        foreach ($elements['tracking'] as $tracking) {
+            switch ($tracking['status']) {
+                case 'Creacion':
+                    $order1->Status = 'VERIFICACION';
+                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                    $info_tealca[] = $order1;
+                    break;
 
-                            case 'Recepcion desde tienda':
-                                $order1->Status = 'RECEPCION EN SUCURSAL';
-                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                                $info_tealca[] = $order1;
-                                break;
+                case 'Recepcion desde plataforma':
+                    $order1->Status = 'RECEPTADO A BODEGA';
+                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                    $info_tealca[] = $order1;
+                    break;
 
-                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                                $order1->Status = 'DESPACHO A SUCURSAL';
-                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                                $info_tealca[] = $order1;
-                                break;
-                        }
-                    }
-                }
+                case 'Recepcion desde tienda':
+                    $order1->Status = 'RECEPCION EN SUCURSAL';
+                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                    $info_tealca[] = $order1;
+                    break;
+
+                case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                    $order1->Status = 'DESPACHO A SUCURSAL';
+                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                    $info_tealca[] = $order1;
+                    break;
             }
-
-            return $this->respond(200, $info_tealca, null, 'Ordenes Internacionales');
-        } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
+    }
+}
+         return datatables()
+            ->of($query)
+            /*->editColumn('Fecha', function($data){
+        $fecha_plan =  substr($data->AppEventDate, 0, -9);
+        return $fecha_plan;
+      })*/
+            ->addColumn('FechaTime', function ($data) {
+                $AppEventDate = strtotime($data->Fecha);
+                $texto =  $AppEventDate;
+                return $texto;
+            })
+            ->addColumn('action', function ($data) {
+                $button = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="tooltip" data-placement="left" title="Detalles" id="' . $data->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+                return $button;
+            })
+
+            ->toJson();
+
+    }
+
+    public function permissionsAccions(Request $request, $id)
+    {
+        $array = array();
+        $id_user = Auth::user()->id;
+        // $permission_sql = DB::select( DB::raw("SELECT DISTINCT (ucm.id), uwug.grant_excel, uwug.grant_label FROM udpWebUserGrants uwug, udpClientModDocType ucmdt, udpClientModules ucm WHERE uwug.user_id = '$id_user' AND uwug.client_doctype_id = ucmdt.id AND ucm.id = ucmdt.module_id AND uwug.active = '1'"));
+        $permission_sql = ['id' => 1, 'grant_excel' => 1, 'grant_label' => 1];
+        return response()->json($permission_sql);
+        // return 'Entro';
     }
 
     public function show($order_id)
@@ -291,7 +314,7 @@ class InternationalOrderController extends Controller
         }
     }
 
-    
+
 
     public function update(Request $request, $id)
     {
