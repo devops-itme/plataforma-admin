@@ -49,55 +49,131 @@ class InternationalOrderController extends Controller
     {
         $user_id = Auth::user()->id;
 
+
+        try {
+            $guides = DB::table('guides AS g')->select('g.id', 'g.external_id', 'g.contact')
+                ->where('g.external_id', '<>', null)
+                ->where('g.state', '1')
+                ->join('orders as o', 'o.id', '=', 'order_id')
+                ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where('o.deleted_at', null)
+                ->where('u.id', $user_id)
+                ->get();
+
+
+            $info_tealca = [];
+
+            foreach ($guides as $guide) {
+                // dd($guide);
+                $order1 = $guide;
+                $Tealca = new Tealca();
+                $Tealca->login();
+                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+
+                foreach ($guideTracking['data'] as $elements) {
+                    foreach ($elements['tracking'] as $tracking) {
+                        switch ($tracking['status']) {
+                            case 'Creacion':
+                                $order1->Status = 'VERIFICACION';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $info = get_object_vars($order1);
+                                $status[] = $info['Status'];
+                                $date[] = $info['Fecha'];
+                                $info_tealca[] = $order1;
+                                break;
+
+                            case 'Recepcion desde plataforma':
+                                $order1->Status = 'RECEPTADO A BODEGA';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $info = get_object_vars($order1);
+                                $status[] = $info['Status'];
+                                $date[] = $info['Fecha'];
+                                $info_tealca[] = $order1;
+                                break;
+
+                            case 'Recepcion desde tienda':
+                                $order1->Status = 'RECEPCION EN SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $info = get_object_vars($order1);
+                                $status[] = $info['Status'];
+                                $date[] = $info['Fecha'];
+                                $info_tealca[] = $order1;
+                                break;
+
+                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                                $order1->Status = 'DESPACHO A SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+
+                                $info = get_object_vars($order1);
+                                $status[] = $info['Status'];
+                                $date[] = $info['Fecha'];
+                                $info_tealca[] = $order1;
+                                break;
+                        }
+                    }
+                }
+            }
+
+
+            return $this->respond(200,  $info_tealca, null, 'Ordenes Internacionales');
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
+
+    public function services(Request $request)
+    {
+        $user_id = Auth::user()->id;
+
         $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
 
-       $query = DB::select(DB::raw("SELECT g.external_id as external_id, g.contact as contact, g.created_at as AppEventDate
+        $query = DB::select(DB::raw("SELECT g.external_id as external_id, g.contact as contact, g.created_at as AppEventDate
        FROM guides g
       JOIN orders o
       on o.id = g.order_id
       JOIN users as u
       on u.id = o.user_id
-      WHERE u.id = '$user_id' and g.state = '1' and g.external_id is not null and o.deleted_at is null and g.created_at between '$fecha_begin' and '$fecha_end' " ));
+      WHERE u.id = '$user_id' and g.state = '1' and g.external_id is not null and o.deleted_at is null and g.created_at between '$fecha_begin' and '$fecha_end' "));
 
-foreach ($query as $guide) {
-    // dd($guide);
-    $order1 = $guide;
-    $Tealca = new Tealca();
-    $Tealca->login();
-    $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+        foreach ($query as $guide) {
+            // dd($guide);
+            $order1 = $guide;
+            $Tealca = new Tealca();
+            $Tealca->login();
+            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-    foreach ($guideTracking['data'] as $elements) {
-        foreach ($elements['tracking'] as $tracking) {
-            switch ($tracking['status']) {
-                case 'Creacion':
-                    $order1->Status = 'VERIFICACION';
-                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                    $info_tealca[] = $order1;
-                    break;
+            foreach ($guideTracking['data'] as $elements) {
+                foreach ($elements['tracking'] as $tracking) {
+                    switch ($tracking['status']) {
+                        case 'Creacion':
+                            $order1->Status = 'VERIFICACION';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $info_tealca[] = $order1;
+                            break;
 
-                case 'Recepcion desde plataforma':
-                    $order1->Status = 'RECEPTADO A BODEGA';
-                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                    $info_tealca[] = $order1;
-                    break;
+                        case 'Recepcion desde plataforma':
+                            $order1->Status = 'RECEPTADO A BODEGA';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $info_tealca[] = $order1;
+                            break;
 
-                case 'Recepcion desde tienda':
-                    $order1->Status = 'RECEPCION EN SUCURSAL';
-                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                    $info_tealca[] = $order1;
-                    break;
+                        case 'Recepcion desde tienda':
+                            $order1->Status = 'RECEPCION EN SUCURSAL';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $info_tealca[] = $order1;
+                            break;
 
-                case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                    $order1->Status = 'DESPACHO A SUCURSAL';
-                    $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                    $info_tealca[] = $order1;
-                    break;
+                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                            $order1->Status = 'DESPACHO A SUCURSAL';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $info_tealca[] = $order1;
+                            break;
+                    }
+                }
             }
         }
-    }
-}
-         return datatables()
+        return datatables()
             ->of($query)
             /*->editColumn('Fecha', function($data){
         $fecha_plan =  substr($data->AppEventDate, 0, -9);
@@ -114,7 +190,6 @@ foreach ($query as $guide) {
             })
 
             ->toJson();
-
     }
 
     public function permissionsAccions(Request $request, $id)
