@@ -49,15 +49,15 @@ class Tealca
     public function requestCreateShipment($guide)
     {
         $body = [
-            "UserLogin" => env("TEALCA_USER"),
-            "PickingNumber" => $guide->pre_guide,
-            "Observations" => $guide->description,
-            "TotalPieces" => $guide->pieces,
+            "UserLogin" => 'multientrega.pa',
+            "PickingNumber" => 1,
+            "Observations" => "",
+            "TotalPieces" => 3,
             "DeclaratedValueCurrency" => "USD",
             "IsSafeKeeping" => 0, //
             "DeclaratedValue" => $guide->declared,
             "CustomerCode" => "2722",
-            "BUCodeSource" => "1102", //
+            "BUCodeSource" => "NN", //
             // "ConsigneeCountry" =>  $guide->country,
             "ConsigneeCountry" =>  'VE',
             "ConsigneeCity" =>  $guide->city,
