@@ -57,7 +57,7 @@ class Tealca
             "IsSafeKeeping" => 0, //
             "DeclaratedValue" => $guide->declared,
             "CustomerCode" => "2722",
-            "BUCodeSource" => "1102", //
+            "BUCodeSource" => "NN", //
             // "ConsigneeCountry" =>  $guide->country,
             "ConsigneeCountry" =>  'VE',
             "ConsigneeCity" =>  $guide->city,
