@@ -49,10 +49,10 @@ class Tealca
     public function requestCreateShipment($guide)
     {
         $body = [
-            "UserLogin" => 'multientrega.pa',
-            "PickingNumber" => 1,
-            "Observations" => "",
-            "TotalPieces" => 3,
+            "UserLogin" => env("TEALCA_USER"),
+            "PickingNumber" => $guide->pre_guide,
+            "Observations" => $guide->description,
+            "TotalPieces" => $guide->pieces,
             "DeclaratedValueCurrency" => "USD",
             "IsSafeKeeping" => 0, //
             "DeclaratedValue" => $guide->declared,
