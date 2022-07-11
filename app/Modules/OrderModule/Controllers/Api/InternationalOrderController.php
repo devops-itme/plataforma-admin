@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class InternationalOrderController extends Controller
 {
@@ -173,8 +174,7 @@ class InternationalOrderController extends Controller
                 }
             }
         }
-        return datatables()
-            ->of($query)
+        return DataTables::of($query)
             /*->editColumn('Fecha', function($data){
         $fecha_plan =  substr($data->AppEventDate, 0, -9);
         return $fecha_plan;
