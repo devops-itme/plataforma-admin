@@ -23,4 +23,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('internationalOrder/detail/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@show_destinations')->name('internationalOrder.detail');;
 });
 
+Route::post('web/export/order', 'OrderModule\Controllers\Api\InternationalOrderController@export2')->name('internationalOrder.export');
 

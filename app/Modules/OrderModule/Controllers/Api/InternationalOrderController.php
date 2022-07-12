@@ -5,12 +5,14 @@ namespace App\Modules\OrderModule\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Modules\AddressModule\Address;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Modules\AddressModule\Controllers\AddressTrait;
 use App\Modules\GuideModule\Controllers\GuideTrait;
 use App\Modules\OrderModule\Controllers\OrderTrait;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\StatusMatrixModule\StatusMatrix;
+use App\Modules\OrderModule\Exports\OrdersExportServices;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use Illuminate\Http\Request;
@@ -466,4 +468,15 @@ foreach ($query as $guide) {
             return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
         }
     }
+
+    public function export2(Request $request){
+
+        // $id_user = $request['user']['grl_persona_id'];
+        $fecha_begin = date('Y-m-d 00:00:00', ((int)$request->begin / 1000));
+        $fecha_end = date('Y-m-d 23:59:59', ((int)$request->end / 1000));
+
+        return Excel::download(new OrdersExportServices($fecha_begin,$fecha_end), 'prueba.xls');
+      }
+
+
 }
