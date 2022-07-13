@@ -173,26 +173,60 @@ class InternationalOrderController extends Controller
                 foreach ($elements['tracking'] as $tracking) {
                     switch ($tracking['status']) {
                         case 'Creacion':
-                            $order1->Status = 'VERIFICACION';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $tealca['Status'] ='VERIFICACION';
+                            $tealca['description'] =$tracking['description'];
+                            $tealca['city'] =$tracking['city'];
+                            $tealca['state'] =$tracking['state'];
+                            $tealca['description'] =$tracking['description'];
+                            $tealca['locationZone'] =$tracking['locationZone'];
+                            $tealca['date'] =date('Y/m/d H:i:s', strtotime($tracking['date']));
+
+                            // $sumando['Status'] ='RECEPTADO A BODEGA';
+                            // $sumando['description'] =$tracking['description'];
+                            // $sumando['city'] =$tracking['city'];
+                            // $sumando['state'] =$tracking['state'];
+                            // $sumando['description'] =$tracking['description'];
+                            // $sumando['locationZone'] =$tracking['locationZone'];
+                            // $sumando['date'] =date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            // $order1->historical[]= $sumando;
+
+                            $order1->historical[]=$tealca;
                             $info_tealca[] = $order1;
                             break;
 
                         case 'Recepcion desde plataforma':
-                            $order1->Status = 'RECEPTADO A BODEGA';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $tealca['Status']  = 'RECEPTADO A BODEGA';
+                            $tealca['description'] =$tracking['description'];
+                            $tealca['city'] =$tracking['city'];
+                            $tealca['state'] =$tracking['state'];
+                            $tealca['description'] =$tracking['description'];
+                            $tealca['locationZone'] =$tracking['locationZone'];
+                            $tealca['date'] =date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $order1->historical[]= $tealca;
                             $info_tealca[] = $order1;
                             break;
 
                         case 'Recepcion desde tienda':
-                            $order1->Status = 'RECEPCION EN SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $tealca['Status']  = 'RECEPCION EN SUCURSAL';
+                            $tealca['description'] =$tracking['description'];
+                            $tealca['city'] =$tracking['city'];
+                            $tealca['state'] =$tracking['state'];
+                            $tealca['description'] =$tracking['description'];
+                            $tealca['locationZone'] =$tracking['locationZone'];
+                            $tealca['date'] =date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $order1->historical[]= $tealca;
                             $info_tealca[] = $order1;
                             break;
 
                         case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                            $order1->Status = 'DESPACHO A SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $tealca['Status']  = 'DESPACHO A SUCURSAL';
+                            $tealca['description'] =$tracking['description'];
+                            $tealca['city'] =$tracking['city'];
+                            $tealca['state'] =$tracking['state'];
+                            $tealca['description'] =$tracking['description'];
+                            $tealca['locationZone'] =$tracking['locationZone'];
+                            $tealca['date'] =date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $order1->historical[]= $tealca;
                             $info_tealca[] = $order1;
                             break;
                     }
@@ -205,8 +239,18 @@ class InternationalOrderController extends Controller
         return $fecha_plan;
       })*/
             ->addColumn('FechaTime', function ($data) {
-                $AppEventDate = strtotime($data->Fecha);
+                $AppEventDate = $data->historical[0]['date'];
                 $texto =  $AppEventDate;
+                return $texto;
+            })
+            ->addColumn('Fecha', function ($data) {
+                $AppEventDate = $data->historical[0]['date'];
+                $texto =  $AppEventDate;
+                return $texto;
+            })
+            ->addColumn('Status', function ($data) {
+                $status = $data->historical[0]['Status'];
+                $texto =  $status;
                 return $texto;
             })
             ->addColumn('action', function ($data) {
