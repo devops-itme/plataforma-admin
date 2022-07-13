@@ -63,7 +63,7 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
         return [
 
             __('numGuia'),
-            __('guiaMe'),
+            // __('guiaMe'),
             __('FechaCreacion'),
             __('Origen'),
             __('codCustomer'),
@@ -112,7 +112,6 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
             $guides = DB::table('guides AS g')
                 ->select(
                     'external_id',
-                    'pre_guide',
                     DB::raw("DATE_FORMAT(g.created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
                     'g.branch_office', //Origen
                     'invoice_contact',
@@ -127,8 +126,8 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
                     'pieces',
                     'kg',
                     'declared',
-                    'invoice_number', //Guia
                     'g.dispatched', // Factura
+                    'pre_guide', //Guia
                     'contact',
                     'g.description',
                     'novelty',
