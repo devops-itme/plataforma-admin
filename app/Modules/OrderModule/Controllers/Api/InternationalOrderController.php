@@ -571,11 +571,10 @@ foreach ($query as $guide) {
 
     public function export2(Request $request){
 
-        // $id_user = $request['user']['grl_persona_id'];
         $fecha_begin = date('Y-m-d 00:00:00', ((int)$request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ((int)$request->end / 1000));
 
-        return Excel::download(new OrdersExportServices($fecha_begin,$fecha_end), 'prueba.xls');
+        return Excel::download(new OrdersExportServices(Auth::user()->id,$fecha_begin,$fecha_end), 'prueba.xls');
       }
 
 

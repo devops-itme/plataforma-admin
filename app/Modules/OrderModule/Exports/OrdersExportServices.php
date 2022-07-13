@@ -23,10 +23,11 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
      * @return \Illuminate\Support\Collection
      */
 
-    public function __construct($date_start, $date_end) {
+    public function __construct($user_id,$date_start, $date_end) {
 
         $this->date_start = $date_start;
         $this->date_end = $date_end;
+        $this->user_id = $user_id;
     }
 
     public function map($guide): array
@@ -140,6 +141,7 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
                 ->where ('o.deleted_at',null)
                 ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
                 ->whereBetween(DB::raw('DATE(g.created_at)'), [$date_start, $date_end])
+                ->where('u.id',$this->user_id)
                 ->get();
 
             foreach ($guides as $guide) {
