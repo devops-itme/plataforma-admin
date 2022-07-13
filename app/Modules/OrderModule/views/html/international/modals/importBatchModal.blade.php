@@ -17,7 +17,11 @@
                             <option value="" id="user_id" selected disabled>Seleccione un cliente</option>
                             @foreach ($customers as $customer)
                             <option {{ old('customer') == $customer->getUser->id ? 'selected ' : '' }} value="{{ $customer->getUser->id }}">
-                                {{ $customer->getUser->name . ' ' . $customer->getUser->last_name }}
+                                @if (!isset($customer->getUser->name))
+                                {{ $customer->business_name }}
+                              @else
+                              {{ $customer->getUser->name . ' ' . $customer->getUser->last_name }}
+                                @endif
                             </option>
                             @endforeach
                         </select>
@@ -25,7 +29,7 @@
                     @else
                     <input type="hidden" name="user_id" id="customer_id" value="{{ Auth::user()->id }}">
                     @endif
-                    <div class="form-group col-md-12">                      
+                    <div class="form-group col-md-12">
                         <label for="customer">Cargar Excel. <span class="text-danger">*</span></label>
                         <div class="row mx-2">
                             <input class="form-input" type="checkbox" value="true" name="unique_phone" id="">
