@@ -139,7 +139,6 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
                 ->join('orders as o', 'o.id', '=', 'g.order_id')
                 ->join('users as u', 'u.id', '=', 'o.user_id')
                 ->where ('o.deleted_at',null)
-                ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
                 ->whereBetween(DB::raw('DATE(g.created_at)'), [$date_start, $date_end])
                 ->where('u.id',$this->user_id)
                 ->get();
