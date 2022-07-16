@@ -233,6 +233,10 @@ class InternationalOrderController extends Controller
                             $order1->historical[]= $tealca;
                             $info_tealca[] = $order1;
                             break;
+
+                            default:
+                            $order1->historical[]= $tracking;
+                            $info_tealca[] = $order1;
                     }
                 }
             }
