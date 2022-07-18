@@ -23,6 +23,7 @@ class GuideLogController extends Controller
     public function store(Request $request)
     {
         try {
+            return $request->all();
             $GuideLog = new GuideLog();
             return $GuideLog->saveGuideLog($request);
         } catch (\Throwable $e) {
