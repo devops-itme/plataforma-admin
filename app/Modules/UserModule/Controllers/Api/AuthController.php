@@ -37,7 +37,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
             'password' => ['required']
         ]);
@@ -91,7 +91,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
         ]);
 
@@ -122,7 +122,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
             'code' => 'required|exists:users,code'
         ]);
@@ -152,7 +152,7 @@ class AuthController extends Controller
                 'user' => [
                     'required',
                     ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                    ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                    ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
                 ],
                 'password' => 'required|min:6|confirmed'
             ]);
@@ -179,7 +179,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
         ]);
 
@@ -270,7 +270,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
             'password' => ['required']
         ]);
