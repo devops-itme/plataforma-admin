@@ -279,7 +279,7 @@ class OrderController extends Controller
                 return $this->respond(500, null, 'not found', 'No se encontró la orden');
             }
             if ($order->update($request->all())) {
-                $order = $order->with($this->messengerRelationships)->get();
+                $order = $order->load($this->messengerRelationships);
                 $order = OrderResource::collection([$order])[0];
                 return $this->respond(200, $order, null, 'Haz culminado esta orden');
             }
