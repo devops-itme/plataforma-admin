@@ -9962,7 +9962,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -10013,7 +10012,7 @@ __webpack_require__.r(__webpack_exports__);
         /* tblItem.id.toLowerCase().includes(v) || */
 
         /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
-        tblItem.app_status.toLowerCase().includes(v) ||                        
+        tblItem.app_status.toLowerCase().includes(v) ||
          */
         );
       });
@@ -15381,7 +15380,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -71811,7 +71810,7 @@ var render = function () {
                           tblItem.get_route.get_messenger.name +
                             " " +
                             tblItem.get_route.get_messenger.last_name
-                        ) + "\n                    "
+                        )
                       ),
                     ]),
                     _vm._v(" "),
@@ -90548,8 +90547,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Desktop\DevelopApp\Projects\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Desktop\DevelopApp\Projects\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

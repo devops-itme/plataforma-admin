@@ -606,8 +606,6 @@ export default {
                 .catch(e => console.log(e));
             return response;
         }
-
-
     },
 
      async mounted() {
@@ -617,6 +615,5 @@ export default {
         this.transportTypes();
         this.paymentMethods();
     },
-
 };
 </script>
