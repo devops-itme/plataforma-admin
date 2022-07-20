@@ -29,8 +29,7 @@
                         <td>{{ tblItem.dispatched }}</td>
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
-                        <td>{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}
-                        </td>
+                        <td>{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
                         <td>{{ tblItem.get_order.get_user.name }}</td>
                         <td>{{ tblItem.contact }}</td>
@@ -108,7 +107,7 @@ export default {
                         tblItem.get_order.get_user.name.toLowerCase().includes(v)
                         /* tblItem.id.toLowerCase().includes(v) || */
                         /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
-                        tblItem.app_status.toLowerCase().includes(v) ||                        
+                        tblItem.app_status.toLowerCase().includes(v) ||
                          */
                     );
             });
@@ -121,9 +120,6 @@ export default {
             this.activeIndex = index;
             this.$emit("getGuide", data);
         }
-
-
     },
 }
-
 </script>
