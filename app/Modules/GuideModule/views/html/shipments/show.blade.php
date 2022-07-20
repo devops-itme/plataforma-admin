@@ -39,7 +39,7 @@
                             <span class="badge badge-pill badge-success">DESPACHO A SUCURSAL</span>
                             @break
                             @default
-                            <span class="badge badge-pill badge-success">{{$info['status']}}</span>
+                            <span class="badge badge-pill badge-success">{{$info[0]['status']}}</span>
                             @endswitch
                         </td>
                     </tr>
