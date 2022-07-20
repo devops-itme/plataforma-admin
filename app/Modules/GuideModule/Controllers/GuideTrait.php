@@ -172,6 +172,7 @@ trait GuideTrait
                 'additional_email' => 'nullable|email',
                 'additional_phone' => 'nullable|numeric',
                 'novelty' => 'nullable|string',
+                'recipient_name' => 'nullable|string',
             ]
         );
         if ($validator->fails()) {
