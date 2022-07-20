@@ -15,6 +15,7 @@
             </h2>
         </div>
     </div>
+
     @if ($history['state'] == 200)
         <br>
         <div style="margin-left: 9%">
@@ -24,7 +25,7 @@
                     </tr>
                     <tr>
                     <td style="font-size:13px">
-                            @switch($info['status'])
+                            @switch($info[0]['status'])
                             @case('Creacion')
                             <span class="badge badge-pill badge-success">VERIFICACION</span>
                             @break
@@ -195,10 +196,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach ($info as $tracking)
                             <tr>
-                                <td>{{ date('Y-m-d h:i:s', strtotime($info['date'])) }}</td>
+                                <td>{{ date('Y-m-d h:i:s', strtotime($tracking['date'])) }}</td>
                                 <td style="padding: 0 70% 0 0">
-                                    @switch($info['status'])
+                                    @switch($tracking['status'])
                                     @case('Creacion')
                                     <span class="badge badge-pill badge-success">VERIFICACION</span>
                                     @break
@@ -216,11 +218,14 @@
                                     @endswitch
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
+
             @endif
+
     </div>
 </div>
 </form>
