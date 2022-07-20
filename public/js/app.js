@@ -9962,6 +9962,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -71804,15 +71805,17 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.get_order.schedule_date))]),
                     _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(
-                          tblItem.get_route.get_messenger.name +
-                            " " +
-                            tblItem.get_route.get_messenger.last_name
-                        )
-                      ),
-                    ]),
+                    tblItem.dispatched != null
+                      ? _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              tblItem.get_route.get_messenger.name +
+                                " " +
+                                tblItem.get_route.get_messenger.last_name
+                            )
+                          ),
+                        ])
+                      : _c("td", [_vm._v("Sin Asignar")]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(

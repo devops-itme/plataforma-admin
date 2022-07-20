@@ -29,7 +29,8 @@
                         <td>{{ tblItem.dispatched }}</td>
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
-                        <td>{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
+                        <td v-if="tblItem.dispatched != null">{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
+                        <td v-else>Sin Asignar</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
                         <td>{{ tblItem.get_order.get_user.name }}</td>
                         <td>{{ tblItem.contact }}</td>
