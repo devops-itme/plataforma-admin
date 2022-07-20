@@ -130,9 +130,9 @@ class Guide extends Model
         return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
     }
 
-    public function getLastIssue()
+    public function getIssues()
     {
-        return $this->hasOne(GuideLog::class, 'guide_id')->whereNotNull('issue_id')->latest()->first();
+        return $this->hasMany(GuideLog::class, 'guide_id')->whereNotNull('issue_id')->latest();
     }
 
     public function getTransportType()
