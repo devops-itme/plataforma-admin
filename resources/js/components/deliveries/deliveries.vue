@@ -141,11 +141,11 @@
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Depto:</div>
-                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_depto" >84: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_depto ? showDataGuide.client_depto: 'No registra'" >84: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
-                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_branch_office">1179: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_branch_office ? showDataGuide.client_branch_office: 'No registra'">1179: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Documento:</div>
@@ -444,8 +444,8 @@ export default {
             this.showDataGuide.programming = data.get_order.schedule_date;
             this.showDataGuide.transport =  data.get_transport_type?.name;
             this.showDataGuide.movil = data.get_route&&(data.get_route?.get_messenger?.name+' '+data.get_route?.get_messenger?.last_name);
-            this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department?.id+':'+data.get_branch_office?.get_department?.get_department?.name;
-            this.showDataGuide.client_branch_office = data.get_branch_office?.id+': '+data.get_branch_office?.name;
+            this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department?.id+':'+data.get_branch_office?.get_department?.get_department?.name ? this.showDataGuide.client_depto: 'No registra';
+            this.showDataGuide.client_branch_office = data.get_branch_office?.id+': '+data.get_branch_office?.name ? this.showDataGuide.client_branch_office: 'No registra';
             this.showDataGuide.client_document = data.get_order?.get_user.document_number;
             this.showDataGuide.concept = data.concept;
             this.showDataGuide.direction = data.address_name;
