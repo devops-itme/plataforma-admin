@@ -119,7 +119,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                     'kg',
                     'declared',
                     'invoice_number', //Guia
-                    'g.dispatched', // Factura            
+                    'g.dispatched', // Factura
                     'contact',
                     'g.description',
                     'novelty',
@@ -130,8 +130,8 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->join('orders as o', 'o.id', '=', 'g.order_id')
                 ->join('users as u', 'u.id', '=', 'o.user_id')
                 ->where ('o.deleted_at',null)
-                ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')                 
-                ->whereBetween(DB::raw('DATE(g.created_at)'), [request()->from, request()->to])               
+                // ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
+                ->whereBetween(DB::raw('DATE(g.created_at)'), [request()->from, request()->to])
                 ->get();
 
             foreach ($guides as $guide) {
@@ -141,41 +141,44 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-                foreach ($guideTracking['data'] as $elements) {
-                    foreach ($elements['tracking'] as $tracking) {
-                        switch ($tracking['status']) {
-                            case 'Creacion':
-                                $order1->Status = 'VERIFICACION';
-                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                                $vector[] = $order1;
-                                break;
+                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                    switch ($tracking['status']) {
+                        case 'Creacion':
+                            $order1->Status = 'VERIFICACION';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
+                            break;
 
-                            case 'Recepcion desde plataforma':
-                                $order1->Status = 'RECEPTADO A BODEGA';
-                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                                $vector[] = $order1;
-                                break;
+                        case 'Recepcion desde plataforma':
+                            $order1->Status = 'RECEPTADO A BODEGA';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
+                            break;
 
-                            case 'Recepcion desde tienda':
-                                $order1->Status = 'RECEPCION EN SUCURSAL';
-                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                                $vector[] = $order1;
-                                break;
+                        case 'Recepcion desde tienda':
+                            $order1->Status = 'RECEPCION EN SUCURSAL';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
+                            break;
 
-                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                                $order1->Status = 'DESPACHO A SUCURSAL';
-                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                                $vector[] = $order1;
-                                break;
-                        }
+                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                            $order1->Status = 'DESPACHO A SUCURSAL';
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
+                            break;
+
+                            default:
+                            $order1->Status = $tracking['status'];
+                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[] = $order1;
                     }
-                }
+            }
             }
         }
 
         if ($from == false and $to == false and $name == false) {
             $guides = DB::table('guides AS g')
-            ->select(           
+            ->select(
                 'external_id',
                 'pre_guide',
                 DB::raw("DATE_FORMAT(g.created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
@@ -193,7 +196,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 'kg',
                 'declared',
                 'invoice_number', //Guia
-                'g.dispatched', // Factura            
+                'g.dispatched', // Factura
                 'contact',
                 'g.description',
                 'novelty',
@@ -204,7 +207,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                ->join('orders as o', 'o.id', '=', 'g.order_id')
                ->join('users as u', 'u.id', '=', 'o.user_id')
                ->where ('o.deleted_at',null)
-               ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')             
+            //    ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
                ->get();
 
            foreach ($guides as $guide) {
@@ -214,35 +217,38 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                $Tealca->login();
                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-               foreach ($guideTracking['data'] as $elements) {
-                   foreach ($elements['tracking'] as $tracking) {
-                       switch ($tracking['status']) {
-                           case 'Creacion':
-                               $order1->Status = 'VERIFICACION';
-                               $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                               $vector[] = $order1;
-                               break;
+               foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                switch ($tracking['status']) {
+                    case 'Creacion':
+                        $order1->Status = 'VERIFICACION';
+                        $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                        $vector[] = $order1;
+                        break;
 
-                           case 'Recepcion desde plataforma':
-                               $order1->Status = 'RECEPTADO A BODEGA';
-                               $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                               $vector[] = $order1;
-                               break;
+                    case 'Recepcion desde plataforma':
+                        $order1->Status = 'RECEPTADO A BODEGA';
+                        $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                        $vector[] = $order1;
+                        break;
 
-                           case 'Recepcion desde tienda':
-                               $order1->Status = 'RECEPCION EN SUCURSAL';
-                               $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                               $vector[] = $order1;
-                               break;
+                    case 'Recepcion desde tienda':
+                        $order1->Status = 'RECEPCION EN SUCURSAL';
+                        $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                        $vector[] = $order1;
+                        break;
 
-                           case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                               $order1->Status = 'DESPACHO A SUCURSAL';
-                               $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                               $vector[] = $order1;
-                               break;
-                       }
-                   }
-               }
+                    case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                        $order1->Status = 'DESPACHO A SUCURSAL';
+                        $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                        $vector[] = $order1;
+                        break;
+
+                        default:
+                        $order1->Status = $tracking['status'];
+                        $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                        $vector[] = $order1;
+                }
+        }
            }
         }
 
@@ -267,18 +273,18 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                     'kg',
                     'declared',
                     'invoice_number', //Guia
-                    'g.dispatched', // Factura            
+                    'g.dispatched', // Factura
                     'contact',
                     'g.description',
                     'novelty',
                     'delivery_office',
                 )
                 ->where('external_id', '<>', null)
-                ->where('country', '<>', 'PAN')                
+                ->where('country', '<>', 'PAN')
                 ->join('orders as o', 'o.id', '=', 'g.order_id')
                 ->join('users as u', 'u.id', '=', 'o.user_id')
                 ->where ('o.deleted_at',null)
-                ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')               
+                // ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
                 ->where(DB::raw('concat(u.name," ",u.last_name)'), 'like', '%' . request()->name . '%')
                 ->get();
 
@@ -289,8 +295,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-                foreach ($guideTracking['data'] as $elements) {
-                    foreach ($elements['tracking'] as $tracking) {
+                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
                         switch ($tracking['status']) {
                             case 'Creacion':
                                 $order1->Status = 'VERIFICACION';
@@ -315,8 +320,12 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                                 $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
                                 $vector[] = $order1;
                                 break;
+
+                                default:
+                                $order1->Status = $tracking['status'];
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
                         }
-                    }
                 }
             }
         }
