@@ -182,6 +182,7 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
                             $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
                             $vector[] = $order1;
                     }
+                    break;
                 }
             }
         }
