@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" id="importBatchModal">
+<div class="modal" role="dialog" id="importBatchModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +13,7 @@
                     @if (Auth::user()->getRole->name == 'Admin')
                     <div class="form-group col-md-3">
                         <label for="customer">Cliente <span class="text-danger">*</span></label>
-                        <select name="customer_id" class="form-control-solid" id="customer">
+                        <select name="customer_id" class="select2-customers form-control-solid" id="customer">
                             <option value="" id="user_id" selected disabled>Seleccione un cliente</option>
                             @foreach ($customers as $customer)
                             <option {{ old('customer') == $customer->getUser->id ? 'selected ' : '' }} value="{{ $customer->getUser->id }}">
