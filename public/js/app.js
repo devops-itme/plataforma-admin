@@ -8560,6 +8560,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8652,7 +8669,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getGuide: function getGuide(data) {
-      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$get_guide_logs$, _data$get_guide_logs, _data$get_guide_logs$2;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$get_documents, _data$get_documents2, _data$get_guide_logs$, _data$get_guide_logs, _data$get_guide_logs$2;
 
       this.showGuide = data;
       this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
@@ -8675,6 +8692,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.status = data.get_status_matrix.name;
       this.showDataGuide.novelty = data.novelty;
       this.showDataGuide.files = data.get_documents;
+      this.showDataGuide.evidence = (_data$get_documents = data.get_documents) === null || _data$get_documents === void 0 ? void 0 : _data$get_documents.filter(function (element) {
+        return element.type != 74;
+      });
+      this.showDataGuide.package_pictures = (_data$get_documents2 = data.get_documents) === null || _data$get_documents2 === void 0 ? void 0 : _data$get_documents2.filter(function (element) {
+        return element.type == 74;
+      });
       console.log('documents', data.get_documents);
       this.showDataGuide.issue = (_data$get_guide_logs$ = (_data$get_guide_logs = data.get_guide_logs[data.get_guide_logs.length - 1]) === null || _data$get_guide_logs === void 0 ? void 0 : (_data$get_guide_logs$2 = _data$get_guide_logs.get_issue) === null || _data$get_guide_logs$2 === void 0 ? void 0 : _data$get_guide_logs$2.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
     },
@@ -15383,7 +15406,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
 
 // exports
 
@@ -70315,10 +70338,7 @@ var render = function () {
             _vm._v(" "),
             _c(
               "div",
-              {
-                staticClass:
-                  "d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center",
-              },
+              { staticClass: " max-h-200px mb-3 pb-3 justify-content-center" },
               [
                 _c(
                   "h5",
@@ -70330,48 +70350,117 @@ var render = function () {
                   ? _c(
                       "div",
                       {
-                        staticClass:
-                          "col-md-12 symbol-group symbol-hover d-flex flex-wrap max-h-200px justify-content-center",
+                        staticClass: "col-md-12 row symbol-group symbol-hover",
                       },
-                      _vm._l(_vm.showDataGuide.files, function (item) {
-                        return _c(
-                          "div",
-                          { key: item.id, staticClass: "symbol" },
-                          [
-                            _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: item.file_url,
-                                  target: "_blank",
-                                  rel: "noopener noreferrer",
-                                },
-                              },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    height: "50px",
-                                    width: "50px",
-                                    alt: "Pic",
-                                    src: item.file_url,
-                                  },
-                                }),
-                              ]
+                      [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c("div", { staticClass: "font-weight-bolder" }, [
+                            _vm._v("Imágenes del paquete a entregar"),
+                          ]),
+                          _vm._v(" "),
+                          Array.isArray(_vm.showDataGuide.package_pictures) &&
+                          _vm.showDataGuide.package_pictures.length == 0
+                            ? _c("div", [
+                                _vm._v(
+                                  "\n                            No hay imágenes del paquete a entregar\n                        "
+                                ),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "d-flex flex-wrap max-h-200px justify-content-center",
+                            },
+                            _vm._l(
+                              _vm.showDataGuide.package_pictures,
+                              function (item) {
+                                return _c(
+                                  "div",
+                                  { key: item.id, staticClass: "symbol" },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href: item.file_url,
+                                          target: "_blank",
+                                          rel: "noopener noreferrer",
+                                        },
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            height: "50px",
+                                            width: "50px",
+                                            alt: "Pic",
+                                            src: item.file_url,
+                                          },
+                                        }),
+                                      ]
+                                    ),
+                                  ]
+                                )
+                              }
                             ),
-                          ]
-                        )
-                      }),
-                      0
+                            0
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-12" }, [
+                          _c("div", { staticClass: "font-weight-bolder" }, [
+                            _vm._v("Evidencias de entrega"),
+                          ]),
+                          _vm._v(" "),
+                          Array.isArray(_vm.showDataGuide.evidence) &&
+                          _vm.showDataGuide.evidence.length == 0
+                            ? _c("div", [
+                                _vm._v(
+                                  "\n                            No hay evidencias de entrega\n                        "
+                                ),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "d-flex flex-wrap max-h-200px justify-content-center",
+                            },
+                            _vm._l(_vm.showDataGuide.evidence, function (item) {
+                              return _c(
+                                "div",
+                                { key: item.id, staticClass: "symbol" },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: item.file_url,
+                                        target: "_blank",
+                                        rel: "noopener noreferrer",
+                                      },
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          height: "50px",
+                                          width: "50px",
+                                          alt: "Pic",
+                                          src: item.file_url,
+                                        },
+                                      }),
+                                    ]
+                                  ),
+                                ]
+                              )
+                            }),
+                            0
+                          ),
+                        ]),
+                      ]
                     )
-                  : _vm._e(),
-                _vm._v(" "),
-                Array.isArray(_vm.showDataGuide.files) &&
-                _vm.showDataGuide.files.length == 0
-                  ? _c("div", [
-                      _vm._v(
-                        "\n                    No hay imágenes del paquete a entregar\n                "
-                      ),
-                    ])
                   : _vm._e(),
               ]
             ),
