@@ -23,7 +23,7 @@
                 <tbody>
                     <tr style="cursor: pointer" v-for="tblItem, index in this.guidess" @click="rowClick(tblItem, index)"
                         class="text-center">
-                        <td>{{ tblItem.get_order.order_type == 36 ? 'Packaging' : tblItem.get_order.order_type }}</td>
+                        <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
                         <td>{{ tblItem.get_status_matrix.name }}</td>
                         <td>{{ '' }}</td>
                         <td>{{ tblItem.dispatched }}</td>

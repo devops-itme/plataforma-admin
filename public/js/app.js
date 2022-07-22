@@ -8663,8 +8663,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.programming = data.get_order.schedule_date;
       this.showDataGuide.transport = (_data$get_transport_t = data.get_transport_type) === null || _data$get_transport_t === void 0 ? void 0 : _data$get_transport_t.name;
       this.showDataGuide.movil = data.get_route && ((_data$get_route = data.get_route) === null || _data$get_route === void 0 ? void 0 : (_data$get_route$get_m = _data$get_route.get_messenger) === null || _data$get_route$get_m === void 0 ? void 0 : _data$get_route$get_m.name) + ' ' + ((_data$get_route2 = data.get_route) === null || _data$get_route2 === void 0 ? void 0 : (_data$get_route2$get_ = _data$get_route2.get_messenger) === null || _data$get_route2$get_ === void 0 ? void 0 : _data$get_route2$get_.last_name);
-      this.showDataGuide.client_depto = ((_data$get_branch_offi = data.get_branch_office) === null || _data$get_branch_offi === void 0 ? void 0 : (_data$get_branch_offi2 = _data$get_branch_offi.get_department) === null || _data$get_branch_offi2 === void 0 ? void 0 : (_data$get_branch_offi3 = _data$get_branch_offi2.get_department) === null || _data$get_branch_offi3 === void 0 ? void 0 : _data$get_branch_offi3.id) + ':' + ((_data$get_branch_offi4 = data.get_branch_office) === null || _data$get_branch_offi4 === void 0 ? void 0 : (_data$get_branch_offi5 = _data$get_branch_offi4.get_department) === null || _data$get_branch_offi5 === void 0 ? void 0 : (_data$get_branch_offi6 = _data$get_branch_offi5.get_department) === null || _data$get_branch_offi6 === void 0 ? void 0 : _data$get_branch_offi6.name);
-      this.showDataGuide.client_branch_office = ((_data$get_branch_offi7 = data.get_branch_office) === null || _data$get_branch_offi7 === void 0 ? void 0 : _data$get_branch_offi7.id) + ': ' + ((_data$get_branch_offi8 = data.get_branch_office) === null || _data$get_branch_offi8 === void 0 ? void 0 : _data$get_branch_offi8.name);
+      this.showDataGuide.client_depto = ((_data$get_branch_offi = data.get_branch_office) === null || _data$get_branch_offi === void 0 ? void 0 : (_data$get_branch_offi2 = _data$get_branch_offi.get_department) === null || _data$get_branch_offi2 === void 0 ? void 0 : (_data$get_branch_offi3 = _data$get_branch_offi2.get_department) === null || _data$get_branch_offi3 === void 0 ? void 0 : _data$get_branch_offi3.id) + ':' + ((_data$get_branch_offi4 = data.get_branch_office) === null || _data$get_branch_offi4 === void 0 ? void 0 : (_data$get_branch_offi5 = _data$get_branch_offi4.get_department) === null || _data$get_branch_offi5 === void 0 ? void 0 : (_data$get_branch_offi6 = _data$get_branch_offi5.get_department) === null || _data$get_branch_offi6 === void 0 ? void 0 : _data$get_branch_offi6.name) ? this.showDataGuide.client_depto : 'No registra';
+      this.showDataGuide.client_branch_office = ((_data$get_branch_offi7 = data.get_branch_office) === null || _data$get_branch_offi7 === void 0 ? void 0 : _data$get_branch_offi7.id) + ': ' + ((_data$get_branch_offi8 = data.get_branch_office) === null || _data$get_branch_offi8 === void 0 ? void 0 : _data$get_branch_offi8.name) ? this.showDataGuide.client_branch_office : 'No registra';
       this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.concept = data.concept;
       this.showDataGuide.direction = data.address_name;
@@ -69752,29 +69752,6 @@ var render = function () {
                   "col-md-8 d-flex align-items-center flex-row flex-wrap",
               },
               [
-                _c("div", { staticClass: "col-md-5 py-2" }, [
-                  _vm.type_guide === _vm.tabEdition
-                    ? _c("div", { staticClass: " border rounded" }, [
-                        _c("p", { staticClass: "mb-0" }, [
-                          _c(
-                            "span",
-                            { staticClass: "font-weight-bolder mb-3" },
-                            [
-                              _vm._v(
-                                "Destinos en recogida por editar:\n                            "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass: "line-height-xl",
-                            domProps: { textContent: _vm._s(200) },
-                          }),
-                        ]),
-                      ])
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
                 _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
                   _vm.type_guide === _vm.tabEdition
                     ? _c(
@@ -69933,16 +69910,6 @@ var render = function () {
                   "d-flex flex-row flex-wrap align-items-center justify-content-center",
               },
               [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "btn btn-light-success btn-block font-weight-bold mr-2",
-                    attrs: { href: "#" },
-                  },
-                  [_vm._v("Imprimir Guia")]
-                ),
-                _vm._v(" "),
                 _vm.type_guide === _vm.tabEdition
                   ? _c(
                       "button",
@@ -70122,7 +70089,11 @@ var render = function () {
                         {
                           staticClass: "line-height-x1",
                           domProps: {
-                            textContent: _vm._s(_vm.showDataGuide.client_depto),
+                            textContent: _vm._s(
+                              _vm.showDataGuide.client_depto
+                                ? _vm.showDataGuide.client_depto
+                                : "No registra"
+                            ),
                           },
                         },
                         [_vm._v("84: PRINCIPAL")]
@@ -70143,6 +70114,8 @@ var render = function () {
                           domProps: {
                             textContent: _vm._s(
                               _vm.showDataGuide.client_branch_office
+                                ? _vm.showDataGuide.client_branch_office
+                                : "No registra"
                             ),
                           },
                         },
@@ -71825,7 +71798,7 @@ var render = function () {
                       _vm._v(
                         _vm._s(
                           tblItem.get_order.order_type == 36
-                            ? "Packaging"
+                            ? "Packing"
                             : tblItem.get_order.order_type
                         )
                       ),
