@@ -83,7 +83,7 @@
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('orders.index') }}"
+                                    <a href="{{ route('orders.record') }}"
                                         class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
