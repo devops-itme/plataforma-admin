@@ -8566,17 +8566,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -8589,6 +8578,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return _defineProperty({
+      selected_filter_status: "",
       selected: 56,
       delivery_types: [{
         value: 57,
@@ -8622,12 +8612,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     tabEdition: function tabEdition() {
       var _this$tabs$;
 
+      console.log('this.tabs', this.tabs);
       return (_this$tabs$ = this.tabs[2]) === null || _this$tabs$ === void 0 ? void 0 : _this$tabs$.id;
     }
   },
   watch: {},
   methods: {
     loadingEvt: function loadingEvt() {
+      selected_filter_status = '';
       $("#myTab li:nth-child(1) a").tab("show");
     },
     statusMatrix: function statusMatrix(scope) {
@@ -8698,18 +8690,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.package_pictures = (_data$get_documents2 = data.get_documents) === null || _data$get_documents2 === void 0 ? void 0 : _data$get_documents2.filter(function (element) {
         return element.type == 74;
       });
-      console.log('documents', data.get_documents);
       this.showDataGuide.issue = (_data$get_guide_logs$ = (_data$get_guide_logs = data.get_guide_logs[data.get_guide_logs.length - 1]) === null || _data$get_guide_logs === void 0 ? void 0 : (_data$get_guide_logs$2 = _data$get_guide_logs.get_issue) === null || _data$get_guide_logs$2 === void 0 ? void 0 : _data$get_guide_logs$2.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
     },
     getGuides: function getGuides(type) {
-      var _this3 = this;
+      var _arguments = arguments,
+          _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
+        var changeType, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                changeType = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : true;
                 _this3.guides2 = [];
                 _this3.showGuide = null;
                 _this3.showDataGuide = {
@@ -8732,14 +8725,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 type == 56 && (type = 3);
                 type == 57 && (type = 7);
-                _context2.next = 8;
+                _context2.next = 9;
                 return _this3.requestGuides(type);
 
-              case 8:
+              case 9:
                 response = _context2.sent;
+
+                if (changeType) {
+                  _this3.type_guide = type;
+                }
+
                 _this3.guides = response.data;
 
-              case 10:
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -8748,8 +8746,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     requestGuides: function requestGuides(type) {
-      var _this4 = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var response, myHeaders, requestOptions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -8769,17 +8765,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return fetch("/orders_packing/".concat(type), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  console.log('data', data);
                   response = data;
                 })["catch"](function (err) {
                   return console.warn(err);
                 });
 
               case 6:
-                _this4.type_guide = type;
                 return _context3.abrupt("return", response);
 
-              case 8:
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -8788,7 +8782,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this5 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, myHeaders, requestOptions;
@@ -8797,7 +8791,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this = _this5;
+                _this = _this4;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
@@ -8822,17 +8816,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     editGuide: function editGuide() {
-      var _this6 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var _this6$showGuide$get_;
+        var _this5$showGuide$get_;
 
         var programming_date;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                if (_this6.showGuide) {
+                if (_this5.showGuide) {
                   _context5.next = 4;
                   break;
                 }
@@ -8844,30 +8838,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _context5.abrupt("return", _context5.sent);
 
               case 4:
-                programming_date = _this6.showGuide.get_order.schedule_date + ' ' + _this6.showGuide.get_order.schedule_time;
-                _this6.showModal = true;
-                _this6.guide.id = _this6.showDataGuide.posting;
-                _this6.guide.client = (_this6$showGuide$get_ = _this6.showGuide.get_order) === null || _this6$showGuide$get_ === void 0 ? void 0 : _this6$showGuide$get_.get_user.name;
-                _this6.guide.balance = 0;
-                _this6.guide.balance_money = 0;
-                _this6.guide.address = _this6.showGuide.address_name;
-                _this6.guide.document_type = _this6.showGuide.customer_document_type;
-                _this6.guide.concept = _this6.showGuide.concept;
-                _this6.guide.payment_method = _this6.showGuide.get_order.payment_method;
-                _this6.guide.transport_type = _this6.showGuide.transport_type;
-                _this6.guide.value = _this6.showGuide.value;
-                _this6.guide.value_corp = _this6.showGuide.corp_value;
-                _this6.guide.contact = _this6.showGuide.contact;
-                _this6.guide.contact_phone = _this6.showGuide.phone_contact;
-                _this6.guide.contact_email = _this6.showGuide.email_contact;
-                _this6.guide.programming = moment__WEBPACK_IMPORTED_MODULE_1___default()(programming_date).format("YYYY-MM-DDTHH:mm");
-                _this6.guide.schedule_date = _this6.showGuide.get_order.schedule_date;
-                _this6.guide.additional_phone = _this6.showGuide.additional_phone;
-                _this6.guide.additional_email = _this6.showGuide.additional_email;
-                _this6.guide.additional_address = _this6.showGuide.additional_address;
-                _this6.guide.app_status = _this6.showGuide.app_status;
-                _this6.guide.status = _this6.showGuide.get_status_matrix.name;
-                _this6.guide.novelty = _this6.showGuide.novelty;
+                programming_date = _this5.showGuide.get_order.schedule_date + ' ' + _this5.showGuide.get_order.schedule_time;
+                _this5.showModal = true;
+                _this5.guide.id = _this5.showDataGuide.posting;
+                _this5.guide.client = (_this5$showGuide$get_ = _this5.showGuide.get_order) === null || _this5$showGuide$get_ === void 0 ? void 0 : _this5$showGuide$get_.get_user.name;
+                _this5.guide.balance = 0;
+                _this5.guide.balance_money = 0;
+                _this5.guide.address = _this5.showGuide.address_name;
+                _this5.guide.document_type = _this5.showGuide.customer_document_type;
+                _this5.guide.concept = _this5.showGuide.concept;
+                _this5.guide.payment_method = _this5.showGuide.get_order.payment_method;
+                _this5.guide.transport_type = _this5.showGuide.transport_type;
+                _this5.guide.value = _this5.showGuide.value;
+                _this5.guide.value_corp = _this5.showGuide.corp_value;
+                _this5.guide.contact = _this5.showGuide.contact;
+                _this5.guide.contact_phone = _this5.showGuide.phone_contact;
+                _this5.guide.contact_email = _this5.showGuide.email_contact;
+                _this5.guide.programming = moment__WEBPACK_IMPORTED_MODULE_1___default()(programming_date).format("YYYY-MM-DDTHH:mm");
+                _this5.guide.schedule_date = _this5.showGuide.get_order.schedule_date;
+                _this5.guide.additional_phone = _this5.showGuide.additional_phone;
+                _this5.guide.additional_email = _this5.showGuide.additional_email;
+                _this5.guide.additional_address = _this5.showGuide.additional_address;
+                _this5.guide.app_status = _this5.showGuide.app_status;
+                _this5.guide.status = _this5.showGuide.get_status_matrix.name;
+                _this5.guide.novelty = _this5.showGuide.novelty;
 
               case 28:
               case "end":
@@ -8878,7 +8872,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     documentTypes: function documentTypes() {
-      var _this7 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var name, req, res;
@@ -8897,7 +8891,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 6:
                 res = _context6.sent;
-                _this7.document_types = res.data;
+                _this6.document_types = res.data;
 
               case 8:
               case "end":
@@ -8908,7 +8902,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     transportTypes: function transportTypes() {
-      var _this8 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var name, req, res;
@@ -8927,7 +8921,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 6:
                 res = _context7.sent;
-                _this8.transport_types = res.data;
+                _this7.transport_types = res.data;
 
               case 8:
               case "end":
@@ -8938,7 +8932,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     paymentMethods: function paymentMethods() {
-      var _this9 = this;
+      var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
         var name, req, res;
@@ -8957,7 +8951,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 6:
                 res = _context8.sent;
-                _this9.payment_methods = res.data;
+                _this8.payment_methods = res.data;
 
               case 8:
               case "end":
@@ -8968,7 +8962,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     updateGuide: function updateGuide() {
-      var _this10 = this;
+      var _this9 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
         var token, myHeaders, requestOptions, response;
@@ -8977,7 +8971,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context9.prev = _context9.next) {
               case 0:
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                console.log(token);
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -8988,12 +8981,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 requestOptions = {
                   method: "PUT",
                   headers: myHeaders,
-                  body: JSON.stringify(_this10.guide)
+                  body: JSON.stringify(_this9.guide)
                 };
-                _context9.next = 12;
-                return _this10.requestUpdateGuide(requestOptions);
+                _context9.next = 11;
+                return _this9.requestUpdateGuide(requestOptions);
 
-              case 12:
+              case 11:
                 response = _context9.sent;
 
                 if (response.state != 200) {
@@ -9001,9 +8994,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }
 
                 alert(response.message);
-                _this10.showModal = false;
+                _this9.showModal = false;
 
-              case 16:
+              case 15:
               case "end":
                 return _context9.stop();
             }
@@ -9043,22 +9036,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var _this11 = this;
+    var _this10 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
-              _this11.getGuides(3);
+              _this10.getGuides(3);
 
-              _this11.getMessengers();
+              _this10.getMessengers();
 
-              _this11.documentTypes();
+              _this10.documentTypes();
 
-              _this11.transportTypes();
+              _this10.transportTypes();
 
-              _this11.paymentMethods();
+              _this10.paymentMethods();
 
             case 5:
             case "end":
@@ -69768,46 +69761,113 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-md-8 d-flex align-items-center flex-row flex-wrap",
-              },
-              [
-                _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
-                  _vm.type_guide === _vm.tabEdition
-                    ? _c(
-                        "select",
-                        {
-                          staticClass: "form-control",
-                          attrs: { id: "delivery_event_state" },
+            _c("div", { staticClass: "col-md-8 d-flex flex-row flex-wrap" }, [
+              _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
+                _vm.type_guide === _vm.tabEdition
+                  ? _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selected_filter_status,
+                            expression: "selected_filter_status",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "delivery_event_state" },
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selected_filter_status = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
                         },
-                        [_c("option", [_vm._v("Seleccione estado")])]
-                      )
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _vm.type_guide === _vm.tabEdition
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-light-primary font-weight-bold",
-                          attrs: { type: "button" },
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("Seleccione estado"),
+                        ]),
+                        _vm._v(" "),
+                        _vm.tabEdition == 5
+                          ? _c("option", { attrs: { value: "4" } }, [
+                              _vm._v("Despachado"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.tabEdition == 5
+                          ? _c("option", { attrs: { value: "6" } }, [
+                              _vm._v("Recogido"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.tabEdition == 9
+                          ? _c("option", { attrs: { value: "8" } }, [
+                              _vm._v("Despachado"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.tabEdition == 9
+                          ? _c("option", { attrs: { value: "10" } }, [
+                              _vm._v("Entregado"),
+                            ])
+                          : _vm._e(),
+                      ]
+                    )
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _vm.type_guide === _vm.tabEdition
+                ? _c("div", { staticClass: "col-md-6" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-light-primary font-weight-bold",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function ($event) {
+                            _vm.selected_filter_status != "" &&
+                              _vm.getGuides(_vm.selected_filter_status, false)
+                          },
                         },
-                        [
-                          _vm._v(
-                            "\n                        Aplicar nuevo estado\n                    "
-                          ),
-                        ]
-                      )
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _vm._m(1),
-              ]
-            ),
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Aplicar nuevo estado\n                    "
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-light-danger font-weight-bold",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function ($event) {
+                            _vm.getGuides(_vm.tabEdition),
+                              (_vm.selected_filter_status = "")
+                          },
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Limpiar\n                    "
+                        ),
+                      ]
+                    ),
+                  ])
+                : _vm._e(),
+            ]),
           ]
         ),
         _vm._v(" "),
@@ -71256,14 +71316,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "card-title" }, [
         _c("h3", { staticClass: "card-label" }, [_vm._v("Despachos Packing")]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1" }, [
-      _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
     ])
   },
 ]

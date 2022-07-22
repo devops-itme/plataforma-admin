@@ -16,40 +16,29 @@
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
                             v-bind:value="item.value"
-
                         >
                             {{ item.text }}
                         </option>
-                        <!-- <option>Entrega</option> -->
                     </select>
                 </div>
-                <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
-                  <!--  <div class="col-md-5 py-2" >
-                        <div class=" border rounded" v-if="type_guide === tabEdition">
-                            <p class="mb-0">
-                                <span class="font-weight-bolder mb-3"
-                                    >Destinos en recogida por editar:
-                                </span>
-                                <span class="line-height-xl" v-text="200"></span>
-                            </p>
-                        </div>
-                    </div>-->
-                    <div class="form-group col-md-3 mb-0" >
-                        <select class="form-control" id="delivery_event_state" v-if="type_guide === tabEdition" >
-                            <option>Seleccione estado</option>
+                <div class="col-md-8 d-flex flex-row flex-wrap">
+
+                    <div class="form-group col-md-3 mb-0">
+                        <select v-model="selected_filter_status" class="form-control" id="delivery_event_state" v-if="type_guide === tabEdition">
+                            <option value="">Seleccione estado</option>
+                            <option v-if="tabEdition == 5" value="4">Despachado</option>
+                            <option v-if="tabEdition == 5" value="6">Recogido</option>
+                            <option v-if="tabEdition == 9" value="8">Despachado</option>
+                            <option v-if="tabEdition == 9" value="10">Entregado</option>
                         </select>
                     </div>
-                    <div class="col-md-3" >
-                        <button
-                            v-if="type_guide === tabEdition"
-                            type="button"
-                            class="btn btn-light-primary font-weight-bold"
-                        >
+                    <div class="col-md-6" v-if="type_guide === tabEdition">
+                        <button @click="selected_filter_status != '' && getGuides(selected_filter_status, false)" type="button" class="btn btn-light-primary font-weight-bold">
                             Aplicar nuevo estado
                         </button>
-                    </div>
-                    <div class="col-md-1">
-                        <span class="h5">1/100</span>
+                         <button @click="getGuides(tabEdition),selected_filter_status=''" type="button" class="btn btn-light-danger font-weight-bold">
+                            Limpiar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -391,7 +380,7 @@ export default {
     },
     data() {
         return {
-
+            selected_filter_status: "",
             selected: 56,
             delivery_types: [
                 { value: 57, text: "Entregas" },
@@ -422,6 +411,7 @@ export default {
     },
     computed:{
         tabEdition(){
+            console.log('this.tabs',this.tabs);
             return this.tabs[2]?.id;
         }
     },
@@ -430,15 +420,15 @@ export default {
     },
     methods: {
         loadingEvt (){
+            selected_filter_status = '';
            $(`#myTab li:nth-child(1) a`).tab("show");
-       },
+        },
         async statusMatrix(scope) {
             //STATUS MATRIX
             let req = await fetch(`despacho/matriz_estados?scope_id=${scope}`);
             let res = await req.json();
             // take the first 3 data from the consulate
             this.tabs = res.data.slice(0, 3);
-
             //#HREF TAB
             this.tabs[0].href = "porRecoger";
             this.tabs[1].href = "enproceso";
@@ -474,12 +464,11 @@ export default {
             this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.get_documents;
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
-            this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
-            console.log('documents',data.get_documents);
+            this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74)
             this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
 
         },
-        async getGuides(type) {
+        async getGuides(type, changeType = true) {
             this.guides2 = [];
             this.showGuide = null;
             this.showDataGuide = {
@@ -502,6 +491,9 @@ export default {
             type == 56 && (type = 3);
             type == 57 && (type = 7);
             let response = await this.requestGuides(type);
+            if(changeType){
+                this.type_guide = type;
+            }
             this.guides = response.data;
 
         },
@@ -518,11 +510,9 @@ export default {
             await fetch(`/orders_packing/${type}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
-                    console.log('data',data);
                     response = data;
                 })
                 .catch((err) => console.warn(err));
-            this.type_guide = type;
             return response;
 
         },
@@ -595,7 +585,6 @@ export default {
             let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
-                console.log(token)
             let myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
