@@ -8566,6 +8566,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8612,14 +8632,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     tabEdition: function tabEdition() {
       var _this$tabs$;
 
-      console.log('this.tabs', this.tabs);
       return (_this$tabs$ = this.tabs[2]) === null || _this$tabs$ === void 0 ? void 0 : _this$tabs$.id;
     }
   },
   watch: {},
   methods: {
     loadingEvt: function loadingEvt() {
-      selected_filter_status = '';
+      this.selected_filter_status = "";
       $("#myTab li:nth-child(1) a").tab("show");
     },
     statusMatrix: function statusMatrix(scope) {
@@ -8677,14 +8696,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.concept = data.concept;
       this.showDataGuide.direction = data.address_name;
-      hone = this.showGuide.phone_contact;
-      cuments;
+      this.showDataGuide.contact = this.showGuide.contact;
+      this.showDataGuide.recipient_name = this.showGuide.recipient_name;
+      this.showDataGuide.contact_phone = this.showGuide.phone_contact;
+      this.showDataGuide.additional_phone = data.additional_phone;
+      this.showDataGuide.additional_email = data.additional_email;
+      this.showDataGuide.additional_address = data.additional_address;
+      this.showDataGuide.app_status = data.app_status;
+      this.showDataGuide.status = data.get_status_matrix.name;
+      this.showDataGuide.novelty = data.novelty;
+      this.showDataGuide.files = data.get_documents;
       this.showDataGuide.evidence = (_data$get_documents = data.get_documents) === null || _data$get_documents === void 0 ? void 0 : _data$get_documents.filter(function (element) {
         return element.type != 74;
       });
       this.showDataGuide.package_pictures = (_data$get_documents2 = data.get_documents) === null || _data$get_documents2 === void 0 ? void 0 : _data$get_documents2.filter(function (element) {
         return element.type == 74;
       });
+      console.log('documents', data.get_documents);
       this.showDataGuide.issue = (_data$get_guide_logs$ = (_data$get_guide_logs = data.get_guide_logs[data.get_guide_logs.length - 1]) === null || _data$get_guide_logs === void 0 ? void 0 : (_data$get_guide_logs$2 = _data$get_guide_logs.get_issue) === null || _data$get_guide_logs$2 === void 0 ? void 0 : _data$get_guide_logs$2.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
     },
     getGuides: function getGuides(type) {
@@ -8760,6 +8788,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return fetch("/orders_packing/".concat(type), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
+                  console.log('data', data);
                   response = data;
                 })["catch"](function (err) {
                   return console.warn(err);
@@ -8966,6 +8995,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context9.prev = _context9.next) {
               case 0:
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                console.log(token);
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -8978,10 +9008,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   headers: myHeaders,
                   body: JSON.stringify(_this9.guide)
                 };
-                _context9.next = 11;
+                _context9.next = 12;
                 return _this9.requestUpdateGuide(requestOptions);
 
-              case 11:
+              case 12:
                 response = _context9.sent;
 
                 if (response.state != 200) {
@@ -8991,7 +9021,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 alert(response.message);
                 _this9.showModal = false;
 
-              case 15:
+              case 16:
               case "end":
                 return _context9.stop();
             }
@@ -69756,113 +69786,123 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-8 d-flex flex-row flex-wrap" }, [
-              _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
-                _vm.type_guide === _vm.tabEdition
-                  ? _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selected_filter_status,
-                            expression: "selected_filter_status",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "delivery_event_state" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selected_filter_status = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }, [
-                          _vm._v("Seleccione estado"),
-                        ]),
-                        _vm._v(" "),
-                        _vm.tabEdition == 5
-                          ? _c("option", { attrs: { value: "4" } }, [
-                              _vm._v("Despachado"),
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.tabEdition == 5
-                          ? _c("option", { attrs: { value: "6" } }, [
-                              _vm._v("Recogido"),
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.tabEdition == 9
-                          ? _c("option", { attrs: { value: "8" } }, [
-                              _vm._v("Despachado"),
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.tabEdition == 9
-                          ? _c("option", { attrs: { value: "10" } }, [
-                              _vm._v("Entregado"),
-                            ])
-                          : _vm._e(),
-                      ]
-                    )
-                  : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _vm.type_guide === _vm.tabEdition
-                ? _c("div", { staticClass: "col-md-6" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-light-primary font-weight-bold",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function ($event) {
-                            _vm.selected_filter_status != "" &&
-                              _vm.getGuides(_vm.selected_filter_status, false)
+            _c(
+              "div",
+              {
+                staticClass:
+                  "col-md-8 d-flex align-items-center flex-row flex-wrap",
+              },
+              [
+                _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
+                  _vm.type_guide === _vm.tabEdition
+                    ? _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected_filter_status,
+                              expression: "selected_filter_status",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { id: "delivery_event_state" },
+                          on: {
+                            change: function ($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function (o) {
+                                  return o.selected
+                                })
+                                .map(function (o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selected_filter_status = $event.target
+                                .multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
                           },
                         },
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Aplicar nuevo estado\n                    "
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-light-danger font-weight-bold",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function ($event) {
-                            _vm.getGuides(_vm.tabEdition),
-                              (_vm.selected_filter_status = "")
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Seleccione estado"),
+                          ]),
+                          _vm._v(" "),
+                          _vm.tabEdition == 5
+                            ? _c("option", { attrs: { value: "4" } }, [
+                                _vm._v("Despachado"),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.tabEdition == 5
+                            ? _c("option", { attrs: { value: "6" } }, [
+                                _vm._v("Recogido"),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.tabEdition == 9
+                            ? _c("option", { attrs: { value: "8" } }, [
+                                _vm._v("Despachado"),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.tabEdition == 9
+                            ? _c("option", { attrs: { value: "10" } }, [
+                                _vm._v("Entregado"),
+                              ])
+                            : _vm._e(),
+                        ]
+                      )
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _vm.type_guide === _vm.tabEdition
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light-primary font-weight-bold",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function ($event) {
+                              _vm.selected_filter_status != "" &&
+                                _vm.getGuides(_vm.selected_filter_status, false)
+                            },
                           },
                         },
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Limpiar\n                    "
-                        ),
-                      ]
-                    ),
-                  ])
-                : _vm._e(),
-            ]),
+                        [
+                          _vm._v(
+                            "\n                        Aplicar nuevo estado\n                    "
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.type_guide === _vm.tabEdition
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light-danger font-weight-bold",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function ($event) {
+                              _vm.getGuides(_vm.tabEdition),
+                                (_vm.selected_filter_status = "")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Limpiar\n                    "
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
+                ]),
+              ]
+            ),
           ]
         ),
         _vm._v(" "),
@@ -70119,6 +70159,36 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Nombre de Contacto:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(_vm.showDataGuide.contact),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Teléfono Contacto:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(_vm.showDataGuide.contact_phone),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
                     _vm._v("Transporte:"),
@@ -70353,6 +70423,25 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Incidencias:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.issue
+                              ? _vm.showDataGuide.issue
+                              : "No registra"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
                     _vm._v("Novedades:"),
                   ]),
                   _vm._v(" "),
@@ -70372,7 +70461,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-                    _vm._v("Incidencias:"),
+                    _vm._v("Nombre quien Entrega/Recibe:"),
                   ]),
                   _vm._v(" "),
                   _vm.showDataGuide
@@ -70380,8 +70469,8 @@ var render = function () {
                         staticClass: "line-height-xl",
                         domProps: {
                           textContent: _vm._s(
-                            _vm.showDataGuide.issue
-                              ? _vm.showDataGuide.issue
+                            _vm.showDataGuide.recipient_name
+                              ? _vm.showDataGuide.recipient_name
                               : "No registra"
                           ),
                         },

@@ -21,10 +21,11 @@
                         </option>
                     </select>
                 </div>
-                <div class="col-md-8 d-flex flex-row flex-wrap">
+                <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
 
-                    <div class="form-group col-md-3 mb-0">
-                        <select v-model="selected_filter_status" class="form-control" id="delivery_event_state" v-if="type_guide === tabEdition">
+
+                    <div class="form-group col-md-3 mb-0" >
+                        <select class="form-control" v-model="selected_filter_status" id="delivery_event_state" v-if="type_guide === tabEdition" >
                             <option value="">Seleccione estado</option>
                             <option v-if="tabEdition == 5" value="4">Despachado</option>
                             <option v-if="tabEdition == 5" value="6">Recogido</option>
@@ -32,14 +33,21 @@
                             <option v-if="tabEdition == 9" value="10">Entregado</option>
                         </select>
                     </div>
-                    <div class="col-md-6" v-if="type_guide === tabEdition">
-                        <button @click="selected_filter_status != '' && getGuides(selected_filter_status, false)" type="button" class="btn btn-light-primary font-weight-bold">
+                    <div class="col-md-6" >
+                        <button v-if="type_guide === tabEdition" type="button"
+                            class="btn btn-light-primary font-weight-bold"
+                            @click="selected_filter_status != '' && getGuides(selected_filter_status, false)">
                             Aplicar nuevo estado
                         </button>
-                         <button @click="getGuides(tabEdition),selected_filter_status=''" type="button" class="btn btn-light-danger font-weight-bold">
+                        <button v-if="type_guide === tabEdition" type="button"
+                            class="btn btn-light-danger font-weight-bold"
+                            @click="getGuides(tabEdition),selected_filter_status=''">
                             Limpiar
                         </button>
                     </div>
+                   <!-- <div class="col-md-1">
+                        <span class="h5">1/100</span>
+                    </div> -->
                 </div>
             </div>
             <ul
@@ -119,6 +127,14 @@
                         <div class="font-weight-bolder mb-1">Programado:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.programming">2022/02/04</div>
                     </div>
+                     <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Nombre de Contacto:</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.contact"></div>
+                    </div>
+                     <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Teléfono Contacto:</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.contact_phone"></div>
+                    </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport" ></div>
@@ -170,12 +186,16 @@
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.status ? showDataGuide.status : 'No registra' "></div>
                     </div>
                     <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Incidencias:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.issue ? showDataGuide.issue : 'No registra'"></div>
+                    </div>
+                    <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Novedades:</div>
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.novelty ? showDataGuide.novelty : 'No registra' "></div>
                     </div>
                     <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Incidencias:</div>
-                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.issue ? showDataGuide.issue : 'No registra'"></div>
+                        <div class="font-weight-bolder mb-1">Nombre quien Entrega/Recibe:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.recipient_name ? showDataGuide.recipient_name : 'No registra' "></div>
                     </div>
                 </div>
                 <div class=" max-h-200px mb-3 pb-3 justify-content-center">
@@ -411,7 +431,6 @@ export default {
     },
     computed:{
         tabEdition(){
-            console.log('this.tabs',this.tabs);
             return this.tabs[2]?.id;
         }
     },
@@ -420,15 +439,16 @@ export default {
     },
     methods: {
         loadingEvt (){
-            selected_filter_status = '';
+            this.selected_filter_status = "";
            $(`#myTab li:nth-child(1) a`).tab("show");
-        },
+       },
         async statusMatrix(scope) {
             //STATUS MATRIX
             let req = await fetch(`despacho/matriz_estados?scope_id=${scope}`);
             let res = await req.json();
             // take the first 3 data from the consulate
             this.tabs = res.data.slice(0, 3);
+
             //#HREF TAB
             this.tabs[0].href = "porRecoger";
             this.tabs[1].href = "enproceso";
@@ -456,10 +476,19 @@ export default {
             this.showDataGuide.client_document = data.get_order?.get_user.document_number;
             this.showDataGuide.concept = data.concept;
             this.showDataGuide.direction = data.address_name;
-hone = this.showGuide.phone_contact;
-cuments;
+            this.showDataGuide.contact = this.showGuide.contact;
+            this.showDataGuide.recipient_name = this.showGuide.recipient_name;
+            this.showDataGuide.contact_phone = this.showGuide.phone_contact;
+            this.showDataGuide.additional_phone = data.additional_phone;
+            this.showDataGuide.additional_email = data.additional_email;
+            this.showDataGuide.additional_address = data.additional_address;
+            this.showDataGuide.app_status = data.app_status;
+            this.showDataGuide.status = data.get_status_matrix.name;
+            this.showDataGuide.novelty = data.novelty;
+            this.showDataGuide.files = data.get_documents;
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
-            this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74)
+            this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
+            console.log('documents',data.get_documents);
             this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
 
         },
@@ -505,9 +534,11 @@ cuments;
             await fetch(`/orders_packing/${type}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
+                    console.log('data',data);
                     response = data;
                 })
                 .catch((err) => console.warn(err));
+
             return response;
 
         },
@@ -580,6 +611,7 @@ cuments;
             let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
+                console.log(token)
             let myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
