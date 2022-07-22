@@ -193,10 +193,10 @@
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
                     <div class="col-md-12 row symbol-group symbol-hover" v-if="type_guide === tabEdition">
                         <div class="col-12">
+                            <div class="font-weight-bolder">Imágenes del paquete a entregar</div>
                             <div v-if="Array.isArray(showDataGuide.package_pictures) && showDataGuide.package_pictures.length  == 0">
                                 No hay imágenes del paquete a entregar
                             </div>
-                            <div class="font-weight-bolder" v-else>Imágenes del paquete a entregar</div>
                             <div class="d-flex flex-wrap max-h-200px justify-content-center">
                                 <div class="symbol" v-for="item in showDataGuide.package_pictures" v-bind:key="item.id">
                                     <a :href="item.file_url" target="_blank" rel="noopener noreferrer">
@@ -206,10 +206,10 @@
                             </div>
                         </div>
                         <div class="col-12">
+                            <div class="font-weight-bolder">Evidencias de entrega</div>
                             <div v-if="Array.isArray(showDataGuide.evidence) && showDataGuide.evidence.length  == 0">
                                 No hay evidencias de entrega
                             </div>
-                            <div class="font-weight-bolder" v-else>Evidencias de entrega</div>
                             <div class="d-flex flex-wrap max-h-200px justify-content-center">
                                 <div class="symbol" v-for="item in showDataGuide.evidence" v-bind:key="item.id">
                                     <a :href="item.file_url" target="_blank" rel="noopener noreferrer">

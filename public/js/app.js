@@ -70354,6 +70354,10 @@ var render = function () {
                       },
                       [
                         _c("div", { staticClass: "col-12" }, [
+                          _c("div", { staticClass: "font-weight-bolder" }, [
+                            _vm._v("Imágenes del paquete a entregar"),
+                          ]),
+                          _vm._v(" "),
                           Array.isArray(_vm.showDataGuide.package_pictures) &&
                           _vm.showDataGuide.package_pictures.length == 0
                             ? _c("div", [
@@ -70361,9 +70365,7 @@ var render = function () {
                                   "\n                            No hay imágenes del paquete a entregar\n                        "
                                 ),
                               ])
-                            : _c("div", { staticClass: "font-weight-bolder" }, [
-                                _vm._v("Imágenes del paquete a entregar"),
-                              ]),
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -70407,6 +70409,10 @@ var render = function () {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-12" }, [
+                          _c("div", { staticClass: "font-weight-bolder" }, [
+                            _vm._v("Evidencias de entrega"),
+                          ]),
+                          _vm._v(" "),
                           Array.isArray(_vm.showDataGuide.evidence) &&
                           _vm.showDataGuide.evidence.length == 0
                             ? _c("div", [
@@ -70414,9 +70420,7 @@ var render = function () {
                                   "\n                            No hay evidencias de entrega\n                        "
                                 ),
                               ])
-                            : _c("div", { staticClass: "font-weight-bolder" }, [
-                                _vm._v("Evidencias de entrega"),
-                              ]),
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "div",
