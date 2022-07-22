@@ -189,18 +189,35 @@
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.issue ? showDataGuide.issue : 'No registra'"></div>
                     </div>
                 </div>
-                <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
+                <div class=" max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
-                    <div class="col-md-12 symbol-group symbol-hover d-flex flex-wrap max-h-200px justify-content-center" v-if="type_guide === tabEdition">
-                        <div class="symbol" v-for="item in showDataGuide.files" v-bind:key="item.id">
-                            <a :href="item.file_url" target="_blank" rel="noopener noreferrer">
-                            <img height="50px" width="50px" alt="Pic" :src="item.file_url"/>
-                            </a>
+                    <div class="col-md-12 row symbol-group symbol-hover" v-if="type_guide === tabEdition">
+                        <div class="col-12">
+                            <div v-if="Array.isArray(showDataGuide.package_pictures) && showDataGuide.package_pictures.length  == 0">
+                                No hay imágenes del paquete a entregar
+                            </div>
+                            <div class="font-weight-bolder" v-else>Imágenes del paquete a entregar</div>
+                            <div class="d-flex flex-wrap max-h-200px justify-content-center">
+                                <div class="symbol" v-for="item in showDataGuide.package_pictures" v-bind:key="item.id">
+                                    <a :href="item.file_url" target="_blank" rel="noopener noreferrer">
+                                    <img height="50px" width="50px" alt="Pic" :src="item.file_url"/>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- {{Array.isArray(showDataGuide.files)}} -->
-                    <div v-if="Array.isArray(showDataGuide.files) && showDataGuide.files.length  == 0">
-                        No hay imágenes del paquete a entregar
+                        <div class="col-12">
+                            <div v-if="Array.isArray(showDataGuide.evidence) && showDataGuide.evidence.length  == 0">
+                                No hay evidencias de entrega
+                            </div>
+                            <div class="font-weight-bolder" v-else>Evidencias de entrega</div>
+                            <div class="d-flex flex-wrap max-h-200px justify-content-center">
+                                <div class="symbol" v-for="item in showDataGuide.evidence" v-bind:key="item.id">
+                                    <a :href="item.file_url" target="_blank" rel="noopener noreferrer">
+                                    <img height="50px" width="50px" alt="Pic" :src="item.file_url"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -456,6 +473,8 @@ export default {
             this.showDataGuide.status = data.get_status_matrix.name;
             this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.get_documents;
+            this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
+            this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
             console.log('documents',data.get_documents);
             this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
 
