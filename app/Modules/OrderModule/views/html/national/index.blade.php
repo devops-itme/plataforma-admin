@@ -104,7 +104,7 @@
                     <th scope="col">Tipo de orden</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Fecha y Hora de creación</th>
-                    <th scope="col">Estado de pago</th>                    
+                    <th scope="col">Estado de pago</th>
                     <th scope="col">Estado</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -122,7 +122,7 @@
                         </span>
                         @else
                         <span class="label label-inline label-light-info font-weight-blog">
-                            Packaking
+                            Packing
                         </span>
                         @endif
                     </td>

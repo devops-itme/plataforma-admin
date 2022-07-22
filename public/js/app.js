@@ -71762,7 +71762,7 @@ var render = function () {
                       _vm._v(
                         _vm._s(
                           tblItem.get_order.order_type == 36
-                            ? "Packaging"
+                            ? "Packing"
                             : tblItem.get_order.order_type
                         )
                       ),
