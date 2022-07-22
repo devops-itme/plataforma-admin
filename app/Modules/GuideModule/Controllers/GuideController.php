@@ -205,7 +205,7 @@ class GuideController extends Controller
     {
         try {
             $type = $request->type;
-           
+
             $guides = Guide::where('order_id', $id)->get();
             foreach ($guides as $guide) {
                 $guide->update([
@@ -264,9 +264,9 @@ class GuideController extends Controller
                 'novelty' => $request->novelty
             ]);
 
-            $order_id = $guide->order_id;                        
+            $order_id = $guide->order_id;
             $order = Order::findOrFail($order_id);
- 
+
             $order->update([
              'schedule_date' => $request->schedule_date,
          ]);

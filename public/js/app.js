@@ -8652,7 +8652,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getGuide: function getGuide(data) {
-      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$get_guide_logs$;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$get_guide_logs$, _data$get_guide_logs, _data$get_guide_logs$2;
 
       this.showGuide = data;
       this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
@@ -8675,7 +8675,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.status = data.get_status_matrix.name;
       this.showDataGuide.novelty = data.novelty;
       this.showDataGuide.files = data.get_documents;
-      this.showDataGuide.issue = (_data$get_guide_logs$ = data.get_guide_logs[data.get_guide_logs.length - 1].get_issue.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
+      console.log('documents', data.get_documents);
+      this.showDataGuide.issue = (_data$get_guide_logs$ = (_data$get_guide_logs = data.get_guide_logs[data.get_guide_logs.length - 1]) === null || _data$get_guide_logs === void 0 ? void 0 : (_data$get_guide_logs$2 = _data$get_guide_logs.get_issue) === null || _data$get_guide_logs$2 === void 0 ? void 0 : _data$get_guide_logs$2.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
     },
     getGuides: function getGuides(type) {
       var _this3 = this;
@@ -8745,6 +8746,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return fetch("/orders_packing/".concat(type), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
+                  console.log('data', data);
                   response = data;
                 })["catch"](function (err) {
                   return console.warn(err);
@@ -15343,7 +15345,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -70354,15 +70356,49 @@ var render = function () {
                 _vm.type_guide === _vm.tabEdition
                   ? _c(
                       "div",
-                      { staticClass: "col-md-12 symbol-group symbol-hover" },
+                      {
+                        staticClass:
+                          "col-md-12 symbol-group symbol-hover d-flex flex-wrap max-h-200px justify-content-center",
+                      },
                       _vm._l(_vm.showDataGuide.files, function (item) {
-                        return _c("div", {
-                          key: item.id,
-                          staticClass: "symbol",
-                        })
+                        return _c(
+                          "div",
+                          { key: item.id, staticClass: "symbol" },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: item.file_url,
+                                  target: "_blank",
+                                  rel: "noopener noreferrer",
+                                },
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    height: "50px",
+                                    width: "50px",
+                                    alt: "Pic",
+                                    src: item.file_url,
+                                  },
+                                }),
+                              ]
+                            ),
+                          ]
+                        )
                       }),
                       0
                     )
+                  : _vm._e(),
+                _vm._v(" "),
+                Array.isArray(_vm.showDataGuide.files) &&
+                _vm.showDataGuide.files.length == 0
+                  ? _c("div", [
+                      _vm._v(
+                        "\n                    No hay imágenes del paquete a entregar\n                "
+                      ),
+                    ])
                   : _vm._e(),
               ]
             ),
@@ -90550,8 +90586,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Desktop\DevelopApp\Projects\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Desktop\DevelopApp\Projects\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

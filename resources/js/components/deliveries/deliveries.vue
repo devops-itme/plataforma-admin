@@ -191,16 +191,16 @@
                 </div>
                 <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
-                    <div class="col-md-12 symbol-group symbol-hover" v-if="type_guide === tabEdition">
+                    <div class="col-md-12 symbol-group symbol-hover d-flex flex-wrap max-h-200px justify-content-center" v-if="type_guide === tabEdition">
                         <div class="symbol" v-for="item in showDataGuide.files" v-bind:key="item.id">
-                            <!-- <img alt="Pic" :src="'storage/'+item.url_document+'/'"/> -->
+                            <a :href="item.file_url" target="_blank" rel="noopener noreferrer">
+                            <img height="50px" width="50px" alt="Pic" :src="item.file_url"/>
+                            </a>
                         </div>
-                        <!-- <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div>
-                        <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div> -->
+                    </div>
+                    <!-- {{Array.isArray(showDataGuide.files)}} -->
+                    <div v-if="Array.isArray(showDataGuide.files) && showDataGuide.files.length  == 0">
+                        No hay imágenes del paquete a entregar
                     </div>
                 </div>
             </div>
@@ -456,7 +456,8 @@ export default {
             this.showDataGuide.status = data.get_status_matrix.name;
             this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.get_documents;
-            this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1].get_issue.name ?? 'sin incidencias';
+            console.log('documents',data.get_documents);
+            this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
 
         },
         async getGuides(type) {
@@ -498,6 +499,7 @@ export default {
             await fetch(`/orders_packing/${type}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
+                    console.log('data',data);
                     response = data;
                 })
                 .catch((err) => console.warn(err));

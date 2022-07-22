@@ -152,7 +152,7 @@
                             class="d-flex flex-row flex-wrap justify-content-around px-0"
                         >
                             <input type="text" class="form-control col-md-3" v-model="searchMessenger" />
-                            
+
                            <select class="form-control col-md-5" ref="seleccionado">
                              <option  v-for="a in this.filterMessengers" :value="a.user.id"  >{{a.user.name+ " " +a.user.last_name}}</option>
                            </select>
