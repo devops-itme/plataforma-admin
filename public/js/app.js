@@ -8577,6 +8577,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8685,6 +8697,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.concept = data.concept;
       this.showDataGuide.direction = data.address_name;
+      this.showDataGuide.contact = this.showGuide.contact;
+      this.showDataGuide.recipient_name = this.showGuide.recipient_name;
+      this.showDataGuide.contact_phone = this.showGuide.phone_contact;
       this.showDataGuide.additional_phone = data.additional_phone;
       this.showDataGuide.additional_email = data.additional_email;
       this.showDataGuide.additional_address = data.additional_address;
@@ -15368,7 +15383,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -15406,7 +15421,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -69804,8 +69819,6 @@ var render = function () {
                       )
                     : _vm._e(),
                 ]),
-                _vm._v(" "),
-                _vm._m(1),
               ]
             ),
           ]
@@ -70064,6 +70077,36 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Nombre de Contacto:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(_vm.showDataGuide.contact),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Teléfono Contacto:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(_vm.showDataGuide.contact_phone),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
                     _vm._v("Transporte:"),
@@ -70298,6 +70341,25 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Incidencias:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.issue
+                              ? _vm.showDataGuide.issue
+                              : "No registra"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
                     _vm._v("Novedades:"),
                   ]),
                   _vm._v(" "),
@@ -70317,7 +70379,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-                    _vm._v("Incidencias:"),
+                    _vm._v("Nombre quien Entrega/Recibe:"),
                   ]),
                   _vm._v(" "),
                   _vm.showDataGuide
@@ -70325,8 +70387,8 @@ var render = function () {
                         staticClass: "line-height-xl",
                         domProps: {
                           textContent: _vm._s(
-                            _vm.showDataGuide.issue
-                              ? _vm.showDataGuide.issue
+                            _vm.showDataGuide.recipient_name
+                              ? _vm.showDataGuide.recipient_name
                               : "No registra"
                           ),
                         },
@@ -71258,14 +71320,6 @@ var staticRenderFns = [
       ]),
     ])
   },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1" }, [
-      _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
-    ])
-  },
 ]
 render._withStripped = true
 
@@ -71376,9 +71430,9 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("777777")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.schedule_date)),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(_vm._s(tblItem.get_order.get_user.name)),
@@ -71390,7 +71444,11 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(tblItem.get_order.schedule_time_range)
+                                ),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
@@ -71497,9 +71555,9 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("777777")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.schedule_date)),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(_vm._s(tblItem.get_order.get_user.name)),
@@ -71511,7 +71569,11 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(tblItem.get_order.schedule_time_range)
+                                ),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
@@ -71661,8 +71723,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ExtRef")]),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Prog")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Cliente")]),
@@ -71692,8 +71752,6 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Orden")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ExtRef")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Prog")]),
         _vm._v(" "),
@@ -90648,8 +90706,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Desktop\DevelopApp\Projects\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Desktop\DevelopApp\Projects\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

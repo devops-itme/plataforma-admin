@@ -48,9 +48,9 @@
                             Aplicar nuevo estado
                         </button>
                     </div>
-                    <div class="col-md-1">
+                   <!-- <div class="col-md-1">
                         <span class="h5">1/100</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <ul
@@ -130,6 +130,14 @@
                         <div class="font-weight-bolder mb-1">Programado:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.programming">2022/02/04</div>
                     </div>
+                     <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Nombre de Contacto:</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.contact"></div>
+                    </div>
+                     <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Teléfono Contacto:</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.contact_phone"></div>
+                    </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport" ></div>
@@ -181,12 +189,16 @@
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.status ? showDataGuide.status : 'No registra' "></div>
                     </div>
                     <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Incidencias:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.issue ? showDataGuide.issue : 'No registra'"></div>
+                    </div>
+                    <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Novedades:</div>
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.novelty ? showDataGuide.novelty : 'No registra' "></div>
                     </div>
                     <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Incidencias:</div>
-                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.issue ? showDataGuide.issue : 'No registra'"></div>
+                        <div class="font-weight-bolder mb-1">Nombre quien Entrega/Recibe:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.recipient_name ? showDataGuide.recipient_name : 'No registra' "></div>
                     </div>
                 </div>
                 <div class=" max-h-200px mb-3 pb-3 justify-content-center">
@@ -466,6 +478,9 @@ export default {
             this.showDataGuide.client_document = data.get_order?.get_user.document_number;
             this.showDataGuide.concept = data.concept;
             this.showDataGuide.direction = data.address_name;
+            this.showDataGuide.contact = this.showGuide.contact;
+            this.showDataGuide.recipient_name = this.showGuide.recipient_name;
+            this.showDataGuide.contact_phone = this.showGuide.phone_contact;
             this.showDataGuide.additional_phone = data.additional_phone;
             this.showDataGuide.additional_email = data.additional_email;
             this.showDataGuide.additional_address = data.additional_address;

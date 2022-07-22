@@ -39,7 +39,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Orden</th>
                                         <th scope="col">Destino</th>
-                                        <th scope="col">ExtRef</th>
+                                       <!-- <th scope="col">ExtRef</th> -->
                                         <th scope="col">Fecha Prog</th>
                                         <th scope="col">Cliente</th>
                                         <th scope="col">Contacto</th>
@@ -69,13 +69,13 @@
                                         <td>{{ tblItem.id }}</td>
                                         <td>{{ tblItem.get_order.order_number }}</td>
                                         <td>{{ tblItem.id }}</td>
-                                        <td>777777</td>
-                                        <td>28/02/2022</td>
+                                        <!--<td>777777</td>-->
+                                        <td>{{ tblItem.get_order.schedule_date }}</td>
                                         <td>{{ tblItem.get_order.get_user.name }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
                                         <td>{{ tblItem.address_name }}</td>
-                                        <td>28/02/2022</td>
+                                        <td>{{ tblItem.get_order.schedule_time_range }}</td>
                                         <td>{{ formatDate(tblItem.created_at) }}</td>
                                         <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
@@ -102,7 +102,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Orden</th>
                                         <th scope="col">Destino</th>
-                                        <th scope="col">ExtRef</th>
+                                        <!--<th scope="col">ExtRef</th>-->
                                         <th scope="col">Fecha Prog</th>
                                         <th scope="col">Cliente</th>
                                         <th scope="col">Contacto</th>
@@ -132,13 +132,13 @@
                                         <td>{{ tblItem.id }}</td>
                                         <td>{{ tblItem.get_order.order_number }}</td>
                                         <td>{{ tblItem.id }}</td>
-                                        <td>777777</td>
-                                        <td>28/02/2022</td>
+                                        <!--<td>777777</td>-->
+                                        <td>{{ tblItem.get_order.schedule_date }}</td>
                                         <td>{{ tblItem.get_order.get_user.name }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
                                         <td>{{ tblItem.address_name }}</td>
-                                        <td>28/02/2022</td>
+                                        <td>{{ tblItem.get_order.schedule_time_range }}</td>
                                         <td>{{ formatDate(tblItem.created_at) }}</td>
                                         <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
