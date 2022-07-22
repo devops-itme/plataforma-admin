@@ -32,7 +32,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         $phones = [];
         $messages = [];
         $failed_validation = false;
-        foreach ($rows as $key => $row) {            
+        foreach ($rows as $key => $row) {
             if (in_array($row['teldes'], $phones)) {
                 $failed_validation = true;
                 $messages[] = 'Hubo un error en la fila  ' . ($key + 1) . '. El campo teldes(Teléfono de destino) se encuentra repetido.';
@@ -41,6 +41,46 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                 throw ValidationException::withMessages($messages);
             }
             $phones[] = $row['teldes'];
+        }
+    }
+
+    protected function validateNames($rows)
+    {
+        $user = [];
+        $names = ['IRVING ALVARADO',
+                  'DANIEL BARKER',
+                  'ORLANDO MONTENEGRO',
+                  'LUISA ARCHIBOLD BURTO',
+                  'JULIÁN AYALA',
+                  'FRANCISCO DIAZ',
+                  'LUIS MINA',
+                  'CIRILO ABDIEL MCFARLANE VILLA',
+                  'REINIER LICONA',
+                  'DEREX VARGAS',
+                  'RYAN AYALA',
+                  'GELEN YAJAIRY SANCHEZ ALVAREZ',
+                  'MIGUEL A.DAVIS',
+                  'BRAYAN DEL VICEHIO',
+                  'ROGELIO RODRÍGUEZ',
+                  'MELANY YANIN MXWELL',
+                  'RICARDO REYNA',
+                  'MARVIN REYNA'
+        ];
+        $messages = [];
+        $failed_validation = false;
+        foreach ($rows as $key => $row) {
+            if (in_array($row['namecontact'] ,$names)) {
+                foreach ($names as $black_list) {
+                    if (($row['namecontact'] == $black_list)) {
+                        $failed_validation = true;
+                    }
+                }
+                $messages[] = 'Hubo un error en la fila  ' . ($key + 1) . '. El usuario del campo namecontact(Contacto de destino) se encuentra en lista negra.';
+            }
+            if (count($rows) == ($key + 1) && $failed_validation) {
+                throw ValidationException::withMessages($messages);
+            }
+            $user[] = $row['namecontact'];
         }
     }
 
@@ -70,6 +110,8 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         if (!$this->unique_phone) {
             $this->validatePhones($rows);
         }
+            $this->validateNames($rows);
+
 
         foreach ($rows as $row) {
             $guideResponse = $this->storeGuide(new Request(array(
