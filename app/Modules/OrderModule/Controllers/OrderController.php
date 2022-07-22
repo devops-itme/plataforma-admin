@@ -40,7 +40,7 @@ class OrderController extends Controller
             ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
                 $query->where('name', '!=', 'RECOGIDO')
                 ->where('name', '!=', 'ENTREGADO');
-               
+
             })
             ->national();
 
@@ -111,8 +111,8 @@ class OrderController extends Controller
             'user_id' => 'required',
             'schedule_date' => 'required',
             'schedule_time_range' => 'required',
-            'order_description' => 'required' 
-        ]); 
+            'order_description' => 'required'
+        ]);
         $validator = Validator::make(
             $request->all(),
             [
@@ -123,7 +123,7 @@ class OrderController extends Controller
                 'user_id' => 'required',
                 'schedule_date' => 'required',
                 'schedule_time_range' => 'required',
-                'order_description' => 'required' 
+                'order_description' => 'required'
                 /* 'guide_address' => 'required', */
                 /* 'phone_contact' => 'required',
                 'contact' => 'required' */
@@ -336,7 +336,7 @@ class OrderController extends Controller
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->whereStatusMatrix([request()->state])
-            ->with('getUser')->get();
+            ->with('getUser')->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
@@ -353,7 +353,7 @@ class OrderController extends Controller
     public function showModGuide($id)
     {
         $guide = Guide::find($id);
-        
+
         return view($this->path . 'national.showGuide', compact('guide'));
     }
 }

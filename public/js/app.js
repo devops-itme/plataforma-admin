@@ -8677,13 +8677,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.concept = data.concept;
       this.showDataGuide.direction = data.address_name;
-      this.showDataGuide.additional_phone = data.additional_phone;
-      this.showDataGuide.additional_email = data.additional_email;
-      this.showDataGuide.additional_address = data.additional_address;
-      this.showDataGuide.app_status = data.app_status;
-      this.showDataGuide.status = data.get_status_matrix.name;
-      this.showDataGuide.novelty = data.novelty;
-      this.showDataGuide.files = data.get_documents;
+      hone = this.showGuide.phone_contact;
+      cuments;
       this.showDataGuide.evidence = (_data$get_documents = data.get_documents) === null || _data$get_documents === void 0 ? void 0 : _data$get_documents.filter(function (element) {
         return element.type != 74;
       });
@@ -71428,9 +71423,9 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("777777")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.schedule_date)),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(_vm._s(tblItem.get_order.get_user.name)),
@@ -71442,7 +71437,11 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(tblItem.get_order.schedule_time_range)
+                                ),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
@@ -71549,9 +71548,9 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("777777")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.schedule_date)),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(_vm._s(tblItem.get_order.get_user.name)),
@@ -71563,7 +71562,11 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(tblItem.get_order.schedule_time_range)
+                                ),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
@@ -71713,8 +71716,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ExtRef")]),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Prog")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Cliente")]),
@@ -71744,8 +71745,6 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Orden")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ExtRef")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Prog")]),
         _vm._v(" "),

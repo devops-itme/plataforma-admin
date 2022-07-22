@@ -83,7 +83,7 @@
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('orders.index') }}"
+                                    <a href="{{ route('orders.record') }}"
                                         class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                                         </span>
                                     @else
                                         <span class="label label-inline label-light-info font-weight-blog">
-                                            Packaking
+                                            Packing
                                         </span>
                                     @endif
                                 </td>
@@ -159,6 +159,9 @@
                 </tbody>
             </table>
             <!--end: Datatable-->
+            <div class="col-md-12 d-flex align-items-center justify-content-end">
+            {{$orders->links()}}
+        </div>
         </div>
     </div>
 @endsection

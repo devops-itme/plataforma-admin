@@ -456,13 +456,8 @@ export default {
             this.showDataGuide.client_document = data.get_order?.get_user.document_number;
             this.showDataGuide.concept = data.concept;
             this.showDataGuide.direction = data.address_name;
-            this.showDataGuide.additional_phone = data.additional_phone;
-            this.showDataGuide.additional_email = data.additional_email;
-            this.showDataGuide.additional_address = data.additional_address;
-            this.showDataGuide.app_status = data.app_status;
-            this.showDataGuide.status = data.get_status_matrix.name;
-            this.showDataGuide.novelty = data.novelty;
-            this.showDataGuide.files = data.get_documents;
+hone = this.showGuide.phone_contact;
+cuments;
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
             this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74)
             this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
