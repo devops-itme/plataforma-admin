@@ -44,7 +44,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         }
     }
 
-    protected function validateNames($rows)
+    protected function validateNamesContact($rows)
     {
         $user = [];
         $names = ['IRVING ALVARADO',
@@ -75,7 +75,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                         $failed_validation = true;
                     }
                 }
-                $messages[] = 'Hubo un error en la fila  ' . ($key + 1) . '. El usuario del campo namecontact(Contacto de destino) se encuentra en lista negra.';
+                $messages[] = 'Verifique la fila  ' . ($key + 1) . ' porque el nombre del contacto se encuentra en lista negra';
             }
             if (count($rows) == ($key + 1) && $failed_validation) {
                 throw ValidationException::withMessages($messages);
@@ -83,6 +83,47 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             $user[] = $row['namecontact'];
         }
     }
+
+    protected function validateNamesDestination($rows)
+    {
+        $user = [];
+        $names = ['IRVING ALVARADO',
+                  'DANIEL BARKER',
+                  'ORLANDO MONTENEGRO',
+                  'LUISA ARCHIBOLD BURTO',
+                  'JULIÁN AYALA',
+                  'FRANCISCO DIAZ',
+                  'LUIS MINA',
+                  'CIRILO ABDIEL MCFARLANE VILLA',
+                  'REINIER LICONA',
+                  'DEREX VARGAS',
+                  'RYAN AYALA',
+                  'GELEN YAJAIRY SANCHEZ ALVAREZ',
+                  'MIGUEL A.DAVIS',
+                  'BRAYAN DEL VICEHIO',
+                  'ROGELIO RODRÍGUEZ',
+                  'MELANY YANIN MXWELL',
+                  'RICARDO REYNA',
+                  'MARVIN REYNA'
+        ];
+        $messages = [];
+        $failed_validation = false;
+        foreach ($rows as $key => $row) {
+            if (in_array($row['nomdes'] ,$names)) {
+                foreach ($names as $black_list) {
+                    if (($row['nomdes'] == $black_list)) {
+                        $failed_validation = true;
+                    }
+                }
+                $messages[] = 'Verifique la fila  ' . ($key + 1) . ' porque el nombre del destinatario se encuentra en lista negra';
+            }
+            if (count($rows) == ($key + 1) && $failed_validation) {
+                throw ValidationException::withMessages($messages);
+            }
+            $user[] = $row['nomdes'];
+        }
+    }
+
 
     public function collection(Collection $rows)
     {
@@ -110,7 +151,9 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         if (!$this->unique_phone) {
             $this->validatePhones($rows);
         }
-            $this->validateNames($rows);
+            $this->validateNamesDestination($rows);
+            $this->validateNamesContact($rows);
+
 
 
         foreach ($rows as $row) {
