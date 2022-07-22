@@ -24,7 +24,7 @@
                     </select>
                 </div>
                 <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
-                    <div class="col-md-5 py-2" >
+                  <!--  <div class="col-md-5 py-2" >
                         <div class=" border rounded" v-if="type_guide === tabEdition">
                             <p class="mb-0">
                                 <span class="font-weight-bolder mb-3"
@@ -33,7 +33,7 @@
                                 <span class="line-height-xl" v-text="200"></span>
                             </p>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group col-md-3 mb-0" >
                         <select class="form-control" id="delivery_event_state" v-if="type_guide === tabEdition" >
                             <option>Seleccione estado</option>
@@ -101,7 +101,7 @@
             </div>
             <div class="col-md-3 py-4">
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
-                    <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
+                   <!-- <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a> -->
                     <button v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2"  @click.prevent="editGuide()">Editar Destino</button>
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">

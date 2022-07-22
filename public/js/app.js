@@ -69750,29 +69750,6 @@ var render = function () {
                   "col-md-8 d-flex align-items-center flex-row flex-wrap",
               },
               [
-                _c("div", { staticClass: "col-md-5 py-2" }, [
-                  _vm.type_guide === _vm.tabEdition
-                    ? _c("div", { staticClass: " border rounded" }, [
-                        _c("p", { staticClass: "mb-0" }, [
-                          _c(
-                            "span",
-                            { staticClass: "font-weight-bolder mb-3" },
-                            [
-                              _vm._v(
-                                "Destinos en recogida por editar:\n                            "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass: "line-height-xl",
-                            domProps: { textContent: _vm._s(200) },
-                          }),
-                        ]),
-                      ])
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
                 _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
                   _vm.type_guide === _vm.tabEdition
                     ? _c(
@@ -69931,16 +69908,6 @@ var render = function () {
                   "d-flex flex-row flex-wrap align-items-center justify-content-center",
               },
               [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "btn btn-light-success btn-block font-weight-bold mr-2",
-                    attrs: { href: "#" },
-                  },
-                  [_vm._v("Imprimir Guia")]
-                ),
-                _vm._v(" "),
                 _vm.type_guide === _vm.tabEdition
                   ? _c(
                       "button",
