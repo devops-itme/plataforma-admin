@@ -135,9 +135,13 @@
                         <div class="font-weight-bolder mb-1">Teléfono Contacto:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.contact_phone"></div>
                     </div>
-                    <div class="col-md-12 mb-2">
+                    <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport" ></div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">H.Entrega:</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.schedule_time_range" ></div>
                     </div>
                     <div class="col-md-12 mb-2" v-if="showDataGuide.movil">
                         <div class="font-weight-bolder mb-1">Movil:</div>
@@ -409,8 +413,8 @@ export default {
             ],
             showModal: false,
             columns:{
-                inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
-                inEdit:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
+                inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
+                inEdit:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
             },
             guides: [],
             guides2: [],
@@ -489,7 +493,7 @@ export default {
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
             this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
             this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
-
+            this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range
         },
         async getGuides(type, changeType = true) {
             this.guides2 = [];

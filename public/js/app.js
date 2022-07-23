@@ -8587,6 +8587,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -8610,8 +8614,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       showModal: false,
       columns: {
-        inProcess: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
-        inEdit: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
+        inProcess: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
+        inEdit: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
       },
       guides: [],
       guides2: [],
@@ -8717,6 +8721,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return element.type == 74;
       });
       this.showDataGuide.issue = (_data$get_guide_logs$ = (_data$get_guide_logs = data.get_guide_logs[data.get_guide_logs.length - 1]) === null || _data$get_guide_logs === void 0 ? void 0 : (_data$get_guide_logs$2 = _data$get_guide_logs.get_issue) === null || _data$get_guide_logs$2 === void 0 ? void 0 : _data$get_guide_logs$2.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
+      this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
     },
     getGuides: function getGuides(type) {
       var _arguments = arguments,
@@ -9955,6 +9960,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -70190,7 +70196,7 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
                     _vm._v("Transporte:"),
                   ]),
@@ -70200,6 +70206,23 @@ var render = function () {
                         staticClass: "line-height-xl",
                         domProps: {
                           textContent: _vm._s(_vm.showDataGuide.transport),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("H.Entrega:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.schedule_time_range
+                          ),
                         },
                       })
                     : _vm._e(),
@@ -72046,6 +72069,10 @@ var render = function () {
                     _c("td", [_vm._v(_vm._s(tblItem.id))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.get_order.schedule_date))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(tblItem.get_order.schedule_time_range)),
+                    ]),
                     _vm._v(" "),
                     tblItem.dispatched != null &&
                     tblItem.get_route != null &&

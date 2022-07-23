@@ -30,6 +30,7 @@
                         <td>{{ tblItem.dispatched }}</td>
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
+                        <td>{{ tblItem.get_order.schedule_time_range }}</td>
                         <td v-if="tblItem.dispatched != null && tblItem.get_route != null && tblItem.get_route.get_messenger != null">{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
                         <td v-else>Sin Asignar</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
