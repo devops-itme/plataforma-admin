@@ -160,7 +160,7 @@
             </table>
             <!--end: Datatable-->
             <div class="col-md-12 d-flex align-items-center justify-content-end">
-            {{$orders->links()}}
+            {{$orders->appends(request()->all())->links()}}
         </div>
         </div>
     </div>
