@@ -149,9 +149,9 @@
                     </td>
                     <td>
                         <div class="d-flex justify-content-around align-items-center flex-wrap flex-row">
-                            <a href="ordenes-listado" class="btn btn-icon btn-light btn-sm mr-2" data-tooltip title="Listado">
+                            {{-- <a href="ordenes-listado" class="btn btn-icon btn-light btn-sm mr-2" data-tooltip title="Listado">
                                 <i class="fas fa-eye"></i>
-                            </a>
+                            </a> --}}
                             <a href="{{ route('orders.show', $order->id) }}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
                                 <i class="fad fa-folder-open"></i>
                             </a>
