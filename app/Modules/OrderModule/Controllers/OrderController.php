@@ -167,33 +167,69 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::with('getUser')->find($id);
-        $user_id = $order->getUser->id ?? NULL;
-        $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
-            $query->where('name', 'customer_document_type');
+        $order = Order::find($id);
+
+        $customers = Customer::whereHas('getUser', function ($query) {
+            $query->whereHas('getRole', function ($query) {
+                $query->where('name', 'Cliente');
+            });
         })->get();
-        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
-            $query->where('name', 'payment_method');
-        })->get();
+
+        $order_type = ParameterValue::whereHas('getParameter', function ($query) {
+            $query->where('name', 'order_types');
+        })
+            ->where('name', '<>', 'International')
+            ->get();
+
         $transport_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'transport_type');
         })->get();
-        $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
-            $query->where('name', 'order_types');
+
+        $user_id = $order->getUser->id;
+
+
+        $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'payment_method');
         })->get();
-        $branches = BranchOffice::with('getBranchUser')->whereHas('getBranchUser', function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
-        })->get();
-        $departments = Department::with('getDepartmentUser')->whereHas('getDepartmentUser', function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
+        $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+            $query->where('name', 'customer_document_type');
         })->get();
         $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         })->get();
         $zones = Zone::get();
         $rates = Rate::get();
-        return view($this->path . 'show.index', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses', 'zones', 'rates'));
+        return view($this->path . 'show.index', compact('customers', 'order', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
     }
+    // public function show($id)
+    // {
+    //     $order = Order::with('getUser')->find($id);
+    //     $user_id = $order->getUser->id ?? NULL;
+    //     $customer_document_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+    //         $query->where('name', 'customer_document_type');
+    //     })->get();
+    //     $payment_method = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+    //         $query->where('name', 'payment_method');
+    //     })->get();
+    //     $transport_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+    //         $query->where('name', 'transport_type');
+    //     })->get();
+    //     $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
+    //         $query->where('name', 'order_types');
+    //     })->get();
+    //     $branches = BranchOffice::with('getBranchUser')->whereHas('getBranchUser', function ($query) use ($user_id) {
+    //         $query->where('user_id', $user_id);
+    //     })->get();
+    //     $departments = Department::with('getDepartmentUser')->whereHas('getDepartmentUser', function ($query) use ($user_id) {
+    //         $query->where('user_id', $user_id);
+    //     })->get();
+    //     $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
+    //         $query->where('user_id', $user_id);
+    //     })->get();
+    //     $zones = Zone::get();
+    //     $rates = Rate::get();
+    //     return view($this->path . 'show.index', compact('order', 'order_type', 'customer_document_type', 'payment_method', 'transport_type', 'order_type', 'branches', 'departments', 'customer_addresses', 'zones', 'rates'));
+    // }
 
 
     public function historial()

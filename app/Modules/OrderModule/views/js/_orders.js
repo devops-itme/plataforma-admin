@@ -98,7 +98,7 @@ export default class Orders {
         createOrderBtn.addEventListener('click', async function () {
             if(GuidesClass.guides.length == 0) {
                 swal("Importante!", "Debes agregar un destino como mínimo","info");
-             
+
                 return;
             }
             guides.value = JSON.stringify(GuidesClass.guides);
@@ -114,11 +114,11 @@ export default class Orders {
         let order_id = document.getElementById("order_id");
         let notification_type = document.getElementById("notification_type");
         let fcm_token = document.getElementById("fcm_token");
-        
+
         if (state == null || order_id == null || notification_type == null || fcm_token == null) {
             return;
         }
-        
+
         state = state.value;
         order_id = order_id.value;
         notification_type = notification_type.value;
@@ -247,7 +247,7 @@ export default class Orders {
                 correct(response.message);
                 // modal.click();
                 $("#modalCreateAddress").modal('hide');
-                this.refreshAddresses();                
+                this.refreshAddresses();
                 // this.listGuides();
                 this.customerAddresses(
                     document.getElementById("user_code").value
@@ -268,7 +268,7 @@ export default class Orders {
 
             $('#guide_address').one('click', async function (e) {
                 let customer_id = customer.value;
-                
+
                 let response = await requestCustomerData(customer_id);
                 if (response.state != 200) {
                     return;
@@ -277,20 +277,20 @@ export default class Orders {
                 this.branches = response.data.branches;
                 this.departments = response.data.departments;
                 this.addresses = response.data.addresses;
-    
+
                 let address = document.getElementById("address");
                 let guide_address = document.getElementById("guide_address");
                 loadSelect(this.addresses, address);
                 loadSelect(this.addresses, guide_address);
-    
+
                 let user_departments = document.getElementById("user_departments");
                 loadSelect(this.departments, user_departments);
-    
+
                 let user_branch_office = document.getElementById("user_branch_office");
                 loadSelect(this.branches, user_branch_office);
-                this.key =false;              
-                
-            });       
+                this.key =false;
+
+            });
     }
 
     async sendAddressData(formData) {
