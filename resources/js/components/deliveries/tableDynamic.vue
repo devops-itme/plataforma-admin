@@ -21,18 +21,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="cursor: pointer" v-for="tblItem, index in this.guidess" @click="rowClick(tblItem, index)"
+                    <tr style="cursor: pointer" v-for="tblItem, index in this.guidess" @click="rowClick(tblItem, index)" v-bind:key="index"
                         class="text-center">
                         <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
-                        <td>{{ tblItem.get_status_matrix.name }}</td>
+                        <td v-if="tblItem.get_status_matrix != null">{{ tblItem.get_status_matrix.name }}</td>
+                        <td v-else>--- ---</td>
                         <td>{{ '' }}</td>
                         <td>{{ tblItem.dispatched }}</td>
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
-                        <td v-if="tblItem.dispatched != null">{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
+                        <td v-if="tblItem.dispatched != null && tblItem.get_route != null && tblItem.get_route.get_messenger != null">{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
                         <td v-else>Sin Asignar</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
-                        <td>{{ tblItem.get_order.get_user.name }}</td>
+                        <td v-if="tblItem != null" >{{ tblItem.get_order.get_user.name }}</td>
+                        <td v-else>--- ---</td>
                         <td>{{ tblItem.contact }}</td>
                         <td>{{ '' }}</td>
                         <td>{{ tblItem.address_name }}</td>
@@ -90,8 +92,6 @@ export default {
 
     computed: {
         guidess() {
-
-            console.log(this.contact);
             return this.guides.filter((tblItem) => {
                 return this.contact
                     .toString()

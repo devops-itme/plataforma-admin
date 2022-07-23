@@ -8586,6 +8586,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -8660,9 +8661,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 5:
                 res = _context.sent;
-                // take the first 3 data from the consulate
-                _this2.tabs = res.data.slice(0, 3); //#HREF TAB
+                _context.next = 8;
+                return res.data.slice(0, 3);
 
+              case 8:
+                _this2.tabs = _context.sent;
+                //#HREF TAB
                 _this2.tabs[0].href = "porRecoger";
                 _this2.tabs[1].href = "enproceso";
                 _this2.tabs[2].href = "consultas"; //NAME TABS
@@ -8671,7 +8675,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.selected == 56 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
                 _this2.selected == 56 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
-              case 13:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -8712,7 +8716,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.package_pictures = (_data$get_documents2 = data.get_documents) === null || _data$get_documents2 === void 0 ? void 0 : _data$get_documents2.filter(function (element) {
         return element.type == 74;
       });
-      console.log('documents', data.get_documents);
       this.showDataGuide.issue = (_data$get_guide_logs$ = (_data$get_guide_logs = data.get_guide_logs[data.get_guide_logs.length - 1]) === null || _data$get_guide_logs === void 0 ? void 0 : (_data$get_guide_logs$2 = _data$get_guide_logs.get_issue) === null || _data$get_guide_logs$2 === void 0 ? void 0 : _data$get_guide_logs$2.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
     },
     getGuides: function getGuides(type) {
@@ -8788,7 +8791,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return fetch("/orders_packing/".concat(type), requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
-                  console.log('data', data);
                   response = data;
                 })["catch"](function (err) {
                   return console.warn(err);
@@ -8995,7 +8997,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context9.prev = _context9.next) {
               case 0:
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                console.log(token);
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -9008,10 +9009,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   headers: myHeaders,
                   body: JSON.stringify(_this9.guide)
                 };
-                _context9.next = 12;
+                _context9.next = 11;
                 return _this9.requestUpdateGuide(requestOptions);
 
-              case 12:
+              case 11:
                 response = _context9.sent;
 
                 if (response.state != 200) {
@@ -9021,7 +9022,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 alert(response.message);
                 _this9.showModal = false;
 
-              case 16:
+              case 15:
               case "end":
                 return _context9.stop();
             }
@@ -9045,7 +9046,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (data) {
                   response = data;
                 })["catch"](function (e) {
-                  return console.log(e);
+                  return console.log('requestUpdateGuide', e);
                 });
 
               case 3:
@@ -9810,7 +9811,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {},
   methods: {
     rowClick: function rowClick(data) {
-      // console.log(data)
       this.$emit("getGuide", data);
     },
     formatDate: function formatDate(date) {
@@ -10006,6 +10006,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -10048,7 +10050,6 @@ __webpack_require__.r(__webpack_exports__);
     guidess: function guidess() {
       var _this = this;
 
-      console.log(this.contact);
       return this.guides.filter(function (tblItem) {
         return _this.contact.toString().toLowerCase().split(" ").every(function (v) {
           return tblItem.address_name.toLowerCase().includes(v) || tblItem.contact.toLowerCase().includes(v) || tblItem.get_order.schedule_date.toLowerCase().includes(v) || tblItem.get_status_matrix.name.toLowerCase().includes(v) || tblItem.dispatched.toLowerCase().includes(v) || tblItem.get_route.get_messenger.name.toLowerCase().includes(v) || tblItem.get_route.get_messenger.last_name.toLowerCase().includes(v) || tblItem.get_order.get_user.name.toLowerCase().includes(v);
@@ -15424,7 +15425,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -71719,9 +71720,11 @@ var render = function () {
                       staticClass: "form-control col-md-5",
                     },
                     _vm._l(this.filterMessengers, function (a) {
-                      return _c("option", { domProps: { value: a.user.id } }, [
-                        _vm._v(_vm._s(a.user.name + " " + a.user.last_name)),
-                      ])
+                      return _c(
+                        "option",
+                        { key: a.id, domProps: { value: a.user.id } },
+                        [_vm._v(_vm._s(a.user.name + " " + a.user.last_name))]
+                      )
                     }),
                     0
                   ),
@@ -72014,6 +72017,7 @@ var render = function () {
                 return _c(
                   "tr",
                   {
+                    key: index,
                     staticClass: "text-center",
                     staticStyle: { cursor: "pointer" },
                     on: {
@@ -72033,7 +72037,11 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(tblItem.get_status_matrix.name))]),
+                    tblItem.get_status_matrix != null
+                      ? _c("td", [
+                          _vm._v(_vm._s(tblItem.get_status_matrix.name)),
+                        ])
+                      : _c("td", [_vm._v("--- ---")]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(""))]),
                     _vm._v(" "),
@@ -72043,7 +72051,9 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.get_order.schedule_date))]),
                     _vm._v(" "),
-                    tblItem.dispatched != null
+                    tblItem.dispatched != null &&
+                    tblItem.get_route != null &&
+                    tblItem.get_route.get_messenger != null
                       ? _c("td", [
                           _vm._v(
                             _vm._s(
@@ -72061,7 +72071,11 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(tblItem.get_order.get_user.name))]),
+                    tblItem != null
+                      ? _c("td", [
+                          _vm._v(_vm._s(tblItem.get_order.get_user.name)),
+                        ])
+                      : _c("td", [_vm._v("--- ---")]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.contact))]),
                     _vm._v(" "),

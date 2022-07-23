@@ -154,7 +154,7 @@
                             <input type="text" class="form-control col-md-3" v-model="searchMessenger" />
 
                            <select class="form-control col-md-5" ref="seleccionado">
-                             <option  v-for="a in this.filterMessengers" :value="a.user.id"  >{{a.user.name+ " " +a.user.last_name}}</option>
+                             <option  v-for="a in this.filterMessengers" :value="a.user.id" v-bind:key="a.id"  >{{a.user.name+ " " +a.user.last_name}}</option>
                            </select>
 
                             <a
@@ -230,7 +230,6 @@ export default {
     },
     methods: {
         rowClick(data) {
-            // console.log(data)
             this.$emit("getGuide", data);
         },
 

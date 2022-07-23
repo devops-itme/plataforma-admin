@@ -232,6 +232,7 @@
             </div>
            </div>
         </div>
+        <!-- EDITAR -->
         <modalEdit
             v-if="showModal"
             @close="showModal = false">
@@ -447,8 +448,7 @@ export default {
             let req = await fetch(`despacho/matriz_estados?scope_id=${scope}`);
             let res = await req.json();
             // take the first 3 data from the consulate
-            this.tabs = res.data.slice(0, 3);
-
+            this.tabs = await res.data.slice(0, 3);
             //#HREF TAB
             this.tabs[0].href = "porRecoger";
             this.tabs[1].href = "enproceso";
@@ -488,7 +488,6 @@ export default {
             this.showDataGuide.files = data.get_documents;
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
             this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
-            console.log('documents',data.get_documents);
             this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
 
         },
@@ -534,7 +533,6 @@ export default {
             await fetch(`/orders_packing/${type}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
-                    console.log('data',data);
                     response = data;
                 })
                 .catch((err) => console.warn(err));
@@ -611,7 +609,6 @@ export default {
             let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
-                console.log(token)
             let myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -640,7 +637,7 @@ export default {
                 .then(data => {
                     response = data
                 })
-                .catch(e => console.log(e));
+                .catch(e => console.log('requestUpdateGuide',e));
             return response;
         }
     },

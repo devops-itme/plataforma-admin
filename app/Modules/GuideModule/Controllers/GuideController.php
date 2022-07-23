@@ -190,7 +190,7 @@ class GuideController extends Controller
 
             $state == 5 ? $state = [4, 5, 6] : ($state == 9 ?  $state = [8, 9, 10] : $state = [intval($state)]);
             $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query) {
-                $query->where('order_type', 36);
+                $query->whereHas('getUser')->where('order_type', 36);
             })->whereIn('status_matrix_id', $state)
                 ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments','getGuideLogs.getIssue'])
                 ->get();
