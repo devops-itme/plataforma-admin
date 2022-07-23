@@ -200,7 +200,7 @@
                 </div>
                 <div class=" max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
-                    <div class="col-md-12 row symbol-group symbol-hover" v-if="type_guide === tabEdition">
+                    <div class="col-md-12 row symbol-group symbol-hover">
                         <div class="col-12">
                             <div class="font-weight-bolder">Imágenes del paquete a entregar</div>
                             <div v-if="Array.isArray(showDataGuide.package_pictures) && showDataGuide.package_pictures.length  == 0">
