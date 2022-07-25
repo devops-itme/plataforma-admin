@@ -112,6 +112,12 @@ class Guide extends Model
             ];
             $userToken = $activity->subject->getOrder->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             sendCustomNotifications($title, $message, $data, $userToken);
+            if($status_matrix->name == 'DESPACHADO') {
+                $title = 'Guía asignada';
+                $message = 'Se le ha asignado la guía' . $activity->subject->order_number;
+                $messengerToken = $activity->subject->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
+                sendCustomNotifications($title, $message, $data, $messengerToken);
+            }
         }
     }
 
