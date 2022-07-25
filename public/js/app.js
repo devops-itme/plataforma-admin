@@ -15393,7 +15393,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -15431,7 +15431,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
 
 // exports
 
@@ -71394,7 +71394,7 @@ var render = function () {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function ($event) {
                         return _vm.updateGuide()
@@ -90825,8 +90825,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Desktop\DevelopApp\Projects\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Desktop\DevelopApp\Projects\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
