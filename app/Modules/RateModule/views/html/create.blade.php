@@ -57,7 +57,7 @@
 
                 <div class="form-group col-md-3 py-3">
                     <label>Valor base(en dolares): <span class="text-danger">*</span></label>
-                    <input type="number" step="0.01" class="form-control form-control-solid"  placeholder="Cantidad de Libra adicional"
+                    <input type="number" step="0.01" class="form-control form-control-solid"  placeholder="Valor base"
                         name="base_value" value="{{ old('base_value') }}" />
                 </div>
 
