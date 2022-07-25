@@ -9,12 +9,12 @@
         <div class="card-title">
             <h2 class="card-label h1">Ordenes Internacionales</h2>
         </div>
-        <form method="post" action="{{ route('internationalOrders.export') }}"> 
-            @csrf           
-                    <input type="hidden" class="form-control form-control-solid" placeholder="" name="from" value="{{ request()->from }}" />        
+        <form method="post" action="{{ route('internationalOrders.export') }}">
+            @csrf
+                    <input type="hidden" class="form-control form-control-solid" placeholder="" name="from" value="{{ request()->from }}" />
                     <input type="hidden" class="form-control form-control-solid" placeholder="" name="to" value="{{ request()->to }}" />
-                    <input type="hidden" class="form-control form-control-solid" placeholder="" name="name" value="{{ request()->name }}" />              
-            
+                    <input type="hidden" class="form-control form-control-solid" placeholder="" name="name" value="{{ request()->name }}" />
+
             <div class="card-toolbar">
                 <button type="submit" class="btn btn-success mr-2 px-6 font-weight-bolder" data-tooltip title="EXPORTAR ÓRDENES">
                     <span class="svg-icon svg-icon-md">
@@ -129,8 +129,15 @@
             @foreach ($orders as $order)
             <tr>
                 <th scope="row">{{ $order->order_number ?? 'No registra' }}</th>
-
-                <td>{{ $order->getUser ? $order->getUser->name . ' ' . $order->getUser->last_name : 'No registra' }}
+                <td>
+                @foreach ($customers as $customer)
+                    @if (($order->getUser->id) == ($customer->user_id))
+                    {{ $order->getUser ? $order->getUser->name . ' ' . $order->getUser->last_name : 'No registra' }}
+                        @if (!isset($customer->getUser->name))
+                                {{$customer->getUser ? $customer->business_name : 'No registra'  }}
+                        @endif
+                    @endif
+                @endforeach
                 </td>
                 <td>{{ format_date(date('Y-n-d', strtotime($order->created_at))) }}
                     <b>{{ date('g:i a', strtotime($order->created_at)) }}</b>

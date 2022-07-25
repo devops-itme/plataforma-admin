@@ -52,7 +52,7 @@ class Customer extends Model
 
     public function getUser()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     public function getZone()
@@ -69,32 +69,32 @@ class Customer extends Model
     public function scopeName($query, $value)
     {
         if (!is_null($value)) {
-            return $query->whereHas('getUser', function($q) use($value){
-                $q->where(DB::raw('concat(name," ",last_name)'), 'like', '%'.$value.'%');
+            return $query->whereHas('getUser', function ($q) use ($value) {
+                $q->where(DB::raw('concat(name," ",last_name)'), 'like', '%' . $value . '%');
             });
         }
     }
     public function scopeDocument($query, $value)
     {
         if (!is_null($value)) {
-            return $query->whereHas('getUser', function($q) use($value){
-                $q->where('document_number', 'like', '%'.$value.'%');
+            return $query->whereHas('getUser', function ($q) use ($value) {
+                $q->where('document_number', 'like', '%' . $value . '%');
             });
         }
     }
     public function scopeEmail($query, $value)
     {
         if (!is_null($value)) {
-            return $query->whereHas('getUser', function($q) use($value){
-                $q->where('email', 'like', '%'.$value.'%');
+            return $query->whereHas('getUser', function ($q) use ($value) {
+                $q->where('email', 'like', '%' . $value . '%');
             });
         }
     }
     public function scopePhone($query, $value)
     {
         if (!is_null($value)) {
-            return $query->whereHas('getUser', function($q) use($value){
-                $q->where('phone', 'like', '%'.$value.'%');
+            return $query->whereHas('getUser', function ($q) use ($value) {
+                $q->where('phone', 'like', '%' . $value . '%');
             });
         }
     }
@@ -107,5 +107,12 @@ class Customer extends Model
     {
         if (!is_null($value))
             return $query->where('state', $value);
+    }
+
+    public function scopeDeletedByUser($query)
+    {
+        return $query->whereHas('getUser', function ($query) {
+            $query->whereNull('deleted_at')->orWhere('deleted_by', '<>', 1);
+        })->withTrashed();
     }
 }

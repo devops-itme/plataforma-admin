@@ -70,9 +70,9 @@
                                 <label for="exampleSelect1">Estado: </label>
                                 <select class="form-control form-control-solid" id="zone" name="state">
                                     <option selected disabled> Seleccione </option>
-                                    <option value="1" {{ request()->state == 1 ? 'selected' : '' }}>Activo</option>
-                                    <option value="0"
-                                        {{ request()->state != '' && request()->state == 0 ? 'selected' : '' }}>Inactivo
+                                    <option value="6" {{ request()->state == 6 ? 'selected' : '' }}>RECOGIDO</option>
+                                    <option value="10"
+                                        {{ request()->state != '' && request()->state == 10 ? 'selected' : '' }}>ENTREGADO
                                     </option>
                                 </select>
                                 <span class="form-text text-muted">Filtro estado</span>
@@ -83,7 +83,7 @@
                                         Filtrar</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('orders.index') }}"
+                                    <a href="{{ route('orders.record') }}"
                                         class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                                         </span>
                                     @else
                                         <span class="label label-inline label-light-info font-weight-blog">
-                                            Packaking
+                                            Packing
                                         </span>
                                     @endif
                                 </td>
@@ -159,6 +159,9 @@
                 </tbody>
             </table>
             <!--end: Datatable-->
+            <div class="col-md-12 d-flex align-items-center justify-content-end">
+            {{$orders->appends(request()->all())->links()}}
+        </div>
         </div>
     </div>
 @endsection

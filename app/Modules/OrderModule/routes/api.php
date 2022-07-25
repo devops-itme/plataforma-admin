@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+//NATIONAL ORDER
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('order/markAsRead', 'OrderModule\Controllers\Api\OrderController@markAsRead');
     Route::resource('orders', 'OrderModule\Controllers\Api\OrderController')->names('order');
@@ -12,3 +12,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 Route::get('order/webview/paguelo-facil/response', 'OrderModule\Controllers\Api\OrderController@responseViewPagueloFacil')->name('order.webview.response');
 Route::get('sendPushNotification', 'OrderModule\Controllers\Api\OrderController@sendPushNotification')->name('order.sendPushNotification');
+
+
+//INTERNATIONAL ORDER
+Route::middleware(['auth:sanctum'])->group(function () {
+    // Route::resource('internationalOrders', 'OrderModule\Controllers\Api\InternationalOrderController')->names('internationalOrder');
+    Route::get('internationalOrder/index', 'OrderModule\Controllers\Api\InternationalOrderController@index')->name('internationalOrder.index');
+    Route::get('internationalOrder/services', 'OrderModule\Controllers\Api\InternationalOrderController@services')->name('internationalOrder.services');
+    Route::post('internationalOrder/create', 'OrderModule\Controllers\Api\InternationalOrderController@store')->name('internationalOrder.create');
+    Route::get('internationalOrder/detail/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@show_destinations')->name('internationalOrder.detail');;
+    Route::post('web/export/order', 'OrderModule\Controllers\Api\InternationalOrderController@export2')->name('internationalOrder.export');
+});
+
+
+

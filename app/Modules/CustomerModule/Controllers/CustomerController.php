@@ -47,6 +47,7 @@ class CustomerController extends Controller
             ->phone(request()->phone)
             ->zone(request()->zone)
             ->state(request()->state)
+            ->deletedByUser()
             ->latest()
             ->paginate(10);
         $zones = Zone::get();

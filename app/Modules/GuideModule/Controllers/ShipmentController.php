@@ -128,7 +128,7 @@ class ShipmentController extends Controller
             $history['state']=500;
             return view($this->path. 'show', compact('guide','history'));
         }else{
-            $info = $history['data'][0]['tracking'][0];
+            $info = $history['data'][0]['tracking'];
             return view($this->path. 'show', compact('guide', 'history', 'info'));
         }
 

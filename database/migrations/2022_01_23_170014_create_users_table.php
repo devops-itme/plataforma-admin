@@ -33,6 +33,8 @@ class CreateUsersTable extends Migration
             $table->string('fcm_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->unsignedBigInteger('deleted_by')->nullable();
+            $table->foreign('deleted_by')->references('id')->on('users');
             $table->softDeletes();
         });
     }

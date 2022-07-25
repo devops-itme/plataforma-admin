@@ -37,6 +37,7 @@ class GuideResource extends JsonResource
             "corp_value" => $this->corp_value,
             "customer_document_type" => $this->customer_document_type,
             "contact" => $this->contact,
+            "recipient_name" => $this->recipient_name,
             "phone_contact" => $this->phone_contact,
             "email_contact" => $this->email_contact,
             "invoice_contact" => $this->invoice_contact,
@@ -54,7 +55,7 @@ class GuideResource extends JsonResource
                 'name' => $this->getStatusMatrix->name  ?? '',
                 'scope_id' => $this->getStatusMatrix->scope_id  ?? '',
             ],
-            "issue" => $this->issue,
+            "issue" => $this->getIssues[0]->getIssue->name ?? '',
             'novelty' => $this->novelty,
             "created_at" => $this->created_at,
             "transport" => [

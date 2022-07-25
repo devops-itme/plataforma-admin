@@ -60,7 +60,7 @@ trait GuideTrait
     {
         $validator = $this->GuideValidate($request);
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            return $this->respond(400,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
             $order = Guide::create([
@@ -172,6 +172,7 @@ trait GuideTrait
                 'additional_email' => 'nullable|email',
                 'additional_phone' => 'nullable|numeric',
                 'novelty' => 'nullable|string',
+                'recipient_name' => 'nullable|string',
             ]
         );
         if ($validator->fails()) {

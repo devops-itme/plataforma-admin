@@ -247,7 +247,7 @@ export default {
         this.orderState();
         this.getOrders(this.currentTab);
         this.getMessengers();
-        
+
     },
 };
 </script>

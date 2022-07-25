@@ -8,6 +8,7 @@ use App\Modules\CustomerModule\Controllers\CustomerTrait;
 use App\Mail\CodeMail;
 use App\Modules\RoleModule\Role;
 use App\Modules\UserModule\User;
+use App\Modules\UserModule\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -36,7 +37,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
             'password' => ['required']
         ]);
@@ -80,7 +81,7 @@ class AuthController extends Controller
     {
         // $user = Auth::user();
         // $user->tokens()->delete();
-        return $this->respond(200, null, null, 'Session cerrada con exito');
+        return $this->respond(200, null, null, 'Session cerrada con éxito');
     }
 
     public function recovery(Request $request)
@@ -90,7 +91,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
         ]);
 
@@ -121,7 +122,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
             'code' => 'required|exists:users,code'
         ]);
@@ -151,7 +152,7 @@ class AuthController extends Controller
                 'user' => [
                     'required',
                     ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                    ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                    ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
                 ],
                 'password' => 'required|min:6|confirmed'
             ]);
@@ -178,7 +179,7 @@ class AuthController extends Controller
             'user' => [
                 'required',
                 ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
-                ($is_numeric ? 'digits:10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
             ],
         ]);
 
@@ -249,6 +250,77 @@ class AuthController extends Controller
             return $saveCustomerResponse;
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Ha ocurrido un error de servidor');
+        }
+    }
+
+    public function deleteAccount()
+    {
+        $UserModel = new UserModel();
+        return $UserModel->deleteAccount();
+    }
+
+
+    //LOGIN FOR INTERNATIONAL ORDERS WITHOUT ROLE TYPE(REQUEST)
+
+    public function LoginClient(Request $request)
+    {
+        $is_numeric = is_numeric($request->user);
+
+        $validator = Validator::make($request->all(), [
+            'user' => [
+                'required',
+                ($is_numeric ? 'exists:users,phone' : 'exists:users,email'),
+                ($is_numeric ? 'digits_between:8,10' : 'regex:/^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,4}/'),
+            ],
+            'password' => ['required']
+        ]);
+
+        if ($validator->fails()) {
+            return $this->respond(400, $validator->errors(), 'Bad Request', 'Error de validacion');
+        }
+
+        $access_type = $is_numeric ? 'phone' : 'email';
+        $request->merge([$access_type => $request->user]);
+        $credentials = request([$access_type, 'password']);
+
+        if (!Auth::attempt($credentials)) {
+            return $this->respond(401,  $credentials, 'Unauthorized', 'Credenciales invalidas');
+        }
+
+        try {
+            $user = User::where(($is_numeric ? 'phone' : 'email'), $request->user)->first();
+
+            $user_role_c = Role::where('name', 'Cliente')
+                ->first();
+
+            $user_role_a = Role::where('name', 'Admin')
+                ->first();
+
+            $user_role_id_c = $user_role_c->id;
+            $user_role_id_a = $user_role_a->id;
+
+            if ($user_role_id_c == null) {
+                if ($user->role != $user_role_id_a) {
+                    return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado');
+                }
+            }
+
+            if ($user_role_id_a == null) {
+                if ($user->role != $user_role_id_c) {
+                    return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado');
+                }
+            }
+
+            if ($user->state != 1) {
+                return $this->respond(401,  null, 'Unauthorized', 'Usuario inactivo');
+            }
+            $user->fcm_token = $request->fcm_token ?? NULL;
+            $user->save();
+
+            $token = $user->createToken('authToken')->plainTextToken;
+            return $this->respond(200, $token, null, 'OK');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage() . ' Line:' . $e->getLine(), 'Ha ocurrido un error de servidor');
         }
     }
 }

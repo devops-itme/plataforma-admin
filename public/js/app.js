@@ -8560,6 +8560,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8572,6 +8603,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return _defineProperty({
+      selected_filter_status: "",
       selected: 56,
       delivery_types: [{
         value: 57,
@@ -8582,8 +8614,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }],
       showModal: false,
       columns: {
-        inProcess: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
-        inEdit: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
+        inProcess: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
+        inEdit: ["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"]
       },
       guides: [],
       guides2: [],
@@ -8611,6 +8643,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {},
   methods: {
     loadingEvt: function loadingEvt() {
+      this.selected_filter_status = "";
       $("#myTab li:nth-child(1) a").tab("show");
     },
     statusMatrix: function statusMatrix(scope) {
@@ -8632,9 +8665,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 5:
                 res = _context.sent;
-                // take the first 3 data from the consulate
-                _this2.tabs = res.data.slice(0, 3); //#HREF TAB
+                _context.next = 8;
+                return res.data.slice(0, 3);
 
+              case 8:
+                _this2.tabs = _context.sent;
+                //#HREF TAB
                 _this2.tabs[0].href = "porRecoger";
                 _this2.tabs[1].href = "enproceso";
                 _this2.tabs[2].href = "consultas"; //NAME TABS
@@ -8643,7 +8679,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.selected == 56 ? _this2.tabs[1].name = "RECOGIDA EN PROCESO" : _this2.tabs[1].name = "ENTREGA EN PROCESO";
                 _this2.selected == 56 ? _this2.tabs[0].name = "POR RECOGER" : _this2.tabs[0].name = "POR ENTREGAR";
 
-              case 13:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -8652,7 +8688,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getGuide: function getGuide(data) {
-      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$get_guide_logs$;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$get_documents, _data$get_documents2, _data$get_guide_logs$, _data$get_guide_logs, _data$get_guide_logs$2;
 
       this.showGuide = data;
       this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
@@ -8663,11 +8699,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.programming = data.get_order.schedule_date;
       this.showDataGuide.transport = (_data$get_transport_t = data.get_transport_type) === null || _data$get_transport_t === void 0 ? void 0 : _data$get_transport_t.name;
       this.showDataGuide.movil = data.get_route && ((_data$get_route = data.get_route) === null || _data$get_route === void 0 ? void 0 : (_data$get_route$get_m = _data$get_route.get_messenger) === null || _data$get_route$get_m === void 0 ? void 0 : _data$get_route$get_m.name) + ' ' + ((_data$get_route2 = data.get_route) === null || _data$get_route2 === void 0 ? void 0 : (_data$get_route2$get_ = _data$get_route2.get_messenger) === null || _data$get_route2$get_ === void 0 ? void 0 : _data$get_route2$get_.last_name);
-      this.showDataGuide.client_depto = ((_data$get_branch_offi = data.get_branch_office) === null || _data$get_branch_offi === void 0 ? void 0 : (_data$get_branch_offi2 = _data$get_branch_offi.get_department) === null || _data$get_branch_offi2 === void 0 ? void 0 : (_data$get_branch_offi3 = _data$get_branch_offi2.get_department) === null || _data$get_branch_offi3 === void 0 ? void 0 : _data$get_branch_offi3.id) + ':' + ((_data$get_branch_offi4 = data.get_branch_office) === null || _data$get_branch_offi4 === void 0 ? void 0 : (_data$get_branch_offi5 = _data$get_branch_offi4.get_department) === null || _data$get_branch_offi5 === void 0 ? void 0 : (_data$get_branch_offi6 = _data$get_branch_offi5.get_department) === null || _data$get_branch_offi6 === void 0 ? void 0 : _data$get_branch_offi6.name);
-      this.showDataGuide.client_branch_office = ((_data$get_branch_offi7 = data.get_branch_office) === null || _data$get_branch_offi7 === void 0 ? void 0 : _data$get_branch_offi7.id) + ': ' + ((_data$get_branch_offi8 = data.get_branch_office) === null || _data$get_branch_offi8 === void 0 ? void 0 : _data$get_branch_offi8.name);
+      this.showDataGuide.client_depto = ((_data$get_branch_offi = data.get_branch_office) === null || _data$get_branch_offi === void 0 ? void 0 : (_data$get_branch_offi2 = _data$get_branch_offi.get_department) === null || _data$get_branch_offi2 === void 0 ? void 0 : (_data$get_branch_offi3 = _data$get_branch_offi2.get_department) === null || _data$get_branch_offi3 === void 0 ? void 0 : _data$get_branch_offi3.id) + ':' + ((_data$get_branch_offi4 = data.get_branch_office) === null || _data$get_branch_offi4 === void 0 ? void 0 : (_data$get_branch_offi5 = _data$get_branch_offi4.get_department) === null || _data$get_branch_offi5 === void 0 ? void 0 : (_data$get_branch_offi6 = _data$get_branch_offi5.get_department) === null || _data$get_branch_offi6 === void 0 ? void 0 : _data$get_branch_offi6.name) ? this.showDataGuide.client_depto : 'No registra';
+      this.showDataGuide.client_branch_office = ((_data$get_branch_offi7 = data.get_branch_office) === null || _data$get_branch_offi7 === void 0 ? void 0 : _data$get_branch_offi7.id) + ': ' + ((_data$get_branch_offi8 = data.get_branch_office) === null || _data$get_branch_offi8 === void 0 ? void 0 : _data$get_branch_offi8.name) ? this.showDataGuide.client_branch_office : 'No registra';
       this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.concept = data.concept;
       this.showDataGuide.direction = data.address_name;
+      this.showDataGuide.contact = this.showGuide.contact;
+      this.showDataGuide.recipient_name = this.showGuide.recipient_name;
+      this.showDataGuide.contact_phone = this.showGuide.phone_contact;
       this.showDataGuide.additional_phone = data.additional_phone;
       this.showDataGuide.additional_email = data.additional_email;
       this.showDataGuide.additional_address = data.additional_address;
@@ -8675,17 +8714,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.status = data.get_status_matrix.name;
       this.showDataGuide.novelty = data.novelty;
       this.showDataGuide.files = data.get_documents;
-      this.showDataGuide.issue = (_data$get_guide_logs$ = data.get_guide_logs[data.get_guide_logs.length - 1].get_issue.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
+      this.showDataGuide.evidence = (_data$get_documents = data.get_documents) === null || _data$get_documents === void 0 ? void 0 : _data$get_documents.filter(function (element) {
+        return element.type != 74;
+      });
+      this.showDataGuide.package_pictures = (_data$get_documents2 = data.get_documents) === null || _data$get_documents2 === void 0 ? void 0 : _data$get_documents2.filter(function (element) {
+        return element.type == 74;
+      });
+      this.showDataGuide.issue = (_data$get_guide_logs$ = (_data$get_guide_logs = data.get_guide_logs[data.get_guide_logs.length - 1]) === null || _data$get_guide_logs === void 0 ? void 0 : (_data$get_guide_logs$2 = _data$get_guide_logs.get_issue) === null || _data$get_guide_logs$2 === void 0 ? void 0 : _data$get_guide_logs$2.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
+      this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
     },
     getGuides: function getGuides(type) {
-      var _this3 = this;
+      var _arguments = arguments,
+          _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
+        var changeType, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                changeType = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : true;
                 _this3.guides2 = [];
                 _this3.showGuide = null;
                 _this3.showDataGuide = {
@@ -8708,14 +8756,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 type == 56 && (type = 3);
                 type == 57 && (type = 7);
-                _context2.next = 8;
+                _context2.next = 9;
                 return _this3.requestGuides(type);
 
-              case 8:
+              case 9:
                 response = _context2.sent;
+
+                if (changeType) {
+                  _this3.type_guide = type;
+                }
+
                 _this3.guides = response.data;
 
-              case 10:
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -8724,8 +8777,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     requestGuides: function requestGuides(type) {
-      var _this4 = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var response, myHeaders, requestOptions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -8751,10 +8802,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
 
               case 6:
-                _this4.type_guide = type;
                 return _context3.abrupt("return", response);
 
-              case 8:
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -8763,7 +8813,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getMessengers: function getMessengers() {
-      var _this5 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this, myHeaders, requestOptions;
@@ -8772,7 +8822,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this = _this5;
+                _this = _this4;
                 myHeaders = new Headers();
                 myHeaders.append("accept", "application/json");
                 requestOptions = {
@@ -8797,17 +8847,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     editGuide: function editGuide() {
-      var _this6 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var _this6$showGuide$get_;
+        var _this5$showGuide$get_;
 
         var programming_date;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                if (_this6.showGuide) {
+                if (_this5.showGuide) {
                   _context5.next = 4;
                   break;
                 }
@@ -8819,30 +8869,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _context5.abrupt("return", _context5.sent);
 
               case 4:
-                programming_date = _this6.showGuide.get_order.schedule_date + ' ' + _this6.showGuide.get_order.schedule_time;
-                _this6.showModal = true;
-                _this6.guide.id = _this6.showDataGuide.posting;
-                _this6.guide.client = (_this6$showGuide$get_ = _this6.showGuide.get_order) === null || _this6$showGuide$get_ === void 0 ? void 0 : _this6$showGuide$get_.get_user.name;
-                _this6.guide.balance = 0;
-                _this6.guide.balance_money = 0;
-                _this6.guide.address = _this6.showGuide.address_name;
-                _this6.guide.document_type = _this6.showGuide.customer_document_type;
-                _this6.guide.concept = _this6.showGuide.concept;
-                _this6.guide.payment_method = _this6.showGuide.get_order.payment_method;
-                _this6.guide.transport_type = _this6.showGuide.transport_type;
-                _this6.guide.value = _this6.showGuide.value;
-                _this6.guide.value_corp = _this6.showGuide.corp_value;
-                _this6.guide.contact = _this6.showGuide.contact;
-                _this6.guide.contact_phone = _this6.showGuide.phone_contact;
-                _this6.guide.contact_email = _this6.showGuide.email_contact;
-                _this6.guide.programming = moment__WEBPACK_IMPORTED_MODULE_1___default()(programming_date).format("YYYY-MM-DDTHH:mm");
-                _this6.guide.schedule_date = _this6.showGuide.get_order.schedule_date;
-                _this6.guide.additional_phone = _this6.showGuide.additional_phone;
-                _this6.guide.additional_email = _this6.showGuide.additional_email;
-                _this6.guide.additional_address = _this6.showGuide.additional_address;
-                _this6.guide.app_status = _this6.showGuide.app_status;
-                _this6.guide.status = _this6.showGuide.get_status_matrix.name;
-                _this6.guide.novelty = _this6.showGuide.novelty;
+                programming_date = _this5.showGuide.get_order.schedule_date + ' ' + _this5.showGuide.get_order.schedule_time;
+                _this5.showModal = true;
+                _this5.guide.id = _this5.showDataGuide.posting;
+                _this5.guide.client = (_this5$showGuide$get_ = _this5.showGuide.get_order) === null || _this5$showGuide$get_ === void 0 ? void 0 : _this5$showGuide$get_.get_user.name;
+                _this5.guide.balance = 0;
+                _this5.guide.balance_money = 0;
+                _this5.guide.address = _this5.showGuide.address_name;
+                _this5.guide.document_type = _this5.showGuide.customer_document_type;
+                _this5.guide.concept = _this5.showGuide.concept;
+                _this5.guide.payment_method = _this5.showGuide.get_order.payment_method;
+                _this5.guide.transport_type = _this5.showGuide.transport_type;
+                _this5.guide.value = _this5.showGuide.value;
+                _this5.guide.value_corp = _this5.showGuide.corp_value;
+                _this5.guide.contact = _this5.showGuide.contact;
+                _this5.guide.contact_phone = _this5.showGuide.phone_contact;
+                _this5.guide.contact_email = _this5.showGuide.email_contact;
+                _this5.guide.programming = moment__WEBPACK_IMPORTED_MODULE_1___default()(programming_date).format("YYYY-MM-DDTHH:mm");
+                _this5.guide.schedule_date = _this5.showGuide.get_order.schedule_date;
+                _this5.guide.additional_phone = _this5.showGuide.additional_phone;
+                _this5.guide.additional_email = _this5.showGuide.additional_email;
+                _this5.guide.additional_address = _this5.showGuide.additional_address;
+                _this5.guide.app_status = _this5.showGuide.app_status;
+                _this5.guide.status = _this5.showGuide.get_status_matrix.name;
+                _this5.guide.novelty = _this5.showGuide.novelty;
 
               case 28:
               case "end":
@@ -8853,7 +8903,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     documentTypes: function documentTypes() {
-      var _this7 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var name, req, res;
@@ -8872,7 +8922,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 6:
                 res = _context6.sent;
-                _this7.document_types = res.data;
+                _this6.document_types = res.data;
 
               case 8:
               case "end":
@@ -8883,7 +8933,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     transportTypes: function transportTypes() {
-      var _this8 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var name, req, res;
@@ -8902,7 +8952,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 6:
                 res = _context7.sent;
-                _this8.transport_types = res.data;
+                _this7.transport_types = res.data;
 
               case 8:
               case "end":
@@ -8913,7 +8963,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     paymentMethods: function paymentMethods() {
-      var _this9 = this;
+      var _this8 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
         var name, req, res;
@@ -8932,7 +8982,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 6:
                 res = _context8.sent;
-                _this9.payment_methods = res.data;
+                _this8.payment_methods = res.data;
 
               case 8:
               case "end":
@@ -8943,7 +8993,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     updateGuide: function updateGuide() {
-      var _this10 = this;
+      var _this9 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
         var token, myHeaders, requestOptions, response;
@@ -8952,7 +9002,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context9.prev = _context9.next) {
               case 0:
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                console.log(token);
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -8963,12 +9012,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 requestOptions = {
                   method: "PUT",
                   headers: myHeaders,
-                  body: JSON.stringify(_this10.guide)
+                  body: JSON.stringify(_this9.guide)
                 };
-                _context9.next = 12;
-                return _this10.requestUpdateGuide(requestOptions);
+                _context9.next = 11;
+                return _this9.requestUpdateGuide(requestOptions);
 
-              case 12:
+              case 11:
                 response = _context9.sent;
 
                 if (response.state != 200) {
@@ -8976,9 +9025,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }
 
                 alert(response.message);
-                _this10.showModal = false;
+                _this9.showModal = false;
 
-              case 16:
+              case 15:
               case "end":
                 return _context9.stop();
             }
@@ -9002,7 +9051,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (data) {
                   response = data;
                 })["catch"](function (e) {
-                  return console.log(e);
+                  return console.log('requestUpdateGuide', e);
                 });
 
               case 3:
@@ -9018,22 +9067,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var _this11 = this;
+    var _this10 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
-              _this11.getGuides(3);
+              _this10.getGuides(3);
 
-              _this11.getMessengers();
+              _this10.getMessengers();
 
-              _this11.documentTypes();
+              _this10.documentTypes();
 
-              _this11.transportTypes();
+              _this10.transportTypes();
 
-              _this11.paymentMethods();
+              _this10.paymentMethods();
 
             case 5:
             case "end":
@@ -9767,7 +9816,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {},
   methods: {
     rowClick: function rowClick(data) {
-      // console.log(data)
       this.$emit("getGuide", data);
     },
     formatDate: function formatDate(date) {
@@ -9963,6 +10011,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -10005,7 +10056,6 @@ __webpack_require__.r(__webpack_exports__);
     guidess: function guidess() {
       var _this = this;
 
-      console.log(this.contact);
       return this.guides.filter(function (tblItem) {
         return _this.contact.toString().toLowerCase().split(" ").every(function (v) {
           return tblItem.address_name.toLowerCase().includes(v) || tblItem.contact.toLowerCase().includes(v) || tblItem.get_order.schedule_date.toLowerCase().includes(v) || tblItem.get_status_matrix.name.toLowerCase().includes(v) || tblItem.dispatched.toLowerCase().includes(v) || tblItem.get_route.get_messenger.name.toLowerCase().includes(v) || tblItem.get_route.get_messenger.last_name.toLowerCase().includes(v) || tblItem.get_order.get_user.name.toLowerCase().includes(v);
@@ -10013,7 +10063,7 @@ __webpack_require__.r(__webpack_exports__);
         /* tblItem.id.toLowerCase().includes(v) || */
 
         /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
-        tblItem.app_status.toLowerCase().includes(v) ||                        
+        tblItem.app_status.toLowerCase().includes(v) ||
          */
         );
       });
@@ -69750,49 +69800,84 @@ var render = function () {
                   "col-md-8 d-flex align-items-center flex-row flex-wrap",
               },
               [
-                _c("div", { staticClass: "col-md-5 py-2" }, [
-                  _vm.type_guide === _vm.tabEdition
-                    ? _c("div", { staticClass: " border rounded" }, [
-                        _c("p", { staticClass: "mb-0" }, [
-                          _c(
-                            "span",
-                            { staticClass: "font-weight-bolder mb-3" },
-                            [
-                              _vm._v(
-                                "Destinos en recogida por editar:\n                            "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass: "line-height-xl",
-                            domProps: { textContent: _vm._s(200) },
-                          }),
-                        ]),
-                      ])
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
                 _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
                   _vm.type_guide === _vm.tabEdition
                     ? _c(
                         "select",
                         {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected_filter_status,
+                              expression: "selected_filter_status",
+                            },
+                          ],
                           staticClass: "form-control",
                           attrs: { id: "delivery_event_state" },
+                          on: {
+                            change: function ($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function (o) {
+                                  return o.selected
+                                })
+                                .map(function (o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selected_filter_status = $event.target
+                                .multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                          },
                         },
-                        [_c("option", [_vm._v("Seleccione estado")])]
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Seleccione estado"),
+                          ]),
+                          _vm._v(" "),
+                          _vm.tabEdition == 5
+                            ? _c("option", { attrs: { value: "4" } }, [
+                                _vm._v("Despachado"),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.tabEdition == 5
+                            ? _c("option", { attrs: { value: "6" } }, [
+                                _vm._v("Recogido"),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.tabEdition == 9
+                            ? _c("option", { attrs: { value: "8" } }, [
+                                _vm._v("Despachado"),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.tabEdition == 9
+                            ? _c("option", { attrs: { value: "10" } }, [
+                                _vm._v("Entregado"),
+                              ])
+                            : _vm._e(),
+                        ]
                       )
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "col-md-6" }, [
                   _vm.type_guide === _vm.tabEdition
                     ? _c(
                         "button",
                         {
                           staticClass: "btn btn-light-primary font-weight-bold",
                           attrs: { type: "button" },
+                          on: {
+                            click: function ($event) {
+                              _vm.selected_filter_status != "" &&
+                                _vm.getGuides(_vm.selected_filter_status, false)
+                            },
+                          },
                         },
                         [
                           _vm._v(
@@ -69801,9 +69886,28 @@ var render = function () {
                         ]
                       )
                     : _vm._e(),
+                  _vm._v(" "),
+                  _vm.type_guide === _vm.tabEdition
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light-danger font-weight-bold",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function ($event) {
+                              _vm.getGuides(_vm.tabEdition),
+                                (_vm.selected_filter_status = "")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Limpiar\n                    "
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
                 ]),
-                _vm._v(" "),
-                _vm._m(1),
               ]
             ),
           ]
@@ -69931,16 +70035,6 @@ var render = function () {
                   "d-flex flex-row flex-wrap align-items-center justify-content-center",
               },
               [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "btn btn-light-success btn-block font-weight-bold mr-2",
-                    attrs: { href: "#" },
-                  },
-                  [_vm._v("Imprimir Guia")]
-                ),
-                _vm._v(" "),
                 _vm.type_guide === _vm.tabEdition
                   ? _c(
                       "button",
@@ -70072,7 +70166,37 @@ var render = function () {
                     : _vm._e(),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Nombre de Contacto:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(_vm.showDataGuide.contact),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Teléfono Contacto:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(_vm.showDataGuide.contact_phone),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
                     _vm._v("Transporte:"),
                   ]),
@@ -70082,6 +70206,23 @@ var render = function () {
                         staticClass: "line-height-xl",
                         domProps: {
                           textContent: _vm._s(_vm.showDataGuide.transport),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("H.Entrega:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.schedule_time_range
+                          ),
                         },
                       })
                     : _vm._e(),
@@ -70120,7 +70261,11 @@ var render = function () {
                         {
                           staticClass: "line-height-x1",
                           domProps: {
-                            textContent: _vm._s(_vm.showDataGuide.client_depto),
+                            textContent: _vm._s(
+                              _vm.showDataGuide.client_depto
+                                ? _vm.showDataGuide.client_depto
+                                : "No registra"
+                            ),
                           },
                         },
                         [_vm._v("84: PRINCIPAL")]
@@ -70141,6 +70286,8 @@ var render = function () {
                           domProps: {
                             textContent: _vm._s(
                               _vm.showDataGuide.client_branch_office
+                                ? _vm.showDataGuide.client_branch_office
+                                : "No registra"
                             ),
                           },
                         },
@@ -70300,6 +70447,25 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
+                    _vm._v("Incidencias:"),
+                  ]),
+                  _vm._v(" "),
+                  _vm.showDataGuide
+                    ? _c("div", {
+                        staticClass: "line-height-xl",
+                        domProps: {
+                          textContent: _vm._s(
+                            _vm.showDataGuide.issue
+                              ? _vm.showDataGuide.issue
+                              : "No registra"
+                          ),
+                        },
+                      })
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 mb-2" }, [
+                  _c("div", { staticClass: "font-weight-bolder mb-1" }, [
                     _vm._v("Novedades:"),
                   ]),
                   _vm._v(" "),
@@ -70319,7 +70485,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 mb-2" }, [
                   _c("div", { staticClass: "font-weight-bolder mb-1" }, [
-                    _vm._v("Incidencias:"),
+                    _vm._v("Nombre quien Entrega/Recibe:"),
                   ]),
                   _vm._v(" "),
                   _vm.showDataGuide
@@ -70327,8 +70493,8 @@ var render = function () {
                         staticClass: "line-height-xl",
                         domProps: {
                           textContent: _vm._s(
-                            _vm.showDataGuide.issue
-                              ? _vm.showDataGuide.issue
+                            _vm.showDataGuide.recipient_name
+                              ? _vm.showDataGuide.recipient_name
                               : "No registra"
                           ),
                         },
@@ -70340,10 +70506,7 @@ var render = function () {
             _vm._v(" "),
             _c(
               "div",
-              {
-                staticClass:
-                  "d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center",
-              },
+              { staticClass: " max-h-200px mb-3 pb-3 justify-content-center" },
               [
                 _c(
                   "h5",
@@ -70351,19 +70514,118 @@ var render = function () {
                   [_vm._v("Adjuntos")]
                 ),
                 _vm._v(" "),
-                _vm.type_guide === _vm.tabEdition
-                  ? _c(
-                      "div",
-                      { staticClass: "col-md-12 symbol-group symbol-hover" },
-                      _vm._l(_vm.showDataGuide.files, function (item) {
-                        return _c("div", {
-                          key: item.id,
-                          staticClass: "symbol",
-                        })
-                      }),
-                      0
-                    )
-                  : _vm._e(),
+                _c(
+                  "div",
+                  { staticClass: "col-md-12 row symbol-group symbol-hover" },
+                  [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "font-weight-bolder" }, [
+                        _vm._v("Imágenes del paquete a entregar"),
+                      ]),
+                      _vm._v(" "),
+                      Array.isArray(_vm.showDataGuide.package_pictures) &&
+                      _vm.showDataGuide.package_pictures.length == 0
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            No hay imágenes del paquete a entregar\n                        "
+                            ),
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex flex-wrap max-h-200px justify-content-center",
+                        },
+                        _vm._l(
+                          _vm.showDataGuide.package_pictures,
+                          function (item) {
+                            return _c(
+                              "div",
+                              { key: item.id, staticClass: "symbol" },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: item.file_url,
+                                      target: "_blank",
+                                      rel: "noopener noreferrer",
+                                    },
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        height: "50px",
+                                        width: "50px",
+                                        alt: "Pic",
+                                        src: item.file_url,
+                                      },
+                                    }),
+                                  ]
+                                ),
+                              ]
+                            )
+                          }
+                        ),
+                        0
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "font-weight-bolder" }, [
+                        _vm._v("Evidencias de entrega"),
+                      ]),
+                      _vm._v(" "),
+                      Array.isArray(_vm.showDataGuide.evidence) &&
+                      _vm.showDataGuide.evidence.length == 0
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            No hay evidencias de entrega\n                        "
+                            ),
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex flex-wrap max-h-200px justify-content-center",
+                        },
+                        _vm._l(_vm.showDataGuide.evidence, function (item) {
+                          return _c(
+                            "div",
+                            { key: item.id, staticClass: "symbol" },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: item.file_url,
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                  },
+                                },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      height: "50px",
+                                      width: "50px",
+                                      alt: "Pic",
+                                      src: item.file_url,
+                                    },
+                                  }),
+                                ]
+                              ),
+                            ]
+                          )
+                        }),
+                        0
+                      ),
+                    ]),
+                  ]
+                ),
               ]
             ),
           ]),
@@ -70884,9 +71146,29 @@ var render = function () {
                     _c("label", [_vm._v("Contacto Teléfono: ")]),
                     _vm._v(" "),
                     _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.guide.contact_phone,
+                          expression: " guide.contact_phone ",
+                        },
+                      ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "contact_phone", type: "tel" },
                       domProps: { value: _vm.guide.contact_phone },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.guide,
+                            "contact_phone",
+                            $event.target.value
+                          )
+                        },
+                      },
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "form-text text-muted" }),
@@ -71132,7 +71414,7 @@ var render = function () {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", "data-dismiss": "modal" },
                     on: {
                       click: function ($event) {
                         return _vm.updateGuide()
@@ -71158,14 +71440,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "card-title" }, [
         _c("h3", { staticClass: "card-label" }, [_vm._v("Despachos Packing")]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1" }, [
-      _c("span", { staticClass: "h5" }, [_vm._v("1/100")]),
     ])
   },
 ]
@@ -71278,9 +71552,9 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("777777")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.schedule_date)),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(_vm._s(tblItem.get_order.get_user.name)),
@@ -71292,7 +71566,11 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(tblItem.get_order.schedule_time_range)
+                                ),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
@@ -71399,9 +71677,9 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.id))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("777777")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(_vm._s(tblItem.get_order.schedule_date)),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(_vm._s(tblItem.get_order.get_user.name)),
@@ -71413,7 +71691,11 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.address_name))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v("28/02/2022")]),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(tblItem.get_order.schedule_time_range)
+                                ),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
@@ -71477,9 +71759,11 @@ var render = function () {
                       staticClass: "form-control col-md-5",
                     },
                     _vm._l(this.filterMessengers, function (a) {
-                      return _c("option", { domProps: { value: a.user.id } }, [
-                        _vm._v(_vm._s(a.user.name + " " + a.user.last_name)),
-                      ])
+                      return _c(
+                        "option",
+                        { key: a.id, domProps: { value: a.user.id } },
+                        [_vm._v(_vm._s(a.user.name + " " + a.user.last_name))]
+                      )
                     }),
                     0
                   ),
@@ -71563,8 +71847,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ExtRef")]),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Prog")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Cliente")]),
@@ -71594,8 +71876,6 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Orden")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ExtRef")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Prog")]),
         _vm._v(" "),
@@ -71776,6 +72056,7 @@ var render = function () {
                 return _c(
                   "tr",
                   {
+                    key: index,
                     staticClass: "text-center",
                     staticStyle: { cursor: "pointer" },
                     on: {
@@ -71789,13 +72070,17 @@ var render = function () {
                       _vm._v(
                         _vm._s(
                           tblItem.get_order.order_type == 36
-                            ? "Packaging"
+                            ? "Packing"
                             : tblItem.get_order.order_type
                         )
                       ),
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(tblItem.get_status_matrix.name))]),
+                    tblItem.get_status_matrix != null
+                      ? _c("td", [
+                          _vm._v(_vm._s(tblItem.get_status_matrix.name)),
+                        ])
+                      : _c("td", [_vm._v("--- ---")]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(""))]),
                     _vm._v(" "),
@@ -71806,14 +72091,22 @@ var render = function () {
                     _c("td", [_vm._v(_vm._s(tblItem.get_order.schedule_date))]),
                     _vm._v(" "),
                     _c("td", [
-                      _vm._v(
-                        _vm._s(
-                          tblItem.get_route.get_messenger.name +
-                            " " +
-                            tblItem.get_route.get_messenger.last_name
-                        ) + "\n                    "
-                      ),
+                      _vm._v(_vm._s(tblItem.get_order.schedule_time_range)),
                     ]),
+                    _vm._v(" "),
+                    tblItem.dispatched != null &&
+                    tblItem.get_route != null &&
+                    tblItem.get_route.get_messenger != null
+                      ? _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              tblItem.get_route.get_messenger.name +
+                                " " +
+                                tblItem.get_route.get_messenger.last_name
+                            )
+                          ),
+                        ])
+                      : _c("td", [_vm._v("Sin Asignar")]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
@@ -71821,7 +72114,11 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(tblItem.get_order.get_user.name))]),
+                    tblItem != null
+                      ? _c("td", [
+                          _vm._v(_vm._s(tblItem.get_order.get_user.name)),
+                        ])
+                      : _c("td", [_vm._v("--- ---")]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.contact))]),
                     _vm._v(" "),
@@ -90548,8 +90845,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\HUAWEI\Documents\Proyectos Develop\Multientrega\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -16,41 +16,38 @@
                             v-for="item of delivery_types"
                             v-bind:key="item.value"
                             v-bind:value="item.value"
-
                         >
                             {{ item.text }}
                         </option>
-                        <!-- <option>Entrega</option> -->
                     </select>
                 </div>
                 <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
-                    <div class="col-md-5 py-2" >
-                        <div class=" border rounded" v-if="type_guide === tabEdition">
-                            <p class="mb-0">
-                                <span class="font-weight-bolder mb-3"
-                                    >Destinos en recogida por editar:
-                                </span>
-                                <span class="line-height-xl" v-text="200"></span>
-                            </p>
-                        </div>
-                    </div>
+
+
                     <div class="form-group col-md-3 mb-0" >
-                        <select class="form-control" id="delivery_event_state" v-if="type_guide === tabEdition" >
-                            <option>Seleccione estado</option>
+                        <select class="form-control" v-model="selected_filter_status" id="delivery_event_state" v-if="type_guide === tabEdition" >
+                            <option value="">Seleccione estado</option>
+                            <option v-if="tabEdition == 5" value="4">Despachado</option>
+                            <option v-if="tabEdition == 5" value="6">Recogido</option>
+                            <option v-if="tabEdition == 9" value="8">Despachado</option>
+                            <option v-if="tabEdition == 9" value="10">Entregado</option>
                         </select>
                     </div>
-                    <div class="col-md-3" >
-                        <button
-                            v-if="type_guide === tabEdition"
-                            type="button"
+                    <div class="col-md-6" >
+                        <button v-if="type_guide === tabEdition" type="button"
                             class="btn btn-light-primary font-weight-bold"
-                        >
+                            @click="selected_filter_status != '' && getGuides(selected_filter_status, false)">
                             Aplicar nuevo estado
                         </button>
+                        <button v-if="type_guide === tabEdition" type="button"
+                            class="btn btn-light-danger font-weight-bold"
+                            @click="getGuides(tabEdition),selected_filter_status=''">
+                            Limpiar
+                        </button>
                     </div>
-                    <div class="col-md-1">
+                   <!-- <div class="col-md-1">
                         <span class="h5">1/100</span>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <ul
@@ -101,7 +98,7 @@
             </div>
             <div class="col-md-3 py-4">
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
-                    <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a>
+                   <!-- <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a> -->
                     <button v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2"  @click.prevent="editGuide()">Editar Destino</button>
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
@@ -130,9 +127,21 @@
                         <div class="font-weight-bolder mb-1">Programado:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.programming">2022/02/04</div>
                     </div>
-                    <div class="col-md-12 mb-2">
+                     <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Nombre de Contacto:</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.contact"></div>
+                    </div>
+                     <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">Teléfono Contacto:</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.contact_phone"></div>
+                    </div>
+                    <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport" ></div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <div class="font-weight-bolder mb-1">H.Entrega:</div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.schedule_time_range" ></div>
                     </div>
                     <div class="col-md-12 mb-2" v-if="showDataGuide.movil">
                         <div class="font-weight-bolder mb-1">Movil:</div>
@@ -141,11 +150,11 @@
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Depto:</div>
-                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_depto" >84: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_depto ? showDataGuide.client_depto: 'No registra'" >84: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Sucursal:</div>
-                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_branch_office">1179: PRINCIPAL</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_branch_office ? showDataGuide.client_branch_office: 'No registra'">1179: PRINCIPAL</div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Documento:</div>
@@ -181,31 +190,53 @@
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.status ? showDataGuide.status : 'No registra' "></div>
                     </div>
                     <div class="col-md-12 mb-2">
+                        <div class="font-weight-bolder mb-1">Incidencias:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.issue ? showDataGuide.issue : 'No registra'"></div>
+                    </div>
+                    <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Novedades:</div>
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.novelty ? showDataGuide.novelty : 'No registra' "></div>
                     </div>
                     <div class="col-md-12 mb-2">
-                        <div class="font-weight-bolder mb-1">Incidencias:</div>
-                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.issue ? showDataGuide.issue : 'No registra'"></div>
+                        <div class="font-weight-bolder mb-1">Nombre quien Entrega/Recibe:</div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.recipient_name ? showDataGuide.recipient_name : 'No registra' "></div>
                     </div>
                 </div>
-                <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 justify-content-center">
+                <div class=" max-h-200px mb-3 pb-3 justify-content-center">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
-                    <div class="col-md-12 symbol-group symbol-hover" v-if="type_guide === tabEdition">
-                        <div class="symbol" v-for="item in showDataGuide.files" v-bind:key="item.id">
-                            <!-- <img alt="Pic" :src="'storage/'+item.url_document+'/'"/> -->
+                    <div class="col-md-12 row symbol-group symbol-hover">
+                        <div class="col-12">
+                            <div class="font-weight-bolder">Imágenes del paquete a entregar</div>
+                            <div v-if="Array.isArray(showDataGuide.package_pictures) && showDataGuide.package_pictures.length  == 0">
+                                No hay imágenes del paquete a entregar
+                            </div>
+                            <div class="d-flex flex-wrap max-h-200px justify-content-center">
+                                <div class="symbol" v-for="item in showDataGuide.package_pictures" v-bind:key="item.id">
+                                    <a :href="item.file_url" target="_blank" rel="noopener noreferrer">
+                                    <img height="50px" width="50px" alt="Pic" :src="item.file_url"/>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <!-- <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
+                        <div class="col-12">
+                            <div class="font-weight-bolder">Evidencias de entrega</div>
+                            <div v-if="Array.isArray(showDataGuide.evidence) && showDataGuide.evidence.length  == 0">
+                                No hay evidencias de entrega
+                            </div>
+                            <div class="d-flex flex-wrap max-h-200px justify-content-center">
+                                <div class="symbol" v-for="item in showDataGuide.evidence" v-bind:key="item.id">
+                                    <a :href="item.file_url" target="_blank" rel="noopener noreferrer">
+                                    <img height="50px" width="50px" alt="Pic" :src="item.file_url"/>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="symbol">
-                            <img alt="Pic" src="https://placem.at/things?h=100"/>
-                        </div> -->
                     </div>
                 </div>
             </div>
            </div>
         </div>
+        <!-- EDITAR -->
         <modalEdit
             v-if="showModal"
             @close="showModal = false">
@@ -310,7 +341,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Contacto Teléfono: </label>
-                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-bind:value=" guide.contact_phone "  />
+                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-model=" guide.contact_phone "  />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
@@ -356,7 +387,7 @@
         </div>
         <div slot="footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" v-on:click="updateGuide()">Guardar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuide()">Guardar</button>
         </div>
         </modalEdit>
     </div>
@@ -374,7 +405,7 @@ export default {
     },
     data() {
         return {
-
+            selected_filter_status: "",
             selected: 56,
             delivery_types: [
                 { value: 57, text: "Entregas" },
@@ -382,8 +413,8 @@ export default {
             ],
             showModal: false,
             columns:{
-                inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
-                inEdit:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
+                inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
+                inEdit:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
             },
             guides: [],
             guides2: [],
@@ -413,6 +444,7 @@ export default {
     },
     methods: {
         loadingEvt (){
+            this.selected_filter_status = "";
            $(`#myTab li:nth-child(1) a`).tab("show");
        },
         async statusMatrix(scope) {
@@ -420,8 +452,7 @@ export default {
             let req = await fetch(`despacho/matriz_estados?scope_id=${scope}`);
             let res = await req.json();
             // take the first 3 data from the consulate
-            this.tabs = res.data.slice(0, 3);
-
+            this.tabs = await res.data.slice(0, 3);
             //#HREF TAB
             this.tabs[0].href = "porRecoger";
             this.tabs[1].href = "enproceso";
@@ -444,11 +475,14 @@ export default {
             this.showDataGuide.programming = data.get_order.schedule_date;
             this.showDataGuide.transport =  data.get_transport_type?.name;
             this.showDataGuide.movil = data.get_route&&(data.get_route?.get_messenger?.name+' '+data.get_route?.get_messenger?.last_name);
-            this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department?.id+':'+data.get_branch_office?.get_department?.get_department?.name;
-            this.showDataGuide.client_branch_office = data.get_branch_office?.id+': '+data.get_branch_office?.name;
+            this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department?.id+':'+data.get_branch_office?.get_department?.get_department?.name ? this.showDataGuide.client_depto: 'No registra';
+            this.showDataGuide.client_branch_office = data.get_branch_office?.id+': '+data.get_branch_office?.name ? this.showDataGuide.client_branch_office: 'No registra';
             this.showDataGuide.client_document = data.get_order?.get_user.document_number;
             this.showDataGuide.concept = data.concept;
             this.showDataGuide.direction = data.address_name;
+            this.showDataGuide.contact = this.showGuide.contact;
+            this.showDataGuide.recipient_name = this.showGuide.recipient_name;
+            this.showDataGuide.contact_phone = this.showGuide.phone_contact;
             this.showDataGuide.additional_phone = data.additional_phone;
             this.showDataGuide.additional_email = data.additional_email;
             this.showDataGuide.additional_address = data.additional_address;
@@ -456,10 +490,12 @@ export default {
             this.showDataGuide.status = data.get_status_matrix.name;
             this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.get_documents;
-            this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1].get_issue.name ?? 'sin incidencias';
-
+            this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
+            this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
+            this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
+            this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range
         },
-        async getGuides(type) {
+        async getGuides(type, changeType = true) {
             this.guides2 = [];
             this.showGuide = null;
             this.showDataGuide = {
@@ -482,6 +518,9 @@ export default {
             type == 56 && (type = 3);
             type == 57 && (type = 7);
             let response = await this.requestGuides(type);
+            if(changeType){
+                this.type_guide = type;
+            }
             this.guides = response.data;
 
         },
@@ -501,7 +540,7 @@ export default {
                     response = data;
                 })
                 .catch((err) => console.warn(err));
-            this.type_guide = type;
+
             return response;
 
         },
@@ -574,7 +613,6 @@ export default {
             let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
-                console.log(token)
             let myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -603,11 +641,9 @@ export default {
                 .then(data => {
                     response = data
                 })
-                .catch(e => console.log(e));
+                .catch(e => console.log('requestUpdateGuide',e));
             return response;
         }
-
-
     },
 
      async mounted() {
@@ -617,6 +653,5 @@ export default {
         this.transportTypes();
         this.paymentMethods();
     },
-
 };
 </script>
