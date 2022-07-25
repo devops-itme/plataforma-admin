@@ -341,7 +341,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Contacto Teléfono: </label>
-                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-bind:value=" guide.contact_phone "  />
+                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-model=" guide.contact_phone "  />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">
@@ -387,7 +387,7 @@
         </div>
         <div slot="footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" v-on:click="updateGuide()">Guardar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuide()">Guardar</button>
         </div>
         </modalEdit>
     </div>
