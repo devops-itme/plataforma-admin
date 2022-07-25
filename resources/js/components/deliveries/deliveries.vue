@@ -341,7 +341,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Contacto Teléfono: </label>
-                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-bind:value=" guide.contact_phone "  />
+                    <input name="contact_phone" type="tel" class="form-control form-control-solid" v-model=" guide.contact_phone "  />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-4">

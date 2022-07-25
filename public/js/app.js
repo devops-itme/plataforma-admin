@@ -71146,9 +71146,29 @@ var render = function () {
                     _c("label", [_vm._v("Contacto Teléfono: ")]),
                     _vm._v(" "),
                     _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.guide.contact_phone,
+                          expression: " guide.contact_phone ",
+                        },
+                      ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "contact_phone", type: "tel" },
                       domProps: { value: _vm.guide.contact_phone },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.guide,
+                            "contact_phone",
+                            $event.target.value
+                          )
+                        },
+                      },
                     }),
                     _vm._v(" "),
                     _c("span", { staticClass: "form-text text-muted" }),
