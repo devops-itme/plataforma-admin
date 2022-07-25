@@ -57,29 +57,29 @@
 
                 <div class="form-group col-md-3 py-3">
                     <label>Valor base(en dolares): <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-solid" placeholder="Cantidad de Libra adicional"
+                    <input type="number" step="0.01" class="form-control form-control-solid"  placeholder="Cantidad de Libra adicional"
                         name="base_value" value="{{ old('base_value') }}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>Libra adicional por peso: <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-solid" placeholder="Cantidad de Libra adicional"
+                    <input type="number" step="0.01" class="form-control form-control-solid" placeholder="Cantidad de Libra adicional"
                         name="extra_for_weight" value="{{ old('extra_for_weight') }}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>Libra adicional por tamaño(Vol.) <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-solid"
+                    <input type="number" step="0.01" class="form-control form-control-solid"
                         placeholder="Cantidad de Libra adicional x Tamaño" name="extra_per_size"
                         value="{{ old('extra_per_size') }}" />
                 </div>
 
                 <div class="form-group col-md-3 py-3">
                     <label>% Por entrega inmediata <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-solid" placeholder="Porcentaje x entrega"
+                    <input type="number" step="0.01" class="form-control form-control-solid" placeholder="Porcentaje x entrega"
                         name="percentage_immediate_delivery" value="{{ old('percentage_immediate_delivery') }}" />
                 </div>
-                
+
                 <div class="form-group row col-md-3 ml-1">
                     <label class="checkbox">
                         <input type="checkbox" name="special_rate" {{ old('special_rate') === 'on' ? 'checked' : '' }} />
