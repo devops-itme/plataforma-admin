@@ -26,7 +26,7 @@
                         <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
                         <td v-if="tblItem.get_status_matrix != null">{{ tblItem.get_status_matrix.name }}</td>
                         <td v-else>--- ---</td>
-                        <td>{{ '' }}</td>
+                        <td>{{ new Date(tblItem.created_at).toLocaleDateString()}}</td>
                         <td>{{ tblItem.dispatched }}</td>
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>

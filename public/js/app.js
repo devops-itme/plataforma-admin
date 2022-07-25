@@ -15431,7 +15431,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -72082,7 +72082,13 @@ var render = function () {
                         ])
                       : _c("td", [_vm._v("--- ---")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(""))]),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(
+                          new Date(tblItem.created_at).toLocaleDateString()
+                        )
+                      ),
+                    ]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(tblItem.dispatched))]),
                     _vm._v(" "),
