@@ -28,11 +28,11 @@
                         <i class="fas fa-plus"></i>
                     </span>Crear</a>
                 <!--end::Button-->
-                <form action="{{route('messengers.import')}}" method="post" enctype="multipart/form-data">
+                {{-- <form action="{{route('messengers.import')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="file" id="file">
                     <button  class="btn btn-primary font-weight-bolder ml-2" type="submit">Importar</button>
-                </form>
+                </form> --}}
             </div>
         </div>
         <div class="card-body">
