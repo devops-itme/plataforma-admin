@@ -71,6 +71,7 @@ class OrderResource extends JsonResource
                 "id" => $this->getPaymentMethod->id ?? '',
                 "name" => $this->getPaymentMethod->name ?? '',
             ],
+            "user_payment_method" => $this->user_payment_method,
             // "state" => [
             //     "id" => $this->getState->id ?? '',
             //     "name" => $this->getState->name ?? '',
