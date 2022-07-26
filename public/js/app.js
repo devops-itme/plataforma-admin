@@ -10054,18 +10054,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     guidess: function guidess() {
-      var _this = this;
-
-      return this.guides.filter(function (tblItem) {
-        return _this.contact.toString().toLowerCase().split(" ").every(function (v) {
-          return tblItem.address_name.toLowerCase().includes(v) || tblItem.contact.toLowerCase().includes(v) || tblItem.get_order.schedule_date.toLowerCase().includes(v) || tblItem.get_status_matrix.name.toLowerCase().includes(v) || tblItem.dispatched.toLowerCase().includes(v) || tblItem.get_route.get_messenger.name.toLowerCase().includes(v) || tblItem.get_route.get_messenger.last_name.toLowerCase().includes(v) || tblItem.get_order.get_user.name.toLowerCase().includes(v);
-        }
-        /* tblItem.id.toLowerCase().includes(v) || */
-
-        /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
-        tblItem.app_status.toLowerCase().includes(v) ||
-         */
-        );
+      // return this.guides.filter((tblItem) => {
+      //     return this.contact
+      //         .toString()
+      //         .toLowerCase()
+      //         .split(" ")
+      //         .every((v) =>
+      //             tblItem.address_name.toLowerCase().includes(v) ||
+      //             tblItem.contact.toLowerCase().includes(v) ||
+      //             tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
+      //             tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
+      //             tblItem.dispatched.toLowerCase().includes(v) ||
+      //             tblItem.get_route.get_messenger.name.toLowerCase().includes(v) ||
+      //             tblItem.get_route.get_messenger.last_name.toLowerCase().includes(v) ||
+      //             tblItem.get_order.get_user.name.toLowerCase().includes(v)
+      //             /* tblItem.id.toLowerCase().includes(v) || */
+      //             /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
+      //             tblItem.app_status.toLowerCase().includes(v) ||
+      //              */
+      //         );
+      // });
+      return this.guides.sort(function (a, b) {
+        return b.updated_at.localeCompare(a.updated_at);
       });
     }
   },
