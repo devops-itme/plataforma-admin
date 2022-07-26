@@ -28,6 +28,7 @@ class CreateOrdersTable extends Migration
             $table->double('tax_total')->nullable();
             $table->integer('vehicle_type_id')->nullable();
             $table->integer('payment_method')->nullable();
+            $table->integer('user_payment_method')->nullable();
             $table->integer('urgent_dispatch')->nullable();
             $table->date('schedule_date')->nullable();
             $table->integer('schedule_time')->nullable();

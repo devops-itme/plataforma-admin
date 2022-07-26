@@ -42,6 +42,7 @@ class Order extends Model
         'tax_total',
         'vehicle_type_id',
         'payment_method',
+        'user_payment_method',
         'urgent_dispatch',
         'schedule_date',
         'schedule_time',
@@ -103,7 +104,7 @@ class Order extends Model
                 'notification_type' => 'order_updated_notification'
             ];
             $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
-            sendCustomNotifications($title, $message, $data, $userToken);
+            // sendCustomNotifications($title, $message, $data, $userToken);
             if($status_matrix->name == 'DESPACHADO'){
                 $title = 'Orden asignada';
                 $message = 'Se le ha asignado la orden: ' . $activity->subject->order_number;
@@ -272,6 +273,7 @@ class Order extends Model
                 'tax_total' => 'nullable|numeric',
                 'vehicle_type_id' => [Rule::requiredIf($action == 'create'), 'numeric'],
                 'payment_method' => 'nullable|numeric',
+                'user_payment_method' => 'nullable|numeric',
                 'urgent_dispatch' => 'nullable|numeric',
                 'schedule_date' => 'nullable',
                 'schedule_time' => 'nullable|numeric|exists:pickup_hours,id',
@@ -327,6 +329,7 @@ class Order extends Model
                 'tax_total' => $request->tax_total,
                 'vehicle_type_id' => $request->vehicle_type_id,
                 'payment_method' => $request->payment_method,
+                'user_payment_method' => $request->user_payment_method,
                 'urgent_dispatch' => $request->urgent_dispatch,
                 'schedule_date' => $request->schedule_date,
                 'schedule_time' => $request->schedule_time,

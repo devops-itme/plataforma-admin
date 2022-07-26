@@ -353,6 +353,10 @@ return [
             'evidence',
             'package_picture',
         ],
+        'user_payment_method' => [
+            'Efectivo',
+            'Tarjeta'
+        ]
         // 'cms' => [
             // 'terms and conditions'
         // ]
