@@ -48,6 +48,8 @@ class Tealca
 
     public function requestCreateShipment($guide)
     {
+        $weight = $guide->kg;
+        $weight = floatval(str_replace(",",".",$weight));
         $body = [
             "UserLogin" => env("TEALCA_USER"),
             "PickingNumber" => $guide->pre_guide,
@@ -85,7 +87,7 @@ class Tealca
             "PackageTypeID" => 20, //
             "ShipmentDetail" => array([
                 "PieceNumber" =>  $guide->pieces,
-                "PhysicalWeight" =>  $guide->kg
+                "PhysicalWeight" =>  $weight
             ])
         ];
 

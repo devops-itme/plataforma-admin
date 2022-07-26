@@ -26,7 +26,7 @@
                         <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
                         <td v-if="tblItem.get_status_matrix != null">{{ tblItem.get_status_matrix.name }}</td>
                         <td v-else>--- ---</td>
-                        <td>{{ '' }}</td>
+                        <td>{{ new Date(tblItem.created_at).toLocaleDateString()}}</td>
                         <td>{{ tblItem.dispatched }}</td>
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
@@ -93,26 +93,28 @@ export default {
 
     computed: {
         guidess() {
-            return this.guides.filter((tblItem) => {
-                return this.contact
-                    .toString()
-                    .toLowerCase()
-                    .split(" ")
-                    .every((v) =>
-                        tblItem.address_name.toLowerCase().includes(v) ||
-                        tblItem.contact.toLowerCase().includes(v) ||
-                        tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
-                        tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
-                        tblItem.dispatched.toLowerCase().includes(v) ||
-                        tblItem.get_route.get_messenger.name.toLowerCase().includes(v) ||
-                        tblItem.get_route.get_messenger.last_name.toLowerCase().includes(v) ||
-                        tblItem.get_order.get_user.name.toLowerCase().includes(v)
-                        /* tblItem.id.toLowerCase().includes(v) || */
-                        /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
-                        tblItem.app_status.toLowerCase().includes(v) ||
-                         */
-                    );
-            });
+            // return this.guides.filter((tblItem) => {
+            //     return this.contact
+            //         .toString()
+            //         .toLowerCase()
+            //         .split(" ")
+            //         .every((v) =>
+            //             tblItem.address_name.toLowerCase().includes(v) ||
+            //             tblItem.contact.toLowerCase().includes(v) ||
+            //             tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
+            //             tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
+            //             tblItem.dispatched.toLowerCase().includes(v) ||
+            //             tblItem.get_route.get_messenger.name.toLowerCase().includes(v) ||
+            //             tblItem.get_route.get_messenger.last_name.toLowerCase().includes(v) ||
+            //             tblItem.get_order.get_user.name.toLowerCase().includes(v)
+            //             /* tblItem.id.toLowerCase().includes(v) || */
+            //             /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
+            //             tblItem.app_status.toLowerCase().includes(v) ||
+            //              */
+            //         );
+            // });
+
+            return this.guides.sort((a, b) => b.updated_at.localeCompare(a.updated_at));
 
         },
 
