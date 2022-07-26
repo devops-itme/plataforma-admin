@@ -28,8 +28,8 @@ class MessengerSeeder extends Seeder
                 'admission_date' =>null,
                 'birth_date' => null,
                 'production_percentage' => 10.5,
-                'exclusive' => 15,
-                'contract_type_id' => 0,
+                'exclusive' => 0,
+                'contract_type_id' => 20,
             ],
             [
                 'name' => 'Jaimito',
@@ -44,8 +44,8 @@ class MessengerSeeder extends Seeder
                 'admission_date' =>null,
                 'birth_date' => null,
                 'production_percentage' => 12.5,
-                'exclusive' => 20,
-                'contract_type_id' => 0,
+                'exclusive' => 0,
+                'contract_type_id' => 20,
             ],
         ];
         foreach ($messengers as $messenger) {

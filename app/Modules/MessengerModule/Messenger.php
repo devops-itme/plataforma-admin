@@ -18,6 +18,7 @@ class Messenger extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'user_id',
+        'number',
         'vehicle_plate',
         'admission_date',
         'birth_date',

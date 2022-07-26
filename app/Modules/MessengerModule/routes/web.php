@@ -10,4 +10,5 @@ Route::group(['middleware' => 'auth'], function () {
     //Messengers delivery
     Route::get('messengers_delivery', 'MessengerModule\Controllers\MessengerController@messengersForDelivery');
     Route::get('contra/{id}/download', 'MessengerModule\Controllers\MessengerController@download')->name('contra.download');
+    Route::post('mensajeros/import', 'MessengerModule\Controllers\MessengerController@importMessenger')->name('messengers.import');
 });

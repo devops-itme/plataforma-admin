@@ -3,10 +3,13 @@
 namespace App\Modules\MessengerModule\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Imports\MessengersImport;
 use App\Modules\MessengerModule\Controllers\MessengerTrait;
 use App\Modules\MessengerModule\Messenger;
 use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MessengerController extends Controller
 {
@@ -138,10 +141,10 @@ class MessengerController extends Controller
 
             $PathToFile = storage_path("app/document_file/".$messe->contract);
             if(file_exists($PathToFile)){
-    
+
             $ext = pathinfo($PathToFile, PATHINFO_EXTENSION);
             return response()->download($PathToFile, 'contrato-mensajero.'.$ext);
-    
+
             }else{
             return  ' <script>alert("No hay archivos en la ruta especificada")</script>';
             }
@@ -150,9 +153,25 @@ class MessengerController extends Controller
 
             return  ' <script>alert("No hay registro de este archivo en la base de datos")</script>';
         }
-      
-       
     }
-   
+
+    public function importMessenger(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required | mimes:xlsx',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+        $order_id = $request->order_id;
+
+        if ($request->hasFile('file')) {
+            $file_import = $request->file('file');
+            Excel::import(new MessengersImport($order_id), $file_import);
+            return $this->respond(200,  [], null, 'Importación de mensajeros completada');
+        }
+        return $this->respond(500,  [], '', 'Error al importar archivo');
+    }
 }
 
