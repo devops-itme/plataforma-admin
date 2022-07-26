@@ -2,14 +2,25 @@
     <div class="d-flex flex-row flex-wrap mt-4">
         <h5 class="font-weight-bold text-dark col-md-12 px-0"> Lista de Destinos</h5>
         <div class="d-flex flex-row flex-wrap col-md-12 px-0">
-            <!--             <div class="form-group col-md-6 pr-0">
-                <label class="font-weight-bolder">Fecha de evento Desde/Hasta</label>
+            <div class="form-group col-md-6 pr-0">
+                <!-- <label class="font-weight-bolder">Fecha de evento Desde/Hasta</label>
                 <div class="d-flex flex-row flex-wrap">
                     <input type="date" class="form-control col-5 mr-2" />
                     <input type="date" class="form-control col-5" />
+                </div> -->
+            </div>
+            <div class="form-group col-md-6 pr-0 ">
+
+                <div class="d-flex flex-row-reverse">
+                    <button v-if="listData.length != 0" type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        @click="sendToDelivery()">
+                        Enviar a Entregas
+                    </button>
                 </div>
-            </div> -->
+            </div>
         </div>
+
         <div class="table-responsive col-md-12 px-0 border rounded h-400px" id="fil">
             <input type="text" class="form-control" placeholder="Filtro" v-model="contact" />
             <!--  <input type="text" class="form-control" placeholder="Filtro" v-for="a in this.guidess" v-model="a.address_name" disabled v-if="contact"/> -->
@@ -21,8 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="cursor: pointer" v-for="tblItem, index in this.guidess" @click="rowClick(tblItem, index)" v-bind:key="index"
-                        class="text-center">
+                    <tr style="cursor: pointer" v-for="tblItem, index in this.guides" @click="rowClick(tblItem, index)" v-bind:class="{ active_row: index === activeIndex, active_list: listData.includes(tblItem.id) } " v-bind:key="index">
                         <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
                         <td v-if="tblItem.get_status_matrix != null">{{ tblItem.get_status_matrix.name }}</td>
                         <td v-else>--- ---</td>
@@ -64,6 +74,7 @@ export default {
     data() {
         return {
             activeIndex: null,
+            listData: [],
             /*  lists: [
                  {
                      additional_address: 'no',
@@ -123,7 +134,60 @@ export default {
         rowClick(data, index) {
             this.activeIndex = index;
             this.$emit("getGuide", data);
+            if (window.event.ctrlKey) {
+                //ctrl was held down during the click
+                if(!this.listData.includes(data.id)){
+                    this.listData.push(data.id)
+                }
+            }else{
+                this.listData = []
+            }
+        },
+        async sendToDelivery(){
+             let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify({
+                      'guide_ids': this.listData
+                    })
+            };
+            let response = await this.requestUpdateGuidesState(requestOptions);
+            if(response.state != 200){
+                error(response.data.message);
+            }
+            correct(response.data.message)
+        },
+        async requestUpdateGuidesState(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("guide/estado/recogida-entrega", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('requestUpdateGuide',e));
+            return response;
         }
     },
 }
 </script>
+
+<style>
+.active_row {
+    background: #2f45b5;
+    color: #ffff;
+}
+
+.active_list {
+    background: #287487;
+    color: #ffff;
+}
+</style>

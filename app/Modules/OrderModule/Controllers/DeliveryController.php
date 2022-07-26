@@ -3,8 +3,7 @@
 namespace App\Modules\OrderModule\Controllers;
 
 use App\Http\Controllers\Controller;
-
-
+use App\Modules\GuideModule\Guide;
 use App\Modules\OrderLogModule\OrderLog;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
@@ -87,5 +86,14 @@ class DeliveryController extends Controller
         });
 
         return $this->respond(200, $data, null, 'matriz de estados');
+    }
+
+    public function sendOrdersPickupToDelivery(Request $request)
+    {
+
+        $guides= Guide::whereIn('id', $request->guide_ids)->get();
+
+        return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
+
     }
 }

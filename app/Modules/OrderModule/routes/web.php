@@ -10,7 +10,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/ordenes-internacionales', 'OrderModule\Controllers\InternationalOrderController')->names('internationalOrders');
         Route::post('/importBatch', 'OrderModule\Controllers\InternationalOrderController@importBatch')->name('internationalOrders.import');
     });
-    
+
     Route::post('/exportBatch', 'OrderModule\Controllers\InternationalOrderController@exportBatch')->name('internationalOrders.export');
     Route::get('/export_incidences', 'OrderModule\Controllers\InternationalOrderController@incidencesExport')->name('internationalOrders.incidencesExport');
     Route::get('getOrder/{id}', 'OrderModule\Controllers\OrderController@getOrder');
@@ -35,8 +35,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     //PACKING
     Route::get('despachos-packing', 'OrderModule\Controllers\DeliveryController@indexPacking')->name('deliveryPacking.index');
+    Route::put('guide/estado/recogida-entrega', 'OrderModule\Controllers\DeliveryController@sendOrdersPickupToDelivery');
 
     //RUTASHOWGUIDE
     Route::get('/details/{id}/show','OrderModule\Controllers\OrderController@showModGuide')->name('showModal.show');
+
+
 });
 
