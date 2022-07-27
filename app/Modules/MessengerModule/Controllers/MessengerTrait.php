@@ -89,7 +89,8 @@ trait MessengerTrait
                 'exclusive' => $request->exclusive,
                 'birth_date' => $request->birth_date,
                 'contract' => $contract_file,
-                'contract_type_id' => $request->contract_type_id
+                'contract_type_id' => $request->contract_type_id,
+                'number' => $request->number
             ]);
             return $this->respond(200, $messenger, null, 'Mensajero creado con éxito');
         } catch (\Throwable $e) {
@@ -114,12 +115,12 @@ trait MessengerTrait
                 $data =  Messenger::find($id);
                 $contract_file = $data->contract;
             }
-            
+
             //if (!empty($contract_file)) {
-               
+
              //   $request->contract = $contract_file;
            // }
-            
+
 
             $messenger = Messenger::find($id);
             //dd($request->contract);
@@ -130,7 +131,8 @@ trait MessengerTrait
                 'exclusive' => $request->exclusive ?? $messenger->exclusive,
                 'birth_date' => $request->birth_date ?? $messenger->birth_date,
                 'contract' => $contract_file ?? $messenger-> $contract_file,
-                'contract_type_id' => $request->contract_type_id ?? $messenger-> contract_type_id
+                'contract_type_id' => $request->contract_type_id ?? $messenger-> contract_type_id,
+                'number' => $request->number ?? $messenger-> number
             ]);
             //$messenger->update($request->all());
             //dd($messenger);

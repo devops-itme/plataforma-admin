@@ -12,7 +12,7 @@
     </div>
     @include('layouts.alerts')
     <!--begin::Form-->
-    <form method="POST" action="{{route('messengers.store')}}" id="formCreateMessenger"  enctype="multipart/form-data">
+    <form method="POST" action="{{route('messengers.store')}}" id="formCreateMessenger" enctype="multipart/form-data">
         @csrf
         <div class="card-body d-flex flex-row flex-wrap pt-2">
             <h5 class="my-4 font-weight-bold text-dark col-md-12">Información basica de mensajero</h5>
@@ -27,7 +27,7 @@
             </div>
             <div class="form-group col-md-4">
                 <label>Email: <span class="text-danger">*</span></label>
-                <input name="email" type="email" class="form-control form-control-solid" placeholder="Email" value="{{old('email')}}"/>
+                <input name="email" type="email" class="form-control form-control-solid" placeholder="Email" value="{{old('email')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-2">
@@ -40,44 +40,42 @@
                 <select name="document_type" class="form-control form-control-solid" id="type_doc">
                     <option selected disabled>Seleccione tipo de documento</option>
                     @foreach($document_type as $document)
-                        <option {{old('document_type')==$document->id?'selected ':''}}  value="{{$document->id}}">{{$document->name}}</option>
+                    <option {{old('document_type')==$document->id?'selected ':''}} value="{{$document->id}}">{{$document->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label>Número de identificación: <span class="text-danger">*</span></label>
-                <input name="document_number" type="text" class="form-control form-control-solid" placeholder="N° de identificación" value="{{old('document_number')}}"/>
+                <input name="document_number" type="text" class="form-control form-control-solid" placeholder="N° de identificación" value="{{old('document_number')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
                 <label>Contraseña <span class="text-danger">*</span></label>
-                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="password" name="password" />
+                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="password" name="password" />
             </div>
             <div class="form-group col-md-3">
                 <label>Repetir Contraseña <span class="text-danger">*</span></label>
-                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="password" name="password_confirmation"/>
+                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="password" name="password_confirmation" />
             </div>
             <h5 class="my-4 font-weight-bold text-dark col-md-12">Información general de mensajero</h5>
             <div class="form-group col-md-3">
                 <label>Placa de vehículo: <span class="text-danger">*</span></label>
-                <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder="" value="{{old('vehicle_plate')}}"/>
+                <input name="vehicle_plate" type="text" class="form-control form-control-solid" placeholder="" value="{{old('vehicle_plate')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
                 <label>Fecha de ingreso: <span class="text-danger">*</span></label>
-                <input name="admission_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('admission_date')}}"/>
+                <input name="admission_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('admission_date')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
                 <label>Fecha de nacimiento: <span class="text-danger"></span></label>
-                <input name="birth_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('birth_date')}}"/>
+                <input name="birth_date" type="date" class="form-control form-control-solid" placeholder="" value="{{old('birth_date')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
                 <label>Porcentaje de producción: <span class="text-danger">*</span></label>
-                <input name="production_percentage" type="number" class="form-control form-control-solid" placeholder="" value="{{old('production_percentage')}}"/>
+                <input name="production_percentage" type="number" class="form-control form-control-solid" placeholder="" value="{{old('production_percentage')}}" />
                 <span class="form-text text-muted"></span>
             </div>
             <div class="form-group col-md-3">
@@ -85,14 +83,13 @@
                 <select name="contract_type_id" class="form-control form-control-solid" id="type_contract">
                     <option selected disabled>Seleccione tipo de contrato</option>
                     @foreach($contract_type as $contract)
-                        <option {{old('contract_type_id')==$contract->id?'selected ':''}}  value="{{$contract->id}}">{{$contract->name}}</option>
+                    <option {{old('contract_type_id')==$contract->id?'selected ':''}} value="{{$contract->id}}">{{$contract->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label>Contrato <span class="text-danger"></span></label>
-                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75"
-                    type="file" name="contract" value="{{old('contract')}}"/>
+                <input class="form-control h-auto form-control-solid px-2 placeholder-dark-75" type="file" name="contract" value="{{old('contract')}}" />
             </div>
             <div class="form-group col-md-2">
                 <label>Exclusivo</label>
@@ -109,6 +106,10 @@
                     </label>
                 </div>
                 <span class="form-text text-muted"></span>
+            </div>
+            <div class="col-md-3">
+              <label>Movil <span class="text-danger"></span></label>
+                <input name="number" type="text" class="form-control form-control-solid" placeholder="Movil" value="{{old('number')}}" />
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">
