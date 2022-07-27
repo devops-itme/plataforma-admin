@@ -2657,7 +2657,7 @@ var Guides = /*#__PURE__*/function () {
 
               case 5:
                 console.log('boxes', boxes_element.value);
-                boxes = JSON.parse(boxes_element.value != '' ? boxes_element.value : '');
+                boxes = JSON.parse(boxes_element.value != '' ? boxes_element.value : []);
                 console.log('boxes', boxes);
                 this.boxes.boxes = boxes;
                 this.sourceAddressHandler();
