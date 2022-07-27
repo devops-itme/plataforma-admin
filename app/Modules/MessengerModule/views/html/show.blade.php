@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Tipo y numero de documento:</div>
-                        <div class="line-height-xl"><b>{{$messenger->user->getDocumentType->name}}</b> / {{$messenger->user->document_number}}</div>
+                        <div class="line-height-xl"><b>{{$messenger->user->getDocumentType->name ??'No registra'}}</b> / {{$messenger->user->document_number ??'No registra'}}</div>
                     </div>
                 </div>
             </div>
