@@ -16,6 +16,7 @@ use App\Modules\StatusDescriptorModule\StatusDescriptor;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -90,6 +91,7 @@ class Guide extends Model
         }
         if ($eventName == 'updated') {
             $this->eventHandler($activity);
+            $this->guideLogController($activity);
         }
     }
     /*End logs config */
@@ -118,6 +120,24 @@ class Guide extends Model
                 $messengerToken = $activity->subject->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
                 sendCustomNotifications($title, $message, $data, $messengerToken);
             }
+        }
+    }
+
+    public function guideLogController($activity)
+    {
+        if (isset($activity->properties['attributes']['status_matrix_id'])) {
+            $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
+            $status_matrix = StatusMatrix::find($status_matrix_id);
+            if($status_matrix->name != 'RECOGIDO' || $status_matrix->name != 'ENTREGADO') {
+                $request = new Request(array(
+                     'status_matrix_id' => $status_matrix_id,
+                     'user_id' => Auth()->user()->id,
+                     'guide_id' => $activity->subject->id,
+                 ));
+                 $GuideLog = new GuideLog();
+                 $GuideLog->saveGuideLog($request);
+            }
+
         }
     }
 

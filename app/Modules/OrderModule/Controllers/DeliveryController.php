@@ -90,8 +90,15 @@ class DeliveryController extends Controller
 
     public function sendOrdersPickupToDelivery(Request $request)
     {
-
-        $guides= Guide::whereIn('id', $request->guide_ids)->get();
+        $statusMatrix = StatusMatrix::with('getScope')->whereHas('getScope', function($query){
+            $query->where('name', 'delivery');
+        })->get();
+        $new_statusMatrix_id = $statusMatrix->where('name', 'POR DESPACHAR')->first();
+        foreach ($request->guide_ids as $guide_id) {
+            $guides = Guide::find($guide_id)->update([
+                'status_matrix_id' => $new_statusMatrix_id->id,
+            ]);
+        }
 
         return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
 

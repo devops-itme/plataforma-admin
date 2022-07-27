@@ -12,7 +12,7 @@
             <div class="form-group col-md-6 pr-0 ">
 
                 <div class="d-flex flex-row-reverse">
-                    <button v-if="listData.length != 0" type="button"
+                    <button v-if="listData.length != 0 && typeGuide == 5" type="button"
                         class="btn btn-light-primary font-weight-bold"
                         @click="sendToDelivery()">
                         Enviar a Entregas
@@ -70,6 +70,7 @@ export default {
         widthTable: Number,
         guides: Array,
         tabs: Array,
+        typeGuide: Number,
     },
     data() {
         return {
@@ -162,6 +163,7 @@ export default {
             if(response.state != 200){
                 error(response.data.message);
             }
+            window.location.reload();
             correct(response.data.message)
         },
         async requestUpdateGuidesState(requestOptions){

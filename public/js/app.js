@@ -10038,7 +10038,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     columnsNames: Array,
     widthTable: Number,
     guides: Array,
-    tabs: Array
+    tabs: Array,
+    typeGuide: Number
   },
   data: function data() {
     return {
@@ -10143,9 +10144,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   error(response.data.message);
                 }
 
+                window.location.reload();
                 correct(response.data.message);
 
-              case 11:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -70150,6 +70152,7 @@ var render = function () {
                         tabs: _vm.tabs,
                         columnsNames: _vm.columns.inProcess,
                         widthTable: 1100,
+                        typeGuide: _vm.type_guide,
                       },
                       on: { getGuide: _vm.getGuide },
                     }),
@@ -70175,6 +70178,7 @@ var render = function () {
                         tabs: _vm.tabs,
                         columnsNames: _vm.columns.inEdit,
                         widthTable: 1600,
+                        typeGuide: _vm.type_guide,
                       },
                       on: { getGuide: _vm.getGuide },
                     }),
@@ -72162,7 +72166,7 @@ var render = function () {
       _vm._v(" "),
       _c("div", { staticClass: "form-group col-md-6 pr-0 " }, [
         _c("div", { staticClass: "d-flex flex-row-reverse" }, [
-          _vm.listData.length != 0
+          _vm.listData.length != 0 && _vm.typeGuide == 5
             ? _c(
                 "button",
                 {

@@ -83,7 +83,7 @@
                     aria-labelledby="enproceso-tab"
                 >
                     <!-- In process table -->
-                    <tabledy :rows=columns.inProcess.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inProcess :widthTable=1100></tabledy>
+                    <tabledy :rows=columns.inProcess.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inProcess :widthTable=1100 :typeGuide="type_guide"></tabledy>
                 </div>
                 <div
                     class="tab-pane fade"
@@ -92,7 +92,7 @@
                     aria-labelledby="consultas-tab"
                 >
                     <!-- Queries and Edit table -->
-                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600></tabledy>
+                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600 :typeGuide="type_guide"></tabledy>
                 </div>
             </div>
             </div>
