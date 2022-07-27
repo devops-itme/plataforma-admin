@@ -108,7 +108,7 @@ class Order extends Model
             $data['notification_type'] = 'order_updated_notification';
             $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             // sendCustomNotifications($title, $message, $data, $userToken);
-            if($status_matrix->name == 'DESPACHADO'){
+            if($status_matrix->name == 'DESPACHADO') {
                 $title = 'Orden asignada';
                 $message = 'Se le ha asignado la orden: ' . $activity->subject->order_number;
             }
