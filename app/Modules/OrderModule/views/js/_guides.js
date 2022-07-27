@@ -140,9 +140,8 @@ export default class Guides {
         if (updateGuideBtn == null || boxes_element == null || updateGuideForm == null) {
             return;
         }
-        console.log('boxes', boxes_element.value);
+        
         let boxes = JSON.parse(boxes_element.value != '' ? boxes_element.value : '[]');
-        console.log('boxes', boxes);
         this.boxes.boxes = boxes;
 
         this.sourceAddressHandler();

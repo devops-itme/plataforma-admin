@@ -97,6 +97,14 @@ class Guide extends Model
     /*End logs config */
     public function eventHandler($activity)
     {
+        $guide = $activity->subject;
+        $guide = GuideResource::collection([$guide])[0];
+        $title = 'Cambio de estado';
+        $message = 'Cambio de estado';
+        $data = [
+            'guide' => $guide,
+            'notification_type' => 'guide_updated'
+        ];
         if (isset($activity->properties['attributes']['status_matrix_id'])) {
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
             $status_matrix = StatusMatrix::find($status_matrix_id);
@@ -106,23 +114,16 @@ class Guide extends Model
             }
             $title = 'Cambio de estado';
             $message = 'Estado de la guía N°' . $activity->subject->id . ' actualizado a: ' . $status_matrix->name;
-            $guide = $activity->subject;
-            $guide = GuideResource::collection([$guide])[0];
-            $data = [
-                'guide' => $guide,
-                'notification_type' => 'guide_updated_notification'
-            ];
+            $data['notification_type'] = 'guide_updated_notification';
             $userToken = $activity->subject->getOrder->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             sendCustomNotifications($title, $message, $data, $userToken);
             if($status_matrix->name == 'DESPACHADO') {
                 $title = 'Guía asignada';
                 $message = 'Se le ha asignado la guía N°' . $activity->subject->id;
-            } else {
-                $data['notification_type'] = 'guide_updated';
-            }
-            $messengerToken = $activity->subject->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
-            sendCustomNotifications($title, $message, $data, $messengerToken);
+            } 
         }
+        $messengerToken = $activity->subject->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
+        sendCustomNotifications($title, $message, $data, $messengerToken);
     }
 
     public function guideLogController($activity)

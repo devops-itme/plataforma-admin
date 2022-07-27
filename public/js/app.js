@@ -2656,9 +2656,7 @@ var Guides = /*#__PURE__*/function () {
                 return _context4.abrupt("return");
 
               case 5:
-                console.log('boxes', boxes_element.value);
                 boxes = JSON.parse(boxes_element.value != '' ? boxes_element.value : '[]');
-                console.log('boxes', boxes);
                 this.boxes.boxes = boxes;
                 this.sourceAddressHandler();
                 this.boxes.initialize();
@@ -2667,7 +2665,7 @@ var Guides = /*#__PURE__*/function () {
                   updateGuideForm.submit();
                 });
 
-              case 12:
+              case 10:
               case "end":
                 return _context4.stop();
             }
