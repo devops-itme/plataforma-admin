@@ -141,7 +141,7 @@ export default class Guides {
             return;
         }
         console.log('boxes', boxes_element.value);
-        let boxes = JSON.parse(boxes_element.value ?? '');
+        let boxes = JSON.parse(boxes_element.value != '' ? boxes_element.value : '');
         console.log('boxes', boxes);
         this.boxes.boxes = boxes;
 

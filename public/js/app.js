@@ -2637,8 +2637,7 @@ var Guides = /*#__PURE__*/function () {
     key: "editGuide",
     value: function () {
       var _editGuide = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var _boxes_element$value,
-            _this2 = this;
+        var _this2 = this;
 
         var boxes_element, updateGuideBtn, updateGuideForm, boxes;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
@@ -2658,7 +2657,7 @@ var Guides = /*#__PURE__*/function () {
 
               case 5:
                 console.log('boxes', boxes_element.value);
-                boxes = JSON.parse((_boxes_element$value = boxes_element.value) !== null && _boxes_element$value !== void 0 ? _boxes_element$value : '');
+                boxes = JSON.parse(boxes_element.value != '' ? boxes_element.value : '');
                 console.log('boxes', boxes);
                 this.boxes.boxes = boxes;
                 this.sourceAddressHandler();
