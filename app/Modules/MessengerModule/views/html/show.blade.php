@@ -59,15 +59,19 @@
                     </div>
                 </div>
                 <div class="row mb-5 pb-5 border-bottom">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="font-weight-bolder mb-3">Movil:</div>
+                        <div class="line-height-xl">{{$messenger->number ??'No registra'}}</div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Exclusivo:</div>
                         <div class="line-height-xl">{{$messenger->exclusive == 1 ? 'SI' : 'NO' }}</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Tipo de contrato:</div>
                         <div class="line-height-xl">{{$messenger->getContractType  ?  $messenger->getContractType->name : '' }}</div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="font-weight-bolder mb-3">Contrato:</div>
                         <div class="line-height-xl"><a href="{{route('contra.download',$messenger->id)}}" target="_blank" >Descargar contrato</a></div>
                     </div>
