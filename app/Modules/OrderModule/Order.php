@@ -103,6 +103,7 @@ class Order extends Model
             if (!is_null($status_descriptor)) {
                 $status_matrix->name = $status_descriptor->description;
             }
+            $title = 'Cambio de estado';
             $message = 'Estado de ' . $activity->subject->order_number . ' actualizado a: ' . $status_matrix->name;
             $data['notification_type'] = 'order_updated_notification';
             $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
