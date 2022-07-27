@@ -88,6 +88,14 @@ class Order extends Model
 
     public function eventHandler($activity)
     {
+        $order = $activity->subject;
+        $order = OrderResource::collection([$order])[0];
+        $title = 'Cambio de estado';
+        $message = 'Cambio de estado';
+        $data = [
+            'order' => $order,
+            'notification_type' => 'order_updated'
+        ];
         if (isset($activity->properties['attributes']['status_matrix_id'])) {
             $status_matrix_id = $activity->properties['attributes']['status_matrix_id'];
             $status_matrix = StatusMatrix::find($status_matrix_id);
@@ -95,25 +103,17 @@ class Order extends Model
             if (!is_null($status_descriptor)) {
                 $status_matrix->name = $status_descriptor->description;
             }
-            $title = 'Cambio de estado';
             $message = 'Estado de ' . $activity->subject->order_number . ' actualizado a: ' . $status_matrix->name;
-            $order = $activity->subject;
-            $order = OrderResource::collection([$order])[0];
-            $data = [
-                'order' => $order,
-                'notification_type' => 'order_updated_notification'
-            ];
+            $data['notification_type'] = 'order_updated_notification';
             $userToken = $activity->subject->getUser->fcm_token ?? Auth::user()->fcm_token ?? '';
             // sendCustomNotifications($title, $message, $data, $userToken);
             if($status_matrix->name == 'DESPACHADO'){
                 $title = 'Orden asignada';
                 $message = 'Se le ha asignado la orden: ' . $activity->subject->order_number;
-            } else {
-                $data['notification_type'] = 'order_updated';
             }
-            $messengerToken = $activity->subject->getGuides[0]->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
-            sendCustomNotifications($title, $message, $data, $messengerToken);
         }
+        $messengerToken = $activity->subject->getGuides[0]->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
+        sendCustomNotifications($title, $message, $data, $messengerToken);
     }
 
     public function getUser()
