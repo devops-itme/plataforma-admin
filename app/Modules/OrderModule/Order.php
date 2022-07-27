@@ -108,9 +108,11 @@ class Order extends Model
             if($status_matrix->name == 'DESPACHADO'){
                 $title = 'Orden asignada';
                 $message = 'Se le ha asignado la orden: ' . $activity->subject->order_number;
-                $messengerToken = $activity->subject->getGuides[0]->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
-                sendCustomNotifications($title, $message, $data, $messengerToken);
+            } else {
+                $data['notification_type'] = 'order_updated';
             }
+            $messengerToken = $activity->subject->getGuides[0]->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
+            sendCustomNotifications($title, $message, $data, $messengerToken);
         }
     }
 
