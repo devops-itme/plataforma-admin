@@ -51,7 +51,7 @@
 
                 <div class="form-group col-md-3">
                     <label>Tiempo estimado(en horas): <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control form-control-solid" placeholder="Estime el tiempo"
+                    <input type="number" step="0.01" class="form-control form-control-solid" placeholder="Estime el tiempo"
                         name="estimated_time" value="{{ old('estimated_time') }}" />
                 </div>
 

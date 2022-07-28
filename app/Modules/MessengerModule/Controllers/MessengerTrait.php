@@ -25,7 +25,9 @@ trait MessengerTrait
                 'document_type' => 'required',
                 'document_number' => 'required',
                 'name' => 'required',
-                'last_name' => 'required'
+                'last_name' => 'required',
+                'phone' => 'required',
+                'number' => 'required',
                 // 'contract' => 'required',
             ]
         );
@@ -89,7 +91,8 @@ trait MessengerTrait
                 'exclusive' => $request->exclusive,
                 'birth_date' => $request->birth_date,
                 'contract' => $contract_file,
-                'contract_type_id' => $request->contract_type_id
+                'contract_type_id' => $request->contract_type_id,
+                'number' => $request->number
             ]);
             return $this->respond(200, $messenger, null, 'Mensajero creado con éxito');
         } catch (\Throwable $e) {
@@ -102,7 +105,7 @@ trait MessengerTrait
         $validator = $this->validationMessenger($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
+            return $this->respond(500, null, $validator->errors(),  $validator->errors()->first());
         }
         //dd($request);
         try {
@@ -114,12 +117,12 @@ trait MessengerTrait
                 $data =  Messenger::find($id);
                 $contract_file = $data->contract;
             }
-            
+
             //if (!empty($contract_file)) {
-               
+
              //   $request->contract = $contract_file;
            // }
-            
+
 
             $messenger = Messenger::find($id);
             //dd($request->contract);
@@ -130,7 +133,8 @@ trait MessengerTrait
                 'exclusive' => $request->exclusive ?? $messenger->exclusive,
                 'birth_date' => $request->birth_date ?? $messenger->birth_date,
                 'contract' => $contract_file ?? $messenger-> $contract_file,
-                'contract_type_id' => $request->contract_type_id ?? $messenger-> contract_type_id
+                'contract_type_id' => $request->contract_type_id ?? $messenger-> contract_type_id,
+                'number' => $request->number ?? $messenger-> number
             ]);
             //$messenger->update($request->all());
             //dd($messenger);

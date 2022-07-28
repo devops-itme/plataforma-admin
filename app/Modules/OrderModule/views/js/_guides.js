@@ -141,7 +141,7 @@ export default class Guides {
             return;
         }
         
-        let boxes = JSON.parse(boxes_element.value);
+        let boxes = JSON.parse(boxes_element.value != '' ? boxes_element.value : '[]');
         this.boxes.boxes = boxes;
 
         this.sourceAddressHandler();
