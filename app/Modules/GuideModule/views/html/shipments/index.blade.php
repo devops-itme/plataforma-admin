@@ -201,7 +201,7 @@
                             <th>{{ $shipment->external_id ?? 'No registrada' }}</th>
                             <td>{{ $shipment->recipient_name ?? 'No registra' }}</td>
                             <td>{{ format_date(date('Y-n-d', strtotime($shipment->created_at))) }}
-                                <b>{{ date('h:m A', strtotime($shipment->created_at)) }}</b>
+                                <b>{{ date('g:i a', strtotime($shipment->created_at)) }}</b>
                             </td>
                             <td>{{ $shipment->contact }}</td>
                             <td>
