@@ -159,8 +159,8 @@ return [
         'customer_origin' => 'origen del cliente',
         'department' => 'departamento',
         'city' => 'ciudad',
-        'address' => 'dirección', 
-        'address_id' => 'dirección',        
+        'address' => 'dirección',
+        'address_id' => 'dirección',
         'document_type' => 'tipo de documento',
         'document_number' => 'número de identificación',
         'client_type' => 'tipo de cliente',
@@ -278,7 +278,8 @@ return [
         'branch_office_phone' => 'Teléfono de sucursal',
         'branch_office_plan' => 'Plan',
         'branch_office_usage_mode' => 'Modo de uso',
-        'branch_office_default' => 'Predeterminada'
+        'branch_office_default' => 'Predeterminada',
+        'number' => 'Movil'
     ],
 
 ];

@@ -25,7 +25,9 @@ trait MessengerTrait
                 'document_type' => 'required',
                 'document_number' => 'required',
                 'name' => 'required',
-                'last_name' => 'required'
+                'last_name' => 'required',
+                'phone' => 'required',
+                'number' => 'required',
                 // 'contract' => 'required',
             ]
         );
@@ -103,7 +105,7 @@ trait MessengerTrait
         $validator = $this->validationMessenger($request);
 
         if ($validator->fails()) {
-            return $this->respond(500,  $validator->errors(),  $validator->errors()->first());
+            return $this->respond(500, null, $validator->errors(),  $validator->errors()->first());
         }
         //dd($request);
         try {
