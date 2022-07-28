@@ -7,8 +7,10 @@ use App\Http\Controllers\Traits\RestActions;
 use App\Imports\GuidesImport;
 use App\Modules\AddressModule\Address;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
+use App\Modules\GuideLogModule\GuideLog;
 use App\Modules\GuideModule\Guide;
 use App\Modules\OrderModule\Order;
+use App\Modules\RouteModule\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -189,13 +191,72 @@ class GuideController extends Controller
         try {
 
             $state == 5 ? $state = [4, 5, 6] : ($state == 9 ?  $state = [8, 9, 10] : $state = [intval($state)]);
-            $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query) {
-                $query->whereHas('getUser')->where('order_type', 36);
-            })->whereIn('status_matrix_id', $state)
-                ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments','getGuideLogs.getIssue'])
-                ->get();
+            // $guides = Guide::with('getOrder.getUser.getCustomer')->whereHas('getOrder', function ($query) {
+            //     $query->whereHas('getUser')->where('order_type', 36);
+            // })->whereIn('status_matrix_id', $state)
+            //     ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments','getGuideLogs.getIssue'])
+            //     ->get();
 
-            return $this->respond(200, $guides, null, 'Lista de guías packing');
+                $guide_pickup = [];
+                $GuideLog_pickup = GuideLog::with(['getState','getGuide.getOrder.getUser.getCustomer', 'getGuide.getRoute.getMessenger', 'getGuide.getTransportType', 'getGuide.getOrder.getOrderType', 'getGuide.getBranchOffice.getDepartment.getDepartment', 'getGuide.getStatusMatrix', 'getGuide.getDocuments','getGuide.getGuideLogs.getIssue'])->whereHas('getState', function($query){
+                    $query->whereHas('getScope', function($query){
+                        $query->where('name', 'pickup');
+                    });
+                })->orderBy('created_at', 'ASC')->get();
+
+                foreach ($GuideLog_pickup as $key => $item) {
+                    array_push($guide_pickup, $item);
+                }
+                $guide_pickup_new = array_values(array_column($guide_pickup, null, "guide_id"));
+
+                $guides_pickup_arr = collect($guide_pickup_new)->map(function($item) use ($GuideLog_pickup){
+                    $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
+                    if($data_guide_log){
+                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereDate('created_at','<=', $data_guide_log->created_at)->get();
+                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at','<=', $data_guide_log->created_at)->first();
+                        $item->getGuide->route = $route;
+                        $item->getGuide->documents = $documents;
+                    }
+                    $item->getGuide->status_matrix_id = $item->status_matrix_id;
+
+                    return $item->getGuide;
+                });
+
+                $guide_delivery = [];
+                $GuideLog_delivery = GuideLog::with(['getState','getGuide.getOrder.getUser.getCustomer', 'getGuide.getRoute.getMessenger', 'getGuide.getTransportType', 'getGuide.getOrder.getOrderType', 'getGuide.getBranchOffice.getDepartment.getDepartment', 'getGuide.getStatusMatrix', 'getGuide.getDocuments','getGuide.getGuideLogs.getIssue'])->whereHas('getState', function($query){
+                    $query->whereHas('getScope', function($query){
+                        $query->where('name', 'delivery');
+                    });
+                })->orderBy('created_at', 'ASC')->get();
+
+                foreach ($GuideLog_delivery as $key => $item) {
+                    array_push($guide_delivery, $item);
+                }
+                $guide_delivery_new = array_values(array_column($guide_delivery, null, "guide_id"));
+
+                $guides_delivery_arr = collect($guide_delivery_new)->map(function($item) use ($GuideLog_delivery){
+                    $data_guide_log = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->first();
+                    if($data_guide_log){
+                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereDate('created_at','>=', $data_guide_log->created_at)->get();
+                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at','>=', $data_guide_log->created_at)->first();
+                        $item->getGuide->route = $route;
+                        $item->getGuide->documents = $documents;
+                    }
+
+                    $item->getGuide->status_matrix_id = $item->status_matrix_id;
+                    return $item->getGuide;
+                });
+
+                $new_guides = $guides_delivery_arr->merge($guides_pickup_arr);
+                $guides = $new_guides->whereIn('status_matrix_id', $state);
+
+                $guide_arr = [];
+                foreach ($guides as $key => $item) {
+                    array_push($guide_arr, $item);
+                }
+
+
+            return $this->respond(200, $guide_arr, null, 'Lista de guías packing');
         } catch (\Throwable $e) {
             return $this->respond(500, [], $e->getMessage());
         }
@@ -304,4 +365,5 @@ class GuideController extends Controller
             return $this->respond(500, [], $e->getMessage(), 'Error al validar guía');
         }
     }
+
 }

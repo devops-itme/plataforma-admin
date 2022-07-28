@@ -474,7 +474,7 @@ export default {
             this.showDataGuide.ref_client = data.get_order?.get_user.document_number;
             this.showDataGuide.programming = data.get_order.schedule_date;
             this.showDataGuide.transport =  data.get_transport_type?.name;
-            this.showDataGuide.movil = data.get_route&&(data.get_route?.get_messenger?.name+' '+data.get_route?.get_messenger?.last_name);
+            this.showDataGuide.movil = data.route&&(data.route?.get_messenger?.name+' '+data.route?.get_messenger?.last_name);
             this.showDataGuide.client_depto = data.get_branch_office?.get_department?.get_department?.id+':'+data.get_branch_office?.get_department?.get_department?.name ? this.showDataGuide.client_depto: 'No registra';
             this.showDataGuide.client_branch_office = data.get_branch_office?.id+': '+data.get_branch_office?.name ? this.showDataGuide.client_branch_office: 'No registra';
             this.showDataGuide.client_document = data.get_order?.get_user.document_number;
@@ -489,9 +489,9 @@ export default {
             this.showDataGuide.app_status = data.app_status;
             this.showDataGuide.status = data.get_status_matrix.name;
             this.showDataGuide.novelty = data.novelty;
-            this.showDataGuide.files = data.get_documents;
-            this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
-            this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
+            this.showDataGuide.files = data.documents;
+            this.showDataGuide.evidence = data.documents?.filter(element => element.type != 74);
+            this.showDataGuide.package_pictures = data.documents?.filter(element => element.type == 74);
             this.showDataGuide.issue = data.get_guide_logs[data.get_guide_logs.length - 1]?.get_issue?.name ?? 'sin incidencias';
             this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range
         },

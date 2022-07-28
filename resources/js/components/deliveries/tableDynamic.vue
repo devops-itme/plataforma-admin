@@ -41,7 +41,7 @@
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
                         <td>{{ tblItem.get_order.schedule_time_range }}</td>
-                        <td v-if="tblItem.dispatched != null && tblItem.get_route != null && tblItem.get_route.get_messenger != null">{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
+                        <td v-if="tblItem.dispatched != null && tblItem.route != null && tblItem.route.get_messenger != null">{{ tblItem.route.get_messenger.name + ' ' + tblItem.route.get_messenger.last_name }}</td>
                         <td v-else>Sin Asignar</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
                         <td v-if="tblItem != null" >{{ tblItem.get_order.get_user.name }}</td>
@@ -116,8 +116,8 @@ export default {
             //             tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
             //             tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
             //             tblItem.dispatched.toLowerCase().includes(v) ||
-            //             tblItem.get_route.get_messenger.name.toLowerCase().includes(v) ||
-            //             tblItem.get_route.get_messenger.last_name.toLowerCase().includes(v) ||
+            //             tblItem.route.get_messenger.name.toLowerCase().includes(v) ||
+            //             tblItem.route.get_messenger.last_name.toLowerCase().includes(v) ||
             //             tblItem.get_order.get_user.name.toLowerCase().includes(v)
             //             /* tblItem.id.toLowerCase().includes(v) || */
             //             /*tblItem.get_order.order_type.toLowerCase().includes(v) ||

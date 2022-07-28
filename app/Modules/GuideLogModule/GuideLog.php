@@ -3,6 +3,7 @@
 namespace App\Modules\GuideLogModule;
 
 use App\Http\Controllers\Traits\RestActions;
+use App\Modules\GuideModule\Guide;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,10 @@ class GuideLog extends Model
     public function getState()
     {
         return $this->belongsTo(StatusMatrix::class, 'status_matrix_id');
+    }
+    public function getGuide()
+    {
+        return $this->belongsTo(Guide::class, 'guide_id');
     }
 
     public function getIssue()

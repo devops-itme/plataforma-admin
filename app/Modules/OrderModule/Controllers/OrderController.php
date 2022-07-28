@@ -9,6 +9,7 @@ use App\Modules\CustomerModule\Customer;
 use App\Modules\DepartmentModule\Department;
 use App\Modules\GuideModule\Guide;
 use App\Http\Controllers\Controller;
+use App\Modules\GuideLogModule\GuideLog;
 use App\Modules\OrderModule\Controllers\OrderTrait;
 use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
@@ -18,6 +19,7 @@ use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -32,6 +34,7 @@ class OrderController extends Controller
     protected $path = 'OrderModule.views.html.';
     public function index()
     {
+
         $orders = Order::number(request()->number)
             ->whereOrderType(request()->order_type)
             ->customer(request()->name)

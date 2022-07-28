@@ -148,7 +148,7 @@ class Guide extends Model
 
     public function getRoute()
     {
-        return $this->hasOne(Route::class, 'guide_id');
+        return $this->hasOne(Route::class, 'guide_id')->orderBy('created_at', 'DESC')->latest();
     }
 
     public function getStatusMatrix()
@@ -158,7 +158,7 @@ class Guide extends Model
 
     public function getIssues()
     {
-        return $this->hasMany(GuideLog::class, 'guide_id')->whereNotNull('issue_id')->latest();
+        return $this->hasMany(GuideLog::class, 'guide_id')->whereNotNull('issue_id');
     }
 
     public function getTransportType()
