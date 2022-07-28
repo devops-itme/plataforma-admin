@@ -120,7 +120,7 @@ class Guide extends Model
             if($status_matrix->name == 'DESPACHADO') {
                 $title = 'Guía asignada';
                 $message = 'Se le ha asignado la guía N°' . $activity->subject->id;
-            } 
+            }
         }
         $messengerToken = $activity->subject->getRoute->getMessenger->fcm_token ?? Auth::user()->fcm_token ?? '';
         sendCustomNotifications($title, $message, $data, $messengerToken);
@@ -291,5 +291,14 @@ class Guide extends Model
         } catch (\Throwable $th) {
             return $this->respond(500, [], $th->getMessage(), 'Error al encontrar guías');
         }
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($guide) { // before delete() method call this
+            $guide->getGuideLogs()->delete();
+            // do the rest of the cleanup...
+        });
     }
 }

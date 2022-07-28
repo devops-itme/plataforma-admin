@@ -456,4 +456,16 @@ class Order extends Model
             return $this->respond(500, [], $th->getMessage() . ' ' . $th->getLine(), 'Error al actualizar orden');
         }
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function($order) {
+            $order->getGuides()->each(function($guides) {
+                $guides->getGuideLogs()->delete();
+                $guides->delete();
+            });
+        });
+    }
 }
