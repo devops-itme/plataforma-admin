@@ -9770,6 +9770,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 // import { Sortable, MultiDrag } from 'sortablejs';
 
  //  Sortable.mount(new MultiDrag());
@@ -15544,7 +15545,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
 
 // exports
 
@@ -15563,7 +15564,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -71922,14 +71923,32 @@ var render = function () {
                       ref: "seleccionado",
                       staticClass: "form-control col-md-5",
                     },
-                    _vm._l(this.filterMessengers, function (a) {
-                      return _c(
-                        "option",
-                        { key: a.id, domProps: { value: a.user.id } },
-                        [_vm._v(_vm._s(a.user.name + " " + a.user.last_name))]
-                      )
-                    }),
-                    0
+                    [
+                      _vm._l(this.filterMessengers, function (a) {
+                        return a.user.last_name != null
+                          ? _c(
+                              "option",
+                              { key: a.id, domProps: { value: a.user.id } },
+                              [
+                                _vm._v(
+                                  _vm._s(a.user.name + " " + a.user.last_name)
+                                ),
+                              ]
+                            )
+                          : _vm._e()
+                      }),
+                      _vm._v(" "),
+                      _vm._l(this.filterMessengers, function (a) {
+                        return a.user.last_name == null
+                          ? _c(
+                              "option",
+                              { key: a.id, domProps: { value: a.user.id } },
+                              [_vm._v(_vm._s(a.user.name))]
+                            )
+                          : _vm._e()
+                      }),
+                    ],
+                    2
                   ),
                   _vm._v(" "),
                   _c(
