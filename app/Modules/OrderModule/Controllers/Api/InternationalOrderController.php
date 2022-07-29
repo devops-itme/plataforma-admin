@@ -152,7 +152,7 @@ class InternationalOrderController extends Controller
             ->join('orders as o', 'o.id', '=', 'g.order_id')
             ->join('users as u', 'u.id', '=', 'o.user_id')
             ->where('o.deleted_at', null)
-            // ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
+            ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
             ->where('u.id', $user_id)
             // ->limit(4)
             // ->cursor();
@@ -183,7 +183,8 @@ class InternationalOrderController extends Controller
             $guide->Status = $guide->historical[0]['status'];
             $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
         }
-        return json_encode($query);
+        // return json_encode($query,true);
+        return $this->respond(200,  $query, null, 'Ordenes Internacionales');
     }
 
     public function permissionsAccions(Request $request, $id)
