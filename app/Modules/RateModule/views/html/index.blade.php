@@ -11,11 +11,11 @@
                 <h2 class="card-label h1">Tarifas</h2>
             </div>
             <div class="card-toolbar">
-                <form action="{{ route('rates.import') }}" method="post" enctype="multipart/form-data">
+                {{-- <form action="{{ route('rates.import') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="file" id="file">
                     <button class="btn btn-primary font-weight-bolder ml-2" type="submit">Importar</button>
-                </form>
+                </form> --}}
                 <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter" data-toggle="collapse"
                     data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     <span class="svg-icon svg-icon-md">
