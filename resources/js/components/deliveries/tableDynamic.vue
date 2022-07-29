@@ -34,7 +34,7 @@
                 <tbody>
                     <tr style="cursor: pointer" v-for="tblItem, index in this.guides" @click="rowClick(tblItem, index)" v-bind:class="{ active_row: index === activeIndex, active_list: listData.includes(tblItem.id) } " v-bind:key="index">
                         <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
-                        <td v-if="tblItem.get_status_matrix != null">{{ tblItem.get_status_matrix.name }}</td>
+                        <td v-if="tblItem.status_matrix != null">{{ tblItem.status_matrix.name }}</td>
                         <td v-else>--- ---</td>
                         <td>{{ new Date(tblItem.created_at).toLocaleDateString()}}</td>
                         <td>{{ tblItem.dispatched }}</td>
@@ -114,7 +114,7 @@ export default {
             //             tblItem.address_name.toLowerCase().includes(v) ||
             //             tblItem.contact.toLowerCase().includes(v) ||
             //             tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
-            //             tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
+            //             tblItem.status_matrix.name.toLowerCase().includes(v) ||
             //             tblItem.dispatched.toLowerCase().includes(v) ||
             //             tblItem.route.get_messenger.name.toLowerCase().includes(v) ||
             //             tblItem.route.get_messenger.last_name.toLowerCase().includes(v) ||

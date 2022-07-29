@@ -487,7 +487,7 @@ export default {
             this.showDataGuide.additional_email = data.additional_email;
             this.showDataGuide.additional_address = data.additional_address;
             this.showDataGuide.app_status = data.app_status;
-            this.showDataGuide.status = data.get_status_matrix.name;
+            this.showDataGuide.status = data.status_matrix.name;
             this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.documents;
             this.showDataGuide.evidence = data.documents?.filter(element => element.type != 74);
@@ -585,7 +585,7 @@ export default {
             this.guide.additional_email = this.showGuide.additional_email;
             this.guide.additional_address = this.showGuide.additional_address;
             this.guide.app_status = this.showGuide.app_status;
-            this.guide.status = this.showGuide.get_status_matrix.name;
+            this.guide.status = this.showGuide.status_matrix.name;
             this.guide.novelty = this.showGuide.novelty;
         },
 
