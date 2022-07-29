@@ -19,8 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-// use Yajra\DataTables\DataTables;
-use Yajra\DataTables\Facades\DataTables;
+
 
 class InternationalOrderController extends Controller
 {
@@ -155,7 +154,7 @@ class InternationalOrderController extends Controller
             ->where('o.deleted_at', null)
             // ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
             ->where('u.id', $user_id)
-            ->limit(4)
+            // ->limit(4)
             // ->cursor();
             ->get();
         $array_response = [];
