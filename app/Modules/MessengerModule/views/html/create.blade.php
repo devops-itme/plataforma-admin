@@ -108,7 +108,7 @@
                 <span class="form-text text-muted"></span>
             </div>
             <div class="col-md-3">
-              <label>Movil <span class="text-danger"></span></label>
+              <label>Movil <span class="text-danger">*</span></label>
                 <input name="number" type="text" class="form-control form-control-solid" placeholder="Movil" value="{{old('number')}}" />
             </div>
         </div>
