@@ -11,6 +11,11 @@
                 <h2 class="card-label h1">Tarifas</h2>
             </div>
             <div class="card-toolbar">
+                <form action="{{ route('rates.import') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="file" id="file">
+                    <button class="btn btn-primary font-weight-bolder ml-2" type="submit">Importar</button>
+                </form>
                 <button class="btn btn-light-success mr-2 px-6 font-weight-bold btn-filter" data-toggle="collapse"
                     data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     <span class="svg-icon svg-icon-md">
@@ -141,9 +146,9 @@
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                     <!-- <a href="{{ route('rates.show', $rate->id) }}"
-                                        class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
-                                        <i class="far fa-folder-open"></i>
-                                    </a> -->
+                                            class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip title="Detalle">
+                                            <i class="far fa-folder-open"></i>
+                                        </a> -->
                                     <a href="{{ route('rates.edit', $rate->id) }}"
                                         class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
                                         <i class="fas fa-edit"></i>

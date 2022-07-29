@@ -3,12 +3,16 @@
 namespace App\Modules\RateModule\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Imports\RatesImport;
 use App\Modules\NeighborhoodModule\Neighborhood;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RateModule\Controllers\RatesTrait;
 use App\Modules\RateModule\Rate;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Calculation\Financial\Securities\Rates;
 
 class RateController extends Controller
 {
@@ -96,5 +100,22 @@ class RateController extends Controller
         }
         $status = $rateResponse['state'] == 200 ? 'success' : 'danger';
         return redirect()->back()->with($status, $rateResponse['message']);
+    }
+
+    public function importRate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required | mimes:xlsx',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+        }
+        if ($request->hasFile('file')) {
+            $file_import = $request->file('file');
+            Excel::import(new RatesImport(), $file_import);
+            return $this->respond(200,  [], null, 'Importación de tarifas completada');
+        }
+        return $this->respond(500,  [], '', 'Error al importar archivo');
     }
 }
