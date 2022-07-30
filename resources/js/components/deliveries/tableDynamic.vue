@@ -41,7 +41,8 @@
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
                         <td>{{ tblItem.get_order.schedule_time_range }}</td>
-                        <td v-if="tblItem.dispatched != null && tblItem.route != null && tblItem.route.get_messenger != null">{{ tblItem.route.get_messenger.name + ' ' + tblItem.route.get_messenger.last_name }}</td>
+                        <td v-if="tblItem.dispatched != null && tblItem.route != null && tblItem.route.get_messenger != null && tblItem.route.get_messenger.last_name != null">{{ tblItem.route.get_messenger.name + ' ' + tblItem.route.get_messenger.last_name }}</td>
+                        <td v-if="tblItem.dispatched != null && tblItem.route != null && tblItem.route.get_messenger != null && tblItem.route.get_messenger.last_name == null">{{ tblItem.route.get_messenger.name }}</td>
                         <td v-else>Sin Asignar</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
                         <td v-if="tblItem != null" >{{ tblItem.get_order.get_user.name }}</td>
