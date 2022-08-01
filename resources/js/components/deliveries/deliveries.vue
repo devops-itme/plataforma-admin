@@ -92,7 +92,7 @@
                     aria-labelledby="consultas-tab"
                 >
                     <!-- Queries and Edit table -->
-                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600 :typeGuide="type_guide"></tabledy>
+                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides_bydate :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600 :typeGuide="type_guide"></tabledy>
                 </div>
             </div>
             </div>
@@ -437,7 +437,11 @@ export default {
     computed:{
         tabEdition(){
             return this.tabs[2]?.id;
-        }
+        },
+        guides_bydate() {
+
+            return this.guides.sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+        },
     },
     watch:{
 

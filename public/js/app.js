@@ -8638,6 +8638,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this$tabs$;
 
       return (_this$tabs$ = this.tabs[2]) === null || _this$tabs$ === void 0 ? void 0 : _this$tabs$.id;
+    },
+    guides_bydate: function guides_bydate() {
+      return this.guides.sort(function (a, b) {
+        return b.updated_at.localeCompare(a.updated_at);
+      });
     }
   },
   watch: {},
@@ -70178,7 +70183,7 @@ var render = function () {
                     _c("tabledy", {
                       attrs: {
                         rows: _vm.columns.inEdit.length,
-                        guides: _vm.guides,
+                        guides: _vm.guides_bydate,
                         tabs: _vm.tabs,
                         columnsNames: _vm.columns.inEdit,
                         widthTable: 1600,
@@ -72335,9 +72340,7 @@ var render = function () {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    tblItem.dispatched != null &&
-                    tblItem.route == null &&
-                    tblItem.route.get_messenger == null
+                    tblItem.dispatched != null && tblItem.route == null
                       ? _c("td", [_vm._v("Sin Asignar")])
                       : _vm._e(),
                     _vm._v(" "),
