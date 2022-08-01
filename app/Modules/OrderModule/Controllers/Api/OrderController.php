@@ -365,15 +365,12 @@ class OrderController extends Controller
             $GuideLog_pickup = GuideLog::with(
                 [
                     'getState',
-                    'getGuide.getTransportType',
-                    'getGuide.getIssues',
+                    'getIssue',
                 ]
             )->whereHas('getState', function ($query) {
                 $query->whereHas('getScope', function ($query) {
                     $query->where('name', 'pickup');
                 });
-            })->whereHas('getGuide.getRoute', function ($query) use ($request) {
-                $query->where('messenger_user_id', Auth()->user()->id);
             })->orderBy('created_at', 'ASC')->get();
 
 
@@ -386,10 +383,11 @@ class OrderController extends Controller
                 $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
                 $item->getGuide->status_matrix_id = $item->status_matrix_id;
                 if ($data_guide_log) {
-                    $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
+                    $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
                     $status_matrix = StatusMatrix::find($item->status_matrix_id);
-                    $item->getGuide->get_route = $route;
-                    $item->getGuide->status_matrix = $status_matrix;
+                    $item->getGuide->getRoute = $route;
+                    $item->getGuide->getStatusMatrix = $status_matrix;
+                    $item->getGuide->getIssues = $item->get_issue;
                 }
                 return $item->getGuide;
             });
@@ -398,15 +396,12 @@ class OrderController extends Controller
             $GuideLog_delivery = GuideLog::with(
                 [
                     'getState',
-                    'getGuide.getTransportType',
-                    'getGuide.getIssues'
+                    'getIssue',
                 ]
             )->whereHas('getState', function ($query) {
                 $query->whereHas('getScope', function ($query) {
                     $query->where('name', 'delivery');
                 });
-            })->whereHas('getGuide.getRoute', function ($query) use ($request) {
-                $query->where('messenger_user_id', Auth()->user()->id);
             })->orderBy('created_at', 'ASC')->get();
 
             foreach ($GuideLog_delivery as $key => $item) {
@@ -419,10 +414,11 @@ class OrderController extends Controller
                 $data_guide_log = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->first();
                 $item->getGuide->status_matrix_id = $item->status_matrix_id;
                 if ($data_guide_log) {
-                    $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '>=', $data_guide_log->created_at)->first();
+                    $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
                     $status_matrix = StatusMatrix::find($item->status_matrix_id);
-                    $item->getGuide->get_route = $route;
-                    $item->getGuide->status_matrix = $status_matrix;
+                    $item->getGuide->getRoute = $route;
+                    $item->getGuide->getStatusMatrix = $status_matrix;
+                    $item->getGuide->getIssues = $item->get_issue;
                 }
                 return $item->getGuide;
             });
@@ -430,18 +426,20 @@ class OrderController extends Controller
             $new_guides = $guides_delivery_arr->merge($guides_pickup_arr);
 
             $guides = $new_guides->whereIn('status_matrix_id', $state);
+
+            $guide_arr = [];
+            foreach ($guides as $item) {
+                $item->getRoute->messenger_user_id == Auth()->user()->id ? array_push($guide_arr, $item) :'';
+             }
+
             //if request order id return guides by
             if($request->order_id){
-                $guide_arr = [];
-                $guides = $guides->whereIn('order_id', $request->order_id);
-                foreach ($guides as $item) {
-                   array_push($guide_arr, $item);
-                }
-                $data = GuideResource::collection($guide_arr);
+                $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
+                $data = GuideResource::collection($guides_list);
                 return $this->respond(200, $data, null, 'Guías');
             }
 
-            $guides_arr_ids = $guides->map(function($item){
+            $guides_arr_ids = collect($guide_arr)->map(function($item){
                 return $item->order_id;
             });
 

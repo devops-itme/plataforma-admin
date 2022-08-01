@@ -214,7 +214,7 @@ class GuideController extends Controller
                     $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
                     if($data_guide_log){
                         $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereDate('created_at','<=', $data_guide_log->created_at)->get();
-                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at','<=', $data_guide_log->created_at)->first();
+                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
                         $status_matrix = StatusMatrix::find($item->status_matrix_id);
                         $item->getGuide->route = $route;
                         $item->getGuide->documents = $documents;
@@ -241,7 +241,7 @@ class GuideController extends Controller
                     $data_guide_log = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->first();
                     if($data_guide_log){
                         $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereDate('created_at','>=', $data_guide_log->created_at)->get();
-                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at','>=', $data_guide_log->created_at)->first();
+                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
                         $status_matrix = StatusMatrix::find($item->status_matrix_id);
                         $item->getGuide->route = $route;
                         $item->getGuide->documents = $documents;
