@@ -72333,7 +72333,13 @@ var render = function () {
                       ? _c("td", [
                           _vm._v(_vm._s(tblItem.route.get_messenger.name)),
                         ])
-                      : _c("td", [_vm._v("Sin Asignar")]),
+                      : _vm._e(),
+                    _vm._v(" "),
+                    tblItem.dispatched != null &&
+                    tblItem.route == null &&
+                    tblItem.route.get_messenger == null
+                      ? _c("td", [_vm._v("Sin Asignar")])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
