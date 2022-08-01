@@ -135,14 +135,13 @@ export default {
         rowClick(data, index) {
             this.activeIndex = index;
             this.$emit("getGuide", data);
-            if (window.event.ctrlKey) {
-                //ctrl was held down during the click
-                if(!this.listData.includes(data.id)){
+            window.addEventListener('click', ()=>{
+                if(!this.listData.includes(data.id) && data.status_matrix_id == 6){
                     this.listData.push(data.id)
+                }else{
+                    this.listData = []
                 }
-            }else{
-                this.listData = []
-            }
+            })
         },
         async sendToDelivery(){
              let token = document
