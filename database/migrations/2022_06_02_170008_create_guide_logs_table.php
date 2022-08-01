@@ -28,7 +28,6 @@ class CreateGuideLogsTable extends Migration
             // $table->string('sign_customer');
             $table->text('detail_log')->nullable();
             $table->json('url_document')->nullable();
-            $table->string('novelty')->nullable();
             $table->integer('active')->default(1);
             $table->softDeletes();
             $table->timestamps();

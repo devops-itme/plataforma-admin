@@ -23,7 +23,6 @@ class GuideLog extends Model
         'sign_customer',
         'detail_log',
         'url_document',
-        'novelty',
         'active',
     ];
 
@@ -53,7 +52,6 @@ class GuideLog extends Model
                 'sign_customer' => 'nullable|numeric',
                 'detail_log' => 'nullable|numeric',
                 'url_document' => 'nullable|numeric',
-                'novelty' => 'nullable',
                 'active' => 'nullable|numeric',
             ]
         );
@@ -94,7 +92,6 @@ class GuideLog extends Model
                 'sign_customer' => $request->sign_customer,
                 'detail_log' => $request->detail_log,
                 'url_document' => $request->url_document,
-                'novelty'=> $request->novelty,
                 'active' => $request->active ?? 1,
             ]);
             DB::commit();
