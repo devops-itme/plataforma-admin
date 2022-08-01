@@ -8,6 +8,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('order/finishOrder', 'OrderModule\Controllers\Api\OrderController@finishOrder')->name('order.finishOrder');
     Route::put('order/changeStatus', 'OrderModule\Controllers\Api\OrderController@changeStatus')->name('order.changeStatus');
 
+    Route::get('order/delivery-courier/record', 'OrderModule\Controllers\Api\OrderController@CourierOrderHistory')->name('order.CourierOrderHistory');
     Route::get('order/webview/paguelo-facil', 'OrderModule\Controllers\Api\OrderController@webviewPagueloFacil')->name('order.webview');
 });
 Route::get('order/webview/paguelo-facil/response', 'OrderModule\Controllers\Api\OrderController@responseViewPagueloFacil')->name('order.webview.response');
@@ -23,6 +24,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('internationalOrder/detail/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@show_destinations')->name('internationalOrder.detail');;
     Route::post('web/export/order', 'OrderModule\Controllers\Api\InternationalOrderController@export2')->name('internationalOrder.export');
 });
+
 
 
 

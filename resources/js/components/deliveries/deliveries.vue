@@ -92,7 +92,7 @@
                     aria-labelledby="consultas-tab"
                 >
                     <!-- Queries and Edit table -->
-                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600 :typeGuide="type_guide"></tabledy>
+                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides_bydate :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600 :typeGuide="type_guide"></tabledy>
                 </div>
             </div>
             </div>
@@ -437,7 +437,11 @@ export default {
     computed:{
         tabEdition(){
             return this.tabs[2]?.id;
-        }
+        },
+        guides_bydate() {
+
+            return this.guides.sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+        },
     },
     watch:{
 
@@ -487,7 +491,7 @@ export default {
             this.showDataGuide.additional_email = data.additional_email;
             this.showDataGuide.additional_address = data.additional_address;
             this.showDataGuide.app_status = data.app_status;
-            this.showDataGuide.status = data.get_status_matrix.name;
+            this.showDataGuide.status = data.status_matrix.name;
             this.showDataGuide.novelty = data.novelty;
             this.showDataGuide.files = data.documents;
             this.showDataGuide.evidence = data.documents?.filter(element => element.type != 74);
@@ -585,7 +589,7 @@ export default {
             this.guide.additional_email = this.showGuide.additional_email;
             this.guide.additional_address = this.showGuide.additional_address;
             this.guide.app_status = this.showGuide.app_status;
-            this.guide.status = this.showGuide.get_status_matrix.name;
+            this.guide.status = this.showGuide.status_matrix.name;
             this.guide.novelty = this.showGuide.novelty;
         },
 

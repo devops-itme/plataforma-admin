@@ -3,7 +3,7 @@
 namespace App\Modules\OrderModule\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Resources\GuideResource;
 use App\Http\Resources\OrderResource;
 use App\Modules\AddressModule\Address;
 use App\Modules\AddressModule\Controllers\AddressTrait;
@@ -16,6 +16,8 @@ use App\Modules\RateModule\Rate;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\GuidanceDocumentModule\Controllers\Api\GuidanceDocumentController;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
+use App\Modules\GuideLogModule\GuideLog;
+use App\Modules\RouteModule\Route;
 use App\Modules\ZoneModule\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -350,5 +352,106 @@ class OrderController extends Controller
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
+    }
+
+    public function CourierOrderHistory(Request $request)
+    {
+        try {
+            $state = $request->state;
+
+            $state == 'record' ? $state = [6, 10] : ($state == 'active' ?  $state = [4, 5, 8, 9] : $state = [intval($state)]);
+
+            $guide_pickup = [];
+            $GuideLog_pickup = GuideLog::with(
+                [
+                    'getState',
+                    'getGuide.getTransportType',
+                    'getGuide.getIssues',
+                ]
+            )->whereHas('getState', function ($query) {
+                $query->whereHas('getScope', function ($query) {
+                    $query->where('name', 'pickup');
+                });
+            })->whereHas('getGuide.getRoute', function ($query) use ($request) {
+                $query->where('messenger_user_id', Auth()->user()->id);
+            })->orderBy('created_at', 'ASC')->get();
+
+
+            foreach ($GuideLog_pickup as $key => $item) {
+                array_push($guide_pickup, $item);
+            }
+            $guide_pickup_new = array_values(array_column($guide_pickup, null, "guide_id"));
+
+            $guides_pickup_arr = collect($guide_pickup_new)->map(function ($item) use ($GuideLog_pickup) {
+                $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
+                $item->getGuide->status_matrix_id = $item->status_matrix_id;
+                if ($data_guide_log) {
+                    $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
+                    $status_matrix = StatusMatrix::find($item->status_matrix_id);
+                    $item->getGuide->get_route = $route;
+                    $item->getGuide->status_matrix = $status_matrix;
+                }
+                return $item->getGuide;
+            });
+
+            $guide_delivery = [];
+            $GuideLog_delivery = GuideLog::with(
+                [
+                    'getState',
+                    'getGuide.getTransportType',
+                    'getGuide.getIssues'
+                ]
+            )->whereHas('getState', function ($query) {
+                $query->whereHas('getScope', function ($query) {
+                    $query->where('name', 'delivery');
+                });
+            })->whereHas('getGuide.getRoute', function ($query) use ($request) {
+                $query->where('messenger_user_id', Auth()->user()->id);
+            })->orderBy('created_at', 'ASC')->get();
+
+            foreach ($GuideLog_delivery as $key => $item) {
+                array_push($guide_delivery, $item);
+            }
+
+            $guide_delivery_new = array_values(array_column($guide_delivery, null, "guide_id"));
+
+            $guides_delivery_arr = collect($guide_delivery_new)->map(function ($item) use ($GuideLog_delivery) {
+                $data_guide_log = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->first();
+                $item->getGuide->status_matrix_id = $item->status_matrix_id;
+                if ($data_guide_log) {
+                    $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '>=', $data_guide_log->created_at)->first();
+                    $status_matrix = StatusMatrix::find($item->status_matrix_id);
+                    $item->getGuide->get_route = $route;
+                    $item->getGuide->status_matrix = $status_matrix;
+                }
+                return $item->getGuide;
+            });
+
+            $new_guides = $guides_delivery_arr->merge($guides_pickup_arr);
+
+            $guides = $new_guides->whereIn('status_matrix_id', $state);
+            //if request order id return guides by
+            if($request->order_id){
+                $guide_arr = [];
+                $guides = $guides->whereIn('order_id', $request->order_id);
+                foreach ($guides as $item) {
+                   array_push($guide_arr, $item);
+                }
+                $data = GuideResource::collection($guide_arr);
+                return $this->respond(200, $data, null, 'Guías');
+            }
+
+            $guides_arr_ids = $guides->map(function($item){
+                return $item->order_id;
+            });
+
+            $data = Order::whereIn('id', $guides_arr_ids)->with($this->messengerRelationships)->get();
+
+            $orders = OrderResource::collection($data);
+            return $this->respond(200, $orders, null, 'Historial ordenes');
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+
     }
 }

@@ -11,6 +11,7 @@ use App\Modules\GuideLogModule\GuideLog;
 use App\Modules\GuideModule\Guide;
 use App\Modules\OrderModule\Order;
 use App\Modules\RouteModule\Route;
+use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -214,8 +215,10 @@ class GuideController extends Controller
                     if($data_guide_log){
                         $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereDate('created_at','<=', $data_guide_log->created_at)->get();
                         $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at','<=', $data_guide_log->created_at)->first();
+                        $status_matrix = StatusMatrix::find($item->status_matrix_id);
                         $item->getGuide->route = $route;
                         $item->getGuide->documents = $documents;
+                        $item->getGuide->status_matrix = $status_matrix;
                     }
                     $item->getGuide->status_matrix_id = $item->status_matrix_id;
 
@@ -239,8 +242,10 @@ class GuideController extends Controller
                     if($data_guide_log){
                         $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereDate('created_at','>=', $data_guide_log->created_at)->get();
                         $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at','>=', $data_guide_log->created_at)->first();
+                        $status_matrix = StatusMatrix::find($item->status_matrix_id);
                         $item->getGuide->route = $route;
                         $item->getGuide->documents = $documents;
+                        $item->getGuide->status_matrix = $status_matrix;
                     }
 
                     $item->getGuide->status_matrix_id = $item->status_matrix_id;

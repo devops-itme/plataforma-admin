@@ -8638,6 +8638,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this$tabs$;
 
       return (_this$tabs$ = this.tabs[2]) === null || _this$tabs$ === void 0 ? void 0 : _this$tabs$.id;
+    },
+    guides_bydate: function guides_bydate() {
+      return this.guides.sort(function (a, b) {
+        return b.updated_at.localeCompare(a.updated_at);
+      });
     }
   },
   watch: {},
@@ -8711,7 +8716,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.additional_email = data.additional_email;
       this.showDataGuide.additional_address = data.additional_address;
       this.showDataGuide.app_status = data.app_status;
-      this.showDataGuide.status = data.get_status_matrix.name;
+      this.showDataGuide.status = data.status_matrix.name;
       this.showDataGuide.novelty = data.novelty;
       this.showDataGuide.files = data.documents;
       this.showDataGuide.evidence = (_data$documents = data.documents) === null || _data$documents === void 0 ? void 0 : _data$documents.filter(function (element) {
@@ -8891,7 +8896,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this5.guide.additional_email = _this5.showGuide.additional_email;
                 _this5.guide.additional_address = _this5.showGuide.additional_address;
                 _this5.guide.app_status = _this5.showGuide.app_status;
-                _this5.guide.status = _this5.showGuide.get_status_matrix.name;
+                _this5.guide.status = _this5.showGuide.status_matrix.name;
                 _this5.guide.novelty = _this5.showGuide.novelty;
 
               case 28:
@@ -10035,6 +10040,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -10086,7 +10092,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //             tblItem.address_name.toLowerCase().includes(v) ||
       //             tblItem.contact.toLowerCase().includes(v) ||
       //             tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
-      //             tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
+      //             tblItem.status_matrix.name.toLowerCase().includes(v) ||
       //             tblItem.dispatched.toLowerCase().includes(v) ||
       //             tblItem.route.get_messenger.name.toLowerCase().includes(v) ||
       //             tblItem.route.get_messenger.last_name.toLowerCase().includes(v) ||
@@ -70177,7 +70183,7 @@ var render = function () {
                     _c("tabledy", {
                       attrs: {
                         rows: _vm.columns.inEdit.length,
-                        guides: _vm.guides,
+                        guides: _vm.guides_bydate,
                         tabs: _vm.tabs,
                         columnsNames: _vm.columns.inEdit,
                         widthTable: 1600,
@@ -72288,10 +72294,8 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    tblItem.get_status_matrix != null
-                      ? _c("td", [
-                          _vm._v(_vm._s(tblItem.get_status_matrix.name)),
-                        ])
+                    tblItem.status_matrix != null
+                      ? _c("td", [_vm._v(_vm._s(tblItem.status_matrix.name))])
                       : _c("td", [_vm._v("--- ---")]),
                     _vm._v(" "),
                     _c("td", [
@@ -72314,7 +72318,8 @@ var render = function () {
                     _vm._v(" "),
                     tblItem.dispatched != null &&
                     tblItem.route != null &&
-                    tblItem.route.get_messenger != null
+                    tblItem.route.get_messenger != null &&
+                    tblItem.route.get_messenger.last_name != null
                       ? _c("td", [
                           _vm._v(
                             _vm._s(
@@ -72324,7 +72329,20 @@ var render = function () {
                             )
                           ),
                         ])
-                      : _c("td", [_vm._v("Sin Asignar")]),
+                      : _vm._e(),
+                    _vm._v(" "),
+                    tblItem.dispatched != null &&
+                    tblItem.route != null &&
+                    tblItem.route.get_messenger != null &&
+                    tblItem.route.get_messenger.last_name == null
+                      ? _c("td", [
+                          _vm._v(_vm._s(tblItem.route.get_messenger.name)),
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    tblItem.dispatched != null && tblItem.route == null
+                      ? _c("td", [_vm._v("Sin Asignar")])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
