@@ -50,8 +50,8 @@ class GuideLog extends Model
                 'status_matrix_id' => 'required|numeric|exists:status_matrix,id',
                 'issue_id' => 'nullable|numeric|exists:parameter_values,id',
                 'sign_customer' => 'nullable|numeric',
-                'detail_log' => 'nullable|numeric',
-                'url_document' => 'nullable|numeric',
+                'detail_log' => 'nullable',
+                'url_document' => 'nullable',
                 'active' => 'nullable|numeric',
             ]
         );
