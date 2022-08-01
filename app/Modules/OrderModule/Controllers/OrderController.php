@@ -45,6 +45,7 @@ class OrderController extends Controller
                 ->where('name', '!=', 'ENTREGADO');
 
             })
+            ->orderBy('id', 'DESC')
             ->national();
 
         if (Auth::user()->getRole->name != 'Admin') {
@@ -375,6 +376,7 @@ class OrderController extends Controller
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->whereStatusMatrix([request()->state])
+            ->orderBy('id', 'DESC')
             ->with('getUser')->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');

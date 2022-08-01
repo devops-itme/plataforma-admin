@@ -8638,6 +8638,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this$tabs$;
 
       return (_this$tabs$ = this.tabs[2]) === null || _this$tabs$ === void 0 ? void 0 : _this$tabs$.id;
+    },
+    guides_bydate: function guides_bydate() {
+      return this.guides.sort(function (a, b) {
+        return b.updated_at.localeCompare(a.updated_at);
+      });
     }
   },
   watch: {},
@@ -10105,20 +10110,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     rowClick: function rowClick(data, index) {
+      var _this = this;
+
       this.activeIndex = index;
       this.$emit("getGuide", data);
-
-      if (window.event.ctrlKey) {
-        //ctrl was held down during the click
-        if (!this.listData.includes(data.id)) {
-          this.listData.push(data.id);
+      window.addEventListener('click', function () {
+        if (!_this.listData.includes(data.id) && data.status_matrix_id == 6) {
+          _this.listData.push(data.id);
+        } else {
+          _this.listData = [];
         }
-      } else {
-        this.listData = [];
-      }
+      });
     },
     sendToDelivery: function sendToDelivery() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var token, myHeaders, requestOptions, response;
@@ -10135,11 +10140,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   method: "PUT",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    'guide_ids': _this.listData
+                    'guide_ids': _this2.listData
                   })
                 };
                 _context.next = 8;
-                return _this.requestUpdateGuidesState(requestOptions);
+                return _this2.requestUpdateGuidesState(requestOptions);
 
               case 8:
                 response = _context.sent;
@@ -15546,7 +15551,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
 
 // exports
 
@@ -15565,7 +15570,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -70178,7 +70183,7 @@ var render = function () {
                     _c("tabledy", {
                       attrs: {
                         rows: _vm.columns.inEdit.length,
-                        guides: _vm.guides,
+                        guides: _vm.guides_bydate,
                         tabs: _vm.tabs,
                         columnsNames: _vm.columns.inEdit,
                         widthTable: 1600,
@@ -72333,7 +72338,11 @@ var render = function () {
                       ? _c("td", [
                           _vm._v(_vm._s(tblItem.route.get_messenger.name)),
                         ])
-                      : _c("td", [_vm._v("Sin Asignar")]),
+                      : _vm._e(),
+                    _vm._v(" "),
+                    tblItem.dispatched != null && tblItem.route == null
+                      ? _c("td", [_vm._v("Sin Asignar")])
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
@@ -91090,8 +91099,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

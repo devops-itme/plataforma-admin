@@ -43,7 +43,7 @@
                         <td>{{ tblItem.get_order.schedule_time_range }}</td>
                         <td v-if="tblItem.dispatched != null && tblItem.route != null && tblItem.route.get_messenger != null && tblItem.route.get_messenger.last_name != null">{{ tblItem.route.get_messenger.name + ' ' + tblItem.route.get_messenger.last_name }}</td>
                         <td v-if="tblItem.dispatched != null && tblItem.route != null && tblItem.route.get_messenger != null && tblItem.route.get_messenger.last_name == null">{{ tblItem.route.get_messenger.name }}</td>
-                        <td v-else>Sin Asignar</td>
+                        <td v-if="tblItem.dispatched != null && tblItem.route == null ">Sin Asignar</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
                         <td v-if="tblItem != null" >{{ tblItem.get_order.get_user.name }}</td>
                         <td v-else>--- ---</td>
@@ -136,14 +136,13 @@ export default {
         rowClick(data, index) {
             this.activeIndex = index;
             this.$emit("getGuide", data);
-            if (window.event.ctrlKey) {
-                //ctrl was held down during the click
-                if(!this.listData.includes(data.id)){
+            window.addEventListener('click', ()=>{
+                if(!this.listData.includes(data.id) && data.status_matrix_id == 6){
                     this.listData.push(data.id)
+                }else{
+                    this.listData = []
                 }
-            }else{
-                this.listData = []
-            }
+            })
         },
         async sendToDelivery(){
              let token = document
