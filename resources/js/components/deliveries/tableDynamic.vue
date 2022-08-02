@@ -34,16 +34,16 @@
                 <tbody>
                     <tr style="cursor: pointer" v-for="tblItem, index in this.guides" @click="rowClick(tblItem, index)" v-bind:class="{ active_row: index === activeIndex, active_list: listData.includes(tblItem.id) } " v-bind:key="index">
                         <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
-                        <td v-if="tblItem.status_matrix != null">{{ tblItem.status_matrix.name }}</td>
+                        <td v-if="tblItem.get_status_matrix != null">{{ tblItem.get_status_matrix.name }}</td>
                         <td v-else>--- ---</td>
                         <td>{{ new Date(tblItem.created_at).toLocaleDateString()}}</td>
                         <td>{{ tblItem.dispatched }}</td>
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
                         <td>{{ tblItem.get_order.schedule_time_range }}</td>
-                        <td v-if="tblItem.dispatched != null && tblItem.route != null && tblItem.route.get_messenger != null && tblItem.route.get_messenger.last_name != null">{{ tblItem.route.get_messenger.name + ' ' + tblItem.route.get_messenger.last_name }}</td>
-                        <td v-if="tblItem.dispatched != null && tblItem.route != null && tblItem.route.get_messenger != null && tblItem.route.get_messenger.last_name == null">{{ tblItem.route.get_messenger.name }}</td>
-                        <td v-if="tblItem.dispatched != null && tblItem.route == null ">Sin Asignar</td>
+                        <td v-if="tblItem.dispatched != null && tblItem.get_route != null && tblItem.get_route.get_messenger != null && tblItem.get_route.get_messenger.last_name != null">{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
+                        <td v-if="tblItem.dispatched != null && tblItem.get_route != null && tblItem.get_route.get_messenger != null && tblItem.get_route.get_messenger.last_name == null">{{ tblItem.get_route.get_messenger.name }}</td>
+                        <td v-if="tblItem.dispatched != null && tblItem.get_route == null ">Sin Asignar</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
                         <td v-if="tblItem != null" >{{ tblItem.get_order.get_user.name }}</td>
                         <td v-else>--- ---</td>
@@ -115,7 +115,7 @@ export default {
             //             tblItem.address_name.toLowerCase().includes(v) ||
             //             tblItem.contact.toLowerCase().includes(v) ||
             //             tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
-            //             tblItem.status_matrix.name.toLowerCase().includes(v) ||
+            //             tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
             //             tblItem.dispatched.toLowerCase().includes(v) ||
             //             tblItem.route.get_messenger.name.toLowerCase().includes(v) ||
             //             tblItem.route.get_messenger.last_name.toLowerCase().includes(v) ||

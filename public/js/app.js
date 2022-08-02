@@ -8693,7 +8693,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getGuide: function getGuide(data) {
-      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$route, _data$route$get_messe, _data$route2, _data$route2$get_mess, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$documents, _data$documents2, _data$get_guide_logs$, _data$get_guide_logs, _data$get_guide_logs$2;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order4, _data$get_documents, _data$get_documents2, _data$get_issue$get_i, _data$get_issue, _data$get_issue$get_i2;
 
       this.showGuide = data;
       this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
@@ -8703,7 +8703,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.ref_client = (_data$get_order3 = data.get_order) === null || _data$get_order3 === void 0 ? void 0 : _data$get_order3.get_user.document_number;
       this.showDataGuide.programming = data.get_order.schedule_date;
       this.showDataGuide.transport = (_data$get_transport_t = data.get_transport_type) === null || _data$get_transport_t === void 0 ? void 0 : _data$get_transport_t.name;
-      this.showDataGuide.movil = data.route && ((_data$route = data.route) === null || _data$route === void 0 ? void 0 : (_data$route$get_messe = _data$route.get_messenger) === null || _data$route$get_messe === void 0 ? void 0 : _data$route$get_messe.name) + ' ' + ((_data$route2 = data.route) === null || _data$route2 === void 0 ? void 0 : (_data$route2$get_mess = _data$route2.get_messenger) === null || _data$route2$get_mess === void 0 ? void 0 : _data$route2$get_mess.last_name);
+      this.showDataGuide.movil = data.get_route && ((_data$get_route = data.get_route) === null || _data$get_route === void 0 ? void 0 : (_data$get_route$get_m = _data$get_route.get_messenger) === null || _data$get_route$get_m === void 0 ? void 0 : _data$get_route$get_m.name) + ' ' + ((_data$get_route2 = data.get_route) === null || _data$get_route2 === void 0 ? void 0 : (_data$get_route2$get_ = _data$get_route2.get_messenger) === null || _data$get_route2$get_ === void 0 ? void 0 : _data$get_route2$get_.last_name);
       this.showDataGuide.client_depto = ((_data$get_branch_offi = data.get_branch_office) === null || _data$get_branch_offi === void 0 ? void 0 : (_data$get_branch_offi2 = _data$get_branch_offi.get_department) === null || _data$get_branch_offi2 === void 0 ? void 0 : (_data$get_branch_offi3 = _data$get_branch_offi2.get_department) === null || _data$get_branch_offi3 === void 0 ? void 0 : _data$get_branch_offi3.id) + ':' + ((_data$get_branch_offi4 = data.get_branch_office) === null || _data$get_branch_offi4 === void 0 ? void 0 : (_data$get_branch_offi5 = _data$get_branch_offi4.get_department) === null || _data$get_branch_offi5 === void 0 ? void 0 : (_data$get_branch_offi6 = _data$get_branch_offi5.get_department) === null || _data$get_branch_offi6 === void 0 ? void 0 : _data$get_branch_offi6.name) ? this.showDataGuide.client_depto : 'No registra';
       this.showDataGuide.client_branch_office = ((_data$get_branch_offi7 = data.get_branch_office) === null || _data$get_branch_offi7 === void 0 ? void 0 : _data$get_branch_offi7.id) + ': ' + ((_data$get_branch_offi8 = data.get_branch_office) === null || _data$get_branch_offi8 === void 0 ? void 0 : _data$get_branch_offi8.name) ? this.showDataGuide.client_branch_office : 'No registra';
       this.showDataGuide.client_document = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
@@ -8716,16 +8716,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.additional_email = data.additional_email;
       this.showDataGuide.additional_address = data.additional_address;
       this.showDataGuide.app_status = data.app_status;
-      this.showDataGuide.status = data.status_matrix.name;
+      this.showDataGuide.status = data.get_status_matrix.name;
       this.showDataGuide.novelty = data.novelty;
-      this.showDataGuide.files = data.documents;
-      this.showDataGuide.evidence = (_data$documents = data.documents) === null || _data$documents === void 0 ? void 0 : _data$documents.filter(function (element) {
+      this.showDataGuide.files = data.get_documents;
+      this.showDataGuide.evidence = (_data$get_documents = data.get_documents) === null || _data$get_documents === void 0 ? void 0 : _data$get_documents.filter(function (element) {
         return element.type != 74;
       });
-      this.showDataGuide.package_pictures = (_data$documents2 = data.documents) === null || _data$documents2 === void 0 ? void 0 : _data$documents2.filter(function (element) {
+      this.showDataGuide.package_pictures = (_data$get_documents2 = data.get_documents) === null || _data$get_documents2 === void 0 ? void 0 : _data$get_documents2.filter(function (element) {
         return element.type == 74;
       });
-      this.showDataGuide.issue = (_data$get_guide_logs$ = (_data$get_guide_logs = data.get_guide_logs[data.get_guide_logs.length - 1]) === null || _data$get_guide_logs === void 0 ? void 0 : (_data$get_guide_logs$2 = _data$get_guide_logs.get_issue) === null || _data$get_guide_logs$2 === void 0 ? void 0 : _data$get_guide_logs$2.name) !== null && _data$get_guide_logs$ !== void 0 ? _data$get_guide_logs$ : 'sin incidencias';
+      this.showDataGuide.issue = (_data$get_issue$get_i = (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i2 = _data$get_issue.get_issue) === null || _data$get_issue$get_i2 === void 0 ? void 0 : _data$get_issue$get_i2.name) !== null && _data$get_issue$get_i !== void 0 ? _data$get_issue$get_i : 'sin incidencias';
       this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
     },
     getGuides: function getGuides(type) {
@@ -8896,7 +8896,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this5.guide.additional_email = _this5.showGuide.additional_email;
                 _this5.guide.additional_address = _this5.showGuide.additional_address;
                 _this5.guide.app_status = _this5.showGuide.app_status;
-                _this5.guide.status = _this5.showGuide.status_matrix.name;
+                _this5.guide.status = _this5.showGuide.get_status_matrix.name;
                 _this5.guide.novelty = _this5.showGuide.novelty;
 
               case 28:
@@ -10092,7 +10092,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //             tblItem.address_name.toLowerCase().includes(v) ||
       //             tblItem.contact.toLowerCase().includes(v) ||
       //             tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
-      //             tblItem.status_matrix.name.toLowerCase().includes(v) ||
+      //             tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
       //             tblItem.dispatched.toLowerCase().includes(v) ||
       //             tblItem.route.get_messenger.name.toLowerCase().includes(v) ||
       //             tblItem.route.get_messenger.last_name.toLowerCase().includes(v) ||
@@ -15513,7 +15513,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -15551,7 +15551,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -15570,7 +15570,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -15589,7 +15589,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\r\n    position: fixed;\r\n    z-index: 99;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5);\r\n    display: table;\r\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\r\n    display: table-cell;\r\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\r\n    width: 75%;\r\n    margin: 0px auto;\r\n    padding: 20px 30px;\r\n    background-color: #fff;\r\n    border-radius: 10px;\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\r\n    transition: all 0.3s ease;\r\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\r\n    margin-top: 0;\r\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\r\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\r\n    float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\r\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\r\n.modal-leave-active .modal-container[data-v-478d961c] {\r\n    transform: scale(1.1);\n}\r\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-478d961c] {\n    position: fixed;\n    z-index: 99;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-478d961c] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-478d961c] {\n    width: 75%;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 10px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-478d961c] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-478d961c] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-478d961c] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-478d961c] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-478d961c],\n.modal-leave-active .modal-container[data-v-478d961c] {\n    transform: scale(1.1);\n}\n", ""]);
 
 // exports
 
@@ -72294,8 +72294,10 @@ var render = function () {
                       ),
                     ]),
                     _vm._v(" "),
-                    tblItem.status_matrix != null
-                      ? _c("td", [_vm._v(_vm._s(tblItem.status_matrix.name))])
+                    tblItem.get_status_matrix != null
+                      ? _c("td", [
+                          _vm._v(_vm._s(tblItem.get_status_matrix.name)),
+                        ])
                       : _c("td", [_vm._v("--- ---")]),
                     _vm._v(" "),
                     _c("td", [
@@ -72317,30 +72319,30 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     tblItem.dispatched != null &&
-                    tblItem.route != null &&
-                    tblItem.route.get_messenger != null &&
-                    tblItem.route.get_messenger.last_name != null
+                    tblItem.get_route != null &&
+                    tblItem.get_route.get_messenger != null &&
+                    tblItem.get_route.get_messenger.last_name != null
                       ? _c("td", [
                           _vm._v(
                             _vm._s(
-                              tblItem.route.get_messenger.name +
+                              tblItem.get_route.get_messenger.name +
                                 " " +
-                                tblItem.route.get_messenger.last_name
+                                tblItem.get_route.get_messenger.last_name
                             )
                           ),
                         ])
                       : _vm._e(),
                     _vm._v(" "),
                     tblItem.dispatched != null &&
-                    tblItem.route != null &&
-                    tblItem.route.get_messenger != null &&
-                    tblItem.route.get_messenger.last_name == null
+                    tblItem.get_route != null &&
+                    tblItem.get_route.get_messenger != null &&
+                    tblItem.get_route.get_messenger.last_name == null
                       ? _c("td", [
-                          _vm._v(_vm._s(tblItem.route.get_messenger.name)),
+                          _vm._v(_vm._s(tblItem.get_route.get_messenger.name)),
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    tblItem.dispatched != null && tblItem.route == null
+                    tblItem.dispatched != null && tblItem.get_route == null
                       ? _c("td", [_vm._v("Sin Asignar")])
                       : _vm._e(),
                     _vm._v(" "),
@@ -91099,8 +91101,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laravel\MultientregaProject\Admin-Multientrega-v2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/germanvq/jobproject/developapp/Admin-Multientrega-v2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/germanvq/jobproject/developapp/Admin-Multientrega-v2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
