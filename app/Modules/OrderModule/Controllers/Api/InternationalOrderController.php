@@ -15,6 +15,7 @@ use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\OrderModule\Exports\OrdersExportServices;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
+use App\Modules\DocumentModule\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -64,29 +65,27 @@ class InternationalOrderController extends Controller
                 // ->limit(4)
                 ->get();
 
-                foreach ($query as $guide) {
-                    // dd($guide);
-                    $Tealca = new Tealca();
-                    $Tealca->login();
-                    $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+            foreach ($query as $guide) {
+                // dd($guide);
+                $Tealca = new Tealca();
+                $Tealca->login();
+                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-                    $status_array = [
-                        'Creacion' => 'VERIFICACION',
-                        'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
-                        'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
-                        'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
-                    ];
-                    foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                        $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
-                        $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                        $guide->historical[] = $tealca;
-                    }
+                $status_array = [
+                    'Creacion' => 'VERIFICACION',
+                    'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
+                    'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
+                    'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
+                ];
+                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                    $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
+                    $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                    $guide->historical[] = $tealca;
                 }
+            }
 
-                //  return json_encode($query,true);
-                return $this->respond(200,  $query, null, 'Ordenes Internacionales');
-
-
+            //  return json_encode($query,true);
+            return $this->respond(200,  $query, null, 'Ordenes Internacionales');
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
@@ -178,27 +177,27 @@ class InternationalOrderController extends Controller
       on u.id = o.user_id
       WHERE g.state = '1' and g.external_id = $id and o.deleted_at is null"));
 
-foreach ($query as $guide) {
-    // dd($guide);
-    $Tealca = new Tealca();
-    $Tealca->login();
-    $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+        foreach ($query as $guide) {
+            // dd($guide);
+            $Tealca = new Tealca();
+            $Tealca->login();
+            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-    $status_array = [
-        'Creacion' => 'VERIFICACION',
-        'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
-        'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
-        'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
-    ];
-    foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-        $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
-        $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
-        $guide->historical[] = $tealca;
-    }
-}
-//  return json_encode($query,true);
-return response()->json($query[0]);
-// return $this->respond(200,  $query[0], null, 'Ordenes Internacionales');
+            $status_array = [
+                'Creacion' => 'VERIFICACION',
+                'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
+                'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
+                'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
+            ];
+            foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
+                $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                $guide->historical[] = $tealca;
+            }
+        }
+        //  return json_encode($query,true);
+        return response()->json($query[0]);
+        // return $this->respond(200,  $query[0], null, 'Ordenes Internacionales');
 
 
     }
@@ -393,10 +392,24 @@ return response()->json($query[0]);
 
     public function exportGuide(Request $request)
     {
-
         $fecha_begin = date('Y-m-d 00:00:00', ((int)$request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ((int)$request->end / 1000));
-        Excel::store(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end), 'prueba.xls', 's3');
+        $name = ('IO_' . Auth::user()->email . '_from_' . $fecha_begin . '_to_' . $fecha_end . '.xls');
+        $response = Excel::store(
+            new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end),
+            $name,
+            's3'
+        );
+        if ($response == 1) {
+            $DocumentModule = new Document();
+            $DocumentModule->saveDocument(new Request(array(
+                'user_id' => Auth::user()->id,
+                'url' => $name,
+                'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
+                'active' => 1,
+            )));
+        }
+
         return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end), 'prueba.xls');
     }
 }
