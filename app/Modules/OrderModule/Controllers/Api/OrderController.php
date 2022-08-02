@@ -383,11 +383,14 @@ class OrderController extends Controller
                 $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
                 $item->getGuide->status_matrix_id = $item->status_matrix_id;
                 if ($data_guide_log) {
+
                     $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
+                    $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->get();
                     $status_matrix = StatusMatrix::find($item->status_matrix_id);
                     $item->getGuide->getRoute = $route;
                     $item->getGuide->getStatusMatrix = $status_matrix;
-                    $item->getGuide->getIssues = $item->get_issue;
+                    $item->getGuide->getIssues = $Issue;
+                    $item->getGuide->novelty = $Issue[0]->detail_log ?? '';
                 }
                 return $item->getGuide;
             });
@@ -415,10 +418,12 @@ class OrderController extends Controller
                 $item->getGuide->status_matrix_id = $item->status_matrix_id;
                 if ($data_guide_log) {
                     $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
+                    $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->get();
                     $status_matrix = StatusMatrix::find($item->status_matrix_id);
                     $item->getGuide->getRoute = $route;
                     $item->getGuide->getStatusMatrix = $status_matrix;
-                    $item->getGuide->getIssues = $item->get_issue;
+                    $item->getGuide->getIssues = $Issue;
+                    $item->getGuide->novelty =  $Issue[0]->detail_log ?? '';
                 }
                 return $item->getGuide;
             });
@@ -429,7 +434,9 @@ class OrderController extends Controller
 
             $guide_arr = [];
             foreach ($guides as $item) {
-                $item->getRoute->messenger_user_id == Auth()->user()->id ? array_push($guide_arr, $item) :'';
+                if($item->getRoute){
+                    $item->getRoute->messenger_user_id == Auth()->user()->id ? array_push($guide_arr, $item) :'';
+                }
              }
 
             //if request order id return guides by
