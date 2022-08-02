@@ -396,7 +396,7 @@ return response()->json($query[0]);
 
         $fecha_begin = date('Y-m-d 00:00:00', ((int)$request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ((int)$request->end / 1000));
-
+        Excel::store(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end), 'prueba.xls', 's3');
         return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end), 'prueba.xls');
     }
 }
