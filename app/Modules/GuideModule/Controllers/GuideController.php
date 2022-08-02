@@ -4,6 +4,7 @@ namespace App\Modules\GuideModule\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Resources\GuideResource;
 use App\Imports\GuidesImport;
 use App\Modules\AddressModule\Address;
 use App\Modules\GuidanceDocumentModule\GuidanceDocument;
@@ -199,7 +200,12 @@ class GuideController extends Controller
             //     ->get();
 
                 $guide_pickup = [];
-                $GuideLog_pickup = GuideLog::with(['getState','getGuide.getOrder.getUser.getCustomer', 'getGuide.getRoute.getMessenger', 'getGuide.getTransportType', 'getGuide.getOrder.getOrderType', 'getGuide.getBranchOffice.getDepartment.getDepartment', 'getGuide.getStatusMatrix', 'getGuide.getDocuments','getGuide.getGuideLogs.getIssue'])->whereHas('getState', function($query){
+                $GuideLog_pickup = GuideLog::with(['getState',
+                    'getGuide.getOrder.getUser.getCustomer',
+                    'getGuide.getTransportType',
+                    'getGuide.getOrder.getOrderType',
+                    'getGuide.getBranchOffice.getDepartment.getDepartment'
+                ])->whereHas('getState', function($query){
                     $query->whereHas('getScope', function($query){
                         $query->where('name', 'pickup');
                     });
@@ -212,21 +218,29 @@ class GuideController extends Controller
 
                 $guides_pickup_arr = collect($guide_pickup_new)->map(function($item) use ($GuideLog_pickup){
                     $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
-                    if($data_guide_log){
-                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereDate('created_at','<=', $data_guide_log->created_at)->get();
-                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
-                        $status_matrix = StatusMatrix::find($item->status_matrix_id);
-                        $item->getGuide->route = $route;
-                        $item->getGuide->documents = $documents;
-                        $item->getGuide->status_matrix = $status_matrix;
-                    }
                     $item->getGuide->status_matrix_id = $item->status_matrix_id;
+                    if($data_guide_log){
+                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->get();
+                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
+                        $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
+                        $status_matrix = StatusMatrix::find($item->status_matrix_id);
+                        $item->getGuide->get_documents = $documents;
+                        $item->getGuide->get_route = $route;
+                        $item->getGuide->get_status_matrix = $status_matrix;
+                        $item->getGuide->get_issue = $Issue;
+                        $item->getGuide->novelty =  $Issue->detail_log ?? '';
+                    }
 
                     return $item->getGuide;
                 });
 
                 $guide_delivery = [];
-                $GuideLog_delivery = GuideLog::with(['getState','getGuide.getOrder.getUser.getCustomer', 'getGuide.getRoute.getMessenger', 'getGuide.getTransportType', 'getGuide.getOrder.getOrderType', 'getGuide.getBranchOffice.getDepartment.getDepartment', 'getGuide.getStatusMatrix', 'getGuide.getDocuments','getGuide.getGuideLogs.getIssue'])->whereHas('getState', function($query){
+                $GuideLog_delivery = GuideLog::with(['getState',
+                    'getGuide.getOrder.getUser.getCustomer',
+                    'getGuide.getTransportType',
+                    'getGuide.getOrder.getOrderType',
+                    'getGuide.getBranchOffice.getDepartment.getDepartment'
+                ])->whereHas('getState', function($query){
                     $query->whereHas('getScope', function($query){
                         $query->where('name', 'delivery');
                     });
@@ -239,16 +253,20 @@ class GuideController extends Controller
 
                 $guides_delivery_arr = collect($guide_delivery_new)->map(function($item) use ($GuideLog_delivery){
                     $data_guide_log = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->first();
+                    $item->getGuide->status_matrix_id = $item->status_matrix_id;
                     if($data_guide_log){
-                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereDate('created_at','>=', $data_guide_log->created_at)->get();
+                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->get();
                         $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
+                        $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
                         $status_matrix = StatusMatrix::find($item->status_matrix_id);
-                        $item->getGuide->route = $route;
-                        $item->getGuide->documents = $documents;
-                        $item->getGuide->status_matrix = $status_matrix;
+                        $item->getGuide->get_documents = $documents;
+                        $item->getGuide->get_route = $route;
+                        $item->getGuide->get_status_matrix = $status_matrix;
+                        $item->getGuide->get_issue = $Issue;
+                        $item->getGuide->novelty =  $Issue->detail_log ?? '';
                     }
 
-                    $item->getGuide->status_matrix_id = $item->status_matrix_id;
+
                     return $item->getGuide;
                 });
 
