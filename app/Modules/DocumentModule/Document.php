@@ -27,8 +27,8 @@ class Document extends Model
     public function getFileUrlAttribute()
     {
         $link = "";
-        if (!empty($this->url_document)) {
-            $link = Storage::disk('s3')->url($this->url_document);
+        if (!empty($this->url)) {
+            $link = Storage::disk('s3')->url($this->url);
         }
         return $link;
     }
@@ -36,6 +36,20 @@ class Document extends Model
     public function getUser()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getDocumentsByUser($request)
+    {
+        try {
+            $validator = $this->validateDocument($request);
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
+            $documents = $this::where('user_id', $request->user_id)->get();
+            return $this->respond(200, $documents, null, 'Documentos obtenidos exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage() . 'Error al obtener los documentos');
+        }
     }
 
     public function validateDocument($request, $action = null)

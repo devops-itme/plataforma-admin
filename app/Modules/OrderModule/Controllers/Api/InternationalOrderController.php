@@ -378,8 +378,6 @@ class InternationalOrderController extends Controller
         }
     }
 
-
-
     public function update(Request $request, $id)
     {
         try {
@@ -388,6 +386,12 @@ class InternationalOrderController extends Controller
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
         }
+    }
+
+    public function getExportedDocumentsByUser(Request $request)
+    {
+        $DocumentModule = new Document();
+        return $DocumentModule->getDocumentsByUser($request);
     }
 
     public function exportGuide(Request $request)
