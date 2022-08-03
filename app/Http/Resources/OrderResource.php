@@ -104,6 +104,7 @@ class OrderResource extends JsonResource
                 'phone' => $this->getBranchOffice->phone ?? '',
                 'usage_mode' => $this->getBranchOffice->usage_mode ?? '',
             ],
+            "guide_quantity" => count($this->getGuides) ?? 0,
         ];
     }
 }
