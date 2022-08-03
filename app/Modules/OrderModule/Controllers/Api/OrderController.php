@@ -208,7 +208,7 @@ class OrderController extends Controller
                         'lat' => $request->address_lat,
                         'lng' => $request->address_lng,
                     ));
-                    return $request_address->address;
+                    
                     if (is_null($guide['address_id'])) {
                         $validator = $this->AddressesValidate($request_address);
 
