@@ -398,8 +398,13 @@ class OrderController extends Controller
                     $status_matrix = StatusMatrix::find($item->status_matrix_id);
                     $item->getGuide->getRoute = $route;
                     $item->getGuide->getStatusMatrix = $status_matrix;
-                    $item->getGuide->getIssues = $Issue;
-                    $item->getGuide->novelty = $Issue[0]->detail_log ?? '';
+                    if(isset($Issue[0])){
+                        $item->getGuide->novelty =  json_decode($Issue[0]->url_document)->novelty ?? '';
+                        $item->getGuide->recipient_name =  json_decode($Issue[0]->url_document)->recipient_name ?? '';
+                        $item->getGuide->additional_phone =  json_decode($Issue[0]->url_document)->additional_phone ?? '';
+                        $item->getGuide->additional_email =  json_decode($Issue[0]->url_document)->additional_email ?? '';
+                        $item->getGuide->additional_address =  json_decode($Issue[0]->url_document)->additional_address ?? '';
+                    }
                 }
                 return $item->getGuide;
             });
@@ -434,7 +439,13 @@ class OrderController extends Controller
                     $item->getGuide->getRoute = $route;
                     $item->getGuide->getStatusMatrix = $status_matrix;
                     $item->getGuide->getIssues = $Issue;
-                    $item->getGuide->novelty =  $Issue[0]->detail_log ?? '';
+                    if(isset($Issue[0])){
+                        $item->getGuide->novelty =  json_decode($Issue[0]->url_document)->novelty ?? '';
+                        $item->getGuide->recipient_name =  json_decode($Issue[0]->url_document)->recipient_name ?? '';
+                        $item->getGuide->additional_phone =  json_decode($Issue[0]->url_document)->additional_phone ?? '';
+                        $item->getGuide->additional_email =  json_decode($Issue[0]->url_document)->additional_email ?? '';
+                        $item->getGuide->additional_address =  json_decode($Issue[0]->url_document)->additional_address ?? '';
+                    }
                 }
                 return $item->getGuide;
             });

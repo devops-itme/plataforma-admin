@@ -91,7 +91,13 @@ class GuideLog extends Model
                 'issue_id' => $request->issue_id,
                 'sign_customer' => $request->sign_customer,
                 'detail_log' => $request->detail_log,
-                'url_document' => $request->url_document,
+                'url_document' => json_encode([
+                   'additional_address' =>$request->additional_address,
+                   'additional_email' =>$request->additional_email,
+                   'additional_phone' =>$request->additional_phone,
+                   'novelty' =>$request->novelty ,
+                   'recipient_name' =>$request->recipient_name,
+                ]),
                 'active' => $request->active ?? 1,
             ]);
             DB::commit();
