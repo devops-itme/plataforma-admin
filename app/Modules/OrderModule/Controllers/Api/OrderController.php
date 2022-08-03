@@ -202,7 +202,14 @@ class OrderController extends Controller
                     ]);
 
                     if (is_null($guide['address_id'])) {
-                        $validator = $this->AddressesValidate($request);
+                        $request_address = new Request(array(
+                            'user_id' => $user_id,
+                            'address' => $request->address_name,
+                            'description' => $request->address_description,
+                            'lat' => $request->address_lat,
+                            'lng' => $request->address_lng,
+                        ));
+                        $validator = $this->AddressesValidate($request_address);
 
                         if ($validator->fails()) {
                             return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
@@ -210,7 +217,7 @@ class OrderController extends Controller
                     }
 
                     if ((bool)$guide['add_address_favorite'] && is_null($guide['address_id'])) {
-                        $saveAddressResponse = $this->saveAddress($request);
+                        $saveAddressResponse = $this->saveAddress($request_address);
                         if ($saveAddressResponse['state'] != 200) {
                             return $saveAddressResponse;
                         }
@@ -385,7 +392,7 @@ class OrderController extends Controller
                 if ($data_guide_log) {
 
                     $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
-                    $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->get();
+                    $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id', '<>', null)->with('getIssue')->orderBy('created_at', 'ASC')->whereDate('created_at', '<=', $data_guide_log->created_at)->get();
                     $status_matrix = StatusMatrix::find($item->status_matrix_id);
                     $item->getGuide->getRoute = $route;
                     $item->getGuide->getStatusMatrix = $status_matrix;
@@ -418,7 +425,7 @@ class OrderController extends Controller
                 $item->getGuide->status_matrix_id = $item->status_matrix_id;
                 if ($data_guide_log) {
                     $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->first();
-                    $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->get();
+                    $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id', '<>', null)->with('getIssue')->orderBy('created_at', 'DESC')->whereDate('created_at', '<=', $data_guide_log->created_at)->get();
                     $status_matrix = StatusMatrix::find($item->status_matrix_id);
                     $item->getGuide->getRoute = $route;
                     $item->getGuide->getStatusMatrix = $status_matrix;
@@ -434,19 +441,19 @@ class OrderController extends Controller
 
             $guide_arr = [];
             foreach ($guides as $item) {
-                if($item->getRoute){
-                    $item->getRoute->messenger_user_id == Auth()->user()->id ? array_push($guide_arr, $item) :'';
+                if ($item->getRoute) {
+                    $item->getRoute->messenger_user_id == Auth()->user()->id ? array_push($guide_arr, $item) : '';
                 }
-             }
+            }
 
             //if request order id return guides by
-            if($request->order_id){
+            if ($request->order_id) {
                 $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
                 $data = GuideResource::collection($guides_list);
                 return $this->respond(200, $data, null, 'Guías');
             }
 
-            $guides_arr_ids = collect($guide_arr)->map(function($item){
+            $guides_arr_ids = collect($guide_arr)->map(function ($item) {
                 return $item->order_id;
             });
 
@@ -457,6 +464,5 @@ class OrderController extends Controller
         } catch (\Throwable $e) {
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
-
     }
 }
