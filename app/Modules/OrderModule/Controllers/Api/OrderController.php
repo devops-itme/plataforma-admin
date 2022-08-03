@@ -215,7 +215,7 @@ class OrderController extends Controller
                             return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
                         }
                     }
-
+                    return is_null($guide['address_id']);
                     return ((bool)$guide['add_address_favorite'] && is_null($guide['address_id'])) ? 1 : 0;
                     if ((bool)$guide['add_address_favorite'] && is_null($guide['address_id'])) {
                         $saveAddressResponse = $this->saveAddress($request_address);
