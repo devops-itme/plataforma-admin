@@ -216,8 +216,8 @@ class OrderController extends Controller
                         }
                     }
 
+                    return (bool)$guide['add_address_favorite'];
                     if ((bool)$guide['add_address_favorite'] && is_null($guide['address_id'])) {
-                        return 'se debe guardar direccion de destino';
                         $saveAddressResponse = $this->saveAddress($request_address);
                         if ($saveAddressResponse['state'] != 200) {
                             return $saveAddressResponse;
