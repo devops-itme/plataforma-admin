@@ -204,11 +204,12 @@ class OrderController extends Controller
                     $request_address = new Request(array(
                         'user_id' => $user_id,
                         'address' => $request->address_name,
+                        'name' => $request->address_name,
                         'description' => $request->address_description,
                         'lat' => $request->address_lat,
                         'lng' => $request->address_lng,
                     ));
-                    
+
                     if (is_null($guide['address_id'])) {
                         $validator = $this->AddressesValidate($request_address);
 
