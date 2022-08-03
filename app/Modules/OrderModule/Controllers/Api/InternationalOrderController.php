@@ -107,7 +107,6 @@ class InternationalOrderController extends Controller
             ->where('o.deleted_at', null)
             ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
             ->where('u.id', $user_id)
-            // ->limit(5)
             ->get();
 
         foreach ($query as $guide) {
@@ -126,13 +125,15 @@ class InternationalOrderController extends Controller
                 $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
                 $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
                 $guide->historical[] = $tealca;
+
             }
             $guide->FechaTime = $guide->historical[0]['date'];
             $guide->Status = $guide->historical[0]['status'];
             $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
         }
-        //  return json_encode($query,true);
-        return $this->respond(200,  $query, null, 'Ordenes Internacionales');
+
+         return json_encode($query,true);
+        // return $this->respond(200,  $query, null, 'Ordenes Internacionales');
     }
 
     public function permissionsAccions(Request $request, $id)
