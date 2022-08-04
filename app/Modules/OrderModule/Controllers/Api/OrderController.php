@@ -125,8 +125,7 @@ class OrderController extends Controller
 
                 $user_id = Auth::user()->id;
                 $request->merge(['user_id' => $user_id, 'address_description' => $request->address_description]);
-                $request->merge(['description' => $request->order_description]);
-
+                
                 if (!is_null($request->address_id)) {
                     $address = Address::find($request->address_id);
                     if (is_null($address)) {
@@ -145,7 +144,8 @@ class OrderController extends Controller
                         return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
                     }
                 }
-
+                
+                $request->merge(['description' => $request->order_description]);
 
                 $storeOderResponse = $this->storeOrder($request);
                 if ($storeOderResponse['state'] != 200) {
