@@ -84,6 +84,7 @@ class GuideLog extends Model
                 return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
             }
             DB::beginTransaction();
+            $guide  = Guide::find($request->guide_id);
             $guide_log = $this::create([
                 'guide_id' => $request->guide_id,
                 'user_id' => $request->user_id,
@@ -92,11 +93,11 @@ class GuideLog extends Model
                 'sign_customer' => $request->sign_customer,
                 'detail_log' => $request->detail_log,
                 'url_document' => json_encode([
-                   'additional_address' =>$request->additional_address,
-                   'additional_email' =>$request->additional_email,
-                   'additional_phone' =>$request->additional_phone,
-                   'novelty' =>$request->novelty ,
-                   'recipient_name' =>$request->recipient_name,
+                   'additional_address' =>$guide->additional_address,
+                   'additional_email' =>$guide->additional_email,
+                   'additional_phone' =>$guide->additional_phone,
+                   'novelty' =>$guide->novelty,
+                   'recipient_name' =>$guide->recipient_name,
                 ]),
                 'active' => $request->active ?? 1,
             ]);
