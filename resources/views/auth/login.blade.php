@@ -92,7 +92,7 @@
                                 <img src="{{ asset('/img/logoME-02.png') }}" class="max-h-50px" alt="" />
                             </a>
                             <div class="text-center mb-10 mb-lg-20">
-                                <h2 class="font-weight-bold">Inciar sesion</h2>
+                                <h2 class="font-weight-bold">Iniciar sesion</h2>
                                 <p class="text-muted font-weight-bold">Escribe tu usuario y contraseña</p>
                             </div>
                             <!--begin::Form-->

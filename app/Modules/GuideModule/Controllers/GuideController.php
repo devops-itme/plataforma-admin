@@ -227,8 +227,9 @@ class GuideController extends Controller
                         $status_matrix = StatusMatrix::find($item->status_matrix_id);
                         $item->getGuide->get_documents = $documents;
                         $item->getGuide->get_route = $route;
-                        $item->getGuide->get_status_matrix = $status_matrix;
+                        $item->getGuide->get_status_matrix = $status_matrix;    
                         if(isset($Issue)){
+                            $item->getGuide->get_issue = $Issue;
                             $item->getGuide->novelty =  json_decode($Issue->url_document)->novelty ?? '';
                             $item->getGuide->recipient_name =  json_decode($Issue->url_document)->recipient_name ?? '';
                             $item->getGuide->additional_phone =  json_decode($Issue->url_document)->additional_phone ?? '';
@@ -270,6 +271,7 @@ class GuideController extends Controller
                         $item->getGuide->get_route = $route;
                         $item->getGuide->get_status_matrix = $status_matrix;
                         if(isset($Issue)){
+                            $item->getGuide->get_issue = $Issue;
                             $item->getGuide->novelty =  json_decode($Issue->url_document)->novelty ?? '';
                             $item->getGuide->recipient_name =  json_decode($Issue->url_document)->recipient_name ?? '';
                             $item->getGuide->additional_phone =  json_decode($Issue->url_document)->additional_phone ?? '';
