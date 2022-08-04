@@ -84,6 +84,16 @@ class GuideLog extends Model
                 return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
             }
             DB::beginTransaction();
+            $guide  = Guide::find($request->guide_id);
+            if($request->status_matrix_id == 8 || $request->status_matrix_id == 4 || $request->status_matrix_id == 10 || $request->status_matrix_id == 6){
+                $request->url_document = json_encode([
+                    'additional_address' =>$guide->additional_address ?? '',
+                    'additional_email' =>$guide->additional_email ?? '',
+                    'additional_phone' =>$guide->additional_phone,
+                    'novelty' =>$guide->novelty ?? '',
+                    'recipient_name' =>$guide->recipient_name ?? '',
+                ]);
+            }
             $guide_log = $this::create([
                 'guide_id' => $request->guide_id,
                 'user_id' => $request->user_id,

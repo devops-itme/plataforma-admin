@@ -395,6 +395,13 @@ class InternationalOrderController extends Controller
         return $DocumentModule->getDocumentsByUser($request);
     }
 
+    public function getExportedDocumentsByAuth()
+    {
+        $query =Document::where('user_id', Auth::user()->id)->get();
+
+       return $this->respond(200, $query, null, 'Autenticacion exitosa');
+    }
+
     public function exportGuide(Request $request)
     {
         $fecha_begin = date('Y-m-d 00:00:00', ((int)$request->begin / 1000));
