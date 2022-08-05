@@ -5,7 +5,10 @@ namespace App\Modules\GuideModule\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Traits\RestActions;
 use App\Modules\GuideModule\Guide;
+use App\Modules\OrderModule\Order;
 use Illuminate\Validation\Rule;
+
+use function PHPSTORM_META\map;
 
 trait GuideTrait
 {
@@ -103,9 +106,9 @@ trait GuideTrait
                 'return_last_destination' => $request->return_last_destination,
                 'boxes' => $request->boxes
             ]);
-            return $this->respond(200, $order, null, 'Guiá creada exitosamente');
+            return $this->respond(200, $order, null, 'Guía creada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al crear guiá');
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear guía');
         }
     }
     public function updateGuide($request)
@@ -157,6 +160,8 @@ trait GuideTrait
                 'return_last_destination' => $request->return_last_destination ?? $guide->return_last_destination,
                 'boxes' => $request->boxes ?? $guide->boxes,
             ]);
+            //order Closing Verification
+            $this->orderClosingVerification($guide->order_id);
             return $this->respond(200, $guide, null, 'Guía actualizada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar guía');
@@ -197,9 +202,28 @@ trait GuideTrait
                 return $this->respond(500, [], 'user not found', 'No se encontró la guiá');
             }
             $guide->delete();
-            return $this->respond(200, $guide, null, 'Guia eliminada exitosamente');
+            return $this->respond(200, $guide, null, 'Guía eliminada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar guiá');
+            return $this->respond(500, [], $e->getMessage(), 'Error al eliminar guía');
         }
+    }
+
+    public function orderClosingVerification($id)
+    {
+        $order = Order::with('getGuides')->find($id);
+        $order_query = Order::with('getGuides')->with(['getGuides' => function ($query) {
+            $query->where('status_matrix_id', 10);
+        }])->find($id);
+
+        $count_guide_order = count($order->getGuides);
+        $count_guide_order_query = count($order_query->getGuides);
+
+       if($count_guide_order == $count_guide_order_query){
+            $order->update([
+                'status_matrix_id' => 10
+            ]);
+
+       }
+
     }
 }
