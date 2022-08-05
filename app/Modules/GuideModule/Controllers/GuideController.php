@@ -268,7 +268,11 @@ class GuideController extends Controller
                     $data_guide_log2 = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->last();
                     $item->getGuide->status_matrix_id = $item->status_matrix_id;
                     if($data_guide_log){
-                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->get();
+                        $package_picture = ParameterValue::where('name', 'package_picture')->first();
+                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->orWhere(function($query) use($item, $package_picture){
+                            $query->where('guide_id', $item->getGuide->id)
+                            ->where('type', $package_picture->id);
+                        })->get();
                         $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
                         $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
                         $status_matrix = StatusMatrix::find($item->status_matrix_id);
