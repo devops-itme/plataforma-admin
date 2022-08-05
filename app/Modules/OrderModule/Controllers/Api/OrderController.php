@@ -125,7 +125,7 @@ class OrderController extends Controller
 
                 $user_id = Auth::user()->id;
                 $request->merge(['user_id' => $user_id, 'description' => $request->address_description]);
-                
+
                 if (!is_null($request->address_id)) {
                     $address = Address::find($request->address_id);
                     if (is_null($address)) {
@@ -144,7 +144,7 @@ class OrderController extends Controller
                         return $this->respond(500, [],  $validator->errors() . ' - address',  $validator->errors()->first());
                     }
                 }
-                
+
                 $request->merge(['description' => $request->order_description]);
 
                 $storeOderResponse = $this->storeOrder($request);
@@ -399,7 +399,7 @@ class OrderController extends Controller
                     $item->getGuide->getRoute = $route;
                     $item->getGuide->getStatusMatrix = $status_matrix;
                     if(isset($Issue[0])){
-                        $item->getGuide->novelty = $Issue[0]->detail_log ?? '';
+                        $item->getGuide->novelty = json_decode($Issue[0]->url_document)->novelty ?? '';
                         $item->getGuide->recipient_name =  json_decode($Issue[0]->url_document)->recipient_name ?? '';
                         $item->getGuide->additional_phone =  json_decode($Issue[0]->url_document)->additional_phone ?? '';
                         $item->getGuide->additional_email =  json_decode($Issue[0]->url_document)->additional_email ?? '';
@@ -440,7 +440,7 @@ class OrderController extends Controller
                     $item->getGuide->getStatusMatrix = $status_matrix;
                     $item->getGuide->getIssues = $Issue;
                     if(isset($Issue[0])){
-                        $item->getGuide->novelty = $Issue[0]->detail_log ?? '';;
+                        $item->getGuide->novelty = json_decode($Issue[0]->url_document)->novelty ?? '';
                         $item->getGuide->recipient_name =  json_decode($Issue[0]->url_document)->recipient_name ?? '';
                         $item->getGuide->additional_phone =  json_decode($Issue[0]->url_document)->additional_phone ?? '';
                         $item->getGuide->additional_email =  json_decode($Issue[0]->url_document)->additional_email ?? '';
