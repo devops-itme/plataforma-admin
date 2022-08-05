@@ -200,7 +200,7 @@ class OrderController extends Controller
                         'state' => 31,
                         'detail_package' => $guide['detail_package'] ?? '',
                     ]);
-                    // $request->description = $guide['guide_description'];
+                    $request->description = $guide['guide_description'];
                     $request_address = new Request(array(
                         'user_id' => $user_id,
                         'address' => $request->address_name,
