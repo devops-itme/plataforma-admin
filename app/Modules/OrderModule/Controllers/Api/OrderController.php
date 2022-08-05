@@ -223,7 +223,7 @@ class OrderController extends Controller
                             return $saveAddressResponse;
                         }
                     }
-
+                    return $this->respond(200, $request, $guide, 'Orden creada correctamente');
                     $storeGuideResponse = $this->storeGuide($request);
                     if ($storeGuideResponse['state'] != 200) {
                         return $storeGuideResponse;
