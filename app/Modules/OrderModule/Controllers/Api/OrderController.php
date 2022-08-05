@@ -243,7 +243,6 @@ class OrderController extends Controller
                 $order = Order::find($order_id);
                 $order->update(['order_value' => $rate_value_total, 'tax_total' => $tax_value]);
                 
-                return $this->respond(200, $request->all(), $guide, 'Orden creada correctamente');
                 return $this->respond(200, $order, null, 'Orden creada correctamente');
             });
             return $transactionResponse;
