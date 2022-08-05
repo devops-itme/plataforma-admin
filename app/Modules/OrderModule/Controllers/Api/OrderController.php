@@ -200,7 +200,7 @@ class OrderController extends Controller
                         'state' => 31,
                         'detail_package' => $guide['detail_package'] ?? '',
                     ]);
-                    $request->description = $guide['guide_description'];
+                    // $request->description = $guide['guide_description'];
                     $request_address = new Request(array(
                         'user_id' => $user_id,
                         'address' => $request->address_name,
@@ -223,12 +223,11 @@ class OrderController extends Controller
                             return $saveAddressResponse;
                         }
                     }
-                    return $this->respond(200, $request->all(), $guide, 'Orden creada correctamente');
                     $storeGuideResponse = $this->storeGuide($request);
                     if ($storeGuideResponse['state'] != 200) {
                         return $storeGuideResponse;
                     }
-
+                    
                     $guide_id = $storeGuideResponse['data']->id;
                     $guidance_document_ids = $guide['guidance_document_ids'];
 
@@ -243,7 +242,8 @@ class OrderController extends Controller
 
                 $order = Order::find($order_id);
                 $order->update(['order_value' => $rate_value_total, 'tax_total' => $tax_value]);
-
+                
+                return $this->respond(200, $request->all(), $guide, 'Orden creada correctamente');
                 return $this->respond(200, $order, null, 'Orden creada correctamente');
             });
             return $transactionResponse;
