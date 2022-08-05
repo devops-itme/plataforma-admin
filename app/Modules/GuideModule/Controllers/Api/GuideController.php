@@ -40,8 +40,9 @@ class GuideController extends Controller
 
             count($status_matrix) == 0 && $status_matrix = null;
 
-            $guides = Guide::where('order_id', $request->order_id)
-                ->whereStatusMatrix($status_matrix)
+            $guides = Guide::where('order_id', $request->order_id)->with(['getIssues' => function ($query) {
+                $query->orderBy('created_at', 'DESC');
+            }])->whereStatusMatrix($status_matrix)
                 ->with($this->messengerRelationships)->get();
             $guides = GuideResource::collection($guides);
             return $this->respond(200, $guides, null, 'Guías asignadas');

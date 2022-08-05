@@ -11,6 +11,7 @@ use App\Modules\GuidanceDocumentModule\GuidanceDocument;
 use App\Modules\GuideLogModule\GuideLog;
 use App\Modules\GuideModule\Guide;
 use App\Modules\OrderModule\Order;
+use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\RouteModule\Route;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Http\Request;
@@ -221,15 +222,25 @@ class GuideController extends Controller
                     $data_guide_log2 = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->last();
                     $item->getGuide->status_matrix_id = $item->status_matrix_id;
                     if($data_guide_log){
-                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->get();
+                        $package_picture = ParameterValue::where('name', 'package_picture')->first();
+                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->orWhere(function($query) use($item, $package_picture){
+                            $query->where('guide_id', $item->getGuide->id)
+                            ->where('type', $package_picture->id);
+                        })->get();
                         $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
                         $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
                         $status_matrix = StatusMatrix::find($item->status_matrix_id);
                         $item->getGuide->get_documents = $documents;
                         $item->getGuide->get_route = $route;
                         $item->getGuide->get_status_matrix = $status_matrix;
-                        $item->getGuide->get_issue = $Issue;
-                        $item->getGuide->novelty =  $Issue->detail_log ?? '';
+                        if(isset($Issue)){
+                            $item->getGuide->get_issue = $Issue;
+                            $item->getGuide->novelty =  json_decode($Issue->url_document)->novelty ?? '';
+                            $item->getGuide->recipient_name =  json_decode($Issue->url_document)->recipient_name ?? '';
+                            $item->getGuide->additional_phone =  json_decode($Issue->url_document)->additional_phone ?? '';
+                            $item->getGuide->additional_email =  json_decode($Issue->url_document)->additional_email ?? '';
+                            $item->getGuide->additional_address =  json_decode($Issue->url_document)->additional_address ?? '';
+                        }
                     }
 
                     return $item->getGuide;
@@ -257,15 +268,25 @@ class GuideController extends Controller
                     $data_guide_log2 = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->last();
                     $item->getGuide->status_matrix_id = $item->status_matrix_id;
                     if($data_guide_log){
-                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->get();
+                        $package_picture = ParameterValue::where('name', 'package_picture')->first();
+                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->orWhere(function($query) use($item, $package_picture){
+                            $query->where('guide_id', $item->getGuide->id)
+                            ->where('type', $package_picture->id);
+                        })->get();
                         $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
                         $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
                         $status_matrix = StatusMatrix::find($item->status_matrix_id);
                         $item->getGuide->get_documents = $documents;
                         $item->getGuide->get_route = $route;
                         $item->getGuide->get_status_matrix = $status_matrix;
-                        $item->getGuide->get_issue = $Issue;
-                        $item->getGuide->novelty =  $Issue->detail_log ?? '';
+                        if(isset($Issue)){
+                            $item->getGuide->get_issue = $Issue;
+                            $item->getGuide->novelty =  json_decode($Issue->url_document)->novelty ?? '';
+                            $item->getGuide->recipient_name =  json_decode($Issue->url_document)->recipient_name ?? '';
+                            $item->getGuide->additional_phone =  json_decode($Issue->url_document)->additional_phone ?? '';
+                            $item->getGuide->additional_email =  json_decode($Issue->url_document)->additional_email ?? '';
+                            $item->getGuide->additional_address =  json_decode($Issue->url_document)->additional_address ?? '';
+                        }
                     }
 
 
