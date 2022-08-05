@@ -233,14 +233,14 @@ class GuideController extends Controller
                         $item->getGuide->get_documents = $documents;
                         $item->getGuide->get_route = $route;
                         $item->getGuide->get_status_matrix = $status_matrix;
-                        if(isset($Issue)){
-                            $item->getGuide->get_issue = $Issue;
-                            $item->getGuide->novelty =  json_decode($Issue->url_document)->novelty ?? '';
-                            $item->getGuide->recipient_name =  json_decode($Issue->url_document)->recipient_name ?? '';
-                            $item->getGuide->additional_phone =  json_decode($Issue->url_document)->additional_phone ?? '';
-                            $item->getGuide->additional_email =  json_decode($Issue->url_document)->additional_email ?? '';
-                            $item->getGuide->additional_address =  json_decode($Issue->url_document)->additional_address ?? '';
-                        }
+
+                        $item->getGuide->get_issue = $Issue;
+                        $item->getGuide->novelty =  $Issue ? json_decode($Issue->url_document)->novelty ?? '' : '';
+                        $item->getGuide->recipient_name = $Issue ? json_decode($Issue->url_document)->recipient_name ?? '' : '';
+                        $item->getGuide->additional_phone = $Issue ? json_decode($Issue->url_document)->additional_phone ?? '' : '';
+                        $item->getGuide->additional_email = $Issue ? json_decode($Issue->url_document)->additional_email ?? '' : '';
+                        $item->getGuide->additional_address = $Issue ?  json_decode($Issue->url_document)->additional_address ?? '' : '';
+
                     }
 
                     return $item->getGuide;
@@ -279,14 +279,14 @@ class GuideController extends Controller
                         $item->getGuide->get_documents = $documents;
                         $item->getGuide->get_route = $route;
                         $item->getGuide->get_status_matrix = $status_matrix;
-                        if(isset($Issue)){
-                            $item->getGuide->get_issue = $Issue;
-                            $item->getGuide->novelty =  json_decode($Issue->url_document)->novelty ?? '';
-                            $item->getGuide->recipient_name =  json_decode($Issue->url_document)->recipient_name ?? '';
-                            $item->getGuide->additional_phone =  json_decode($Issue->url_document)->additional_phone ?? '';
-                            $item->getGuide->additional_email =  json_decode($Issue->url_document)->additional_email ?? '';
-                            $item->getGuide->additional_address =  json_decode($Issue->url_document)->additional_address ?? '';
-                        }
+
+                        $item->getGuide->get_issue = $Issue;
+                        $item->getGuide->novelty =  $Issue ? json_decode($Issue->url_document)->novelty ?? '' : '';
+                        $item->getGuide->recipient_name = $Issue ? json_decode($Issue->url_document)->recipient_name ?? '' : '';
+                        $item->getGuide->additional_phone = $Issue ? json_decode($Issue->url_document)->additional_phone ?? '' : '';
+                        $item->getGuide->additional_email = $Issue ? json_decode($Issue->url_document)->additional_email ?? '' : '';
+                        $item->getGuide->additional_address = $Issue ?  json_decode($Issue->url_document)->additional_address ?? '' : '';
+
                     }
 
 
