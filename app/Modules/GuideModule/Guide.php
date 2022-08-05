@@ -164,6 +164,11 @@ class Guide extends Model
         return $this->hasMany(GuideLog::class, 'guide_id')->whereNotNull('issue_id');
     }
 
+    public function getIssuesDesc()
+    {
+        return $this->hasMany(GuideLog::class, 'guide_id')->whereNotNull('issue_id')->orderBy('created_at', 'DESC');
+    }
+
     public function getTransportType()
     {
         return $this->belongsTo(ParameterValue::class, 'transport_type');
