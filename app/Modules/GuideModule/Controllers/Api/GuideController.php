@@ -89,6 +89,7 @@ class GuideController extends Controller
                 return $this->respond(500, null, 'not found', 'No se encontró la guía');
             }
             if ($guide->update($request->all())) {
+                $this->orderClosingVerification($guide->order_id);
                 $guide = GuideResource::collection([$guide]);
                 return $this->respond(200, $guide->first(), null, 'Estado de la guía cambiado');
             }
