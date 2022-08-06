@@ -189,6 +189,7 @@ trait GuideTrait
                 return $this->respond(500, [], 'guide not found', 'No se encontró la orden');
             }
             $guide->update($request->all());
+            $this->orderClosingVerification($guide->order_id);
             return $this->respond(200, $guide, null, 'Orden actualizada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar orden');
