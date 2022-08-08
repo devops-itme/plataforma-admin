@@ -397,7 +397,10 @@ class InternationalOrderController extends Controller
 
     public function getExportedDocumentsByAuth()
     {
-        $query =Document::where('user_id', Auth::user()->id)->get();
+        $query =Document::where('user_id', Auth::user()->id)
+        ->get()
+        ->reverse()
+        ->values();
 
        return $this->respond(200, $query, null, 'Autenticacion exitosa');
     }
