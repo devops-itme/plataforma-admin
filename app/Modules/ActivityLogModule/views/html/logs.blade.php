@@ -106,8 +106,8 @@
                         <tr>
                             <td></td>
                             <td>{{ ucfirst($item->log_name) }}</td>
-                            <td>{{ $item->causer ? $item->causer->fullName : 'Sistema' }}</td>
-                            <td>{{ $item->causer ? $item->causer->role : 'Indefinido' }}</td>
+                            <td>{{ $item->causer ? $item->causer->name : 'Sistema' }} {{ $item->causer ? $item->causer->last_name : 'Sistema' }}</td>
+                            <td>{{ $item->causer ? $item->causer->getRole->name : 'Indefinido' }}</td>
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->created_at->format('d/m/Y h:i A') }}</td>
                         </tr>
