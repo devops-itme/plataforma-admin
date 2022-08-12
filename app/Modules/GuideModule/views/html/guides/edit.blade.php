@@ -3,13 +3,13 @@
     @include('layouts.breadCrumbs')
     <div class="card card-custom">
         <form id="update-guide-form" action="{{ route('guides.update', $guide->id) }}" method="POST">
-            <div class="card-header row flex-wrap border-0 pt-6 pb-0">
+            <div class="card-header">
                 @csrf @method('PUT')
                 <h3 class="card-title col-10">
                     Datos de destino
                 </h3>
-
-                <div class="card-toolbar" >
+                @include('layouts.alerts')
+                <div style="margin-left:81%">
                     <a href="{{ route('orders.edit', $guide_id) }}">
                     <button class="btn btn-light-primary"
                             type="button" data-tooltip title="Volver a la orden">
@@ -22,8 +22,6 @@
                     </button>
                 </div>
             </div>
-
-            @include('layouts.alerts')
             <div class="card-body d-flex flex-row flex-wrap pt-2">
                 <div class="form-group col-md-2">
                     <label for="guide_address">Dirección destino <span class="text-danger">*</span></label>
