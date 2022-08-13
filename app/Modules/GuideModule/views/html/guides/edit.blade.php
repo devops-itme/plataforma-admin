@@ -16,7 +16,7 @@
                             Volver</button></a>
 
                     <button class="btn btn-primary font-weight-bolder" id="update-guide-btn" type="button" data-tooltip
-                        title="CREAR">
+                        title="Actualizar destino">
                         <span class="svg-icon svg-icon-md">
                         </span>Actualizar destino
                     </button>
