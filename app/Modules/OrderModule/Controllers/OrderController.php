@@ -252,6 +252,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::find($id);
+        $order_collection = Order::where('id',$id)->get();
 
         $customers = Customer::whereHas('getUser', function ($query) {
             $query->whereHas('getRole', function ($query) {
@@ -283,7 +284,7 @@ class OrderController extends Controller
         })->get();
         $zones = Zone::get();
         $rates = Rate::get();
-        return view($this->path . 'national.edit', compact('customers', 'order', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
+        return view($this->path . 'national.edit', compact('customers', 'order','order_collection', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
     }
 
     /**

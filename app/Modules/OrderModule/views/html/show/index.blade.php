@@ -33,7 +33,7 @@
 
             <div class="form-group col-md-3">
                 <label for="address">Dirección origen</label>
-                <p class="form-control form-control-solid">{{ $order->getAddress->name ?? 'No registra' }}</p>
+                <p class="form-control form-control-solid">{{ $order->getAddress->name ?? $order->address_name }}</p>
             </div>
 
             <div class="form-group col-md-3">

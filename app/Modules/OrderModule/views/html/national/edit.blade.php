@@ -49,8 +49,20 @@
 
                 <div class="form-group col-md-3">
                     <label for="address">Dirección origen <span class="text-danger">*</span></label>
-                    <select name="address_id" class="form-control form-control-solid" id="address">
-                        <option value="" disabled selected>Seleccione</option>
+                    <select name="address_id" class="form-control form-control-solid"  >
+                        <option value="" disabled selected>Seleccione</option >
+                        {{ $key=false }}
+                        @foreach ($order_collection as $item1)
+                        @foreach ($customer_addresses as $item2)
+                        @if ( $item1->address_name != $item2->name && $key==false  )
+                        <option {{ $item1->address_id != $item2->id  ? 'selected' : ''}}  value="" >{{ $item1->address_name }}</option>
+                        {{ $key=true }}
+                        @endif
+                          @if ($item1->user_id == $item2->user_id &&  $item1->address_name != $item2->name  )
+                              <option {{ $item1->address_id == $item2->id  ? 'selected' : ''}} value="{{ $item2->id }}">{{ $item2->name }}</option>
+                              @endif
+                        @endforeach
+                    @endforeach
                     </select>
                 </div>
 
