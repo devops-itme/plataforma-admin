@@ -10,7 +10,7 @@
         @include('layouts.alerts')
 
         <div class="card-body d-flex flex-row flex-wrap pt-2">
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3">
                 <label>Numero de orden:</label>
                 <p class="form-control form-control-solid">{{ $order->order_number }}</p>
                 <span class="form-text text-muted"></span>
@@ -33,7 +33,7 @@
 
             <div class="form-group col-md-3">
                 <label for="address">Dirección origen</label>
-                <p class="form-control form-control-solid">{{ $order->getAddress->name ?? $order->address_name }}</p>
+                <textarea class="form-control" name="address" disabled>{{$order->getAddress->name ?? $order->address_name }}</textarea>
             </div>
 
             <div class="form-group col-md-3">
