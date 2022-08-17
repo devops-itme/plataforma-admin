@@ -9,7 +9,7 @@
                 @if ($item == "shipments")
                 <li class="breadcrumb-item active" aria-current="page">  <a href="{{request()->segment(1)==$item?'/'.request()->segment(1):route('internationalOrders.index')}}" style="color: #6f6f6f !important;">{{__("Ordenes Internacionales")}}</a> </li>
                 <li class="breadcrumb-item active" aria-current="page">  <a href="javascript:history.back()" style="color: #6f6f6f !important;">{{__("Guias")}}</a> </li>
-                @elseif ($item!="shipments" && $item!="users" && $item!="customers" && $item!="messengers" && $item!="orders")
+                @elseif ($item!="shipments" && $item!="users" && $item!="customers" && $item!="messengers" && $item!="orders" && $item!="showModal")
                 <li class="breadcrumb-item active" aria-current="page">  <a href="{{request()->segment(1)==$item?'/'.request()->segment(1):'#'}}" style="color: #6f6f6f !important;">{{__("$item")}}</a> </li>
                 @endif
              @else
@@ -27,8 +27,11 @@
           @endif
           @if($item == "orders")
             <li class="breadcrumb-item active" aria-current="page">  <a href="{{request()->segment(1)==$item?'/'.request()->segment(1):route('orders.index')}}" style="color: #6f6f6f !important;">{{__("Ordenes")}}</a> </li>
+            @endif
+            @if ($item == "showModal")
+               <li class="breadcrumb-item active" aria-current="page">  <a href="{{request()->segment(1)==$item?'/'.request()->segment(1):route('orders.index')}}" style="color: #6f6f6f !important;">{{__("Ordenes")}}</a> </li>
+               <li class="breadcrumb-item active" aria-current="page">   <a href="{{url()->previous()}}" style="color: #6f6f6f !important;">{{__("Editar")}}</a> </li>
           @endif
-
           @endif
        @endforeach
     </ol>

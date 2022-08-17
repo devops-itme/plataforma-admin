@@ -11,7 +11,7 @@
 
         <form id="guide_form" action="{{ route('guides.store') }}" method="POST">
             @csrf
-            <div class="card-header row flex-wrap border-0 pt-6 pb-0">
+            <div class="card-header border-0 pt-6 pb-0">
                 <h3 class="card-title col-10">
                     Datos de destino
                 </h3>
@@ -28,62 +28,48 @@
             <div class="card-body d-flex flex-row flex-wrap pt-2">
                 {{-- <input type="hidden" name="order_id" value="{{ $order->id }}"> --}}
                 {{-- <input type="hidden" name="guide_return_last_destination" id="guide_return_last_destination" value="0"> --}}
-                <div class="form-group col-md-2">
-                    <label for="guide_address">Dirección destino <span class="text-danger">*</span></label>
-                    <select name="guide_address" class="form-control form-control-solid" id="guide_address" disabled>
-                        <option  selected >{{$guide->address_name ?? 'sin datos'}}</option>
-                        {{-- <option disabled selected>{{$guide->guide_address== null ? 'Sin datos': $guide->guide_address}}</option> --}}
-                    </select>
-                </div>
-                <div class="form-group col-md-1 mb-0 d-flex align-items-center justify-content-start">
-                    <a class="btn" data-toggle="modal" data-target="#modalCreateAddress" data-dismiss="modal">
-                        <i class="fad fa-plus-circle text-info"></i>
-                    </a>
+                <div class="form-group col-md-3">
+                    <label for="guide_address">Dirección destino: <span class="text-danger">*</span></label>
+                    <input  name="guide_address" class="form-control form-control-solid" value="{{$guide->address_name ?? 'No Registra'}}" disabled>
+
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="district">Tarifa <span class="text-danger">*</span></label>
-                    <select name="rate" class="form-control form-control-solid" id="rate">
-                        <option selected disabled value="" disabled>Seleccione Tarifa</option>
-{{--                         @foreach ($rates as $item)
-                            <option value="{{ $item->id }}" {{ request()->rate == $item->id ? 'selected' : '' }}>
-                                {{ $item->name }}</option>
-                        @endforeach --}}
-                    </select>
+                    <label for="district">Tarifa: <span class="text-danger">*</span></label>
+                    <input  name="rate" class="form-control form-control-solid" value="{{$guide->rate ?? 'No Registra'}}" disabled>
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Valor: <span class="text-danger">*</span></label>
-                    <input name="value" id="value" type="number" class="form-control form-control-solid" disabled
-                    disabled value="{{$guide->value}}" />
+                    <input name="value" id="value" type="number" class="form-control form-control-solid" value="{{$guide->value ?? 'No Registra'}}" disabled >
                     <span class="form-text text-muted"></span>
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Valor Corp: <span class="text-danger">*</span></label>
                     <input name="corp_value" id="corp_value" type="number" class="form-control form-control-solid"
-                        disabled value="{{$guide->corp_value}}"/>
+                        disabled value="{{$guide->corp_value ?? 'No Registra'}}"/>
                     <span class="form-text text-muted"></span>
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Contacto: <span class="text-danger">*</span></label>
-                    <input name="contact" id="contact" type="text" class="form-control form-control-solid" disabled 
-                    value="{{$guide->contact}}"/>
+                    <input name="contact" id="contact" type="text" class="form-control form-control-solid" disabled
+                    value="{{$guide->contact ?? 'No Registra'}}"/>
                     <span class="form-text text-muted"></span>
                 </div>
 
                 <div class="form-group col-md-3 pt-2">
-                    <label>Teléfono contacto </label>
+                    <label>Teléfono contacto: <span class="text-danger">*</span></label>
                     <input name="phone_contact" type="tel" id="phone_contact" class="form-control form-control-solid"
-                        disabled value="{{$guide->phone_contact}}"/>
+                        disabled value="{{$guide->phone_contact ?? 'No Registra'}}"/>
                     <span class="form-text text-muted"></span>
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Contacto Email: </label>
                     <input name="email_contact" id="email_contact" type="email" class="form-control form-control-solid"
-                        disabled value="{{$guide->email_contact}}"/>
+                        disabled value="{{$guide->email_contact ?? 'No Registra'}}"/>
                     <span class="form-text text-muted"></span>
                 </div>
 
@@ -108,9 +94,9 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="description">Descripción <span class="text-danger">*</span></label>
+                    <label for="description">Descripción: <span class="text-danger">*</span></label>
                     <textarea name="guide_description" id="guide_description" cols="10" disabled rows="2"
-                        class="form-control form-control-solid">{{ $guide->description }}</textarea>
+                        class="form-control form-control-solid">{{ $guide->description ?? 'No Registra' }}</textarea>
                 </div>
 
 {{--                 @include('OrderModule.views.html.national.guideContentTab')
