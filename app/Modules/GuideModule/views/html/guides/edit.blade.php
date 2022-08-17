@@ -25,11 +25,19 @@
             <div class="card-body d-flex flex-row flex-wrap pt-2">
                 <div class="form-group col-md-2">
                     <label for="guide_address">Dirección destino <span class="text-danger">*</span></label>
-                    <select name="address_id" class="form-control form-control-solid" id="guide_address">
+                    <select name="address_id" class="form-control form-control-solid" >
                         <option selected disabled value="">Seleccione</option>
-                        @foreach ($addresses as $item)
-                            <option value="{{ $item->id }}" {{ $guide->address_id == $item->id ? 'selected' : '' }}>
-                                {{ $item->name }}</option>
+                        {{ $key=false }}
+                        @foreach ($guide_collection as $item1)
+                        @foreach ($addresses as $item2)
+                        @if ($item1->address_name != $item2->name && $key==false && $item1->address_name != null )
+                        <option {{ $item1->address_name != $item2->name  ? 'selected' : ''}} value="">{{ $item1->address_name}}</option>
+                        {{ $key=true }}
+                        @endif
+                        @if ($item1->address_name != $item2->name  )
+                            <option {{ $item1->address_name == $item2->name ? 'selected' : '' }} value="{{ $item2->id }}">{{ $item2->name }}</option>
+                        @endif
+                        @endforeach
                         @endforeach
                     </select>
                 </div>

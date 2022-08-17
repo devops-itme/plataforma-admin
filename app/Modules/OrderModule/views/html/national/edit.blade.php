@@ -54,7 +54,7 @@
                         {{ $key=false }}
                         @foreach ($order_collection as $item1)
                         @foreach ($customer_addresses as $item2)
-                        @if ( $item1->address_name != $item2->name && $key==false  )
+                        @if ( $item1->address_name != $item2->name && $key==false && $item1->address_name != null  )
                         <option {{ $item1->address_id != $item2->id  ? 'selected' : ''}}  value="" >{{ $item1->address_name }}</option>
                         {{ $key=true }}
                         @endif

@@ -133,7 +133,8 @@ class GuideController extends Controller
         $user_id = $guide->getOrder->getUser->id;
         $addresses = Address::where('user_id', $user_id)->get();
         $guide_id = $guide->getOrder->id;
-        return view($this->path . 'edit', compact('guide', 'addresses','guide_id'));
+        $guide_collection = Guide::where('id',$id)->get();
+        return view($this->path . 'edit', compact('guide', 'addresses','guide_id','guide_collection'));
     }
 
     /**
