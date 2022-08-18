@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="guide_description">Descripción <span class="text-danger">*</span></label>
+                    <label for="guide_description">Descripción: <span class="text-danger">*</span></label>
                     <textarea name="guide_description" cols="10" rows="2" class="form-control form-control-solid"> {{ $guide->description }}</textarea>
                 </div>
 

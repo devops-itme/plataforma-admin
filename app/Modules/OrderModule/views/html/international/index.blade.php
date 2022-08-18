@@ -84,7 +84,7 @@
                         <input type="date" class="form-control form-control-solid" placeholder="" name="to" value="{{ request()->to }}" />
                         <span class="form-text text-muted">Filtro hasta</span>
                     </div>
-                    <div class="form-group py-3 m-0 col-md-4">
+                    <!-- <div class="form-group py-3 m-0 col-md-4">
                         <label for="exampleSelect1">Estado: </label>
                         <select class="form-control form-control-solid" id="zone" name="state">
                             <option selected disabled> Seleccione </option>
@@ -94,7 +94,7 @@
                             @endforeach
                         </select>
                         <span class="form-text text-muted">Filtro estado</span>
-                    </div>
+                    </div> -->
                     <div class=" row form-group py-6 m-0 col-md-12">
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block">

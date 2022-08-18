@@ -73,8 +73,15 @@
                             <select class="form-control form-control-solid" id="zone" name="state">
                                 <option selected disabled> Seleccione </option>
                                 @foreach ($status_matrix as $item)
-                                <option value="{{ $item->id }}" {{ $item->id == request()->state ? 'selected' : '' }}>{{ $item->name }}
-                                </option>
+                                 @if ($item->name == 'CREADO')
+                                 <option value="{{ $item->id }}" {{ $item->id == request()->state ? 'selected' : '' }}>{{ $item->name }}</option>
+                                 @endif
+                                 @if ($item->name == 'POR DESPACHAR' && $item->scope_id == '56')
+                                 <option value="{{ $item->id }}" {{ $item->id == request()->state ? 'selected' : '' }}>POR DESPACHAR RECOGIDA</option>
+                                 @endif
+                                 @if ($item->name == 'POR DESPACHAR' && $item->scope_id == '57')
+                                 <option value="{{ $item->id }}" {{ $item->id == request()->state ? 'selected' : '' }}>POR DESPACHAR ENTREGA</option>
+                                 @endif
                                 @endforeach
                             </select>
                             <span class="form-text text-muted">Filtro estado</span>
@@ -174,7 +181,7 @@
         </table>
         <!--end: Datatable-->
         <div class="col-md-12 d-flex align-items-center justify-content-end">
-            {{$orders->links()}}
+        {{$orders->appends(request()->all())->links()}}
         </div>
     </div>
 </div>
