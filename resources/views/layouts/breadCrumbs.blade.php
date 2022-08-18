@@ -34,7 +34,7 @@
           @endif
           @if ($item == "guides")
                <li class="breadcrumb-item active" aria-current="page">  <a href="{{request()->segment(1)==$item?'/'.request()->segment(1):route('orders.index')}}" style="color: #6f6f6f !important;">{{__("Ordenes")}}</a> </li>
-               <li class="breadcrumb-item active" aria-current="page">   <a href="{{url()->previous()}}" style="color: #6f6f6f !important;">{{__("Editar Guia")}}</a> </li>
+               <li class="breadcrumb-item active" aria-current="page">   <a href="{{url()->previous()}}" style="color: #6f6f6f !important;">{{__("Editar Orden")}}</a> </li>
           @endif
           @endif
        @endforeach
