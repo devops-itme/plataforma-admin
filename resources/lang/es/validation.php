@@ -282,7 +282,7 @@ return [
         'number' => 'Movil',
         'from' => 'Desde',
         'to' => 'Hasta',
-        'day' => 'Día',
+        'day' => 'Día'
     ],
 
 ];
