@@ -24,7 +24,7 @@
             </div>
             <div class="card-body d-flex flex-row flex-wrap pt-2">
                 <div class="form-group col-md-2">
-                    <label for="guide_address">Dirección destino <span class="text-danger">*</span></label>
+                    <label for="guide_address">Dirección destino: <span class="text-danger">*</span></label>
                     <select name="address_id" class="form-control form-control-solid" >
                         <option selected disabled value="">Seleccione</option>
                         {{ $key=false }}
@@ -48,7 +48,7 @@
                 </div>
 
                 {{-- <div class="form-group col-md-3">
-                <label for="district">Tarifa <span class="text-danger">*</span></label>
+                <label for="district">Tarifa: <span class="text-danger">*</span></label>
                 <select name="rate" class="form-control form-control-solid" id="rate">
                     <option selected disabled value="">Seleccione Tarifa</option>
                     @foreach ($rates as $item)
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="form-group col-md-3 pt-2">
-                    <label>Teléfono contacto </label>
+                    <label>Teléfono contacto: <span class="text-danger">*</span> </label>
                     <input name="phone_contact" type="tel" id="phone_contact" value="{{ $guide->phone_contact }}"
                         class="form-control form-control-solid" placeholder="" />
                     <span class="form-text text-muted"></span>
