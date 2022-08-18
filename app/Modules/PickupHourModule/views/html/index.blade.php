@@ -78,17 +78,17 @@
                                     <select name="day" class="form-control form-control-solid">
                                         <option value="" selected disabled> Seleccione </option>
                                         @foreach ($days as $item)
-                                            <option value="{{$item->id}}"> {{$item->name}} </option>
+                                            <option {{ old('day') == $item->id ? 'selected ' : '' }} value="{{$item->id}}"> {{$item->name}} </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label for=""> Desde <span class="text-danger">*</span></label>
-                                    <input type="time" name="from" class="form-control form-control-solid">
+                                    <input type="time" name="from" value="{{old('from') }}" class="form-control form-control-solid">
                                 </div>
                                 <div class="col-md-4">
                                     <label for=""> Hasta <span class="text-danger">*</span></label>
-                                    <input type="time" name="to" class="form-control form-control-solid">
+                                    <input type="time" name="to" value="{{old('to') }}" class="form-control form-control-solid">
                                 </div>
                             </div>
                             <div class="row mt-4">

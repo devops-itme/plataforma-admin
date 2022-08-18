@@ -279,7 +279,10 @@ return [
         'branch_office_plan' => 'Plan',
         'branch_office_usage_mode' => 'Modo de uso',
         'branch_office_default' => 'Predeterminada',
-        'number' => 'Movil'
+        'number' => 'Movil',
+        'from' => 'Desde',
+        'to' => 'Hasta',
+        'day' => 'Día',
     ],
 
 ];
