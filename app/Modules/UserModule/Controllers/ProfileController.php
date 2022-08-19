@@ -121,7 +121,7 @@ class ProfileController extends Controller
         /* Store $imageName name in DATABASE from HERE */
 
         return back()
-            ->with('success','Se ha Subido su foto de perfil satisfactoriamente.')
+            ->with('success','Se ha subido su foto de perfil satisfactoriamente.')
             ->with('image', $path);
     }
 
