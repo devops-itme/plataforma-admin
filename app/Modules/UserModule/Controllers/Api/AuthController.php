@@ -276,7 +276,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->respond(400, $validator->errors(), 'Bad Request', 'Error de validacion');
+            return response()->json(['success' => false, 'validation'=>$validator->errors(),'error' => 'Bad Request.'], 400);
         }
 
         $access_type = $is_numeric ? 'phone' : 'email';
@@ -284,35 +284,19 @@ class AuthController extends Controller
         $credentials = request([$access_type, 'password']);
 
         if (!Auth::attempt($credentials)) {
-            return $this->respond(401,  $credentials, 'Unauthorized', 'Credenciales invalidas');
+            return response()->json(['state' => 404,'validation'=>$validator->errors(),'error' => 'No podemos encontrar una cuenta con estas credenciales. Asegúrese de haber ingresado la información correcta.'], 404);
         }
 
         try {
             $user = User::where(($is_numeric ? 'phone' : 'email'), $request->user)->first();
 
-            $user_role_c = Role::where('name', 'Cliente')
-                ->first();
 
-            $user_role_a = Role::where('name', 'Admin')
-                ->first();
-
-            $user_role_id_c = $user_role_c->id;
-            $user_role_id_a = $user_role_a->id;
-
-            if ($user_role_id_c == null) {
-                if ($user->role != $user_role_id_a) {
-                    return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado');
-                }
-            }
-
-            if ($user_role_id_a == null) {
-                if ($user->role != $user_role_id_c) {
-                    return $this->respond(401,  null, 'Unauthorized', 'Acceso denegado');
-                }
+            if ($user->role == 2 || $user->role == 3) {
+                    return response()->json(['state' => 401,'validation'=>'Acceso denegado.','error' => 'Unauthorized.'], 401);
             }
 
             if ($user->state != 1) {
-                return $this->respond(401,  null, 'Unauthorized', 'Usuario inactivo');
+                return response()->json(['state' => 401,'validation'=>'Usuario Inactivo.','error' => 'Unauthorized.'], 401);
             }
             $user->fcm_token = $request->fcm_token ?? NULL;
             $user->save();

@@ -292,7 +292,8 @@ class InternationalOrderController extends Controller
 
 
             if ($validator->fails()) {
-                return $this->respond(400, null, $validator->errors(), "Solicitud incorrecta");
+                // return $this->respond(400, null, $validator->errors(), "Solicitud incorrecta");
+                return response()->json(['state' => 400, 'data'=> $validator->errors(),'error' => 'Bad Request'], 400);
             }
 
             $user_id = $request->user_id;
@@ -371,11 +372,13 @@ class InternationalOrderController extends Controller
                 }
                 $response = $Tealca->requestCreateShipment($guide);
                 if ($response['state'] == 200) {
-                    return $this->respond(200, $response['data'], null, 'OK');
+                    // return $this->respond(200, $response['data'], null, 'OK');
+                    return response()->json(['state' => 200, 'data'=> $response['data'],'error' => null], 200);
                 }
             }
         } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
+            // return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
+            return response()->json(['state' => 500, 'data'=> $e->getMessage() . '. Line: ' . $e->getLine(),'error' => 'Error del servidor'], 500);
         }
     }
 
