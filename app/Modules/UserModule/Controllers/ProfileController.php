@@ -7,6 +7,8 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\UserModule\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use App\Modules\DocumentModule\Document;
 
 class ProfileController extends Controller
 {
@@ -23,7 +25,12 @@ class ProfileController extends Controller
         $documents = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'document_type');
         })->get();
-        return view($this->path.'index', compact('user', 'documents'));
+
+        $profile_photo = Document::where('user_id',Auth::user()->id)->where('data','')->get();
+        $wordCount = $profile_photo->isEmpty();
+
+
+        return view($this->path.'index', compact('user', 'documents','profile_photo','wordCount'));
     }
 
     /**
@@ -86,11 +93,74 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+
+
+    public function update(Request $request, $id){
+         //
     }
 
+    public function imageUploadPost(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+
+        $path = Storage::disk('s3')->put('images', $request->image);
+        $path = Storage::disk('s3')->url($path);
+
+
+        $DocumentModule = new Document();
+        $DocumentModule->saveDocument(new Request(array(
+            'user_id' => Auth::user()->id,
+            'url' => $path,
+            'data' => '',
+            'active' => 1,
+        )));
+        /* Store $imageName name in DATABASE from HERE */
+
+        return back()
+            ->with('success','Se ha Subido su foto de perfil satisfactoriamente.')
+            ->with('image', $path);
+    }
+
+    public function imageUpdatePost(Request $request)
+    {
+
+        $id_document = Document::select('id')
+        ->where('user_id',Auth::user()->id)
+        ->where('data','')
+        ->get();
+
+        foreach ($id_document as $doc) {
+            $id = $doc->id;
+        }
+        // dd($id);
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+
+        $path = Storage::disk('s3')->put('images', $request->image);
+        $path = Storage::disk('s3')->url($path);
+
+
+        $DocumentModule = new Document();
+        $DocumentModule->updateDocument(new Request(array(
+            'user_id' => Auth::user()->id,
+            'url' => $path,
+            'data' => '',
+            'active' => 1,
+        )),$id);
+        /* Store $imageName name in DATABASE from HERE */
+
+        return back()
+            ->with('success','Se ha actualizado su foto de perfil satisfactoriamente.')
+            ->with('image', $path);
+    }
     /**
      * Remove the specified resource from storage.
      *
