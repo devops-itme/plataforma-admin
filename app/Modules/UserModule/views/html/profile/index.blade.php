@@ -45,8 +45,8 @@
                 Datos del {{Auth::user()->getRole->name}}
             </p>
             <form action="{{ route('image.update.post') }}" method="POST" class="col-md-12" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            {{ method_field('put') }}
+                {{ csrf_field() }}
+                {{ method_field('put') }}
                 <input type="file" name="image" class="form-control mb-4">
                 <div class="row">
                     <div class="col-md-12"><button type="submit" class="btn btn-primary btn-round">Actualizar
@@ -64,7 +64,16 @@
             <div class="card-header">
                 <h2 class="title">Editar Perfil</h2>
             </div>
+            @if (count($errors) > 0)
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Debe seleccionar una foto</strong>
+            </div>
+            @else
             @include('layouts.alerts')
+            @endif
             <div class="card-body card-round">
                 <div class="row">
                     <div class="col-md-6">
