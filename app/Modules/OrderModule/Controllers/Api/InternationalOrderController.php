@@ -85,9 +85,11 @@ class InternationalOrderController extends Controller
             }
 
             //  return json_encode($query,true);
-            return $this->respond(200,  $query, null, 'Ordenes Internacionales');
+            // return $this->respond(200,  $query, null, 'Ordenes Internacionales');
+            return response()->json(['state' => 200, 'data'=> $query ,'error' => null], 200);
         } catch (\Throwable $e) {
-            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+            // return $this->respond(500, null, [], 'Error del servidor');
+            return response()->json(['state' => 500, 'data'=> '','error' => 'Error del servidor'], 500);
         }
     }
 
@@ -378,7 +380,7 @@ class InternationalOrderController extends Controller
             }
         } catch (\Throwable $e) {
             // return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
-            return response()->json(['state' => 500, 'data'=> $e->getMessage() . '. Line: ' . $e->getLine(),'error' => 'Error del servidor'], 500);
+            return response()->json(['state' => 500, 'data'=> '','error' => 'Error del servidor'], 500);
         }
     }
 
