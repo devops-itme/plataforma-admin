@@ -97,12 +97,12 @@
                 </div>
             </div>
             <!--end::Search Form-->
-            
+
             <!--begin: Datatable-->
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">Nombres</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Número de documento</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Teléfono</th>
@@ -114,7 +114,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr id="user-id-{{ $user->id }}">
-                            <th scope="row">{{ $user->name }}</th>
+                            <th scope="row">{{ $user->name }} {{ $user->last_name }}</th>
                             <td>{{ $user->document_number }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>

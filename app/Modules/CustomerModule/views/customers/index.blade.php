@@ -195,7 +195,7 @@
                             <tr>
                                 {{-- <th scope="row">{{$customer->id}}</th> --}}
                                 {{-- <td>{{$customer->display_name}}</td> --}}
-                                <td>{{ $customer->business_name ?? ($customer->getUser->name ?? ('' . ' ' . $customer->getUser->last_name ?? '')) }}
+                                <td>{{ $customer->business_name ?? ($customer->getUser->name ?? ('' . ' ' . $customer->getUser->last_name ?? '')) }}  {{$customer->getUser->last_name}}
                                 </td>
                                 <td>{{ $customer->getUser->document_number ?? '' }}</td>
                                 <td>{{ $customer->getUser->email ?? '' }}</td>
