@@ -16,4 +16,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 // Auth International Orders API
+//Browser
+Route::get('loginClient', 'UserModule\Controllers\Api\AuthController@LoginClient');
+
+//Via API
 Route::post('loginClient', 'UserModule\Controllers\Api\AuthController@LoginClient');

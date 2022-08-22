@@ -264,6 +264,9 @@ class AuthController extends Controller
 
     public function LoginClient(Request $request)
     {
+        if (!$request->expectsJson()) {
+            return abort('404');
+        }
         $is_numeric = is_numeric($request->user);
 
         $validator = Validator::make($request->all(), [
