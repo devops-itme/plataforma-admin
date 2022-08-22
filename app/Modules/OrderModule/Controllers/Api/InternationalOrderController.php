@@ -150,6 +150,8 @@ class InternationalOrderController extends Controller
 
     public function show($id)
     {
+
+        try {
         $query = DB::select(DB::raw("SELECT
          g.external_id as external_id,
          g.pre_guide as pre_guide,
@@ -199,9 +201,16 @@ class InternationalOrderController extends Controller
             }
         }
         //  return json_encode($query,true);
-        return response()->json($query[0]);
-        // return $this->respond(200,  $query[0], null, 'Ordenes Internacionales');
 
+          if ( !isset($query[0]) ) {
+            return response()->json(['state' => 400, 'data'=> 'Guia no encontrada','error' => 'Bad Request'], 400);
+          }
+
+          return response()->json($query[0]);
+
+    } catch (\Throwable $e) {
+        return response()->json(['state' => 500, 'data'=> '','error' => 'Error del servidor'], 500);
+    }
 
     }
 
