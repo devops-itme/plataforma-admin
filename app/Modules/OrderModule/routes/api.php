@@ -17,7 +17,8 @@ Route::get('sendPushNotification', 'OrderModule\Controllers\Api\OrderController@
 
 //INTERNATIONAL ORDER
 Route::middleware(['auth:sanctum'])->group(function () {
-    // Route::resource('internationalOrders', 'OrderModule\Controllers\Api\InternationalOrderController')->names('internationalOrder');
+    if (auth('sanctum')->check()) {
+            // Route::resource('internationalOrders', 'OrderModule\Controllers\Api\InternationalOrderController')->names('internationalOrder');
     Route::get('internationalOrder/index', 'OrderModule\Controllers\Api\InternationalOrderController@index')->name('internationalOrder.index');
     Route::get('internationalOrder/services', 'OrderModule\Controllers\Api\InternationalOrderController@services')->name('internationalOrder.services');
     Route::post('internationalOrder/create', 'OrderModule\Controllers\Api\InternationalOrderController@store')->name('internationalOrder.create');
@@ -25,6 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('internationalOrder/getExportedDocumentsByUser', 'OrderModule\Controllers\Api\InternationalOrderController@getExportedDocumentsByUser');
     Route::get('internationalOrder/getExportedDocumentsbyAuth', 'OrderModule\Controllers\Api\InternationalOrderController@getExportedDocumentsByAuth');
     Route::post('web/export/order', 'OrderModule\Controllers\Api\InternationalOrderController@exportGuide')->name('internationalOrder.export');
+    }
 });
 
 
