@@ -47,7 +47,7 @@
                 <div class="form-group col-md-3">
                     <label for="address">Dirección origen <span class="text-danger">*</span></label>
                     <select name="address_id" class="form-control form-control-solid" id="address">
-                        <option value="{{old('address_id')}}"selected disabled>{{old('address_id')}}Seleccione tipo de orden</option>
+                        <option value="{{old('address_id')}}"selected disabled>Seleccione tipo de orden</option>
                        {{--  @foreach ($address_id as $address) --}}
                        {{--  <option {{old('address_id') == $address->id ? 'selected' : '' }} value="{{ $address->id }}">
                             {{$address->name }}
@@ -61,16 +61,26 @@
                 <div class="form-group col-md-3">
                     <label for="user_departments">Departamento</label>
                     <select name="department_id" id="user_departments" class="form-control form-control-solid">
-                        <option  selected disabled >{{old('department_id')}} Seleccione </option>
+                        <option  selected disabled >Seleccione </option>
+                        @foreach ($department as $item)
+                                <option {{ old('department_id') == $item->id ? 'selected' : '' }} value="{{ $item->id }}">
+                                {{ $item->name}}
+                                </option>
+                            @endforeach
                     </select>
                     @error('department_id')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="user_branch_office">Sucursal</label>
-                    <select name="branch_office_id" id="user_branch_office" class="form-control form-control-solid">
-                        <option value="" selected disabled>{{old('branch_office_id')}}Seleccione </option>
+                    <label for="branch_office_id">Sucursal</label>
+                    <select name="branch_office" class="form-control form-control-solid" id="user_branch_office">
+                        <option value="" selected disabled>Seleccione </option>
+                            @foreach ($branch_office as $item)
+                                <option {{ old('branch_office') == $item->id ? 'selected' : '' }} value="{{ $item->id }}">
+                                {{ $item->name}}
+                                </option>
+                            @endforeach
                     </select>
                     @error('branch_office_id')
                         <div class="text-danger">{{ $message }}</div>

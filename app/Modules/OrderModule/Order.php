@@ -341,7 +341,7 @@ class Order extends Model
                 'money_to_collect' => $request->money_to_collect,
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
-                'branch_office' => $request->branch_office_id,
+                'branch_office'=> $request->branch_office_id,
                 'address_id' => $request->address_id,
                 'address_name' => $request->address,
                 'address_lat' => $request->lat,
@@ -381,6 +381,8 @@ class Order extends Model
                 'order_number' => $request->order_number,
                 'creator_user_id' => $request->creator_user_id,
                 'status_matrix_id' => $status_id,
+                'branch_office' => $request->branch_office,
+                'department_id' => $request->department_id,
                 'state' => 1,
             ]);
 

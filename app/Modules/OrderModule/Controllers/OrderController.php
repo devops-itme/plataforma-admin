@@ -91,12 +91,15 @@ class OrderController extends Controller
             $query->where('name', 'customer_document_type');
         })->get();
 
+        $branch_office = BranchOffice::where('state',1)->get();
+        $department = Department::where('state',1)->get();
+
         $zones = Zone::get();
         $rates = Rate::get();
         /* dd($rates); */
         $customer_addresses = [];
         $tax_percentage = 7;
-        return view($this->path . 'national.create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses', 'tax_percentage'));
+        return view($this->path . 'national.create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses', 'tax_percentage','branch_office','department'));
     }
 
     /**
@@ -115,7 +118,9 @@ class OrderController extends Controller
             'user_id' => 'required',
             'schedule_date' => 'required',
             'schedule_time_range' => 'required',
-            'order_description' => 'required'
+            'order_description' => 'required',
+            'branch_office'=> 'required',
+            'department_id'=> 'required'
         ]);
         $validator = Validator::make(
             $request->all(),
@@ -127,7 +132,9 @@ class OrderController extends Controller
                 'user_id' => 'required',
                 'schedule_date' => 'required',
                 'schedule_time_range' => 'required',
-                'order_description' => 'required'
+                'order_description' => 'required',
+                'branch_office'=> 'required',
+                'department_id'=> 'required'
                 /* 'guide_address' => 'required', */
                 /* 'phone_contact' => 'required',
                 'contact' => 'required' */
