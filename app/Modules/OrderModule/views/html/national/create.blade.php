@@ -61,12 +61,7 @@
                 <div class="form-group col-md-3">
                     <label for="user_departments">Departamento</label>
                     <select name="department_id" id="user_departments" class="form-control form-control-solid">
-                        <option  selected disabled >Seleccione </option>
-                        @foreach ($department as $item)
-                                <option {{ old('department_id') == $item->id ? 'selected' : '' }} value="{{ $item->id }}">
-                                {{ $item->name}}
-                                </option>
-                            @endforeach
+                        <option selected disabled >{{old('department_id')}} Seleccione </option>
                     </select>
                     @error('department_id')
                     <div class="text-danger">{{ $message }}</div>
@@ -74,13 +69,8 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="branch_office_id">Sucursal</label>
-                    <select name="branch_office" class="form-control form-control-solid" id="user_branch_office">
-                        <option value="" selected disabled>Seleccione </option>
-                            @foreach ($branch_office as $item)
-                                <option {{ old('branch_office') == $item->id ? 'selected' : '' }} value="{{ $item->id }}">
-                                {{ $item->name}}
-                                </option>
-                            @endforeach
+                    <select name="branch_office_id" class="form-control form-control-solid" id="user_branch_office">
+                        <option selected disabled>Seleccione </option>
                     </select>
                     @error('branch_office_id')
                         <div class="text-danger">{{ $message }}</div>

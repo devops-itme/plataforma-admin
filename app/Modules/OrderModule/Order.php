@@ -62,7 +62,7 @@ class Order extends Model
         'state',
         'service_type',
         'department_id',
-        'branch_office',
+        'branch_office_id',
         'dispatched',
         'app_status',
         'status_matrix_id',
@@ -179,7 +179,7 @@ class Order extends Model
 
     public function getBranchOffice()
     {
-        return $this->belongsTo(BranchOffice::class, 'branch_office');
+        return $this->belongsTo(BranchOffice::class, 'branch_office_id');
     }
 
     //SCOPES
@@ -284,7 +284,7 @@ class Order extends Model
                 'insured_value' => 'nullable|numeric',
                 'money_to_collect' => 'nullable|numeric',
                 'percentage_to_collect' => 'nullable|numeric',
-                'branch_office' => 'nullable|numeric|exists:branch_offices,id',
+                'branch_office_id' => 'nullable|numeric|exists:branch_offices,id',
                 'department_id' => 'nullable|numeric|exists:departments,id',
                 'address_id' => 'nullable|numeric|exists:addresses,id',
                 'address_name' => 'nullable',
@@ -341,7 +341,7 @@ class Order extends Model
                 'money_to_collect' => $request->money_to_collect,
                 'percentage_to_collect' => $request->percentage_to_collect,
                 'customer_user_id' => $request->user_id,
-                'branch_office'=> $request->branch_office_id,
+                'branch_office_id'=> $request->branch_office_id,
                 'address_id' => $request->address_id,
                 'address_name' => $request->address,
                 'address_lat' => $request->lat,
@@ -381,7 +381,7 @@ class Order extends Model
                 'order_number' => $request->order_number,
                 'creator_user_id' => $request->creator_user_id,
                 'status_matrix_id' => $status_id,
-                'branch_office' => $request->branch_office,
+                'branch_office_id' => $request->branch_office_id,
                 'department_id' => $request->department_id,
                 'state' => 1,
             ]);
