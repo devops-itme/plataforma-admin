@@ -2224,7 +2224,7 @@ var Customer = /*#__PURE__*/function () {
                 user_departments = document.getElementById("user_departments");
                 loadSelect(this.departments, user_departments, (_this$order2 = this.order) === null || _this$order2 === void 0 ? void 0 : _this$order2.department_id);
                 user_branch_office = document.getElementById("user_branch_office");
-                loadSelect(this.branches, user_branch_office, (_this$order3 = this.order) === null || _this$order3 === void 0 ? void 0 : _this$order3.branch_office_id);
+                loadSelect(this.branches, user_branch_office, (_this$order3 = this.order) === null || _this$order3 === void 0 ? void 0 : _this$order3.branch_office);
 
               case 19:
                 this.changeCustomerId();

@@ -73,16 +73,11 @@
                     </select>
                 </div>
 
-                <div class="form-group col-md-3">
+                 <div class="form-group col-md-3">
                     <label for="user_branch_office">Sucursal</label>
-                    <select name="branch_office_id"  class="form-control form-control-solid">
+                    <select name="branch_office_id" id="user_branch_office" class="form-control form-control-solid">
                         <option value="" selected disabled> Seleccione </option>
-                        @foreach ($branch_office as $item)
-                                <option value="{{ $item->id }}"
-                                    {{ $order->branch_office == $item->id ? 'selected' : '' }}>{{ $item->name }}
-                                </option>
-                            @endforeach
-                    </select>
+                     </select>
                 </div>
 
                 @if (Auth::user()->getRole->name == 'Admin')

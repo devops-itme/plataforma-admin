@@ -31,7 +31,7 @@ export default class Customer {
             loadSelect(this.departments, user_departments, this.order?.department_id);
 
             let user_branch_office = document.getElementById("user_branch_office");
-            loadSelect(this.branches, user_branch_office, this.order?.branch_office_id);
+            loadSelect(this.branches, user_branch_office, this.order?.branch_office);
         }
         this.changeCustomerId();
     }
@@ -45,7 +45,7 @@ export default class Customer {
 
         $('.select2-customers').on('change', async function (e) {
             let customer_id = customer.value;
-            
+
             let response = await requestCustomerData(customer_id);
             if (response.state != 200) {
                 return;
