@@ -287,10 +287,9 @@ class OrderController extends Controller
             $query->where('user_id', $user_id);
         })->get();
 
-        $branch_office = BranchOffice::where('state',1)->get();
         $zones = Zone::get();
         $rates = Rate::get();
-        return view($this->path . 'national.edit', compact('customers', 'order','order_collection', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates','branch_office'));
+        return view($this->path . 'national.edit', compact('customers', 'order','order_collection', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
     }
 
     /**
