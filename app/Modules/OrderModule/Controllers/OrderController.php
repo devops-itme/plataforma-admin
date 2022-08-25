@@ -91,15 +91,12 @@ class OrderController extends Controller
             $query->where('name', 'customer_document_type');
         })->get();
 
-        $branch_office = BranchOffice::where('state',1)->get();
-        $department = Department::where('state',1)->get();
-
         $zones = Zone::get();
         $rates = Rate::get();
         /* dd($rates); */
         $customer_addresses = [];
         $tax_percentage = 7;
-        return view($this->path . 'national.create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses', 'tax_percentage','branch_office','department'));
+        return view($this->path . 'national.create', compact('customers', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'zones', 'rates', 'customer_addresses', 'tax_percentage'));
     }
 
     /**
@@ -289,9 +286,11 @@ class OrderController extends Controller
         $customer_addresses = Address::with('getUser')->whereHas('getUser', function ($query) use ($user_id) {
             $query->where('user_id', $user_id);
         })->get();
+
+        $branch_office = BranchOffice::where('state',1)->get();
         $zones = Zone::get();
         $rates = Rate::get();
-        return view($this->path . 'national.edit', compact('customers', 'order','order_collection', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
+        return view($this->path . 'national.edit', compact('customers', 'order','order_collection', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates','branch_office'));
     }
 
     /**
