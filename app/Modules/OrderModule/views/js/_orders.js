@@ -7,7 +7,6 @@ import { requestPickupHours } from "./request/requestPickupHours.js";
 import { requestGetOrder } from "./request/requestGetOrder.js";
 import { requestCustomerData } from "./request/requestCustomerData";
 
-
 //functions
 import { importModal } from "./importModal";
 import { getDayReference } from "./src/getDayReference.js";
@@ -16,20 +15,15 @@ import { getDayReference } from "./src/getDayReference.js";
 import Customer from "./_customer";
 import Guides from "./_guides.js";
 
-
-
 export default class Orders {
-
     order = null;
     pathname = window.location.pathname;
-    constructor() {
-
-    }
+    constructor() {}
 
     async initialize() {
         this.sendPushNotification();
 
-        if (this.pathname.includes('edit')) {
+        if (this.pathname.includes("edit")) {
             let regex = /(\d+)/g;
             let order_id = this.pathname.match(regex);
             let response = await requestGetOrder(order_id);
@@ -45,14 +39,13 @@ export default class Orders {
         this.loadCustomer();
         this.loadGuides();
 
-
-
         this.loadBranches();
 
         this.createAddress();
         this.customerAddresses();
         this.loadPickupHours();
         this.loadHoursInEditOrShow();
+        this.saveTransportType();
         importModal();
     }
 
@@ -73,6 +66,20 @@ export default class Orders {
         CustomerClass.initialize();
     }
 
+    saveTransportType() {
+        document
+            .getElementById("vehicle_type_id")
+            ?.addEventListener("change", (event) => {
+                const mySelectValue = event.currentTarget.value;
+                const hiddenElement = document.getElementById("transport_type");
+                if (mySelectValue === "38") {
+                    hiddenElement.value = "38";
+                } else {
+                    hiddenElement.value = "39";
+                }
+            });
+    }
+
     loadGuides() {
         let addGuideBtn = document.getElementById("add-guide-btn");
         if (addGuideBtn == null) {
@@ -87,17 +94,21 @@ export default class Orders {
         }
 
         let guidesArr = this.order?.get_guides;
-        let scope = this.pathname.includes('edit') ? 'edition' : 'creation';
+        let scope = this.pathname.includes("edit") ? "edition" : "creation";
         let GuidesClass = new Guides(guidesArr, scope);
         GuidesClass.initialize();
         GuidesClass.sourceAddressHandler();
-        addGuideBtn.addEventListener('click', async function () {
+        addGuideBtn.addEventListener("click", async function () {
             GuidesClass.addGuide();
         });
 
-        createOrderBtn.addEventListener('click', async function () {
-            if(GuidesClass.guides.length == 0) {
-                swal("Importante!", "Debes agregar un destino como mínimo","info");
+        createOrderBtn.addEventListener("click", async function () {
+            if (GuidesClass.guides.length == 0) {
+                swal(
+                    "Importante!",
+                    "Debes agregar un destino como mínimo",
+                    "info"
+                );
 
                 return;
             }
@@ -106,8 +117,6 @@ export default class Orders {
         });
     }
 
-
-
     //////////////////////////////////////
     async sendPushNotification() {
         let state = document.getElementById("state");
@@ -115,7 +124,12 @@ export default class Orders {
         let notification_type = document.getElementById("notification_type");
         let fcm_token = document.getElementById("fcm_token");
 
-        if (state == null || order_id == null || notification_type == null || fcm_token == null) {
+        if (
+            state == null ||
+            order_id == null ||
+            notification_type == null ||
+            fcm_token == null
+        ) {
             return;
         }
 
@@ -133,7 +147,6 @@ export default class Orders {
                 console.log(e);
             });
     }
-
 
     loadBranches() {
         let branchesSlc = document.getElementsByName("branch_office");
@@ -178,7 +191,7 @@ export default class Orders {
             if (
                 !(
                     typeof parseInt(location.pathname.split("/")[2]) ==
-                    "number" && location.pathname.includes("edit")
+                        "number" && location.pathname.includes("edit")
                 )
             ) {
                 if (!slcAddress.id != "order_customer_address") {
@@ -246,7 +259,7 @@ export default class Orders {
             if (response.state == 200) {
                 correct(response.message);
                 // modal.click();
-                $("#modalCreateAddress").modal('hide');
+                $("#modalCreateAddress").modal("hide");
                 this.refreshAddresses();
                 // this.listGuides();
                 this.customerAddresses(
@@ -266,31 +279,31 @@ export default class Orders {
             return;
         }
 
-            $('#guide_address').one('click', async function (e) {
-                let customer_id = customer.value;
+        $("#guide_address").one("click", async function (e) {
+            let customer_id = customer.value;
 
-                let response = await requestCustomerData(customer_id);
-                if (response.state != 200) {
-                    return;
-                }
-                this.user = response.data.customer;
-                this.branches = response.data.branches;
-                this.departments = response.data.departments;
-                this.addresses = response.data.addresses;
+            let response = await requestCustomerData(customer_id);
+            if (response.state != 200) {
+                return;
+            }
+            this.user = response.data.customer;
+            this.branches = response.data.branches;
+            this.departments = response.data.departments;
+            this.addresses = response.data.addresses;
 
-                let address = document.getElementById("address");
-                let guide_address = document.getElementById("guide_address");
-                loadSelect(this.addresses, address);
-                loadSelect(this.addresses, guide_address);
+            let address = document.getElementById("address");
+            let guide_address = document.getElementById("guide_address");
+            loadSelect(this.addresses, address);
+            loadSelect(this.addresses, guide_address);
 
-                let user_departments = document.getElementById("user_departments");
-                loadSelect(this.departments, user_departments);
+            let user_departments = document.getElementById("user_departments");
+            loadSelect(this.departments, user_departments);
 
-                let user_branch_office = document.getElementById("user_branch_office");
-                loadSelect(this.branches, user_branch_office);
-                this.key =false;
-
-            });
+            let user_branch_office =
+                document.getElementById("user_branch_office");
+            loadSelect(this.branches, user_branch_office);
+            this.key = false;
+        });
     }
 
     async sendAddressData(formData) {
@@ -333,8 +346,7 @@ export default class Orders {
                                 accept: "application/json",
                             },
                         }
-                    )
-                        .then(response => response.json());
+                    ).then((response) => response.json());
                     if (req.state == 200) {
                         correct("Estado actualizado!");
                         window.location.reload();
@@ -376,8 +388,7 @@ export default class Orders {
                     let req = await fetch(
                         `/pordespachar/packaging/${order_id.id}`,
                         requestOptions
-                    )
-                        .then(response => response.json());
+                    ).then((response) => response.json());
                     console.log(req);
                     if (req.state == 200) {
                         correct("Estado actualizado!");
@@ -425,8 +436,12 @@ export default class Orders {
                     schedule_time_range.insertAdjacentHTML("beforeend", option);
                 }
                 schedule_time_range.addEventListener("change", () => {
-                    let id = schedule_time_range.options[schedule_time_range.selectedIndex].id;
-                    let schedule_time = document.getElementById("schedule_time");
+                    let id =
+                        schedule_time_range.options[
+                            schedule_time_range.selectedIndex
+                        ].id;
+                    let schedule_time =
+                        document.getElementById("schedule_time");
                     if (schedule_time == null) {
                         return;
                     }
@@ -480,7 +495,6 @@ export default class Orders {
             });
         }
     }
-
 }
 
 //LOAD THE NEWS ADDRESSES WHEN CLIENT CLICK IT ON SELECT OPTION!
@@ -488,13 +502,14 @@ const loadSelect = (data, element, selected = null) => {
     if (element == null) {
         return;
     }
-    element.innerHTML = '<option value="" disabled selected>Seleccione</option>';
+    element.innerHTML =
+        '<option value="" disabled selected>Seleccione</option>';
     [].forEach.call(data, async (item) => {
-        let option = document.createElement('option');
+        let option = document.createElement("option");
         option.value = item.id;
         option.label = item.name;
         option.selected = item.id == selected;
         element.appendChild(option);
         // console.log("La opcion es: "+option.value);
     });
-}
+};

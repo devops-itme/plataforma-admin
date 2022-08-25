@@ -87,6 +87,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        <input type='hidden' id='transport_type'name="transport_type" value=''>
                         @error('vehicle_type_id')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

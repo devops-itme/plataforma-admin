@@ -406,6 +406,7 @@ class Order extends Model
                     'return_last_destination' => $request->return_last_destination,
                     'value' => $guide->value,
                     'corp_value' => $guide->corp_value,
+                    'transport_type' => $request->transport_type,
                     'boxes' => json_encode($guide->boxes),
                 ]);
             }
