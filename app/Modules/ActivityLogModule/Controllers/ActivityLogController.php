@@ -37,10 +37,10 @@ class ActivityLogController extends Controller
                 return $query->where('u.name','like', '%'. $causerName . '%');
             })
             ->when(!empty($causerLastName), function ($query) use ($causerLastName) {
-                return $query->where('u.last_name', '%'. $causerLastName . '%');
+                return $query->where('u.last_name','like', '%'. $causerLastName . '%');
             })
             ->when(!empty($action), function ($query) use ($action) {
-                return $query->where('al.description', 'like', '%' .  request()->action . '%');
+                return $query->where('al.description', 'like', '%' .  $action . '%');
             })
             ->when(!empty($role), function ($query) use ($role) {
                 return $query->where('r.name', $role);
