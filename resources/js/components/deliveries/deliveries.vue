@@ -103,7 +103,7 @@
                 </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
-                  <!--   <div class="col-md-6 mb-2">
+                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Tipo de orden:</div>
                         <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.type_order"></div>
                     </div>
@@ -126,7 +126,7 @@
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Programado:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.programming">2022/02/04</div>
-                    </div> -->
+                    </div>
                      <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Nombre de Contacto:</div>
                         <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.contact"></div>
@@ -414,7 +414,7 @@ export default {
             showModal: false,
             columns:{
                 inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
-                inEdit:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección", "Estado Web", "Tipo Doc", "Estado Web Cont", "ExtRef", "DeptoId", "Dept Nombre", "SucId", "Suc Nombre", "DocId", "Doc Nombre"],
+                inEdit:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección",],
             },
             guides: [],
             guides2: [],
