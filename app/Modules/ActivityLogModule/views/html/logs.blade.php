@@ -55,10 +55,10 @@
                             </div>
                             <div class="col-12 col-md-6 form-group">
                                 <label for="name">Role</label>
-                                <select name="role" class="form-control" id="">
+                                    <select name="role" class="form-control" id="">
                                     <option value="">Todos</option>
                                     @foreach ($roles as $item)
-                                        <option {{ request()->role == $item->id ? 'selected' : '' }} value="{{ $item->id }}">
+                                        <option {{ request()->role == $item->name ? 'selected' : '' }} value="{{ $item->name }}">
                                             {{ $item->name }}</option>
                                     @endforeach
                                 </select>
@@ -102,14 +102,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $item)
+                    @foreach ($roles_log as $item)
                         <tr>
                             <td></td>
-                            <td>{{ ucfirst($item->log_name) }}</td>
-                            <td>{{ $item->causer ? $item->causer->name : 'Sistema' }} {{ $item->causer ? $item->causer->last_name : 'Sistema' }}</td>
-                            <td>{{ $item->causer ? $item->causer->getRole->name : 'Indefinido' }}</td>
-                            <td>{{ $item->description }}</td>
-                            <td>{{ $item->created_at->format('d/m/Y h:i A') }}</td>
+                            <td>{{ ucfirst($item->evento) }}</td>
+                            <td>{{ $item->causante_name  }} {{ $item->causante_last_name  }} </td>
+                            <td>{{ $item->rol  }}</td>
+                            <td>{{ $item->descripcion }}</td>
+                            <td>{{ $item->fecha }}</td>
                         </tr>
                     @endforeach
                     {{-- @foreach ($logs as $item)
@@ -124,7 +124,7 @@
                     @endforeach --}}
                 </tbody>
             </table>
-            {{ $users->links() }}
+            {{$roles_log->appends(request()->all())->links()}}
         </div>
     </div>
 @endsection
