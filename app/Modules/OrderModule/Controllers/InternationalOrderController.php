@@ -33,6 +33,7 @@ class InternationalOrderController extends Controller
                 $query->where('name', '!=', 'ENTREGADO');
             })
             ->international()
+            ->orderBy('id', 'DESC')
             ->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
@@ -81,7 +82,7 @@ class InternationalOrderController extends Controller
     public function incidencesExport()
     {
         $guides = Guide::select('id', 'external_id', 'contact')->where('external_id', '<>', null)
-            ->where('state', '1')->get();       
+            ->where('state', '1')->get();
         $incidences = [];
         foreach ($guides as $guide) {
             $Tealca = new Tealca();
@@ -89,10 +90,10 @@ class InternationalOrderController extends Controller
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
             // $statuses = json_decode($guideTracking)->tracking;
             $statuses = $guideTracking['data'][0]['tracking'][0];
-            $status   = $guideTracking['data'][0]['tracking'][0]['status'];            
+            $status   = $guideTracking['data'][0]['tracking'][0]['status'];
             $order1 = json_decode($guide);
             foreach ($statuses as $status) {
-                if ($status ==   'Incidencia') {                    
+                if ($status ==   'Incidencia') {
                     $order1->Status = $status;
                     $order1->Fecha = date('Y/m/d H:i:s', strtotime($statuses['date']));
                     $order1->description = $statuses['description'];
