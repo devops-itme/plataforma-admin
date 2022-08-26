@@ -26,59 +26,59 @@
                     <form action="{{ route('log.index') }}">
                         <div class="row align-items-center">
                             <div class="col-12 col-md-6 form-group">
-                                <label for="name">Evento</label>
-                                <input type="text" name="event" id="event" class="form-control"
+                                <label for="name">Evento:</label>
+                                <input type="text" name="event" id="event" class="form-control form-control-solid"
                                     placeholder="Escriba el evento" aria-describedby="helpId"
                                     value="{{ request()->event }}">
                                 <small id="helpId" class="text-muted">Nombre del evento</small>
                             </div>
                             <div class="col-12 col-md-3 form-group">
-                                <label for="name">Causante</label>
-                                <input type="text" name="causerName" id="causerName" class="form-control"
+                                <label for="name">Causante:</label>
+                                <input type="text" name="causerName" id="causerName" class="form-control form-control-solid"
                                     placeholder="Escriba el nombre" aria-describedby="helpId"
                                     value="{{ request()->causerName }}">
                                 <small id="helpId" class="text-muted">Nombre del causante</small>
                             </div>
                             <div class="col-12 col-md-3 form-group">
                                 <label for="name"></label>
-                                <input type="text" name="causerLastName" id="causerLastName" class="form-control"
+                                <input type="text" name="causerLastName" id="causerLastName" class="form-control form-control-solid"
                                     placeholder="Escriba el apellido" aria-describedby="helpId"
                                     value="{{ request()->causerLastName }}">
                                 <small id="helpId" class="text-muted">Apellido del causante</small>
                             </div>
                             <div class="col-12 col-md-6 form-group">
-                                <label for="name">Acción</label>
-                                <input type="text" name="action" id="action" class="form-control"
+                                <label for="name">Acción:</label>
+                                <input type="text" name="action" id="action" class="form-control form-control-solid"
                                     placeholder="Escriba la acción" aria-describedby="helpId"
                                     value="{{ request()->action }}">
                                 <small id="helpId" class="text-muted">filtro acción</small>
                             </div>
                             <div class="col-12 col-md-6 form-group">
-                                <label for="name">Role</label>
-                                    <select name="role" class="form-control" id="">
+                                <label for="name">Roles:</label>
+                                    <select name="role" class="form-control form-control-solid" id="">
                                     <option value="">Todos</option>
                                     @foreach ($roles as $item)
                                         <option {{ request()->role == $item->name ? 'selected' : '' }} value="{{ $item->name }}">
                                             {{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                                <small id="helpId" class="text-muted">filtro role</small>
+                                <small id="helpId" class="text-muted">filtro roles</small>
                             </div>
                             <div class="col-12 col-md-6 form-group">
-                                <label for="name">Fecha inicial</label>
-                                <input type="date" name="initDate" class="form-control" value="{{ request()->initDate }}">
+                                <label for="name">Fecha inicial:</label>
+                                <input type="date" name="initDate" class="form-control form-control-solid" value="{{ request()->initDate }}">
                                 <small id="helpId" class="text-muted">filtro fecha inicial</small>
                             </div>
                             <div class="col-12 col-md-6 form-group">
-                                <label for="name">Fecha final</label>
-                                <input type="date" name="finDate" class="form-control" value="{{ request()->finDate }}">
+                                <label for="name">Fecha final:</label>
+                                <input type="date" name="finDate" class="form-control form-control-solid" value="{{ request()->finDate }}">
                                 <small id="helpId" class="text-muted">filtro fecha final</small>
                             </div>
-                            <div class=" row form-group py-6 m-0 col-md-4">
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block">
-                                        Filtrar</button>
-                                </div>
+                            <div class=" row form-group py-6 m-0 col-md-12">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-light-primary px-6 font-weight-bold btn-block">
+                                    Filtrar</button>
+                            </div>
                                 <div class="col-md-6">
                                     <a href="{{ route('log.index') }}"
                                         class="btn btn-light-danger px-6 font-weight-bold btn-block">Limpiar</a>
