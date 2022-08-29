@@ -132,7 +132,11 @@ export default {
                 error(response.data.message);
             }
             window.location.reload();
-            correct(response.data.message)
+             swal({title: "Estado Actualizado", text: "", type:
+                        "success"}).then(function(){
+                         location.reload();
+                     }
+                   );
         },
         async requestUpdateGuidesState(requestOptions){
             let response = {

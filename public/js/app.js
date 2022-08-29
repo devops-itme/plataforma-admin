@@ -10135,7 +10135,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 window.location.reload();
-                correct(response.data.message);
+                swal({
+                  title: "Estado Actualizado",
+                  text: "",
+                  type: "success"
+                }).then(function () {
+                  location.reload();
+                });
 
               case 12:
               case "end":
