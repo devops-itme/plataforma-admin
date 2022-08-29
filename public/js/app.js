@@ -8742,7 +8742,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.package_pictures = (_data$get_documents2 = data.get_documents) === null || _data$get_documents2 === void 0 ? void 0 : _data$get_documents2.filter(function (element) {
         return element.type == 74;
       });
-      this.showDataGuide.issue = (_data$get_issue$get_i = (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i2 = _data$get_issue.get_issue) === null || _data$get_issue$get_i2 === void 0 ? void 0 : _data$get_issue$get_i2.name) !== null && _data$get_issue$get_i !== void 0 ? _data$get_issue$get_i : 'sin incidencias';
+      this.showDataGuide.issue = (_data$get_issue$get_i = (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i2 = _data$get_issue.get_issue) === null || _data$get_issue$get_i2 === void 0 ? void 0 : _data$get_issue$get_i2.name) !== null && _data$get_issue$get_i !== void 0 ? _data$get_issue$get_i : 'No registra';
       this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
     },
     getGuides: function getGuides(type) {
@@ -70497,6 +70497,8 @@ var render = function () {
                           domProps: {
                             textContent: _vm._s(
                               _vm.showDataGuide.client_document
+                                ? _vm.showDataGuide.client_document
+                                : "No registra"
                             ),
                           },
                         },

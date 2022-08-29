@@ -158,7 +158,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente Documento:</div>
-                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_document" >1191: DELIVERY</div>
+                        <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.client_document ? showDataGuide.client_document: 'No registra'" >1191: DELIVERY</div>
                     </div>
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
@@ -496,7 +496,7 @@ export default {
             this.showDataGuide.files = data.get_documents;
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
             this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
-            this.showDataGuide.issue = data.get_issue?.get_issue?.name ?? 'sin incidencias';
+            this.showDataGuide.issue = data.get_issue?.get_issue?.name ?? 'No registra';
             this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range
         },
         async getGuides(type, changeType = true) {
