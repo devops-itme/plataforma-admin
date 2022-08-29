@@ -10071,76 +10071,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       activeIndex: null,
       listData: [],
-
-      /*  lists: [
-           {
-               additional_address: 'no',
-               additional_email: 'mailcom@gamil.com',
-               additional_phone: '213',
-               address_description: 'Casa Central',
-               address_id: 1,
-               address_lat: '8.537981',
-               address_lng: '-80.782127',
-               address_name: 'Panamá',
-               app_status: 0,
-               branch_office: null,
-               city: null,
-               concept: 'adad',
-               contact: '77777777',
-               corp_value: 0,
-               country: null,
-               created_at: '2022-06-04T20:04:26.000000Z',
-               customer_document_type: '53',
-               declared: null,
-               deleted_at: null,
-           }
-       ], */
-      contact: ''
+      search: ''
     };
   },
   computed: {
     guidess: function guidess() {
-      // return this.guides.filter((tblItem) => {
-      //     return this.contact
-      //         .toString()
-      //         .toLowerCase()
-      //         .split(" ")
-      //         .every((v) =>
-      //             tblItem.address_name.toLowerCase().includes(v) ||
-      //             tblItem.contact.toLowerCase().includes(v) ||
-      //             tblItem.get_order.schedule_date.toLowerCase().includes(v) ||
-      //             tblItem.get_status_matrix.name.toLowerCase().includes(v) ||
-      //             tblItem.dispatched.toLowerCase().includes(v) ||
-      //             tblItem.route.get_messenger.name.toLowerCase().includes(v) ||
-      //             tblItem.route.get_messenger.last_name.toLowerCase().includes(v) ||
-      //             tblItem.get_order.get_user.name.toLowerCase().includes(v)
-      //             /* tblItem.id.toLowerCase().includes(v) || */
-      //             /*tblItem.get_order.order_type.toLowerCase().includes(v) ||
-      //             tblItem.app_status.toLowerCase().includes(v) ||
-      //              */
-      //         );
-      // });
-      return this.guides.sort(function (a, b) {
-        return b.updated_at.localeCompare(a.updated_at);
+      var _this = this;
+
+      return this.guides.filter(function (tblItem) {
+        return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
+          tblItem.get_status_matrix.name.toLowerCase().includes(_this.search) || tblItem.dispatched.toLowerCase().includes(_this.search) || tblItem.get_order.schedule_date.toLowerCase().includes(_this.search) || // tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
+          // tblItem.route.get_messenger.name.toLowerCase().includes(this.search) ||
+          // tblItem.route.get_messenger.last_name.toLowerCase().includes(this.search) ||
+          // tblItem.app_status.toLowerCase().includes(this.search) ||
+          tblItem.get_order.get_user.name.toLowerCase().includes(_this.search) || tblItem.contact.toLowerCase().includes(_this.search) || tblItem.address_name.toLowerCase().includes(_this.search)
+        );
       });
     }
   },
   methods: {
     rowClick: function rowClick(data, index) {
-      var _this = this;
+      var _this2 = this;
 
       this.activeIndex = index;
       this.$emit("getGuide", data);
       window.addEventListener('click', function () {
-        if (!_this.listData.includes(data.id) && data.status_matrix_id == 6) {
-          _this.listData.push(data.id);
+        if (!_this2.listData.includes(data.id) && data.status_matrix_id == 6) {
+          _this2.listData.push(data.id);
         } else {
-          _this.listData = [];
+          _this2.listData = [];
         }
       });
     },
     sendToDelivery: function sendToDelivery() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var token, myHeaders, requestOptions, response;
@@ -10157,11 +10121,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   method: "PUT",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    'guide_ids': _this2.listData
+                    'guide_ids': _this3.listData
                   })
                 };
                 _context.next = 8;
-                return _this2.requestUpdateGuidesState(requestOptions);
+                return _this3.requestUpdateGuidesState(requestOptions);
 
               case 8:
                 response = _context.sent;
@@ -15568,7 +15532,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -15587,7 +15551,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -72247,19 +72211,19 @@ var render = function () {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.contact,
-              expression: "contact",
+              value: _vm.search,
+              expression: "search",
             },
           ],
           staticClass: "form-control",
           attrs: { type: "text", placeholder: "Filtro" },
-          domProps: { value: _vm.contact },
+          domProps: { value: _vm.search },
           on: {
             input: function ($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.contact = $event.target.value
+              _vm.search = $event.target.value
             },
           },
         }),
@@ -72286,7 +72250,7 @@ var render = function () {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(this.guides, function (tblItem, index) {
+              _vm._l(this.guidess, function (tblItem, index) {
                 return _c(
                   "tr",
                   {
