@@ -131,10 +131,12 @@ export default {
             if(response.state != 200){
                 error(response.data.message);
             }
-             swal({title: "Estado Actualizado",
-              text: "",
+             swal({
+              title: "Estado Actualizado",
+              text: " ",
               icon: 'success',
-              timer: 2000})
+              timer: 2000,
+              buttons: false })
                         .then(function(){
                          location.reload();
                      }

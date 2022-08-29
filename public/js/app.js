@@ -10136,9 +10136,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 swal({
                   title: "Estado Actualizado",
-                  text: "",
+                  text: " ",
                   icon: 'success',
-                  timer: 2000
+                  timer: 2000,
+                  buttons: false
                 }).then(function () {
                   location.reload();
                 });
