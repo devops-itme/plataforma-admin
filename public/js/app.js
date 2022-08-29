@@ -10134,16 +10134,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   error(response.data.message);
                 }
 
-                window.location.reload();
                 swal({
                   title: "Estado Actualizado",
                   text: "",
-                  type: "success"
+                  icon: 'success',
+                  timer: 2000
                 }).then(function () {
                   location.reload();
                 });
 
-              case 12:
+              case 11:
               case "end":
                 return _context.stop();
             }
