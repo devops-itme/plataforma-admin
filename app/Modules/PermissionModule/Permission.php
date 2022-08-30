@@ -12,7 +12,7 @@ class Permission extends Model
     protected $table = 'permissions';
 
     protected $fillable = [
-        'actions'
+      'role_id','module_id', 'actions','state'
     ];
 
      /* Logs Config */
