@@ -51,9 +51,9 @@ class PermissionController extends Controller
                 $actions = implode(',', $item);
                 $permission->update([
                     'actions' => $actions
-                ]);
-                return redirect()->back()->with('success', 'Permisos actualizados exitosamente');
+                ]);                
             }
+            return redirect()->back()->with('success', 'Permisos actualizados exitosamente');
         } catch (\Throwable $e) {
             return redirect()->back()->with('danger', 'Error al actualizar permisos');
         }
