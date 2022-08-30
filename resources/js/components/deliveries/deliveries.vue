@@ -117,11 +117,11 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Despacho:</div>
-                        <div class="line-height-xl" v-if="showDataGuide"  v-text="showDataGuide.dispatched"></div>
+                        <div class="line-height-xl" v-if="showDataGuide"  v-text="showDataGuide.dispatched ? showDataGuide.dispatched: 'No registra'"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Ref.Cliente:</div>
-                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.ref_client"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.ref_client ? showDataGuide.ref_client: 'No registra'"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Programado:</div>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Transporte:</div>
-                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport" ></div>
+                        <div class="line-height-xl"  v-if="showDataGuide"  v-text="showDataGuide.transport ? showDataGuide.transport: 'No registra' " ></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">H.Entrega:</div>
@@ -163,7 +163,7 @@
                     <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Concepto:</div>
-                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.concept"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.concept ? showDataGuide.concept: 'No registra'"></div>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Dirección:</div>

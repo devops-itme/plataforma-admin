@@ -15539,7 +15539,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
 
 // exports
 
@@ -15558,7 +15558,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -70285,7 +70285,11 @@ var render = function () {
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(_vm.showDataGuide.dispatched),
+                          textContent: _vm._s(
+                            _vm.showDataGuide.dispatched
+                              ? _vm.showDataGuide.dispatched
+                              : "No registra"
+                          ),
                         },
                       })
                     : _vm._e(),
@@ -70300,7 +70304,11 @@ var render = function () {
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(_vm.showDataGuide.ref_client),
+                          textContent: _vm._s(
+                            _vm.showDataGuide.ref_client
+                              ? _vm.showDataGuide.ref_client
+                              : "No registra"
+                          ),
                         },
                       })
                     : _vm._e(),
@@ -70364,7 +70372,11 @@ var render = function () {
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(_vm.showDataGuide.transport),
+                          textContent: _vm._s(
+                            _vm.showDataGuide.transport
+                              ? _vm.showDataGuide.transport
+                              : "No registra"
+                          ),
                         },
                       })
                     : _vm._e(),
@@ -70492,7 +70504,11 @@ var render = function () {
                     ? _c("div", {
                         staticClass: "line-height-xl",
                         domProps: {
-                          textContent: _vm._s(_vm.showDataGuide.concept),
+                          textContent: _vm._s(
+                            _vm.showDataGuide.concept
+                              ? _vm.showDataGuide.concept
+                              : "No registra"
+                          ),
                         },
                       })
                     : _vm._e(),
