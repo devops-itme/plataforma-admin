@@ -45,7 +45,7 @@
                         <td v-if="tblItem.dispatched != null && tblItem.get_route != null && tblItem.get_route.get_messenger != null && tblItem.get_route.get_messenger.last_name == null">{{ tblItem.get_route.get_messenger.name }}</td>
                         <td v-if="tblItem.dispatched != null && tblItem.get_route == null ">Sin Asignar</td>
                         <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
-                        <td v-if="tblItem != null" >{{ tblItem.get_order.get_user.name }}</td>
+                        <td v-if="tblItem != null" >{{ tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name }}</td>
                         <td v-else>--- ---</td>
                         <td>{{ tblItem.contact }}</td>
                         <td>{{ '' }}</td>

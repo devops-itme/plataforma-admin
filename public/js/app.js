@@ -15541,7 +15541,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -15560,7 +15560,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -72373,7 +72373,13 @@ var render = function () {
                     _vm._v(" "),
                     tblItem != null
                       ? _c("td", [
-                          _vm._v(_vm._s(tblItem.get_order.get_user.name)),
+                          _vm._v(
+                            _vm._s(
+                              tblItem.get_order.get_user.name +
+                                " " +
+                                tblItem.get_order.get_user.last_name
+                            )
+                          ),
                         ])
                       : _c("td", [_vm._v("--- ---")]),
                     _vm._v(" "),
