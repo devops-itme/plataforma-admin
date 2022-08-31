@@ -109,7 +109,8 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="font-weight-bolder mb-1">Cliente:</div>
-                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.client"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.client_name"></div>
+                        <div class="line-height-xl" v-if="showDataGuide" v-text="showDataGuide.client_last_name"></div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <div class="font-weight-bolder mb-1">Destino:</div>
@@ -472,7 +473,8 @@ export default {
         getGuide(data){
             this.showGuide = data;
             this.showDataGuide.type_order = data.get_order?.get_order_type.name;
-            this.showDataGuide.client = data.get_order?.get_user.name;
+            this.showDataGuide.client_name = data.get_order?.get_user.name;
+             this.showDataGuide.client_last_name = data.get_order?.get_user.last_name;
             this.showDataGuide.posting = data?.id;
             this.showDataGuide.dispatched = data.dispatched;
             this.showDataGuide.ref_client = data.get_order?.get_user.document_number;
