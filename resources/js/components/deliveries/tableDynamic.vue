@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="cursor: pointer" v-for="tblItem, index in this.guidess" @click="rowClick(tblItem, index)" v-bind:class="{ active_row: index === activeIndex, active_list: listData.includes(tblItem.id) } " v-bind:key="index">
+                    <tr style="cursor: pointer" v-for="tblItem, index in this.guidess"  v-if="tblItem.get_route != null" @click="rowClick(tblItem, index)" v-bind:class="{ active_row: index === activeIndex, active_list: listData.includes(tblItem.id) } " v-bind:key="index">
                         <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
                         <td v-if="tblItem.get_status_matrix != null">{{ tblItem.get_status_matrix.name }}</td>
                         <td v-else>--- ---</td>
@@ -84,6 +84,7 @@ export default {
     computed: {
        guidess() {
             return this.guides.filter((tblItem) => {
+                   if (tblItem.get_route != null){
                 if(this.search == 'leido'){
             return (
                 tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(this.search)
@@ -101,15 +102,14 @@ export default {
                     tblItem.get_order.created_at.toLowerCase().includes(this.search) ||
                     tblItem.dispatched.toLowerCase().includes(this.search) ||
                     tblItem.get_order.schedule_date.toLowerCase().includes(this.search) ||
-                   // tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
-                   // tblItem.route.get_messenger.name.toLowerCase().includes(this.search) ||
-                   // tblItem.route.get_messenger.last_name.toLowerCase().includes(this.search) ||
-                   // tblItem.app_status == 'Pendiente'.toLowerCase().includes(this.search) ||
+                    tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
+                    tblItem.get_route.get_messenger.name.toLowerCase().includes(this.search) ||
                     tblItem.get_order.get_user.name.toLowerCase().includes(this.search) ||
                     tblItem.contact.toLowerCase().includes(this.search) ||
                     tblItem.address_name.toLowerCase().includes(this.search)
                 )
                     }
+                }
             });
         }
     },
