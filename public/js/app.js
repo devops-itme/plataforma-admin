@@ -10081,13 +10081,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return this.guides.filter(function (tblItem) {
-        return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
-          tblItem.get_status_matrix.name.toLowerCase().includes(_this.search) || tblItem.dispatched.toLowerCase().includes(_this.search) || tblItem.get_order.schedule_date.toLowerCase().includes(_this.search) || // tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
-          // tblItem.route.get_messenger.name.toLowerCase().includes(this.search) ||
-          // tblItem.route.get_messenger.last_name.toLowerCase().includes(this.search) ||
-          // tblItem.app_status.toLowerCase().includes(this.search) ||
-          tblItem.get_order.get_user.name.toLowerCase().includes(_this.search) || tblItem.contact.toLowerCase().includes(_this.search) || tblItem.address_name.toLowerCase().includes(_this.search)
-        );
+        if (_this.search == 'leido') {
+          return tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(_this.search);
+        }
+
+        if (_this.search == 'pendiente') {
+          return tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(_this.search);
+        }
+
+        if (_this.search != 'leido' && _this.search != 'pendiente') {
+          return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
+            tblItem.get_status_matrix.name.toLowerCase().includes(_this.search) || tblItem.dispatched.toLowerCase().includes(_this.search) || tblItem.get_order.schedule_date.toLowerCase().includes(_this.search) || // tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
+            // tblItem.route.get_messenger.name.toLowerCase().includes(this.search) ||
+            // tblItem.route.get_messenger.last_name.toLowerCase().includes(this.search) ||
+            // tblItem.app_status == 'Pendiente'.toLowerCase().includes(this.search) ||
+            tblItem.get_order.get_user.name.toLowerCase().includes(_this.search) || tblItem.contact.toLowerCase().includes(_this.search) || tblItem.address_name.toLowerCase().includes(_this.search)
+          );
+        }
       });
     }
   },
@@ -72367,7 +72377,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
-                        _vm._s(tblItem.app_status == 0 ? "Pendiente" : "Leido")
+                        _vm._s(tblItem.app_status ? "Leido" : "Pendiente")
                       ),
                     ]),
                     _vm._v(" "),

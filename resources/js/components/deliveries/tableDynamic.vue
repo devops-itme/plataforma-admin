@@ -44,7 +44,7 @@
                         <td v-if="tblItem.dispatched != null && tblItem.get_route != null && tblItem.get_route.get_messenger != null && tblItem.get_route.get_messenger.last_name != null">{{ tblItem.get_route.get_messenger.name + ' ' + tblItem.get_route.get_messenger.last_name }}</td>
                         <td v-if="tblItem.dispatched != null && tblItem.get_route != null && tblItem.get_route.get_messenger != null && tblItem.get_route.get_messenger.last_name == null">{{ tblItem.get_route.get_messenger.name }}</td>
                         <td v-if="tblItem.dispatched != null && tblItem.get_route == null ">Sin Asignar</td>
-                        <td>{{ tblItem.app_status == 0 ? 'Pendiente' : 'Leido' }}</td>
+                        <td>{{ tblItem.app_status ? 'Leido' : 'Pendiente' }}</td>
                         <td v-if="tblItem != null" >{{ tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name }}</td>
                         <td v-else>--- ---</td>
                         <td>{{ tblItem.contact }}</td>
@@ -84,6 +84,26 @@ export default {
     computed: {
        guidess() {
             return this.guides.filter((tblItem) => {
+
+                if(this.search == 'leido'){
+
+            return (
+
+                tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(this.search)
+                )
+                    }
+
+            if(this.search == 'pendiente'){
+
+            return (
+
+                tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(this.search)
+                )
+                    }
+
+
+                if(this.search != 'leido' && this.search != 'pendiente' ){
+
                 return (
                     //tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
                     tblItem.get_status_matrix.name.toLowerCase().includes(this.search) ||
@@ -92,11 +112,15 @@ export default {
                    // tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
                    // tblItem.route.get_messenger.name.toLowerCase().includes(this.search) ||
                    // tblItem.route.get_messenger.last_name.toLowerCase().includes(this.search) ||
-                   // tblItem.app_status.toLowerCase().includes(this.search) ||
+                   // tblItem.app_status == 'Pendiente'.toLowerCase().includes(this.search) ||
                     tblItem.get_order.get_user.name.toLowerCase().includes(this.search) ||
                     tblItem.contact.toLowerCase().includes(this.search) ||
                     tblItem.address_name.toLowerCase().includes(this.search)
-                );
+                )
+                    }
+
+
+
             });
         }
     },
