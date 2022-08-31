@@ -36,7 +36,7 @@
                         <td>{{ tblItem.get_order.order_type == 36 ? 'Packing' : tblItem.get_order.order_type }}</td>
                         <td v-if="tblItem.get_status_matrix != null">{{ tblItem.get_status_matrix.name }}</td>
                         <td v-else>--- ---</td>
-                        <td>{{ new Date(tblItem.created_at).toLocaleDateString()}}</td>
+                        <td>{{ tblItem.created_at.slice(0, 10)}}</td>
                         <td>{{ tblItem.dispatched }}</td>
                         <td>{{ tblItem.id }}</td>
                         <td>{{ tblItem.get_order.schedule_date }}</td>
@@ -84,29 +84,21 @@ export default {
     computed: {
        guidess() {
             return this.guides.filter((tblItem) => {
-
                 if(this.search == 'leido'){
-
             return (
-
                 tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(this.search)
                 )
                     }
-
             if(this.search == 'pendiente'){
-
             return (
-
                 tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(this.search)
                 )
                     }
-
-
                 if(this.search != 'leido' && this.search != 'pendiente' ){
-
                 return (
                     //tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
                     tblItem.get_status_matrix.name.toLowerCase().includes(this.search) ||
+                    tblItem.get_order.created_at.toLowerCase().includes(this.search) ||
                     tblItem.dispatched.toLowerCase().includes(this.search) ||
                     tblItem.get_order.schedule_date.toLowerCase().includes(this.search) ||
                    // tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
@@ -118,9 +110,6 @@ export default {
                     tblItem.address_name.toLowerCase().includes(this.search)
                 )
                     }
-
-
-
             });
         }
     },
