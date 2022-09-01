@@ -254,6 +254,34 @@ class Order extends Model
         }
     }
 
+
+    // Sorting Table Order
+    public function scopeSortByOrderNumber($query,$value)
+    {
+        if (!is_null($value))
+            return $query->orderBy('orders.created_at', $value);
+    }
+
+    public function scopeSortByOrderType($query,$value)
+    {
+        if (!is_null($value))
+            return $query->orderBy('orders.order_type', $value);
+    }
+
+    public function scopeSortByUser($query,$value)
+    {
+        if (!is_null($value)) {
+            $query->join('users as u', 'u.id', '=', 'orders.user_id')
+                  ->orderBy('u.name', $value);
+        }
+    }
+
+    public function scopeSortByOrderStatusMatrix($query,$value)
+    {
+        if (!is_null($value))
+            return $query->orderBy('status_matrix_id', $value);
+    }
+
     ////////////////////////
 
     public function orderValidate($request, $action = null, $id = null)

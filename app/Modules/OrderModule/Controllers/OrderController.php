@@ -40,12 +40,16 @@ class OrderController extends Controller
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->whereStatusMatrix([request()->state])
+            ->sortbyordernumber(request()->sortByOrderNumber)
+            ->sortbyordertype(request()->sortByOrderType)
+            ->sortbyUser(request()->sortByUser)
+            ->sortbyorderstatusmatrix(request()->SortByOrderStatusMatrix)
             ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
                 $query->where('name', '!=', 'RECOGIDO')
                 ->where('name', '!=', 'ENTREGADO');
 
             })
-            ->orderBy('id', 'DESC')
+            ->orderBy('orders.id', 'DESC')
             ->national();
 
         if (Auth::user()->getRole->name != 'Admin') {
@@ -53,11 +57,16 @@ class OrderController extends Controller
         }
         $orders = $orders->paginate(10);
 
+        $sort_by_number        = request()->sortByOrderNumber;
+        $sort_by_type          = request()->sortByOrderType;
+        $sort_by_user          = request()->sortByUser;
+        $sort_by_status_matrix = request()->SortByOrderStatusMatrix;
+
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
         $status_matrix = StatusMatrix::get();
-        return view($this->path . 'national.index', compact('orders', 'order_type', 'status_matrix'));
+        return view($this->path . 'national.index', compact('orders', 'order_type', 'status_matrix','sort_by_number','sort_by_type', 'sort_by_user','sort_by_status_matrix'));
     }
 
     /**
