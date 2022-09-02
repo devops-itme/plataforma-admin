@@ -10092,7 +10092,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
           if (_this.search != 'leido' && _this.search != 'pendiente') {
             return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
-              tblItem.get_status_matrix.name.toLowerCase().includes(_this.search) || tblItem.get_order.created_at.toLowerCase().includes(_this.search) || tblItem.dispatched.toLowerCase().includes(_this.search) || tblItem.get_order.schedule_date.toLowerCase().includes(_this.search) || tblItem.get_order.schedule_time_range.toLowerCase().includes(_this.search) || tblItem.get_route.get_messenger.name.toLowerCase().includes(_this.search) || tblItem.get_order.get_user.name.toLowerCase().includes(_this.search) || tblItem.contact.toLowerCase().includes(_this.search) || tblItem.address_name.toLowerCase().includes(_this.search)
+              tblItem.get_status_matrix.name.toLowerCase().includes(_this.search) || tblItem.get_order.created_at.toLowerCase().includes(_this.search) || tblItem.dispatched.toLowerCase().includes(_this.search) || // tblItem.id.toLowerCase().includes(this.search) ||
+              tblItem.get_order.schedule_date.toLowerCase().includes(_this.search) || tblItem.get_order.schedule_time_range.toLowerCase().includes(_this.search) || tblItem.get_route.get_messenger.name.toLowerCase().includes(_this.search) || tblItem.get_order.get_user.name.toLowerCase().includes(_this.search) || tblItem.contact.toLowerCase().includes(_this.search) || tblItem.address_name.toLowerCase().includes(_this.search)
             );
           }
         }
@@ -71755,7 +71756,11 @@ var render = function () {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(_vm._s(tblItem.get_order.get_user.name)),
+                                _vm._v(
+                                  _vm._s(tblItem.get_order.get_user.name) +
+                                    " " +
+                                    _vm._s(tblItem.get_order.get_user.last_name)
+                                ),
                               ]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.contact))]),

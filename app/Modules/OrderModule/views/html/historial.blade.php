@@ -102,7 +102,7 @@
                         <th scope="col">Número de orden</th>
                         <th scope="col">Tipo de orden</th>
                         <th scope="col">Cliente</th>
-                        <th scope="col">Fechay Hora de creación</th>
+                        <th scope="col">Fecha y Hora de creación</th>
                         <th scope="col">Estado</th>
                         <th scope="col"></th>
                     </tr>

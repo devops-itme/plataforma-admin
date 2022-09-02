@@ -202,17 +202,28 @@
                             </div>
                         </span>
                     </th>
-                    <th scope="col">Estado de pago</th>
+                    <th scope="col">Estado de pago
+                    <span style="cursor:pointer">
+                            <div style="display: inline-block;">
+                            <form class="form-inline" action="">
+                                    <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderPaidState" value="desc" />
+                                    <i> <button class="fa fa-arrow-down text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                </form>
+                            </div>
+                            <div style="display: inline-block;">
+                            <form class="form-inline" action="">
+                                <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderPaidState" value="asc" />
+                                    <i> <button name="asc" class="fa fa-arrow-up text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                </form>
+                            </div>
+                        </span>
+                    </th>
                     <th scope="col">Estado
                     <span style="cursor:pointer">
                             <div style="display: inline-block;">
                             <form class="form-inline" action="">
                                     <input type="hidden" class="form-control form-control-solid" placeholder="id" name="SortByOrderStatusMatrix" value="desc" />
-                                    @if ( $sort_by_status_matrix == 'desc' )
-                                    <i> <button class="fa fa-arrow-down " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
-                                    @else
                                     <i> <button class="fa fa-arrow-down text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
-                                    @endif
                                 </form>
                             </div>
                             <div style="display: inline-block;">
@@ -227,8 +238,9 @@
                             </div>
                         </span>
                     </th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col" ></th>
+                    <th scope="col" style="text-align:center">Acciones</th>
+
                 </tr>
             </thead>
             <tbody>

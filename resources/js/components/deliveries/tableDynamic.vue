@@ -101,6 +101,7 @@ export default {
                     tblItem.get_status_matrix.name.toLowerCase().includes(this.search) ||
                     tblItem.get_order.created_at.toLowerCase().includes(this.search) ||
                     tblItem.dispatched.toLowerCase().includes(this.search) ||
+                   // tblItem.id.toLowerCase().includes(this.search) ||
                     tblItem.get_order.schedule_date.toLowerCase().includes(this.search) ||
                     tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
                     tblItem.get_route.get_messenger.name.toLowerCase().includes(this.search) ||

@@ -71,7 +71,7 @@
                                         <td>{{ tblItem.id }}</td>
                                         <!--<td>777777</td>-->
                                         <td>{{ tblItem.get_order.schedule_date }}</td>
-                                        <td>{{ tblItem.get_order.get_user.name }}</td>
+                                        <td>{{ tblItem.get_order.get_user.name }} {{ tblItem.get_order.get_user.last_name }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
                                         <td>{{ tblItem.address_name }}</td>
