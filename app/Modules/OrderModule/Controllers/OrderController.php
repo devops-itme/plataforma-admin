@@ -393,12 +393,23 @@ class OrderController extends Controller
             ->customer(request()->name)
             ->date(request()->from, request()->to)
             ->whereStatusMatrix([request()->state])
-            ->orderBy('id', 'DESC')
+            ->sortbyordernumber(request()->sortByOrderNumber)
+            ->sortbyordertype(request()->sortByOrderType)
+            ->sortbyUser(request()->sortByUser)
+            ->sortbyorderstatusmatrix(request()->SortByOrderStatusMatrix)
+            ->orderBy('orders.id', 'DESC')
             ->with('getUser')->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
-        return view($this->path . 'historial', compact('orders', 'order_type'));
+
+        $sort_by_number        = request()->sortByOrderNumber;
+        $sort_by_type          = request()->sortByOrderType;
+        $sort_by_user          = request()->sortByUser;
+        $sort_by_status_matrix = request()->SortByOrderStatusMatrix;
+
+
+        return view($this->path . 'historial', compact('orders', 'order_type','sort_by_number','sort_by_type', 'sort_by_user','sort_by_status_matrix'));
     }
 
     public function getOrder($id)
