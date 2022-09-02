@@ -268,6 +268,12 @@ class Order extends Model
             return $query->orderBy('orders.order_type', $value);
     }
 
+    public function scopeSortByPaidStatus($query,$value)
+    {
+        if (!is_null($value))
+            return $query->orderBy('orders.paid', $value);
+    }
+
     public function scopeSortByUser($query,$value)
     {
         if (!is_null($value)) {

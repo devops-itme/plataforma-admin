@@ -109,9 +109,9 @@
                     <th scope="col">Número de orden
                         <span style="cursor:pointer">
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
+                                <form class="form-inline" action="">
                                     <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderNumber" value="desc" />
-                                    @if ( $sort_by_number == 'desc'  )
+                                    @if ( $sort_by_number == 'desc' )
                                     <i> <button class="fa fa-arrow-down " style="border: none ;  background-color: white; font-size:15px;margin-right:-10px" type="submit"></button> </i>
                                     @else
                                     <i> <button class="fa fa-arrow-down text-muted " style="border: none ;  background-color: white; font-size:15px;margin-right:-10px" type="submit"></button> </i>
@@ -119,8 +119,8 @@
                                 </form>
                             </div>
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
-                                <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderNumber" value="asc" />
+                                <form class="form-inline" action="">
+                                    <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderNumber" value="asc" />
                                     @if ( $sort_by_number == 'asc')
                                     <i> <button name="asc" class="fa fa-arrow-up " style="border: none ;  background-color: white; font-size:15px;margin-right:-10px" type="submit"></button> </i>
                                     @else
@@ -131,9 +131,9 @@
                         </span>
                     </th>
                     <th scope="col">Tipo de orden
-                    <span style="cursor:pointer">
+                        <span style="cursor:pointer">
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
+                                <form class="form-inline" action="">
                                     <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderType" value="desc" />
                                     @if ( $sort_by_type == 'desc' )
                                     <i> <button class="fa fa-arrow-down " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
@@ -143,8 +143,8 @@
                                 </form>
                             </div>
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
-                                <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderType" value="asc" />
+                                <form class="form-inline" action="">
+                                    <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderType" value="asc" />
                                     @if ( $sort_by_type == 'asc')
                                     <i> <button name="asc" class="fa fa-arrow-up " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
                                     @else
@@ -155,11 +155,11 @@
                         </span>
                     </th>
                     <th scope="col">Cliente
-                    <span style="cursor:pointer">
+                        <span style="cursor:pointer">
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
+                                <form class="form-inline" action="">
                                     <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByUser" value="desc" />
-                                    @if ( $sort_by_user == 'desc'  )
+                                    @if ( $sort_by_user == 'desc' )
                                     <i> <button class="fa fa-arrow-down " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
                                     @else
                                     <i> <button class="fa fa-arrow-down text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
@@ -167,8 +167,8 @@
                                 </form>
                             </div>
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
-                                <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByUser" value="asc" />
+                                <form class="form-inline" action="">
+                                    <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByUser" value="asc" />
                                     @if ( $sort_by_user == 'asc')
                                     <i> <button name="asc" class="fa fa-arrow-up " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
                                     @else
@@ -179,9 +179,9 @@
                         </span>
                     </th>
                     <th scope="col">Fecha y Hora de creación
-                    <span style="cursor:pointer">
+                        <span style="cursor:pointer">
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
+                                <form class="form-inline" action="">
                                     <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderNumber" value="desc" />
                                     @if ( $sort_by_number == 'desc' )
                                     <i> <button class="fa fa-arrow-down " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
@@ -191,8 +191,8 @@
                                 </form>
                             </div>
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
-                                <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderNumber" value="asc" />
+                                <form class="form-inline" action="">
+                                    <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderNumber" value="asc" />
                                     @if ( $sort_by_number == 'asc')
                                     <i> <button name="asc" class="fa fa-arrow-up " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
                                     @else
@@ -203,32 +203,44 @@
                         </span>
                     </th>
                     <th scope="col">Estado de pago
-                    <span style="cursor:pointer">
+                        <span style="cursor:pointer">
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
-                                    <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderPaidState" value="desc" />
-                                    <i> <button class="fa fa-arrow-down text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                <form class="form-inline" action="">
+                                <input type="hidden" class="form-control form-control-solid" placeholder="id" name="SortByPaidStatus" value="desc" />
+                                    @if ( $sort_by_paid_status == 'desc')
+                                    <i> <button name="asc" class="fa fa-arrow-down " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                    @else
+                                    <i> <button name="asc" class="fa fa-arrow-down text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                    @endif
                                 </form>
                             </div>
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
-                                <input type="hidden" class="form-control form-control-solid" placeholder="id" name="sortByOrderPaidState" value="asc" />
+                                <form class="form-inline" action="">
+                                    <input type="hidden" class="form-control form-control-solid" placeholder="id" name="SortByPaidStatus" value="asc" />
+                                    @if ( $sort_by_paid_status == 'asc')
+                                    <i> <button name="asc" class="fa fa-arrow-up " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                    @else
                                     <i> <button name="asc" class="fa fa-arrow-up text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                    @endif
                                 </form>
                             </div>
                         </span>
                     </th>
                     <th scope="col">Estado
-                    <span style="cursor:pointer">
+                        <span style="cursor:pointer">
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
+                                <form class="form-inline" action="">
                                     <input type="hidden" class="form-control form-control-solid" placeholder="id" name="SortByOrderStatusMatrix" value="desc" />
-                                    <i> <button class="fa fa-arrow-down text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                    @if ( $sort_by_status_matrix == 'desc')
+                                    <i> <button name="asc" class="fa fa-arrow-down " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                    @else
+                                    <i> <button name="asc" class="fa fa-arrow-down text-muted " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
+                                    @endif
                                 </form>
                             </div>
                             <div style="display: inline-block;">
-                            <form class="form-inline" action="">
-                                <input type="hidden" class="form-control form-control-solid" placeholder="id" name="SortByOrderStatusMatrix" value="asc" />
+                                <form class="form-inline" action="">
+                                    <input type="hidden" class="form-control form-control-solid" placeholder="id" name="SortByOrderStatusMatrix" value="asc" />
                                     @if ( $sort_by_status_matrix == 'asc')
                                     <i> <button name="asc" class="fa fa-arrow-up " style="border: none ;  background-color: white;font-size:15px;margin-right:-10px" type="submit"></button> </i>
                                     @else
@@ -238,9 +250,8 @@
                             </div>
                         </span>
                     </th>
-                    <th scope="col" ></th>
+                    <th scope="col"></th>
                     <th scope="col" style="text-align:center">Acciones</th>
-
                 </tr>
             </thead>
             <tbody>

@@ -43,6 +43,7 @@ class OrderController extends Controller
             ->sortbyordernumber(request()->sortByOrderNumber)
             ->sortbyordertype(request()->sortByOrderType)
             ->sortbyUser(request()->sortByUser)
+            ->sortbyPaidStatus(request()->SortByPaidStatus)
             ->sortbyorderstatusmatrix(request()->SortByOrderStatusMatrix)
             ->with('getStatusMatrix')->whereHas('getStatusMatrix', function ($query) {
                 $query->where('name', '!=', 'RECOGIDO')
@@ -60,13 +61,14 @@ class OrderController extends Controller
         $sort_by_number        = request()->sortByOrderNumber;
         $sort_by_type          = request()->sortByOrderType;
         $sort_by_user          = request()->sortByUser;
+        $sort_by_paid_status   = request()->SortByPaidStatus;
         $sort_by_status_matrix = request()->SortByOrderStatusMatrix;
 
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');
         })->get();
         $status_matrix = StatusMatrix::get();
-        return view($this->path . 'national.index', compact('orders', 'order_type', 'status_matrix','sort_by_number','sort_by_type', 'sort_by_user','sort_by_status_matrix'));
+        return view($this->path . 'national.index', compact('orders', 'order_type', 'status_matrix','sort_by_number','sort_by_type', 'sort_by_user','sort_by_paid_status','sort_by_status_matrix'));
     }
 
     /**
