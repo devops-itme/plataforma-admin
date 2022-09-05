@@ -22,11 +22,7 @@
                         </div>
                     </div>
                     <div class="collapse col-md-12 mt-4" id="collapseExample">
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Filtrar"
-                        />
+                        <input type="text" class="form-control" placeholder="Filtro" v-model.number="search" />
                     </div>
                     <div class="max-h-500px h-500px col-md-12 border rounded px-0 mt-3">
                         <div class="table-responsive h-500px">
@@ -51,7 +47,7 @@
                                     </tr>
                                 </thead>
                                 <draggable
-                                    :list="guides"
+                                    :list="guidess"
                                     group="orders"
                                     tag="tbody"
                                     :multi-drag="true"
@@ -61,7 +57,7 @@
                                     style="cursor: move"
                                 >
                                     <tr
-                                        v-for="tblItem of guides"
+                                        v-for="tblItem of this.guidess"
                                         v-bind:key="tblItem.id"
                                         class="text-center"
                                         @click="rowClick(tblItem)"
@@ -71,12 +67,12 @@
                                         <td>{{ tblItem.id }}</td>
                                         <!--<td>777777</td>-->
                                         <td>{{ tblItem.get_order.schedule_date }}</td>
-                                        <td>{{ tblItem.get_order.get_user.name }} {{ tblItem.get_order.get_user.last_name }}</td>
+                                        <td>{{ tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name  }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
                                         <td>{{ tblItem.address_name }}</td>
                                         <td>{{ tblItem.get_order.schedule_time_range }}</td>
-                                        <td>{{ formatDate(tblItem.created_at) }}</td>
+                                        <td>{{ tblItem.created_at.slice(0, 10) }}</td>
                                         <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
                                 </draggable>
@@ -134,12 +130,12 @@
                                         <td>{{ tblItem.id }}</td>
                                         <!--<td>777777</td>-->
                                         <td>{{ tblItem.get_order.schedule_date }}</td>
-                                        <td>{{ tblItem.get_order.get_user.name }}</td>
+                                        <td>{{ tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name  }}</td>
                                         <td>{{ tblItem.contact }}</td>
                                         <td>{{ tblItem.zone }}</td>
                                         <td>{{ tblItem.address_name }}</td>
                                         <td>{{ tblItem.get_order.schedule_time_range }}</td>
-                                        <td>{{ formatDate(tblItem.created_at) }}</td>
+                                        <td>{{tblItem.created_at.slice(0, 10) }}</td>
                                         <td>{{ tblItem.get_order.order_type }}</td>
                                     </tr>
                                 </draggable>
@@ -200,9 +196,38 @@ export default {
             messenger: null,
             messengerName: null,
             activeIndex: null,
+            search: ''
         };
     },
     computed: {
+
+        guidess() {
+        const search = this.search.toString().trim();
+         //const search = this.search.toLowerCase().trim();
+
+            return this.guides.filter((tblItem) => {
+            const full_name =  tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name ;
+
+                   return (
+                     //tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
+                    tblItem.id.toString().includes(search) ||
+                    tblItem.get_order.order_number.toLowerCase().includes(search) ||
+                    tblItem.get_order.order_number.includes(search) ||
+                    tblItem.get_order.schedule_date.toLowerCase().includes(search) ||
+                    tblItem.get_order.schedule_time_range.includes(search) ||
+                    full_name.toLowerCase().includes(search) ||
+                    full_name.includes(search) ||
+                    tblItem.contact.toLowerCase().includes(search) ||
+                    tblItem.contact.includes(search) ||
+                    tblItem.address_name.toLowerCase().includes(search) ||
+                    tblItem.address_name.includes(search) ||
+                    tblItem.get_order.created_at.toLowerCase().includes(this.search)
+                )
+
+
+            });
+        },
+
         filterMessengers() {
             if (this.searchMessenger) {
                 return this.messengers.filter((item) => {

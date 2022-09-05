@@ -9791,10 +9791,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 // import { Sortable, MultiDrag } from 'sortablejs';
 
  //  Sortable.mount(new MultiDrag());
@@ -9816,16 +9812,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       searchMessenger: null,
       messenger: null,
       messengerName: null,
-      activeIndex: null
+      activeIndex: null,
+      search: ''
     };
   },
   computed: {
-    filterMessengers: function filterMessengers() {
+    guidess: function guidess() {
       var _this2 = this;
+
+      var search = this.search.toString().trim(); //const search = this.search.toLowerCase().trim();
+
+      return this.guides.filter(function (tblItem) {
+        var full_name = tblItem.get_order.get_user.name + ' ' + tblItem.get_order.get_user.last_name;
+        return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
+          tblItem.id.toString().includes(search) || tblItem.get_order.order_number.toLowerCase().includes(search) || tblItem.get_order.order_number.includes(search) || tblItem.get_order.schedule_date.toLowerCase().includes(search) || tblItem.get_order.schedule_time_range.includes(search) || full_name.toLowerCase().includes(search) || full_name.includes(search) || tblItem.contact.toLowerCase().includes(search) || tblItem.contact.includes(search) || tblItem.address_name.toLowerCase().includes(search) || tblItem.address_name.includes(search) || tblItem.get_order.created_at.toLowerCase().includes(_this2.search)
+        );
+      });
+    },
+    filterMessengers: function filterMessengers() {
+      var _this3 = this;
 
       if (this.searchMessenger) {
         return this.messengers.filter(function (item) {
-          return _this2.searchMessenger.toString().toLowerCase().split(" ").every(function (v) {
+          return _this3.searchMessenger.toString().toLowerCase().split(" ").every(function (v) {
             var _item$user$document_n, _item$user$document_n2, _item$user$name, _item$user$name$toLow;
 
             return ((_item$user$document_n = item.user.document_number) === null || _item$user$document_n === void 0 ? void 0 : (_item$user$document_n2 = _item$user$document_n.toLowerCase()) === null || _item$user$document_n2 === void 0 ? void 0 : _item$user$document_n2.includes(v)) || ((_item$user$name = item.user.name) === null || _item$user$name === void 0 ? void 0 : (_item$user$name$toLow = _item$user$name.toLowerCase()) === null || _item$user$name$toLow === void 0 ? void 0 : _item$user$name$toLow.includes(v));
@@ -9851,7 +9860,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     assignateDelivery: function assignateDelivery() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _this, token, myHeaders, requestOptions;
@@ -9860,7 +9869,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(_this3.guides2.length === 0)) {
+                if (!(_this4.guides2.length === 0)) {
                   _context.next = 4;
                   break;
                 }
@@ -9872,7 +9881,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", _context.sent);
 
               case 4:
-                if (_this3.setMessenger) {
+                if (_this4.setMessenger) {
                   _context.next = 8;
                   break;
                 }
@@ -9884,7 +9893,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", _context.sent);
 
               case 8:
-                _this = _this3;
+                _this = _this4;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -9894,9 +9903,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    messenger_user_id: _this3.setMessenger,
-                    guides: _this3.guides2,
-                    state_order: _this3.tabs[1].id
+                    messenger_user_id: _this4.setMessenger,
+                    guides: _this4.guides2,
+                    state_order: _this4.tabs[1].id
                   })
                 };
                 _context.next = 17;
@@ -10080,20 +10089,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     guidess: function guidess() {
       var _this = this;
 
+      var search = this.search.toLowerCase().trim();
       return this.guides.filter(function (tblItem) {
+        var full_name = tblItem.get_order.get_user.name + ' ' + tblItem.get_order.get_user.last_name;
+
         if (tblItem.get_route != null) {
           if (_this.search == 'leido') {
-            return tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(_this.search);
+            return tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(search);
           }
 
           if (_this.search == 'pendiente') {
-            return tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(_this.search);
+            return tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(search);
           }
 
           if (_this.search != 'leido' && _this.search != 'pendiente') {
             return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
-              tblItem.get_status_matrix.name.toLowerCase().includes(_this.search) || tblItem.get_order.created_at.toLowerCase().includes(_this.search) || tblItem.dispatched.toLowerCase().includes(_this.search) || // tblItem.id.toLowerCase().includes(this.search) ||
-              tblItem.get_order.schedule_date.toLowerCase().includes(_this.search) || tblItem.get_order.schedule_time_range.toLowerCase().includes(_this.search) || tblItem.get_route.get_messenger.name.toLowerCase().includes(_this.search) || tblItem.get_order.get_user.name.toLowerCase().includes(_this.search) || tblItem.contact.toLowerCase().includes(_this.search) || tblItem.address_name.toLowerCase().includes(_this.search)
+              tblItem.get_status_matrix.name.toLowerCase().includes(search) || tblItem.get_order.created_at.toLowerCase().includes(search) || tblItem.dispatched.toLowerCase().includes(search) || tblItem.id.toString().includes(_this.search) || tblItem.get_order.schedule_date.toLowerCase().includes(search) || tblItem.get_order.schedule_time_range.toLowerCase().includes(search) || tblItem.get_route.get_messenger.name.toLowerCase().includes(search) || tblItem.get_route.get_messenger.name.includes(search) || full_name.toLowerCase().includes(search) || full_name.includes(search) || tblItem.contact.toLowerCase().includes(search) || tblItem.contact.includes(search) || tblItem.address_name.toLowerCase().includes(search) || tblItem.address_name.includes(search)
             );
           }
         }
@@ -71691,7 +71702,40 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(1),
+            _c(
+              "div",
+              {
+                staticClass: "collapse col-md-12 mt-4",
+                attrs: { id: "collapseExample" },
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model.number",
+                      value: _vm.search,
+                      expression: "search",
+                      modifiers: { number: true },
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Filtro" },
+                  domProps: { value: _vm.search },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.search = _vm._n($event.target.value)
+                    },
+                    blur: function ($event) {
+                      return _vm.$forceUpdate()
+                    },
+                  },
+                }),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -71708,14 +71752,14 @@ var render = function () {
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
-                      _vm._m(2),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c(
                         "draggable",
                         {
                           staticStyle: { cursor: "move" },
                           attrs: {
-                            list: _vm.guides,
+                            list: _vm.guidess,
                             group: "orders",
                             tag: "tbody",
                             "multi-drag": true,
@@ -71730,7 +71774,7 @@ var render = function () {
                             },
                           },
                         },
-                        _vm._l(_vm.guides, function (tblItem) {
+                        _vm._l(this.guidess, function (tblItem) {
                           return _c(
                             "tr",
                             {
@@ -71757,9 +71801,11 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
-                                  _vm._s(tblItem.get_order.get_user.name) +
-                                    " " +
-                                    _vm._s(tblItem.get_order.get_user.last_name)
+                                  _vm._s(
+                                    tblItem.get_order.get_user.name +
+                                      " " +
+                                      tblItem.get_order.get_user.last_name
+                                  )
                                 ),
                               ]),
                               _vm._v(" "),
@@ -71776,9 +71822,7 @@ var render = function () {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(
-                                  _vm._s(_vm.formatDate(tblItem.created_at))
-                                ),
+                                _vm._v(_vm._s(tblItem.created_at.slice(0, 10))),
                               ]),
                               _vm._v(" "),
                               _c("td", [
@@ -71837,7 +71881,7 @@ var render = function () {
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
-                      _vm._m(3),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c(
                         "draggable",
@@ -71885,7 +71929,13 @@ var render = function () {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(_vm._s(tblItem.get_order.get_user.name)),
+                                _vm._v(
+                                  _vm._s(
+                                    tblItem.get_order.get_user.name +
+                                      " " +
+                                      tblItem.get_order.get_user.last_name
+                                  )
+                                ),
                               ]),
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(tblItem.contact))]),
@@ -71901,9 +71951,7 @@ var render = function () {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(
-                                  _vm._s(_vm.formatDate(tblItem.created_at))
-                                ),
+                                _vm._v(_vm._s(tblItem.created_at.slice(0, 10))),
                               ]),
                               _vm._v(" "),
                               _c("td", [
@@ -72037,24 +72085,6 @@ var staticRenderFns = [
         ]
       ),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "collapse col-md-12 mt-4",
-        attrs: { id: "collapseExample" },
-      },
-      [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Filtrar" },
-        }),
-      ]
-    )
   },
   function () {
     var _vm = this

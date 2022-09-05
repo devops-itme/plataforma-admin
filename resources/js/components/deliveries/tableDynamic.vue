@@ -82,32 +82,41 @@ export default {
     },
 
     computed: {
+
        guidess() {
+        const search = this.search.toLowerCase().trim();
+
+
             return this.guides.filter((tblItem) => {
+                  const full_name =  tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name ;
                    if (tblItem.get_route != null){
                 if(this.search == 'leido'){
             return (
-                tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(this.search)
+                tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(search)
                 )
                     }
             if(this.search == 'pendiente'){
             return (
-                tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(this.search)
+                tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(search)
                 )
                     }
                 if(this.search != 'leido' && this.search != 'pendiente' ){
                 return (
                     //tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
-                    tblItem.get_status_matrix.name.toLowerCase().includes(this.search) ||
-                    tblItem.get_order.created_at.toLowerCase().includes(this.search) ||
-                    tblItem.dispatched.toLowerCase().includes(this.search) ||
-                   // tblItem.id.toLowerCase().includes(this.search) ||
-                    tblItem.get_order.schedule_date.toLowerCase().includes(this.search) ||
-                    tblItem.get_order.schedule_time_range.toLowerCase().includes(this.search) ||
-                    tblItem.get_route.get_messenger.name.toLowerCase().includes(this.search) ||
-                    tblItem.get_order.get_user.name.toLowerCase().includes(this.search) ||
-                    tblItem.contact.toLowerCase().includes(this.search) ||
-                    tblItem.address_name.toLowerCase().includes(this.search)
+                    tblItem.get_status_matrix.name.toLowerCase().includes(search) ||
+                    tblItem.get_order.created_at.toLowerCase().includes(search) ||
+                    tblItem.dispatched.toLowerCase().includes(search) ||
+                    tblItem.id.toString().includes(this.search) ||
+                    tblItem.get_order.schedule_date.toLowerCase().includes(search) ||
+                    tblItem.get_order.schedule_time_range.toLowerCase().includes(search) ||
+                    tblItem.get_route.get_messenger.name.toLowerCase().includes(search) ||
+                    tblItem.get_route.get_messenger.name.includes(search) ||
+                    full_name.toLowerCase().includes(search) ||
+                    full_name.includes(search) ||
+                    tblItem.contact.toLowerCase().includes(search) ||
+                    tblItem.contact.includes(search) ||
+                    tblItem.address_name.toLowerCase().includes(search) ||
+                    tblItem.address_name.includes(search)
                 )
                     }
                 }
