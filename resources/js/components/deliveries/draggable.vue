@@ -223,8 +223,6 @@ export default {
                     tblItem.address_name.includes(search)
                   //  tblItem.get_order.created_at.toLowerCase().includes(search)
                 )
-
-
             });
         },
 

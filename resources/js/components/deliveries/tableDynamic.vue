@@ -28,7 +28,19 @@
                 :style="{ 'width': widthTable + 'px', 'table-layout': 'auto' }">
                 <thead class="thead-light">
                     <tr class="text-center">
-                        <th scope="col" v-for="item of columnsNames" :key="item">{{ item }}</th>
+                        <th >Tipo</th>
+                        <th>Estado</th>
+                        <th><i class="fa fa-sort-down" v-on:click="sorted_date"></i>Fecha Evento</th>
+                        <th>Despacho</th>
+                        <th >Destino</th>
+                        <th>F.Prog</th>
+                        <th>H.Entrega</th>
+                        <th>Mensajero</th>
+                        <th>Estado App</th>
+                        <th> <i class="fa fa-sort-down"  v-on:click="sortedItems"></i> Cliente</th>
+                        <th>Contacto</th>
+                        <th>Barrio/Zona</th>
+                        <th>Dirección</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,9 +89,17 @@ export default {
         return {
             activeIndex: null,
             listData: [],
-            search: ''
+            search: '',
+            sortedData: [],
+            sortedbyASC: true
         }
     },
+
+mounted() {
+    this.sortedData = this.guides;
+    console.log(this.sortedData);
+  },
+
 
     computed: {
 
@@ -123,7 +143,28 @@ export default {
             });
         }
     },
+
+
     methods: {
+
+
+   saludar: function (event) {
+      // `this` dentro de los métodos apunta a la instancia de Vue
+      alert('Hola ' + this.name + '!')
+      // `evento` es el evento DOM nativo
+      if (event) {
+        alert(event.target.tagName)
+      }
+    },
+
+    sorted_date(){
+         return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+    },
+
+  sortedItems(){
+         return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
+    },
+
         rowClick(data, index) {
             this.activeIndex = index;
             this.$emit("getGuide", data);

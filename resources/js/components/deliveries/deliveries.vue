@@ -92,7 +92,7 @@
                     aria-labelledby="consultas-tab"
                 >
                     <!-- Queries and Edit table -->
-                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides_bydate :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600 :typeGuide="type_guide"></tabledy>
+                    <tabledy :rows=columns.inEdit.length @getGuide="getGuide" :guides=guides :tabs=tabs :columnsNames=columns.inEdit :widthTable=1600 :typeGuide="type_guide"></tabledy>
                 </div>
             </div>
             </div>

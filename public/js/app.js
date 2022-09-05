@@ -10069,6 +10069,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -10082,8 +10094,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       activeIndex: null,
       listData: [],
-      search: ''
+      search: '',
+      sortedData: [],
+      sortedbyASC: true
     };
+  },
+  mounted: function mounted() {
+    this.sortedData = this.guides;
+    console.log(this.sortedData);
   },
   computed: {
     guidess: function guidess() {
@@ -10112,6 +10130,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    saludar: function saludar(event) {
+      // `this` dentro de los métodos apunta a la instancia de Vue
+      alert('Hola ' + this.name + '!'); // `evento` es el evento DOM nativo
+
+      if (event) {
+        alert(event.target.tagName);
+      }
+    },
+    sorted_date: function sorted_date() {
+      return this.guides.sort(function (a, b) {
+        return b.created_at.localeCompare(a.created_at);
+      });
+    },
+    sortedItems: function sortedItems() {
+      return this.guides.sort(function (a, b) {
+        return b.contact.localeCompare(a.contact);
+      });
+    },
     rowClick: function rowClick(data, index) {
       var _this2 = this;
 
@@ -70193,7 +70229,7 @@ var render = function () {
                     _c("tabledy", {
                       attrs: {
                         rows: _vm.columns.inEdit.length,
-                        guides: _vm.guides_bydate,
+                        guides: _vm.guides,
                         tabs: _vm.tabs,
                         columnsNames: _vm.columns.inEdit,
                         widthTable: 1600,
@@ -72315,16 +72351,45 @@ var render = function () {
           },
           [
             _c("thead", { staticClass: "thead-light" }, [
-              _c(
-                "tr",
-                { staticClass: "text-center" },
-                _vm._l(_vm.columnsNames, function (item) {
-                  return _c("th", { key: item, attrs: { scope: "col" } }, [
-                    _vm._v(_vm._s(item)),
-                  ])
-                }),
-                0
-              ),
+              _c("tr", { staticClass: "text-center" }, [
+                _c("th", [_vm._v("Tipo")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Estado")]),
+                _vm._v(" "),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_date },
+                  }),
+                  _vm._v("Fecha Evento"),
+                ]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Despacho")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Destino")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("F.Prog")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("H.Entrega")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Mensajero")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Estado App")]),
+                _vm._v(" "),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sortedItems },
+                  }),
+                  _vm._v(" Cliente"),
+                ]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Contacto")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Barrio/Zona")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Dirección")]),
+              ]),
             ]),
             _vm._v(" "),
             _c(
