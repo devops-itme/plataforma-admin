@@ -27,20 +27,20 @@
             <table class="table table-sm table-bordered"
                 :style="{ 'width': widthTable + 'px', 'table-layout': 'auto' }">
                 <thead class="thead-light">
-                    <tr class="text-center">
+                 <tr class="text-center">
                         <th >Tipo</th>
-                        <th>Estado</th>
-                        <th><i class="fa fa-sort-down" v-on:click="sorted_date"></i>Fecha Evento</th>
-                        <th>Despacho</th>
-                        <th >Destino</th>
+                        <th><i class="fa fa-sort-down" v-on:click="sorted_estado_desc"></i> <i class="fa fa-sort-up" v-on:click="sorted_estado_asc"></i>Estado</th>
+                        <th><i class="fa fa-sort-down" v-on:click="sorted_evento_desc"></i> <i class="fa fa-sort-up" v-on:click="sorted_evento_asc"></i>Fecha Evento</th>
+                        <th><i class="fa fa-sort-down" v-on:click="sorted_despacho_desc"></i> <i class="fa fa-sort-up" v-on:click="sorted_despacho_asc"></i>Despacho</th>
+                        <th><i class="fa fa-sort-down" v-on:click="sorted_destino_desc"></i> <i class="fa fa-sort-up" v-on:click="sorted_destino_asc"></i>Destino</th>
                         <th>F.Prog</th>
                         <th>H.Entrega</th>
                         <th>Mensajero</th>
                         <th>Estado App</th>
-                        <th> <i class="fa fa-sort-down"  v-on:click="sortedItems"></i> Cliente</th>
-                        <th>Contacto</th>
+                        <th>Cliente</th>
+                        <th><i class="fa fa-sort-down" v-on:click="sorted_contacto_desc"></i><i class="fa fa-sort-up"  v-on:click="sorted_contacto_asc"></i>Contacto</th>
                         <th>Barrio/Zona</th>
-                        <th>Dirección</th>
+                        <th><i class="fa fa-sort-down"  v-on:click="sorted_direccion_desc"></i><i class="fa fa-sort-up"  v-on:click="sorted_direccion_asc"></i>Dirección</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -146,24 +146,110 @@ mounted() {
 
 
     methods: {
-
-
-   saludar: function (event) {
-      // `this` dentro de los métodos apunta a la instancia de Vue
-      alert('Hola ' + this.name + '!')
-      // `evento` es el evento DOM nativo
-      if (event) {
-        alert(event.target.tagName)
-      }
+   //Estado sorting
+    sorted_estado_asc(){
+         return this.guides.sort((a, b) => a.get_status_matrix.name.localeCompare(b.get_status_matrix.name));
     },
 
-    sorted_date(){
+     sorted_estado_desc(){
+         return this.guides.sort((a, b) => b.get_status_matrix.name.localeCompare(a.get_status_matrix.name));
+    },
+
+     //Evento Sorting
+    sorted_evento_asc(){
+         return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
+    },
+
+     sorted_evento_desc(){
          return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
     },
 
-  sortedItems(){
+         //Despacho Sorting
+    sorted_despacho_asc(){
+         return this.guides.sort((a, b) => a.dispatched.localeCompare(b.dispatched));
+    },
+
+     sorted_despacho_desc(){
+         return this.guides.sort((a, b) => b.dispatched.localeCompare(a.dispatched));
+    },
+
+    //Destino Sorting
+    sorted_destino_asc(){   // Molestando
+         return this.guides.sort((a, b) => a.tblItem.id.toString().localeCompare(b.tblItem.id.toString()));
+    },
+
+     sorted_destino_desc(){
+         return this.guides.sort((a, b) => b.tblItem.id.toString().localeCompare(a.tblItem.id.toString()));
+    },
+
+
+     //Fecha Prog. Sorting
+    sorted_fecha_prog_asc(){
+         return this.guides.sort((a, b) => a.get_order.schedule_date.localeCompare(b.get_order.schedule_date));
+    },
+
+     sorted_fecha_prog_desc(){
+         return this.guides.sort((a, b) => b.get_order.schedule_date.localeCompare(a.get_order.schedule_date));
+    },
+
+//   //Hora Entrega Sorting
+//      sorted_hora_ent_asc(){
+//          return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
+//     },
+
+//      sorted_hora_ent_desc(){
+//          return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
+//     },
+
+      // Mensajero Sorting
+     sorted_mensajero_asc(){
+         return this.guides.sort((a, b) => a.get_route.get_messenger.name.localeCompare(b.get_route.get_messenger.name));
+    },
+
+     sorted_mensajero_desc(){
+         return this.guides.sort((a, b) => b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name));
+    },
+
+    //     // Estado App Sorting
+    //  sorted_estado_app_asc(){
+    //      return this.guides.sort((a, b) => a.app_status .localeCompare(b.app_status ));
+    // },
+
+    //  sorted_estado_app_desc(){
+    //      return this.guides.sort((a, b) => b.app_status .localeCompare(a.app_status ));
+    // },
+
+
+//Cliente Sorting
+//   sorted_cliente_asc(){
+//          return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
+//     },
+
+//     sorted_cliente_desc(){
+//          return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
+//     },
+
+//Cliente Sorting
+  sorted_contacto_asc(){
+         return this.guides.sort((a, b) => a.contact.localeCompare(b.contact));
+    },
+
+    sorted_contacto_desc(){
          return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
     },
+
+
+    //Cliente direccion
+  sorted_direccion_asc(){
+         return this.guides.sort((a, b) => a.address_name.localeCompare(b.address_name));
+    },
+
+    sorted_direccion_desc(){
+         return this.guides.sort((a, b) => b.address_name.localeCompare(a.address_name));
+    },
+
+
+
 
         rowClick(data, index) {
             this.activeIndex = index;

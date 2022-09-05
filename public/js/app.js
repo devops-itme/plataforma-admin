@@ -10130,22 +10130,114 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    saludar: function saludar(event) {
-      // `this` dentro de los métodos apunta a la instancia de Vue
-      alert('Hola ' + this.name + '!'); // `evento` es el evento DOM nativo
-
-      if (event) {
-        alert(event.target.tagName);
-      }
+    //Estado sorting
+    sorted_estado_asc: function sorted_estado_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.get_status_matrix.name.localeCompare(b.get_status_matrix.name);
+      });
     },
-    sorted_date: function sorted_date() {
+    sorted_estado_desc: function sorted_estado_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.get_status_matrix.name.localeCompare(a.get_status_matrix.name);
+      });
+    },
+    //Evento Sorting
+    sorted_evento_asc: function sorted_evento_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.created_at.localeCompare(b.created_at);
+      });
+    },
+    sorted_evento_desc: function sorted_evento_desc() {
       return this.guides.sort(function (a, b) {
         return b.created_at.localeCompare(a.created_at);
       });
     },
-    sortedItems: function sortedItems() {
+    //Despacho Sorting
+    sorted_despacho_asc: function sorted_despacho_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.dispatched.localeCompare(b.dispatched);
+      });
+    },
+    sorted_despacho_desc: function sorted_despacho_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.dispatched.localeCompare(a.dispatched);
+      });
+    },
+    //Destino Sorting
+    sorted_destino_asc: function sorted_destino_asc() {
+      // Molestando
+      return this.guides.sort(function (a, b) {
+        return a.tblItem.id.toString().localeCompare(b.tblItem.id.toString());
+      });
+    },
+    sorted_destino_desc: function sorted_destino_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.tblItem.id.toString().localeCompare(a.tblItem.id.toString());
+      });
+    },
+    //Fecha Prog. Sorting
+    sorted_fecha_prog_asc: function sorted_fecha_prog_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.get_order.schedule_date.localeCompare(b.get_order.schedule_date);
+      });
+    },
+    sorted_fecha_prog_desc: function sorted_fecha_prog_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.get_order.schedule_date.localeCompare(a.get_order.schedule_date);
+      });
+    },
+    //   //Hora Entrega Sorting
+    //      sorted_hora_ent_asc(){
+    //          return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
+    //     },
+    //      sorted_hora_ent_desc(){
+    //          return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
+    //     },
+    // Mensajero Sorting
+    sorted_mensajero_asc: function sorted_mensajero_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.get_route.get_messenger.name.localeCompare(b.get_route.get_messenger.name);
+      });
+    },
+    sorted_mensajero_desc: function sorted_mensajero_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name);
+      });
+    },
+    //     // Estado App Sorting
+    //  sorted_estado_app_asc(){
+    //      return this.guides.sort((a, b) => a.app_status .localeCompare(b.app_status ));
+    // },
+    //  sorted_estado_app_desc(){
+    //      return this.guides.sort((a, b) => b.app_status .localeCompare(a.app_status ));
+    // },
+    //Cliente Sorting
+    //   sorted_cliente_asc(){
+    //          return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
+    //     },
+    //     sorted_cliente_desc(){
+    //          return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
+    //     },
+    //Cliente Sorting
+    sorted_contacto_asc: function sorted_contacto_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.contact.localeCompare(b.contact);
+      });
+    },
+    sorted_contacto_desc: function sorted_contacto_desc() {
       return this.guides.sort(function (a, b) {
         return b.contact.localeCompare(a.contact);
+      });
+    },
+    //Cliente direccion
+    sorted_direccion_asc: function sorted_direccion_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.address_name.localeCompare(b.address_name);
+      });
+    },
+    sorted_direccion_desc: function sorted_direccion_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.address_name.localeCompare(a.address_name);
       });
     },
     rowClick: function rowClick(data, index) {
@@ -72354,19 +72446,57 @@ var render = function () {
               _c("tr", { staticClass: "text-center" }, [
                 _c("th", [_vm._v("Tipo")]),
                 _vm._v(" "),
-                _c("th", [_vm._v("Estado")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_estado_desc },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_estado_asc },
+                  }),
+                  _vm._v("Estado"),
+                ]),
                 _vm._v(" "),
                 _c("th", [
                   _c("i", {
                     staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_date },
+                    on: { click: _vm.sorted_evento_desc },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_evento_asc },
                   }),
                   _vm._v("Fecha Evento"),
                 ]),
                 _vm._v(" "),
-                _c("th", [_vm._v("Despacho")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_despacho_desc },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_despacho_asc },
+                  }),
+                  _vm._v("Despacho"),
+                ]),
                 _vm._v(" "),
-                _c("th", [_vm._v("Destino")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_destino_desc },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_destino_asc },
+                  }),
+                  _vm._v("Destino"),
+                ]),
                 _vm._v(" "),
                 _c("th", [_vm._v("F.Prog")]),
                 _vm._v(" "),
@@ -72376,19 +72506,33 @@ var render = function () {
                 _vm._v(" "),
                 _c("th", [_vm._v("Estado App")]),
                 _vm._v(" "),
+                _c("th", [_vm._v("Cliente")]),
+                _vm._v(" "),
                 _c("th", [
                   _c("i", {
                     staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sortedItems },
+                    on: { click: _vm.sorted_contacto_desc },
                   }),
-                  _vm._v(" Cliente"),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_contacto_asc },
+                  }),
+                  _vm._v("Contacto"),
                 ]),
-                _vm._v(" "),
-                _c("th", [_vm._v("Contacto")]),
                 _vm._v(" "),
                 _c("th", [_vm._v("Barrio/Zona")]),
                 _vm._v(" "),
-                _c("th", [_vm._v("Dirección")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_direccion_desc },
+                  }),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_direccion_asc },
+                  }),
+                  _vm._v("Dirección"),
+                ]),
               ]),
             ]),
             _vm._v(" "),
