@@ -47,7 +47,7 @@
                                     </tr>
                                 </thead>
                                 <draggable
-                                    :list="guidess"
+                                    :list="this.guidess"
                                     group="orders"
                                     tag="tbody"
                                     :multi-drag="true"
@@ -202,8 +202,8 @@ export default {
     computed: {
 
         guidess() {
-        const search = this.search.toString().trim();
-         //const search = this.search.toLowerCase().trim();
+        const search = this.search.toString();
+       // const search = this.search.toLowerCase().trim();
 
             return this.guides.filter((tblItem) => {
             const full_name =  tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name ;
@@ -213,15 +213,15 @@ export default {
                     tblItem.id.toString().includes(search) ||
                     tblItem.get_order.order_number.toLowerCase().includes(search) ||
                     tblItem.get_order.order_number.includes(search) ||
-                    tblItem.get_order.schedule_date.toLowerCase().includes(search) ||
-                    tblItem.get_order.schedule_time_range.includes(search) ||
+                   tblItem.get_order.schedule_date.includes(search) ||
+                    //tblItem.get_order.schedule_time_range.includes(this.search) ||
                     full_name.toLowerCase().includes(search) ||
                     full_name.includes(search) ||
                     tblItem.contact.toLowerCase().includes(search) ||
                     tblItem.contact.includes(search) ||
                     tblItem.address_name.toLowerCase().includes(search) ||
-                    tblItem.address_name.includes(search) ||
-                    tblItem.get_order.created_at.toLowerCase().includes(this.search)
+                    tblItem.address_name.includes(search)
+                  //  tblItem.get_order.created_at.toLowerCase().includes(search)
                 )
 
 
