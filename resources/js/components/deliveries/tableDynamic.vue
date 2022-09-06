@@ -28,19 +28,19 @@
                 :style="{ 'width': widthTable + 'px', 'table-layout': 'auto' }">
                 <thead class="thead-light">
                  <tr class="text-center">
-                        <th >Tipo</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_estado_desc"></i> <i class="fa fa-sort-up" @click="sorted_estado_asc"></i>Estado</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_evento_desc"></i> <i class="fa fa-sort-up" @click="sorted_evento_asc"></i>Fecha Evento</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_despacho_desc"></i> <i class="fa fa-sort-up" @click="sorted_despacho_asc"></i>Despacho</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_destino_desc"></i> <i class="fa fa-sort-up" @click="sorted_destino_asc"></i>Destino</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_fecha_prog_desc"></i> <i class="fa fa-sort-up" @click="sorted_fecha_prog_asc"></i>F.Prog</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_hora_ent_desc"></i> <i class="fa fa-sort-up" @click="sorted_hora_ent_asc"></i>H.Entrega</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_mensajero_desc"></i> <i class="fa fa-sort-up" @click="sorted_mensajero_asc"></i>Mensajero</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_estado_app_desc"></i> <i class="fa fa-sort-up" @click="sorted_estado_app_asc"></i>Estado App</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_contacto_desc"></i><i class="fa fa-sort-up"  @click="sorted_contacto_asc"></i>Cliente</th>
-                        <th><i class="fa fa-sort-down" @click="sorted_contacto_desc"></i><i class="fa fa-sort-up"  @click="sorted_contacto_asc"></i>Contacto</th>
+                        <th>Tipo </th>
+                        <th>Estado <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_estado_asc" ></i> <i class="fa fa-sort-down" @click="sorted_estado_desc " ></i> </div> </th>
+                        <th>Fecha Evento <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_evento_asc" ></i> <i class="fa fa-sort-down" @click="sorted_evento_desc " ></i> </div></th>
+                        <th>Despacho <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_despacho_asc" ></i> <i class="fa fa-sort-down" @click="sorted_despacho_desc " ></i> </div></th>
+                        <th>Destino <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_destino_asc" ></i> <i class="fa fa-sort-down" @click="sorted_destino_desc " ></i> </div></th>
+                        <th>F.Prog <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_fecha_prog_asc" ></i> <i class="fa fa-sort-down" @click="sorted_fecha_prog_desc " ></i> </div></th>
+                        <th>H.Entrega <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_hora_ent_asc" ></i> <i class="fa fa-sort-down" @click="sorted_hora_ent_desc " ></i> </div></th>
+                        <th>Mensajero <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_mensajero_asc" ></i> <i class="fa fa-sort-down" @click="sorted_mensajero_desc " ></i> </div></th>
+                        <th>Estado App <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_estado_app_asc" ></i> <i class="fa fa-sort-down" @click="sorted_estado_app_asc " ></i> </div></th>
+                        <th>Cliente <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_cliente_asc" ></i> <i class="fa fa-sort-down" @click="sorted_cliente_desc " ></i> </div></th>
+                        <th>Contacto <div style="display: flex; flex-direction: column;´"> <i class="fa fa-sort-up"  @click="sorted_contacto_asc" ></i> <i class="fa fa-sort-down" @click="sorted_contacto_desc " ></i> </div></th>
                         <th>Barrio/Zona</th>
-                        <th><i class="fa fa-sort-down"  v-on:click="sorted_direccion_desc"></i><i class="fa fa-sort-up"  v-on:click="sorted_direccion_asc"></i>Dirección</th>
+                        <th>Dirección <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_direccion_asc" ></i> <i class="fa fa-sort-down" @click="sorted_direccion_desc " ></i> </div></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -175,11 +175,11 @@ mounted() {
 
     //Destino Sorting
     sorted_destino_asc(){   // Molestando
-         return this.guides.sort((a, b) => a.tblItem.id.toString().localeCompare(b.tblItem.id.toString()));
+         return this.guides.sort((a, b) => a.tblItem.id.localeCompare(b.tblItem.id));
     },
 
      sorted_destino_desc(){
-         return this.guides.sort((a, b) => b.tblItem.id.toString().localeCompare(a.tblItem.id.toString()));
+         return this.guides.sort((a, b) => b.tblItem.id.localeCompare(a.tblItem.id ));
     },
 
 
@@ -212,11 +212,11 @@ mounted() {
 
         // Estado App Sorting
      sorted_estado_app_asc(){
-         return this.guides.sort((a, b) => a.app_status .localeCompare(b.app_status ));
+         return this.guides.sort((a, b) => a.app_status.toString() .localeCompare(b.app_status.toString() ));
     },
 
      sorted_estado_app_desc(){
-         return this.guides.sort((a, b) => b.app_status .localeCompare(a.app_status ));
+         return this.guides.sort((a, b) => b.app_status.toString() .localeCompare(a.app_status.toString() ));
     },
 
 
@@ -238,7 +238,6 @@ mounted() {
          return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
     },
 
-
     //Cliente direccion
   sorted_direccion_asc(){
          return this.guides.sort((a, b) => a.address_name.localeCompare(b.address_name));
@@ -247,9 +246,6 @@ mounted() {
     sorted_direccion_desc(){
          return this.guides.sort((a, b) => b.address_name.localeCompare(a.address_name));
     },
-
-
-
 
         rowClick(data, index) {
             this.activeIndex = index;
