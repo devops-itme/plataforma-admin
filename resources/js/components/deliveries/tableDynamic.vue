@@ -29,18 +29,18 @@
                 <thead class="thead-light">
                  <tr class="text-center">
                         <th>Tipo </th>
-                        <th>Estado <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_estado_asc" ></i> <i class="fa fa-sort-down" @click="sorted_estado_desc " ></i> </div> </th>
-                        <th>Fecha Evento <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_evento_asc" ></i> <i class="fa fa-sort-down" @click="sorted_evento_desc " ></i> </div></th>
-                        <th>Despacho <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_despacho_asc" ></i> <i class="fa fa-sort-down" @click="sorted_despacho_desc " ></i> </div></th>
-                        <th>Destino <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_destino_asc" ></i> <i class="fa fa-sort-down" @click="sorted_destino_desc " ></i> </div></th>
-                        <th>F.Prog <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_fecha_prog_asc" ></i> <i class="fa fa-sort-down" @click="sorted_fecha_prog_desc " ></i> </div></th>
-                        <th>H.Entrega <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_hora_ent_asc" ></i> <i class="fa fa-sort-down" @click="sorted_hora_ent_desc " ></i> </div></th>
-                        <th>Mensajero <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_mensajero_asc" ></i> <i class="fa fa-sort-down" @click="sorted_mensajero_desc " ></i> </div></th>
-                        <th>Estado App <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_estado_app_asc" ></i> <i class="fa fa-sort-down" @click="sorted_estado_app_desc " ></i> </div></th>
-                        <th>Cliente <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_cliente_asc" ></i> <i class="fa fa-sort-down" @click="sorted_cliente_desc " ></i> </div></th>
-                        <th>Contacto <div style="display: flex; flex-direction: column;´"> <i class="fa fa-sort-up"  @click="sorted_contacto_asc" ></i> <i class="fa fa-sort-down" @click="sorted_contacto_desc " ></i> </div></th>
-                        <th>Barrio/Zona</th>
-                        <th>Dirección <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_direccion_asc" ></i> <i class="fa fa-sort-down" @click="sorted_direccion_desc " ></i> </div></th>
+                        <th class="text-nowrap">Estado  <i class="fa fa-sort-up"  @click="sorted_estado_asc" ></i> <i class="fa fa-sort-down" @click="sorted_estado_desc " ></i></th>
+                        <th class="text-nowrap">Fecha Evento  <i class="fa fa-sort-up"  @click="sorted_evento_asc" ></i> <i class="fa fa-sort-down" @click="sorted_evento_desc " ></i></th>
+                        <th class="text-nowrap" >Despacho  <i class="fa fa-sort-up"  @click="sorted_despacho_asc" ></i> <i class="fa fa-sort-down" @click="sorted_despacho_desc " ></i></th>
+                        <th class="text-nowrap">Destino  <i class="fa fa-sort-up"  @click="sorted_destino_asc" ></i> <i class="fa fa-sort-down" @click="sorted_destino_desc " ></i> </th>
+                        <th class="text-nowrap">F.Prog  <i class="fa fa-sort-up"  @click="sorted_fecha_prog_asc" ></i> <i class="fa fa-sort-down" @click="sorted_fecha_prog_desc " ></i></th>
+                        <th class="text-nowrap">H.Entrega  <i class="fa fa-sort-up"  @click="sorted_hora_ent_asc" ></i> <i class="fa fa-sort-down" @click="sorted_hora_ent_desc " ></i></th>
+                        <th class="text-nowrap">Mensajero  <i class="fa fa-sort-up"  @click="sorted_mensajero_asc" ></i> <i class="fa fa-sort-down" @click="sorted_mensajero_desc " ></i></th>
+                        <th class="text-nowrap">Estado App  <i class="fa fa-sort-up"  @click="sorted_estado_app_asc" ></i> <i class="fa fa-sort-down" @click="sorted_estado_app_desc " ></i></th>
+                        <th class="text-nowrap">Cliente  <i class="fa fa-sort"  @click="sorted_cliente_asc" ></i> <i class="fa fa-sort-down" @click="sorted_cliente_desc " ></i> </th>
+                        <th class="text-nowrap">Contacto  <i class="fa fa-sort-up align-middle"  @click="sorted_contacto_asc" ></i> <i class="fa fa-sort-down align-middle" @click="sorted_contacto_desc " ></i></th>
+                        <th class="text-nowrap">Barrio/Zona</th>
+                        <th class="text-nowrap">Dirección  <i class="fa fa-sort-up"  @click="sorted_direccion_asc" ></i> <i class="fa fa-sort-down" @click="sorted_direccion_desc " ></i></th>
                     </tr>
                 </thead>
                 <tbody>
