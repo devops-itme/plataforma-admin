@@ -72582,12 +72582,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_estado_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_estado_desc },
                             }),
                           ]),
@@ -72613,12 +72613,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_evento_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_evento_desc },
                             }),
                           ]),
@@ -72644,12 +72644,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_despacho_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_despacho_desc },
                             }),
                           ]),
@@ -72675,12 +72675,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_destino_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_destino_desc },
                             }),
                           ]),
@@ -72706,12 +72706,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_fecha_prog_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_fecha_prog_desc },
                             }),
                           ]),
@@ -72737,12 +72737,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_hora_ent_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_hora_ent_desc },
                             }),
                           ]),
@@ -72768,12 +72768,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_mensajero_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_mensajero_desc },
                             }),
                           ]),
@@ -72799,12 +72799,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_estado_app_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_estado_app_desc },
                             }),
                           ]),
@@ -72830,12 +72830,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_cliente_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_cliente_desc },
                             }),
                           ]),
@@ -72861,12 +72861,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_contacto_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa fa-arrow-down",
                               on: { click: _vm.sorted_contacto_desc },
                             }),
                           ]),
@@ -72896,12 +72896,12 @@ var render = function () {
                           _vm._v(" "),
                           _c("div", { staticClass: "d-flex flex-wrap" }, [
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-up",
+                              staticClass: "col-md-12 fa fa-arrow-up",
                               on: { click: _vm.sorted_direccion_asc },
                             }),
                             _vm._v(" "),
                             _c("i", {
-                              staticClass: "col-md-12 fa fa-sort-down",
+                              staticClass: "col-md-12 fa fa-arrow-down",
                               on: { click: _vm.sorted_direccion_desc },
                             }),
                           ]),

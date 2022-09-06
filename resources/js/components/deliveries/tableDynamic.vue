@@ -33,8 +33,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Estado</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up" @click="sorted_estado_asc"></i>
-                                <i class="col-md-12 fa fa-sort-down"  @click="sorted_estado_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up" @click="sorted_estado_asc"></i>
+                                <i class="col-md-12 fa fa-arrow-down"  @click="sorted_estado_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -44,8 +44,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Fecha Evento</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up" @click="sorted_evento_asc"></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_evento_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up" @click="sorted_evento_asc"></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_evento_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -55,8 +55,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Despacho</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up" @click="sorted_despacho_asc"></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_despacho_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up" @click="sorted_despacho_asc"></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_despacho_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -66,8 +66,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Destino</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up"  @click="sorted_destino_asc"></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_destino_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_destino_asc"></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_destino_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -77,8 +77,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>F.Prog</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up"  @click="sorted_fecha_prog_asc"></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_fecha_prog_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_fecha_prog_asc"></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_fecha_prog_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -88,8 +88,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>H.Entrega</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up"  @click="sorted_hora_ent_asc"></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_hora_ent_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_hora_ent_asc"></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_hora_ent_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -99,8 +99,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Mensajero</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up"  @click="sorted_mensajero_asc" ></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_mensajero_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_mensajero_asc" ></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_mensajero_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -110,8 +110,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Estado App</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up" @click="sorted_estado_app_asc"  ></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_estado_app_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up" @click="sorted_estado_app_asc"  ></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_estado_app_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -121,8 +121,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Cliente</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up"  @click="sorted_cliente_asc"  ></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_cliente_desc " ></i>
+                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_cliente_asc"  ></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_cliente_desc " ></i>
                             </div>
                             </div>
                         </div>
@@ -132,8 +132,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Contacto</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up"  @click="sorted_contacto_asc"  ></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_contacto_desc"  ></i>
+                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_contacto_asc"  ></i>
+                                <i class="col-md-12 fa fa fa-arrow-down" @click="sorted_contacto_desc"  ></i>
                             </div>
                             </div>
                         </div>
@@ -143,8 +143,8 @@
                             <div class="d-flex align-content-center justify-content-end align-items-center">
                                 <span>Dirección</span>
                                 <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-sort-up"  @click="sorted_direccion_asc"  ></i>
-                                <i class="col-md-12 fa fa-sort-down" @click="sorted_direccion_desc "  ></i>
+                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_direccion_asc"  ></i>
+                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_direccion_desc "  ></i>
                             </div>
                             </div>
                         </div>
