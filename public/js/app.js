@@ -10186,13 +10186,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return b.get_order.schedule_date.localeCompare(a.get_order.schedule_date);
       });
     },
-    //   //Hora Entrega Sorting
-    //      sorted_hora_ent_asc(){
-    //          return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
-    //     },
-    //      sorted_hora_ent_desc(){
-    //          return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
-    //     },
+    //Hora Entrega Sorting
+    sorted_hora_ent_asc: function sorted_hora_ent_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range);
+      });
+    },
+    sorted_hora_ent_desc: function sorted_hora_ent_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range);
+      });
+    },
     // Mensajero Sorting
     sorted_mensajero_asc: function sorted_mensajero_asc() {
       return this.guides.sort(function (a, b) {
@@ -10204,20 +10208,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name);
       });
     },
-    //     // Estado App Sorting
-    //  sorted_estado_app_asc(){
-    //      return this.guides.sort((a, b) => a.app_status .localeCompare(b.app_status ));
-    // },
-    //  sorted_estado_app_desc(){
-    //      return this.guides.sort((a, b) => b.app_status .localeCompare(a.app_status ));
-    // },
+    // Estado App Sorting
+    sorted_estado_app_asc: function sorted_estado_app_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.app_status.localeCompare(b.app_status);
+      });
+    },
+    sorted_estado_app_desc: function sorted_estado_app_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.app_status.localeCompare(a.app_status);
+      });
+    },
     //Cliente Sorting
-    //   sorted_cliente_asc(){
-    //          return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
-    //     },
-    //     sorted_cliente_desc(){
-    //          return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
-    //     },
+    sorted_cliente_asc: function sorted_cliente_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.get_order.get_user.name.localeCompare(b.get_order.get_user.name);
+      });
+    },
+    sorted_cliente_desc: function sorted_cliente_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.get_order.get_user.name.localeCompare(a.get_order.get_user.name);
+      });
+    },
     //Cliente Sorting
     sorted_contacto_asc: function sorted_contacto_asc() {
       return this.guides.sort(function (a, b) {
@@ -72498,15 +72510,69 @@ var render = function () {
                   _vm._v("Destino"),
                 ]),
                 _vm._v(" "),
-                _c("th", [_vm._v("F.Prog")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_fecha_prog_desc },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_fecha_prog_asc },
+                  }),
+                  _vm._v("F.Prog"),
+                ]),
                 _vm._v(" "),
-                _c("th", [_vm._v("H.Entrega")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_hora_ent_desc },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_hora_ent_asc },
+                  }),
+                  _vm._v("H.Entrega"),
+                ]),
                 _vm._v(" "),
-                _c("th", [_vm._v("Mensajero")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_mensajero_desc },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_mensajero_asc },
+                  }),
+                  _vm._v("Mensajero"),
+                ]),
                 _vm._v(" "),
-                _c("th", [_vm._v("Estado App")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_estado_app_desc },
+                  }),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_estado_app_asc },
+                  }),
+                  _vm._v("Estado App"),
+                ]),
                 _vm._v(" "),
-                _c("th", [_vm._v("Cliente")]),
+                _c("th", [
+                  _c("i", {
+                    staticClass: "fa fa-sort-down",
+                    on: { click: _vm.sorted_contacto_desc },
+                  }),
+                  _c("i", {
+                    staticClass: "fa fa-sort-up",
+                    on: { click: _vm.sorted_contacto_asc },
+                  }),
+                  _vm._v("Cliente"),
+                ]),
                 _vm._v(" "),
                 _c("th", [
                   _c("i", {

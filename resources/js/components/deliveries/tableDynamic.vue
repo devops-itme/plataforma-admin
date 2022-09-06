@@ -29,16 +29,16 @@
                 <thead class="thead-light">
                  <tr class="text-center">
                         <th >Tipo</th>
-                        <th><i class="fa fa-sort-down" v-on:click="sorted_estado_desc"></i> <i class="fa fa-sort-up" v-on:click="sorted_estado_asc"></i>Estado</th>
-                        <th><i class="fa fa-sort-down" v-on:click="sorted_evento_desc"></i> <i class="fa fa-sort-up" v-on:click="sorted_evento_asc"></i>Fecha Evento</th>
-                        <th><i class="fa fa-sort-down" v-on:click="sorted_despacho_desc"></i> <i class="fa fa-sort-up" v-on:click="sorted_despacho_asc"></i>Despacho</th>
-                        <th><i class="fa fa-sort-down" v-on:click="sorted_destino_desc"></i> <i class="fa fa-sort-up" v-on:click="sorted_destino_asc"></i>Destino</th>
-                        <th>F.Prog</th>
-                        <th>H.Entrega</th>
-                        <th>Mensajero</th>
-                        <th>Estado App</th>
-                        <th>Cliente</th>
-                        <th><i class="fa fa-sort-down" v-on:click="sorted_contacto_desc"></i><i class="fa fa-sort-up"  v-on:click="sorted_contacto_asc"></i>Contacto</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_estado_desc"></i> <i class="fa fa-sort-up" @click="sorted_estado_asc"></i>Estado</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_evento_desc"></i> <i class="fa fa-sort-up" @click="sorted_evento_asc"></i>Fecha Evento</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_despacho_desc"></i> <i class="fa fa-sort-up" @click="sorted_despacho_asc"></i>Despacho</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_destino_desc"></i> <i class="fa fa-sort-up" @click="sorted_destino_asc"></i>Destino</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_fecha_prog_desc"></i> <i class="fa fa-sort-up" @click="sorted_fecha_prog_asc"></i>F.Prog</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_hora_ent_desc"></i> <i class="fa fa-sort-up" @click="sorted_hora_ent_asc"></i>H.Entrega</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_mensajero_desc"></i> <i class="fa fa-sort-up" @click="sorted_mensajero_asc"></i>Mensajero</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_estado_app_desc"></i> <i class="fa fa-sort-up" @click="sorted_estado_app_asc"></i>Estado App</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_contacto_desc"></i><i class="fa fa-sort-up"  @click="sorted_contacto_asc"></i>Cliente</th>
+                        <th><i class="fa fa-sort-down" @click="sorted_contacto_desc"></i><i class="fa fa-sort-up"  @click="sorted_contacto_asc"></i>Contacto</th>
                         <th>Barrio/Zona</th>
                         <th><i class="fa fa-sort-down"  v-on:click="sorted_direccion_desc"></i><i class="fa fa-sort-up"  v-on:click="sorted_direccion_asc"></i>Dirección</th>
                     </tr>
@@ -140,7 +140,7 @@ mounted() {
                 )
                     }
                 }
-            });
+            })
         }
     },
 
@@ -192,14 +192,14 @@ mounted() {
          return this.guides.sort((a, b) => b.get_order.schedule_date.localeCompare(a.get_order.schedule_date));
     },
 
-//   //Hora Entrega Sorting
-//      sorted_hora_ent_asc(){
-//          return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
-//     },
+  //Hora Entrega Sorting
+     sorted_hora_ent_asc(){
+         return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
+    },
 
-//      sorted_hora_ent_desc(){
-//          return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
-//     },
+     sorted_hora_ent_desc(){
+         return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
+    },
 
       // Mensajero Sorting
      sorted_mensajero_asc(){
@@ -210,24 +210,24 @@ mounted() {
          return this.guides.sort((a, b) => b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name));
     },
 
-    //     // Estado App Sorting
-    //  sorted_estado_app_asc(){
-    //      return this.guides.sort((a, b) => a.app_status .localeCompare(b.app_status ));
-    // },
+        // Estado App Sorting
+     sorted_estado_app_asc(){
+         return this.guides.sort((a, b) => a.app_status .localeCompare(b.app_status ));
+    },
 
-    //  sorted_estado_app_desc(){
-    //      return this.guides.sort((a, b) => b.app_status .localeCompare(a.app_status ));
-    // },
+     sorted_estado_app_desc(){
+         return this.guides.sort((a, b) => b.app_status .localeCompare(a.app_status ));
+    },
 
 
 //Cliente Sorting
-//   sorted_cliente_asc(){
-//          return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
-//     },
+  sorted_cliente_asc(){
+         return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
+    },
 
-//     sorted_cliente_desc(){
-//          return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
-//     },
+    sorted_cliente_desc(){
+         return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
+    },
 
 //Cliente Sorting
   sorted_contacto_asc(){
