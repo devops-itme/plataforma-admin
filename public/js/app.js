@@ -10081,6 +10081,114 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -72458,151 +72566,349 @@ var render = function () {
               _c("tr", { staticClass: "text-center" }, [
                 _c("th", [_vm._v("Tipo ")]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Estado  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_estado_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_estado_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Estado")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_estado_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_estado_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Fecha Evento  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_evento_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_evento_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Fecha Evento")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_evento_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_evento_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Despacho  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_despacho_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_despacho_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Despacho")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_despacho_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_despacho_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Destino  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_destino_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_destino_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Destino")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_destino_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_destino_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("F.Prog  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_fecha_prog_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_fecha_prog_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("F.Prog")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_fecha_prog_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_fecha_prog_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("H.Entrega  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_hora_ent_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_hora_ent_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("H.Entrega")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_hora_ent_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_hora_ent_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Mensajero  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_mensajero_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_mensajero_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Mensajero")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_mensajero_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_mensajero_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Estado App  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_estado_app_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_estado_app_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Estado App")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_estado_app_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_estado_app_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Cliente  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort",
-                    on: { click: _vm.sorted_cliente_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_cliente_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Cliente")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_cliente_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_cliente_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Contacto  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up align-middle",
-                    on: { click: _vm.sorted_contacto_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down align-middle",
-                    on: { click: _vm.sorted_contacto_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Contacto")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_contacto_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_contacto_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
                 _c("th", { staticClass: "text-nowrap" }, [
                   _vm._v("Barrio/Zona"),
                 ]),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Dirección  "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-up",
-                    on: { click: _vm.sorted_direccion_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-sort-down",
-                    on: { click: _vm.sorted_direccion_desc },
-                  }),
+                _c("th", [
+                  _c(
+                    "div",
+                    { staticClass: "col-lg-12 d-flex flex-row flex-wrap" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex align-content-center justify-content-end align-items-center",
+                        },
+                        [
+                          _c("span", [_vm._v("Dirección")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "d-flex flex-wrap" }, [
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-up",
+                              on: { click: _vm.sorted_direccion_asc },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "col-md-12 fa fa-sort-down",
+                              on: { click: _vm.sorted_direccion_desc },
+                            }),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
               ]),
             ]),
