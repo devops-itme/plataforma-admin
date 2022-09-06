@@ -36,7 +36,7 @@
                         <th>F.Prog <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_fecha_prog_asc" ></i> <i class="fa fa-sort-down" @click="sorted_fecha_prog_desc " ></i> </div></th>
                         <th>H.Entrega <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_hora_ent_asc" ></i> <i class="fa fa-sort-down" @click="sorted_hora_ent_desc " ></i> </div></th>
                         <th>Mensajero <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_mensajero_asc" ></i> <i class="fa fa-sort-down" @click="sorted_mensajero_desc " ></i> </div></th>
-                        <th>Estado App <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_estado_app_asc" ></i> <i class="fa fa-sort-down" @click="sorted_estado_app_asc " ></i> </div></th>
+                        <th>Estado App <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_estado_app_asc" ></i> <i class="fa fa-sort-down" @click="sorted_estado_app_desc " ></i> </div></th>
                         <th>Cliente <div style="display: flex; flex-direction: column;"> <i class="fa fa-sort-up"  @click="sorted_cliente_asc" ></i> <i class="fa fa-sort-down" @click="sorted_cliente_desc " ></i> </div></th>
                         <th>Contacto <div style="display: flex; flex-direction: column;´"> <i class="fa fa-sort-up"  @click="sorted_contacto_asc" ></i> <i class="fa fa-sort-down" @click="sorted_contacto_desc " ></i> </div></th>
                         <th>Barrio/Zona</th>

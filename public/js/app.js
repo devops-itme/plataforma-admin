@@ -72644,7 +72644,7 @@ var render = function () {
                       _vm._v(" "),
                       _c("i", {
                         staticClass: "fa fa-sort-down",
-                        on: { click: _vm.sorted_estado_app_asc },
+                        on: { click: _vm.sorted_estado_app_desc },
                       }),
                     ]
                   ),
