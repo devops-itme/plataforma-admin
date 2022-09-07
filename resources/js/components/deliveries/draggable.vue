@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="collapse col-md-12 mt-4" id="collapseExample">
-                        <input type="text" class="form-control" placeholder="Filtro" v-model.number="search" />
+                        <input type="text" class="form-control" placeholder="Filtro" v-model="search" />
                     </div>
                     <div class="max-h-500px h-500px col-md-12 border rounded px-0 mt-3">
                         <div class="table-responsive h-500px">
@@ -214,14 +214,14 @@ export default {
                     tblItem.get_order.order_number.toLowerCase().includes(search) ||
                     tblItem.get_order.order_number.includes(search) ||
                    tblItem.get_order.schedule_date.includes(search) ||
-                    //tblItem.get_order.schedule_time_range.includes(this.search) ||
+                    tblItem.get_order.schedule_time_range.includes(search) ||
                     full_name.toLowerCase().includes(search) ||
                     full_name.includes(search) ||
                     tblItem.contact.toLowerCase().includes(search) ||
                     tblItem.contact.includes(search) ||
                     tblItem.address_name.toLowerCase().includes(search) ||
-                    tblItem.address_name.includes(search)
-                  //  tblItem.get_order.created_at.toLowerCase().includes(search)
+                    tblItem.address_name.includes(search) ||
+                    tblItem.get_order.created_at.toLowerCase().includes(search)
                 )
             });
         },

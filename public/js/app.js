@@ -9823,9 +9823,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.guides.filter(function (tblItem) {
         var full_name = tblItem.get_order.get_user.name + ' ' + tblItem.get_order.get_user.last_name;
         return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
-          tblItem.id.toString().includes(search) || tblItem.get_order.order_number.toLowerCase().includes(search) || tblItem.get_order.order_number.includes(search) || tblItem.get_order.schedule_date.includes(search) || //tblItem.get_order.schedule_time_range.includes(this.search) ||
-          full_name.toLowerCase().includes(search) || full_name.includes(search) || tblItem.contact.toLowerCase().includes(search) || tblItem.contact.includes(search) || tblItem.address_name.toLowerCase().includes(search) || tblItem.address_name.includes(search) //  tblItem.get_order.created_at.toLowerCase().includes(search)
-
+          tblItem.id.toString().includes(search) || tblItem.get_order.order_number.toLowerCase().includes(search) || tblItem.get_order.order_number.includes(search) || tblItem.get_order.schedule_date.includes(search) || tblItem.get_order.schedule_time_range.includes(search) || full_name.toLowerCase().includes(search) || full_name.includes(search) || tblItem.contact.toLowerCase().includes(search) || tblItem.contact.includes(search) || tblItem.address_name.toLowerCase().includes(search) || tblItem.address_name.includes(search) || tblItem.get_order.created_at.toLowerCase().includes(search)
         );
       });
     },
@@ -71931,10 +71929,9 @@ var render = function () {
                   directives: [
                     {
                       name: "model",
-                      rawName: "v-model.number",
+                      rawName: "v-model",
                       value: _vm.search,
                       expression: "search",
-                      modifiers: { number: true },
                     },
                   ],
                   staticClass: "form-control",
@@ -71945,10 +71942,7 @@ var render = function () {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.search = _vm._n($event.target.value)
-                    },
-                    blur: function ($event) {
-                      return _vm.$forceUpdate()
+                      _vm.search = $event.target.value
                     },
                   },
                 }),
