@@ -29,126 +29,18 @@
                 <thead class="thead-light">
                  <tr class="text-center">
                         <th>Tipo </th>
-                        <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Estado</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up" @click="sorted_estado_asc"></i>
-                                <i class="col-md-12 fa fa-arrow-down"  @click="sorted_estado_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                             <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Fecha Evento</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up" @click="sorted_evento_asc"></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_evento_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                           <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Despacho</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up" @click="sorted_despacho_asc"></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_despacho_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                         <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Destino</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_destino_asc"></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_destino_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                         <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>F.Prog</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_fecha_prog_asc"></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_fecha_prog_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                              <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>H.Entrega</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_hora_ent_asc"></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_hora_ent_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                            <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Mensajero</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_mensajero_asc" ></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_mensajero_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                              <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Estado App</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up" @click="sorted_estado_app_asc"  ></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_estado_app_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                             <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Cliente</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_cliente_asc"  ></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_cliente_desc " ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
-
-                           <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Contacto</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_contacto_asc"  ></i>
-                                <i class="col-md-12 fa fa fa-arrow-down" @click="sorted_contacto_desc"  ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
+                        <th class="text-nowrap">Estado  <i class="fa fa-arrow-up"  @click="sorted_estado_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_estado_desc " ></i></th>
+                        <th class="text-nowrap">Fecha Evento  <i class="fa fa-arrow-up"  @click="sorted_evento_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_evento_desc " ></i></th>
+                        <th class="text-nowrap" >Despacho  <i class="fa fa-arrow-up"  @click="sorted_despacho_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_despacho_desc " ></i></th>
+                        <th class="text-nowrap">Destino  <i class="fa fa-arrow-up"  @click="sorted_destino_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_destino_desc " ></i> </th>
+                        <th class="text-nowrap">F.Prog  <i class="fa fa-arrow-up"  @click="sorted_fecha_prog_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_fecha_prog_desc " ></i></th>
+                        <th class="text-nowrap">H.Entrega  <i class="fa fa-arrow-up"  @click="sorted_hora_ent_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_hora_ent_desc " ></i></th>
+                        <th class="text-nowrap">Mensajero  <i class="fa fa-arrow-up"  @click="sorted_mensajero_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_mensajero_desc " ></i></th>
+                        <th class="text-nowrap">Estado App  <i class="fa fa-arrow-up"  @click="sorted_estado_app_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_estado_app_desc " ></i></th>
+                        <th class="text-nowrap">Cliente  <i class="fa fa-arrow-up"  @click="sorted_cliente_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_cliente_desc " ></i> </th>
+                        <th class="text-nowrap">Contacto  <i class="fa fa-arrow-up "  @click="sorted_contacto_asc" ></i> <i class="fa fa-arrow-down " @click="sorted_contacto_desc " ></i></th>
                         <th class="text-nowrap">Barrio/Zona</th>
-                         <th> <div class="col-lg-12 d-flex flex-row flex-wrap">
-                            <div class="d-flex align-content-center justify-content-end align-items-center">
-                                <span>Dirección</span>
-                                <div class="d-flex flex-wrap">
-                                <i class="col-md-12 fa fa-arrow-up"  @click="sorted_direccion_asc"  ></i>
-                                <i class="col-md-12 fa fa-arrow-down" @click="sorted_direccion_desc "  ></i>
-                            </div>
-                            </div>
-                        </div>
-                         </th>
+                        <th class="text-nowrap">Dirección  <i class="fa fa-arrow-up"  @click="sorted_direccion_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_direccion_desc " ></i></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -283,11 +175,11 @@ mounted() {
 
     //Destino Sorting
     sorted_destino_asc(){   // Molestando
-         return this.guides.sort((a, b) => a.tblItem.id.localeCompare(b.tblItem.id));
-    },
+          return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
 
+    },
      sorted_destino_desc(){
-         return this.guides.sort((a, b) => b.tblItem.id.localeCompare(a.tblItem.id ));
+          return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
     },
 
 
