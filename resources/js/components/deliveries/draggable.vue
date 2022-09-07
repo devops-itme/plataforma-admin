@@ -32,18 +32,18 @@
                             >
                                 <thead class="thead-light">
                                     <tr class="text-center">
-                                        <th scope="col">#</th>
-                                        <th scope="col">Orden</th>
-                                        <th scope="col">Destino</th>
+                                        <th class="text-nowrap" scope="col">#</th>
+                                        <th class="text-nowrap" scope="col">Orden <i class="fa fa-arrow-up"  @click="sorted_destino_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_destino_desc " ></i></th>
+                                        <th class="text-nowrap" scope="col">Destino <i class="fa fa-arrow-up"  @click="sorted_destino_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_destino_desc " ></i></th>
                                        <!-- <th scope="col">ExtRef</th> -->
-                                        <th scope="col">Fecha Prog</th>
-                                        <th scope="col">Cliente</th>
-                                        <th scope="col">Contacto</th>
-                                        <th scope="col">Barrio/Zona</th>
-                                        <th scope="col">Dirección</th>
-                                        <th scope="col">H.Entrega</th>
-                                        <th scope="col">Fecha Creación</th>
-                                        <th scope="col">Tipo</th>
+                                        <th class="text-nowrap" scope="col">Fecha Prog   <i class="fa fa-arrow-up"  @click="sorted_fecha_prog_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_fecha_prog_desc " ></i> </th>
+                                        <th class="text-nowrap" scope="col">Cliente <i class="fa fa-arrow-up"  @click="sorted_cliente_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_cliente_desc " ></i></th>
+                                        <th class="text-nowrap" scope="col">Contacto <i class="fa fa-arrow-up "  @click="sorted_contacto_asc" ></i> <i class="fa fa-arrow-down " @click="sorted_contacto_desc " ></i></th>
+                                        <th class="text-nowrap" scope="col">Barrio/Zona</th>
+                                        <th class="text-nowrap" scope="col">Dirección  <i class="fa fa-arrow-up"  @click="sorted_direccion_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_direccion_desc " ></i></th>
+                                        <th class="text-nowrap" scope="col">H.Entrega <i class="fa fa-arrow-up"  @click="sorted_hora_ent_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_hora_ent_desc " ></i></th>
+                                        <th class="text-nowrap" scope="col">Fecha Creación <i class="fa fa-arrow-up"  @click="sorted_evento_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_evento_desc " ></i></th>
+                                        <th class="text-nowrap" scope="col">Tipo</th>
                                     </tr>
                                 </thead>
                                 <draggable
@@ -253,6 +253,73 @@ export default {
 
     },
     methods: {
+        //Destino Sorting
+    sorted_destino_asc(){   // Molestando
+          return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
+
+    },
+     sorted_destino_desc(){
+          return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+    },
+
+     //Fecha Prog. Sorting
+     sorted_fecha_prog_asc(){
+         return this.guides.sort((a, b) => a.get_order.schedule_date.localeCompare(b.get_order.schedule_date));
+    },
+
+     sorted_fecha_prog_desc(){
+         return this.guides.sort((a, b) => b.get_order.schedule_date.localeCompare(a.get_order.schedule_date));
+    },
+
+    //Cliente Sorting
+  sorted_cliente_asc(){
+         return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
+    },
+
+    sorted_cliente_desc(){
+         return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
+    },
+
+//Contato Sorting
+sorted_contacto_asc(){
+         return this.guides.sort((a, b) => a.contact.localeCompare(b.contact));
+    },
+
+    sorted_contacto_desc(){
+         return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
+    },
+
+       //Cliente direccion
+  sorted_direccion_asc(){
+         return this.guides.sort((a, b) => a.address_name.localeCompare(b.address_name));
+    },
+
+    sorted_direccion_desc(){
+         return this.guides.sort((a, b) => b.address_name.localeCompare(a.address_name));
+    },
+
+//Hora Entrega Sorting
+sorted_hora_ent_asc(){
+         return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
+    },
+
+     sorted_hora_ent_desc(){
+         return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
+    },
+
+     //Evento Sorting
+     sorted_evento_asc(){
+         return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
+    },
+
+     sorted_evento_desc(){
+         return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+    },
+
+
+
+
+
         rowClick(data) {
             this.$emit("getGuide", data);
         },

@@ -229,7 +229,7 @@ mounted() {
          return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
     },
 
-//Cliente Sorting
+//Contato Sorting
   sorted_contacto_asc(){
          return this.guides.sort((a, b) => a.contact.localeCompare(b.contact));
     },

@@ -9851,6 +9851,84 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {},
   methods: {
+    //Destino Sorting
+    sorted_destino_asc: function sorted_destino_asc() {
+      // Molestando
+      return this.guides.sort(function (a, b) {
+        return a.created_at.localeCompare(b.created_at);
+      });
+    },
+    sorted_destino_desc: function sorted_destino_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.created_at.localeCompare(a.created_at);
+      });
+    },
+    //Fecha Prog. Sorting
+    sorted_fecha_prog_asc: function sorted_fecha_prog_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.get_order.schedule_date.localeCompare(b.get_order.schedule_date);
+      });
+    },
+    sorted_fecha_prog_desc: function sorted_fecha_prog_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.get_order.schedule_date.localeCompare(a.get_order.schedule_date);
+      });
+    },
+    //Cliente Sorting
+    sorted_cliente_asc: function sorted_cliente_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.get_order.get_user.name.localeCompare(b.get_order.get_user.name);
+      });
+    },
+    sorted_cliente_desc: function sorted_cliente_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.get_order.get_user.name.localeCompare(a.get_order.get_user.name);
+      });
+    },
+    //Contato Sorting
+    sorted_contacto_asc: function sorted_contacto_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.contact.localeCompare(b.contact);
+      });
+    },
+    sorted_contacto_desc: function sorted_contacto_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.contact.localeCompare(a.contact);
+      });
+    },
+    //Cliente direccion
+    sorted_direccion_asc: function sorted_direccion_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.address_name.localeCompare(b.address_name);
+      });
+    },
+    sorted_direccion_desc: function sorted_direccion_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.address_name.localeCompare(a.address_name);
+      });
+    },
+    //Hora Entrega Sorting
+    sorted_hora_ent_asc: function sorted_hora_ent_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range);
+      });
+    },
+    sorted_hora_ent_desc: function sorted_hora_ent_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range);
+      });
+    },
+    //Evento Sorting
+    sorted_evento_asc: function sorted_evento_asc() {
+      return this.guides.sort(function (a, b) {
+        return a.created_at.localeCompare(b.created_at);
+      });
+    },
+    sorted_evento_desc: function sorted_evento_desc() {
+      return this.guides.sort(function (a, b) {
+        return b.created_at.localeCompare(a.created_at);
+      });
+    },
     rowClick: function rowClick(data) {
       this.$emit("getGuide", data);
     },
@@ -10230,7 +10308,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return b.get_order.get_user.name.localeCompare(a.get_order.get_user.name);
       });
     },
-    //Cliente Sorting
+    //Contato Sorting
     sorted_contacto_asc: function sorted_contacto_asc() {
       return this.guides.sort(function (a, b) {
         return a.contact.localeCompare(b.contact);
@@ -71892,7 +71970,196 @@ var render = function () {
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
-                      _vm._m(1),
+                      _c("thead", { staticClass: "thead-light" }, [
+                        _c("tr", { staticClass: "text-center" }, [
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [_vm._v("#")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [
+                              _vm._v("Orden "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-up",
+                                on: { click: _vm.sorted_destino_asc },
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-down",
+                                on: { click: _vm.sorted_destino_desc },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [
+                              _vm._v("Destino "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-up",
+                                on: { click: _vm.sorted_destino_asc },
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-down",
+                                on: { click: _vm.sorted_destino_desc },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [
+                              _vm._v("Fecha Prog   "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-up",
+                                on: { click: _vm.sorted_fecha_prog_asc },
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-down",
+                                on: { click: _vm.sorted_fecha_prog_desc },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [
+                              _vm._v("Cliente "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-up",
+                                on: { click: _vm.sorted_cliente_asc },
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-down",
+                                on: { click: _vm.sorted_cliente_desc },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [
+                              _vm._v("Contacto "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-up ",
+                                on: { click: _vm.sorted_contacto_asc },
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-down ",
+                                on: { click: _vm.sorted_contacto_desc },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [_vm._v("Barrio/Zona")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [
+                              _vm._v("Dirección  "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-up",
+                                on: { click: _vm.sorted_direccion_asc },
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-down",
+                                on: { click: _vm.sorted_direccion_desc },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [
+                              _vm._v("H.Entrega "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-up",
+                                on: { click: _vm.sorted_hora_ent_asc },
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-down",
+                                on: { click: _vm.sorted_hora_ent_desc },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [
+                              _vm._v("Fecha Creación "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-up",
+                                on: { click: _vm.sorted_evento_asc },
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fa fa-arrow-down",
+                                on: { click: _vm.sorted_evento_desc },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              attrs: { scope: "col" },
+                            },
+                            [_vm._v("Tipo")]
+                          ),
+                        ]),
+                      ]),
                       _vm._v(" "),
                       _c(
                         "draggable",
@@ -72021,7 +72288,7 @@ var render = function () {
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
-                      _vm._m(2),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c(
                         "draggable",
@@ -72224,36 +72491,6 @@ var staticRenderFns = [
           ),
         ]
       ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-light" }, [
-      _c("tr", { staticClass: "text-center" }, [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Orden")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Destino")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Prog")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cliente")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Contacto")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Barrio/Zona")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Dirección")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("H.Entrega")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha Creación")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo")]),
-      ]),
     ])
   },
   function () {
