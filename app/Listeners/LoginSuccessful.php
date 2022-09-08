@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Spatie\Activitylog\Models;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
+use Illuminate\Support\Facades\Auth;
 
 class LoginSuccessful
 {
@@ -31,7 +32,7 @@ class LoginSuccessful
     public function handle(Login $event)
     {
         $event->subject = 'login';
-        $event->description = 'Login Successful';
+        $event->description = 'Inicio de Sesión';
         activity($event->subject)
             ->by($event->user)
             ->log($event->description);
