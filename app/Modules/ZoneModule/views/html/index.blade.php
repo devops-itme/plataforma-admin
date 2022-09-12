@@ -144,7 +144,7 @@
                             <th scope="col">Nombre de la zona</th>
                             <th scope="col">Nombre del país</th>
                             <th scope="col">Estado</th>
-                            <th scope="col"></th>
+                            <th scope="col" style="text-align:center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

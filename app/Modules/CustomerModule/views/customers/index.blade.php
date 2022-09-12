@@ -186,7 +186,7 @@
                         <th scope="col">Teléfono</th>
                         <th scope="col">Zona</th>
                         <th scope="col">Estado</th>
-                        <th scope="col"></th>
+                        <th scope="col" style="text-align:center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
