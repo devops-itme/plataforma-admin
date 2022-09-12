@@ -22,9 +22,13 @@ class Role
     {
         //module reference
         $pathRoute = explode('.', $request->route()->getName())[0];
-        $module = Module::where('reference', $pathRoute)->first(['id']);
-        $module_id = $module->id;
+        //  dd($pathRoute);
+        $module = Module::where('reference', $pathRoute)->select('id')->get();
 
+        foreach ($module as $item) {
+            $module_id = $item->id;
+        }
+        //   dd($module_id);
 
         //role _id of authenticated user
         $role_id = Auth::user()->role;
@@ -41,7 +45,9 @@ class Role
         $action = ParameterValue::where('name', $action)->first(['id']);
         $action_id = $action->id;
 
-        if (!in_array($action_id, explode(',',$actions))) {
+        // dd($action_id);
+
+        if (!in_array($action_id, explode(',', $actions))) {
             // Session::flash('warning', 'Lo siento, no tienes permiso.');
             return back();
         }

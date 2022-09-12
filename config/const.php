@@ -201,7 +201,7 @@ return [
             ]
         ],
         'statusMatrix' => [
-            'name' => 'Matriz de estados', 'reference' => 'reports', 'icon' => '', 'position' => '10',
+            'name' => 'Matriz de estados', 'reference' => 'statusMatrix', 'icon' => '', 'position' => '10',
             'actions' => '6',
             'children' => [],
             'permission' => [
@@ -211,6 +211,29 @@ return [
                 'Cliente' => ['role_id' => 4, 'actions' => '6'],
             ]
         ],
+        'hours' => [
+            'name' => 'Horas', 'reference' => 'hours', 'icon' => '', 'position' => '11',
+            'actions' => '6',
+            'children' => [],
+            'permission' => [
+                'Admin' =>  ['role_id' => 1, 'actions' => '6'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
+            ]
+        ],
+        'deliveryPacking' => [
+            'name' => 'Horas', 'reference' => 'deliveryPacking', 'icon' => '', 'position' => '12',
+            'actions' => '6',
+            'children' => [],
+            'permission' => [
+                'Admin' =>  ['role_id' => 1, 'actions' => '6'],
+                'Operador' => ['role_id' => 2, 'actions' => '6'],
+                'Mensajero' => ['role_id' => 3, 'actions' => '6'],
+                'Cliente' => ['role_id' => 4, 'actions' => '6'],
+            ]
+        ],
+
     ],
     'months' => [
         1 => 'Enero',

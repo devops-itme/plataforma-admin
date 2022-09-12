@@ -9,9 +9,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
         Route::resource('/ordenes-internacionales', 'OrderModule\Controllers\InternationalOrderController')->names('internationalOrders');
         Route::post('/importBatch', 'OrderModule\Controllers\InternationalOrderController@importBatch')->name('internationalOrders.import');
-    });
 
-    Route::post('/exportBatch', 'OrderModule\Controllers\InternationalOrderController@exportBatch')->name('internationalOrders.export');
+
+        Route::post('/exportBatch', 'OrderModule\Controllers\InternationalOrderController@exportBatch')->name('internationalOrders.export');
+    });
     Route::get('/export_incidences', 'OrderModule\Controllers\InternationalOrderController@incidencesExport')->name('internationalOrders.incidencesExport');
     Route::get('getOrder/{id}', 'OrderModule\Controllers\OrderController@getOrder');
     Route::get('orders_ondemand/{type}', 'OrderModule\Controllers\OrderController@ordersForDelivery');
@@ -30,16 +31,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/quias/asignacion', 'OrderModule\Controllers\DeliveryController@assignPacking')->name('guides.assign');
     Route::post('/despacho/orden/estado', 'OrderModule\Controllers\DeliveryController@updateStateOrders');
 
+
+
     //ONDEMAND
     Route::get('despachos', 'OrderModule\Controllers\DeliveryController@indexOndemand')->name('delivery.index');
 
-    //PACKING
-    Route::get('despachos-packing', 'OrderModule\Controllers\DeliveryController@indexPacking')->name('deliveryPacking.index');
+    Route::group(['middleware' => 'role'], function () {
+        //PACKING
+        Route::get('despachos-packing', 'OrderModule\Controllers\DeliveryController@indexPacking')->name('deliveryPacking.index');
+    });
+
     Route::put('guide/estado/recogida-entrega', 'OrderModule\Controllers\DeliveryController@sendOrdersPickupToDelivery');
 
+
+
     //RUTASHOWGUIDE
-    Route::get('/details/{id}/show','OrderModule\Controllers\OrderController@showModGuide')->name('showModal.show');
-
-
+    Route::group(['middleware' => 'role'], function () {
+        Route::get('/details/{id}/show', 'OrderModule\Controllers\OrderController@showModGuide')->name('guides.show');
+    });
 });
-

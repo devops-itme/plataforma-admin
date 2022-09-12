@@ -168,6 +168,20 @@ class RoleController extends Controller
                 'state' => 1
             ]);
 
+            Permission::create([
+                'role_id' => $rol->id,
+                'module_id' => 18,
+                'actions' => 6,
+                'state' => 1
+            ]);
+
+            Permission::create([
+                'role_id' => $rol->id,
+                'module_id' => 19,
+                'actions' => 6,
+                'state' => 1
+            ]);
+
             return redirect()->back()->with('success', 'Rol creado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('danger', $e->getMessage());
