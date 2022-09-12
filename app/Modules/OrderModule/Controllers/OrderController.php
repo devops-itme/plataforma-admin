@@ -127,8 +127,8 @@ class OrderController extends Controller
             'schedule_date' => 'required',
             'schedule_time_range' => 'required',
             'order_description' => 'required',
-            'branch_office_id'=> 'required',
-            'department_id'=> 'required'
+            // 'branch_office_id'=> 'required',
+            // 'department_id'=> 'required'
         ]);
         $validator = Validator::make(
             $request->all(),
@@ -141,8 +141,8 @@ class OrderController extends Controller
                 'schedule_date' => 'required',
                 'schedule_time_range' => 'required',
                 'order_description' => 'required',
-                'branch_office_id'=> 'required',
-                'department_id'=> 'required'
+                // 'branch_office_id'=> 'required',
+                // 'department_id'=> 'required'
                 /* 'guide_address' => 'required', */
                 /* 'phone_contact' => 'required',
                 'contact' => 'required' */
