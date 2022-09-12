@@ -12,6 +12,7 @@
                 <th scope="col">Correo</th>
                 {{-- <th scope="col">Tarifa</th> --}}
                 <th scope="col">
+                <th scope="col" style="text-align:center">Acciones</th>
                     <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                         {{-- <a href="#" class="btn btn-primary btn-sm font-weight-bolder" data-toggle="modal"
                         data-target="#modalCreate" data-tooltip title="CREAR">
