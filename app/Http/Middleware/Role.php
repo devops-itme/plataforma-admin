@@ -49,7 +49,7 @@ class Role
 
         if (!in_array($action_id, explode(',', $actions))) {
             // Session::flash('warning', 'Lo siento, no tienes permiso.');
-            return back();
+            return back()->with('message', "Special message goes here");
         }
 
         return $next($request);

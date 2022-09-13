@@ -28,3 +28,14 @@
     </ul>
 </div>
 @endif
+
+<!--Permission Alert-->
+@if (Session::has('message'))
+<script type="application/javascript" >
+    swal({
+        title: 'Permiso Denegado',
+        text: 'No tienes permitido realizar esta acción!',
+        icon: 'warning',
+    })
+</script>
+@endif
