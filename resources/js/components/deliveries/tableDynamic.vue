@@ -28,19 +28,19 @@
                 :style="{ 'width': widthTable + 'px', 'table-layout': 'auto' }">
                 <thead class="thead-light">
                  <tr class="text-center">
-                        <th>Tipo </th>
-                        <th class="text-nowrap">Estado  <i class="fa fa-arrow-up"  @click="sorted_estado_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_estado_desc " ></i></th>
-                        <th class="text-nowrap">Fecha Evento  <i class="fa fa-arrow-up"  @click="sorted_evento_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_evento_desc " ></i></th>
-                        <th class="text-nowrap" >Despacho  <i class="fa fa-arrow-up"  @click="sorted_despacho_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_despacho_desc " ></i></th>
-                        <th class="text-nowrap">Destino  <i class="fa fa-arrow-up"  @click="sorted_destino_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_destino_desc " ></i> </th>
-                        <th class="text-nowrap">F.Prog  <i class="fa fa-arrow-up"  @click="sorted_fecha_prog_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_fecha_prog_desc " ></i></th>
-                        <th class="text-nowrap">H.Entrega  <i class="fa fa-arrow-up"  @click="sorted_hora_ent_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_hora_ent_desc " ></i></th>
-                        <th class="text-nowrap">Mensajero  <i class="fa fa-arrow-up"  @click="sorted_mensajero_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_mensajero_desc " ></i></th>
-                        <th class="text-nowrap">Estado App  <i class="fa fa-arrow-up"  @click="sorted_estado_app_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_estado_app_desc " ></i></th>
-                        <th class="text-nowrap">Cliente  <i class="fa fa-arrow-up"  @click="sorted_cliente_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_cliente_desc " ></i> </th>
-                        <th class="text-nowrap">Contacto  <i class="fa fa-arrow-up "  @click="sorted_contacto_asc" ></i> <i class="fa fa-arrow-down " @click="sorted_contacto_desc " ></i></th>
-                        <th class="text-nowrap">Barrio/Zona</th>
-                        <th class="text-nowrap">Dirección  <i class="fa fa-arrow-up"  @click="sorted_direccion_asc" ></i> <i class="fa fa-arrow-down" @click="sorted_direccion_desc " ></i></th>
+                        <th style="cursor: pointer" class="text-nowrap">Tipo <i class='fa fa-sort'></i> </th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_estado">Estado <i class='fa fa-sort'></i></th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_evento">Fecha Evento <i class='fa fa-sort'></i> </th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_despacho">Despacho <i class='fa fa-sort'></i> </th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_destino">Destino  <i class='fa fa-sort'></i> </th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_fecha_prog">F.Prog <i class='fa fa-sort'></i> </th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_hora_ent">H.Entrega <i class='fa fa-sort'></i> </th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_mensajero">Mensajero <i class='fa fa-sort'></i> </th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_estado_app">Estado App  <i class='fa fa-sort'></i></th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_cliente">Cliente <i class='fa fa-sort'></i>  </th>
+                        <th style="cursor: pointer"  class="text-nowrap" @click="sorted_contacto">Contacto <i class='fa fa-sort'></i> </th>
+                        <th style="cursor: pointer" class="text-nowrap">Barrio/Zona <i class='fa fa-sort'></i></th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_direccion">Dirección&#8597; </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -147,104 +147,148 @@ mounted() {
 
     methods: {
    //Estado sorting
-    sorted_estado_asc(){
-         return this.guides.sort((a, b) => a.get_status_matrix.name.localeCompare(b.get_status_matrix.name));
-    },
-
-     sorted_estado_desc(){
-         return this.guides.sort((a, b) => b.get_status_matrix.name.localeCompare(a.get_status_matrix.name));
+    sorted_estado(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.get_status_matrix.name.localeCompare(b.get_status_matrix.name));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.get_status_matrix.name.localeCompare(a.get_status_matrix.name));
+      }
     },
 
      //Evento Sorting
-    sorted_evento_asc(){
+    sorted_evento(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
          return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
-    },
-
-     sorted_evento_desc(){
-         return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+       return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+      }
     },
 
          //Despacho Sorting
-    sorted_despacho_asc(){
+    sorted_despacho(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
          return this.guides.sort((a, b) => a.dispatched.localeCompare(b.dispatched));
-    },
-
-     sorted_despacho_desc(){
-         return this.guides.sort((a, b) => b.dispatched.localeCompare(a.dispatched));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+       return this.guides.sort((a, b) => b.dispatched.localeCompare(a.dispatched));
+      }
     },
 
     //Destino Sorting
-    sorted_destino_asc(){   // Molestando
-          return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
-
+    sorted_destino(){   // Molestando
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+         return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+       return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+      }
     },
-     sorted_destino_desc(){
-          return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
-    },
 
-
-     //Fecha Prog. Sorting
-    sorted_fecha_prog_asc(){
+      //Fecha Prog. Sorting
+    sorted_fecha_prog(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
          return this.guides.sort((a, b) => a.get_order.schedule_date.localeCompare(b.get_order.schedule_date));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+       return this.guides.sort((a, b) => b.get_order.schedule_date.localeCompare(a.get_order.schedule_date));
+      }
     },
 
-     sorted_fecha_prog_desc(){
-         return this.guides.sort((a, b) => b.get_order.schedule_date.localeCompare(a.get_order.schedule_date));
-    },
 
   //Hora Entrega Sorting
-     sorted_hora_ent_asc(){
-         return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
-    },
-
-     sorted_hora_ent_desc(){
-         return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
+     sorted_hora_ent(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+       return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
+      }
     },
 
       // Mensajero Sorting
-     sorted_mensajero_asc(){
-         return this.guides.sort((a, b) => a.get_route.get_messenger.name.localeCompare(b.get_route.get_messenger.name));
-    },
-
-     sorted_mensajero_desc(){
-         return this.guides.sort((a, b) => b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name));
+     sorted_mensajero(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+       return this.guides.sort((a, b) => a.get_route.get_messenger.name.localeCompare(b.get_route.get_messenger.name));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+       return this.guides.sort((a, b) => b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name));
+      }
     },
 
         // Estado App Sorting
-     sorted_estado_app_asc(){
-         return this.guides.sort((a, b) => a.app_status.toString() .localeCompare(b.app_status.toString() ));
-    },
-
-     sorted_estado_app_desc(){
-         return this.guides.sort((a, b) => b.app_status.toString() .localeCompare(a.app_status.toString() ));
+     sorted_estado_app(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+       return this.guides.sort((a, b) => a.app_status.toString() .localeCompare(b.app_status.toString() ));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.app_status.toString() .localeCompare(a.app_status.toString() ));
+      }
     },
 
 
 //Cliente Sorting
-  sorted_cliente_asc(){
+  sorted_cliente(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
          return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
-    },
-
-    sorted_cliente_desc(){
-         return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
+      }
     },
 
 //Contato Sorting
-  sorted_contacto_asc(){
-         return this.guides.sort((a, b) => a.contact.localeCompare(b.contact));
+  sorted_contacto(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+          return this.guides.sort((a, b) => a.contact.localeCompare(b.contact));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
+      }
     },
 
-    sorted_contacto_desc(){
-         return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
-    },
-
-    //Cliente direccion
-  sorted_direccion_asc(){
-         return this.guides.sort((a, b) => a.address_name.localeCompare(b.address_name));
-    },
-
-    sorted_direccion_desc(){
-         return this.guides.sort((a, b) => b.address_name.localeCompare(a.address_name));
+   //Cliente direccion
+  sorted_direccion(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+          return this.guides.sort((a, b) => a.address_name.localeCompare(b.address_name));
+      } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.address_name.localeCompare(a.address_name));
+      }
     },
 
         rowClick(data, index) {

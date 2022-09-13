@@ -9790,7 +9790,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 // import { Sortable, MultiDrag } from 'sortablejs';
 
  //  Sortable.mount(new MultiDrag());
@@ -9813,7 +9812,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       messenger: null,
       messengerName: null,
       activeIndex: null,
-      search: ''
+      search: '',
+      sortedData: [],
+      sortedbyASC: true
     };
   },
   computed: {
@@ -9849,83 +9850,146 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {},
   methods: {
-    //Destino Sorting
-    sorted_destino_asc: function sorted_destino_asc() {
-      // Molestando
-      return this.guides.sort(function (a, b) {
-        return a.created_at.localeCompare(b.created_at);
-      });
+    //Evento Sorting
+    sorted_evento: function sorted_evento() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.created_at.localeCompare(b.created_at);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.created_at.localeCompare(a.created_at);
+        });
+      }
     },
-    sorted_destino_desc: function sorted_destino_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.created_at.localeCompare(a.created_at);
-      });
+    //Destino Sorting
+    sorted_destino: function sorted_destino() {
+      // Molestando
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.created_at.localeCompare(b.created_at);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.created_at.localeCompare(a.created_at);
+        });
+      }
     },
     //Fecha Prog. Sorting
-    sorted_fecha_prog_asc: function sorted_fecha_prog_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.get_order.schedule_date.localeCompare(b.get_order.schedule_date);
-      });
-    },
-    sorted_fecha_prog_desc: function sorted_fecha_prog_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.get_order.schedule_date.localeCompare(a.get_order.schedule_date);
-      });
-    },
-    //Cliente Sorting
-    sorted_cliente_asc: function sorted_cliente_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.get_order.get_user.name.localeCompare(b.get_order.get_user.name);
-      });
-    },
-    sorted_cliente_desc: function sorted_cliente_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.get_order.get_user.name.localeCompare(a.get_order.get_user.name);
-      });
-    },
-    //Contato Sorting
-    sorted_contacto_asc: function sorted_contacto_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.contact.localeCompare(b.contact);
-      });
-    },
-    sorted_contacto_desc: function sorted_contacto_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.contact.localeCompare(a.contact);
-      });
-    },
-    //Cliente direccion
-    sorted_direccion_asc: function sorted_direccion_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.address_name.localeCompare(b.address_name);
-      });
-    },
-    sorted_direccion_desc: function sorted_direccion_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.address_name.localeCompare(a.address_name);
-      });
+    sorted_fecha_prog: function sorted_fecha_prog() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.get_order.schedule_date.localeCompare(b.get_order.schedule_date);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.get_order.schedule_date.localeCompare(a.get_order.schedule_date);
+        });
+      }
     },
     //Hora Entrega Sorting
-    sorted_hora_ent_asc: function sorted_hora_ent_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range);
-      });
+    sorted_hora_ent: function sorted_hora_ent() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range);
+        });
+      }
     },
-    sorted_hora_ent_desc: function sorted_hora_ent_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range);
-      });
+    //Cliente Sorting
+    sorted_cliente: function sorted_cliente() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.get_order.get_user.name.localeCompare(b.get_order.get_user.name);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.get_order.get_user.name.localeCompare(a.get_order.get_user.name);
+        });
+      }
     },
-    //Evento Sorting
-    sorted_evento_asc: function sorted_evento_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.created_at.localeCompare(b.created_at);
-      });
+    //Contato Sorting
+    sorted_contacto: function sorted_contacto() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.contact.localeCompare(b.contact);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.contact.localeCompare(a.contact);
+        });
+      }
     },
-    sorted_evento_desc: function sorted_evento_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.created_at.localeCompare(a.created_at);
-      });
+    //Cliente direccion
+    sorted_direccion: function sorted_direccion() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.address_name.localeCompare(b.address_name);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.address_name.localeCompare(a.address_name);
+        });
+      }
     },
     rowClick: function rowClick(data) {
       this.$emit("getGuide", data);
@@ -10207,126 +10271,225 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     //Estado sorting
-    sorted_estado_asc: function sorted_estado_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.get_status_matrix.name.localeCompare(b.get_status_matrix.name);
-      });
-    },
-    sorted_estado_desc: function sorted_estado_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.get_status_matrix.name.localeCompare(a.get_status_matrix.name);
-      });
+    sorted_estado: function sorted_estado() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.get_status_matrix.name.localeCompare(b.get_status_matrix.name);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.get_status_matrix.name.localeCompare(a.get_status_matrix.name);
+        });
+      }
     },
     //Evento Sorting
-    sorted_evento_asc: function sorted_evento_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.created_at.localeCompare(b.created_at);
-      });
-    },
-    sorted_evento_desc: function sorted_evento_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.created_at.localeCompare(a.created_at);
-      });
+    sorted_evento: function sorted_evento() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.created_at.localeCompare(b.created_at);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.created_at.localeCompare(a.created_at);
+        });
+      }
     },
     //Despacho Sorting
-    sorted_despacho_asc: function sorted_despacho_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.dispatched.localeCompare(b.dispatched);
-      });
-    },
-    sorted_despacho_desc: function sorted_despacho_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.dispatched.localeCompare(a.dispatched);
-      });
+    sorted_despacho: function sorted_despacho() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.dispatched.localeCompare(b.dispatched);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.dispatched.localeCompare(a.dispatched);
+        });
+      }
     },
     //Destino Sorting
-    sorted_destino_asc: function sorted_destino_asc() {
+    sorted_destino: function sorted_destino() {
       // Molestando
-      return this.guides.sort(function (a, b) {
-        return a.created_at.localeCompare(b.created_at);
-      });
-    },
-    sorted_destino_desc: function sorted_destino_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.created_at.localeCompare(a.created_at);
-      });
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.created_at.localeCompare(b.created_at);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.created_at.localeCompare(a.created_at);
+        });
+      }
     },
     //Fecha Prog. Sorting
-    sorted_fecha_prog_asc: function sorted_fecha_prog_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.get_order.schedule_date.localeCompare(b.get_order.schedule_date);
-      });
-    },
-    sorted_fecha_prog_desc: function sorted_fecha_prog_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.get_order.schedule_date.localeCompare(a.get_order.schedule_date);
-      });
+    sorted_fecha_prog: function sorted_fecha_prog() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.get_order.schedule_date.localeCompare(b.get_order.schedule_date);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.get_order.schedule_date.localeCompare(a.get_order.schedule_date);
+        });
+      }
     },
     //Hora Entrega Sorting
-    sorted_hora_ent_asc: function sorted_hora_ent_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range);
-      });
-    },
-    sorted_hora_ent_desc: function sorted_hora_ent_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range);
-      });
+    sorted_hora_ent: function sorted_hora_ent() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range);
+        });
+      }
     },
     // Mensajero Sorting
-    sorted_mensajero_asc: function sorted_mensajero_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.get_route.get_messenger.name.localeCompare(b.get_route.get_messenger.name);
-      });
-    },
-    sorted_mensajero_desc: function sorted_mensajero_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name);
-      });
+    sorted_mensajero: function sorted_mensajero() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.get_route.get_messenger.name.localeCompare(b.get_route.get_messenger.name);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name);
+        });
+      }
     },
     // Estado App Sorting
-    sorted_estado_app_asc: function sorted_estado_app_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.app_status.toString().localeCompare(b.app_status.toString());
-      });
-    },
-    sorted_estado_app_desc: function sorted_estado_app_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.app_status.toString().localeCompare(a.app_status.toString());
-      });
+    sorted_estado_app: function sorted_estado_app() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.app_status.toString().localeCompare(b.app_status.toString());
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.app_status.toString().localeCompare(a.app_status.toString());
+        });
+      }
     },
     //Cliente Sorting
-    sorted_cliente_asc: function sorted_cliente_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.get_order.get_user.name.localeCompare(b.get_order.get_user.name);
-      });
-    },
-    sorted_cliente_desc: function sorted_cliente_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.get_order.get_user.name.localeCompare(a.get_order.get_user.name);
-      });
+    sorted_cliente: function sorted_cliente() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.get_order.get_user.name.localeCompare(b.get_order.get_user.name);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.get_order.get_user.name.localeCompare(a.get_order.get_user.name);
+        });
+      }
     },
     //Contato Sorting
-    sorted_contacto_asc: function sorted_contacto_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.contact.localeCompare(b.contact);
-      });
-    },
-    sorted_contacto_desc: function sorted_contacto_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.contact.localeCompare(a.contact);
-      });
+    sorted_contacto: function sorted_contacto() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.contact.localeCompare(b.contact);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.contact.localeCompare(a.contact);
+        });
+      }
     },
     //Cliente direccion
-    sorted_direccion_asc: function sorted_direccion_asc() {
-      return this.guides.sort(function (a, b) {
-        return a.address_name.localeCompare(b.address_name);
-      });
-    },
-    sorted_direccion_desc: function sorted_direccion_desc() {
-      return this.guides.sort(function (a, b) {
-        return b.address_name.localeCompare(a.address_name);
-      });
+    sorted_direccion: function sorted_direccion() {
+      if (this.sortedbyASC) {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] > y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = false;
+        return this.guides.sort(function (a, b) {
+          return a.address_name.localeCompare(b.address_name);
+        });
+      } else {
+        this.sortedData.sort(function (x, y) {
+          return x[sortBy] < y[sortBy] ? -1 : 1;
+        });
+        this.sortedbyASC = true;
+        return this.guides.sort(function (a, b) {
+          return b.address_name.localeCompare(a.address_name);
+        });
+      }
     },
     rowClick: function rowClick(data, index) {
       var _this2 = this;
@@ -71970,28 +72133,12 @@ var render = function () {
                             "th",
                             {
                               staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
-                            },
-                            [_vm._v("#")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "th",
-                            {
-                              staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_destino },
                             },
                             [
-                              _vm._v("Orden "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-up",
-                                on: { click: _vm.sorted_destino_asc },
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-down",
-                                on: { click: _vm.sorted_destino_desc },
-                              }),
+                              _vm._v("# "),
+                              _c("i", { staticClass: "fa fa-sort" }),
                             ]
                           ),
                           _vm._v(" "),
@@ -71999,19 +72146,12 @@ var render = function () {
                             "th",
                             {
                               staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_destino },
                             },
                             [
-                              _vm._v("Destino "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-up",
-                                on: { click: _vm.sorted_destino_asc },
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-down",
-                                on: { click: _vm.sorted_destino_desc },
-                              }),
+                              _vm._v("Orden  "),
+                              _c("i", { staticClass: "fa fa-sort" }),
                             ]
                           ),
                           _vm._v(" "),
@@ -72019,19 +72159,12 @@ var render = function () {
                             "th",
                             {
                               staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_destino },
                             },
                             [
-                              _vm._v("Fecha Prog   "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-up",
-                                on: { click: _vm.sorted_fecha_prog_asc },
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-down",
-                                on: { click: _vm.sorted_fecha_prog_desc },
-                              }),
+                              _vm._v("Destino  "),
+                              _c("i", { staticClass: "fa fa-sort" }),
                             ]
                           ),
                           _vm._v(" "),
@@ -72039,19 +72172,25 @@ var render = function () {
                             "th",
                             {
                               staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_fecha_prog },
+                            },
+                            [
+                              _vm._v("F.Prog "),
+                              _c("i", { staticClass: "fa fa-sort" }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "text-nowrap",
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_cliente },
                             },
                             [
                               _vm._v("Cliente "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-up",
-                                on: { click: _vm.sorted_cliente_asc },
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-down",
-                                on: { click: _vm.sorted_cliente_desc },
-                              }),
+                              _c("i", { staticClass: "fa fa-sort" }),
                             ]
                           ),
                           _vm._v(" "),
@@ -72059,48 +72198,27 @@ var render = function () {
                             "th",
                             {
                               staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_contacto },
                             },
                             [
                               _vm._v("Contacto "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-up ",
-                                on: { click: _vm.sorted_contacto_asc },
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-down ",
-                                on: { click: _vm.sorted_contacto_desc },
-                              }),
+                              _c("i", { staticClass: "fa fa-sort" }),
                             ]
                           ),
                           _vm._v(" "),
-                          _c(
-                            "th",
-                            {
-                              staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
-                            },
-                            [_vm._v("Barrio/Zona")]
-                          ),
+                          _vm._m(1),
                           _vm._v(" "),
                           _c(
                             "th",
                             {
                               staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_direccion },
                             },
                             [
-                              _vm._v("Dirección  "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-up",
-                                on: { click: _vm.sorted_direccion_asc },
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-down",
-                                on: { click: _vm.sorted_direccion_desc },
-                              }),
+                              _vm._v("Dirección "),
+                              _c("i", { staticClass: "fa fa-sort" }),
                             ]
                           ),
                           _vm._v(" "),
@@ -72108,19 +72226,12 @@ var render = function () {
                             "th",
                             {
                               staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_hora_ent },
                             },
                             [
                               _vm._v("H.Entrega "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-up",
-                                on: { click: _vm.sorted_hora_ent_asc },
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-down",
-                                on: { click: _vm.sorted_hora_ent_desc },
-                              }),
+                              _c("i", { staticClass: "fa fa-sort" }),
                             ]
                           ),
                           _vm._v(" "),
@@ -72128,30 +72239,16 @@ var render = function () {
                             "th",
                             {
                               staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
+                              staticStyle: { cursor: "pointer" },
+                              on: { click: _vm.sorted_evento },
                             },
                             [
                               _vm._v("Fecha Creación "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-up",
-                                on: { click: _vm.sorted_evento_asc },
-                              }),
-                              _vm._v(" "),
-                              _c("i", {
-                                staticClass: "fa fa-arrow-down",
-                                on: { click: _vm.sorted_evento_desc },
-                              }),
+                              _c("i", { staticClass: "fa fa-sort" }),
                             ]
                           ),
                           _vm._v(" "),
-                          _c(
-                            "th",
-                            {
-                              staticClass: "text-nowrap",
-                              attrs: { scope: "col" },
-                            },
-                            [_vm._v("Tipo")]
-                          ),
+                          _vm._m(2),
                         ]),
                       ]),
                       _vm._v(" "),
@@ -72282,7 +72379,7 @@ var render = function () {
                       staticStyle: { "table-layout": "auto", width: "1100px" },
                     },
                     [
-                      _vm._m(1),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c(
                         "draggable",
@@ -72491,6 +72588,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "th",
+      { staticClass: "text-nowrap", staticStyle: { cursor: "pointer" } },
+      [_vm._v("Barrio/Zona "), _c("i", { staticClass: "fa fa-sort" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "th",
+      { staticClass: "text-nowrap", staticStyle: { cursor: "pointer" } },
+      [_vm._v("Tipo "), _c("i", { staticClass: "fa fa-sort" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-light" }, [
       _c("tr", { staticClass: "text-center" }, [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
@@ -72687,154 +72804,125 @@ var render = function () {
           [
             _c("thead", { staticClass: "thead-light" }, [
               _c("tr", { staticClass: "text-center" }, [
-                _c("th", [_vm._v("Tipo ")]),
+                _vm._m(0),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Estado  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_estado_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_estado_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_estado },
+                  },
+                  [_vm._v("Estado "), _c("i", { staticClass: "fa fa-sort" })]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Fecha Evento  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_evento_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_evento_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_evento },
+                  },
+                  [
+                    _vm._v("Fecha Evento "),
+                    _c("i", { staticClass: "fa fa-sort" }),
+                  ]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Despacho  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_despacho_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_despacho_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_despacho },
+                  },
+                  [_vm._v("Despacho "), _c("i", { staticClass: "fa fa-sort" })]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Destino  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_destino_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_destino_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_destino },
+                  },
+                  [_vm._v("Destino  "), _c("i", { staticClass: "fa fa-sort" })]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("F.Prog  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_fecha_prog_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_fecha_prog_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_fecha_prog },
+                  },
+                  [_vm._v("F.Prog "), _c("i", { staticClass: "fa fa-sort" })]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("H.Entrega  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_hora_ent_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_hora_ent_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_hora_ent },
+                  },
+                  [_vm._v("H.Entrega "), _c("i", { staticClass: "fa fa-sort" })]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Mensajero  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_mensajero_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_mensajero_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_mensajero },
+                  },
+                  [_vm._v("Mensajero "), _c("i", { staticClass: "fa fa-sort" })]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Estado App  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_estado_app_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_estado_app_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_estado_app },
+                  },
+                  [
+                    _vm._v("Estado App  "),
+                    _c("i", { staticClass: "fa fa-sort" }),
+                  ]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Cliente  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_cliente_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_cliente_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_cliente },
+                  },
+                  [_vm._v("Cliente "), _c("i", { staticClass: "fa fa-sort" })]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Contacto  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up ",
-                    on: { click: _vm.sorted_contacto_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down ",
-                    on: { click: _vm.sorted_contacto_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_contacto },
+                  },
+                  [_vm._v("Contacto "), _c("i", { staticClass: "fa fa-sort" })]
+                ),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Barrio/Zona"),
-                ]),
+                _vm._m(1),
                 _vm._v(" "),
-                _c("th", { staticClass: "text-nowrap" }, [
-                  _vm._v("Dirección  "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-up",
-                    on: { click: _vm.sorted_direccion_asc },
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-arrow-down",
-                    on: { click: _vm.sorted_direccion_desc },
-                  }),
-                ]),
+                _c(
+                  "th",
+                  {
+                    staticClass: "text-nowrap",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.sorted_direccion },
+                  },
+                  [_vm._v("Dirección↕ ")]
+                ),
               ]),
             ]),
             _vm._v(" "),
@@ -72955,7 +73043,28 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "th",
+      { staticClass: "text-nowrap", staticStyle: { cursor: "pointer" } },
+      [_vm._v("Tipo "), _c("i", { staticClass: "fa fa-sort" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "th",
+      { staticClass: "text-nowrap", staticStyle: { cursor: "pointer" } },
+      [_vm._v("Barrio/Zona "), _c("i", { staticClass: "fa fa-sort" })]
+    )
+  },
+]
 render._withStripped = true
 
 
