@@ -10399,7 +10399,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.get_route.get_messenger.name.localeCompare(b.get_route.get_messenger.name);
+          var _a$get_route, _a$get_route$get_mess, _b$get_route, _b$get_route$get_mess;
+
+          return (_a$get_route = a.get_route) === null || _a$get_route === void 0 ? void 0 : (_a$get_route$get_mess = _a$get_route.get_messenger) === null || _a$get_route$get_mess === void 0 ? void 0 : _a$get_route$get_mess.name.localeCompare((_b$get_route = b.get_route) === null || _b$get_route === void 0 ? void 0 : (_b$get_route$get_mess = _b$get_route.get_messenger) === null || _b$get_route$get_mess === void 0 ? void 0 : _b$get_route$get_mess.name);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10407,7 +10409,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name);
+          var _b$get_route2, _b$get_route2$get_mes, _a$get_route2, _a$get_route2$get_mes;
+
+          return (_b$get_route2 = b.get_route) === null || _b$get_route2 === void 0 ? void 0 : (_b$get_route2$get_mes = _b$get_route2.get_messenger) === null || _b$get_route2$get_mes === void 0 ? void 0 : _b$get_route2$get_mes.name.localeCompare((_a$get_route2 = a.get_route) === null || _a$get_route2 === void 0 ? void 0 : (_a$get_route2$get_mes = _a$get_route2.get_messenger) === null || _a$get_route2$get_mes === void 0 ? void 0 : _a$get_route2$get_mes.name);
         });
       }
     },
@@ -72921,7 +72925,7 @@ var render = function () {
                     staticStyle: { cursor: "pointer" },
                     on: { click: _vm.sorted_direccion },
                   },
-                  [_vm._v("Dirección↕ ")]
+                  [_vm._v("Dirección "), _c("i", { staticClass: "fa fa-sort" })]
                 ),
               ]),
             ]),

@@ -40,7 +40,7 @@
                         <th style="cursor: pointer" class="text-nowrap" @click="sorted_cliente">Cliente <i class='fa fa-sort'></i>  </th>
                         <th style="cursor: pointer"  class="text-nowrap" @click="sorted_contacto">Contacto <i class='fa fa-sort'></i> </th>
                         <th style="cursor: pointer" class="text-nowrap">Barrio/Zona <i class='fa fa-sort'></i></th>
-                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_direccion">Dirección&#8597; </th>
+                        <th style="cursor: pointer" class="text-nowrap" @click="sorted_direccion">Dirección <i class='fa fa-sort'></i> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -230,11 +230,11 @@ mounted() {
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-       return this.guides.sort((a, b) => a.get_route.get_messenger.name.localeCompare(b.get_route.get_messenger.name));
+       return this.guides.sort((a, b) => a.get_route?.get_messenger?.name.localeCompare(b.get_route?.get_messenger?.name));
       } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-       return this.guides.sort((a, b) => b.get_route.get_messenger.name.localeCompare(a.get_route.get_messenger.name));
+       return this.guides.sort((a, b) => b.get_route?.get_messenger?.name.localeCompare(a.get_route?.get_messenger?.name));
       }
     },
 
