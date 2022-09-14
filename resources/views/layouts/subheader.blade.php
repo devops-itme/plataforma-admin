@@ -46,6 +46,7 @@
                 data-placement="bottom">
                 <i class="fad fa-hand-holding-box"></i>
             </a>
+
             <a href="{{ route('zone.index') }}" class="btn btn-light btn-hover-primary btn-sm btn-icon mr-2"
                 data-tooltip title="Zonas" data-placement="bottom">
                 <i class="fad fa-map-marked-alt"></i>
@@ -84,12 +85,16 @@
                                     <a class="dropdown-item" href="">ODS Orden de Servicio<i
                                             class="fas fa-angle-right"></i></a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        @can('Orders')
                                         <li><a class="dropdown-item" href="{{ route('orders.index') }}">Ordenes de
                                                 Servicio</a>
                                         </li>
+                                        @endcan
+                                        @can('InternationalOrders')
                                         <li><a class="dropdown-item" href="{{ route('internationalOrders.index') }}">Ordenes de
                                                 Servicio Internacional</a>
                                         </li>
+                                        @endcan
                                         <li><a class="dropdown-item" href="#">Clonar/Replicar</a></li>
                                         <li><a class="dropdown-item" href="#">Importar de Excel</a></li>
                                     </ul>
@@ -102,9 +107,11 @@
                                         <li><a class="dropdown-item"
                                                 href="{{ route('delivery.index') }}">Despachos</a>
                                         </li>
+                                        @can('DeliveryPacking')
                                         <li><a class="dropdown-item"
                                                 href="{{ route('deliveryPacking.index') }}">Despachos
                                                 Packing</a></li>
+                                        @endcan
                                     </ul>
                                 </li>
                                 <li><a class="dropdown-item" href="#">UDPro Driver</a></li>
@@ -202,8 +209,11 @@
                                     <li><a class="dropdown-item" href="{{ route('log.index') }}">Log de usuario</a>
                                     </li>
                                 @endif
+
+                                 @can('StatusMatrix')
                                 <li><a class="dropdown-item" href="{{ route('statusMatrix.index') }}">Matriz de
                                         estados</a></li>
+                                 @endcan
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
