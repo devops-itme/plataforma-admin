@@ -131,11 +131,17 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a></li>
+                                @can('Users')
                                 <li><a class="dropdown-item" href="{{ route('users.index') }}">Usuarios</a></li>
+                                @endcan
+                                @can('Customers')
                                 <li><a class="dropdown-item" href="{{ route('customers.index') }}">Clientes (Web)</a>
                                 </li>
+                                @endcan
+                                @can('Messengers')
                                 <li><a class="dropdown-item" href="{{ route('messengers.index') }}">Mensajeros</a>
                                 </li>
+                                @endcan
                                 <li><a class="dropdown-item" href="{{ route('plans.index') }}">Planes</a></li>
                             </ul>
                         </li>
@@ -221,11 +227,19 @@
                                 data-toggle="dropdown" aria-expanded="false"><i class="fas fa-globe"></i>
                                 Configuraciones</a>
                             <ul class="dropdown-menu menuMovPagos" aria-labelledby="navbarDropdownMenuLink">
+                                @can('Zones')
                                 <li><a class="dropdown-item" href="{{ route('zones.index') }}">Zonas</a></li>
+                                @endcan
+                                @can('Parameters')
                                 <li><a class="dropdown-item" href="{{ route('parameters.index') }}">Parametros</a>
                                 </li>
+                                @endcan
+                                @can('Hours')
                                 <li><a class="dropdown-item" href="{{ route('hours.index') }}">Horas</a></li>
+                                @endcan
+                                @can('Rates')
                                 <li><a class="dropdown-item" href="{{ route('rates.index') }}">Tarifario</a></li>
+                                @endcan
                             </ul>
                         </li>
 
