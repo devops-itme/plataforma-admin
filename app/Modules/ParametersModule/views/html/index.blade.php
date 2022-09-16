@@ -25,7 +25,7 @@
                                         Estado
                                     </th>
                                     <th>
-                                        Opciones
+                                        Acciones
                                     </th>
                                 </thead>
                                 <tbody>
@@ -77,7 +77,7 @@
                                     <th>Nombre</th>
                                     <th>Descripcion</th>
                                     <th>Estado</th>
-                                    <th>Opciones</th>
+                                    <th class="text-center">Acciones</th>
                                 </thead>
                                 <tbody></tbody>
                             </table>

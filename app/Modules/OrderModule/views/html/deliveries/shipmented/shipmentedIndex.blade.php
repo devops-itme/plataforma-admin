@@ -7,6 +7,7 @@
                 <th scope="col">Mensajero</th>
                 <th scope="col">Cliente</th>
                 <th scope="col">Fecha</th>
+                <th scope="col">H.Entrega</th>
                 <th scope="col">Valor</th>
                 <th scope="col">Barrios</th>
                 <th scope="col">Estado</th>
@@ -17,11 +18,12 @@
             @click="rowClick(order,index)">
                 <td v-text="`${order.user_id}-${ order.order_number }`"></td>
                 <td v-text="`${order.dispatched}`"></td>
-                <td v-text="`${order.get_guides[0]?.get_route?.get_messenger.name} ${ order.get_guides[0]?.get_route?.get_messenger.last_name }`"></td>
-                <td v-text=order?.get_user?.name??(order?.get_user?.get_customer?.business_name??(order?.get_user?.get_customer?.tradename??'---'))></td>
-                <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
+                <td v-text="`${order.get_guides[0]?.get_route?.get_messenger.name ?? 'No registra'} ${ order.get_guides[0]?.get_route?.get_messenger.last_name ?? '' }`"></td>
+                <td v-text="`${order?.get_user?.name??(order?.get_user?.get_customer?.business_name??(order?.get_user?.get_customer?.tradename??'No Registra'))} ${ order?.get_user?.last_name ?? '' }`"></td>
+                <td v-text="`${ order.schedule_date }`"> </td>
+                <td v-text="`${ order.schedule_time_range ?? 'No Registra' }`"> </td>
                 <td v-text="`$${rowTotal(order.get_guides)}`"></td>
-                <td v-text="`${ order.get_guides[0]?.address_description}`"></td>
+                <td v-text="`${ order.get_guides[0]?.address_description ?? 'No Registra'}`"></td>
                 <td>Pendiente</td>
             </tr>
         </tbody>
@@ -32,7 +34,7 @@
             <div class="col-md-8 d-flex flex-row flex-wrap">
                 <div class="form-group py-3 m-0 col-md-4">
                     <label>Nro Mensajero:</label>
-                    <input type="number" class="form-control" v-if="showData" disabled v-bind:value="`${showData.get_guides[0]?.get_route?.get_messenger.document_number}`" />
+                    <input type="number" class="form-control" v-if="showData" disabled v-bind:value="`${showData.get_guides[0]?.get_route?.get_messenger.document_number ? showData.get_guides[0]?.get_route?.get_messenger.document_number : 'No Registra'}`" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group py-3 m-0 col-md-3">
@@ -42,7 +44,7 @@
                 </div>
                 <div class="form-group py-3 m-0 col-md-5">
                     <label>Cliente:</label>
-                    <input type="text" class="form-control" v-if="showData" disabled v-bind:value=showData?.get_user?.name??(showData?.get_user?.get_customer?.business_name??(showData?.get_user?.get_customer?.tradename??'---')) />
+                    <input type="text" class="form-control" v-if="showData" disabled v-bind:value="`${showData?.get_user?.name??(showData?.get_user?.get_customer?.business_name??(showData?.get_user?.get_customer?.tradename??'---'))} ${ showData?.get_user?.last_name ?? ''} `" />
                     <span class="form-text text-muted"></span>
                 </div>
             </div>

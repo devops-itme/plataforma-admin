@@ -5,6 +5,7 @@
                 <th scope="col">Orden</th>
                 <th scope="col">Cliente</th>
                 <th scope="col">Fecha</th>
+                <th scope="col">H.Entrega</th>
                 <th scope="col">Valor</th>
                 <th scope="col">Barrios</th>
             </tr>
@@ -13,10 +14,11 @@
             <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}, {'urgent_row': order.urgent_dispatch === 1  && index != activeIndex}]"
                 @click="rowClick(order,index)">
                 <td v-text="`${order.user_id}-${ order.order_number }`"></td>
-                <td v-text=order?.get_user?.name??(order?.get_user?.get_customer?.business_name??(order?.get_user?.get_customer?.tradename??'---'))></td>
-                <td v-text="`${ order.schedule_date }|${ order.schedule_time }`"> </td>
-                <td v-text="`$${rowTotal(order.get_guides)}`"></td>
-                <td v-text="`${ order.get_guides[0]?.address_description}`"></td>
+                <td v-text="`${order?.get_user?.name??(order?.get_user?.get_customer?.business_name??(order?.get_user?.get_customer?.tradename ??'---'))} ${ order?.get_user?.last_name ?? ' ' }`"></td>
+                <td v-text="`${ order.schedule_date }`"> </td>
+                <td v-text="`${ order.schedule_time_range ?? 'No Registra' }`"> </td>
+                <td v-text="`$${rowTotal(order.get_guides ?? 'No Registra')}`"></td>
+                <td v-text="`${ order.get_guides[0]?.address_description ??'No Registra'}`"></td>
             </tr>
         </tbody>
     </table>

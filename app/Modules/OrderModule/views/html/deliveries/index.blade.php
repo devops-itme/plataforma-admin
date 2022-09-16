@@ -64,7 +64,7 @@
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Cliente:</div>
                                 <div class="line-height-xl" v-show="showData.id"
-                                    v-text=showData?.get_user?.name??(showData?.get_user?.get_customer?.business_name??(showData?.get_user?.get_customer?.tradename??'---'))></div>
+                                    v-text= "`${showData?.get_user?.name??(showData?.get_user?.get_customer?.business_name??(showData?.get_user?.get_customer?.tradename??'---'))} ${ showData?.get_user?.last_name ?? ''} `"></div>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Teléfono:</div>
@@ -72,7 +72,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Contacto:</div>
-                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_user?.get_customer.contact}`"></div>
+                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_user?.get_customer.contact ? showData.get_user?.get_customer.contact : 'No Registra'}`"></div>
                             </div>
                             <div class="col-md-6 mb-2"  v-show="showMessengerData?.id">
                                 <div class="font-weight-bolder mb-1">Transporte:</div>
@@ -81,7 +81,7 @@
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-6 mb-2">
                                 <div class="font-weight-bolder mb-1">Medio de pago:</div>
-                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_payment_method?.name}`">Efectivo</div>
+                                <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_payment_method?.name ? showData.get_payment_method?.name : 'No Registra'}`">Efectivo</div>
                             </div>
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-6 mb-2">
@@ -91,8 +91,8 @@
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-12 m-0 p-0" v-for="(tab, i) in showData.get_guides"  >
                                 <div class="col-md-12 mb-2">
-                                    <div class="font-weight-bolder mb-1" v-text="`${'('+(i+1)+'), '+tab.rate}`">(1) Adicional*0:</div>
-                                    <div class="line-height-xl" v-text="`${'$'+new Intl.NumberFormat().format(tab.value)}`">$0</div>
+                                    <div class="font-weight-bolder mb-1" v-text="`${'('+(i+1)+')'} , ${tab.rate ? tab.rate : 'No Registra'}`">(1) Adicional*0:</div>
+                                    <div class="line-height-xl" v-text="`${'$'+new Intl.NumberFormat().format(tab.value) }`">$0</div>
                                 </div>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">
@@ -105,12 +105,12 @@
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Cliente Documento:</div>
-                                    <div class="line-height-x1" v-text="`${[showData.get_user ? showData.get_user.document_number+': '+showData.get_user.get_document_type?.name : '']}`"></div>
+                                    <div class="line-height-x1" v-text="`${ showData.get_user.get_document_type?.name ? showData.get_user.get_document_type?.name : 'No Registra'} ${ showData.get_user.document_number ? showData.get_user.document_number : ''}`"></div>
                                 </div>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Concepto:</div>
-                                    <div class="line-height-xl" v-text="tab.concept"></div>
+                                    <div class="line-height-xl" v-text="tab.concept ? tab.concept : 'No registra'"></div>
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Dirección:</div>
@@ -135,7 +135,7 @@
                         <div class="d-flex flex-row flex-wrap max-h-200px mb-3 pb-3 border-bottom justify-content-center"  v-if=currentTab==tabs[2]?.id>
                             <h5 class="mb-5 font-weight-bold text-dark col-md-12">Adjuntos</h5>
                             <div class="col-md">
-                                <img class="img-fluid rounded" src="https://placem.at/things?h=100alt=">                                                                   
+                                <img class="img-fluid rounded" src="https://placem.at/things?h=100alt=">
                             </div>
                             <div class="col-md">
                                 <img class="img-fluid rounded" src="https://placem.at/things?h=100" alt="">

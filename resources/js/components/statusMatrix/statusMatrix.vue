@@ -12,7 +12,7 @@
                                 <thead class="text-primary">
                                     <th>Nombre</th>
                                     <th>Ámbito</th>
-                                    <th>Opciones</th>
+                                    <th>Acciones</th>
                                 </thead>
                                 <tbody>
                                       <tr
@@ -64,7 +64,7 @@
                                 <thead class="text-primary">
                                     <th>Descripción</th>
                                     <th>Rol</th>
-                                    <th>Opciones</th>
+                                    <th class="text-center">Acciones</th>
                                 </thead>
                                 <tbody>
                                      <tr
@@ -73,7 +73,7 @@
                                     >
                                         <td>{{ descriptor.description }}</td>
                                         <td>{{ descriptor.get_role.name }}</td>
-                                        <td>
+                                        <td class="text-center">
                                             <a
                                                 href="#"
                                                 role="button"

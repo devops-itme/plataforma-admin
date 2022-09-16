@@ -15944,7 +15944,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
 
 // exports
 
@@ -15963,7 +15963,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -73760,7 +73760,7 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(descriptor.get_role.name))]),
                           _vm._v(" "),
-                          _c("td", [
+                          _c("td", { staticClass: "text-center" }, [
                             _c(
                               "a",
                               {
@@ -74025,7 +74025,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Ámbito")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Opciones")]),
+      _c("th", [_vm._v("Acciones")]),
     ])
   },
   function () {
@@ -74053,7 +74053,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Rol")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Opciones")]),
+      _c("th", { staticClass: "text-center" }, [_vm._v("Acciones")]),
     ])
   },
 ]

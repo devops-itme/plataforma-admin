@@ -24,9 +24,7 @@
                                     <th>
                                         Hora hasta
                                     </th>
-                                    <th>
-                                        Opciones
-                                    </th>
+                                    <th class="text-center">Acciones</th>
                                 </thead>
                                 <tbody>
                                     @foreach($pickupdays as $day)

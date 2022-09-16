@@ -29,7 +29,7 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Estado</th>
-                                <th></th>
+                                <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
