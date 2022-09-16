@@ -34,7 +34,7 @@
             <div class="col-md-8 d-flex flex-row flex-wrap">
                 <div class="form-group py-3 m-0 col-md-4">
                     <label>Nro Mensajero:</label>
-                    <input type="number" class="form-control" v-if="showData" disabled v-bind:value="`${showData.get_guides[0]?.get_route?.get_messenger.document_number ? showData.get_guides[0]?.get_route?.get_messenger.document_number : 'No Registra'}`" />
+                    <input type="text" class="form-control" v-if="showData" disabled v-bind:value="`${showData.get_guides[0]?.get_route?.get_messenger.document_number ?? 'No Registra'}`" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group py-3 m-0 col-md-3">
