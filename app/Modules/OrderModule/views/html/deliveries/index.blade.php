@@ -119,15 +119,15 @@
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Contacto:</div>
-                                    <div class="line-height-xl" v-text="tab.contact"></div>
+                                    <div class="line-height-xl" v-text="tab.contact ? tab.contact : 'No registra'"></div>
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Email Contacto:</div>
-                                    <div class="line-height-xl" v-text="tab.email_contact"></div>
+                                    <div class="line-height-xl" v-text="tab.email_contact ? tab.email_contact : 'No registra'"></div>
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <div class="font-weight-bolder mb-1">Teléfono contacto:</div>
-                                    <div class="line-height-xl" v-text="tab.phone_contact"></div>
+                                    <div class="line-height-xl" v-text="tab.phone_contact ? tab.phone_contact : 'No registra' "></div>
                                 </div>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             </div>
