@@ -104,8 +104,8 @@
                                     <div class="line-height-x1" v-text="`${[showData.get_branch_office ? showData.get_branch_office.id+': '+showData.get_branch_office.name : 'No registra']}`"></div>
                                 </div>
                                 <div class="col-md-12 mb-2">
-                                    <div class="font-weight-bolder mb-1">Tipo y número de documento:</div>
-                                    <div class="line-height-x1" v-text="`${ showData.get_user.get_document_type?.name ? showData.get_user.get_document_type?.name : 'No Registra'} / ${ showData.get_user.document_number ? showData.get_user.document_number : ''}`"></div>
+                                    <div class="font-weight-bolder mb-1">Cliente tipo y número de documento:</div>
+                                    <div class="line-height-x1" v-text="`${ showData.get_user.get_document_type?.name ? showData.get_user.get_document_type?.name : 'No Registra'} / ${ showData.get_user.document_number ? showData.get_user.document_number : 'No Registra'}`"></div>
                                 </div>
                                 <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                                 <div class="col-md-12 mb-2">
