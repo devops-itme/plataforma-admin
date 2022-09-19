@@ -9836,9 +9836,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.searchMessenger) {
         return this.messengers.filter(function (item) {
           return _this2.searchMessenger.toString().toLowerCase().split(" ").every(function (v) {
-            var _item$user$document_n, _item$user$document_n2, _item$user$name, _item$user$name$toLow;
+            var _item$user$document_n, _item$user$document_n2, _item$user$name, _item$user$name$toLow, _item$number, _item$number$toLowerC;
 
-            return ((_item$user$document_n = item.user.document_number) === null || _item$user$document_n === void 0 ? void 0 : (_item$user$document_n2 = _item$user$document_n.toLowerCase()) === null || _item$user$document_n2 === void 0 ? void 0 : _item$user$document_n2.includes(v)) || ((_item$user$name = item.user.name) === null || _item$user$name === void 0 ? void 0 : (_item$user$name$toLow = _item$user$name.toLowerCase()) === null || _item$user$name$toLow === void 0 ? void 0 : _item$user$name$toLow.includes(v));
+            return ((_item$user$document_n = item.user.document_number) === null || _item$user$document_n === void 0 ? void 0 : (_item$user$document_n2 = _item$user$document_n.toLowerCase()) === null || _item$user$document_n2 === void 0 ? void 0 : _item$user$document_n2.includes(v)) || ((_item$user$name = item.user.name) === null || _item$user$name === void 0 ? void 0 : (_item$user$name$toLow = _item$user$name.toLowerCase()) === null || _item$user$name$toLow === void 0 ? void 0 : _item$user$name$toLow.includes(v)) || ((_item$number = item.number) === null || _item$number === void 0 ? void 0 : (_item$number$toLowerC = _item$number.toLowerCase()) === null || _item$number$toLowerC === void 0 ? void 0 : _item$number$toLowerC.includes(v));
           });
         });
       }
@@ -15908,7 +15908,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
