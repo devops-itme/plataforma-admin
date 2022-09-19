@@ -33,11 +33,11 @@ class DeliveryController extends Controller
     {
         $response = $this->storeRouteOndemand($request);
         if ($response['state'] == 200) {
-            OrderLog::create([
-                'status_matrix_id' => 3,
-                'user_id' => Auth::user()->id,
-                'order_id' => $response['data']->id
-            ]);
+            // OrderLog::create([
+            //     'status_matrix_id' => 3,
+            //     'user_id' => Auth::user()->id,
+            //     'order_id' => $response['data']->id
+            // ]);
             return $this->respond(200, $response['data'], null, $response['message']);
         } else {
             return $this->respond(500, null, $response['error'], $response['message']);
