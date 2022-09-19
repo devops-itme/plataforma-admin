@@ -38,11 +38,15 @@
                         v-text="`${showData.user_id}-${ showData.order_number }`"></span>
                     </p>
                     <div class="mb-2 d-flex flex-row flex-wrap align-items-center justify-content-between">
-                        <span class="font-weight-bolder mb-0">Nro Mensajero: </span>
-                        <input type="number" class="form-control col-7"  v-model="searchMessenger" >
+                        <span class="font-weight-bolder mb-0">Nro Mensajero:</span>
+                        <input type="text" class="form-control col-7"  v-model="searchMessenger" >
                     </div>
-                    <div class="mb-0">
-                        <input type="text" class="form-control col-12" disabled v-if="setMessenger" v-model="messengerName">
+                    <div class="mb-2 d-flex flex-row flex-wrap align-items-center justify-content-between">
+                    <span class="font-weight-bolder mb-0"></span>
+                    <select v-if="setMessenger" class="form-control col-12" >
+                             <option v-if="a.user.last_name != null"  v-for="a in this.filterMessengers" :value="a.user.id" v-bind:key="a.id">@{{a.user.name + " " + a.user.last_name}}</option>
+                             <option v-if="a.user.last_name == null"  v-for="a in this.filterMessengers" :value="a.user.id" v-bind:key="a.id">@{{a.user.name}}</option>
+                           </select>
                     </div>
                 </div>
                 <div class="col-md-7">

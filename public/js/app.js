@@ -9181,7 +9181,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.searchMessenger) {
         return this.messengers.filter(function (item) {
           return _this2.searchMessenger.toString().toLowerCase().split(" ").every(function (v) {
-            return item.user.document_number.toLowerCase().includes(v);
+            var _item$user$name, _item$user$name$toLow, _item$user$phone, _item$user$phone$toLo;
+
+            return item.user.document_number.toLowerCase().includes(v) || ((_item$user$name = item.user.name) === null || _item$user$name === void 0 ? void 0 : (_item$user$name$toLow = _item$user$name.toLowerCase()) === null || _item$user$name$toLow === void 0 ? void 0 : _item$user$name$toLow.includes(v)) || ((_item$user$phone = item.user.phone) === null || _item$user$phone === void 0 ? void 0 : (_item$user$phone$toLo = _item$user$phone.toLowerCase()) === null || _item$user$phone$toLo === void 0 ? void 0 : _item$user$phone$toLo.includes(v));
           });
         });
       }
@@ -15906,7 +15908,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.urgent_row {\r\n    background: #d31928;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.urgent_row {\n    background: #d31928;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
