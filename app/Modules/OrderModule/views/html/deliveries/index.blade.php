@@ -84,9 +84,9 @@
                                 <div class="line-height-xl" v-show="showData.id" v-text="`${showData.get_payment_method?.name ? showData.get_payment_method?.name : 'No Registra'}`">Efectivo</div>
                             </div>
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-12 mb-2"  v-for="(tab, i) in showData.get_guides">
                                 <div class="font-weight-bolder mb-1">Movil:</div>
-                                <div class="line-height-xl" v-show="showData.id" v-text="`${[showMessengerData ? showMessengerData.id+', '+showMessengerData?.name+' '+showMessengerData?.last_name : 'No registra']}`">381, YEMAYEL ARIEL</div>
+                                <div class="line-height-xl"v-for="(tab2, i) in messengers"   v-if="tab2?.user_id == tab.get_route?.messenger_user_id"  v-text="`${tab2?.number ? tab2?.number : 'No registra'} / ${tab.get_route?.get_messenger.name ? tab.get_route?.get_messenger.name : 'No registra'} ${tab.get_route?.get_messenger.last_name ? tab.get_route?.get_messenger.last_name : ''}`">381, YEMAYEL ARIEL</div>
                             </div>
                             <div class="separator separator-dashed separator-border-2 col-md-12 my-3"></div>
                             <div class="col-md-12 m-0 p-0" v-for="(tab, i) in showData.get_guides"  >
