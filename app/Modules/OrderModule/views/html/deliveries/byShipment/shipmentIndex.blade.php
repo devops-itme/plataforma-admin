@@ -1,6 +1,7 @@
 <div class="h-500px d-flex flex-column justify-content-between">
+<div style="overflow-y: auto;height: 425px;">
     <table class="table table-sm table-hover">
-        <thead class="thead-light">
+        <thead class="thead-light" style=" position: sticky;top: 0;">
             <tr class="text-center">
                 <th scope="col">Orden</th>
                 <th scope="col">Cliente</th>
@@ -10,7 +11,7 @@
                 <th scope="col">Barrios</th>
             </tr>
         </thead>
-        <tbody class="text-center max-h-300px" style="overflow-y: scroll">
+        <tbody class="text-center max-h-425px" >
             <tr v-for="(order, index) in data" :key="data.id" :class="[{'active_row': index === activeIndex}, {'urgent_row': order.urgent_dispatch === 1  && index != activeIndex}]"
                 @click="rowClick(order,index)">
                 <td v-text="`${order.user_id}-${ order.order_number }`"></td>
@@ -22,6 +23,7 @@
             </tr>
         </tbody>
     </table>
+    </div>
     <div class="d-flex flex-row flex-wrap align-items-stretch border-top pt-3">
         <a href="#" class="btn btn-light-primary d-flex align-items-center btn-lg col-md-2">
             <span class="svg-icon">
