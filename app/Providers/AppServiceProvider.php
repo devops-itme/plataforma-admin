@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('Orders', function () {
 
+
+
             $permisos =  DB::table('permissions AS p')
                 ->select(
                     'p.id',
@@ -46,6 +48,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('u.id', Auth::user()->id)
                 ->where('p.module_id', '=', '2')
                 ->get();
+
+                $guardar = [];
 
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
@@ -84,6 +88,9 @@ class AppServiceProvider extends ServiceProvider
                 ->where('p.module_id', '=', '4')
                 ->get();
 
+
+                $guardar = [];
+
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
             }
@@ -120,6 +127,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('u.id', Auth::user()->id)
                 ->where('p.module_id', '=', '6')
                 ->get();
+
+                $guardar = [];
 
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
@@ -158,6 +167,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('p.module_id', '=', '11')
                 ->get();
 
+                $guardar = [];
+
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
             }
@@ -193,6 +204,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('u.id', Auth::user()->id)
                 ->where('p.module_id', '=', '12')
                 ->get();
+
+                $guardar = [];
 
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
@@ -231,6 +244,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('p.module_id', '=', '13')
                 ->get();
 
+                $guardar = [];
+
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
             }
@@ -267,6 +282,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('u.id', Auth::user()->id)
                 ->where('p.module_id', '=', '14')
                 ->get();
+
+                $guardar = [];
 
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
@@ -305,6 +322,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('p.module_id', '=', '15')
                 ->get();
 
+                $guardar = [];
+
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
             }
@@ -341,6 +360,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('u.id', Auth::user()->id)
                 ->where('p.module_id', '=', '18')
                 ->get();
+
+                $guardar = [];
 
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
@@ -380,6 +401,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('p.module_id', '=', '17')
                 ->get();
 
+                $guardar = [];
+
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
             }
@@ -416,6 +439,8 @@ class AppServiceProvider extends ServiceProvider
                 ->where('u.id', Auth::user()->id)
                 ->where('p.module_id', '=', '19')
                 ->get();
+
+                $guardar = [];
 
             foreach ($permisos as $permiso) {
                 $guardar[] = $permiso->actions;
