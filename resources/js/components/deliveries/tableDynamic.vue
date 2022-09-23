@@ -1,20 +1,28 @@
 <template>
     <div class="d-flex flex-row flex-wrap mt-4">
     <div class="form-group col-md-3 mb-0" >
-     <select v-if="typeGuide == 5" class="form-control" style="margin: -30% 0px 0px 339%;"  @change="onChange($event)" v-model="key">  <!--Call run() function-->
+     <select v-if="typeGuide == 5 && listState.length != 0" class="form-control" style="margin: -30% 0px 0px 339%;"  @change="onChange($event)" v-model="key">  <!--Call run() function-->
     <option value="">Seleccione estado</option>
     <option  v-if="typeGuide == 5" value="3">POR DESPACHAR</option>
     <option  v-if="typeGuide == 5" value="4">DESPACHADO</option>
     <option  v-if="typeGuide == 5" value="6">RECOGIDO</option>
+    </select>
+    </div>
+
+     <div class="form-group col-md-3 mb-0" >
+     <select v-if="typeGuide == 9 && listState.length != 0" class="form-control" style="margin: -30% 0px 0px 223%;"  @change="onChange($event)" v-model="key">  <!--Call run() function-->
+    <option value="">Seleccione estado</option>
     <option  v-if="typeGuide == 9" value="7">POR DESPACHAR</option>
     <option  v-if="typeGuide == 9" value="8">DESPACHADO</option>
     <option  v-if="typeGuide == 9" value="10">ENTREGADO</option>
     </select>
-            </div>
+    </div>
+
+
         <h5 class="font-weight-bold text-dark col-md-12 px-0"> Lista de Destinos</h5>
         <div class="d-flex flex-row flex-wrap col-md-12 px-0">
             <div class="form-group col-md-6 pr-0" >
-            <div v-if="typeGuide == 5" class="form-group col-md-6 pr-0" style="margin: -19.5% 0px 0px 206%;">
+            <div v-if="listState.length != 0" class="form-group col-md-6 pr-0" style="margin: -19.5% 0px 0px 206%;">
                     <button type="button"
                         class="btn btn-light-primary font-weight-bold"
                         @click="changeState()">
@@ -85,7 +93,12 @@
     color: #fff;
 }
 </style>
+
 <script>
+
+import swal from 'sweetalert'
+window.swal = swal;
+
 export default {
     props: {
         rows: Number,
@@ -101,6 +114,7 @@ export default {
             activeIndex: null,
             listData: [],
             listState: [],
+            listSelected: [],
             search: '',
             sortedData: [],
             sortedbyASC: true,
@@ -166,9 +180,13 @@ mounted() {
             window.addEventListener('click', ()=>{
                 if(!this.listData.includes(data.id) && data.status_matrix_id == 6  ){
                     this.listData.push(data.id)
-                }else{
+                    this.listState.push(data.id)
+                    this.listSelected = data.status_matrix_id
+                }
+                else{
                     this.listData = []
                     this.listState.push(data.id)
+                    this.listSelected = data.status_matrix_id;
                 }
             })
         },
@@ -219,7 +237,75 @@ mounted() {
   // CHANGE STATE GUIDES
 
 async changeState(){
-            let state_select = this.seleccion;
+let answer = '';
+
+console.log('List Data');
+console.log(this.listData);
+ let equal = this.listSelected;
+ let state_select = this.seleccion;
+ let key_word = '';
+
+if (state_select == 3){
+    key_word = ' POR DESPACHAR'
+}
+
+if (state_select == 4){
+    key_word = 'DESPACHADO'
+}
+
+
+if (state_select == 6){
+    key_word = 'RECOGIDO'
+}
+
+if (state_select == 7){
+    key_word = ' POR DESPACHAR'
+}
+
+if (state_select == 8){
+    key_word = 'DESPACHADO'
+}
+
+if (state_select == 10){
+    key_word = 'ENTREGADD'
+}
+
+  if(state_select == ''){
+    window.swal({
+   title: "ADVERTENCIA",
+    text: "Debe seleccionar un estado",
+    icon: "warning",
+    buttons: {
+    confirm: true,
+    cancel: true,
+  },
+})
+  }
+
+  else if(equal == state_select){
+    window.swal({
+   title: "ADVERTENCIA",
+    text: "Ya estas en el estado deseado",
+    icon: "warning",
+    buttons: {
+    confirm: true,
+    cancel: true,
+  },
+})
+  }
+
+  else if(state_select != ''){
+
+ window.swal({
+   title: "Cambio de Estado",
+    text: "¿Está seguro que quiere cambiar el estado de la guía a: "+key_word+"?",
+    icon: "warning",
+    buttons: {
+    confirm: true,
+    cancel: true,
+  },
+}).then((isConfirm) => {
+  if (isConfirm) {
             let response = null;
             let token = document
                 .querySelector('meta[name="csrf-token"]')
@@ -228,40 +314,24 @@ async changeState(){
                 myHeaders.append("Accept", "application/json");
                 myHeaders.append('Content-Type', "application/json");
                 myHeaders.append("X-CSRF-TOKEN", token);
-            let requestOptions = {
+
+            //PICKUP ORDERS
+            if (state_select == 3){
+                let requestOptions = {
                 method: "PUT",
                 headers: myHeaders,
                 body: JSON.stringify({
                     'guide_ids': this.listState
                     })
             };
-
-            //PICKUP ORDERS
-            if (state_select == 3){
-            response = await this.pickupByDispatch(requestOptions);
-            }
-            if (state_select == 4){
-            response = await this.pickupDispatched(requestOptions);
-            }
-            if (state_select == 6){
-            response = await this.pickupPicked(requestOptions);
-            }
-
-            //DELIVERY ORDERS
-            if (state_select == 7){
-            response = await this.deliveryByDispatch(requestOptions);
-            }
-            if (state_select == 8){
-            response = await this.deliveryDispatched(requestOptions);
-            }
-            if (state_select == 10){
-            response = await this.deliveryDelivered(requestOptions);
-            }
-
-            if(response.state != 200){
-                error(response.data.message);
-            }
-            swal({
+            let response = {
+                'state': 500
+            };
+             fetch("guide/estado/recogida-pordespachar", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                    swal({
             title: "Estado Actualizado",
             text: " ",
             icon: 'success',
@@ -271,84 +341,170 @@ async changeState(){
                         location.reload();
                 }
                 );
-        },
-
-        //PICKUP ORDERS
-        async pickupByDispatch(requestOptions){
-            let response = {
-                'state': 500
-            };
-            await fetch("guide/estado/recogida-pordespachar", requestOptions)
-                .then((response) => response.json())
-                .then(data => {
-                    response = data
                 })
                 .catch(e => console.log('pickupByDispatch',e));
             return response;
-        },
-        async pickupDispatched(requestOptions){
-            let response = {
-                'state': 500
-            };
-            await fetch("guide/estado/recogida-despachada", requestOptions)
-                .then((response) => response.json())
-                .then(data => {
-                    response = data
-                })
-                .catch(e => console.log('pickupDispatched',e));
-            return response;
-        },
-        async pickupPicked(requestOptions){
-            let response = {
-                'state': 500
-            };
-            await fetch("guide/estado/recogida-finalizada", requestOptions)
-                .then((response) => response.json())
-                .then(data => {
-                    response = data
-                })
-                .catch(e => console.log('pickupPicked',e));
-            return response;
-        },
+            }
 
-          //DELIVERY ORDERS
-        async deliveryByDispatch(requestOptions){
+            if (state_select == 4){
+                let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify({
+                    'guide_ids': this.listState
+                    })
+            };
             let response = {
                 'state': 500
             };
-            await fetch("guide/estado/entrega-pordespachar", requestOptions)
+             fetch("guide/estado/recogida-despachada", requestOptions)
                 .then((response) => response.json())
                 .then(data => {
                     response = data
+                    swal({
+            title: "Estado Actualizado",
+            text: " ",
+            icon: 'success',
+            timer: 2000,
+            buttons: false })
+                        .then(function(){
+                        location.reload();
+                }
+                );
                 })
-                .catch(e => console.log('deliveryByDispatch',e));
+                .catch(e => console.log('pickupByDispatch',e));
             return response;
-        },
-        async deliveryDispatched(requestOptions){
-            let response = {
-                'state': 500
-            };
-            await fetch("guide/estado/entrega-despachada", requestOptions)
-                .then((response) => response.json())
-                .then(data => {
-                    response = data
-                })
-                .catch(e => console.log('deliveryDispatched',e));
-            return response;
-        },
-        async deliveryDelivered(requestOptions){
-            let response = {
-                'state': 500
-            };
-            await fetch("guide/estado/entrega-finalizada", requestOptions)
-                .then((response) => response.json())
-                .then(data => {
-                    response = data
-                })
-                .catch(e => console.log('deliveryDelivered',e));
-            return response;
-        },
+            }
 
+
+            if (state_select == 6){
+                 let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify({
+                    'guide_ids': this.listState
+                    })
+            };
+            let response = {
+                'state': 500
+            };
+             fetch("guide/estado/recogida-finalizada", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                    swal({
+            title: "Estado Actualizado",
+            text: " ",
+            icon: 'success',
+            timer: 2000,
+            buttons: false })
+                        .then(function(){
+                        location.reload();
+                }
+                );
+                })
+                .catch(e => console.log('pickupByDispatch',e));
+            return response;
+            }
+
+            //DELIVERY ORDERS
+            if (state_select == 7){
+               let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify({
+                    'guide_ids': this.listState
+                    })
+            };
+            let response = {
+                'state': 500
+            };
+             fetch("guide/estado/entrega-pordespachar", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                    swal({
+            title: "Estado Actualizado",
+            text: " ",
+            icon: 'success',
+            timer: 2000,
+            buttons: false })
+                        .then(function(){
+                        location.reload();
+                }
+                );
+                })
+                .catch(e => console.log('pickupByDispatch',e));
+            return response;
+            }
+            if (state_select == 8){
+              let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify({
+                    'guide_ids': this.listState
+                    })
+            };
+            let response = {
+                'state': 500
+            };
+             fetch("guide/estado/entrega-despachada", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                    swal({
+            title: "Estado Actualizado",
+            text: " ",
+            icon: 'success',
+            timer: 2000,
+            buttons: false })
+                        .then(function(){
+                        location.reload();
+                }
+                );
+                })
+                .catch(e => console.log('pickupByDispatch',e));
+            return response;
+            }
+            if (state_select == 10){
+              let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify({
+                    'guide_ids': this.listState
+                    })
+            };
+            let response = {
+                'state': 500
+            };
+             fetch("guide/estado/recogida-finalizada", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                    swal({
+            title: "Estado Actualizado",
+            text: " ",
+            icon: 'success',
+            timer: 2000,
+            buttons: false })
+                        .then(function(){
+                        location.reload();
+                }
+                );
+                })
+                .catch(e => console.log('pickupByDispatch',e));
+            return response;
+            }
+
+            if(response.state != 200){
+                error(response.data.message);
+            }
+
+}
+})
+
+}
+        },
 
    //Estado sorting
     sorted_estado(){
