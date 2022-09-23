@@ -21,34 +21,6 @@
                         </option>
                     </select>
                 </div>
-                <div class="col-md-8 d-flex align-items-center flex-row flex-wrap">
-
-
-                    <div class="form-group col-md-3 mb-0" >
-                        <select class="form-control" v-model="selected_filter_status" id="delivery_event_state" v-if="type_guide === tabEdition" >
-                            <option value="">Seleccione estado</option>
-                            <option v-if="tabEdition == 5" value="4">Despachado</option>
-                            <option v-if="tabEdition == 5" value="6">Recogido</option>
-                            <option v-if="tabEdition == 9" value="8">Despachado</option>
-                            <option v-if="tabEdition == 9" value="10">Entregado</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6" >
-                        <button v-if="type_guide === tabEdition" type="button"
-                            class="btn btn-light-primary font-weight-bold"
-                            @click="selected_filter_status != '' && getGuides(selected_filter_status, false)">
-                            Aplicar nuevo estado
-                        </button>
-                        <button v-if="type_guide === tabEdition" type="button"
-                            class="btn btn-light-danger font-weight-bold"
-                            @click="getGuides(tabEdition),selected_filter_status=''">
-                            Limpiar
-                        </button>
-                    </div>
-                   <!-- <div class="col-md-1">
-                        <span class="h5">1/100</span>
-                    </div> -->
-                </div>
             </div>
             <ul
                 class="nav nav-tabs nav-tabs-line nav-tabs-line-3x nav-bolder"

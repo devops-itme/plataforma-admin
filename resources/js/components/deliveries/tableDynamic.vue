@@ -1,33 +1,44 @@
 <template>
     <div class="d-flex flex-row flex-wrap mt-4">
+    <div class="form-group col-md-3 mb-0" >
+     <select v-if="typeGuide == 5" class="form-control" style="margin: -30% 0px 0px 339%;"  @change="onChange($event)" v-model="key">  <!--Call run() function-->
+    <option value="">Seleccione estado</option>
+    <option  v-if="typeGuide == 5" value="3">POR DESPACHAR</option>
+    <option  v-if="typeGuide == 5" value="4">DESPACHADO</option>
+    <option  v-if="typeGuide == 5" value="6">RECOGIDO</option>
+    <option  v-if="typeGuide == 9" value="7">POR DESPACHAR</option>
+    <option  v-if="typeGuide == 9" value="8">DESPACHADO</option>
+    <option  v-if="typeGuide == 9" value="10">ENTREGADO</option>
+    </select>
+            </div>
         <h5 class="font-weight-bold text-dark col-md-12 px-0"> Lista de Destinos</h5>
         <div class="d-flex flex-row flex-wrap col-md-12 px-0">
-            <div class="form-group col-md-6 pr-0">
-                <!-- <label class="font-weight-bolder">Fecha de evento Desde/Hasta</label>
-                <div class="d-flex flex-row flex-wrap">
-                    <input type="date" class="form-control col-5 mr-2" />
-                    <input type="date" class="form-control col-5" />
-                </div> -->
+            <div class="form-group col-md-6 pr-0" >
+            <div v-if="typeGuide == 5" class="form-group col-md-6 pr-0" style="margin: -19.5% 0px 0px 206%;">
+                    <button type="button"
+                        class="btn btn-light-primary font-weight-bold"
+                        @click="changeState()">
+                        Aplicar nuevo estado
+                    </button>
+                </div>
             </div>
-            <div class="form-group col-md-6 pr-0 ">
-
+            <div class="form-group col-md-6 pr-0 " style="margin: -5.2% 0px 0px 49%;" >
                 <div class="d-flex flex-row-reverse">
                     <button v-if="listData.length != 0 && typeGuide == 5" type="button"
                         class="btn btn-light-primary font-weight-bold"
                         @click="sendToDelivery()">
-                        Enviar a Entregas
+                        Enviar a entregas
                     </button>
                 </div>
             </div>
         </div>
-
         <div class="table-responsive col-md-12 px-0 border rounded h-400px" id="fil">
             <input type="text" class="form-control" placeholder="Filtro" v-model="search" />
             <!--  <input type="text" class="form-control" placeholder="Filtro" v-for="a in this.guidess" v-model="a.address_name" disabled v-if="contact"/> -->
             <table class="table table-sm table-bordered"
                 :style="{ 'width': widthTable + 'px', 'table-layout': 'auto' }">
                 <thead class="thead-light">
-                 <tr class="text-center">
+                <tr class="text-center">
                         <th style="cursor: pointer" class="text-nowrap">Tipo <i class='fa fa-sort'></i> </th>
                         <th style="cursor: pointer" class="text-nowrap" @click="sorted_estado">Estado <i class='fa fa-sort'></i></th>
                         <th style="cursor: pointer" class="text-nowrap" @click="sorted_evento">Fecha Evento <i class='fa fa-sort'></i> </th>
@@ -64,7 +75,6 @@
                         <td>{{ tblItem.address_name }}</td>
                     </tr>
                 </tbody>
-
             </table>
         </div>
     </div>
@@ -84,32 +94,33 @@ export default {
         guides: Array,
         tabs: Array,
         typeGuide: Number,
+
     },
     data() {
         return {
             activeIndex: null,
             listData: [],
+            listState: [],
             search: '',
             sortedData: [],
-            sortedbyASC: true
+            sortedbyASC: true,
+            key: "",
+            seleccion: "",
         }
     },
 
 mounted() {
     this.sortedData = this.guides;
-    console.log(this.sortedData);
   },
-
 
     computed: {
 
        guidess() {
         const search = this.search.toLowerCase().trim();
 
-
             return this.guides.filter((tblItem) => {
-                  const full_name =  tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name ;
-                   if (tblItem.get_route != null){
+                const full_name =  tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name ;
+                if (tblItem.get_route != null){
                 if(this.search == 'leido'){
             return (
                 tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(search)
@@ -144,166 +155,26 @@ mounted() {
         }
     },
 
-
     methods: {
-   //Estado sorting
-    sorted_estado(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.get_status_matrix.name.localeCompare(b.get_status_matrix.name));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.get_status_matrix.name.localeCompare(a.get_status_matrix.name));
-      }
+        onChange(event) {
+       this.seleccion = event.target.value;
     },
 
-     //Evento Sorting
-    sorted_evento(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-         return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-       return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
-      }
-    },
-
-         //Despacho Sorting
-    sorted_despacho(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-         return this.guides.sort((a, b) => a.dispatched.localeCompare(b.dispatched));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-       return this.guides.sort((a, b) => b.dispatched.localeCompare(a.dispatched));
-      }
-    },
-
-    //Destino Sorting
-    sorted_destino(){   // Molestando
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-         return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-       return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
-      }
-    },
-
-      //Fecha Prog. Sorting
-    sorted_fecha_prog(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-         return this.guides.sort((a, b) => a.get_order.schedule_date.localeCompare(b.get_order.schedule_date));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-       return this.guides.sort((a, b) => b.get_order.schedule_date.localeCompare(a.get_order.schedule_date));
-      }
-    },
-
-
-  //Hora Entrega Sorting
-     sorted_hora_ent(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-       return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
-      }
-    },
-
-      // Mensajero Sorting
-     sorted_mensajero(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-       return this.guides.sort((a, b) => a.get_route?.get_messenger?.name.localeCompare(b.get_route?.get_messenger?.name));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-       return this.guides.sort((a, b) => b.get_route?.get_messenger?.name.localeCompare(a.get_route?.get_messenger?.name));
-      }
-    },
-
-        // Estado App Sorting
-     sorted_estado_app(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-       return this.guides.sort((a, b) => a.app_status.toString() .localeCompare(b.app_status.toString() ));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.app_status.toString() .localeCompare(a.app_status.toString() ));
-      }
-    },
-
-
-//Cliente Sorting
-  sorted_cliente(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-         return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
-      }
-    },
-
-//Contato Sorting
-  sorted_contacto(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-          return this.guides.sort((a, b) => a.contact.localeCompare(b.contact));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
-      }
-    },
-
-   //Cliente direccion
-  sorted_direccion(){
-        if (this.sortedbyASC) {
-        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
-        this.sortedbyASC = false;
-          return this.guides.sort((a, b) => a.address_name.localeCompare(b.address_name));
-      } else {
-        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
-        this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.address_name.localeCompare(a.address_name));
-      }
-    },
-
-        rowClick(data, index) {
+    rowClick(data, index) {
             this.activeIndex = index;
             this.$emit("getGuide", data);
             window.addEventListener('click', ()=>{
-                if(!this.listData.includes(data.id) && data.status_matrix_id == 6){
+                if(!this.listData.includes(data.id) && data.status_matrix_id == 6  ){
                     this.listData.push(data.id)
                 }else{
                     this.listData = []
+                    this.listState.push(data.id)
                 }
             })
         },
+
         async sendToDelivery(){
-             let token = document
+            let token = document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content");
             let myHeaders = new Headers();
@@ -314,23 +185,23 @@ mounted() {
                 method: "PUT",
                 headers: myHeaders,
                 body: JSON.stringify({
-                      'guide_ids': this.listData
+                    'guide_ids': this.listData
                     })
             };
             let response = await this.requestUpdateGuidesState(requestOptions);
             if(response.state != 200){
                 error(response.data.message);
             }
-             swal({
-              title: "Estado Actualizado",
-              text: " ",
-              icon: 'success',
-              timer: 2000,
-              buttons: false })
+            swal({
+            title: "Estado Actualizado",
+            text: " ",
+            icon: 'success',
+            timer: 2000,
+            buttons: false })
                         .then(function(){
-                         location.reload();
-                     }
-                   );
+                        location.reload();
+                    }
+                );
         },
         async requestUpdateGuidesState(requestOptions){
             let response = {
@@ -343,8 +214,288 @@ mounted() {
                 })
                 .catch(e => console.log('requestUpdateGuide',e));
             return response;
-        }
+        },
+
+  // CHANGE STATE GUIDES
+
+async changeState(){
+            let state_select = this.seleccion;
+            let response = null;
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify({
+                    'guide_ids': this.listState
+                    })
+            };
+
+            //PICKUP ORDERS
+            if (state_select == 3){
+            response = await this.pickupByDispatch(requestOptions);
+            }
+            if (state_select == 4){
+            response = await this.pickupDispatched(requestOptions);
+            }
+            if (state_select == 6){
+            response = await this.pickupPicked(requestOptions);
+            }
+
+            //DELIVERY ORDERS
+            if (state_select == 7){
+            response = await this.deliveryByDispatch(requestOptions);
+            }
+            if (state_select == 8){
+            response = await this.deliveryDispatched(requestOptions);
+            }
+            if (state_select == 10){
+            response = await this.deliveryDelivered(requestOptions);
+            }
+
+            if(response.state != 200){
+                error(response.data.message);
+            }
+            swal({
+            title: "Estado Actualizado",
+            text: " ",
+            icon: 'success',
+            timer: 2000,
+            buttons: false })
+                        .then(function(){
+                        location.reload();
+                }
+                );
+        },
+
+        //PICKUP ORDERS
+        async pickupByDispatch(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("guide/estado/recogida-pordespachar", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('pickupByDispatch',e));
+            return response;
+        },
+        async pickupDispatched(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("guide/estado/recogida-despachada", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('pickupDispatched',e));
+            return response;
+        },
+        async pickupPicked(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("guide/estado/recogida-finalizada", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('pickupPicked',e));
+            return response;
+        },
+
+          //DELIVERY ORDERS
+        async deliveryByDispatch(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("guide/estado/entrega-pordespachar", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('deliveryByDispatch',e));
+            return response;
+        },
+        async deliveryDispatched(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("guide/estado/entrega-despachada", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('deliveryDispatched',e));
+            return response;
+        },
+        async deliveryDelivered(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("guide/estado/entrega-finalizada", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('deliveryDelivered',e));
+            return response;
+        },
+
+
+   //Estado sorting
+    sorted_estado(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.get_status_matrix.name.localeCompare(b.get_status_matrix.name));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.get_status_matrix.name.localeCompare(a.get_status_matrix.name));
+    }
     },
+
+     //Evento Sorting
+    sorted_evento(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+    return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+    },
+
+         //Despacho Sorting
+    sorted_despacho(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+    return this.guides.sort((a, b) => a.dispatched.localeCompare(b.dispatched));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+    return this.guides.sort((a, b) => b.dispatched.localeCompare(a.dispatched));
+    }
+    },
+
+    //Destino Sorting
+    sorted_destino(){   // Molestando
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+    return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+    },
+
+      //Fecha Prog. Sorting
+    sorted_fecha_prog(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.get_order.schedule_date.localeCompare(b.get_order.schedule_date));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+    return this.guides.sort((a, b) => b.get_order.schedule_date.localeCompare(a.get_order.schedule_date));
+    }
+    },
+
+
+  //Hora Entrega Sorting
+    sorted_hora_ent(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+    return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
+    }
+    },
+
+      // Mensajero Sorting
+    sorted_mensajero(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+    return this.guides.sort((a, b) => a.get_route?.get_messenger?.name.localeCompare(b.get_route?.get_messenger?.name));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+    return this.guides.sort((a, b) => b.get_route?.get_messenger?.name.localeCompare(a.get_route?.get_messenger?.name));
+    }
+    },
+
+        // Estado App Sorting
+    sorted_estado_app(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+    return this.guides.sort((a, b) => a.app_status.toString() .localeCompare(b.app_status.toString() ));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.app_status.toString() .localeCompare(a.app_status.toString() ));
+    }
+    },
+
+
+//Cliente Sorting
+    sorted_cliente(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
+    }
+    },
+
+//Contato Sorting
+    sorted_contacto(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.contact.localeCompare(b.contact));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
+    }
+    },
+
+   //Cliente direccion
+    sorted_direccion(){
+        if (this.sortedbyASC) {
+        this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
+        this.sortedbyASC = false;
+        return this.guides.sort((a, b) => a.address_name.localeCompare(b.address_name));
+    } else {
+        this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
+        this.sortedbyASC = true;
+        return this.guides.sort((a, b) => b.address_name.localeCompare(a.address_name));
+    }
+    }
+
+    }
 }
 </script>
 

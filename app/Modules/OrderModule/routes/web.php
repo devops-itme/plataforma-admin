@@ -9,8 +9,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
         Route::resource('/ordenes-internacionales', 'OrderModule\Controllers\InternationalOrderController')->names('internationalOrders');
         Route::post('/importBatch', 'OrderModule\Controllers\InternationalOrderController@importBatch')->name('internationalOrders.import');
-
-
         Route::post('/exportBatch', 'OrderModule\Controllers\InternationalOrderController@exportBatch')->name('internationalOrders.export');
     });
     Route::get('/export_incidences', 'OrderModule\Controllers\InternationalOrderController@incidencesExport')->name('internationalOrders.incidencesExport');
@@ -37,15 +35,37 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('despachos', 'OrderModule\Controllers\DeliveryController@indexOndemand')->name('delivery.index');
 
     Route::group(['middleware' => 'role'], function () {
-        //PACKING
+    //PACKING
         Route::get('despachos-packing', 'OrderModule\Controllers\DeliveryController@indexPacking')->name('deliveryPacking.index');
     });
 
+    //PACKING PICKUP TO DELIVERY
     Route::put('guide/estado/recogida-entrega', 'OrderModule\Controllers\DeliveryController@sendOrdersPickupToDelivery');
 
 
 
-    //RUTASHOWGUIDE
+    //PICKUP POR DESPACHAR
+    Route::put('guide/estado/recogida-pordespachar', 'OrderModule\Controllers\DeliveryController@changeStateGuidesPickupToByDispatch');
+
+    //PICKUP DESPACHADA
+    Route::put('guide/estado/recogida-despachada', 'OrderModule\Controllers\DeliveryController@changeStateGuidesPickupToDispatched');
+
+     //PICKUP FINALIZADA -- RECOGIDA
+     Route::put('guide/estado/recogida-finalizada', 'OrderModule\Controllers\DeliveryController@changeStateGuidesPickupToPicked');
+
+
+     //DELIVERY POR DESPACHAR
+    Route::put('guide/estado/entrega-pordespachar', 'OrderModule\Controllers\DeliveryController@changeStateGuidesDeliveryToByDispatch');
+
+    //DELIVERY DESPACHADA
+    Route::put('guide/estado/entrega-despachada', 'OrderModule\Controllers\DeliveryController@changeStateGuidesDeliveryToDispatched');
+
+     //DELIVERY FINALIZADA -- ENTREGADA
+     Route::put('guide/estado/entrega-finalizada', 'OrderModule\Controllers\DeliveryController@changeStateGuidesDeliveryToDelivered');
+
+
+
+    //RUTAS SHOW GUIDE
     Route::group(['middleware' => 'role'], function () {
         Route::get('/details/{id}/show', 'OrderModule\Controllers\OrderController@showModGuide')->name('guides.show');
     });

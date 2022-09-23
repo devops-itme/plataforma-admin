@@ -88,6 +88,9 @@ class DeliveryController extends Controller
         return $this->respond(200, $data, null, 'matriz de estados');
     }
 
+
+    //PICKUP ORDERS
+
     public function sendOrdersPickupToDelivery(Request $request)
     {
         $statusMatrix = StatusMatrix::with('getScope')->whereHas('getScope', function($query){
@@ -101,6 +104,97 @@ class DeliveryController extends Controller
         }
 
         return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
+    }
 
+    public function changeStateGuidesPickupToByDispatch(Request $request)
+    {
+        $statusMatrix = StatusMatrix::with('getScope')->whereHas('getScope', function($query){
+            $query->where('name', 'pickup');
+        })->get();
+        $new_statusMatrix_id = $statusMatrix->where('name', 'POR DESPACHAR')->first();
+        foreach ($request->guide_ids as $guide_id) {
+            $guides = Guide::find($guide_id)->update([
+                'status_matrix_id' => $new_statusMatrix_id->id,
+            ]);
+        }
+
+        return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
+    }
+
+    public function changeStateGuidesPickupToDispatched(Request $request)
+    {
+        $statusMatrix = StatusMatrix::with('getScope')->whereHas('getScope', function($query){
+            $query->where('name', 'pickup');
+        })->get();
+        $new_statusMatrix_id = $statusMatrix->where('name', 'DESPACHADO')->first();
+        foreach ($request->guide_ids as $guide_id) {
+            $guides = Guide::find($guide_id)->update([
+                'status_matrix_id' => $new_statusMatrix_id->id,
+            ]);
+        }
+
+        return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
+    }
+
+    public function changeStateGuidesPickupToPicked(Request $request)
+    {
+        $statusMatrix = StatusMatrix::with('getScope')->whereHas('getScope', function($query){
+            $query->where('name', 'pickup');
+        })->get();
+        $new_statusMatrix_id = $statusMatrix->where('name', 'RECOGIDO')->first();
+        foreach ($request->guide_ids as $guide_id) {
+            $guides = Guide::find($guide_id)->update([
+                'status_matrix_id' => $new_statusMatrix_id->id,
+            ]);
+        }
+
+        return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
+    }
+
+    //DELIVERY ORDERS
+
+    public function changeStateGuidesDeliveryToByDispatch(Request $request)
+    {
+        $statusMatrix = StatusMatrix::with('getScope')->whereHas('getScope', function($query){
+            $query->where('name', 'delivery');
+        })->get();
+        $new_statusMatrix_id = $statusMatrix->where('name', 'POR DESPACHAR')->first();
+        foreach ($request->guide_ids as $guide_id) {
+            $guides = Guide::find($guide_id)->update([
+                'status_matrix_id' => $new_statusMatrix_id->id,
+            ]);
+        }
+
+        return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
+    }
+
+    public function changeStateGuidesDeliveryToDispatched(Request $request)
+    {
+        $statusMatrix = StatusMatrix::with('getScope')->whereHas('getScope', function($query){
+            $query->where('name', 'delivery');
+        })->get();
+        $new_statusMatrix_id = $statusMatrix->where('name', 'DESPACHADO')->first();
+        foreach ($request->guide_ids as $guide_id) {
+            $guides = Guide::find($guide_id)->update([
+                'status_matrix_id' => $new_statusMatrix_id->id,
+            ]);
+        }
+
+        return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
+    }
+
+    public function changeStateGuidesDeliveryToDelivered(Request $request)
+    {
+        $statusMatrix = StatusMatrix::with('getScope')->whereHas('getScope', function($query){
+            $query->where('name', 'delivery');
+        })->get();
+        $new_statusMatrix_id = $statusMatrix->where('name', 'ENTREGADO')->first();
+        foreach ($request->guide_ids as $guide_id) {
+            $guides = Guide::find($guide_id)->update([
+                'status_matrix_id' => $new_statusMatrix_id->id,
+            ]);
+        }
+
+        return $this->respond(200, $guides, null, 'Guías enviada a por despachar de entrega');
     }
 }

@@ -8581,34 +8581,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -10223,6 +10195,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     rows: Number,
@@ -10236,14 +10218,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       activeIndex: null,
       listData: [],
+      listState: [],
       search: '',
       sortedData: [],
-      sortedbyASC: true
+      sortedbyASC: true,
+      key: "",
+      seleccion: ""
     };
   },
   mounted: function mounted() {
     this.sortedData = this.guides;
-    console.log(this.sortedData);
   },
   computed: {
     guidess: function guidess() {
@@ -10272,6 +10256,404 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    onChange: function onChange(event) {
+      this.seleccion = event.target.value;
+    },
+    rowClick: function rowClick(data, index) {
+      var _this2 = this;
+
+      this.activeIndex = index;
+      this.$emit("getGuide", data);
+      window.addEventListener('click', function () {
+        if (!_this2.listData.includes(data.id) && data.status_matrix_id == 6) {
+          _this2.listData.push(data.id);
+        } else {
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+        }
+      });
+    },
+    sendToDelivery: function sendToDelivery() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var token, myHeaders, requestOptions, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify({
+                    'guide_ids': _this3.listData
+                  })
+                };
+                _context.next = 8;
+                return _this3.requestUpdateGuidesState(requestOptions);
+
+              case 8:
+                response = _context.sent;
+
+                if (response.state != 200) {
+                  error(response.data.message);
+                }
+
+                swal({
+                  title: "Estado Actualizado",
+                  text: " ",
+                  icon: 'success',
+                  timer: 2000,
+                  buttons: false
+                }).then(function () {
+                  location.reload();
+                });
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    requestUpdateGuidesState: function requestUpdateGuidesState(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context2.next = 3;
+                return fetch("guide/estado/recogida-entrega", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('requestUpdateGuide', e);
+                });
+
+              case 3:
+                return _context2.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    // CHANGE STATE GUIDES
+    changeState: function changeState() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var state_select, response, token, myHeaders, requestOptions;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                state_select = _this4.seleccion;
+                response = null;
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify({
+                    'guide_ids': _this4.listState
+                  })
+                }; //PICKUP ORDERS
+
+                if (!(state_select == 3)) {
+                  _context3.next = 12;
+                  break;
+                }
+
+                _context3.next = 11;
+                return _this4.pickupByDispatch(requestOptions);
+
+              case 11:
+                response = _context3.sent;
+
+              case 12:
+                if (!(state_select == 4)) {
+                  _context3.next = 16;
+                  break;
+                }
+
+                _context3.next = 15;
+                return _this4.pickupDispatched(requestOptions);
+
+              case 15:
+                response = _context3.sent;
+
+              case 16:
+                if (!(state_select == 6)) {
+                  _context3.next = 20;
+                  break;
+                }
+
+                _context3.next = 19;
+                return _this4.pickupPicked(requestOptions);
+
+              case 19:
+                response = _context3.sent;
+
+              case 20:
+                if (!(state_select == 7)) {
+                  _context3.next = 24;
+                  break;
+                }
+
+                _context3.next = 23;
+                return _this4.deliveryByDispatch(requestOptions);
+
+              case 23:
+                response = _context3.sent;
+
+              case 24:
+                if (!(state_select == 8)) {
+                  _context3.next = 28;
+                  break;
+                }
+
+                _context3.next = 27;
+                return _this4.deliveryDispatched(requestOptions);
+
+              case 27:
+                response = _context3.sent;
+
+              case 28:
+                if (!(state_select == 10)) {
+                  _context3.next = 32;
+                  break;
+                }
+
+                _context3.next = 31;
+                return _this4.deliveryDelivered(requestOptions);
+
+              case 31:
+                response = _context3.sent;
+
+              case 32:
+                if (response.state != 200) {
+                  error(response.data.message);
+                }
+
+                swal({
+                  title: "Estado Actualizado",
+                  text: " ",
+                  icon: 'success',
+                  timer: 2000,
+                  buttons: false
+                }).then(function () {
+                  location.reload();
+                });
+
+              case 34:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    //PICKUP ORDERS
+    pickupByDispatch: function pickupByDispatch(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context4.next = 3;
+                return fetch("guide/estado/recogida-pordespachar", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('pickupByDispatch', e);
+                });
+
+              case 3:
+                return _context4.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    pickupDispatched: function pickupDispatched(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context5.next = 3;
+                return fetch("guide/estado/recogida-despachada", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('pickupDispatched', e);
+                });
+
+              case 3:
+                return _context5.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    pickupPicked: function pickupPicked(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context6.next = 3;
+                return fetch("guide/estado/recogida-finalizada", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('pickupPicked', e);
+                });
+
+              case 3:
+                return _context6.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    //DELIVERY ORDERS
+    deliveryByDispatch: function deliveryByDispatch(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context7.next = 3;
+                return fetch("guide/estado/entrega-pordespachar", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('deliveryByDispatch', e);
+                });
+
+              case 3:
+                return _context7.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    },
+    deliveryDispatched: function deliveryDispatched(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context8.next = 3;
+                return fetch("guide/estado/entrega-despachada", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('deliveryDispatched', e);
+                });
+
+              case 3:
+                return _context8.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
+    },
+    deliveryDelivered: function deliveryDelivered(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context9.next = 3;
+                return fetch("guide/estado/entrega-finalizada", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('deliveryDelivered', e);
+                });
+
+              case 3:
+                return _context9.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }))();
+    },
     //Estado sorting
     sorted_estado: function sorted_estado() {
       if (this.sortedbyASC) {
@@ -10496,98 +10878,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return b.address_name.localeCompare(a.address_name);
         });
       }
-    },
-    rowClick: function rowClick(data, index) {
-      var _this2 = this;
-
-      this.activeIndex = index;
-      this.$emit("getGuide", data);
-      window.addEventListener('click', function () {
-        if (!_this2.listData.includes(data.id) && data.status_matrix_id == 6) {
-          _this2.listData.push(data.id);
-        } else {
-          _this2.listData = [];
-        }
-      });
-    },
-    sendToDelivery: function sendToDelivery() {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var token, myHeaders, requestOptions, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-                myHeaders = new Headers();
-                myHeaders.append("Accept", "application/json");
-                myHeaders.append('Content-Type', "application/json");
-                myHeaders.append("X-CSRF-TOKEN", token);
-                requestOptions = {
-                  method: "PUT",
-                  headers: myHeaders,
-                  body: JSON.stringify({
-                    'guide_ids': _this3.listData
-                  })
-                };
-                _context.next = 8;
-                return _this3.requestUpdateGuidesState(requestOptions);
-
-              case 8:
-                response = _context.sent;
-
-                if (response.state != 200) {
-                  error(response.data.message);
-                }
-
-                swal({
-                  title: "Estado Actualizado",
-                  text: " ",
-                  icon: 'success',
-                  timer: 2000,
-                  buttons: false
-                }).then(function () {
-                  location.reload();
-                });
-
-              case 11:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    requestUpdateGuidesState: function requestUpdateGuidesState(requestOptions) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context2.next = 3;
-                return fetch("guide/estado/recogida-entrega", requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log('requestUpdateGuide', e);
-                });
-
-              case 3:
-                return _context2.abrupt("return", response);
-
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
     }
   }
 });
@@ -15946,7 +16236,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -15965,7 +16255,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
+exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
 
 // exports
 
@@ -70356,124 +70646,6 @@ var render = function () {
                 0
               ),
             ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "col-md-8 d-flex align-items-center flex-row flex-wrap",
-              },
-              [
-                _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
-                  _vm.type_guide === _vm.tabEdition
-                    ? _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selected_filter_status,
-                              expression: "selected_filter_status",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { id: "delivery_event_state" },
-                          on: {
-                            change: function ($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function (o) {
-                                  return o.selected
-                                })
-                                .map(function (o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.selected_filter_status = $event.target
-                                .multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                          },
-                        },
-                        [
-                          _c("option", { attrs: { value: "" } }, [
-                            _vm._v("Seleccione estado"),
-                          ]),
-                          _vm._v(" "),
-                          _vm.tabEdition == 5
-                            ? _c("option", { attrs: { value: "4" } }, [
-                                _vm._v("Despachado"),
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.tabEdition == 5
-                            ? _c("option", { attrs: { value: "6" } }, [
-                                _vm._v("Recogido"),
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.tabEdition == 9
-                            ? _c("option", { attrs: { value: "8" } }, [
-                                _vm._v("Despachado"),
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.tabEdition == 9
-                            ? _c("option", { attrs: { value: "10" } }, [
-                                _vm._v("Entregado"),
-                              ])
-                            : _vm._e(),
-                        ]
-                      )
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _vm.type_guide === _vm.tabEdition
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-light-primary font-weight-bold",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function ($event) {
-                              _vm.selected_filter_status != "" &&
-                                _vm.getGuides(_vm.selected_filter_status, false)
-                            },
-                          },
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Aplicar nuevo estado\n                    "
-                          ),
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.type_guide === _vm.tabEdition
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-light-danger font-weight-bold",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function ($event) {
-                              _vm.getGuides(_vm.tabEdition),
-                                (_vm.selected_filter_status = "")
-                            },
-                          },
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Limpiar\n                    "
-                          ),
-                        ]
-                      )
-                    : _vm._e(),
-                ]),
-              ]
-            ),
           ]
         ),
         _vm._v(" "),
@@ -72740,36 +72912,151 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "d-flex flex-row flex-wrap mt-4" }, [
+    _c("div", { staticClass: "form-group col-md-3 mb-0" }, [
+      _vm.typeGuide == 5
+        ? _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.key,
+                  expression: "key",
+                },
+              ],
+              staticClass: "form-control",
+              staticStyle: { margin: "-30% 0px 0px 339%" },
+              on: {
+                change: [
+                  function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.key = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function ($event) {
+                    return _vm.onChange($event)
+                  },
+                ],
+              },
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [
+                _vm._v("Seleccione estado"),
+              ]),
+              _vm._v(" "),
+              _vm.typeGuide == 5
+                ? _c("option", { attrs: { value: "3" } }, [
+                    _vm._v("POR DESPACHAR"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.typeGuide == 5
+                ? _c("option", { attrs: { value: "4" } }, [
+                    _vm._v("DESPACHADO"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.typeGuide == 5
+                ? _c("option", { attrs: { value: "6" } }, [_vm._v("RECOGIDO")])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.typeGuide == 9
+                ? _c("option", { attrs: { value: "7" } }, [
+                    _vm._v("POR DESPACHAR"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.typeGuide == 9
+                ? _c("option", { attrs: { value: "8" } }, [
+                    _vm._v("DESPACHADO"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.typeGuide == 9
+                ? _c("option", { attrs: { value: "10" } }, [
+                    _vm._v("ENTREGADO"),
+                  ])
+                : _vm._e(),
+            ]
+          )
+        : _vm._e(),
+    ]),
+    _vm._v(" "),
     _c("h5", { staticClass: "font-weight-bold text-dark col-md-12 px-0" }, [
       _vm._v(" Lista de Destinos"),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "d-flex flex-row flex-wrap col-md-12 px-0" }, [
-      _c("div", { staticClass: "form-group col-md-6 pr-0" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-md-6 pr-0 " }, [
-        _c("div", { staticClass: "d-flex flex-row-reverse" }, [
-          _vm.listData.length != 0 && _vm.typeGuide == 5
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-light-primary font-weight-bold",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.sendToDelivery()
+      _c("div", { staticClass: "form-group col-md-6 pr-0" }, [
+        _vm.typeGuide == 5
+          ? _c(
+              "div",
+              {
+                staticClass: "form-group col-md-6 pr-0",
+                staticStyle: { margin: "-19.5% 0px 0px 206%" },
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light-primary font-weight-bold",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.changeState()
+                      },
                     },
                   },
-                },
-                [
-                  _vm._v(
-                    "\n                    Enviar a Entregas\n                "
-                  ),
-                ]
-              )
-            : _vm._e(),
-        ]),
+                  [
+                    _vm._v(
+                      "\n                    Aplicar nuevo estado\n                "
+                    ),
+                  ]
+                ),
+              ]
+            )
+          : _vm._e(),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "form-group col-md-6 pr-0 ",
+          staticStyle: { margin: "-5.2% 0px 0px 49%" },
+        },
+        [
+          _c("div", { staticClass: "d-flex flex-row-reverse" }, [
+            _vm.listData.length != 0 && _vm.typeGuide == 5
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light-primary font-weight-bold",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.sendToDelivery()
+                      },
+                    },
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Enviar a entregas\n                "
+                    ),
+                  ]
+                )
+              : _vm._e(),
+          ]),
+        ]
+      ),
     ]),
     _vm._v(" "),
     _c(
