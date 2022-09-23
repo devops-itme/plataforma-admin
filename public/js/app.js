@@ -10232,6 +10232,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
       activeIndex: null,
       listData: [],
       listState: [],
+      issue: '',
+      suma: '',
       listSelected: [],
       search: '',
       sortedData: [],
@@ -10280,18 +10282,79 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
       this.$emit("getGuide", data);
       window.addEventListener('click', function () {
         if (!_this2.listData.includes(data.id) && data.status_matrix_id == 6) {
+          var _data, _data$get_issue, _data$get_issue$get_i;
+
           _this2.listData.push(data.id);
 
           _this2.listState.push(data.id);
 
           _this2.listSelected = data.status_matrix_id;
-        } else {
+          _this2.issue = (_data = data) === null || _data === void 0 ? void 0 : (_data$get_issue = _data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i = _data$get_issue.get_issue) === null || _data$get_issue$get_i === void 0 ? void 0 : _data$get_issue$get_i.name;
+          data = ''; // console.log(this.issue)
+        }
+
+        if (data.status_matrix_id == 4) {
+          var _data2, _data2$get_issue, _data2$get_issue$get_;
+
           _this2.listData = [];
 
           _this2.listState.push(data.id);
 
           _this2.listSelected = data.status_matrix_id;
+          _this2.issue = (_data2 = data) === null || _data2 === void 0 ? void 0 : (_data2$get_issue = _data2.get_issue) === null || _data2$get_issue === void 0 ? void 0 : (_data2$get_issue$get_ = _data2$get_issue.get_issue) === null || _data2$get_issue$get_ === void 0 ? void 0 : _data2$get_issue$get_.name;
+          data = ''; // console.log(this.issue)
         }
+
+        if (data.status_matrix_id == 3) {
+          var _data3, _data3$get_issue, _data3$get_issue$get_;
+
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+
+          _this2.listSelected = data.status_matrix_id;
+          _this2.issue = (_data3 = data) === null || _data3 === void 0 ? void 0 : (_data3$get_issue = _data3.get_issue) === null || _data3$get_issue === void 0 ? void 0 : (_data3$get_issue$get_ = _data3$get_issue.get_issue) === null || _data3$get_issue$get_ === void 0 ? void 0 : _data3$get_issue$get_.name;
+          data = ''; // console.log(this.issue)
+        }
+
+        if (data.status_matrix_id == 7) {
+          var _data4, _data4$get_issue, _data4$get_issue$get_;
+
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+
+          _this2.listSelected = data.status_matrix_id;
+          _this2.issue = (_data4 = data) === null || _data4 === void 0 ? void 0 : (_data4$get_issue = _data4.get_issue) === null || _data4$get_issue === void 0 ? void 0 : (_data4$get_issue$get_ = _data4$get_issue.get_issue) === null || _data4$get_issue$get_ === void 0 ? void 0 : _data4$get_issue$get_.name;
+          data = ''; // console.log(this.issue)
+        }
+
+        if (data.status_matrix_id == 8) {
+          var _data5, _data5$get_issue, _data5$get_issue$get_;
+
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+
+          _this2.listSelected = data.status_matrix_id;
+          _this2.issue = (_data5 = data) === null || _data5 === void 0 ? void 0 : (_data5$get_issue = _data5.get_issue) === null || _data5$get_issue === void 0 ? void 0 : (_data5$get_issue$get_ = _data5$get_issue.get_issue) === null || _data5$get_issue$get_ === void 0 ? void 0 : _data5$get_issue$get_.name;
+          data = ''; // console.log(this.issue)
+        }
+
+        if (data.status_matrix_id == 10) {
+          var _data6, _data6$get_issue, _data6$get_issue$get_;
+
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+
+          _this2.listSelected = data.status_matrix_id;
+          _this2.issue = (_data6 = data) === null || _data6 === void 0 ? void 0 : (_data6$get_issue = _data6.get_issue) === null || _data6$get_issue === void 0 ? void 0 : (_data6$get_issue$get_ = _data6$get_issue.get_issue) === null || _data6$get_issue$get_ === void 0 ? void 0 : _data6$get_issue$get_.name;
+          data = ''; // console.log(this.issue)
+        } // else {
+        //     this.listData = []
+        // }
+
       });
     },
     sendToDelivery: function sendToDelivery() {
@@ -10378,14 +10441,15 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var answer, equal, state_select, key_word;
+        var answer, issue, equal, state_select, key_word;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                answer = '';
-                console.log('List Data');
-                console.log(_this4.listData);
+                answer = ''; // console.log('List Data');
+                // console.log(this.listData);
+
+                issue = _this4.issue;
                 equal = _this4.listSelected;
                 state_select = _this4.seleccion;
                 key_word = '';
@@ -10434,7 +10498,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                       cancel: true
                     }
                   });
-                } else if (state_select != '') {
+                } else if (state_select != '' && issue != 'ENTREGADO') {
                   window.swal({
                     title: "Cambio de Estado",
                     text: "¿Está seguro que quiere cambiar el estado de la guía a: " + key_word + "?",
@@ -10638,9 +10702,19 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                       }
                     }
                   });
+                } else if (state_select != '' && issue == 'ENTREGADO') {
+                  window.swal({
+                    title: "Denegado",
+                    text: "No puedes cambiar el estado de la guia",
+                    icon: "warning",
+                    buttons: {
+                      confirm: true,
+                      cancel: true
+                    }
+                  });
                 }
 
-              case 13:
+              case 12:
               case "end":
                 return _context3.stop();
             }

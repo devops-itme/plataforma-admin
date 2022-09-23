@@ -114,6 +114,8 @@ export default {
             activeIndex: null,
             listData: [],
             listState: [],
+            issue: '',
+            suma : '',
             listSelected: [],
             search: '',
             sortedData: [],
@@ -178,16 +180,64 @@ mounted() {
             this.activeIndex = index;
             this.$emit("getGuide", data);
             window.addEventListener('click', ()=>{
+
                 if(!this.listData.includes(data.id) && data.status_matrix_id == 6  ){
                     this.listData.push(data.id)
                     this.listState.push(data.id)
                     this.listSelected = data.status_matrix_id
+                    this.issue = data?.get_issue?.get_issue?.name
+                    data = ''
+                    // console.log(this.issue)
                 }
-                else{
+
+
+                 if(  data.status_matrix_id == 4  ){
                     this.listData = []
                     this.listState.push(data.id)
-                    this.listSelected = data.status_matrix_id;
+                    this.listSelected = data.status_matrix_id
+                    this.issue = data?.get_issue?.get_issue?.name
+                    data = ''
+                    // console.log(this.issue)
                 }
+
+                  if(  data.status_matrix_id == 3  ){
+                    this.listData = []
+                    this.listState.push(data.id)
+                    this.listSelected = data.status_matrix_id
+                    this.issue = data?.get_issue?.get_issue?.name
+                    data = ''
+                    // console.log(this.issue)
+                }
+
+
+                 if(  data.status_matrix_id == 7  ){
+                    this.listData = []
+                    this.listState.push(data.id)
+                    this.listSelected = data.status_matrix_id
+                    this.issue = data?.get_issue?.get_issue?.name
+                    data = ''
+                    // console.log(this.issue)
+                }
+
+                  if( data.status_matrix_id == 8  ){
+                    this.listData = []
+                    this.listState.push(data.id)
+                    this.listSelected = data.status_matrix_id
+                    this.issue = data?.get_issue?.get_issue?.name
+                    data = ''
+                    // console.log(this.issue)
+                }
+                   if( data.status_matrix_id == 10  ){
+                    this.listData = []
+                    this.listState.push(data.id)
+                    this.listSelected = data.status_matrix_id
+                    this.issue = data?.get_issue?.get_issue?.name
+                    data = ''
+                    // console.log(this.issue)
+                }
+                // else {
+                //     this.listData = []
+                // }
             })
         },
 
@@ -237,10 +287,11 @@ mounted() {
   // CHANGE STATE GUIDES
 
 async changeState(){
-let answer = '';
 
-console.log('List Data');
-console.log(this.listData);
+let answer = '';
+// console.log('List Data');
+// console.log(this.listData);
+ let issue = this.issue;
  let equal = this.listSelected;
  let state_select = this.seleccion;
  let key_word = '';
@@ -258,7 +309,7 @@ if (state_select == 6){
     key_word = 'RECOGIDO'
 }
 
-if (state_select == 7){
+if (state_select == 7 ){
     key_word = ' POR DESPACHAR'
 }
 
@@ -294,7 +345,7 @@ if (state_select == 10){
 })
   }
 
-  else if(state_select != ''){
+  else if(state_select != '' && issue!= 'ENTREGADO' ){
 
  window.swal({
    title: "Cambio de Estado",
@@ -504,6 +555,19 @@ if (state_select == 10){
 })
 
 }
+ else if(state_select != '' && issue== 'ENTREGADO'){
+
+     window.swal({
+   title: "Denegado",
+    text: "No puedes cambiar el estado de la guia",
+    icon: "warning",
+    buttons: {
+    confirm: true,
+    cancel: true,
+  },
+})
+
+ }
         },
 
    //Estado sorting
