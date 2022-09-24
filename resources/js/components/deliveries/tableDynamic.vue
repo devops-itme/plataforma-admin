@@ -22,7 +22,7 @@
         <h5 class="font-weight-bold text-dark col-md-12 px-0"> Lista de Destinos</h5>
         <div class="d-flex flex-row flex-wrap col-md-12 px-0">
             <div class="form-group col-md-6 pr-0" >
-            <div v-if="listState.length != 0" class="form-group col-md-6 pr-0" style="margin: -19.5% 0px 0px 206%;">
+            <div v-if=" (listState.length != 0 && typeGuide == 5) || (listState.length != 0 && typeGuide == 9)" class="form-group col-md-6 pr-0" style="margin: -19.5% 0px 0px 206%;">
                     <button type="button"
                         class="btn btn-light-primary font-weight-bold"
                         @click="changeState()">
@@ -243,7 +243,7 @@ mounted() {
                     this.listState.push(data.id)
                     this.listSelected = data?.status_matrix_id
                     this.issue = data?.get_issue?.get_issue?.name
-                    data = ''
+
                     if(this.issue == undefined){
                         this.issue = 'NO REGISTRA'
                     }
@@ -331,7 +331,7 @@ if (state_select == 8){
 }
 
 if (state_select == 10){
-    key_word = 'ENTREGADD'
+    key_word = 'ENTREGADO'
 }
 
   if(state_select == ''){

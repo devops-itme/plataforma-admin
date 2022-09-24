@@ -10285,83 +10285,82 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
       this.activeIndex = index;
       this.$emit("getGuide", data);
       (_window = window) === null || _window === void 0 ? void 0 : _window.addEventListener('click', function () {
-        var _this2$listData, _data, _data2, _data5, _data7, _data10, _data13, _data16;
+        var _this2$listData;
 
-        if (!((_this2$listData = _this2.listData) !== null && _this2$listData !== void 0 && _this2$listData.includes((_data = data) === null || _data === void 0 ? void 0 : _data.id)) && ((_data2 = data) === null || _data2 === void 0 ? void 0 : _data2.status_matrix_id) == 6) {
-          var _data3, _data4, _data4$get_issue, _data4$get_issue$get_;
+        if (!((_this2$listData = _this2.listData) !== null && _this2$listData !== void 0 && _this2$listData.includes(data === null || data === void 0 ? void 0 : data.id)) && (data === null || data === void 0 ? void 0 : data.status_matrix_id) == 6) {
+          var _data$get_issue, _data$get_issue$get_i;
 
           _this2.listData.push(data.id);
 
           _this2.listState.push(data.id);
 
-          _this2.listSelected = (_data3 = data) === null || _data3 === void 0 ? void 0 : _data3.status_matrix_id;
-          _this2.issue = (_data4 = data) === null || _data4 === void 0 ? void 0 : (_data4$get_issue = _data4.get_issue) === null || _data4$get_issue === void 0 ? void 0 : (_data4$get_issue$get_ = _data4$get_issue.get_issue) === null || _data4$get_issue$get_ === void 0 ? void 0 : _data4$get_issue$get_.name;
+          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i = _data$get_issue.get_issue) === null || _data$get_issue$get_i === void 0 ? void 0 : _data$get_issue$get_i.name;
 
           if (_this2.issue == undefined) {
             _this2.issue = 'NO REGISTRA';
           }
-        } else if (((_data5 = data) === null || _data5 === void 0 ? void 0 : _data5.status_matrix_id) == 4) {
-          var _data6, _data6$get_issue, _data6$get_issue$get_;
+        } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 4) {
+          var _data$get_issue2, _data$get_issue2$get_;
 
           _this2.listData = [];
 
           _this2.listState.push(data.id);
 
           _this2.listSelected = data.status_matrix_id;
-          _this2.issue = (_data6 = data) === null || _data6 === void 0 ? void 0 : (_data6$get_issue = _data6.get_issue) === null || _data6$get_issue === void 0 ? void 0 : (_data6$get_issue$get_ = _data6$get_issue.get_issue) === null || _data6$get_issue$get_ === void 0 ? void 0 : _data6$get_issue$get_.name; // data = ''
+          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue2 = data.get_issue) === null || _data$get_issue2 === void 0 ? void 0 : (_data$get_issue2$get_ = _data$get_issue2.get_issue) === null || _data$get_issue2$get_ === void 0 ? void 0 : _data$get_issue2$get_.name; // data = ''
 
           if (_this2.issue == undefined) {
             _this2.issue = 'NO REGISTRA';
           }
-        } else if (((_data7 = data) === null || _data7 === void 0 ? void 0 : _data7.status_matrix_id) == 3) {
-          var _data8, _data9, _data9$get_issue, _data9$get_issue$get_;
+        } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 3) {
+          var _data$get_issue3, _data$get_issue3$get_;
 
           _this2.listData = [];
 
           _this2.listState.push(data.id);
 
-          _this2.listSelected = (_data8 = data) === null || _data8 === void 0 ? void 0 : _data8.status_matrix_id;
-          _this2.issue = (_data9 = data) === null || _data9 === void 0 ? void 0 : (_data9$get_issue = _data9.get_issue) === null || _data9$get_issue === void 0 ? void 0 : (_data9$get_issue$get_ = _data9$get_issue.get_issue) === null || _data9$get_issue$get_ === void 0 ? void 0 : _data9$get_issue$get_.name;
+          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue3 = data.get_issue) === null || _data$get_issue3 === void 0 ? void 0 : (_data$get_issue3$get_ = _data$get_issue3.get_issue) === null || _data$get_issue3$get_ === void 0 ? void 0 : _data$get_issue3$get_.name;
 
           if (_this2.issue == undefined) {
             _this2.issue = 'NO REGISTRA';
           }
-        } else if (((_data10 = data) === null || _data10 === void 0 ? void 0 : _data10.status_matrix_id) == 7) {
-          var _data11, _data12, _data12$get_issue, _data12$get_issue$get;
+        } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 7) {
+          var _data$get_issue4, _data$get_issue4$get_;
 
           _this2.listData = [];
 
           _this2.listState.push(data.id);
 
-          _this2.listSelected = (_data11 = data) === null || _data11 === void 0 ? void 0 : _data11.status_matrix_id;
-          _this2.issue = (_data12 = data) === null || _data12 === void 0 ? void 0 : (_data12$get_issue = _data12.get_issue) === null || _data12$get_issue === void 0 ? void 0 : (_data12$get_issue$get = _data12$get_issue.get_issue) === null || _data12$get_issue$get === void 0 ? void 0 : _data12$get_issue$get.name;
+          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue4 = data.get_issue) === null || _data$get_issue4 === void 0 ? void 0 : (_data$get_issue4$get_ = _data$get_issue4.get_issue) === null || _data$get_issue4$get_ === void 0 ? void 0 : _data$get_issue4$get_.name;
 
           if (_this2.issue == undefined) {
             _this2.issue = 'NO REGISTRA';
           }
-        } else if (((_data13 = data) === null || _data13 === void 0 ? void 0 : _data13.status_matrix_id) == 8) {
-          var _data14, _data15, _data15$get_issue, _data15$get_issue$get;
+        } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 8) {
+          var _data$get_issue5, _data$get_issue5$get_;
 
           _this2.listData = [];
 
           _this2.listState.push(data.id);
 
-          _this2.listSelected = (_data14 = data) === null || _data14 === void 0 ? void 0 : _data14.status_matrix_id;
-          _this2.issue = (_data15 = data) === null || _data15 === void 0 ? void 0 : (_data15$get_issue = _data15.get_issue) === null || _data15$get_issue === void 0 ? void 0 : (_data15$get_issue$get = _data15$get_issue.get_issue) === null || _data15$get_issue$get === void 0 ? void 0 : _data15$get_issue$get.name;
+          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue5 = data.get_issue) === null || _data$get_issue5 === void 0 ? void 0 : (_data$get_issue5$get_ = _data$get_issue5.get_issue) === null || _data$get_issue5$get_ === void 0 ? void 0 : _data$get_issue5$get_.name;
 
           if (_this2.issue == undefined) {
             _this2.issue = 'NO REGISTRA';
           }
-        } else if (((_data16 = data) === null || _data16 === void 0 ? void 0 : _data16.status_matrix_id) == 10) {
-          var _data17, _data18, _data18$get_issue, _data18$get_issue$get;
+        } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 10) {
+          var _data$get_issue6, _data$get_issue6$get_;
 
           _this2.listData = [];
 
           _this2.listState.push(data.id);
 
-          _this2.listSelected = (_data17 = data) === null || _data17 === void 0 ? void 0 : _data17.status_matrix_id;
-          _this2.issue = (_data18 = data) === null || _data18 === void 0 ? void 0 : (_data18$get_issue = _data18.get_issue) === null || _data18$get_issue === void 0 ? void 0 : (_data18$get_issue$get = _data18$get_issue.get_issue) === null || _data18$get_issue$get === void 0 ? void 0 : _data18$get_issue$get.name;
-          data = '';
+          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue6 = data.get_issue) === null || _data$get_issue6 === void 0 ? void 0 : (_data$get_issue6$get_ = _data$get_issue6.get_issue) === null || _data$get_issue6$get_ === void 0 ? void 0 : _data$get_issue6$get_.name;
 
           if (_this2.issue == undefined) {
             _this2.issue = 'NO REGISTRA';
@@ -10489,7 +10488,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                 }
 
                 if (state_select == 10) {
-                  key_word = 'ENTREGADD';
+                  key_word = 'ENTREGADO';
                 }
 
                 if (state_select == '') {
@@ -73170,7 +73169,8 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "d-flex flex-row flex-wrap col-md-12 px-0" }, [
       _c("div", { staticClass: "form-group col-md-6 pr-0" }, [
-        _vm.listState.length != 0
+        (_vm.listState.length != 0 && _vm.typeGuide == 5) ||
+        (_vm.listState.length != 0 && _vm.typeGuide == 9)
           ? _c(
               "div",
               {
