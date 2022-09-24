@@ -10497,8 +10497,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                     text: "Debe seleccionar un estado",
                     icon: "warning",
                     buttons: {
-                      confirm: true,
-                      cancel: true
+                      confirm: 'Entendido'
                     }
                   });
                 } else if (equal == state_select) {

@@ -340,8 +340,7 @@ if (state_select == 10){
     text: "Debe seleccionar un estado",
     icon: "warning",
     buttons: {
-    confirm: true,
-    cancel: true,
+    confirm: 'Entendido',
   },
 })
   }
