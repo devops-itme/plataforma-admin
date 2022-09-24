@@ -446,7 +446,7 @@
                             <th>Estado Web</th>
                             <th>Usuario creación</th>
                             <th>Fecha creación</th>
-                            <th>Fecha modificacíon</th>
+                            <th>Fecha modificación</th>
                         </tr>
                     </thead>
                     <tbody>

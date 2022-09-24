@@ -72906,7 +72906,7 @@ var render = function () {
                           _vm._v(" "),
                           _c("th", [_vm._v("Fecha creación")]),
                           _vm._v(" "),
-                          _c("th", [_vm._v("Fecha modificacíon")]),
+                          _c("th", [_vm._v("Fecha modificación")]),
                         ]),
                       ]),
                       _vm._v(" "),
