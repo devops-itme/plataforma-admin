@@ -10251,7 +10251,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
 
       var search = this.search.toLowerCase().trim();
       return this.guides.filter(function (tblItem) {
-        var full_name = tblItem.get_order.get_user.name + ' ' + tblItem.get_order.get_user.last_name;
+        var _tblItem$get_order, _tblItem$get_order$ge, _tblItem$get_order2, _tblItem$get_order2$g;
+
+        var full_name = (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order = tblItem.get_order) === null || _tblItem$get_order === void 0 ? void 0 : (_tblItem$get_order$ge = _tblItem$get_order.get_user) === null || _tblItem$get_order$ge === void 0 ? void 0 : _tblItem$get_order$ge.name) + ' ' + (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order2 = tblItem.get_order) === null || _tblItem$get_order2 === void 0 ? void 0 : (_tblItem$get_order2$g = _tblItem$get_order2.get_user) === null || _tblItem$get_order2$g === void 0 ? void 0 : _tblItem$get_order2$g.last_name);
 
         if (tblItem.get_route != null) {
           if (_this.search == 'leido') {
@@ -10263,9 +10265,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
           }
 
           if (_this.search != 'leido' && _this.search != 'pendiente') {
-            return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
-              tblItem.get_status_matrix.name.toLowerCase().includes(search) || tblItem.get_order.created_at.toLowerCase().includes(search) || tblItem.dispatched.toLowerCase().includes(search) || tblItem.id.toString().includes(_this.search) || tblItem.get_order.schedule_date.toLowerCase().includes(search) || tblItem.get_order.schedule_time_range.toLowerCase().includes(search) || tblItem.get_route.get_messenger.name.toLowerCase().includes(search) || tblItem.get_route.get_messenger.name.includes(search) || full_name.toLowerCase().includes(search) || full_name.includes(search) || tblItem.contact.toLowerCase().includes(search) || tblItem.contact.includes(search) || tblItem.address_name.toLowerCase().includes(search) || tblItem.address_name.includes(search)
-            );
+            var _tblItem$get_status_m, _tblItem$get_order3, _tblItem$get_order3$c, _tblItem$dispatched, _tblItem$get_order4, _tblItem$get_order4$s, _tblItem$get_order5, _tblItem$get_order5$s, _tblItem$get_route, _tblItem$get_route$ge, _tblItem$get_route2, _tblItem$get_route2$g, _tblItem$contact, _tblItem$contact2, _tblItem$address_name, _tblItem$address_name2;
+
+            return (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_status_m = tblItem.get_status_matrix.name) === null || _tblItem$get_status_m === void 0 ? void 0 : _tblItem$get_status_m.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order3 = tblItem.get_order) === null || _tblItem$get_order3 === void 0 ? void 0 : (_tblItem$get_order3$c = _tblItem$get_order3.created_at) === null || _tblItem$get_order3$c === void 0 ? void 0 : _tblItem$get_order3$c.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$dispatched = tblItem.dispatched) === null || _tblItem$dispatched === void 0 ? void 0 : _tblItem$dispatched.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : tblItem.id.toString().includes(_this.search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order4 = tblItem.get_order) === null || _tblItem$get_order4 === void 0 ? void 0 : (_tblItem$get_order4$s = _tblItem$get_order4.schedule_date) === null || _tblItem$get_order4$s === void 0 ? void 0 : _tblItem$get_order4$s.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order5 = tblItem.get_order) === null || _tblItem$get_order5 === void 0 ? void 0 : (_tblItem$get_order5$s = _tblItem$get_order5.schedule_time_range) === null || _tblItem$get_order5$s === void 0 ? void 0 : _tblItem$get_order5$s.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_route = tblItem.get_route) === null || _tblItem$get_route === void 0 ? void 0 : (_tblItem$get_route$ge = _tblItem$get_route.get_messenger.name) === null || _tblItem$get_route$ge === void 0 ? void 0 : _tblItem$get_route$ge.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_route2 = tblItem.get_route) === null || _tblItem$get_route2 === void 0 ? void 0 : (_tblItem$get_route2$g = _tblItem$get_route2.get_messenger.name) === null || _tblItem$get_route2$g === void 0 ? void 0 : _tblItem$get_route2$g.includes(search)) || (full_name === null || full_name === void 0 ? void 0 : full_name.toLowerCase().includes(search)) || (full_name === null || full_name === void 0 ? void 0 : full_name.includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$contact = tblItem.contact) === null || _tblItem$contact === void 0 ? void 0 : _tblItem$contact.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$contact2 = tblItem.contact) === null || _tblItem$contact2 === void 0 ? void 0 : _tblItem$contact2.includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$address_name = tblItem.address_name) === null || _tblItem$address_name === void 0 ? void 0 : _tblItem$address_name.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$address_name2 = tblItem.address_name) === null || _tblItem$address_name2 === void 0 ? void 0 : _tblItem$address_name2.includes(search));
           }
         }
       });
@@ -10274,74 +10276,31 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
   methods: {
     onChange: function onChange(event) {
       this.seleccion = event.target.value;
+      this.listData = [];
     },
     rowClick: function rowClick(data, index) {
-      var _this2 = this;
+      var _window,
+          _this2 = this;
 
       this.activeIndex = index;
       this.$emit("getGuide", data);
-      window.addEventListener('click', function () {
-        if (!_this2.listData.includes(data.id) && data.status_matrix_id == 6) {
-          var _data, _data$get_issue, _data$get_issue$get_i;
+      (_window = window) === null || _window === void 0 ? void 0 : _window.addEventListener('click', function () {
+        var _this2$listData, _data, _data2, _data5, _data7, _data10, _data13, _data16;
+
+        if (!((_this2$listData = _this2.listData) !== null && _this2$listData !== void 0 && _this2$listData.includes((_data = data) === null || _data === void 0 ? void 0 : _data.id)) && ((_data2 = data) === null || _data2 === void 0 ? void 0 : _data2.status_matrix_id) == 6) {
+          var _data3, _data4, _data4$get_issue, _data4$get_issue$get_;
 
           _this2.listData.push(data.id);
 
           _this2.listState.push(data.id);
 
-          _this2.listSelected = data.status_matrix_id;
-          _this2.issue = (_data = data) === null || _data === void 0 ? void 0 : (_data$get_issue = _data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i = _data$get_issue.get_issue) === null || _data$get_issue$get_i === void 0 ? void 0 : _data$get_issue$get_i.name;
-          data = ''; // console.log(this.issue)
-        }
-
-        if (data.status_matrix_id == 4) {
-          var _data2, _data2$get_issue, _data2$get_issue$get_;
-
-          _this2.listData = [];
-
-          _this2.listState.push(data.id);
-
-          _this2.listSelected = data.status_matrix_id;
-          _this2.issue = (_data2 = data) === null || _data2 === void 0 ? void 0 : (_data2$get_issue = _data2.get_issue) === null || _data2$get_issue === void 0 ? void 0 : (_data2$get_issue$get_ = _data2$get_issue.get_issue) === null || _data2$get_issue$get_ === void 0 ? void 0 : _data2$get_issue$get_.name;
-          data = ''; // console.log(this.issue)
-        }
-
-        if (data.status_matrix_id == 3) {
-          var _data3, _data3$get_issue, _data3$get_issue$get_;
-
-          _this2.listData = [];
-
-          _this2.listState.push(data.id);
-
-          _this2.listSelected = data.status_matrix_id;
-          _this2.issue = (_data3 = data) === null || _data3 === void 0 ? void 0 : (_data3$get_issue = _data3.get_issue) === null || _data3$get_issue === void 0 ? void 0 : (_data3$get_issue$get_ = _data3$get_issue.get_issue) === null || _data3$get_issue$get_ === void 0 ? void 0 : _data3$get_issue$get_.name;
-          data = ''; // console.log(this.issue)
-        }
-
-        if (data.status_matrix_id == 7) {
-          var _data4, _data4$get_issue, _data4$get_issue$get_;
-
-          _this2.listData = [];
-
-          _this2.listState.push(data.id);
-
-          _this2.listSelected = data.status_matrix_id;
+          _this2.listSelected = (_data3 = data) === null || _data3 === void 0 ? void 0 : _data3.status_matrix_id;
           _this2.issue = (_data4 = data) === null || _data4 === void 0 ? void 0 : (_data4$get_issue = _data4.get_issue) === null || _data4$get_issue === void 0 ? void 0 : (_data4$get_issue$get_ = _data4$get_issue.get_issue) === null || _data4$get_issue$get_ === void 0 ? void 0 : _data4$get_issue$get_.name;
-          data = ''; // console.log(this.issue)
-        }
 
-        if (data.status_matrix_id == 8) {
-          var _data5, _data5$get_issue, _data5$get_issue$get_;
-
-          _this2.listData = [];
-
-          _this2.listState.push(data.id);
-
-          _this2.listSelected = data.status_matrix_id;
-          _this2.issue = (_data5 = data) === null || _data5 === void 0 ? void 0 : (_data5$get_issue = _data5.get_issue) === null || _data5$get_issue === void 0 ? void 0 : (_data5$get_issue$get_ = _data5$get_issue.get_issue) === null || _data5$get_issue$get_ === void 0 ? void 0 : _data5$get_issue$get_.name;
-          data = ''; // console.log(this.issue)
-        }
-
-        if (data.status_matrix_id == 10) {
+          if (_this2.issue == undefined) {
+            _this2.issue = 'NO REGISTRA';
+          }
+        } else if (((_data5 = data) === null || _data5 === void 0 ? void 0 : _data5.status_matrix_id) == 4) {
           var _data6, _data6$get_issue, _data6$get_issue$get_;
 
           _this2.listData = [];
@@ -10349,12 +10308,67 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
           _this2.listState.push(data.id);
 
           _this2.listSelected = data.status_matrix_id;
-          _this2.issue = (_data6 = data) === null || _data6 === void 0 ? void 0 : (_data6$get_issue = _data6.get_issue) === null || _data6$get_issue === void 0 ? void 0 : (_data6$get_issue$get_ = _data6$get_issue.get_issue) === null || _data6$get_issue$get_ === void 0 ? void 0 : _data6$get_issue$get_.name;
-          data = ''; // console.log(this.issue)
-        } // else {
-        //     this.listData = []
-        // }
+          _this2.issue = (_data6 = data) === null || _data6 === void 0 ? void 0 : (_data6$get_issue = _data6.get_issue) === null || _data6$get_issue === void 0 ? void 0 : (_data6$get_issue$get_ = _data6$get_issue.get_issue) === null || _data6$get_issue$get_ === void 0 ? void 0 : _data6$get_issue$get_.name; // data = ''
 
+          if (_this2.issue == undefined) {
+            _this2.issue = 'NO REGISTRA';
+          }
+        } else if (((_data7 = data) === null || _data7 === void 0 ? void 0 : _data7.status_matrix_id) == 3) {
+          var _data8, _data9, _data9$get_issue, _data9$get_issue$get_;
+
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+
+          _this2.listSelected = (_data8 = data) === null || _data8 === void 0 ? void 0 : _data8.status_matrix_id;
+          _this2.issue = (_data9 = data) === null || _data9 === void 0 ? void 0 : (_data9$get_issue = _data9.get_issue) === null || _data9$get_issue === void 0 ? void 0 : (_data9$get_issue$get_ = _data9$get_issue.get_issue) === null || _data9$get_issue$get_ === void 0 ? void 0 : _data9$get_issue$get_.name;
+
+          if (_this2.issue == undefined) {
+            _this2.issue = 'NO REGISTRA';
+          }
+        } else if (((_data10 = data) === null || _data10 === void 0 ? void 0 : _data10.status_matrix_id) == 7) {
+          var _data11, _data12, _data12$get_issue, _data12$get_issue$get;
+
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+
+          _this2.listSelected = (_data11 = data) === null || _data11 === void 0 ? void 0 : _data11.status_matrix_id;
+          _this2.issue = (_data12 = data) === null || _data12 === void 0 ? void 0 : (_data12$get_issue = _data12.get_issue) === null || _data12$get_issue === void 0 ? void 0 : (_data12$get_issue$get = _data12$get_issue.get_issue) === null || _data12$get_issue$get === void 0 ? void 0 : _data12$get_issue$get.name;
+
+          if (_this2.issue == undefined) {
+            _this2.issue = 'NO REGISTRA';
+          }
+        } else if (((_data13 = data) === null || _data13 === void 0 ? void 0 : _data13.status_matrix_id) == 8) {
+          var _data14, _data15, _data15$get_issue, _data15$get_issue$get;
+
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+
+          _this2.listSelected = (_data14 = data) === null || _data14 === void 0 ? void 0 : _data14.status_matrix_id;
+          _this2.issue = (_data15 = data) === null || _data15 === void 0 ? void 0 : (_data15$get_issue = _data15.get_issue) === null || _data15$get_issue === void 0 ? void 0 : (_data15$get_issue$get = _data15$get_issue.get_issue) === null || _data15$get_issue$get === void 0 ? void 0 : _data15$get_issue$get.name;
+
+          if (_this2.issue == undefined) {
+            _this2.issue = 'NO REGISTRA';
+          }
+        } else if (((_data16 = data) === null || _data16 === void 0 ? void 0 : _data16.status_matrix_id) == 10) {
+          var _data17, _data18, _data18$get_issue, _data18$get_issue$get;
+
+          _this2.listData = [];
+
+          _this2.listState.push(data.id);
+
+          _this2.listSelected = (_data17 = data) === null || _data17 === void 0 ? void 0 : _data17.status_matrix_id;
+          _this2.issue = (_data18 = data) === null || _data18 === void 0 ? void 0 : (_data18$get_issue = _data18.get_issue) === null || _data18$get_issue === void 0 ? void 0 : (_data18$get_issue$get = _data18$get_issue.get_issue) === null || _data18$get_issue$get === void 0 ? void 0 : _data18$get_issue$get.name;
+          data = '';
+
+          if (_this2.issue == undefined) {
+            _this2.issue = 'NO REGISTRA';
+          }
+        } else {
+          _this2.listData = [];
+        }
       });
     },
     sendToDelivery: function sendToDelivery() {
@@ -10480,7 +10494,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
 
                 if (state_select == '') {
                   window.swal({
-                    title: "ADVERTENCIA",
+                    title: "Aviso",
                     text: "Debe seleccionar un estado",
                     icon: "warning",
                     buttons: {
@@ -10490,12 +10504,11 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                   });
                 } else if (equal == state_select) {
                   window.swal({
-                    title: "ADVERTENCIA",
-                    text: "Ya estas en el estado deseado",
+                    title: "Aviso",
+                    text: "Ya esta guía se encuentra en el estado seleccionado: " + key_word,
                     icon: "warning",
                     buttons: {
-                      confirm: true,
-                      cancel: true
+                      confirm: 'Entendido'
                     }
                   });
                 } else if (state_select != '' && issue != 'ENTREGADO') {
@@ -10504,8 +10517,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                     text: "¿Está seguro que quiere cambiar el estado de la guía a: " + key_word + "?",
                     icon: "warning",
                     buttons: {
-                      confirm: true,
-                      cancel: true
+                      confirm: 'Si',
+                      cancel: 'No'
                     }
                   }).then(function (isConfirm) {
                     if (isConfirm) {
@@ -10678,7 +10691,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                         var _response6 = {
                           'state': 500
                         };
-                        fetch("guide/estado/recogida-finalizada", _requestOptions5).then(function (response) {
+                        fetch("guide/estado/entrega-finalizada", _requestOptions5).then(function (response) {
                           return response.json();
                         }).then(function (data) {
                           _response6 = data;
@@ -10704,12 +10717,11 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                   });
                 } else if (state_select != '' && issue == 'ENTREGADO') {
                   window.swal({
-                    title: "Denegado",
-                    text: "No puedes cambiar el estado de la guia",
+                    title: "Aviso",
+                    text: "No se puede cambiar el estado de una guía que tiene cómo incidencia: ENTREGADO",
                     icon: "warning",
                     buttons: {
-                      confirm: true,
-                      cancel: true
+                      confirm: 'Entendido'
                     }
                   });
                 }
@@ -10730,7 +10742,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.get_status_matrix.name.localeCompare(b.get_status_matrix.name);
+          var _a$get_status_matrix, _a$get_status_matrix$, _b$get_status_matrix;
+
+          return a === null || a === void 0 ? void 0 : (_a$get_status_matrix = a.get_status_matrix) === null || _a$get_status_matrix === void 0 ? void 0 : (_a$get_status_matrix$ = _a$get_status_matrix.name) === null || _a$get_status_matrix$ === void 0 ? void 0 : _a$get_status_matrix$.localeCompare(b === null || b === void 0 ? void 0 : (_b$get_status_matrix = b.get_status_matrix) === null || _b$get_status_matrix === void 0 ? void 0 : _b$get_status_matrix.name);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10738,7 +10752,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.get_status_matrix.name.localeCompare(a.get_status_matrix.name);
+          var _b$get_status_matrix2, _b$get_status_matrix3, _a$get_status_matrix2;
+
+          return b === null || b === void 0 ? void 0 : (_b$get_status_matrix2 = b.get_status_matrix) === null || _b$get_status_matrix2 === void 0 ? void 0 : (_b$get_status_matrix3 = _b$get_status_matrix2.name) === null || _b$get_status_matrix3 === void 0 ? void 0 : _b$get_status_matrix3.localeCompare(a === null || a === void 0 ? void 0 : (_a$get_status_matrix2 = a.get_status_matrix) === null || _a$get_status_matrix2 === void 0 ? void 0 : _a$get_status_matrix2.name);
         });
       }
     },
@@ -10750,7 +10766,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.created_at.localeCompare(b.created_at);
+          return a === null || a === void 0 ? void 0 : a.created_at.localeCompare(b === null || b === void 0 ? void 0 : b.created_at);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10758,7 +10774,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.created_at.localeCompare(a.created_at);
+          return b === null || b === void 0 ? void 0 : b.created_at.localeCompare(a === null || a === void 0 ? void 0 : a.created_at);
         });
       }
     },
@@ -10770,7 +10786,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.dispatched.localeCompare(b.dispatched);
+          var _a$dispatched;
+
+          return a === null || a === void 0 ? void 0 : (_a$dispatched = a.dispatched) === null || _a$dispatched === void 0 ? void 0 : _a$dispatched.localeCompare(b === null || b === void 0 ? void 0 : b.dispatched);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10778,7 +10796,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.dispatched.localeCompare(a.dispatched);
+          var _b$dispatched;
+
+          return b === null || b === void 0 ? void 0 : (_b$dispatched = b.dispatched) === null || _b$dispatched === void 0 ? void 0 : _b$dispatched.localeCompare(a.dispatched);
         });
       }
     },
@@ -10791,7 +10811,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.created_at.localeCompare(b.created_at);
+          var _a$created_at;
+
+          return a === null || a === void 0 ? void 0 : (_a$created_at = a.created_at) === null || _a$created_at === void 0 ? void 0 : _a$created_at.localeCompare(b === null || b === void 0 ? void 0 : b.created_at);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10799,7 +10821,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.created_at.localeCompare(a.created_at);
+          var _b$created_at;
+
+          return b === null || b === void 0 ? void 0 : (_b$created_at = b.created_at) === null || _b$created_at === void 0 ? void 0 : _b$created_at.localeCompare(a === null || a === void 0 ? void 0 : a.created_at);
         });
       }
     },
@@ -10811,7 +10835,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.get_order.schedule_date.localeCompare(b.get_order.schedule_date);
+          var _a$get_order, _a$get_order$schedule, _b$get_order;
+
+          return a === null || a === void 0 ? void 0 : (_a$get_order = a.get_order) === null || _a$get_order === void 0 ? void 0 : (_a$get_order$schedule = _a$get_order.schedule_date) === null || _a$get_order$schedule === void 0 ? void 0 : _a$get_order$schedule.localeCompare(b === null || b === void 0 ? void 0 : (_b$get_order = b.get_order) === null || _b$get_order === void 0 ? void 0 : _b$get_order.schedule_date);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10819,7 +10845,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.get_order.schedule_date.localeCompare(a.get_order.schedule_date);
+          var _b$get_order2, _b$get_order2$schedul, _a$get_order2;
+
+          return (_b$get_order2 = b.get_order) === null || _b$get_order2 === void 0 ? void 0 : (_b$get_order2$schedul = _b$get_order2.schedule_date) === null || _b$get_order2$schedul === void 0 ? void 0 : _b$get_order2$schedul.localeCompare((_a$get_order2 = a.get_order) === null || _a$get_order2 === void 0 ? void 0 : _a$get_order2.schedule_date);
         });
       }
     },
@@ -10831,7 +10859,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range);
+          var _a$get_order3, _b$get_order3;
+
+          return a === null || a === void 0 ? void 0 : (_a$get_order3 = a.get_order) === null || _a$get_order3 === void 0 ? void 0 : _a$get_order3.schedule_time_range.localeCompare(b === null || b === void 0 ? void 0 : (_b$get_order3 = b.get_order) === null || _b$get_order3 === void 0 ? void 0 : _b$get_order3.schedule_time_range);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10839,7 +10869,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range);
+          var _b$get_order4, _a$get_order4;
+
+          return b === null || b === void 0 ? void 0 : (_b$get_order4 = b.get_order) === null || _b$get_order4 === void 0 ? void 0 : _b$get_order4.schedule_time_range.localeCompare(a === null || a === void 0 ? void 0 : (_a$get_order4 = a.get_order) === null || _a$get_order4 === void 0 ? void 0 : _a$get_order4.schedule_time_range);
         });
       }
     },
@@ -10853,7 +10885,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         return this.guides.sort(function (a, b) {
           var _a$get_route, _a$get_route$get_mess, _b$get_route, _b$get_route$get_mess;
 
-          return (_a$get_route = a.get_route) === null || _a$get_route === void 0 ? void 0 : (_a$get_route$get_mess = _a$get_route.get_messenger) === null || _a$get_route$get_mess === void 0 ? void 0 : _a$get_route$get_mess.name.localeCompare((_b$get_route = b.get_route) === null || _b$get_route === void 0 ? void 0 : (_b$get_route$get_mess = _b$get_route.get_messenger) === null || _b$get_route$get_mess === void 0 ? void 0 : _b$get_route$get_mess.name);
+          return a === null || a === void 0 ? void 0 : (_a$get_route = a.get_route) === null || _a$get_route === void 0 ? void 0 : (_a$get_route$get_mess = _a$get_route.get_messenger) === null || _a$get_route$get_mess === void 0 ? void 0 : _a$get_route$get_mess.name.localeCompare(b === null || b === void 0 ? void 0 : (_b$get_route = b.get_route) === null || _b$get_route === void 0 ? void 0 : (_b$get_route$get_mess = _b$get_route.get_messenger) === null || _b$get_route$get_mess === void 0 ? void 0 : _b$get_route$get_mess.name);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10863,7 +10895,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         return this.guides.sort(function (a, b) {
           var _b$get_route2, _b$get_route2$get_mes, _a$get_route2, _a$get_route2$get_mes;
 
-          return (_b$get_route2 = b.get_route) === null || _b$get_route2 === void 0 ? void 0 : (_b$get_route2$get_mes = _b$get_route2.get_messenger) === null || _b$get_route2$get_mes === void 0 ? void 0 : _b$get_route2$get_mes.name.localeCompare((_a$get_route2 = a.get_route) === null || _a$get_route2 === void 0 ? void 0 : (_a$get_route2$get_mes = _a$get_route2.get_messenger) === null || _a$get_route2$get_mes === void 0 ? void 0 : _a$get_route2$get_mes.name);
+          return b === null || b === void 0 ? void 0 : (_b$get_route2 = b.get_route) === null || _b$get_route2 === void 0 ? void 0 : (_b$get_route2$get_mes = _b$get_route2.get_messenger) === null || _b$get_route2$get_mes === void 0 ? void 0 : _b$get_route2$get_mes.name.localeCompare(a === null || a === void 0 ? void 0 : (_a$get_route2 = a.get_route) === null || _a$get_route2 === void 0 ? void 0 : (_a$get_route2$get_mes = _a$get_route2.get_messenger) === null || _a$get_route2$get_mes === void 0 ? void 0 : _a$get_route2$get_mes.name);
         });
       }
     },
@@ -10875,7 +10907,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.app_status.toString().localeCompare(b.app_status.toString());
+          var _a$app_status, _b$app_status;
+
+          return a === null || a === void 0 ? void 0 : (_a$app_status = a.app_status) === null || _a$app_status === void 0 ? void 0 : _a$app_status.toString().localeCompare(b === null || b === void 0 ? void 0 : (_b$app_status = b.app_status) === null || _b$app_status === void 0 ? void 0 : _b$app_status.toString());
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10883,7 +10917,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.app_status.toString().localeCompare(a.app_status.toString());
+          var _b$app_status2, _a$app_status2;
+
+          return b === null || b === void 0 ? void 0 : (_b$app_status2 = b.app_status) === null || _b$app_status2 === void 0 ? void 0 : _b$app_status2.toString().localeCompare(a === null || a === void 0 ? void 0 : (_a$app_status2 = a.app_status) === null || _a$app_status2 === void 0 ? void 0 : _a$app_status2.toString());
         });
       }
     },
@@ -10895,7 +10931,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.get_order.get_user.name.localeCompare(b.get_order.get_user.name);
+          var _a$get_order5, _a$get_order5$get_use, _a$get_order5$get_use2, _b$get_order5, _b$get_order5$get_use;
+
+          return a === null || a === void 0 ? void 0 : (_a$get_order5 = a.get_order) === null || _a$get_order5 === void 0 ? void 0 : (_a$get_order5$get_use = _a$get_order5.get_user) === null || _a$get_order5$get_use === void 0 ? void 0 : (_a$get_order5$get_use2 = _a$get_order5$get_use.name) === null || _a$get_order5$get_use2 === void 0 ? void 0 : _a$get_order5$get_use2.localeCompare(b === null || b === void 0 ? void 0 : (_b$get_order5 = b.get_order) === null || _b$get_order5 === void 0 ? void 0 : (_b$get_order5$get_use = _b$get_order5.get_user) === null || _b$get_order5$get_use === void 0 ? void 0 : _b$get_order5$get_use.name);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10903,7 +10941,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.get_order.get_user.name.localeCompare(a.get_order.get_user.name);
+          var _b$get_order6, _b$get_order6$get_use, _b$get_order6$get_use2, _a$get_order6, _a$get_order6$get_use;
+
+          return (_b$get_order6 = b.get_order) === null || _b$get_order6 === void 0 ? void 0 : (_b$get_order6$get_use = _b$get_order6.get_user) === null || _b$get_order6$get_use === void 0 ? void 0 : (_b$get_order6$get_use2 = _b$get_order6$get_use.name) === null || _b$get_order6$get_use2 === void 0 ? void 0 : _b$get_order6$get_use2.localeCompare((_a$get_order6 = a.get_order) === null || _a$get_order6 === void 0 ? void 0 : (_a$get_order6$get_use = _a$get_order6.get_user) === null || _a$get_order6$get_use === void 0 ? void 0 : _a$get_order6$get_use.name);
         });
       }
     },
@@ -10915,7 +10955,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.contact.localeCompare(b.contact);
+          var _a$contact;
+
+          return a === null || a === void 0 ? void 0 : (_a$contact = a.contact) === null || _a$contact === void 0 ? void 0 : _a$contact.localeCompare(b === null || b === void 0 ? void 0 : b.contact);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10923,7 +10965,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.contact.localeCompare(a.contact);
+          var _b$contact;
+
+          return b === null || b === void 0 ? void 0 : (_b$contact = b.contact) === null || _b$contact === void 0 ? void 0 : _b$contact.localeCompare(a === null || a === void 0 ? void 0 : a.contact);
         });
       }
     },
@@ -10935,7 +10979,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = false;
         return this.guides.sort(function (a, b) {
-          return a.address_name.localeCompare(b.address_name);
+          var _a$address_name;
+
+          return a === null || a === void 0 ? void 0 : (_a$address_name = a.address_name) === null || _a$address_name === void 0 ? void 0 : _a$address_name.localeCompare(b === null || b === void 0 ? void 0 : b.address_name);
         });
       } else {
         this.sortedData.sort(function (x, y) {
@@ -10943,7 +10989,9 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
         });
         this.sortedbyASC = true;
         return this.guides.sort(function (a, b) {
-          return b.address_name.localeCompare(a.address_name);
+          var _b$address_name;
+
+          return b === null || b === void 0 ? void 0 : (_b$address_name = b.address_name) === null || _b$address_name === void 0 ? void 0 : _b$address_name.localeCompare(a === null || a === void 0 ? void 0 : a.address_name);
         });
       }
     }
@@ -73218,6 +73266,7 @@ var render = function () {
           {
             staticClass: "table table-sm table-bordered",
             style: { width: _vm.widthTable + "px", "table-layout": "auto" },
+            attrs: { id: "tabla_packing" },
           },
           [
             _c("thead", { staticClass: "thead-light" }, [

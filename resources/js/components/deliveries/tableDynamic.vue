@@ -43,7 +43,7 @@
         <div class="table-responsive col-md-12 px-0 border rounded h-400px" id="fil">
             <input type="text" class="form-control" placeholder="Filtro" v-model="search" />
             <!--  <input type="text" class="form-control" placeholder="Filtro" v-for="a in this.guidess" v-model="a.address_name" disabled v-if="contact"/> -->
-            <table class="table table-sm table-bordered"
+            <table id='tabla_packing' class="table table-sm table-bordered"
                 :style="{ 'width': widthTable + 'px', 'table-layout': 'auto' }">
                 <thead class="thead-light">
                 <tr class="text-center">
@@ -135,7 +135,7 @@ mounted() {
         const search = this.search.toLowerCase().trim();
 
             return this.guides.filter((tblItem) => {
-                const full_name =  tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name ;
+                const full_name =  tblItem?.get_order?.get_user?.name  + ' ' + tblItem?.get_order?.get_user?.last_name ;
                 if (tblItem.get_route != null){
                 if(this.search == 'leido'){
             return (
@@ -149,21 +149,21 @@ mounted() {
                     }
                 if(this.search != 'leido' && this.search != 'pendiente' ){
                 return (
-                    //tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
-                    tblItem.get_status_matrix.name.toLowerCase().includes(search) ||
-                    tblItem.get_order.created_at.toLowerCase().includes(search) ||
-                    tblItem.dispatched.toLowerCase().includes(search) ||
-                    tblItem.id.toString().includes(this.search) ||
-                    tblItem.get_order.schedule_date.toLowerCase().includes(search) ||
-                    tblItem.get_order.schedule_time_range.toLowerCase().includes(search) ||
-                    tblItem.get_route.get_messenger.name.toLowerCase().includes(search) ||
-                    tblItem.get_route.get_messenger.name.includes(search) ||
-                    full_name.toLowerCase().includes(search) ||
-                    full_name.includes(search) ||
-                    tblItem.contact.toLowerCase().includes(search) ||
-                    tblItem.contact.includes(search) ||
-                    tblItem.address_name.toLowerCase().includes(search) ||
-                    tblItem.address_name.includes(search)
+
+                    tblItem?.get_status_matrix.name?.toLowerCase().includes(search) ||
+                    tblItem?.get_order?.created_at?.toLowerCase().includes(search) ||
+                    tblItem?.dispatched?.toLowerCase().includes(search) ||
+                    tblItem?.id.toString().includes(this.search) ||
+                    tblItem?.get_order?.schedule_date?.toLowerCase().includes(search) ||
+                    tblItem?.get_order?.schedule_time_range?.toLowerCase().includes(search) ||
+                    tblItem?.get_route?.get_messenger.name?.toLowerCase().includes(search) ||
+                    tblItem?.get_route?.get_messenger.name?.includes(search) ||
+                    full_name?.toLowerCase().includes(search) ||
+                    full_name?.includes(search) ||
+                    tblItem?.contact?.toLowerCase().includes(search) ||
+                    tblItem?.contact?.includes(search) ||
+                    tblItem?.address_name?.toLowerCase().includes(search) ||
+                    tblItem?.address_name?.includes(search)
                 )
                     }
                 }
@@ -174,70 +174,83 @@ mounted() {
     methods: {
         onChange(event) {
        this.seleccion = event.target.value;
+       this.listData = [];
     },
 
     rowClick(data, index) {
             this.activeIndex = index;
             this.$emit("getGuide", data);
-            window.addEventListener('click', ()=>{
+            window?.addEventListener('click', ()=>{
 
-                if(!this.listData.includes(data.id) && data.status_matrix_id == 6  ){
+                if(!this.listData?.includes(data?.id) && data?.status_matrix_id == 6  ){
                     this.listData.push(data.id)
                     this.listState.push(data.id)
-                    this.listSelected = data.status_matrix_id
+                    this.listSelected = data?.status_matrix_id
                     this.issue = data?.get_issue?.get_issue?.name
-                    data = ''
-                    // console.log(this.issue)
+                    if(this.issue == undefined){
+                        this.issue = 'NO REGISTRA'
+                    }
+
                 }
 
-
-                 if(  data.status_matrix_id == 4  ){
+                else if(  data?.status_matrix_id == 4  ){
                     this.listData = []
                     this.listState.push(data.id)
                     this.listSelected = data.status_matrix_id
                     this.issue = data?.get_issue?.get_issue?.name
-                    data = ''
-                    // console.log(this.issue)
+                    // data = ''
+                    if(this.issue == undefined){
+                        this.issue = 'NO REGISTRA'
+                    }
+
                 }
 
-                  if(  data.status_matrix_id == 3  ){
+                else if(  data?.status_matrix_id == 3  ){
                     this.listData = []
                     this.listState.push(data.id)
-                    this.listSelected = data.status_matrix_id
+                    this.listSelected = data?.status_matrix_id
                     this.issue = data?.get_issue?.get_issue?.name
-                    data = ''
-                    // console.log(this.issue)
+
+                    if(this.issue == undefined){
+                        this.issue = 'NO REGISTRA'
+                    }
                 }
 
+                else if(  data?.status_matrix_id == 7  ){
+                    this.listData = []
+                    this.listState.push(data.id)
+                    this.listSelected = data?.status_matrix_id
+                    this.issue = data?.get_issue?.get_issue?.name
 
-                 if(  data.status_matrix_id == 7  ){
-                    this.listData = []
-                    this.listState.push(data.id)
-                    this.listSelected = data.status_matrix_id
-                    this.issue = data?.get_issue?.get_issue?.name
-                    data = ''
-                    // console.log(this.issue)
+                    if(this.issue == undefined){
+                        this.issue = 'NO REGISTRA'
+                    }
                 }
 
-                  if( data.status_matrix_id == 8  ){
+                else if( data?.status_matrix_id == 8  ){
                     this.listData = []
                     this.listState.push(data.id)
-                    this.listSelected = data.status_matrix_id
+                    this.listSelected = data?.status_matrix_id
                     this.issue = data?.get_issue?.get_issue?.name
-                    data = ''
-                    // console.log(this.issue)
+
+                    if(this.issue == undefined){
+                        this.issue = 'NO REGISTRA'
+                    }
+
                 }
-                   if( data.status_matrix_id == 10  ){
+                else if( data?.status_matrix_id == 10  ){
                     this.listData = []
                     this.listState.push(data.id)
-                    this.listSelected = data.status_matrix_id
+                    this.listSelected = data?.status_matrix_id
                     this.issue = data?.get_issue?.get_issue?.name
                     data = ''
-                    // console.log(this.issue)
+                    if(this.issue == undefined){
+                        this.issue = 'NO REGISTRA'
+                    }
                 }
-                // else {
-                //     this.listData = []
-                // }
+                else {
+                    this.listData = []
+                }
             })
         },
 
@@ -323,7 +336,7 @@ if (state_select == 10){
 
   if(state_select == ''){
     window.swal({
-   title: "ADVERTENCIA",
+   title: "Aviso",
     text: "Debe seleccionar un estado",
     icon: "warning",
     buttons: {
@@ -335,12 +348,11 @@ if (state_select == 10){
 
   else if(equal == state_select){
     window.swal({
-   title: "ADVERTENCIA",
-    text: "Ya estas en el estado deseado",
+   title: "Aviso",
+    text: "Ya esta guía se encuentra en el estado seleccionado: "+key_word,
     icon: "warning",
     buttons: {
-    confirm: true,
-    cancel: true,
+    confirm: 'Entendido',
   },
 })
   }
@@ -352,8 +364,8 @@ if (state_select == 10){
     text: "¿Está seguro que quiere cambiar el estado de la guía a: "+key_word+"?",
     icon: "warning",
     buttons: {
-    confirm: true,
-    cancel: true,
+    confirm: 'Si',
+    cancel: 'No',
   },
 }).then((isConfirm) => {
   if (isConfirm) {
@@ -528,7 +540,7 @@ if (state_select == 10){
             let response = {
                 'state': 500
             };
-             fetch("guide/estado/recogida-finalizada", requestOptions)
+             fetch("guide/estado/entrega-finalizada", requestOptions)
                 .then((response) => response.json())
                 .then(data => {
                     response = data
@@ -558,12 +570,11 @@ if (state_select == 10){
  else if(state_select != '' && issue== 'ENTREGADO'){
 
      window.swal({
-   title: "Denegado",
-    text: "No puedes cambiar el estado de la guia",
+   title: "Aviso",
+    text: "No se puede cambiar el estado de una guía que tiene cómo incidencia: ENTREGADO",
     icon: "warning",
     buttons: {
-    confirm: true,
-    cancel: true,
+    confirm: 'Entendido',
   },
 })
 
@@ -575,11 +586,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.get_status_matrix.name.localeCompare(b.get_status_matrix.name));
+        return this.guides.sort((a, b) => a?.get_status_matrix?.name?.localeCompare(b?.get_status_matrix?.name));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.get_status_matrix.name.localeCompare(a.get_status_matrix.name));
+        return this.guides.sort((a, b) => b?.get_status_matrix?.name?.localeCompare(a?.get_status_matrix?.name));
     }
     },
 
@@ -588,11 +599,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
+        return this.guides.sort((a, b) => a?.created_at.localeCompare(b?.created_at));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-    return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+    return this.guides.sort((a, b) => b?.created_at.localeCompare(a?.created_at));
     }
     },
 
@@ -601,11 +612,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-    return this.guides.sort((a, b) => a.dispatched.localeCompare(b.dispatched));
+    return this.guides.sort((a, b) => a?.dispatched?.localeCompare(b?.dispatched));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-    return this.guides.sort((a, b) => b.dispatched.localeCompare(a.dispatched));
+    return this.guides.sort((a, b) => b?.dispatched?.localeCompare(a.dispatched));
     }
     },
 
@@ -614,11 +625,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.created_at.localeCompare(b.created_at));
+        return this.guides.sort((a, b) => a?.created_at?.localeCompare(b?.created_at));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-    return this.guides.sort((a, b) => b.created_at.localeCompare(a.created_at));
+    return this.guides.sort((a, b) => b?.created_at?.localeCompare(a?.created_at));
     }
     },
 
@@ -627,11 +638,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.get_order.schedule_date.localeCompare(b.get_order.schedule_date));
+        return this.guides.sort((a, b) => a?.get_order?.schedule_date?.localeCompare(b?.get_order?.schedule_date));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-    return this.guides.sort((a, b) => b.get_order.schedule_date.localeCompare(a.get_order.schedule_date));
+    return this.guides.sort((a, b) => b.get_order?.schedule_date?.localeCompare(a.get_order?.schedule_date));
     }
     },
 
@@ -641,11 +652,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.get_order.schedule_time_range.localeCompare(b.get_order.schedule_time_range));
+        return this.guides.sort((a, b) => a?.get_order?.schedule_time_range.localeCompare(b?.get_order?.schedule_time_range));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-    return this.guides.sort((a, b) => b.get_order.schedule_time_range.localeCompare(a.get_order.schedule_time_range));
+    return this.guides.sort((a, b) => b?.get_order?.schedule_time_range.localeCompare(a?.get_order?.schedule_time_range));
     }
     },
 
@@ -654,11 +665,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-    return this.guides.sort((a, b) => a.get_route?.get_messenger?.name.localeCompare(b.get_route?.get_messenger?.name));
+    return this.guides.sort((a, b) => a?.get_route?.get_messenger?.name.localeCompare(b?.get_route?.get_messenger?.name));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-    return this.guides.sort((a, b) => b.get_route?.get_messenger?.name.localeCompare(a.get_route?.get_messenger?.name));
+    return this.guides.sort((a, b) => b?.get_route?.get_messenger?.name.localeCompare(a?.get_route?.get_messenger?.name));
     }
     },
 
@@ -667,11 +678,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-    return this.guides.sort((a, b) => a.app_status.toString() .localeCompare(b.app_status.toString() ));
+    return this.guides.sort((a, b) => a?.app_status?.toString().localeCompare(b?.app_status?.toString() ));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.app_status.toString() .localeCompare(a.app_status.toString() ));
+        return this.guides.sort((a, b) => b?.app_status?.toString().localeCompare(a?.app_status?.toString() ));
     }
     },
 
@@ -681,11 +692,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.get_order.get_user.name.localeCompare(b.get_order.get_user.name));
+        return this.guides.sort((a, b) => a?.get_order?.get_user?.name?.localeCompare(b?.get_order?.get_user?.name));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.get_order.get_user.name.localeCompare(a.get_order.get_user.name));
+        return this.guides.sort((a, b) => b.get_order?.get_user?.name?.localeCompare(a.get_order?.get_user?.name));
     }
     },
 
@@ -694,11 +705,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.contact.localeCompare(b.contact));
+        return this.guides.sort((a, b) => a?.contact?.localeCompare(b?.contact));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.contact.localeCompare(a.contact));
+        return this.guides.sort((a, b) => b?.contact?.localeCompare(a?.contact));
     }
     },
 
@@ -707,11 +718,11 @@ if (state_select == 10){
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
-        return this.guides.sort((a, b) => a.address_name.localeCompare(b.address_name));
+        return this.guides.sort((a, b) => a?.address_name?.localeCompare(b?.address_name));
     } else {
         this.sortedData.sort((x, y) => (x[sortBy] < y[sortBy] ? -1 : 1));
         this.sortedbyASC = true;
-        return this.guides.sort((a, b) => b.address_name.localeCompare(a.address_name));
+        return this.guides.sort((a, b) => b?.address_name?.localeCompare(a?.address_name));
     }
     }
 
