@@ -69,10 +69,14 @@
             </div>
             </div>
             <div class="col-md-3 py-4">
-                <div class="d-flex flex-row flex-wrap align-items-center justify-content-center">
-                   <!-- <a href="#" class="btn btn-light-success btn-block font-weight-bold mr-2">Imprimir Guia</a> -->
-                    <button v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-block font-weight-bold mr-2"  @click.prevent="editGuide()">Editar Destino</button>
+             <div class="d-flex ">
+                <div class="mr-auto ">
+                <button style="width:110%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuide()">Editar Destino</button>
                 </div>
+                <div class="mr-auto " >
+                <button style="width:150%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuideHistory()">Historial</button>
+                </div>
+            </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
                     <h5 class="mb-5 font-weight-bold text-dark col-md-12">Información de Destino</h5>
                      <div class="col-md-6 mb-2">
@@ -363,6 +367,110 @@
             <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuide()">Guardar</button>
         </div>
         </modalEdit>
+
+
+<!-- HISTORIAL -->
+        <modalHistory
+            v-if="showModalHistory"
+            @close="showModalHistory = false">
+        <div slot="header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar Historial</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div slot="body">
+    <div class="d-flex flex-row flex-wrap">
+
+        <div class="form-group  ">
+            <div class="d-flex ">
+                <div  style="width:200%;margin-left:1.5%;margin-top:1.5%">
+                    <strong> No Guia: </strong>
+                </div>
+                <div>
+                <input name="customer" type="text" class=" form-control form-control-solid" style="margin-left:-650%;width:200%" v-model="guide.id" disabled />
+                    <span class="form-text text-muted"></span>
+                </div>
+
+
+                <div  style="width:300%;margin-top:1.5%;margin-right:-150%">
+                    <strong>Seleccionar Incidencia:</strong>
+                </div>
+                <div>
+                <select name="issue" v-model="guide.issue"  class="form-control form-control-solid" style="margin-left:230%;width:290%" id="issue">
+                        <option
+                            v-for="issue in issues"
+                            v-bind:key="issue.id"
+                            v-bind:value="issue.id"
+                            >
+                            {{ issue.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+                <div class="form-group col-md-12">
+                    <label><strong>Novedades:</strong> </label>
+                    <input name="address" type="text" v-model="guide.novelty" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label><strong>Nombre quién Entrega/Recibe:</strong></label>
+                    <input name="concept" type="text" class="form-control form-control-solid" v-model="guide.recipient_name" />
+                    <span class="form-text text-muted"></span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label><strong>Dirección adicional:</strong></label>
+                    <input name="address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div>
+
+            <div class="d-flex ">
+                <div  style="width:200%;margin-left:185%;margin-top:1.5%">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Guardar</button>
+                </div>
+                <div  style="width:300%;margin-top:1.5%;margin-left:375%">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Limpiar</button>
+                </div>
+            </div>
+
+                 <div style="margin-top:2%" class=" separator separator-solid separator-border-3 col-12 mb-3"></div>
+                  <div class="form-group col-md-12">
+                    <table class="table table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th>#</th>
+                            <th>Despacho</th>
+                            <th>Recogida/Entrega</th>
+                            <th>Estado</th>
+                            <th>Estado Web</th>
+                            <th>Usuario creación</th>
+                            <th>Fecha creación</th>
+                            <th>Fecha modificacíon</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center">
+                            <td>308</td>
+                            <td>1659539929</td>
+                            <td>RECOGIDO</td>
+                            <td>Activo</td>
+                            <td>Leído</td>
+                            <td>Laura Orozco</td>
+                            <td>2022-08-03 / 10:14:51 </td>
+                            <td>2022-08-03 / 10:14:51 </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+        <div slot="footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Aceptar</button>
+        </div>
+        </modalHistory>
+
     </div>
 </template>
 <script>
@@ -370,11 +478,13 @@ import moment from 'moment';
 import draggables from "./draggable.vue";
 import tabledy from "./tableDynamic.vue";
 import modalEdit from "./modalEditComponent.vue";
+import modalHistory from "./modalEditHistory.vue";
 export default {
     components: {
         draggables,
         tabledy,
-        modalEdit
+        modalEdit,
+        modalHistory
     },
     data() {
         return {
@@ -385,6 +495,7 @@ export default {
                 { value: 56, text: "Recogidas" },
             ],
             showModal: false,
+            showModalHistory: false,
             columns:{
                 inProcess:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección"],
                 inEdit:["Tipo", "Estado", "Fecha evento", "Despacho", "Destino", "F.Prog", 'H.Entrega', "Mensajero", "Estado App", "Cliente", "Contacto", "Barrio/Zona", "Dirección",],
@@ -403,7 +514,8 @@ export default {
             document_types:null,
             transport_types:null,
             payment_methods:null,
-            showModal:false
+            showModal:false,
+            showModalHistory:false
 
         };
     },
@@ -565,6 +677,38 @@ export default {
             this.guide.app_status = this.showGuide.app_status;
             this.guide.status = this.showGuide.get_status_matrix.name;
             this.guide.novelty = this.showGuide.novelty;
+            this.guide.issue = this.showGuide.issue;
+        },
+
+            async editGuideHistory() {
+            if (!this.showGuide) {
+                return await error("Debe seleccionar una guía");
+            }
+            let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
+            this.showModalHistory = true;
+            this.guide.id = this.showGuide.id ?? 'No registra';
+            this.guide.client =  this.showGuide.get_order?.get_user.name;
+            this.guide.balance  = 0;
+            this.guide.balance_money  = 0;
+            this.guide.address = this.showGuide.address_name;
+            this.guide.document_type = this.showGuide.customer_document_type;
+            this.guide.concept = this.showGuide.concept;
+            this.guide.payment_method = this.showGuide.get_order.payment_method;
+            this.guide.transport_type = this.showGuide.transport_type;
+            this.guide.value = this.showGuide.value;
+            this.guide.value_corp = this.showGuide.corp_value;
+            this.guide.contact = this.showGuide.contact;
+            this.guide.contact_phone = this.showGuide.phone_contact;
+            this.guide.contact_email = this.showGuide.email_contact;
+            this.guide.programming = moment(programming_date).format("YYYY-MM-DDTHH:mm");
+            this.guide.schedule_date = this.showGuide.get_order.schedule_date
+            this.guide.additional_phone = this.showGuide.additional_phone;
+            this.guide.additional_email = this.showGuide.additional_email;
+            this.guide.additional_address = this.showGuide.additional_address;
+            this.guide.app_status = this.showGuide.app_status;
+            this.guide.status = this.showGuide.get_status_matrix.name;
+            this.guide.novelty = this.showGuide.novelty ?? 'No registra';
+            this.guide.recipient_name = this.showGuide.recipient_name ?? 'No registra'
         },
 
         async documentTypes() {
@@ -579,6 +723,13 @@ export default {
             let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
             let res = await req.json()
             this.transport_types = res.data;
+        },
+
+           async issues() {
+            let name = "issues";
+            let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
+            let res = await req.json()
+            this.issues = res.data;
         },
 
         async paymentMethods() {
@@ -630,6 +781,7 @@ export default {
         this.documentTypes();
         this.transportTypes();
         this.paymentMethods();
+        this.issues();
     },
 };
 </script>
