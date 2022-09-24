@@ -393,11 +393,11 @@
                 </div>
 
 
-                <div  style="width:300%;margin-top:1.5%;margin-right:-150%">
+                <div  style="width:250%;margin-top:1.5%;margin-right:-105%">
                     <strong>Seleccionar Incidencia:</strong>
                 </div>
                 <div>
-                <select name="issue" v-model="guide.issue"  class="form-control form-control-solid" style="margin-left:230%;width:290%" id="issue">
+                <select name="issue" v-model="guide.issue"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
                         <option
                             v-for="issue in issues"
                             v-bind:key="issue.id"

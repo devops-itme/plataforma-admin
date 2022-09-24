@@ -72676,9 +72676,9 @@ var render = function () {
                         "div",
                         {
                           staticStyle: {
-                            width: "300%",
+                            width: "250%",
                             "margin-top": "1.5%",
-                            "margin-right": "-150%",
+                            "margin-right": "-105%",
                           },
                         },
                         [_c("strong", [_vm._v("Seleccionar Incidencia:")])]
@@ -72698,7 +72698,7 @@ var render = function () {
                             ],
                             staticClass: "form-control form-control-solid",
                             staticStyle: {
-                              "margin-left": "230%",
+                              "margin-left": "180%",
                               width: "290%",
                             },
                             attrs: { name: "issue", id: "issue" },
