@@ -9160,29 +9160,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee9);
       }))();
     },
-    paymentMethods: function paymentMethods() {
-      var _this10 = this;
-
+    guideLogs: function guideLogs(guide_id) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
-        var name, req, res;
+        var response, myHeaders, requestOptions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
-                name = "payment_method";
-                _context10.next = 3;
-                return fetch("/api/parameter_values?parameter_name=".concat(name));
-
-              case 3:
-                req = _context10.sent;
+                response = {
+                  state: 500
+                };
+                myHeaders = new Headers();
+                myHeaders.append("accept", "application/json");
+                requestOptions = {
+                  method: "GET",
+                  headers: myHeaders
+                };
                 _context10.next = 6;
-                return req.json();
+                return fetch("/api/get_guides?guide_log=".concat(guide_id), requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data; // console.log(response)
+                })["catch"](function (err) {
+                  return console.warn(err);
+                });
 
               case 6:
-                res = _context10.sent;
-                _this10.payment_methods = res.data;
+                return _context10.abrupt("return", response);
 
-              case 8:
+              case 7:
               case "end":
                 return _context10.stop();
             }
@@ -9190,14 +9196,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee10);
       }))();
     },
-    updateGuide: function updateGuide() {
-      var _this11 = this;
+    dataGuideId: function dataGuideId() {
+      var _this10 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-        var token, myHeaders, requestOptions, response;
+        var guide_id, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
+              case 0:
+                guide_id = _this10.showDataGuide.posting;
+                _context11.next = 3;
+                return _this10.guideLogs(guide_id);
+
+              case 3:
+                response = _context11.sent;
+                _this10.guide_logs = response.data; // console.log(this.guide_logs);
+
+              case 5:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11);
+      }))();
+    },
+    paymentMethods: function paymentMethods() {
+      var _this11 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+        var name, req, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                name = "payment_method";
+                _context12.next = 3;
+                return fetch("/api/parameter_values?parameter_name=".concat(name));
+
+              case 3:
+                req = _context12.sent;
+                _context12.next = 6;
+                return req.json();
+
+              case 6:
+                res = _context12.sent;
+                _this11.payment_methods = res.data;
+
+              case 8:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }))();
+    },
+    updateGuide: function updateGuide() {
+      var _this12 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        var token, myHeaders, requestOptions, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
               case 0:
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
@@ -9210,40 +9271,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 requestOptions = {
                   method: "PUT",
                   headers: myHeaders,
-                  body: JSON.stringify(_this11.guide)
+                  body: JSON.stringify(_this12.guide)
                 };
-                _context11.next = 11;
-                return _this11.requestUpdateGuide(requestOptions);
+                _context13.next = 11;
+                return _this12.requestUpdateGuide(requestOptions);
 
               case 11:
-                response = _context11.sent;
+                response = _context13.sent;
 
                 if (response.state != 200) {
                   alert(response.message);
                 }
 
                 alert(response.message);
-                _this11.showModal = false;
+                _this12.showModal = false;
 
               case 15:
               case "end":
-                return _context11.stop();
+                return _context13.stop();
             }
           }
-        }, _callee11);
+        }, _callee13);
       }))();
     },
     requestUpdateGuide: function requestUpdateGuide(requestOptions) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context12.next = 3;
+                _context14.next = 3;
                 return fetch("/guide/update", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -9253,43 +9314,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
 
               case 3:
-                return _context12.abrupt("return", response);
+                return _context14.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context12.stop();
+                return _context14.stop();
             }
           }
-        }, _callee12);
+        }, _callee14);
       }))();
     }
   },
   mounted: function mounted() {
-    var _this12 = this;
+    var _this13 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
         while (1) {
-          switch (_context13.prev = _context13.next) {
+          switch (_context15.prev = _context15.next) {
             case 0:
-              _this12.getGuides(3);
+              _this13.getGuides(3);
 
-              _this12.getMessengers();
+              _this13.getMessengers();
 
-              _this12.documentTypes();
+              _this13.documentTypes();
 
-              _this12.transportTypes();
+              _this13.transportTypes();
 
-              _this12.paymentMethods();
+              _this13.paymentMethods();
 
-              _this12.issues();
+              _this13.issues();
 
-            case 6:
+              _this13.guideLogs();
+
+              _this13.dataGuideId();
+
+            case 8:
             case "end":
-              return _context13.stop();
+              return _context15.stop();
           }
         }
-      }, _callee13);
+      }, _callee15);
     }))();
   }
 });
@@ -71175,7 +71240,8 @@ var render = function () {
                         on: {
                           click: function ($event) {
                             $event.preventDefault()
-                            return _vm.editGuideHistory()
+                            _vm.editGuideHistory()
+                            _vm.dataGuideId()
                           },
                         },
                       },
@@ -72910,25 +72976,35 @@ var render = function () {
                         ]),
                       ]),
                       _vm._v(" "),
-                      _c("tbody", [
-                        _c("tr", { staticClass: "text-center" }, [
-                          _c("td", [_vm._v("308")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("1659539929")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("RECOGIDO")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("Activo")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("Leído")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("Laura Orozco")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("2022-08-03 / 10:14:51 ")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("2022-08-03 / 10:14:51 ")]),
-                        ]),
-                      ]),
+                      _c(
+                        "tbody",
+                        _vm._l(this.guide_logs, function (guide_log, index) {
+                          return _c("tr", { staticClass: "text-center" }, [
+                            _c("td", [_vm._v(_vm._s(guide_log.id))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(guide_log.get_state.name)),
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v("Despacho")]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(guide_log.status_matrix_id)),
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v("Despacho")]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v("Despacho")]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(guide_log.id))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(guide_log.updated_at.slice(0, 10))),
+                            ]),
+                          ])
+                        }),
+                        0
+                      ),
                     ]),
                   ]),
                 ]),

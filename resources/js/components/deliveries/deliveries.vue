@@ -74,7 +74,7 @@
                 <button style="width:110%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuide()">Editar Destino</button>
                 </div>
                 <div class="mr-auto " >
-                <button style="width:150%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuideHistory()">Historial</button>
+                <button style="width:150%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuideHistory() ; dataGuideId()">Historial</button>
                 </div>
             </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
@@ -450,15 +450,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center">
-                            <td>308</td>
-                            <td>1659539929</td>
-                            <td>RECOGIDO</td>
-                            <td>Activo</td>
-                            <td>Leído</td>
-                            <td>Laura Orozco</td>
-                            <td>2022-08-03 / 10:14:51 </td>
-                            <td>2022-08-03 / 10:14:51 </td>
+                        <tr class="text-center" v-for="guide_log, index in  this.guide_logs"  >
+                            <td>{{ guide_log.id }}</td>
+                            <td>{{ guide_log.get_state.name }}</td>
+                            <td>Despacho</td>
+                            <td>{{ guide_log.status_matrix_id }}</td>
+                            <td>Despacho</td>
+                            <td>Despacho</td>
+                            <td>{{ guide_log.id }}</td>
+                            <td>{{ guide_log.updated_at.slice(0, 10) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -732,6 +732,32 @@ export default {
             this.issues = res.data;
         },
 
+       async guideLogs(guide_id) {
+          let response = { state: 500 };
+            let myHeaders = new Headers();
+            myHeaders.append("accept", "application/json");
+            let requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+            };
+            await fetch(`/api/get_guides?guide_log=${guide_id}`, requestOptions)
+                .then((response) => response.json())
+                .then(function (data) {
+                    response = data;
+                    // console.log(response)
+                })
+                .catch((err) => console.warn(err));
+            return response;
+        },
+
+       async dataGuideId(){
+            let guide_id = this.showDataGuide.posting;
+            let  response = await this.guideLogs(guide_id);
+            this.guide_logs = response.data;
+            // console.log(this.guide_logs);
+        },
+
+
         async paymentMethods() {
             let name = "payment_method";
             let req = await fetch(`/api/parameter_values?parameter_name=${name}`);
@@ -782,6 +808,9 @@ export default {
         this.transportTypes();
         this.paymentMethods();
         this.issues();
+        this.guideLogs();
+        this.dataGuideId();
+
     },
 };
 </script>

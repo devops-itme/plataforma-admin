@@ -29,4 +29,18 @@ class GuideLogController extends Controller
             return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
         }
     }
+
+    public function obtainGuideLogs(Request $request)
+    {
+        try {
+            $guide_log = $request->guide_log;
+            $log = GuideLog::where('guide_id', $guide_log)->get();
+            if (is_null($log)) {
+                return $this->respond(500, [], 'not found', 'El Log no existe');
+            }
+            return $this->respond(200, $log, null, 'Log de Guias');
+        } catch (\Throwable $e) {
+            return $this->respond(500, null, $e->getMessage(), 'Error del servidor');
+        }
+    }
 }
