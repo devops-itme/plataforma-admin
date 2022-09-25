@@ -450,14 +450,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" v-for="guide_log, index in  this.guide_logs"  >
+                        <tr class="text-center" v-for="guide_log, index in  this.guide_logs.slice().reverse()"  >
                             <td>{{ guide_log.id }}</td>
+                            <td>{{ guide_log.get_guide.dispatched }}</td>
                             <td>{{ guide_log.get_state.name }}</td>
-                            <td>Despacho</td>
-                            <td>{{ guide_log.status_matrix_id }}</td>
-                            <td>Despacho</td>
-                            <td>Despacho</td>
-                            <td>{{ guide_log.id }}</td>
+                            <td>{{ guide_log.active ? 'Activo' : 'Inactivo' }}</td>
+                            <td>{{ guide_log.get_guide.app_status ? 'Leido' : 'Pendiente' }}</td>
+                            <td v-if="guide_log.get_guide.get_order.get_user.name != null">{{ guide_log.get_guide.get_order.get_user.name + ' ' + guide_log.get_guide.get_order.get_user.last_name }}</td>
+                            <td v-if="guide_log.get_guide.get_order.get_user.name == null">{{ guide_log.get_guide.get_order.get_user.get_customer.tradename }}</td>
+                            <td>{{ guide_log.created_at.slice(0, 10) }}</td>
                             <td>{{ guide_log.updated_at.slice(0, 10) }}</td>
                         </tr>
                     </tbody>

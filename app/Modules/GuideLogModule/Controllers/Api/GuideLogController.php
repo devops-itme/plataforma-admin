@@ -34,7 +34,13 @@ class GuideLogController extends Controller
     {
         try {
             $guide_log = $request->guide_log;
-            $log = GuideLog::where('guide_id', $guide_log)->get();
+            $log = GuideLog:: with(['getState',
+            'getGuide.getOrder.getUser.getCustomer',
+            'getGuide.getTransportType',
+            'getGuide.getOrder.getOrderType',
+            'getGuide.getBranchOffice.getDepartment.getDepartment'
+        ])->where('guide_id', $guide_log)->get();
+
             if (is_null($log)) {
                 return $this->respond(500, [], 'not found', 'El Log no existe');
             }

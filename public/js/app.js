@@ -8690,6 +8690,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -72978,31 +72979,79 @@ var render = function () {
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        _vm._l(this.guide_logs, function (guide_log, index) {
-                          return _c("tr", { staticClass: "text-center" }, [
-                            _c("td", [_vm._v(_vm._s(guide_log.id))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(guide_log.get_state.name)),
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Despacho")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(guide_log.status_matrix_id)),
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Despacho")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Despacho")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(guide_log.id))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(guide_log.updated_at.slice(0, 10))),
-                            ]),
-                          ])
-                        }),
+                        _vm._l(
+                          this.guide_logs.slice().reverse(),
+                          function (guide_log, index) {
+                            return _c("tr", { staticClass: "text-center" }, [
+                              _c("td", [_vm._v(_vm._s(guide_log.id))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(guide_log.get_guide.dispatched)),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(guide_log.get_state.name)),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    guide_log.active ? "Activo" : "Inactivo"
+                                  )
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    guide_log.get_guide.app_status
+                                      ? "Leido"
+                                      : "Pendiente"
+                                  )
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              guide_log.get_guide.get_order.get_user.name !=
+                              null
+                                ? _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        guide_log.get_guide.get_order.get_user
+                                          .name +
+                                          " " +
+                                          guide_log.get_guide.get_order.get_user
+                                            .last_name
+                                      )
+                                    ),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              guide_log.get_guide.get_order.get_user.name ==
+                              null
+                                ? _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        guide_log.get_guide.get_order.get_user
+                                          .get_customer.tradename
+                                      )
+                                    ),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(guide_log.created_at.slice(0, 10))
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(guide_log.updated_at.slice(0, 10))
+                                ),
+                              ]),
+                            ])
+                          }
+                        ),
                         0
                       ),
                     ]),
