@@ -397,8 +397,10 @@ if (state_select == 10){
             title: "Estado Actualizado",
             text: " ",
             icon: 'success',
-            timer: 1000,
-            buttons: false })
+            // timer: 1000,
+            buttons: {
+            confirm: 'OK',
+                     }} )
                         .then(function(){
                         location.reload();
                 }
@@ -427,8 +429,10 @@ if (state_select == 10){
             title: "Estado Actualizado",
             text: " ",
             icon: 'success',
-            timer: 1000,
-            buttons: false })
+            // timer: 2000,
+             buttons: {
+            confirm: 'OK',
+                     }})
                         .then(function(){
                         location.reload();
                 }
@@ -458,8 +462,10 @@ if (state_select == 10){
             title: "Estado Actualizado",
             text: " ",
             icon: 'success',
-            timer: 1000,
-            buttons: false })
+            // timer: 2000,
+             buttons: {
+            confirm: 'OK',
+                     }})
                         .then(function(){
                         location.reload();
                 }
@@ -489,8 +495,10 @@ if (state_select == 10){
             title: "Estado Actualizado",
             text: " ",
             icon: 'success',
-            timer: 1000,
-            buttons: false })
+            // timer: 2000,
+             buttons: {
+            confirm: 'OK',
+                     }})
                         .then(function(){
                         location.reload();
                 }
@@ -518,8 +526,10 @@ if (state_select == 10){
             title: "Estado Actualizado",
             text: " ",
             icon: 'success',
-            timer: 1000,
-            buttons: false })
+            // timer: 2000,
+             buttons: {
+            confirm: 'OK',
+                     }})
                         .then(function(){
                         location.reload();
                 }
@@ -547,8 +557,10 @@ if (state_select == 10){
             title: "Estado Actualizado",
             text: " ",
             icon: 'success',
-            timer: 1000,
-            buttons: false })
+            // timer: 2000,
+             buttons: {
+            confirm: 'OK',
+                     }})
                         .then(function(){
                         location.reload();
                 }

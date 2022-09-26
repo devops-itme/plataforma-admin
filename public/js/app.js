@@ -10853,8 +10853,10 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 1000,
-                            buttons: false
+                            // timer: 1000,
+                            buttons: {
+                              confirm: 'OK'
+                            }
                           }).then(function () {
                             location.reload();
                           });
@@ -10883,8 +10885,10 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 1000,
-                            buttons: false
+                            // timer: 2000,
+                            buttons: {
+                              confirm: 'OK'
+                            }
                           }).then(function () {
                             location.reload();
                           });
@@ -10913,8 +10917,10 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 1000,
-                            buttons: false
+                            // timer: 2000,
+                            buttons: {
+                              confirm: 'OK'
+                            }
                           }).then(function () {
                             location.reload();
                           });
@@ -10944,8 +10950,10 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 1000,
-                            buttons: false
+                            // timer: 2000,
+                            buttons: {
+                              confirm: 'OK'
+                            }
                           }).then(function () {
                             location.reload();
                           });
@@ -10974,8 +10982,10 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 1000,
-                            buttons: false
+                            // timer: 2000,
+                            buttons: {
+                              confirm: 'OK'
+                            }
                           }).then(function () {
                             location.reload();
                           });
@@ -11004,8 +11014,10 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 1000,
-                            buttons: false
+                            // timer: 2000,
+                            buttons: {
+                              confirm: 'OK'
+                            }
                           }).then(function () {
                             location.reload();
                           });
