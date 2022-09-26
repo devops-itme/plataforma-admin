@@ -72990,15 +72990,17 @@ var render = function () {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(_vm._s(guide_log.get_state.name)),
+                                _vm._v(
+                                  _vm._s(
+                                    guide_log.get_state.scope_id == 56
+                                      ? "RECOGIDA"
+                                      : "ENTREGA"
+                                  )
+                                ),
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(
-                                  _vm._s(
-                                    guide_log.active ? "Activo" : "Inactivo"
-                                  )
-                                ),
+                                _vm._v(_vm._s(guide_log.get_state.name)),
                               ]),
                               _vm._v(" "),
                               _c("td", [
