@@ -385,7 +385,7 @@
         <div class="form-group  ">
             <div class="d-flex ">
                 <div  style="width:200%;margin-left:1.5%;margin-top:1.5%">
-                    <strong> No Guia: </strong>
+                    <label><strong> No Guia: </strong> </label>
                 </div>
                 <div>
                 <input name="customer" type="text" class=" form-control form-control-solid" style="margin-left:-650%;width:200%" v-model="guide.id" disabled />
@@ -394,7 +394,7 @@
 
 
                 <div  style="width:250%;margin-top:1.5%;margin-right:-105%">
-                    <strong>Seleccionar Incidencia:</strong>
+                    <label><strong>Seleccionar incidencia <span class="text-danger">*</span> </strong></label>
                 </div>
                 <div>
                 <select name="issue" v-model="guide.issue"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
@@ -410,17 +410,17 @@
             </div>
         </div>
                 <div class="form-group col-md-12">
-                    <label><strong>Novedades:</strong> </label>
+                    <label><strong>Novedades <span class="text-danger">*</span> </strong></label>
                     <input name="address" type="text" v-model="guide.novelty" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
-                    <label><strong>Nombre quién Entrega/Recibe:</strong></label>
+                    <label><strong>Nombre quién Entrega/Recibe <span class="text-danger">*</span></strong></label>
                     <input name="concept" type="text" class="form-control form-control-solid" v-model="guide.recipient_name" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
-                    <label><strong>Dirección adicional:</strong></label>
+                    <label><strong>Dirección adicional <span class="text-danger">*</span></strong></label>
                     <input name="address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>

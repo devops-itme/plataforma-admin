@@ -72702,7 +72702,7 @@ var render = function () {
                             "margin-top": "1.5%",
                           },
                         },
-                        [_c("strong", [_vm._v(" No Guia: ")])]
+                        [_c("label", [_c("strong", [_vm._v(" No Guia: ")])])]
                       ),
                       _vm._v(" "),
                       _c("div", [
@@ -72748,7 +72748,16 @@ var render = function () {
                             "margin-right": "-105%",
                           },
                         },
-                        [_c("strong", [_vm._v("Seleccionar Incidencia:")])]
+                        [
+                          _c("label", [
+                            _c("strong", [
+                              _vm._v("Seleccionar incidencia "),
+                              _c("span", { staticClass: "text-danger" }, [
+                                _vm._v("*"),
+                              ]),
+                            ]),
+                          ]),
+                        ]
                       ),
                       _vm._v(" "),
                       _c("div", [
@@ -72809,7 +72818,14 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-12" }, [
-                    _c("label", [_c("strong", [_vm._v("Novedades:")])]),
+                    _c("label", [
+                      _c("strong", [
+                        _vm._v("Novedades "),
+                        _c("span", { staticClass: "text-danger" }, [
+                          _vm._v("*"),
+                        ]),
+                      ]),
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -72838,7 +72854,12 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-12" }, [
                     _c("label", [
-                      _c("strong", [_vm._v("Nombre quién Entrega/Recibe:")]),
+                      _c("strong", [
+                        _vm._v("Nombre quién Entrega/Recibe "),
+                        _c("span", { staticClass: "text-danger" }, [
+                          _vm._v("*"),
+                        ]),
+                      ]),
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -72872,7 +72893,12 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-12" }, [
                     _c("label", [
-                      _c("strong", [_vm._v("Dirección adicional:")]),
+                      _c("strong", [
+                        _vm._v("Dirección adicional "),
+                        _c("span", { staticClass: "text-danger" }, [
+                          _vm._v("*"),
+                        ]),
+                      ]),
                     ]),
                     _vm._v(" "),
                     _c("input", {
