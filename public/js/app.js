@@ -10883,7 +10883,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 2000,
+                            timer: 1000,
                             buttons: false
                           }).then(function () {
                             location.reload();
@@ -10913,7 +10913,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 2000,
+                            timer: 1000,
                             buttons: false
                           }).then(function () {
                             location.reload();
@@ -10944,7 +10944,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 2000,
+                            timer: 1000,
                             buttons: false
                           }).then(function () {
                             location.reload();
@@ -10974,7 +10974,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 2000,
+                            timer: 1000,
                             buttons: false
                           }).then(function () {
                             location.reload();
@@ -11004,7 +11004,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                             title: "Estado Actualizado",
                             text: " ",
                             icon: 'success',
-                            timer: 2000,
+                            timer: 1000,
                             buttons: false
                           }).then(function () {
                             location.reload();
