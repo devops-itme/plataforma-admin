@@ -397,7 +397,7 @@
                     <label><strong>Seleccionar incidencia <span class="text-danger">*</span> </strong></label>
                 </div>
                 <div>
-                <select name="issue_id" v-model="this.showDataGuide.issue_id"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
+                <select name="issue_id" v-model="guide.issue"   class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
                         <option
                             v-for="issue in issues"
                             v-bind:key="issue.id"
@@ -589,8 +589,8 @@ export default {
             this.showDataGuide.files = data.get_documents;
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
             this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
-            this.showDataGuide.issue = data.get_issue?.get_issue?.name ?? 'No registra';
-            this.showDataGuide.issue_id = data.get_issue?.get_issue?.id ?? 'No registra';
+            this.showDataGuide.issue = data?.get_issue?.get_issue?.name ?? 'No registra';
+            this.showDataGuide.issue_id = data?.get_issue?.get_issue?.id ?? 'No registra';
             this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
             this.showDataGuide.logs = this.guide_logs;
         },
@@ -690,7 +690,7 @@ export default {
         },
 
 
-            async editGuideHistory() {
+            async editGuideHistory(data) {
 
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
@@ -698,6 +698,8 @@ export default {
                 this.showModalHistory = true;
                  this.guide.id = this.showDataGuide.posting ?? 'No registra';
                 let id = this.showDataGuide.id;
+                 this.guide.issue = data?.get_issue?.get_issue?.id ?? 'No registra';
+                //  this.showDataGuide.issue_id = data?.get_issue?.get_issue?.id ?? 'No registra';
                 let  response = await this.guideLogs(id);
 
             if (response != '') {

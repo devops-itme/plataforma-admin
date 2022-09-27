@@ -8837,8 +8837,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.package_pictures = (_data$get_documents2 = data.get_documents) === null || _data$get_documents2 === void 0 ? void 0 : _data$get_documents2.filter(function (element) {
         return element.type == 74;
       });
-      this.showDataGuide.issue = (_data$get_issue$get_i = (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i2 = _data$get_issue.get_issue) === null || _data$get_issue$get_i2 === void 0 ? void 0 : _data$get_issue$get_i2.name) !== null && _data$get_issue$get_i !== void 0 ? _data$get_issue$get_i : 'No registra';
-      this.showDataGuide.issue_id = (_data$get_issue$get_i3 = (_data$get_issue2 = data.get_issue) === null || _data$get_issue2 === void 0 ? void 0 : (_data$get_issue2$get_ = _data$get_issue2.get_issue) === null || _data$get_issue2$get_ === void 0 ? void 0 : _data$get_issue2$get_.id) !== null && _data$get_issue$get_i3 !== void 0 ? _data$get_issue$get_i3 : 'No registra';
+      this.showDataGuide.issue = (_data$get_issue$get_i = data === null || data === void 0 ? void 0 : (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i2 = _data$get_issue.get_issue) === null || _data$get_issue$get_i2 === void 0 ? void 0 : _data$get_issue$get_i2.name) !== null && _data$get_issue$get_i !== void 0 ? _data$get_issue$get_i : 'No registra';
+      this.showDataGuide.issue_id = (_data$get_issue$get_i3 = data === null || data === void 0 ? void 0 : (_data$get_issue2 = data.get_issue) === null || _data$get_issue2 === void 0 ? void 0 : (_data$get_issue2$get_ = _data$get_issue2.get_issue) === null || _data$get_issue2$get_ === void 0 ? void 0 : _data$get_issue2$get_.id) !== null && _data$get_issue$get_i3 !== void 0 ? _data$get_issue$get_i3 : 'No registra';
       this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
       this.showDataGuide.logs = this.guide_logs;
     },
@@ -9022,11 +9022,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee5);
       }))();
     },
-    editGuideHistory: function editGuideHistory() {
+    editGuideHistory: function editGuideHistory(data) {
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var _this6$showDataGuide$, id, response;
+        var _this6$showDataGuide$, _data$get_issue$get_i4, _data$get_issue3, _data$get_issue3$get_, id, response;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
@@ -9047,10 +9047,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.showModalHistory = true;
                 _this6.guide.id = (_this6$showDataGuide$ = _this6.showDataGuide.posting) !== null && _this6$showDataGuide$ !== void 0 ? _this6$showDataGuide$ : 'No registra';
                 id = _this6.showDataGuide.id;
-                _context6.next = 11;
+                _this6.guide.issue = (_data$get_issue$get_i4 = data === null || data === void 0 ? void 0 : (_data$get_issue3 = data.get_issue) === null || _data$get_issue3 === void 0 ? void 0 : (_data$get_issue3$get_ = _data$get_issue3.get_issue) === null || _data$get_issue3$get_ === void 0 ? void 0 : _data$get_issue3$get_.id) !== null && _data$get_issue$get_i4 !== void 0 ? _data$get_issue$get_i4 : 'No registra'; //  this.showDataGuide.issue_id = data?.get_issue?.get_issue?.id ?? 'No registra';
+
+                _context6.next = 12;
                 return _this6.guideLogs(id);
 
-              case 11:
+              case 12:
                 response = _context6.sent;
 
                 if (response != '') {
@@ -9061,7 +9063,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this6.guide_logs = response.data;
                 }
 
-              case 13:
+              case 14:
               case "end":
                 return _context6.stop();
             }
@@ -72824,8 +72826,8 @@ var render = function () {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: this.showDataGuide.issue_id,
-                                expression: "this.showDataGuide.issue_id",
+                                value: _vm.guide.issue,
+                                expression: "guide.issue",
                               },
                             ],
                             staticClass: "form-control form-control-solid",
@@ -72845,8 +72847,8 @@ var render = function () {
                                     return val
                                   })
                                 _vm.$set(
-                                  this.showDataGuide,
-                                  "issue_id",
+                                  _vm.guide,
+                                  "issue",
                                   $event.target.multiple
                                     ? $$selectedVal
                                     : $$selectedVal[0]
