@@ -698,10 +698,6 @@ export default {
                 this.showModalHistory = true;
                  this.guide.id = this.showDataGuide.posting ?? 'No registra';
                 let id = this.showDataGuide.id;
-
-
-
-
                 let  response = await this.guideLogs(id);
 
             if (response != '') {
