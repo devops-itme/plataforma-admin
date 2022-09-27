@@ -388,7 +388,7 @@
                     <label><strong> No Guia: </strong> </label>
                 </div>
                 <div>
-                <input name="customer" type="text" class=" form-control form-control-solid" style="margin-left:-650%;width:200%" v-model="guide.id" disabled />
+                <input name="customer" type="text" class=" form-control form-control-solid" style="margin-left:-650%;width:200%" v-model="showDataGuide.id" disabled />
                     <span class="form-text text-muted"></span>
                 </div>
 
@@ -397,7 +397,7 @@
                     <label><strong>Seleccionar incidencia <span class="text-danger">*</span> </strong></label>
                 </div>
                 <div>
-                <select name="issue_id" v-model="guide.issue"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
+                <select name="issue_id" v-model="this.showDataGuide.issue_id"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
                         <option
                             v-for="issue in issues"
                             v-bind:key="issue.id"
@@ -411,17 +411,17 @@
         </div>
                 <div class="form-group col-md-12">
                     <label><strong>Novedades <span class="text-danger">*</span> </strong></label>
-                    <input name="address" type="text" v-model="guide.novelty" class="form-control form-control-solid" />
+                    <input name="address" type="text" v-model="this.showDataGuide.novelty" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
                     <label><strong>Nombre quién Entrega/Recibe <span class="text-danger">*</span></strong></label>
-                    <input name="concept" type="text" class="form-control form-control-solid" v-model="guide.recipient_name" />
+                    <input name="concept" type="text" class="form-control form-control-solid" v-model="this.showDataGuide.recipient_name" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
                     <label><strong>Dirección adicional <span class="text-danger">*</span></strong></label>
-                    <input name="address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" />
+                    <input name="address" type="text" v-model="this.showDataGuide.additional_address" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                <!-- <div class="form-group col-md-12">
@@ -434,7 +434,7 @@
                     <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuideLog()">Guardar</button>
                 </div>
                 <div  style="width:300%;margin-top:1.5%;margin-left:375%">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Limpiar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="clear()" >Limpiar</button>
                 </div>
             </div>
 
@@ -454,7 +454,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" v-for="guide_log, index in  this.guide_logs.slice().reverse()"  >
+                        <tr class="text-center" v-for="guide_log, index in  this.showDataGuide.logs.slice().reverse()"  >
                             <td>{{ guide_log.id }}</td>
                             <td>{{ guide_log.get_guide.dispatched }}</td>
                             <td>{{ guide_log.get_state.scope_id == 56 ? 'RECOGIDA' : 'ENTREGA'}}</td>
@@ -472,7 +472,7 @@
         </div>
         <div slot="footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuideLog()">Aceptar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Aceptar</button>
         </div>
         </modalHistory>
 
@@ -564,7 +564,8 @@ export default {
             this.showDataGuide.type_order = data.get_order?.get_order_type.name;
             this.showDataGuide.client_name = data.get_order?.get_user.name;
              this.showDataGuide.client_last_name = data.get_order?.get_user.last_name;
-            this.showDataGuide.posting = data?.id;
+             this.showDataGuide.posting = data?.id;
+             this.showDataGuide.id = this.showDataGuide.posting;
             this.showDataGuide.dispatched = data.dispatched;
             this.showDataGuide.ref_client = data.get_order?.get_user.document_number;
             this.showDataGuide.programming = data.get_order.schedule_date;
@@ -583,12 +584,15 @@ export default {
             this.showDataGuide.additional_address = data.additional_address;
             this.showDataGuide.app_status = data.app_status;
             this.showDataGuide.status = data.get_status_matrix.name;
-            this.showDataGuide.novelty = data.novelty;
+            this.showDataGuide.novelty = data?.novelty;
+            this.showDataGuide.novelty_history = this.showDataGuide.novelty;
             this.showDataGuide.files = data.get_documents;
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
             this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
             this.showDataGuide.issue = data.get_issue?.get_issue?.name ?? 'No registra';
-            this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range
+            this.showDataGuide.issue_id = data.get_issue?.get_issue?.id ?? 'No registra';
+            this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
+            this.showDataGuide.logs = this.guide_logs;
         },
         async getGuides(type, changeType = true) {
             this.guides2 = [];
@@ -691,30 +695,15 @@ export default {
             }
             let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
             this.showModalHistory = true;
-            this.guide.id = this.showDataGuide.posting ?? 'No registra';
-            this.guide.client =  this.showGuide.get_order?.get_user.name;
-            this.guide.balance  = 0;
-            this.guide.balance_money  = 0;
-            this.guide.address = this.showGuide.address_name;
-            this.guide.document_type = this.showGuide.customer_document_type;
-            this.guide.concept = this.showGuide.concept;
-            this.guide.payment_method = this.showGuide.get_order.payment_method;
-            this.guide.transport_type = this.showGuide.transport_type;
-            this.guide.value = this.showGuide.value;
-            this.guide.value_corp = this.showGuide.corp_value;
-            this.guide.contact = this.showGuide.contact;
-            this.guide.contact_phone = this.showGuide.phone_contact;
-            this.guide.contact_email = this.showGuide.email_contact;
-            this.guide.programming = moment(programming_date).format("YYYY-MM-DDTHH:mm");
-            this.guide.schedule_date = this.showGuide.get_order.schedule_date
-            this.guide.additional_phone = this.showGuide.additional_phone;
-            this.guide.additional_email = this.showGuide.additional_email;
-            this.guide.additional_address = this.showGuide.additional_address;
-            this.guide.app_status = this.showGuide.app_status;
-            this.guide.status = this.showGuide.get_status_matrix.name;
-            this.guide.novelty = this.showGuide.novelty ?? 'No registra';
-            this.guide.recipient_name = this.showGuide.recipient_name ?? 'No registra'
-            this.guide.issue = this.showGuide?.get_issue?.get_issue?.id ?? 'No registra';
+            // this.guide.id = this.showDataGuide.posting ?? 'No registra';
+            this.guide.id = this.showDataGuide.id ?? 'No registra';;
+            this.guide.novelty =  this.showDataGuide.novelty_history ?? 'No registra';
+            this.guide.recipient_name = this.showDataGuide.recipient_name ?? 'No registra'
+            this.guide.issue = this.showGuide.get_issue?.get_issue?.id ?? 'No registra';
+        },
+
+        clear (){
+            this.showGuide = null ;
         },
 
         async documentTypes() {

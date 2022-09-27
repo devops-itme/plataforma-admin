@@ -8802,13 +8802,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getGuide: function getGuide(data) {
-      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_order4, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order5, _data$get_documents, _data$get_documents2, _data$get_issue$get_i, _data$get_issue, _data$get_issue$get_i2;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_order4, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order5, _data$get_documents, _data$get_documents2, _data$get_issue$get_i, _data$get_issue, _data$get_issue$get_i2, _data$get_issue$get_i3, _data$get_issue2, _data$get_issue2$get_;
 
       this.showGuide = data;
       this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
       this.showDataGuide.client_name = (_data$get_order2 = data.get_order) === null || _data$get_order2 === void 0 ? void 0 : _data$get_order2.get_user.name;
       this.showDataGuide.client_last_name = (_data$get_order3 = data.get_order) === null || _data$get_order3 === void 0 ? void 0 : _data$get_order3.get_user.last_name;
       this.showDataGuide.posting = data === null || data === void 0 ? void 0 : data.id;
+      this.showDataGuide.id = this.showDataGuide.posting;
       this.showDataGuide.dispatched = data.dispatched;
       this.showDataGuide.ref_client = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.programming = data.get_order.schedule_date;
@@ -8827,7 +8828,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.additional_address = data.additional_address;
       this.showDataGuide.app_status = data.app_status;
       this.showDataGuide.status = data.get_status_matrix.name;
-      this.showDataGuide.novelty = data.novelty;
+      this.showDataGuide.novelty = data === null || data === void 0 ? void 0 : data.novelty;
+      this.showDataGuide.novelty_history = this.showDataGuide.novelty;
       this.showDataGuide.files = data.get_documents;
       this.showDataGuide.evidence = (_data$get_documents = data.get_documents) === null || _data$get_documents === void 0 ? void 0 : _data$get_documents.filter(function (element) {
         return element.type != 74;
@@ -8836,7 +8838,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return element.type == 74;
       });
       this.showDataGuide.issue = (_data$get_issue$get_i = (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i2 = _data$get_issue.get_issue) === null || _data$get_issue$get_i2 === void 0 ? void 0 : _data$get_issue$get_i2.name) !== null && _data$get_issue$get_i !== void 0 ? _data$get_issue$get_i : 'No registra';
+      this.showDataGuide.issue_id = (_data$get_issue$get_i3 = (_data$get_issue2 = data.get_issue) === null || _data$get_issue2 === void 0 ? void 0 : (_data$get_issue2$get_ = _data$get_issue2.get_issue) === null || _data$get_issue2$get_ === void 0 ? void 0 : _data$get_issue2$get_.id) !== null && _data$get_issue$get_i3 !== void 0 ? _data$get_issue$get_i3 : 'No registra';
       this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
+      this.showDataGuide.logs = this.guide_logs;
     },
     getGuides: function getGuides(type) {
       var _arguments = arguments,
@@ -9022,7 +9026,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var _this6$showDataGuide$, _this6$showGuide$get_, _this6$showGuide$nove, _this6$showGuide$reci, _this6$showGuide$get_2, _this6$showGuide, _this6$showGuide$get_3, _this6$showGuide$get_4;
+        var _this6$showDataGuide$, _this6$showDataGuide$2, _this6$showDataGuide$3, _this6$showGuide$get_, _this6$showGuide$get_2, _this6$showGuide$get_3;
 
         var programming_date;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
@@ -9042,39 +9046,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 programming_date = _this6.showGuide.get_order.schedule_date + ' ' + _this6.showGuide.get_order.schedule_time;
-                _this6.showModalHistory = true;
-                _this6.guide.id = (_this6$showDataGuide$ = _this6.showDataGuide.posting) !== null && _this6$showDataGuide$ !== void 0 ? _this6$showDataGuide$ : 'No registra';
-                _this6.guide.client = (_this6$showGuide$get_ = _this6.showGuide.get_order) === null || _this6$showGuide$get_ === void 0 ? void 0 : _this6$showGuide$get_.get_user.name;
-                _this6.guide.balance = 0;
-                _this6.guide.balance_money = 0;
-                _this6.guide.address = _this6.showGuide.address_name;
-                _this6.guide.document_type = _this6.showGuide.customer_document_type;
-                _this6.guide.concept = _this6.showGuide.concept;
-                _this6.guide.payment_method = _this6.showGuide.get_order.payment_method;
-                _this6.guide.transport_type = _this6.showGuide.transport_type;
-                _this6.guide.value = _this6.showGuide.value;
-                _this6.guide.value_corp = _this6.showGuide.corp_value;
-                _this6.guide.contact = _this6.showGuide.contact;
-                _this6.guide.contact_phone = _this6.showGuide.phone_contact;
-                _this6.guide.contact_email = _this6.showGuide.email_contact;
-                _this6.guide.programming = moment__WEBPACK_IMPORTED_MODULE_1___default()(programming_date).format("YYYY-MM-DDTHH:mm");
-                _this6.guide.schedule_date = _this6.showGuide.get_order.schedule_date;
-                _this6.guide.additional_phone = _this6.showGuide.additional_phone;
-                _this6.guide.additional_email = _this6.showGuide.additional_email;
-                _this6.guide.additional_address = _this6.showGuide.additional_address;
-                _this6.guide.app_status = _this6.showGuide.app_status;
-                _this6.guide.status = _this6.showGuide.get_status_matrix.name;
-                _this6.guide.novelty = (_this6$showGuide$nove = _this6.showGuide.novelty) !== null && _this6$showGuide$nove !== void 0 ? _this6$showGuide$nove : 'No registra';
-                _this6.guide.recipient_name = (_this6$showGuide$reci = _this6.showGuide.recipient_name) !== null && _this6$showGuide$reci !== void 0 ? _this6$showGuide$reci : 'No registra';
-                _this6.guide.issue = (_this6$showGuide$get_2 = (_this6$showGuide = _this6.showGuide) === null || _this6$showGuide === void 0 ? void 0 : (_this6$showGuide$get_3 = _this6$showGuide.get_issue) === null || _this6$showGuide$get_3 === void 0 ? void 0 : (_this6$showGuide$get_4 = _this6$showGuide$get_3.get_issue) === null || _this6$showGuide$get_4 === void 0 ? void 0 : _this6$showGuide$get_4.id) !== null && _this6$showGuide$get_2 !== void 0 ? _this6$showGuide$get_2 : 'No registra';
+                _this6.showModalHistory = true; // this.guide.id = this.showDataGuide.posting ?? 'No registra';
 
-              case 30:
+                _this6.guide.id = (_this6$showDataGuide$ = _this6.showDataGuide.id) !== null && _this6$showDataGuide$ !== void 0 ? _this6$showDataGuide$ : 'No registra';
+                ;
+                _this6.guide.novelty = (_this6$showDataGuide$2 = _this6.showDataGuide.novelty_history) !== null && _this6$showDataGuide$2 !== void 0 ? _this6$showDataGuide$2 : 'No registra';
+                _this6.guide.recipient_name = (_this6$showDataGuide$3 = _this6.showDataGuide.recipient_name) !== null && _this6$showDataGuide$3 !== void 0 ? _this6$showDataGuide$3 : 'No registra';
+                _this6.guide.issue = (_this6$showGuide$get_ = (_this6$showGuide$get_2 = _this6.showGuide.get_issue) === null || _this6$showGuide$get_2 === void 0 ? void 0 : (_this6$showGuide$get_3 = _this6$showGuide$get_2.get_issue) === null || _this6$showGuide$get_3 === void 0 ? void 0 : _this6$showGuide$get_3.id) !== null && _this6$showGuide$get_ !== void 0 ? _this6$showGuide$get_ : 'No registra';
+
+              case 11:
               case "end":
                 return _context6.stop();
             }
           }
         }, _callee6);
       }))();
+    },
+    clear: function clear() {
+      this.showGuide = null;
     },
     documentTypes: function documentTypes() {
       var _this7 = this;
@@ -72801,8 +72790,8 @@ var render = function () {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.guide.id,
-                              expression: "guide.id",
+                              value: _vm.showDataGuide.id,
+                              expression: "showDataGuide.id",
                             },
                           ],
                           staticClass: " form-control form-control-solid",
@@ -72815,13 +72804,17 @@ var render = function () {
                             type: "text",
                             disabled: "",
                           },
-                          domProps: { value: _vm.guide.id },
+                          domProps: { value: _vm.showDataGuide.id },
                           on: {
                             input: function ($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(_vm.guide, "id", $event.target.value)
+                              _vm.$set(
+                                _vm.showDataGuide,
+                                "id",
+                                $event.target.value
+                              )
                             },
                           },
                         }),
@@ -72858,8 +72851,8 @@ var render = function () {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.guide.issue,
-                                expression: "guide.issue",
+                                value: this.showDataGuide.issue_id,
+                                expression: "this.showDataGuide.issue_id",
                               },
                             ],
                             staticClass: "form-control form-control-solid",
@@ -72879,8 +72872,8 @@ var render = function () {
                                     return val
                                   })
                                 _vm.$set(
-                                  _vm.guide,
-                                  "issue",
+                                  this.showDataGuide,
+                                  "issue_id",
                                   $event.target.multiple
                                     ? $$selectedVal
                                     : $$selectedVal[0]
@@ -72922,19 +72915,23 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.novelty,
-                          expression: "guide.novelty",
+                          value: this.showDataGuide.novelty,
+                          expression: "this.showDataGuide.novelty",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "address", type: "text" },
-                      domProps: { value: _vm.guide.novelty },
+                      domProps: { value: this.showDataGuide.novelty },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.guide, "novelty", $event.target.value)
+                          _vm.$set(
+                            this.showDataGuide,
+                            "novelty",
+                            $event.target.value
+                          )
                         },
                       },
                     }),
@@ -72957,20 +72954,20 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.recipient_name,
-                          expression: "guide.recipient_name",
+                          value: this.showDataGuide.recipient_name,
+                          expression: "this.showDataGuide.recipient_name",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "concept", type: "text" },
-                      domProps: { value: _vm.guide.recipient_name },
+                      domProps: { value: this.showDataGuide.recipient_name },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.guide,
+                            this.showDataGuide,
                             "recipient_name",
                             $event.target.value
                           )
@@ -72996,20 +72993,22 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.additional_address,
-                          expression: "guide.additional_address",
+                          value: this.showDataGuide.additional_address,
+                          expression: "this.showDataGuide.additional_address",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "address", type: "text" },
-                      domProps: { value: _vm.guide.additional_address },
+                      domProps: {
+                        value: this.showDataGuide.additional_address,
+                      },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.guide,
+                            this.showDataGuide,
                             "additional_address",
                             $event.target.value
                           )
@@ -73062,6 +73061,11 @@ var render = function () {
                           {
                             staticClass: "btn btn-danger",
                             attrs: { type: "button", "data-dismiss": "modal" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.clear()
+                              },
+                            },
                           },
                           [_vm._v("Limpiar")]
                         ),
@@ -73100,7 +73104,7 @@ var render = function () {
                       _c(
                         "tbody",
                         _vm._l(
-                          this.guide_logs.slice().reverse(),
+                          this.showDataGuide.logs.slice().reverse(),
                           function (guide_log, index) {
                             return _c("tr", { staticClass: "text-center" }, [
                               _c("td", [_vm._v(_vm._s(guide_log.id))]),
@@ -73196,11 +73200,7 @@ var render = function () {
                   {
                     staticClass: "btn btn-primary",
                     attrs: { type: "button", "data-dismiss": "modal" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.updateGuideLog()
-                      },
-                    },
+                    on: { click: function ($event) {} },
                   },
                   [_vm._v("Aceptar")]
                 ),
