@@ -9026,7 +9026,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var id, response;
+        var _this6$showDataGuide$, id, response;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
@@ -9044,11 +9045,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 6:
                 _this6.showModalHistory = true;
+                _this6.guide.id = (_this6$showDataGuide$ = _this6.showDataGuide.posting) !== null && _this6$showDataGuide$ !== void 0 ? _this6$showDataGuide$ : 'No registra';
                 id = _this6.showDataGuide.id;
-                _context6.next = 10;
+                _context6.next = 11;
                 return _this6.guideLogs(id);
 
-              case 10:
+              case 11:
                 response = _context6.sent;
 
                 if (response != '') {
@@ -9059,7 +9061,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this6.guide_logs = response.data;
                 }
 
-              case 12:
+              case 13:
               case "end":
                 return _context6.stop();
             }
@@ -72765,8 +72767,8 @@ var render = function () {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.showDataGuide.id,
-                              expression: "showDataGuide.id",
+                              value: _vm.guide.id,
+                              expression: "guide.id",
                             },
                           ],
                           staticClass: " form-control form-control-solid",
@@ -72779,17 +72781,13 @@ var render = function () {
                             type: "text",
                             disabled: "",
                           },
-                          domProps: { value: _vm.showDataGuide.id },
+                          domProps: { value: _vm.guide.id },
                           on: {
                             input: function ($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(
-                                _vm.showDataGuide,
-                                "id",
-                                $event.target.value
-                              )
+                              _vm.$set(_vm.guide, "id", $event.target.value)
                             },
                           },
                         }),

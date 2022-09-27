@@ -388,7 +388,7 @@
                     <label><strong> No Guia: </strong> </label>
                 </div>
                 <div>
-                <input name="customer" type="text" class=" form-control form-control-solid" style="margin-left:-650%;width:200%" v-model="showDataGuide.id" disabled />
+                <input name="customer" type="text" class=" form-control form-control-solid" style="margin-left:-650%;width:200%" v-model="guide.id" disabled />
                     <span class="form-text text-muted"></span>
                 </div>
 
@@ -696,7 +696,12 @@ export default {
                 return await error("Debe seleccionar una guía");
             }else{
                 this.showModalHistory = true;
+                 this.guide.id = this.showDataGuide.posting ?? 'No registra';
                 let id = this.showDataGuide.id;
+
+
+
+
                 let  response = await this.guideLogs(id);
 
             if (response != '') {
