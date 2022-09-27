@@ -74,7 +74,7 @@
                 <button style="width:110%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuide()">Editar Destino</button>
                 </div>
                 <div class="mr-auto " >
-                <button style="width:150%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuideHistory() ; dataGuideId()">Historial</button>
+                <button style="width:150%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuideHistory()">Historial</button>
                 </div>
             </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
@@ -397,7 +397,7 @@
                     <label><strong>Seleccionar incidencia <span class="text-danger">*</span> </strong></label>
                 </div>
                 <div>
-                <select name="issue" v-model="guide.issue"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
+                <select name="issue_id" v-model="this.showDataGuide.issue_id"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
                         <option
                             v-for="issue in issues"
                             v-bind:key="issue.id"
@@ -411,26 +411,30 @@
         </div>
                 <div class="form-group col-md-12">
                     <label><strong>Novedades <span class="text-danger">*</span> </strong></label>
-                    <input name="address" type="text" v-model="guide.novelty" class="form-control form-control-solid" />
+                    <input name="address" type="text" v-model="this.showDataGuide.novelty" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
                     <label><strong>Nombre quién Entrega/Recibe <span class="text-danger">*</span></strong></label>
-                    <input name="concept" type="text" class="form-control form-control-solid" v-model="guide.recipient_name" />
+                    <input name="concept" type="text" class="form-control form-control-solid" v-model="this.showDataGuide.recipient_name" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
                     <label><strong>Dirección adicional <span class="text-danger">*</span></strong></label>
-                    <input name="address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" />
+                    <input name="address" type="text" v-model="this.showDataGuide.additional_address" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
-
+               <!-- <div class="form-group col-md-12">
+                    <label><strong>Incidencia<span class="text-danger">*</span></strong></label>
+                    <input name="address" type="text" v-model="guide.issue" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div> -->
             <div class="d-flex ">
                 <div  style="width:200%;margin-left:185%;margin-top:1.5%">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Guardar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuideLog()">Guardar</button>
                 </div>
                 <div  style="width:300%;margin-top:1.5%;margin-left:375%">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Limpiar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="clear()" >Limpiar</button>
                 </div>
             </div>
 
@@ -450,7 +454,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" v-for="guide_log, index in  this.guide_logs.slice().reverse()"  >
+                        <tr class="text-center" v-for="guide_log, index in  guide_logs ? guide_logs.slice().reverse() : []"  >
                             <td>{{ guide_log.id }}</td>
                             <td>{{ guide_log.get_guide.dispatched }}</td>
                             <td>{{ guide_log.get_state.scope_id == 56 ? 'RECOGIDA' : 'ENTREGA'}}</td>
@@ -516,8 +520,8 @@ export default {
             transport_types:null,
             payment_methods:null,
             showModal:false,
-            showModalHistory:false
-
+            showModalHistory:false,
+            guide_logs: null
         };
     },
     computed:{
@@ -560,7 +564,8 @@ export default {
             this.showDataGuide.type_order = data.get_order?.get_order_type.name;
             this.showDataGuide.client_name = data.get_order?.get_user.name;
              this.showDataGuide.client_last_name = data.get_order?.get_user.last_name;
-            this.showDataGuide.posting = data?.id;
+             this.showDataGuide.posting = data?.id;
+             this.showDataGuide.id = this.showDataGuide.posting;
             this.showDataGuide.dispatched = data.dispatched;
             this.showDataGuide.ref_client = data.get_order?.get_user.document_number;
             this.showDataGuide.programming = data.get_order.schedule_date;
@@ -579,12 +584,15 @@ export default {
             this.showDataGuide.additional_address = data.additional_address;
             this.showDataGuide.app_status = data.app_status;
             this.showDataGuide.status = data.get_status_matrix.name;
-            this.showDataGuide.novelty = data.novelty;
+            this.showDataGuide.novelty = data?.novelty;
+            this.showDataGuide.novelty_history = this.showDataGuide.novelty;
             this.showDataGuide.files = data.get_documents;
             this.showDataGuide.evidence = data.get_documents?.filter(element => element.type != 74);
             this.showDataGuide.package_pictures = data.get_documents?.filter(element => element.type == 74);
             this.showDataGuide.issue = data.get_issue?.get_issue?.name ?? 'No registra';
-            this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range
+            this.showDataGuide.issue_id = data.get_issue?.get_issue?.id ?? 'No registra';
+            this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
+            this.showDataGuide.logs = this.guide_logs;
         },
         async getGuides(type, changeType = true) {
             this.guides2 = [];
@@ -654,9 +662,9 @@ export default {
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
             }
+             this.guide.id = this.showDataGuide.posting;
             let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
             this.showModal = true;
-            this.guide.id = this.showDataGuide.posting;
             this.guide.client =  this.showGuide.get_order?.get_user.name;
             this.guide.balance  = 0;
             this.guide.balance_money  = 0;
@@ -681,35 +689,27 @@ export default {
             this.guide.issue = this.showGuide.issue;
         },
 
+
             async editGuideHistory() {
+
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
+            }else{
+                this.showModalHistory = true;
+                 this.guide.id = this.showDataGuide.posting ?? 'No registra';
+                let id = this.showDataGuide.id;
+                let  response = await this.guideLogs(id);
+
+            if (response != '') {
+                this.showModalHistory = false;
+                this.open();
+                this.guide_logs = response.data;
             }
-            let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
+            }
+        },
+
+        open (){
             this.showModalHistory = true;
-            this.guide.id = this.showGuide.id ?? 'No registra';
-            this.guide.client =  this.showGuide.get_order?.get_user.name;
-            this.guide.balance  = 0;
-            this.guide.balance_money  = 0;
-            this.guide.address = this.showGuide.address_name;
-            this.guide.document_type = this.showGuide.customer_document_type;
-            this.guide.concept = this.showGuide.concept;
-            this.guide.payment_method = this.showGuide.get_order.payment_method;
-            this.guide.transport_type = this.showGuide.transport_type;
-            this.guide.value = this.showGuide.value;
-            this.guide.value_corp = this.showGuide.corp_value;
-            this.guide.contact = this.showGuide.contact;
-            this.guide.contact_phone = this.showGuide.phone_contact;
-            this.guide.contact_email = this.showGuide.email_contact;
-            this.guide.programming = moment(programming_date).format("YYYY-MM-DDTHH:mm");
-            this.guide.schedule_date = this.showGuide.get_order.schedule_date
-            this.guide.additional_phone = this.showGuide.additional_phone;
-            this.guide.additional_email = this.showGuide.additional_email;
-            this.guide.additional_address = this.showGuide.additional_address;
-            this.guide.app_status = this.showGuide.app_status;
-            this.guide.status = this.showGuide.get_status_matrix.name;
-            this.guide.novelty = this.showGuide.novelty ?? 'No registra';
-            this.guide.recipient_name = this.showGuide.recipient_name ?? 'No registra'
         },
 
         async documentTypes() {
@@ -733,7 +733,7 @@ export default {
             this.issues = res.data;
         },
 
-       async guideLogs(guide_id) {
+      async  guideLogs(guide_id) {
           let response = { state: 500 };
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -741,7 +741,7 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/api/get_guides?guide_log=${guide_id}`, requestOptions)
+           await  fetch(`/api/get_guides?guide_log=${guide_id}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     response = data;
@@ -749,13 +749,6 @@ export default {
                 })
                 .catch((err) => console.warn(err));
             return response;
-        },
-
-       async dataGuideId(){
-            let guide_id = this.showDataGuide.posting;
-            let  response = await this.guideLogs(guide_id);
-            this.guide_logs = response.data;
-            // console.log(this.guide_logs);
         },
 
 
@@ -799,19 +792,53 @@ export default {
                 })
                 .catch(e => console.log('requestUpdateGuide',e));
             return response;
+        },
+
+
+        async updateGuideLog(){
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify(this.guide)
+            };
+            let response = await this.requestUpdateGuideLog(requestOptions);
+            if(response.state != 200){
+                alert(response.message);
+            }
+            alert(response.message);
+            this.showModal = false;
+        },
+        async requestUpdateGuideLog(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("/guide/update/issue", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('requestUpdateGuideLog',e));
+            return response;
         }
     },
 
-     async mounted() {
+    async mounted() {
         this.getGuides(3);
         this.getMessengers();
         this.documentTypes();
         this.transportTypes();
         this.paymentMethods();
         this.issues();
-        this.guideLogs();
-        this.dataGuideId();
-
     },
 };
 </script>

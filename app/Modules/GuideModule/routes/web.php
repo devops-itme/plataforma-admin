@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('guias/import', 'GuideModule\Controllers\GuideController@importGuide')->name('guide.import');
 
     Route::put('guide/update', 'GuideModule\Controllers\GuideController@updatePackingGuide');
+    Route::put('guide/update/issue', 'GuideModule\Controllers\GuideController@updateGuideLog');
 });
 
 //Tealca Deliverys

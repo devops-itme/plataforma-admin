@@ -8691,6 +8691,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -8736,7 +8740,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document_types: null,
       transport_types: null,
       payment_methods: null
-    }, _defineProperty(_ref, "showModal", false), _defineProperty(_ref, "showModalHistory", false), _ref;
+    }, _defineProperty(_ref, "showModal", false), _defineProperty(_ref, "showModalHistory", false), _defineProperty(_ref, "guide_logs", null), _ref;
   },
   computed: {
     tabEdition: function tabEdition() {
@@ -8798,13 +8802,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     getGuide: function getGuide(data) {
-      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_order4, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order5, _data$get_documents, _data$get_documents2, _data$get_issue$get_i, _data$get_issue, _data$get_issue$get_i2;
+      var _data$get_order, _data$get_order2, _data$get_order3, _data$get_order4, _data$get_transport_t, _data$get_route, _data$get_route$get_m, _data$get_route2, _data$get_route2$get_, _data$get_branch_offi, _data$get_branch_offi2, _data$get_branch_offi3, _data$get_branch_offi4, _data$get_branch_offi5, _data$get_branch_offi6, _data$get_branch_offi7, _data$get_branch_offi8, _data$get_order5, _data$get_documents, _data$get_documents2, _data$get_issue$get_i, _data$get_issue, _data$get_issue$get_i2, _data$get_issue$get_i3, _data$get_issue2, _data$get_issue2$get_;
 
       this.showGuide = data;
       this.showDataGuide.type_order = (_data$get_order = data.get_order) === null || _data$get_order === void 0 ? void 0 : _data$get_order.get_order_type.name;
       this.showDataGuide.client_name = (_data$get_order2 = data.get_order) === null || _data$get_order2 === void 0 ? void 0 : _data$get_order2.get_user.name;
       this.showDataGuide.client_last_name = (_data$get_order3 = data.get_order) === null || _data$get_order3 === void 0 ? void 0 : _data$get_order3.get_user.last_name;
       this.showDataGuide.posting = data === null || data === void 0 ? void 0 : data.id;
+      this.showDataGuide.id = this.showDataGuide.posting;
       this.showDataGuide.dispatched = data.dispatched;
       this.showDataGuide.ref_client = (_data$get_order4 = data.get_order) === null || _data$get_order4 === void 0 ? void 0 : _data$get_order4.get_user.document_number;
       this.showDataGuide.programming = data.get_order.schedule_date;
@@ -8823,7 +8828,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.additional_address = data.additional_address;
       this.showDataGuide.app_status = data.app_status;
       this.showDataGuide.status = data.get_status_matrix.name;
-      this.showDataGuide.novelty = data.novelty;
+      this.showDataGuide.novelty = data === null || data === void 0 ? void 0 : data.novelty;
+      this.showDataGuide.novelty_history = this.showDataGuide.novelty;
       this.showDataGuide.files = data.get_documents;
       this.showDataGuide.evidence = (_data$get_documents = data.get_documents) === null || _data$get_documents === void 0 ? void 0 : _data$get_documents.filter(function (element) {
         return element.type != 74;
@@ -8832,7 +8838,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return element.type == 74;
       });
       this.showDataGuide.issue = (_data$get_issue$get_i = (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i2 = _data$get_issue.get_issue) === null || _data$get_issue$get_i2 === void 0 ? void 0 : _data$get_issue$get_i2.name) !== null && _data$get_issue$get_i !== void 0 ? _data$get_issue$get_i : 'No registra';
+      this.showDataGuide.issue_id = (_data$get_issue$get_i3 = (_data$get_issue2 = data.get_issue) === null || _data$get_issue2 === void 0 ? void 0 : (_data$get_issue2$get_ = _data$get_issue2.get_issue) === null || _data$get_issue2$get_ === void 0 ? void 0 : _data$get_issue2$get_.id) !== null && _data$get_issue$get_i3 !== void 0 ? _data$get_issue$get_i3 : 'No registra';
       this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
+      this.showDataGuide.logs = this.guide_logs;
     },
     getGuides: function getGuides(type) {
       var _arguments = arguments,
@@ -8980,9 +8988,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _context5.abrupt("return", _context5.sent);
 
               case 4:
+                _this5.guide.id = _this5.showDataGuide.posting;
                 programming_date = _this5.showGuide.get_order.schedule_date + ' ' + _this5.showGuide.get_order.schedule_time;
                 _this5.showModal = true;
-                _this5.guide.id = _this5.showDataGuide.posting;
                 _this5.guide.client = (_this5$showGuide$get_ = _this5.showGuide.get_order) === null || _this5$showGuide$get_ === void 0 ? void 0 : _this5$showGuide$get_.get_user.name;
                 _this5.guide.balance = 0;
                 _this5.guide.balance_money = 0;
@@ -9018,15 +9026,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var _this6$showGuide$id, _this6$showGuide$get_, _this6$showGuide$nove, _this6$showGuide$reci;
+        var _this6$showDataGuide$, id, response;
 
-        var programming_date;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
                 if (_this6.showGuide) {
-                  _context6.next = 4;
+                  _context6.next = 6;
                   break;
                 }
 
@@ -9036,40 +9043,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 3:
                 return _context6.abrupt("return", _context6.sent);
 
-              case 4:
-                programming_date = _this6.showGuide.get_order.schedule_date + ' ' + _this6.showGuide.get_order.schedule_time;
+              case 6:
                 _this6.showModalHistory = true;
-                _this6.guide.id = (_this6$showGuide$id = _this6.showGuide.id) !== null && _this6$showGuide$id !== void 0 ? _this6$showGuide$id : 'No registra';
-                _this6.guide.client = (_this6$showGuide$get_ = _this6.showGuide.get_order) === null || _this6$showGuide$get_ === void 0 ? void 0 : _this6$showGuide$get_.get_user.name;
-                _this6.guide.balance = 0;
-                _this6.guide.balance_money = 0;
-                _this6.guide.address = _this6.showGuide.address_name;
-                _this6.guide.document_type = _this6.showGuide.customer_document_type;
-                _this6.guide.concept = _this6.showGuide.concept;
-                _this6.guide.payment_method = _this6.showGuide.get_order.payment_method;
-                _this6.guide.transport_type = _this6.showGuide.transport_type;
-                _this6.guide.value = _this6.showGuide.value;
-                _this6.guide.value_corp = _this6.showGuide.corp_value;
-                _this6.guide.contact = _this6.showGuide.contact;
-                _this6.guide.contact_phone = _this6.showGuide.phone_contact;
-                _this6.guide.contact_email = _this6.showGuide.email_contact;
-                _this6.guide.programming = moment__WEBPACK_IMPORTED_MODULE_1___default()(programming_date).format("YYYY-MM-DDTHH:mm");
-                _this6.guide.schedule_date = _this6.showGuide.get_order.schedule_date;
-                _this6.guide.additional_phone = _this6.showGuide.additional_phone;
-                _this6.guide.additional_email = _this6.showGuide.additional_email;
-                _this6.guide.additional_address = _this6.showGuide.additional_address;
-                _this6.guide.app_status = _this6.showGuide.app_status;
-                _this6.guide.status = _this6.showGuide.get_status_matrix.name;
-                _this6.guide.novelty = (_this6$showGuide$nove = _this6.showGuide.novelty) !== null && _this6$showGuide$nove !== void 0 ? _this6$showGuide$nove : 'No registra';
-                _this6.guide.recipient_name = (_this6$showGuide$reci = _this6.showGuide.recipient_name) !== null && _this6$showGuide$reci !== void 0 ? _this6$showGuide$reci : 'No registra';
+                _this6.guide.id = (_this6$showDataGuide$ = _this6.showDataGuide.posting) !== null && _this6$showDataGuide$ !== void 0 ? _this6$showDataGuide$ : 'No registra';
+                id = _this6.showDataGuide.id;
+                _context6.next = 11;
+                return _this6.guideLogs(id);
 
-              case 29:
+              case 11:
+                response = _context6.sent;
+
+                if (response != '') {
+                  _this6.showModalHistory = false;
+
+                  _this6.open();
+
+                  _this6.guide_logs = response.data;
+                }
+
+              case 13:
               case "end":
                 return _context6.stop();
             }
           }
         }, _callee6);
       }))();
+    },
+    open: function open() {
+      this.showModalHistory = true;
     },
     documentTypes: function documentTypes() {
       var _this7 = this;
@@ -9197,24 +9198,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee10);
       }))();
     },
-    dataGuideId: function dataGuideId() {
+    paymentMethods: function paymentMethods() {
       var _this10 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
-        var guide_id, response;
+        var name, req, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                guide_id = _this10.showDataGuide.posting;
+                name = "payment_method";
                 _context11.next = 3;
-                return _this10.guideLogs(guide_id);
+                return fetch("/api/parameter_values?parameter_name=".concat(name));
 
               case 3:
-                response = _context11.sent;
-                _this10.guide_logs = response.data; // console.log(this.guide_logs);
+                req = _context11.sent;
+                _context11.next = 6;
+                return req.json();
 
-              case 5:
+              case 6:
+                res = _context11.sent;
+                _this10.payment_methods = res.data;
+
+              case 8:
               case "end":
                 return _context11.stop();
             }
@@ -9222,29 +9228,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee11);
       }))();
     },
-    paymentMethods: function paymentMethods() {
+    updateGuide: function updateGuide() {
       var _this11 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-        var name, req, res;
+        var token, myHeaders, requestOptions, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                name = "payment_method";
-                _context12.next = 3;
-                return fetch("/api/parameter_values?parameter_name=".concat(name));
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(_this11.guide)
+                };
+                _context12.next = 11;
+                return _this11.requestUpdateGuide(requestOptions);
 
-              case 3:
-                req = _context12.sent;
-                _context12.next = 6;
-                return req.json();
+              case 11:
+                response = _context12.sent;
 
-              case 6:
-                res = _context12.sent;
-                _this11.payment_methods = res.data;
+                if (response.state != 200) {
+                  alert(response.message);
+                }
 
-              case 8:
+                alert(response.message);
+                _this11.showModal = false;
+
+              case 15:
               case "end":
                 return _context12.stop();
             }
@@ -9252,14 +9271,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee12);
       }))();
     },
-    updateGuide: function updateGuide() {
-      var _this12 = this;
-
+    requestUpdateGuide: function requestUpdateGuide(requestOptions) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var token, myHeaders, requestOptions, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context13.next = 3;
+                return fetch("/guide/update", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('requestUpdateGuide', e);
+                });
+
+              case 3:
+                return _context13.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      }))();
+    },
+    updateGuideLog: function updateGuideLog() {
+      var _this12 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
+        var token, myHeaders, requestOptions, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+          while (1) {
+            switch (_context14.prev = _context14.next) {
               case 0:
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
@@ -9274,11 +9323,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   headers: myHeaders,
                   body: JSON.stringify(_this12.guide)
                 };
-                _context13.next = 11;
-                return _this12.requestUpdateGuide(requestOptions);
+                _context14.next = 11;
+                return _this12.requestUpdateGuideLog(requestOptions);
 
               case 11:
-                response = _context13.sent;
+                response = _context14.sent;
 
                 if (response.state != 200) {
                   alert(response.message);
@@ -9289,50 +9338,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 15:
               case "end":
-                return _context13.stop();
-            }
-          }
-        }, _callee13);
-      }))();
-    },
-    requestUpdateGuide: function requestUpdateGuide(requestOptions) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
-          while (1) {
-            switch (_context14.prev = _context14.next) {
-              case 0:
-                response = {
-                  'state': 500
-                };
-                _context14.next = 3;
-                return fetch("/guide/update", requestOptions).then(function (response) {
-                  return response.json();
-                }).then(function (data) {
-                  response = data;
-                })["catch"](function (e) {
-                  return console.log('requestUpdateGuide', e);
-                });
-
-              case 3:
-                return _context14.abrupt("return", response);
-
-              case 4:
-              case "end":
                 return _context14.stop();
             }
           }
         }, _callee14);
+      }))();
+    },
+    requestUpdateGuideLog: function requestUpdateGuideLog(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+          while (1) {
+            switch (_context15.prev = _context15.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context15.next = 3;
+                return fetch("/guide/update/issue", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('requestUpdateGuideLog', e);
+                });
+
+              case 3:
+                return _context15.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context15.stop();
+            }
+          }
+        }, _callee15);
       }))();
     }
   },
   mounted: function mounted() {
     var _this13 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
         while (1) {
-          switch (_context15.prev = _context15.next) {
+          switch (_context16.prev = _context16.next) {
             case 0:
               _this13.getGuides(3);
 
@@ -9346,16 +9395,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               _this13.issues();
 
-              _this13.guideLogs();
-
-              _this13.dataGuideId();
-
-            case 8:
+            case 6:
             case "end":
-              return _context15.stop();
+              return _context16.stop();
           }
         }
-      }, _callee15);
+      }, _callee16);
     }))();
   }
 });
@@ -71253,8 +71298,7 @@ var render = function () {
                         on: {
                           click: function ($event) {
                             $event.preventDefault()
-                            _vm.editGuideHistory()
-                            _vm.dataGuideId()
+                            return _vm.editGuideHistory()
                           },
                         },
                       },
@@ -72780,8 +72824,8 @@ var render = function () {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.guide.issue,
-                                expression: "guide.issue",
+                                value: this.showDataGuide.issue_id,
+                                expression: "this.showDataGuide.issue_id",
                               },
                             ],
                             staticClass: "form-control form-control-solid",
@@ -72789,7 +72833,7 @@ var render = function () {
                               "margin-left": "180%",
                               width: "290%",
                             },
-                            attrs: { name: "issue", id: "issue" },
+                            attrs: { name: "issue_id", id: "issue" },
                             on: {
                               change: function ($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -72801,8 +72845,8 @@ var render = function () {
                                     return val
                                   })
                                 _vm.$set(
-                                  _vm.guide,
-                                  "issue",
+                                  this.showDataGuide,
+                                  "issue_id",
                                   $event.target.multiple
                                     ? $$selectedVal
                                     : $$selectedVal[0]
@@ -72844,19 +72888,23 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.novelty,
-                          expression: "guide.novelty",
+                          value: this.showDataGuide.novelty,
+                          expression: "this.showDataGuide.novelty",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "address", type: "text" },
-                      domProps: { value: _vm.guide.novelty },
+                      domProps: { value: this.showDataGuide.novelty },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.guide, "novelty", $event.target.value)
+                          _vm.$set(
+                            this.showDataGuide,
+                            "novelty",
+                            $event.target.value
+                          )
                         },
                       },
                     }),
@@ -72879,20 +72927,20 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.recipient_name,
-                          expression: "guide.recipient_name",
+                          value: this.showDataGuide.recipient_name,
+                          expression: "this.showDataGuide.recipient_name",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "concept", type: "text" },
-                      domProps: { value: _vm.guide.recipient_name },
+                      domProps: { value: this.showDataGuide.recipient_name },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.guide,
+                            this.showDataGuide,
                             "recipient_name",
                             $event.target.value
                           )
@@ -72918,20 +72966,22 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.guide.additional_address,
-                          expression: "guide.additional_address",
+                          value: this.showDataGuide.additional_address,
+                          expression: "this.showDataGuide.additional_address",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
                       attrs: { name: "address", type: "text" },
-                      domProps: { value: _vm.guide.additional_address },
+                      domProps: {
+                        value: this.showDataGuide.additional_address,
+                      },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.guide,
+                            this.showDataGuide,
                             "additional_address",
                             $event.target.value
                           )
@@ -72958,7 +73008,11 @@ var render = function () {
                           {
                             staticClass: "btn btn-primary",
                             attrs: { type: "button", "data-dismiss": "modal" },
-                            on: { click: function ($event) {} },
+                            on: {
+                              click: function ($event) {
+                                return _vm.updateGuideLog()
+                              },
+                            },
                           },
                           [_vm._v("Guardar")]
                         ),
@@ -72980,6 +73034,11 @@ var render = function () {
                           {
                             staticClass: "btn btn-danger",
                             attrs: { type: "button", "data-dismiss": "modal" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.clear()
+                              },
+                            },
                           },
                           [_vm._v("Limpiar")]
                         ),
@@ -73018,7 +73077,9 @@ var render = function () {
                       _c(
                         "tbody",
                         _vm._l(
-                          this.guide_logs.slice().reverse(),
+                          _vm.guide_logs
+                            ? _vm.guide_logs.slice().reverse()
+                            : [],
                           function (guide_log, index) {
                             return _c("tr", { staticClass: "text-center" }, [
                               _c("td", [_vm._v(_vm._s(guide_log.id))]),
