@@ -8691,6 +8691,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -8980,9 +8984,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _context5.abrupt("return", _context5.sent);
 
               case 4:
+                _this5.guide.id = _this5.showDataGuide.posting;
                 programming_date = _this5.showGuide.get_order.schedule_date + ' ' + _this5.showGuide.get_order.schedule_time;
                 _this5.showModal = true;
-                _this5.guide.id = _this5.showDataGuide.posting;
                 _this5.guide.client = (_this5$showGuide$get_ = _this5.showGuide.get_order) === null || _this5$showGuide$get_ === void 0 ? void 0 : _this5$showGuide$get_.get_user.name;
                 _this5.guide.balance = 0;
                 _this5.guide.balance_money = 0;
@@ -9018,7 +9022,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var _this6$showGuide$id, _this6$showGuide$get_, _this6$showGuide$nove, _this6$showGuide$reci;
+        var _this6$showDataGuide$, _this6$showGuide$get_, _this6$showGuide$nove, _this6$showGuide$reci, _this6$showGuide$get_2, _this6$showGuide, _this6$showGuide$get_3, _this6$showGuide$get_4;
 
         var programming_date;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
@@ -9039,7 +9043,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 4:
                 programming_date = _this6.showGuide.get_order.schedule_date + ' ' + _this6.showGuide.get_order.schedule_time;
                 _this6.showModalHistory = true;
-                _this6.guide.id = (_this6$showGuide$id = _this6.showGuide.id) !== null && _this6$showGuide$id !== void 0 ? _this6$showGuide$id : 'No registra';
+                _this6.guide.id = (_this6$showDataGuide$ = _this6.showDataGuide.posting) !== null && _this6$showDataGuide$ !== void 0 ? _this6$showDataGuide$ : 'No registra';
                 _this6.guide.client = (_this6$showGuide$get_ = _this6.showGuide.get_order) === null || _this6$showGuide$get_ === void 0 ? void 0 : _this6$showGuide$get_.get_user.name;
                 _this6.guide.balance = 0;
                 _this6.guide.balance_money = 0;
@@ -9062,8 +9066,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.guide.status = _this6.showGuide.get_status_matrix.name;
                 _this6.guide.novelty = (_this6$showGuide$nove = _this6.showGuide.novelty) !== null && _this6$showGuide$nove !== void 0 ? _this6$showGuide$nove : 'No registra';
                 _this6.guide.recipient_name = (_this6$showGuide$reci = _this6.showGuide.recipient_name) !== null && _this6$showGuide$reci !== void 0 ? _this6$showGuide$reci : 'No registra';
+                _this6.guide.issue = (_this6$showGuide$get_2 = (_this6$showGuide = _this6.showGuide) === null || _this6$showGuide === void 0 ? void 0 : (_this6$showGuide$get_3 = _this6$showGuide.get_issue) === null || _this6$showGuide$get_3 === void 0 ? void 0 : (_this6$showGuide$get_4 = _this6$showGuide$get_3.get_issue) === null || _this6$showGuide$get_4 === void 0 ? void 0 : _this6$showGuide$get_4.id) !== null && _this6$showGuide$get_2 !== void 0 ? _this6$showGuide$get_2 : 'No registra';
 
-              case 29:
+              case 30:
               case "end":
                 return _context6.stop();
             }
@@ -9324,38 +9329,111 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }, _callee14);
       }))();
+    },
+    updateGuideLog: function updateGuideLog() {
+      var _this13 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+        var token, myHeaders, requestOptions, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+          while (1) {
+            switch (_context15.prev = _context15.next) {
+              case 0:
+                token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+                myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+                requestOptions = {
+                  method: "PUT",
+                  headers: myHeaders,
+                  body: JSON.stringify(_this13.guide)
+                };
+                _context15.next = 11;
+                return _this13.requestUpdateGuideLog(requestOptions);
+
+              case 11:
+                response = _context15.sent;
+
+                if (response.state != 200) {
+                  alert(response.message);
+                }
+
+                alert(response.message);
+                _this13.showModal = false;
+
+              case 15:
+              case "end":
+                return _context15.stop();
+            }
+          }
+        }, _callee15);
+      }))();
+    },
+    requestUpdateGuideLog: function requestUpdateGuideLog(requestOptions) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+          while (1) {
+            switch (_context16.prev = _context16.next) {
+              case 0:
+                response = {
+                  'state': 500
+                };
+                _context16.next = 3;
+                return fetch("/guide/update/issue", requestOptions).then(function (response) {
+                  return response.json();
+                }).then(function (data) {
+                  response = data;
+                })["catch"](function (e) {
+                  return console.log('requestUpdateGuideLog', e);
+                });
+
+              case 3:
+                return _context16.abrupt("return", response);
+
+              case 4:
+              case "end":
+                return _context16.stop();
+            }
+          }
+        }, _callee16);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this13 = this;
+    var _this14 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
         while (1) {
-          switch (_context15.prev = _context15.next) {
+          switch (_context17.prev = _context17.next) {
             case 0:
-              _this13.getGuides(3);
+              _this14.getGuides(3);
 
-              _this13.getMessengers();
+              _this14.getMessengers();
 
-              _this13.documentTypes();
+              _this14.documentTypes();
 
-              _this13.transportTypes();
+              _this14.transportTypes();
 
-              _this13.paymentMethods();
+              _this14.paymentMethods();
 
-              _this13.issues();
+              _this14.issues();
 
-              _this13.guideLogs();
+              _this14.guideLogs();
 
-              _this13.dataGuideId();
+              _this14.dataGuideId();
 
             case 8:
             case "end":
-              return _context15.stop();
+              return _context17.stop();
           }
         }
-      }, _callee15);
+      }, _callee17);
     }))();
   }
 });
@@ -72789,7 +72867,7 @@ var render = function () {
                               "margin-left": "180%",
                               width: "290%",
                             },
-                            attrs: { name: "issue", id: "issue" },
+                            attrs: { name: "issue_id", id: "issue" },
                             on: {
                               change: function ($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -72958,7 +73036,11 @@ var render = function () {
                           {
                             staticClass: "btn btn-primary",
                             attrs: { type: "button", "data-dismiss": "modal" },
-                            on: { click: function ($event) {} },
+                            on: {
+                              click: function ($event) {
+                                return _vm.updateGuideLog()
+                              },
+                            },
                           },
                           [_vm._v("Guardar")]
                         ),
@@ -73114,7 +73196,11 @@ var render = function () {
                   {
                     staticClass: "btn btn-primary",
                     attrs: { type: "button", "data-dismiss": "modal" },
-                    on: { click: function ($event) {} },
+                    on: {
+                      click: function ($event) {
+                        return _vm.updateGuideLog()
+                      },
+                    },
                   },
                   [_vm._v("Aceptar")]
                 ),

@@ -133,8 +133,8 @@ class GuideController extends Controller
         $user_id = $guide->getOrder->getUser->id;
         $addresses = Address::where('user_id', $user_id)->get();
         $guide_id = $guide->getOrder->id;
-        $guide_collection = Guide::where('id',$id)->get();
-        return view($this->path . 'edit', compact('guide', 'addresses','guide_id','guide_collection'));
+        $guide_collection = Guide::where('id', $id)->get();
+        return view($this->path . 'edit', compact('guide', 'addresses', 'guide_id', 'guide_collection'));
     }
 
     /**
@@ -201,106 +201,106 @@ class GuideController extends Controller
             //     ->with(['getRoute.getMessenger', 'getTransportType', 'getOrder.getOrderType', 'getBranchOffice.getDepartment.getDepartment', 'getStatusMatrix', 'getDocuments','getGuideLogs.getIssue'])
             //     ->get();
 
-                $guide_pickup = [];
-                $GuideLog_pickup = GuideLog::with(['getState',
-                    'getGuide.getOrder.getUser.getCustomer',
-                    'getGuide.getTransportType',
-                    'getGuide.getOrder.getOrderType',
-                    'getGuide.getBranchOffice.getDepartment.getDepartment'
-                ])->whereHas('getState', function($query){
-                    $query->whereHas('getScope', function($query){
-                        $query->where('name', 'pickup');
-                    });
-                })->orderBy('created_at', 'ASC')->get();
-
-                foreach ($GuideLog_pickup as $key => $item) {
-                    array_push($guide_pickup, $item);
-                }
-                $guide_pickup_new = array_values(array_column($guide_pickup, null, "guide_id"));
-
-                $guides_pickup_arr = collect($guide_pickup_new)->map(function($item) use ($GuideLog_pickup){
-                    $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
-                    $data_guide_log2 = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->last();
-                    $item->getGuide->status_matrix_id = $item->status_matrix_id;
-                    if($data_guide_log){
-                        $package_picture = ParameterValue::where('name', 'package_picture')->first();
-                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->orWhere(function($query) use($item, $package_picture){
-                            $query->where('guide_id', $item->getGuide->id)
-                            ->where('type', $package_picture->id);
-                        })->get();
-                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
-                        $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
-                        $status_matrix = StatusMatrix::find($item->status_matrix_id);
-                        $item->getGuide->get_documents = $documents;
-                        $item->getGuide->get_route = $route;
-                        $item->getGuide->get_status_matrix = $status_matrix;
-
-                        $item->getGuide->get_issue = $Issue;
-                        $item->getGuide->novelty =  $Issue ? json_decode($Issue->url_document)->novelty ?? '' : '';
-                        $item->getGuide->recipient_name = $Issue ? json_decode($Issue->url_document)->recipient_name ?? '' : '';
-                        $item->getGuide->additional_phone = $Issue ? json_decode($Issue->url_document)->additional_phone ?? '' : '';
-                        $item->getGuide->additional_email = $Issue ? json_decode($Issue->url_document)->additional_email ?? '' : '';
-                        $item->getGuide->additional_address = $Issue ?  json_decode($Issue->url_document)->additional_address ?? '' : '';
-
-                    }
-
-                    return $item->getGuide;
+            $guide_pickup = [];
+            $GuideLog_pickup = GuideLog::with([
+                'getState',
+                'getGuide.getOrder.getUser.getCustomer',
+                'getGuide.getTransportType',
+                'getGuide.getOrder.getOrderType',
+                'getGuide.getBranchOffice.getDepartment.getDepartment'
+            ])->whereHas('getState', function ($query) {
+                $query->whereHas('getScope', function ($query) {
+                    $query->where('name', 'pickup');
                 });
+            })->orderBy('created_at', 'ASC')->get();
 
-                $guide_delivery = [];
-                $GuideLog_delivery = GuideLog::with(['getState',
-                    'getGuide.getOrder.getUser.getCustomer',
-                    'getGuide.getTransportType',
-                    'getGuide.getOrder.getOrderType',
-                    'getGuide.getBranchOffice.getDepartment.getDepartment'
-                ])->whereHas('getState', function($query){
-                    $query->whereHas('getScope', function($query){
-                        $query->where('name', 'delivery');
-                    });
-                })->orderBy('created_at', 'ASC')->get();
+            foreach ($GuideLog_pickup as $key => $item) {
+                array_push($guide_pickup, $item);
+            }
+            $guide_pickup_new = array_values(array_column($guide_pickup, null, "guide_id"));
 
-                foreach ($GuideLog_delivery as $key => $item) {
-                    array_push($guide_delivery, $item);
-                }
-                $guide_delivery_new = array_values(array_column($guide_delivery, null, "guide_id"));
-
-                $guides_delivery_arr = collect($guide_delivery_new)->map(function($item) use ($GuideLog_delivery){
-                    $data_guide_log = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->first();
-                    $data_guide_log2 = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->last();
-                    $item->getGuide->status_matrix_id = $item->status_matrix_id;
-                    if($data_guide_log){
-                        $package_picture = ParameterValue::where('name', 'package_picture')->first();
-                        $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->orWhere(function($query) use($item, $package_picture){
-                            $query->where('guide_id', $item->getGuide->id)
+            $guides_pickup_arr = collect($guide_pickup_new)->map(function ($item) use ($GuideLog_pickup) {
+                $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
+                $data_guide_log2 = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->last();
+                $item->getGuide->status_matrix_id = $item->status_matrix_id;
+                if ($data_guide_log) {
+                    $package_picture = ParameterValue::where('name', 'package_picture')->first();
+                    $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->orWhere(function ($query) use ($item, $package_picture) {
+                        $query->where('guide_id', $item->getGuide->id)
                             ->where('type', $package_picture->id);
-                        })->get();
-                        $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
-                        $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id','<>',null)->with('getIssue')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
-                        $status_matrix = StatusMatrix::find($item->status_matrix_id);
-                        $item->getGuide->get_documents = $documents;
-                        $item->getGuide->get_route = $route;
-                        $item->getGuide->get_status_matrix = $status_matrix;
+                    })->get();
+                    $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
+                    $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id', '<>', null)->with('getIssue')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
+                    $status_matrix = StatusMatrix::find($item->status_matrix_id);
+                    $item->getGuide->get_documents = $documents;
+                    $item->getGuide->get_route = $route;
+                    $item->getGuide->get_status_matrix = $status_matrix;
 
-                        $item->getGuide->get_issue = $Issue;
-                        $item->getGuide->novelty =  $Issue ? json_decode($Issue->url_document)->novelty ?? '' : '';
-                        $item->getGuide->recipient_name = $Issue ? json_decode($Issue->url_document)->recipient_name ?? '' : '';
-                        $item->getGuide->additional_phone = $Issue ? json_decode($Issue->url_document)->additional_phone ?? '' : '';
-                        $item->getGuide->additional_email = $Issue ? json_decode($Issue->url_document)->additional_email ?? '' : '';
-                        $item->getGuide->additional_address = $Issue ?  json_decode($Issue->url_document)->additional_address ?? '' : '';
-
-                    }
-
-
-                    return $item->getGuide;
-                });
-
-                $new_guides = $guides_delivery_arr->merge($guides_pickup_arr);
-                $guides = $new_guides->whereIn('status_matrix_id', $state);
-
-                $guide_arr = [];
-                foreach ($guides as $key => $item) {
-                    array_push($guide_arr, $item);
+                    $item->getGuide->get_issue = $Issue;
+                    $item->getGuide->novelty =  $Issue ? json_decode($Issue->url_document)->novelty ?? '' : '';
+                    $item->getGuide->recipient_name = $Issue ? json_decode($Issue->url_document)->recipient_name ?? '' : '';
+                    $item->getGuide->additional_phone = $Issue ? json_decode($Issue->url_document)->additional_phone ?? '' : '';
+                    $item->getGuide->additional_email = $Issue ? json_decode($Issue->url_document)->additional_email ?? '' : '';
+                    $item->getGuide->additional_address = $Issue ?  json_decode($Issue->url_document)->additional_address ?? '' : '';
                 }
+
+                return $item->getGuide;
+            });
+
+            $guide_delivery = [];
+            $GuideLog_delivery = GuideLog::with([
+                'getState',
+                'getGuide.getOrder.getUser.getCustomer',
+                'getGuide.getTransportType',
+                'getGuide.getOrder.getOrderType',
+                'getGuide.getBranchOffice.getDepartment.getDepartment'
+            ])->whereHas('getState', function ($query) {
+                $query->whereHas('getScope', function ($query) {
+                    $query->where('name', 'delivery');
+                });
+            })->orderBy('created_at', 'ASC')->get();
+
+            foreach ($GuideLog_delivery as $key => $item) {
+                array_push($guide_delivery, $item);
+            }
+            $guide_delivery_new = array_values(array_column($guide_delivery, null, "guide_id"));
+
+            $guides_delivery_arr = collect($guide_delivery_new)->map(function ($item) use ($GuideLog_delivery) {
+                $data_guide_log = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->first();
+                $data_guide_log2 = $GuideLog_delivery->where('guide_id', $item->getGuide->id)->last();
+                $item->getGuide->status_matrix_id = $item->status_matrix_id;
+                if ($data_guide_log) {
+                    $package_picture = ParameterValue::where('name', 'package_picture')->first();
+                    $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->orWhere(function ($query) use ($item, $package_picture) {
+                        $query->where('guide_id', $item->getGuide->id)
+                            ->where('type', $package_picture->id);
+                    })->get();
+                    $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
+                    $Issue = GuideLog::where('guide_id', $item->getGuide->id)->where('issue_id', '<>', null)->with('getIssue')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
+                    $status_matrix = StatusMatrix::find($item->status_matrix_id);
+                    $item->getGuide->get_documents = $documents;
+                    $item->getGuide->get_route = $route;
+                    $item->getGuide->get_status_matrix = $status_matrix;
+
+                    $item->getGuide->get_issue = $Issue;
+                    $item->getGuide->novelty =  $Issue ? json_decode($Issue->url_document)->novelty ?? '' : '';
+                    $item->getGuide->recipient_name = $Issue ? json_decode($Issue->url_document)->recipient_name ?? '' : '';
+                    $item->getGuide->additional_phone = $Issue ? json_decode($Issue->url_document)->additional_phone ?? '' : '';
+                    $item->getGuide->additional_email = $Issue ? json_decode($Issue->url_document)->additional_email ?? '' : '';
+                    $item->getGuide->additional_address = $Issue ?  json_decode($Issue->url_document)->additional_address ?? '' : '';
+                }
+
+
+                return $item->getGuide;
+            });
+
+            $new_guides = $guides_delivery_arr->merge($guides_pickup_arr);
+            $guides = $new_guides->whereIn('status_matrix_id', $state);
+
+            $guide_arr = [];
+            foreach ($guides as $key => $item) {
+                array_push($guide_arr, $item);
+            }
 
 
             return $this->respond(200, $guide_arr, null, 'Lista de guías packing');
@@ -376,12 +376,34 @@ class GuideController extends Controller
             $order = Order::findOrFail($order_id);
 
             $order->update([
-             'schedule_date' => $request->schedule_date,
-         ]);
+                'schedule_date' => $request->schedule_date,
+            ]);
 
-            return $this->respond(200,$guide,$order,'Guía actualizada exitosamente');
+            return $this->respond(200, $guide, $order, 'Guía actualizada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar guía');
+        }
+    }
+
+
+    public function updateGuideLog(Request $request)
+    {
+        try {
+            $issue_id = $request->issue;
+            $guide_log_ids = GuideLog::where('guide_id', $request->id)->get();
+
+            foreach ($guide_log_ids as  $ids) {
+                $id = $ids->id;
+            }
+            $guide_log = GuideLog::where('id', $id)->firstOrFail();
+
+            $guide_log->update([
+                'issue_id' => $issue_id,
+            ]);
+
+            return $this->respond(200, $guide_log, null, ' Log de Guía actualizada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar el log de guía');
         }
     }
 
@@ -412,5 +434,4 @@ class GuideController extends Controller
             return $this->respond(500, [], $e->getMessage(), 'Error al validar guía');
         }
     }
-
 }

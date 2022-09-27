@@ -397,7 +397,7 @@
                     <label><strong>Seleccionar incidencia <span class="text-danger">*</span> </strong></label>
                 </div>
                 <div>
-                <select name="issue" v-model="guide.issue"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
+                <select name="issue_id" v-model="guide.issue"  class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
                         <option
                             v-for="issue in issues"
                             v-bind:key="issue.id"
@@ -424,10 +424,14 @@
                     <input name="address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
-
+               <!-- <div class="form-group col-md-12">
+                    <label><strong>Incidencia<span class="text-danger">*</span></strong></label>
+                    <input name="address" type="text" v-model="guide.issue" class="form-control form-control-solid" />
+                    <span class="form-text text-muted"></span>
+                </div> -->
             <div class="d-flex ">
                 <div  style="width:200%;margin-left:185%;margin-top:1.5%">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Guardar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuideLog()">Guardar</button>
                 </div>
                 <div  style="width:300%;margin-top:1.5%;margin-left:375%">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Limpiar</button>
@@ -468,7 +472,7 @@
         </div>
         <div slot="footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Aceptar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuideLog()">Aceptar</button>
         </div>
         </modalHistory>
 
@@ -654,9 +658,9 @@ export default {
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
             }
+             this.guide.id = this.showDataGuide.posting;
             let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
             this.showModal = true;
-            this.guide.id = this.showDataGuide.posting;
             this.guide.client =  this.showGuide.get_order?.get_user.name;
             this.guide.balance  = 0;
             this.guide.balance_money  = 0;
@@ -687,7 +691,7 @@ export default {
             }
             let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
             this.showModalHistory = true;
-            this.guide.id = this.showGuide.id ?? 'No registra';
+            this.guide.id = this.showDataGuide.posting ?? 'No registra';
             this.guide.client =  this.showGuide.get_order?.get_user.name;
             this.guide.balance  = 0;
             this.guide.balance_money  = 0;
@@ -710,6 +714,7 @@ export default {
             this.guide.status = this.showGuide.get_status_matrix.name;
             this.guide.novelty = this.showGuide.novelty ?? 'No registra';
             this.guide.recipient_name = this.showGuide.recipient_name ?? 'No registra'
+            this.guide.issue = this.showGuide?.get_issue?.get_issue?.id ?? 'No registra';
         },
 
         async documentTypes() {
@@ -798,6 +803,43 @@ export default {
                     response = data
                 })
                 .catch(e => console.log('requestUpdateGuide',e));
+            return response;
+        },
+
+
+        async updateGuideLog(){
+            let token = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content");
+            let myHeaders = new Headers();
+                myHeaders.append("Accept", "application/json");
+                myHeaders.append("Access-Control-Allow-Origin", "*");
+                myHeaders.append('Content-Type', "application/x-www-form-urlencoded");
+                myHeaders.append('Content-Type', "application/json");
+                myHeaders.append('Content-Type', "multipart/form-data");
+                myHeaders.append("X-CSRF-TOKEN", token);
+            let requestOptions = {
+                method: "PUT",
+                headers: myHeaders,
+                body: JSON.stringify(this.guide)
+            };
+            let response = await this.requestUpdateGuideLog(requestOptions);
+            if(response.state != 200){
+                alert(response.message);
+            }
+            alert(response.message);
+            this.showModal = false;
+        },
+        async requestUpdateGuideLog(requestOptions){
+            let response = {
+                'state': 500
+            };
+            await fetch("/guide/update/issue", requestOptions)
+                .then((response) => response.json())
+                .then(data => {
+                    response = data
+                })
+                .catch(e => console.log('requestUpdateGuideLog',e));
             return response;
         }
     },
