@@ -454,7 +454,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" v-for="guide_log, index in  guide_logs"  >
+                        <tr class="text-center" v-for="guide_log, index in  guide_logs ? guide_logs.slice().reverse() : []"  >
                             <td>{{ guide_log.id }}</td>
                             <td>{{ guide_log.get_guide.dispatched }}</td>
                             <td>{{ guide_log.get_state.scope_id == 56 ? 'RECOGIDA' : 'ENTREGA'}}</td>
@@ -691,7 +691,6 @@ export default {
 
 
             async editGuideHistory() {
-
 
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
