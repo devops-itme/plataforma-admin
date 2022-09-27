@@ -74,7 +74,7 @@
                 <button style="width:110%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuide()">Editar Destino</button>
                 </div>
                 <div class="mr-auto " >
-                <button style="width:150%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuideHistory() ; dataGuideId()">Historial</button>
+                <button style="width:150%" v-if="type_guide === tabEdition" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-light-primary btn-lg font-weight-bold "  @click.prevent="editGuideHistory()">Historial</button>
                 </div>
             </div>
                 <div class="d-flex flex-row flex-wrap scroll scroll-pull mt-3 mb-3 border py-2 max-h-250px">
@@ -454,7 +454,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center" v-for="guide_log, index in  this.showDataGuide.logs.slice().reverse()"  >
+                        <tr class="text-center" v-for="guide_log, index in  guide_logs"  >
                             <td>{{ guide_log.id }}</td>
                             <td>{{ guide_log.get_guide.dispatched }}</td>
                             <td>{{ guide_log.get_state.scope_id == 56 ? 'RECOGIDA' : 'ENTREGA'}}</td>
@@ -520,8 +520,8 @@ export default {
             transport_types:null,
             payment_methods:null,
             showModal:false,
-            showModalHistory:false
-
+            showModalHistory:false,
+            guide_logs: null
         };
     },
     computed:{
@@ -689,21 +689,27 @@ export default {
             this.guide.issue = this.showGuide.issue;
         },
 
+
             async editGuideHistory() {
+
+
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
+            }else{
+                this.showModalHistory = true;
+                let id = this.showDataGuide.id;
+                let  response = await this.guideLogs(id);
+
+            if (response != '') {
+                this.showModalHistory = false;
+                this.open();
+                this.guide_logs = response.data;
             }
-            let programming_date = this.showGuide.get_order.schedule_date+' '+this.showGuide.get_order.schedule_time;
-            this.showModalHistory = true;
-            // this.guide.id = this.showDataGuide.posting ?? 'No registra';
-            this.guide.id = this.showDataGuide.id ?? 'No registra';;
-            this.guide.novelty =  this.showDataGuide.novelty_history ?? 'No registra';
-            this.guide.recipient_name = this.showDataGuide.recipient_name ?? 'No registra'
-            this.guide.issue = this.showGuide.get_issue?.get_issue?.id ?? 'No registra';
+            }
         },
 
-        clear (){
-            this.showGuide = null ;
+        open (){
+            this.showModalHistory = true;
         },
 
         async documentTypes() {
@@ -727,7 +733,7 @@ export default {
             this.issues = res.data;
         },
 
-       async guideLogs(guide_id) {
+      async  guideLogs(guide_id) {
           let response = { state: 500 };
             let myHeaders = new Headers();
             myHeaders.append("accept", "application/json");
@@ -735,7 +741,7 @@ export default {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch(`/api/get_guides?guide_log=${guide_id}`, requestOptions)
+           await  fetch(`/api/get_guides?guide_log=${guide_id}`, requestOptions)
                 .then((response) => response.json())
                 .then(function (data) {
                     response = data;
@@ -743,13 +749,6 @@ export default {
                 })
                 .catch((err) => console.warn(err));
             return response;
-        },
-
-       async dataGuideId(){
-            let guide_id = this.showDataGuide.posting;
-            let  response = await this.guideLogs(guide_id);
-            this.guide_logs = response.data;
-            // console.log(this.guide_logs);
         },
 
 
@@ -833,16 +832,13 @@ export default {
         }
     },
 
-     async mounted() {
+    async mounted() {
         this.getGuides(3);
         this.getMessengers();
         this.documentTypes();
         this.transportTypes();
         this.paymentMethods();
         this.issues();
-        this.guideLogs();
-        this.dataGuideId();
-
     },
 };
 </script>
