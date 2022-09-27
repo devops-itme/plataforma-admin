@@ -390,6 +390,9 @@ class GuideController extends Controller
     {
         try {
             $issue_id = $request->issue;
+            $novelty = $request->novelty;
+            $additional_address = $request->additional_address;
+            $recipient_name = $request->recipient_name;
             $guide_log_ids = GuideLog::where('guide_id', $request->id)->get();
 
             foreach ($guide_log_ids as  $ids) {
@@ -399,6 +402,7 @@ class GuideController extends Controller
 
             $guide_log->update([
                 'issue_id' => $issue_id,
+                'url_document' => ["novelty"=>$novelty,"additional_address"=>"$additional_address","recipient_name"=>$recipient_name]
             ]);
 
             return $this->respond(200, $guide_log, null, ' Log de Guía actualizada exitosamente');

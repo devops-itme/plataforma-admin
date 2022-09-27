@@ -8821,7 +8821,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.concept = data.concept;
       this.showDataGuide.direction = data.address_name;
       this.showDataGuide.contact = this.showGuide.contact;
-      this.showDataGuide.recipient_name = this.showGuide.recipient_name;
+      this.showDataGuide.recipient_name = data === null || data === void 0 ? void 0 : data.recipient_name;
       this.showDataGuide.contact_phone = this.showGuide.phone_contact;
       this.showDataGuide.additional_phone = data.additional_phone;
       this.showDataGuide.additional_email = data.additional_email;
@@ -9026,7 +9026,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var _this6$showDataGuide$, _data$get_issue$get_i4, _data$get_issue3, _data$get_issue3$get_, id, response;
+        var _this6$showDataGuide$, id, response;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
@@ -9047,12 +9047,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.showModalHistory = true;
                 _this6.guide.id = (_this6$showDataGuide$ = _this6.showDataGuide.posting) !== null && _this6$showDataGuide$ !== void 0 ? _this6$showDataGuide$ : 'No registra';
                 id = _this6.showDataGuide.id;
-                _this6.guide.issue = (_data$get_issue$get_i4 = data === null || data === void 0 ? void 0 : (_data$get_issue3 = data.get_issue) === null || _data$get_issue3 === void 0 ? void 0 : (_data$get_issue3$get_ = _data$get_issue3.get_issue) === null || _data$get_issue3$get_ === void 0 ? void 0 : _data$get_issue3$get_.id) !== null && _data$get_issue$get_i4 !== void 0 ? _data$get_issue$get_i4 : 'No registra'; //  this.showDataGuide.issue_id = data?.get_issue?.get_issue?.id ?? 'No registra';
+                _this6.guide.issue = _this6.showDataGuide.issue_id;
+                _this6.guide.novelty = _this6.showDataGuide.novelty; // console.log(this.guide.novelty);
 
-                _context6.next = 12;
+                _this6.guide.recipient_name = _this6.showDataGuide.recipient_name;
+                _this6.guide.additional_address = _this6.showDataGuide.additional_address;
+                _context6.next = 15;
                 return _this6.guideLogs(id);
 
-              case 12:
+              case 15:
                 response = _context6.sent;
 
                 if (response != '') {
@@ -9063,7 +9066,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this6.guide_logs = response.data;
                 }
 
-              case 14:
+              case 17:
               case "end":
                 return _context6.stop();
             }
@@ -72890,23 +72893,19 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: this.showDataGuide.novelty,
-                          expression: "this.showDataGuide.novelty",
+                          value: _vm.guide.novelty,
+                          expression: "guide.novelty",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
-                      attrs: { name: "address", type: "text" },
-                      domProps: { value: this.showDataGuide.novelty },
+                      attrs: { name: "novelty", type: "text" },
+                      domProps: { value: _vm.guide.novelty },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            this.showDataGuide,
-                            "novelty",
-                            $event.target.value
-                          )
+                          _vm.$set(_vm.guide, "novelty", $event.target.value)
                         },
                       },
                     }),
@@ -72929,20 +72928,20 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: this.showDataGuide.recipient_name,
-                          expression: "this.showDataGuide.recipient_name",
+                          value: _vm.guide.recipient_name,
+                          expression: "guide.recipient_name",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
-                      attrs: { name: "concept", type: "text" },
-                      domProps: { value: this.showDataGuide.recipient_name },
+                      attrs: { name: "recipient_name", type: "text" },
+                      domProps: { value: _vm.guide.recipient_name },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            this.showDataGuide,
+                            _vm.guide,
                             "recipient_name",
                             $event.target.value
                           )
@@ -72968,22 +72967,20 @@ var render = function () {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: this.showDataGuide.additional_address,
-                          expression: "this.showDataGuide.additional_address",
+                          value: _vm.guide.additional_address,
+                          expression: "guide.additional_address",
                         },
                       ],
                       staticClass: "form-control form-control-solid",
-                      attrs: { name: "address", type: "text" },
-                      domProps: {
-                        value: this.showDataGuide.additional_address,
-                      },
+                      attrs: { name: "additional_address", type: "text" },
+                      domProps: { value: _vm.guide.additional_address },
                       on: {
                         input: function ($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            this.showDataGuide,
+                            _vm.guide,
                             "additional_address",
                             $event.target.value
                           )

@@ -411,17 +411,17 @@
         </div>
                 <div class="form-group col-md-12">
                     <label><strong>Novedades <span class="text-danger">*</span> </strong></label>
-                    <input name="address" type="text" v-model="this.showDataGuide.novelty" class="form-control form-control-solid" />
+                    <input name="novelty" type="text" v-model="guide.novelty" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
                     <label><strong>Nombre quién Entrega/Recibe <span class="text-danger">*</span></strong></label>
-                    <input name="concept" type="text" class="form-control form-control-solid" v-model="this.showDataGuide.recipient_name" />
+                    <input name="recipient_name" type="text" class="form-control form-control-solid" v-model="guide.recipient_name" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
                     <label><strong>Dirección adicional <span class="text-danger">*</span></strong></label>
-                    <input name="address" type="text" v-model="this.showDataGuide.additional_address" class="form-control form-control-solid" />
+                    <input name="additional_address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" />
                     <span class="form-text text-muted"></span>
                 </div>
                <!-- <div class="form-group col-md-12">
@@ -563,9 +563,9 @@ export default {
             this.showGuide = data;
             this.showDataGuide.type_order = data.get_order?.get_order_type.name;
             this.showDataGuide.client_name = data.get_order?.get_user.name;
-             this.showDataGuide.client_last_name = data.get_order?.get_user.last_name;
-             this.showDataGuide.posting = data?.id;
-             this.showDataGuide.id = this.showDataGuide.posting;
+            this.showDataGuide.client_last_name = data.get_order?.get_user.last_name;
+            this.showDataGuide.posting = data?.id;
+            this.showDataGuide.id = this.showDataGuide.posting;
             this.showDataGuide.dispatched = data.dispatched;
             this.showDataGuide.ref_client = data.get_order?.get_user.document_number;
             this.showDataGuide.programming = data.get_order.schedule_date;
@@ -577,7 +577,7 @@ export default {
             this.showDataGuide.concept = data.concept;
             this.showDataGuide.direction = data.address_name;
             this.showDataGuide.contact = this.showGuide.contact;
-            this.showDataGuide.recipient_name = this.showGuide.recipient_name;
+            this.showDataGuide.recipient_name = data?.recipient_name;
             this.showDataGuide.contact_phone = this.showGuide.phone_contact;
             this.showDataGuide.additional_phone = data.additional_phone;
             this.showDataGuide.additional_email = data.additional_email;
@@ -696,10 +696,13 @@ export default {
                 return await error("Debe seleccionar una guía");
             }else{
                 this.showModalHistory = true;
-                 this.guide.id = this.showDataGuide.posting ?? 'No registra';
+                this.guide.id = this.showDataGuide.posting ?? 'No registra';
                 let id = this.showDataGuide.id;
-                 this.guide.issue = data?.get_issue?.get_issue?.id ?? 'No registra';
-                //  this.showDataGuide.issue_id = data?.get_issue?.get_issue?.id ?? 'No registra';
+                this.guide.issue = this.showDataGuide.issue_id ;
+                this.guide.novelty = this.showDataGuide.novelty ;
+                // console.log(this.guide.novelty);
+                this.guide.recipient_name = this.showDataGuide.recipient_name ;
+                this.guide.additional_address =  this.showDataGuide.additional_address ;
                 let  response = await this.guideLogs(id);
 
             if (response != '') {
