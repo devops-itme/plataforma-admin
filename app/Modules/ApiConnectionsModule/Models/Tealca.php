@@ -117,7 +117,7 @@ class Tealca
             env("TEALCA_URL") . 'Tracking?shipment=' . $guide
         );
 
-        if ($trackingResponse->status() != 200) {
+        if ($trackingResponse->status() != 200 || empty($trackingResponse)) {
             return $this->respond(500, null, $trackingResponse, 'Fallo en el servicio. Guía N° ' . $guide);
         };
 
