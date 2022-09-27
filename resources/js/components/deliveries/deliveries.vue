@@ -698,11 +698,11 @@ export default {
                 this.showModalHistory = true;
                 this.guide.id = this.showDataGuide.posting ?? 'No registra';
                 let id = this.showDataGuide.id;
-                this.guide.issue = this.showDataGuide.issue_id ;
-                this.guide.novelty = this.showDataGuide.novelty ;
+                this.guide.issue = this.showDataGuide.issue_id;
+                this.guide.novelty = this.showDataGuide.novelty ? this.showDataGuide.novelty : 'No registra' ;
                 // console.log(this.guide.novelty);
-                this.guide.recipient_name = this.showDataGuide.recipient_name ;
-                this.guide.additional_address =  this.showDataGuide.additional_address ;
+                this.guide.recipient_name = this.showDataGuide.recipient_name ? this.showDataGuide.recipient_name : 'No registra' ;
+                this.guide.additional_address =  this.showDataGuide.additional_address ? this.showDataGuide.additional_address : 'No registra' ;
                 let  response = await this.guideLogs(id);
 
             if (response != '') {

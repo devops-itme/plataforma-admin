@@ -9048,10 +9048,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this6.guide.id = (_this6$showDataGuide$ = _this6.showDataGuide.posting) !== null && _this6$showDataGuide$ !== void 0 ? _this6$showDataGuide$ : 'No registra';
                 id = _this6.showDataGuide.id;
                 _this6.guide.issue = _this6.showDataGuide.issue_id;
-                _this6.guide.novelty = _this6.showDataGuide.novelty; // console.log(this.guide.novelty);
+                _this6.guide.novelty = _this6.showDataGuide.novelty ? _this6.showDataGuide.novelty : 'No registra'; // console.log(this.guide.novelty);
 
-                _this6.guide.recipient_name = _this6.showDataGuide.recipient_name;
-                _this6.guide.additional_address = _this6.showDataGuide.additional_address;
+                _this6.guide.recipient_name = _this6.showDataGuide.recipient_name ? _this6.showDataGuide.recipient_name : 'No registra';
+                _this6.guide.additional_address = _this6.showDataGuide.additional_address ? _this6.showDataGuide.additional_address : 'No registra';
                 _context6.next = 15;
                 return _this6.guideLogs(id);
 
