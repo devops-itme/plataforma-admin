@@ -390,9 +390,24 @@ class GuideController extends Controller
     {
         try {
             $issue_id = $request->issue;
-            $novelty = $request->novelty;
-            $additional_address = $request->additional_address;
-            $recipient_name = $request->recipient_name;
+            // $novelty = $request->novelty;
+            // $additional_address = $request->additional_address;
+            // $recipient_name = $request->recipient_name;
+
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    // 'issue_id' => 'required',
+                    'novelty' => 'required',
+                    'additional_address' => 'required',
+                    'recipient_name' => 'required',
+                ]
+            );
+            if ($validator->fails()) {
+                return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
+            }
+
+
             $guide_log_ids = GuideLog::where('guide_id', $request->id)->get();
 
             foreach ($guide_log_ids as  $ids) {
@@ -402,7 +417,7 @@ class GuideController extends Controller
 
             $guide_log->update([
                 'issue_id' => $issue_id,
-                'url_document' => ["novelty"=>$novelty,"additional_address"=>"$additional_address","recipient_name"=>$recipient_name]
+                'url_document' => ["novelty"=>$request->novelty,"additional_address"=>"$request->additional_address","recipient_name"=>$request->recipient_name]
             ]);
 
             return $this->respond(200, $guide_log, null, ' Log de Guía actualizada exitosamente');

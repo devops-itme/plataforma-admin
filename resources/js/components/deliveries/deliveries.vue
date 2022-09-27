@@ -371,7 +371,7 @@
 
 <!-- HISTORIAL -->
         <modalHistory
-            v-if="showModalHistory"
+            v-show="showModalHistory"
             @close="showModalHistory = false">
         <div slot="header">
             <h5 class="modal-title" id="exampleModalLabel">Editar Historial</h5>
@@ -431,7 +431,7 @@
                 </div> -->
             <div class="d-flex ">
                 <div  style="width:200%;margin-left:185%;margin-top:1.5%">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateGuideLog()">Guardar</button>
+                    <button type="button" class="btn btn-primary"  v-on:click="updateGuideLog()">Guardar</button>
                 </div>
                 <div  style="width:300%;margin-top:1.5%;margin-left:375%">
                     <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="clear()" >Limpiar</button>
@@ -471,7 +471,7 @@
             </div>
         </div>
         <div slot="footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button id="cerrar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Aceptar</button>
         </div>
         </modalHistory>
@@ -819,9 +819,10 @@ export default {
             let response = await this.requestUpdateGuideLog(requestOptions);
             if(response.state != 200){
                 alert(response.message);
+            }if(response.state == 200){
+                 alert(response.message);
+                document.getElementById('cerrar').click();
             }
-            alert(response.message);
-            this.showModal = false;
         },
         async requestUpdateGuideLog(requestOptions){
             let response = {

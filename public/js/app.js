@@ -9338,10 +9338,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   alert(response.message);
                 }
 
-                alert(response.message);
-                _this12.showModal = false;
+                if (response.state == 200) {
+                  alert(response.message);
+                  document.getElementById('cerrar').click();
+                }
 
-              case 15:
+              case 14:
               case "end":
                 return _context14.stop();
             }
@@ -72711,477 +72713,453 @@ var render = function () {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.showModalHistory
-        ? _c(
-            "modalHistory",
+      _c(
+        "modalHistory",
+        {
+          directives: [
             {
-              on: {
-                close: function ($event) {
-                  _vm.showModalHistory = false
+              name: "show",
+              rawName: "v-show",
+              value: _vm.showModalHistory,
+              expression: "showModalHistory",
+            },
+          ],
+          on: {
+            close: function ($event) {
+              _vm.showModalHistory = false
+            },
+          },
+        },
+        [
+          _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+            _c(
+              "h5",
+              {
+                staticClass: "modal-title",
+                attrs: { id: "exampleModalLabel" },
+              },
+              [_vm._v("Editar Historial")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close",
                 },
               },
-            },
-            [
-              _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLabel" },
-                  },
-                  [_vm._v("Editar Historial")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close",
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+            _c("div", { staticClass: "d-flex flex-row flex-wrap" }, [
+              _c("div", { staticClass: "form-group  " }, [
+                _c("div", { staticClass: "d-flex " }, [
+                  _c(
+                    "div",
+                    {
+                      staticStyle: {
+                        width: "200%",
+                        "margin-left": "1.5%",
+                        "margin-top": "1.5%",
+                      },
                     },
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×"),
-                    ]),
-                  ]
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { slot: "body" }, slot: "body" }, [
-                _c("div", { staticClass: "d-flex flex-row flex-wrap" }, [
-                  _c("div", { staticClass: "form-group  " }, [
-                    _c("div", { staticClass: "d-flex " }, [
-                      _c(
-                        "div",
+                    [_c("label", [_c("strong", [_vm._v(" No Guia: ")])])]
+                  ),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("input", {
+                      directives: [
                         {
-                          staticStyle: {
-                            width: "200%",
-                            "margin-left": "1.5%",
-                            "margin-top": "1.5%",
-                          },
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.guide.id,
+                          expression: "guide.id",
                         },
-                        [_c("label", [_c("strong", [_vm._v(" No Guia: ")])])]
-                      ),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.guide.id,
-                              expression: "guide.id",
-                            },
-                          ],
-                          staticClass: " form-control form-control-solid",
-                          staticStyle: {
-                            "margin-left": "-650%",
-                            width: "200%",
-                          },
-                          attrs: {
-                            name: "customer",
-                            type: "text",
-                            disabled: "",
-                          },
-                          domProps: { value: _vm.guide.id },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.guide, "id", $event.target.value)
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "form-text text-muted" }),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticStyle: {
-                            width: "250%",
-                            "margin-top": "1.5%",
-                            "margin-right": "-105%",
-                          },
+                      ],
+                      staticClass: " form-control form-control-solid",
+                      staticStyle: { "margin-left": "-650%", width: "200%" },
+                      attrs: { name: "customer", type: "text", disabled: "" },
+                      domProps: { value: _vm.guide.id },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.guide, "id", $event.target.value)
                         },
-                        [
-                          _c("label", [
-                            _c("strong", [
-                              _vm._v("Seleccionar incidencia "),
-                              _c("span", { staticClass: "text-danger" }, [
-                                _vm._v("*"),
-                              ]),
-                            ]),
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "form-text text-muted" }),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticStyle: {
+                        width: "250%",
+                        "margin-top": "1.5%",
+                        "margin-right": "-105%",
+                      },
+                    },
+                    [
+                      _c("label", [
+                        _c("strong", [
+                          _vm._v("Seleccionar incidencia "),
+                          _c("span", { staticClass: "text-danger" }, [
+                            _vm._v("*"),
                           ]),
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "select",
+                        ]),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
                           {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.guide.issue,
-                                expression: "guide.issue",
-                              },
-                            ],
-                            staticClass: "form-control form-control-solid",
-                            staticStyle: {
-                              "margin-left": "180%",
-                              width: "290%",
-                            },
-                            attrs: { name: "issue_id", id: "issue" },
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.guide,
-                                  "issue",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
-                            },
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.guide.issue,
+                            expression: "guide.issue",
                           },
-                          _vm._l(_vm.issues, function (issue) {
-                            return _c(
-                              "option",
-                              { key: issue.id, domProps: { value: issue.id } },
-                              [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(issue.name) +
-                                    "\n                        "
-                                ),
-                              ]
+                        ],
+                        staticClass: "form-control form-control-solid",
+                        staticStyle: { "margin-left": "180%", width: "290%" },
+                        attrs: { name: "issue_id", id: "issue" },
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.guide,
+                              "issue",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
                             )
-                          }),
-                          0
-                        ),
-                      ]),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-12" }, [
-                    _c("label", [
-                      _c("strong", [
-                        _vm._v("Novedades "),
-                        _c("span", { staticClass: "text-danger" }, [
-                          _vm._v("*"),
-                        ]),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.guide.novelty,
-                          expression: "guide.novelty",
-                        },
-                      ],
-                      staticClass: "form-control form-control-solid",
-                      attrs: { name: "novelty", type: "text" },
-                      domProps: { value: _vm.guide.novelty },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.guide, "novelty", $event.target.value)
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-12" }, [
-                    _c("label", [
-                      _c("strong", [
-                        _vm._v("Nombre quién Entrega/Recibe "),
-                        _c("span", { staticClass: "text-danger" }, [
-                          _vm._v("*"),
-                        ]),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.guide.recipient_name,
-                          expression: "guide.recipient_name",
-                        },
-                      ],
-                      staticClass: "form-control form-control-solid",
-                      attrs: { name: "recipient_name", type: "text" },
-                      domProps: { value: _vm.guide.recipient_name },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.guide,
-                            "recipient_name",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-12" }, [
-                    _c("label", [
-                      _c("strong", [
-                        _vm._v("Dirección adicional "),
-                        _c("span", { staticClass: "text-danger" }, [
-                          _vm._v("*"),
-                        ]),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.guide.additional_address,
-                          expression: "guide.additional_address",
-                        },
-                      ],
-                      staticClass: "form-control form-control-solid",
-                      attrs: { name: "additional_address", type: "text" },
-                      domProps: { value: _vm.guide.additional_address },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.guide,
-                            "additional_address",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "d-flex " }, [
-                    _c(
-                      "div",
-                      {
-                        staticStyle: {
-                          width: "200%",
-                          "margin-left": "185%",
-                          "margin-top": "1.5%",
-                        },
-                      },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "button", "data-dismiss": "modal" },
-                            on: {
-                              click: function ($event) {
-                                return _vm.updateGuideLog()
-                              },
-                            },
                           },
-                          [_vm._v("Guardar")]
-                        ),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticStyle: {
-                          width: "300%",
-                          "margin-top": "1.5%",
-                          "margin-left": "375%",
                         },
                       },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger",
-                            attrs: { type: "button", "data-dismiss": "modal" },
-                            on: {
-                              click: function ($event) {
-                                return _vm.clear()
-                              },
-                            },
-                          },
-                          [_vm._v("Limpiar")]
-                        ),
-                      ]
+                      _vm._l(_vm.issues, function (issue) {
+                        return _c(
+                          "option",
+                          { key: issue.id, domProps: { value: issue.id } },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(issue.name) +
+                                "\n                        "
+                            ),
+                          ]
+                        )
+                      }),
+                      0
                     ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", {
-                    staticClass:
-                      " separator separator-solid separator-border-3 col-12 mb-3",
-                    staticStyle: { "margin-top": "2%" },
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group col-md-12" }, [
-                    _c("table", { staticClass: "table table-striped" }, [
-                      _c("thead", [
-                        _c("tr", { staticClass: "text-center" }, [
-                          _c("th", [_vm._v("#")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Despacho")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Recogida/Entrega")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Estado")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Estado Web")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Usuario creación")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Fecha creación")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Fecha modificación")]),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(
-                          _vm.guide_logs
-                            ? _vm.guide_logs.slice().reverse()
-                            : [],
-                          function (guide_log, index) {
-                            return _c("tr", { staticClass: "text-center" }, [
-                              _c("td", [_vm._v(_vm._s(guide_log.id))]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(guide_log.get_guide.dispatched)),
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(
-                                    guide_log.get_state.scope_id == 56
-                                      ? "RECOGIDA"
-                                      : "ENTREGA"
-                                  )
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(guide_log.get_state.name)),
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(
-                                    guide_log.get_guide.app_status
-                                      ? "Leido"
-                                      : "Pendiente"
-                                  )
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              guide_log.get_guide.get_order.get_user.name !=
-                              null
-                                ? _c("td", [
-                                    _vm._v(
-                                      _vm._s(
-                                        guide_log.get_guide.get_order.get_user
-                                          .name +
-                                          " " +
-                                          guide_log.get_guide.get_order.get_user
-                                            .last_name
-                                      )
-                                    ),
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              guide_log.get_guide.get_order.get_user.name ==
-                              null
-                                ? _c("td", [
-                                    _vm._v(
-                                      _vm._s(
-                                        guide_log.get_guide.get_order.get_user
-                                          .get_customer.tradename
-                                      )
-                                    ),
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(guide_log.created_at.slice(0, 10))
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(guide_log.updated_at.slice(0, 10))
-                                ),
-                              ]),
-                            ])
-                          }
-                        ),
-                        0
-                      ),
-                    ]),
                   ]),
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" },
+              _c("div", { staticClass: "form-group col-md-12" }, [
+                _c("label", [
+                  _c("strong", [
+                    _vm._v("Novedades "),
+                    _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.guide.novelty,
+                      expression: "guide.novelty",
+                    },
+                  ],
+                  staticClass: "form-control form-control-solid",
+                  attrs: { name: "novelty", type: "text" },
+                  domProps: { value: _vm.guide.novelty },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.guide, "novelty", $event.target.value)
+                    },
                   },
-                  [_vm._v("Cancelar")]
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "form-text text-muted" }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-md-12" }, [
+                _c("label", [
+                  _c("strong", [
+                    _vm._v("Nombre quién Entrega/Recibe "),
+                    _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.guide.recipient_name,
+                      expression: "guide.recipient_name",
+                    },
+                  ],
+                  staticClass: "form-control form-control-solid",
+                  attrs: { name: "recipient_name", type: "text" },
+                  domProps: { value: _vm.guide.recipient_name },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.guide, "recipient_name", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "form-text text-muted" }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-md-12" }, [
+                _c("label", [
+                  _c("strong", [
+                    _vm._v("Dirección adicional "),
+                    _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.guide.additional_address,
+                      expression: "guide.additional_address",
+                    },
+                  ],
+                  staticClass: "form-control form-control-solid",
+                  attrs: { name: "additional_address", type: "text" },
+                  domProps: { value: _vm.guide.additional_address },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.guide,
+                        "additional_address",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "form-text text-muted" }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "d-flex " }, [
+                _c(
+                  "div",
+                  {
+                    staticStyle: {
+                      width: "200%",
+                      "margin-left": "185%",
+                      "margin-top": "1.5%",
+                    },
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function ($event) {
+                            return _vm.updateGuideLog()
+                          },
+                        },
+                      },
+                      [_vm._v("Guardar")]
+                    ),
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
-                  "button",
+                  "div",
                   {
-                    staticClass: "btn btn-primary",
-                    attrs: { type: "button", "data-dismiss": "modal" },
-                    on: { click: function ($event) {} },
+                    staticStyle: {
+                      width: "300%",
+                      "margin-top": "1.5%",
+                      "margin-left": "375%",
+                    },
                   },
-                  [_vm._v("Aceptar")]
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: {
+                          click: function ($event) {
+                            return _vm.clear()
+                          },
+                        },
+                      },
+                      [_vm._v("Limpiar")]
+                    ),
+                  ]
                 ),
               ]),
-            ]
-          )
-        : _vm._e(),
+              _vm._v(" "),
+              _c("div", {
+                staticClass:
+                  " separator separator-solid separator-border-3 col-12 mb-3",
+                staticStyle: { "margin-top": "2%" },
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-md-12" }, [
+                _c("table", { staticClass: "table table-striped" }, [
+                  _c("thead", [
+                    _c("tr", { staticClass: "text-center" }, [
+                      _c("th", [_vm._v("#")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Despacho")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Recogida/Entrega")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Estado")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Estado Web")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Usuario creación")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Fecha creación")]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Fecha modificación")]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(
+                      _vm.guide_logs ? _vm.guide_logs.slice().reverse() : [],
+                      function (guide_log, index) {
+                        return _c("tr", { staticClass: "text-center" }, [
+                          _c("td", [_vm._v(_vm._s(guide_log.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(guide_log.get_guide.dispatched)),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                guide_log.get_state.scope_id == 56
+                                  ? "RECOGIDA"
+                                  : "ENTREGA"
+                              )
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(guide_log.get_state.name))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                guide_log.get_guide.app_status
+                                  ? "Leido"
+                                  : "Pendiente"
+                              )
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          guide_log.get_guide.get_order.get_user.name != null
+                            ? _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    guide_log.get_guide.get_order.get_user
+                                      .name +
+                                      " " +
+                                      guide_log.get_guide.get_order.get_user
+                                        .last_name
+                                  )
+                                ),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          guide_log.get_guide.get_order.get_user.name == null
+                            ? _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    guide_log.get_guide.get_order.get_user
+                                      .get_customer.tradename
+                                  )
+                                ),
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(guide_log.created_at.slice(0, 10))),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(guide_log.updated_at.slice(0, 10))),
+                          ]),
+                        ])
+                      }
+                    ),
+                    0
+                  ),
+                ]),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: {
+                  id: "cerrar",
+                  type: "button",
+                  "data-dismiss": "modal",
+                },
+              },
+              [_vm._v("Cancelar")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: { click: function ($event) {} },
+              },
+              [_vm._v("Aceptar")]
+            ),
+          ]),
+        ]
+      ),
     ],
     1
   )
