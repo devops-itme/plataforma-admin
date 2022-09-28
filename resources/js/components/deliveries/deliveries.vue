@@ -411,17 +411,17 @@
         </div>
                 <div class="form-group col-md-12">
                     <label><strong>Novedades <span class="text-danger">*</span> </strong></label>
-                    <input name="novelty" type="text" v-model="guide.novelty" class="form-control form-control-solid" />
+                    <input name="novelty" type="text" v-model="guide.novelty" class="form-control form-control-solid" id="novelty" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
                     <label><strong>Nombre quién Entrega/Recibe <span class="text-danger">*</span></strong></label>
-                    <input name="recipient_name" type="text" class="form-control form-control-solid" v-model="guide.recipient_name" />
+                    <input name="recipient_name" type="text" class="form-control form-control-solid" v-model="guide.recipient_name" id="recipient_name" />
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
                     <label><strong>Dirección adicional <span class="text-danger">*</span></strong></label>
-                    <input name="additional_address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" />
+                    <input name="additional_address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" id="additional_address" />
                     <span class="form-text text-muted"></span>
                 </div>
                <!-- <div class="form-group col-md-12">
@@ -434,7 +434,7 @@
                     <button type="button" class="btn btn-primary"  v-on:click="updateGuideLog()">Guardar</button>
                 </div>
                 <div  style="width:300%;margin-top:1.5%;margin-left:375%">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="clear()" >Limpiar</button>
+                    <button type="button" class="btn btn-danger"  v-on:click="clear()" >Limpiar</button>
                 </div>
             </div>
 
@@ -715,6 +715,15 @@ export default {
 
         open (){
             this.showModalHistory = true;
+        },
+
+         clear (){
+            document.getElementById("novelty").value = "";
+            document.getElementById("recipient_name").value = "";
+            document.getElementById("additional_address").value = "";
+            this.guide.novelty = null;
+            this.guide.recipient_name = null;
+            this.guide.additional_address = null;
         },
 
         async documentTypes() {

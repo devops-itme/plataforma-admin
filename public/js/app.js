@@ -9077,6 +9077,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     open: function open() {
       this.showModalHistory = true;
     },
+    clear: function clear() {
+      document.getElementById("novelty").value = "";
+      document.getElementById("recipient_name").value = "";
+      document.getElementById("additional_address").value = "";
+      this.guide.novelty = null;
+      this.guide.recipient_name = null;
+      this.guide.additional_address = null;
+    },
     documentTypes: function documentTypes() {
       var _this7 = this;
 
@@ -72891,7 +72899,7 @@ var render = function () {
                     },
                   ],
                   staticClass: "form-control form-control-solid",
-                  attrs: { name: "novelty", type: "text" },
+                  attrs: { name: "novelty", type: "text", id: "novelty" },
                   domProps: { value: _vm.guide.novelty },
                   on: {
                     input: function ($event) {
@@ -72924,7 +72932,11 @@ var render = function () {
                     },
                   ],
                   staticClass: "form-control form-control-solid",
-                  attrs: { name: "recipient_name", type: "text" },
+                  attrs: {
+                    name: "recipient_name",
+                    type: "text",
+                    id: "recipient_name",
+                  },
                   domProps: { value: _vm.guide.recipient_name },
                   on: {
                     input: function ($event) {
@@ -72957,7 +72969,11 @@ var render = function () {
                     },
                   ],
                   staticClass: "form-control form-control-solid",
-                  attrs: { name: "additional_address", type: "text" },
+                  attrs: {
+                    name: "additional_address",
+                    type: "text",
+                    id: "additional_address",
+                  },
                   domProps: { value: _vm.guide.additional_address },
                   on: {
                     input: function ($event) {
@@ -73017,7 +73033,7 @@ var render = function () {
                       "button",
                       {
                         staticClass: "btn btn-danger",
-                        attrs: { type: "button", "data-dismiss": "modal" },
+                        attrs: { type: "button" },
                         on: {
                           click: function ($event) {
                             return _vm.clear()
