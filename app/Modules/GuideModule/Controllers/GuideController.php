@@ -400,7 +400,7 @@ class GuideController extends Controller
                 [
                     // 'issue_id' => 'required',
                     'novelty' => 'required',
-                    'additional_address' => 'required',
+                    // 'additional_address' => 'required',
                     'recipient_name' => 'required',
                 ]
             );
