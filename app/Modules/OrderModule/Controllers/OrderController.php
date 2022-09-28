@@ -397,7 +397,7 @@ class OrderController extends Controller
             ->sortbyordertype(request()->sortByOrderType)
             ->sortbyUser(request()->sortByUser)
             ->sortbyorderstatusmatrix(request()->SortByOrderStatusMatrix)
-            ->orderBy('orders.id', 'DESC')
+            ->orderBy('orders.updated_at', 'DESC')
             ->with('getUser')->paginate(10);
         $order_type = ParameterValue::with('getParameter')->whereHas('getParameter', function ($query) {
             $query->where('name', 'order_types');

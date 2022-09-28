@@ -8828,6 +8828,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showDataGuide.additional_address = data.additional_address;
       this.showDataGuide.app_status = data.app_status;
       this.showDataGuide.status = data.get_status_matrix.name;
+      this.showDataGuide.status_id = data.get_status_matrix.id;
       this.showDataGuide.novelty = data === null || data === void 0 ? void 0 : data.novelty;
       this.showDataGuide.novelty_history = this.showDataGuide.novelty;
       this.showDataGuide.files = data.get_documents;
@@ -9052,10 +9053,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 _this6.guide.recipient_name = _this6.showDataGuide.recipient_name ? _this6.showDataGuide.recipient_name : 'No registra';
                 _this6.guide.additional_address = _this6.showDataGuide.additional_address ? _this6.showDataGuide.additional_address : 'No registra';
-                _context6.next = 15;
+                _this6.guide.status_matrix = _this6.showDataGuide.status_id;
+                _context6.next = 16;
                 return _this6.guideLogs(id);
 
-              case 15:
+              case 16:
                 response = _context6.sent;
 
                 if (response != '') {
@@ -9066,7 +9068,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this6.guide_logs = response.data;
                 }
 
-              case 17:
+              case 18:
               case "end":
                 return _context6.stop();
             }
@@ -72991,6 +72993,28 @@ var render = function () {
                 _vm._v(" "),
                 _c("span", { staticClass: "form-text text-muted" }),
               ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.guide.status_matrix,
+                    expression: "guide.status_matrix",
+                  },
+                ],
+                staticClass: "form-control form-control-solid",
+                attrs: { type: "hidden", name: "status_matrix" },
+                domProps: { value: _vm.guide.status_matrix },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.guide, "status_matrix", $event.target.value)
+                  },
+                },
+              }),
               _vm._v(" "),
               _c("div", { staticClass: "d-flex " }, [
                 _c(

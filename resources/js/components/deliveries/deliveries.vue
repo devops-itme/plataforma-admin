@@ -424,11 +424,11 @@
                     <input name="additional_address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" id="additional_address" />
                     <span class="form-text text-muted"></span>
                 </div>
-               <!-- <div class="form-group col-md-12">
-                    <label><strong>Incidencia<span class="text-danger">*</span></strong></label>
-                    <input name="address" type="text" v-model="guide.issue" class="form-control form-control-solid" />
-                    <span class="form-text text-muted"></span>
-                </div> -->
+                <!-- <div class="form-group col-md-12"> -->
+                <!--  <label><strong>Status Matrix<span class="text-danger">*</span></strong></label> -->
+                    <input type="hidden" name="status_matrix"  v-model="guide.status_matrix" class="form-control form-control-solid" />
+                <!-- <span class="form-text text-muted"></span>
+                </div>  -->
             <div class="d-flex ">
                 <div  style="width:200%;margin-left:185%;margin-top:1.5%">
                     <button type="button" class="btn btn-primary"  v-on:click="updateGuideLog()">Guardar</button>
@@ -584,6 +584,7 @@ export default {
             this.showDataGuide.additional_address = data.additional_address;
             this.showDataGuide.app_status = data.app_status;
             this.showDataGuide.status = data.get_status_matrix.name;
+            this.showDataGuide.status_id = data.get_status_matrix.id;
             this.showDataGuide.novelty = data?.novelty;
             this.showDataGuide.novelty_history = this.showDataGuide.novelty;
             this.showDataGuide.files = data.get_documents;
@@ -703,6 +704,7 @@ export default {
                 // console.log(this.guide.novelty);
                 this.guide.recipient_name = this.showDataGuide.recipient_name ? this.showDataGuide.recipient_name : 'No registra' ;
                 this.guide.additional_address =  this.showDataGuide.additional_address ? this.showDataGuide.additional_address : 'No registra' ;
+                this.guide.status_matrix = this.showDataGuide.status_id;
                 let  response = await this.guideLogs(id);
 
             if (response != '') {

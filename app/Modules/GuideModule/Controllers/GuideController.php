@@ -408,12 +408,19 @@ class GuideController extends Controller
                 return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
             }
 
-
             $guide_log_ids = GuideLog::where('guide_id', $request->id)->get();
 
             foreach ($guide_log_ids as  $ids) {
                 $id = $ids->id;
             }
+
+            $guides = Guide::where('id', $request->id)->get();
+
+            foreach ($guides as  $guide) {
+                $id_order = $guide->order_id;
+            }
+
+            $order = Order::where('id', $id_order)->firstOrFail();
             $guide_log = GuideLog::where('id', $id)->firstOrFail();
 
             $guide_log->update([
@@ -422,7 +429,13 @@ class GuideController extends Controller
                 'url_document' => ["novelty"=>$request->novelty,"additional_address"=>"$request->additional_address","recipient_name"=>$request->recipient_name]
             ]);
 
-            return $this->respond(200, $guide_log, null, ' Log de Guía actualizada exitosamente');
+            if ($issue_id == '58') {
+                $order->update([
+                    'status_matrix_id' => $request->status_matrix
+                ]);
+            }
+
+            return $this->respond(200, $guide_log, $order, ' Log de Guía actualizada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar el log de guía');
         }
