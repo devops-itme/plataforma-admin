@@ -17,6 +17,7 @@ use App\Modules\StatusMatrixModule\StatusMatrix;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 
 class GuideController extends Controller
@@ -417,6 +418,7 @@ class GuideController extends Controller
 
             $guide_log->update([
                 'issue_id' => $issue_id,
+                'user_id' => Auth::user()->id,
                 'url_document' => ["novelty"=>$request->novelty,"additional_address"=>"$request->additional_address","recipient_name"=>$request->recipient_name]
             ]);
 

@@ -73092,26 +73092,24 @@ var render = function () {
                             ),
                           ]),
                           _vm._v(" "),
-                          guide_log.get_guide.get_order.get_user.name != null
+                          guide_log.get_user_log.name != null
                             ? _c("td", [
                                 _vm._v(
                                   _vm._s(
-                                    guide_log.get_guide.get_order.get_user
-                                      .name +
+                                    guide_log.get_user_log.name +
                                       " " +
-                                      guide_log.get_guide.get_order.get_user
-                                        .last_name
+                                      guide_log.get_user_log.last_name
                                   )
                                 ),
                               ])
                             : _vm._e(),
                           _vm._v(" "),
-                          guide_log.get_guide.get_order.get_user.name == null
+                          guide_log.get_user_log.name == null
                             ? _c("td", [
                                 _vm._v(
                                   _vm._s(
-                                    guide_log.get_guide.get_order.get_user
-                                      .get_customer.tradename
+                                    guide_log.get_user_log.get_customer
+                                      .tradename
                                   )
                                 ),
                               ])

@@ -460,8 +460,8 @@
                             <td>{{ guide_log.get_state.scope_id == 56 ? 'RECOGIDA' : 'ENTREGA'}}</td>
                             <td>{{ guide_log.get_state.name  }}</td>
                             <td>{{ guide_log.get_guide.app_status ? 'Leido' : 'Pendiente' }}</td>
-                            <td v-if="guide_log.get_guide.get_order.get_user.name != null">{{ guide_log.get_guide.get_order.get_user.name + ' ' + guide_log.get_guide.get_order.get_user.last_name }}</td>
-                            <td v-if="guide_log.get_guide.get_order.get_user.name == null">{{ guide_log.get_guide.get_order.get_user.get_customer.tradename }}</td>
+                            <td v-if="guide_log.get_user_log.name != null">{{ guide_log.get_user_log.name + ' ' + guide_log.get_user_log.last_name }}</td>
+                            <td v-if="guide_log.get_user_log.name == null">{{ guide_log.get_user_log.get_customer.tradename }}</td>
                             <td>{{ guide_log.created_at.slice(0, 10) }}</td>
                             <td>{{ guide_log.updated_at.slice(0, 10) }}</td>
                         </tr>

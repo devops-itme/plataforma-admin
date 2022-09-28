@@ -35,6 +35,7 @@ class GuideLogController extends Controller
         try {
             $guide_log = $request->guide_log;
             $log = GuideLog:: with(['getState',
+            'getUserLog',
             'getGuide.getOrder.getUser.getCustomer',
             'getGuide.getTransportType',
             'getGuide.getOrder.getOrderType',
