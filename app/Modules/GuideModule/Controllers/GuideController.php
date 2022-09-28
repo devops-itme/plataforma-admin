@@ -426,18 +426,57 @@ class GuideController extends Controller
             $guide_log->update([
                 'issue_id' => $issue_id,
                 'user_id' => Auth::user()->id,
-                'url_document' => ["novelty"=>$request->novelty,"additional_address"=>"$request->additional_address","recipient_name"=>$request->recipient_name]
+                'url_document' => ["novelty" => $request->novelty, "additional_address" => "$request->additional_address", "recipient_name" => $request->recipient_name]
             ]);
 
-            if ($issue_id == '58') {
+            $guide_pack = Guide::where('order_id', $id_order)->get();
+
+            $guide_log_issue = [];
+            $order_pack_status = [];
+            $guide_log_pack = [];
+            $key_1 = false;
+            $key_2 = false;
+            $key_3 = false;
+
+            foreach ($guide_pack as  $guide) {
+                $guide_id = $guide->id;
+                $order_pack_status[] = $guide->status_matrix_id;
+                $guide_log_issue[] = GuideLog::where('guide_id', $guide_id)->latest()->first();
+            }
+            foreach ($guide_log_issue as  $issue) {
+                $guide_log_pack[] = $issue->issue_id;
+            }
+
+
+            foreach ($order_pack_status as  $status) { // Status Matrix
+                if ($status != '10') {
+                    $key_1 = false;
+                } else {
+                    $key_1 = true;
+                }
+            }
+
+            foreach ($guide_log_pack as $issue) {  // Issue Last Log Guide
+                if ($issue == '58') {
+                    $key_2 = true;
+                } else {
+                    $key_2 = false;
+                }
+            }
+
+            if ($key_1 && $key_2 && $issue_id == '58') {
+                $key_3 = true;
+            }
+
+            if ($key_3) {
                 $order->update([
                     'status_matrix_id' => $request->status_matrix
                 ]);
             }
 
-            return $this->respond(200, $guide_log, $order, ' Log de Guía actualizada exitosamente');
+            return $this->respond(200, $guide_log, $order, 'Log de Guía actualizada exitosamente');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar el log de guía');
+            return $this->respond(500, [], $e->getMessage(), 'Error al actualizar el Log de guía');
         }
     }
 
