@@ -10127,12 +10127,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     guidess: function guidess() {
       var search = this.search.toString(); // const search = this.search.toLowerCase().trim();
 
-      return this.guides.filter(function (tblItem) {
-        var full_name = tblItem.get_order.get_user.name + ' ' + tblItem.get_order.get_user.last_name;
-        return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
-          tblItem.id.toString().includes(search) || tblItem.get_order.order_number.toLowerCase().includes(search) || tblItem.get_order.order_number.includes(search) || tblItem.get_order.schedule_date.includes(search) || tblItem.get_order.schedule_time_range.includes(search) || full_name.toLowerCase().includes(search) || full_name.includes(search) || tblItem.contact.toLowerCase().includes(search) || tblItem.contact.includes(search) || tblItem.address_name.toLowerCase().includes(search) || tblItem.address_name.includes(search) || tblItem.get_order.created_at.toLowerCase().includes(search)
-        );
-      });
+      if (!this.gate) {
+        return this.guides.filter(function (tblItem) {
+          var full_name = tblItem.get_order.get_user.name + ' ' + tblItem.get_order.get_user.last_name;
+          return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
+            tblItem.id.toString().includes(search) || tblItem.get_order.order_number.toLowerCase().includes(search) || tblItem.get_order.order_number.includes(search) || tblItem.get_order.schedule_date.includes(search) || tblItem.get_order.schedule_time_range.includes(search) || full_name.toLowerCase().includes(search) || full_name.includes(search) || tblItem.contact.toLowerCase().includes(search) || tblItem.contact.includes(search) || tblItem.address_name.toLowerCase().includes(search) || tblItem.address_name.includes(search) || tblItem.get_order.created_at.toLowerCase().includes(search)
+          );
+        }).sort(function (a, b) {
+          var _b$updated_at;
+
+          return b === null || b === void 0 ? void 0 : (_b$updated_at = b.updated_at) === null || _b$updated_at === void 0 ? void 0 : _b$updated_at.localeCompare(a === null || a === void 0 ? void 0 : a.updated_at);
+        });
+      } else {
+        return this.guides.filter(function (tblItem) {
+          var full_name = tblItem.get_order.get_user.name + ' ' + tblItem.get_order.get_user.last_name;
+          return (//tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
+            tblItem.id.toString().includes(search) || tblItem.get_order.order_number.toLowerCase().includes(search) || tblItem.get_order.order_number.includes(search) || tblItem.get_order.schedule_date.includes(search) || tblItem.get_order.schedule_time_range.includes(search) || full_name.toLowerCase().includes(search) || full_name.includes(search) || tblItem.contact.toLowerCase().includes(search) || tblItem.contact.includes(search) || tblItem.address_name.toLowerCase().includes(search) || tblItem.address_name.includes(search) || tblItem.get_order.created_at.toLowerCase().includes(search)
+          );
+        });
+      }
     },
     filterMessengers: function filterMessengers() {
       var _this2 = this;
@@ -10156,8 +10169,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {},
   methods: {
+    loadByDefault: function loadByDefault() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this3.gate = false;
+                console.log('lodByDefault');
+                console.log(_this3.contador);
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     //Evento Sorting
     sorted_evento: function sorted_evento() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -10179,6 +10214,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //Destino Sorting
     sorted_destino: function sorted_destino() {
       // Molestando
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -10199,6 +10236,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //Fecha Prog. Sorting
     sorted_fecha_prog: function sorted_fecha_prog() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -10219,6 +10258,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //Hora Entrega Sorting
     sorted_hora_ent: function sorted_hora_ent() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -10239,6 +10280,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //Cliente Sorting
     sorted_cliente: function sorted_cliente() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -10259,6 +10302,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //Contato Sorting
     sorted_contacto: function sorted_contacto() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -10279,6 +10324,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //Cliente direccion
     sorted_direccion: function sorted_direccion() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -10306,40 +10353,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     assignateDelivery: function assignateDelivery() {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var _this, token, myHeaders, requestOptions;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this3.guides2.length === 0)) {
-                  _context.next = 4;
+                if (!(_this4.guides2.length === 0)) {
+                  _context2.next = 4;
                   break;
                 }
 
-                _context.next = 3;
+                _context2.next = 3;
                 return error("Debe seleccionar una orden");
 
               case 3:
-                return _context.abrupt("return", _context.sent);
+                return _context2.abrupt("return", _context2.sent);
 
               case 4:
-                if (_this3.setMessenger) {
-                  _context.next = 8;
+                if (_this4.setMessenger) {
+                  _context2.next = 8;
                   break;
                 }
 
-                _context.next = 7;
+                _context2.next = 7;
                 return error("Debe seleccionar un mensajero");
 
               case 7:
-                return _context.abrupt("return", _context.sent);
+                return _context2.abrupt("return", _context2.sent);
 
               case 8:
-                _this = _this3;
+                _this = _this4;
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
                 myHeaders.append("Accept", "application/json");
@@ -10349,12 +10396,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   method: "POST",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    messenger_user_id: _this3.setMessenger,
-                    guides: _this3.guides2,
-                    state_order: _this3.tabs[1].id
+                    messenger_user_id: _this4.setMessenger,
+                    guides: _this4.guides2,
+                    state_order: _this4.tabs[1].id
                   })
                 };
-                _context.next = 17;
+                _context2.next = 17;
                 return fetch("/quias/asignacion", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -10372,24 +10419,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 17:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     }
   },
   mounted: function mounted() {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    var _this5 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
+              _this5.loadByDefault();
+
+            case 1:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   }
 });
@@ -10686,11 +10738,10 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this2.gate = false;
-                console.log('lodByDefault');
-                console.log(_this2.gate);
+                _this2.gate = false; // console.log('lodByDefault');
+                // console.log(this.gate);
 
-              case 3:
+              case 1:
               case "end":
                 return _context.stop();
             }

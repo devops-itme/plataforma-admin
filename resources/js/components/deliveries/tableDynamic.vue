@@ -223,8 +223,8 @@ mounted() {
 
     async  loadByDefault(){
         this.gate = false;
-        console.log('lodByDefault');
-        console.log(this.gate);
+        // console.log('lodByDefault');
+        // console.log(this.gate);
 
       },
 

@@ -206,6 +206,9 @@ export default {
         const search = this.search.toString();
        // const search = this.search.toLowerCase().trim();
 
+
+        if(!this.gate){
+
             return this.guides.filter((tblItem) => {
             const full_name =  tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name ;
 
@@ -224,7 +227,30 @@ export default {
                     tblItem.address_name.includes(search) ||
                     tblItem.get_order.created_at.toLowerCase().includes(search)
                 )
+            }).sort((a, b) => b?.updated_at?.localeCompare(a?.updated_at));
+
+        }else{
+                    return this.guides.filter((tblItem) => {
+            const full_name =  tblItem.get_order.get_user.name  + ' ' + tblItem.get_order.get_user.last_name ;
+
+                   return (
+                     //tblItem.get_order.order_type.toLowerCase().includes(this.search) ||
+                    tblItem.id.toString().includes(search) ||
+                    tblItem.get_order.order_number.toLowerCase().includes(search) ||
+                    tblItem.get_order.order_number.includes(search) ||
+                   tblItem.get_order.schedule_date.includes(search) ||
+                    tblItem.get_order.schedule_time_range.includes(search) ||
+                    full_name.toLowerCase().includes(search) ||
+                    full_name.includes(search) ||
+                    tblItem.contact.toLowerCase().includes(search) ||
+                    tblItem.contact.includes(search) ||
+                    tblItem.address_name.toLowerCase().includes(search) ||
+                    tblItem.address_name.includes(search) ||
+                    tblItem.get_order.created_at.toLowerCase().includes(search)
+                )
             });
+        }
+
         },
 
         filterMessengers() {
@@ -255,8 +281,17 @@ export default {
     },
     methods: {
 
+
+async  loadByDefault(){
+        this.gate = false;
+        console.log('lodByDefault');
+        console.log(this.contador);
+
+      },
+
      //Evento Sorting
     sorted_evento(){
+        this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -270,6 +305,7 @@ export default {
 
     //Destino Sorting
     sorted_destino(){   // Molestando
+        this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -283,6 +319,7 @@ export default {
 
       //Fecha Prog. Sorting
     sorted_fecha_prog(){
+        this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -297,6 +334,7 @@ export default {
 
   //Hora Entrega Sorting
      sorted_hora_ent(){
+        this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -312,6 +350,7 @@ export default {
 
 //Cliente Sorting
   sorted_cliente(){
+        this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -325,6 +364,7 @@ export default {
 
 //Contato Sorting
   sorted_contacto(){
+        this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -338,6 +378,7 @@ export default {
 
    //Cliente direccion
   sorted_direccion(){
+        this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -397,13 +438,9 @@ export default {
                 .catch((err) => console.warn(err));
         },
 
-
-
-
-
     },
     async mounted() {
-
+      this.loadByDefault();
     },
 
 };
