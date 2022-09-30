@@ -10608,38 +10608,69 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
       sortedData: [],
       sortedbyASC: true,
       key: "",
-      seleccion: ""
+      seleccion: "",
+      gate: ""
     };
   },
   mounted: function mounted() {
     this.sortedData = this.guides;
+    this.loadByDefault();
   },
   computed: {
     guidess: function guidess() {
       var _this = this;
 
       var search = this.search.toLowerCase().trim();
-      return this.guides.filter(function (tblItem) {
-        var _tblItem$get_order, _tblItem$get_order$ge, _tblItem$get_order2, _tblItem$get_order2$g;
 
-        var full_name = (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order = tblItem.get_order) === null || _tblItem$get_order === void 0 ? void 0 : (_tblItem$get_order$ge = _tblItem$get_order.get_user) === null || _tblItem$get_order$ge === void 0 ? void 0 : _tblItem$get_order$ge.name) + ' ' + (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order2 = tblItem.get_order) === null || _tblItem$get_order2 === void 0 ? void 0 : (_tblItem$get_order2$g = _tblItem$get_order2.get_user) === null || _tblItem$get_order2$g === void 0 ? void 0 : _tblItem$get_order2$g.last_name);
+      if (!this.gate) {
+        return this.guides.filter(function (tblItem) {
+          var _tblItem$get_order, _tblItem$get_order$ge, _tblItem$get_order2, _tblItem$get_order2$g;
 
-        if (tblItem.get_route != null) {
-          if (_this.search == 'leido') {
-            return tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(search);
+          var full_name = (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order = tblItem.get_order) === null || _tblItem$get_order === void 0 ? void 0 : (_tblItem$get_order$ge = _tblItem$get_order.get_user) === null || _tblItem$get_order$ge === void 0 ? void 0 : _tblItem$get_order$ge.name) + ' ' + (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order2 = tblItem.get_order) === null || _tblItem$get_order2 === void 0 ? void 0 : (_tblItem$get_order2$g = _tblItem$get_order2.get_user) === null || _tblItem$get_order2$g === void 0 ? void 0 : _tblItem$get_order2$g.last_name);
+
+          if (tblItem.get_route != null) {
+            if (_this.search == 'leido') {
+              return tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(search);
+            }
+
+            if (_this.search == 'pendiente') {
+              return tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(search);
+            }
+
+            if (_this.search != 'leido' && _this.search != 'pendiente') {
+              var _tblItem$get_status_m, _tblItem$get_order3, _tblItem$get_order3$c, _tblItem$dispatched, _tblItem$get_order4, _tblItem$get_order4$s, _tblItem$get_order5, _tblItem$get_order5$s, _tblItem$get_route, _tblItem$get_route$ge, _tblItem$get_route2, _tblItem$get_route2$g, _tblItem$contact, _tblItem$contact2, _tblItem$address_name, _tblItem$address_name2;
+
+              return (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_status_m = tblItem.get_status_matrix.name) === null || _tblItem$get_status_m === void 0 ? void 0 : _tblItem$get_status_m.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order3 = tblItem.get_order) === null || _tblItem$get_order3 === void 0 ? void 0 : (_tblItem$get_order3$c = _tblItem$get_order3.created_at) === null || _tblItem$get_order3$c === void 0 ? void 0 : _tblItem$get_order3$c.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$dispatched = tblItem.dispatched) === null || _tblItem$dispatched === void 0 ? void 0 : _tblItem$dispatched.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : tblItem.id.toString().includes(_this.search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order4 = tblItem.get_order) === null || _tblItem$get_order4 === void 0 ? void 0 : (_tblItem$get_order4$s = _tblItem$get_order4.schedule_date) === null || _tblItem$get_order4$s === void 0 ? void 0 : _tblItem$get_order4$s.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order5 = tblItem.get_order) === null || _tblItem$get_order5 === void 0 ? void 0 : (_tblItem$get_order5$s = _tblItem$get_order5.schedule_time_range) === null || _tblItem$get_order5$s === void 0 ? void 0 : _tblItem$get_order5$s.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_route = tblItem.get_route) === null || _tblItem$get_route === void 0 ? void 0 : (_tblItem$get_route$ge = _tblItem$get_route.get_messenger.name) === null || _tblItem$get_route$ge === void 0 ? void 0 : _tblItem$get_route$ge.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_route2 = tblItem.get_route) === null || _tblItem$get_route2 === void 0 ? void 0 : (_tblItem$get_route2$g = _tblItem$get_route2.get_messenger.name) === null || _tblItem$get_route2$g === void 0 ? void 0 : _tblItem$get_route2$g.includes(search)) || (full_name === null || full_name === void 0 ? void 0 : full_name.toLowerCase().includes(search)) || (full_name === null || full_name === void 0 ? void 0 : full_name.includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$contact = tblItem.contact) === null || _tblItem$contact === void 0 ? void 0 : _tblItem$contact.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$contact2 = tblItem.contact) === null || _tblItem$contact2 === void 0 ? void 0 : _tblItem$contact2.includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$address_name = tblItem.address_name) === null || _tblItem$address_name === void 0 ? void 0 : _tblItem$address_name.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$address_name2 = tblItem.address_name) === null || _tblItem$address_name2 === void 0 ? void 0 : _tblItem$address_name2.includes(search));
+            }
           }
+        }).sort(function (a, b) {
+          var _b$updated_at;
 
-          if (_this.search == 'pendiente') {
-            return tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(search);
+          return b === null || b === void 0 ? void 0 : (_b$updated_at = b.updated_at) === null || _b$updated_at === void 0 ? void 0 : _b$updated_at.localeCompare(a === null || a === void 0 ? void 0 : a.updated_at);
+        });
+      } else {
+        return this.guides.filter(function (tblItem) {
+          var _tblItem$get_order6, _tblItem$get_order6$g, _tblItem$get_order7, _tblItem$get_order7$g;
+
+          var full_name = (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order6 = tblItem.get_order) === null || _tblItem$get_order6 === void 0 ? void 0 : (_tblItem$get_order6$g = _tblItem$get_order6.get_user) === null || _tblItem$get_order6$g === void 0 ? void 0 : _tblItem$get_order6$g.name) + ' ' + (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order7 = tblItem.get_order) === null || _tblItem$get_order7 === void 0 ? void 0 : (_tblItem$get_order7$g = _tblItem$get_order7.get_user) === null || _tblItem$get_order7$g === void 0 ? void 0 : _tblItem$get_order7$g.last_name);
+
+          if (tblItem.get_route != null) {
+            if (_this.search == 'leido') {
+              return tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(search);
+            }
+
+            if (_this.search == 'pendiente') {
+              return tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(search);
+            }
+
+            if (_this.search != 'leido' && _this.search != 'pendiente') {
+              var _tblItem$get_status_m2, _tblItem$get_order8, _tblItem$get_order8$c, _tblItem$dispatched2, _tblItem$get_order9, _tblItem$get_order9$s, _tblItem$get_order10, _tblItem$get_order10$, _tblItem$get_route3, _tblItem$get_route3$g, _tblItem$get_route4, _tblItem$get_route4$g, _tblItem$contact3, _tblItem$contact4, _tblItem$address_name3, _tblItem$address_name4;
+
+              return (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_status_m2 = tblItem.get_status_matrix.name) === null || _tblItem$get_status_m2 === void 0 ? void 0 : _tblItem$get_status_m2.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order8 = tblItem.get_order) === null || _tblItem$get_order8 === void 0 ? void 0 : (_tblItem$get_order8$c = _tblItem$get_order8.created_at) === null || _tblItem$get_order8$c === void 0 ? void 0 : _tblItem$get_order8$c.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$dispatched2 = tblItem.dispatched) === null || _tblItem$dispatched2 === void 0 ? void 0 : _tblItem$dispatched2.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : tblItem.id.toString().includes(_this.search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order9 = tblItem.get_order) === null || _tblItem$get_order9 === void 0 ? void 0 : (_tblItem$get_order9$s = _tblItem$get_order9.schedule_date) === null || _tblItem$get_order9$s === void 0 ? void 0 : _tblItem$get_order9$s.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order10 = tblItem.get_order) === null || _tblItem$get_order10 === void 0 ? void 0 : (_tblItem$get_order10$ = _tblItem$get_order10.schedule_time_range) === null || _tblItem$get_order10$ === void 0 ? void 0 : _tblItem$get_order10$.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_route3 = tblItem.get_route) === null || _tblItem$get_route3 === void 0 ? void 0 : (_tblItem$get_route3$g = _tblItem$get_route3.get_messenger.name) === null || _tblItem$get_route3$g === void 0 ? void 0 : _tblItem$get_route3$g.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_route4 = tblItem.get_route) === null || _tblItem$get_route4 === void 0 ? void 0 : (_tblItem$get_route4$g = _tblItem$get_route4.get_messenger.name) === null || _tblItem$get_route4$g === void 0 ? void 0 : _tblItem$get_route4$g.includes(search)) || (full_name === null || full_name === void 0 ? void 0 : full_name.toLowerCase().includes(search)) || (full_name === null || full_name === void 0 ? void 0 : full_name.includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$contact3 = tblItem.contact) === null || _tblItem$contact3 === void 0 ? void 0 : _tblItem$contact3.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$contact4 = tblItem.contact) === null || _tblItem$contact4 === void 0 ? void 0 : _tblItem$contact4.includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$address_name3 = tblItem.address_name) === null || _tblItem$address_name3 === void 0 ? void 0 : _tblItem$address_name3.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$address_name4 = tblItem.address_name) === null || _tblItem$address_name4 === void 0 ? void 0 : _tblItem$address_name4.includes(search));
+            }
           }
-
-          if (_this.search != 'leido' && _this.search != 'pendiente') {
-            var _tblItem$get_status_m, _tblItem$get_order3, _tblItem$get_order3$c, _tblItem$dispatched, _tblItem$get_order4, _tblItem$get_order4$s, _tblItem$get_order5, _tblItem$get_order5$s, _tblItem$get_route, _tblItem$get_route$ge, _tblItem$get_route2, _tblItem$get_route2$g, _tblItem$contact, _tblItem$contact2, _tblItem$address_name, _tblItem$address_name2;
-
-            return (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_status_m = tblItem.get_status_matrix.name) === null || _tblItem$get_status_m === void 0 ? void 0 : _tblItem$get_status_m.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order3 = tblItem.get_order) === null || _tblItem$get_order3 === void 0 ? void 0 : (_tblItem$get_order3$c = _tblItem$get_order3.created_at) === null || _tblItem$get_order3$c === void 0 ? void 0 : _tblItem$get_order3$c.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$dispatched = tblItem.dispatched) === null || _tblItem$dispatched === void 0 ? void 0 : _tblItem$dispatched.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : tblItem.id.toString().includes(_this.search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order4 = tblItem.get_order) === null || _tblItem$get_order4 === void 0 ? void 0 : (_tblItem$get_order4$s = _tblItem$get_order4.schedule_date) === null || _tblItem$get_order4$s === void 0 ? void 0 : _tblItem$get_order4$s.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_order5 = tblItem.get_order) === null || _tblItem$get_order5 === void 0 ? void 0 : (_tblItem$get_order5$s = _tblItem$get_order5.schedule_time_range) === null || _tblItem$get_order5$s === void 0 ? void 0 : _tblItem$get_order5$s.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_route = tblItem.get_route) === null || _tblItem$get_route === void 0 ? void 0 : (_tblItem$get_route$ge = _tblItem$get_route.get_messenger.name) === null || _tblItem$get_route$ge === void 0 ? void 0 : _tblItem$get_route$ge.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$get_route2 = tblItem.get_route) === null || _tblItem$get_route2 === void 0 ? void 0 : (_tblItem$get_route2$g = _tblItem$get_route2.get_messenger.name) === null || _tblItem$get_route2$g === void 0 ? void 0 : _tblItem$get_route2$g.includes(search)) || (full_name === null || full_name === void 0 ? void 0 : full_name.toLowerCase().includes(search)) || (full_name === null || full_name === void 0 ? void 0 : full_name.includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$contact = tblItem.contact) === null || _tblItem$contact === void 0 ? void 0 : _tblItem$contact.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$contact2 = tblItem.contact) === null || _tblItem$contact2 === void 0 ? void 0 : _tblItem$contact2.includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$address_name = tblItem.address_name) === null || _tblItem$address_name === void 0 ? void 0 : _tblItem$address_name.toLowerCase().includes(search)) || (tblItem === null || tblItem === void 0 ? void 0 : (_tblItem$address_name2 = tblItem.address_name) === null || _tblItem$address_name2 === void 0 ? void 0 : _tblItem$address_name2.includes(search));
-          }
-        }
-      });
+        });
+      }
     }
   },
   methods: {
@@ -10647,106 +10678,126 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
       this.seleccion = event.target.value;
       this.listData = [];
     },
+    loadByDefault: function loadByDefault() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this2.gate = false;
+                console.log('lodByDefault');
+                console.log(_this2.gate);
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     rowClick: function rowClick(data, index) {
       var _window,
-          _this2 = this;
+          _this3 = this;
 
       this.activeIndex = index;
       this.$emit("getGuide", data);
       (_window = window) === null || _window === void 0 ? void 0 : _window.addEventListener('click', function () {
-        var _this2$listData;
+        var _this3$listData;
 
-        if (!((_this2$listData = _this2.listData) !== null && _this2$listData !== void 0 && _this2$listData.includes(data === null || data === void 0 ? void 0 : data.id)) && (data === null || data === void 0 ? void 0 : data.status_matrix_id) == 6) {
+        if (!((_this3$listData = _this3.listData) !== null && _this3$listData !== void 0 && _this3$listData.includes(data === null || data === void 0 ? void 0 : data.id)) && (data === null || data === void 0 ? void 0 : data.status_matrix_id) == 6) {
           var _data$get_issue, _data$get_issue$get_i;
 
-          _this2.listData.push(data.id);
+          _this3.listData.push(data.id);
 
-          _this2.listState.push(data.id);
+          _this3.listState.push(data.id);
 
-          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
-          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i = _data$get_issue.get_issue) === null || _data$get_issue$get_i === void 0 ? void 0 : _data$get_issue$get_i.name;
+          _this3.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this3.issue = data === null || data === void 0 ? void 0 : (_data$get_issue = data.get_issue) === null || _data$get_issue === void 0 ? void 0 : (_data$get_issue$get_i = _data$get_issue.get_issue) === null || _data$get_issue$get_i === void 0 ? void 0 : _data$get_issue$get_i.name;
 
-          if (_this2.issue == undefined) {
-            _this2.issue = 'NO REGISTRA';
+          if (_this3.issue == undefined) {
+            _this3.issue = 'NO REGISTRA';
           }
         } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 4) {
           var _data$get_issue2, _data$get_issue2$get_;
 
-          _this2.listData = [];
+          _this3.listData = [];
 
-          _this2.listState.push(data.id);
+          _this3.listState.push(data.id);
 
-          _this2.listSelected = data.status_matrix_id;
-          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue2 = data.get_issue) === null || _data$get_issue2 === void 0 ? void 0 : (_data$get_issue2$get_ = _data$get_issue2.get_issue) === null || _data$get_issue2$get_ === void 0 ? void 0 : _data$get_issue2$get_.name; // data = ''
+          _this3.listSelected = data.status_matrix_id;
+          _this3.issue = data === null || data === void 0 ? void 0 : (_data$get_issue2 = data.get_issue) === null || _data$get_issue2 === void 0 ? void 0 : (_data$get_issue2$get_ = _data$get_issue2.get_issue) === null || _data$get_issue2$get_ === void 0 ? void 0 : _data$get_issue2$get_.name; // data = ''
 
-          if (_this2.issue == undefined) {
-            _this2.issue = 'NO REGISTRA';
+          if (_this3.issue == undefined) {
+            _this3.issue = 'NO REGISTRA';
           }
         } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 3) {
           var _data$get_issue3, _data$get_issue3$get_;
 
-          _this2.listData = [];
+          _this3.listData = [];
 
-          _this2.listState.push(data.id);
+          _this3.listState.push(data.id);
 
-          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
-          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue3 = data.get_issue) === null || _data$get_issue3 === void 0 ? void 0 : (_data$get_issue3$get_ = _data$get_issue3.get_issue) === null || _data$get_issue3$get_ === void 0 ? void 0 : _data$get_issue3$get_.name;
+          _this3.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this3.issue = data === null || data === void 0 ? void 0 : (_data$get_issue3 = data.get_issue) === null || _data$get_issue3 === void 0 ? void 0 : (_data$get_issue3$get_ = _data$get_issue3.get_issue) === null || _data$get_issue3$get_ === void 0 ? void 0 : _data$get_issue3$get_.name;
 
-          if (_this2.issue == undefined) {
-            _this2.issue = 'NO REGISTRA';
+          if (_this3.issue == undefined) {
+            _this3.issue = 'NO REGISTRA';
           }
         } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 7) {
           var _data$get_issue4, _data$get_issue4$get_;
 
-          _this2.listData = [];
+          _this3.listData = [];
 
-          _this2.listState.push(data.id);
+          _this3.listState.push(data.id);
 
-          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
-          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue4 = data.get_issue) === null || _data$get_issue4 === void 0 ? void 0 : (_data$get_issue4$get_ = _data$get_issue4.get_issue) === null || _data$get_issue4$get_ === void 0 ? void 0 : _data$get_issue4$get_.name;
+          _this3.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this3.issue = data === null || data === void 0 ? void 0 : (_data$get_issue4 = data.get_issue) === null || _data$get_issue4 === void 0 ? void 0 : (_data$get_issue4$get_ = _data$get_issue4.get_issue) === null || _data$get_issue4$get_ === void 0 ? void 0 : _data$get_issue4$get_.name;
 
-          if (_this2.issue == undefined) {
-            _this2.issue = 'NO REGISTRA';
+          if (_this3.issue == undefined) {
+            _this3.issue = 'NO REGISTRA';
           }
         } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 8) {
           var _data$get_issue5, _data$get_issue5$get_;
 
-          _this2.listData = [];
+          _this3.listData = [];
 
-          _this2.listState.push(data.id);
+          _this3.listState.push(data.id);
 
-          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
-          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue5 = data.get_issue) === null || _data$get_issue5 === void 0 ? void 0 : (_data$get_issue5$get_ = _data$get_issue5.get_issue) === null || _data$get_issue5$get_ === void 0 ? void 0 : _data$get_issue5$get_.name;
+          _this3.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this3.issue = data === null || data === void 0 ? void 0 : (_data$get_issue5 = data.get_issue) === null || _data$get_issue5 === void 0 ? void 0 : (_data$get_issue5$get_ = _data$get_issue5.get_issue) === null || _data$get_issue5$get_ === void 0 ? void 0 : _data$get_issue5$get_.name;
 
-          if (_this2.issue == undefined) {
-            _this2.issue = 'NO REGISTRA';
+          if (_this3.issue == undefined) {
+            _this3.issue = 'NO REGISTRA';
           }
         } else if ((data === null || data === void 0 ? void 0 : data.status_matrix_id) == 10) {
           var _data$get_issue6, _data$get_issue6$get_;
 
-          _this2.listData = [];
+          _this3.listData = [];
 
-          _this2.listState.push(data.id);
+          _this3.listState.push(data.id);
 
-          _this2.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
-          _this2.issue = data === null || data === void 0 ? void 0 : (_data$get_issue6 = data.get_issue) === null || _data$get_issue6 === void 0 ? void 0 : (_data$get_issue6$get_ = _data$get_issue6.get_issue) === null || _data$get_issue6$get_ === void 0 ? void 0 : _data$get_issue6$get_.name;
+          _this3.listSelected = data === null || data === void 0 ? void 0 : data.status_matrix_id;
+          _this3.issue = data === null || data === void 0 ? void 0 : (_data$get_issue6 = data.get_issue) === null || _data$get_issue6 === void 0 ? void 0 : (_data$get_issue6$get_ = _data$get_issue6.get_issue) === null || _data$get_issue6$get_ === void 0 ? void 0 : _data$get_issue6$get_.name;
 
-          if (_this2.issue == undefined) {
-            _this2.issue = 'NO REGISTRA';
+          if (_this3.issue == undefined) {
+            _this3.issue = 'NO REGISTRA';
           }
         } else {
-          _this2.listData = [];
+          _this3.listData = [];
         }
       });
     },
     sendToDelivery: function sendToDelivery() {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var token, myHeaders, requestOptions, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
                 myHeaders = new Headers();
@@ -10757,14 +10808,14 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                   method: "PUT",
                   headers: myHeaders,
                   body: JSON.stringify({
-                    'guide_ids': _this3.listData
+                    'guide_ids': _this4.listData
                   })
                 };
-                _context.next = 8;
-                return _this3.requestUpdateGuidesState(requestOptions);
+                _context2.next = 8;
+                return _this4.requestUpdateGuidesState(requestOptions);
 
               case 8:
-                response = _context.sent;
+                response = _context2.sent;
 
                 if (response.state != 200) {
                   error(response.data.message);
@@ -10782,23 +10833,23 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
 
               case 11:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     requestUpdateGuidesState: function requestUpdateGuidesState(requestOptions) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 response = {
                   'state': 500
                 };
-                _context2.next = 3;
+                _context3.next = 3;
                 return fetch("guide/estado/recogida-entrega", requestOptions).then(function (response) {
                   return response.json();
                 }).then(function (data) {
@@ -10808,32 +10859,32 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                 });
 
               case 3:
-                return _context2.abrupt("return", response);
+                return _context3.abrupt("return", response);
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     // CHANGE STATE GUIDES
     changeState: function changeState() {
-      var _this4 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var answer, issue, equal, state_select, key_word;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 answer = ''; // console.log('List Data');
                 // console.log(this.listData);
 
-                issue = _this4.issue;
-                equal = _this4.listSelected;
-                state_select = _this4.seleccion;
+                issue = _this5.issue;
+                equal = _this5.listSelected;
+                state_select = _this5.seleccion;
                 key_word = '';
 
                 if (state_select == 3) {
@@ -10901,7 +10952,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                           method: "PUT",
                           headers: myHeaders,
                           body: JSON.stringify({
-                            'guide_ids': _this4.listState
+                            'guide_ids': _this5.listState
                           })
                         };
                         var _response = {
@@ -10933,7 +10984,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                           method: "PUT",
                           headers: myHeaders,
                           body: JSON.stringify({
-                            'guide_ids': _this4.listState
+                            'guide_ids': _this5.listState
                           })
                         };
                         var _response2 = {
@@ -10965,7 +11016,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                           method: "PUT",
                           headers: myHeaders,
                           body: JSON.stringify({
-                            'guide_ids': _this4.listState
+                            'guide_ids': _this5.listState
                           })
                         };
                         var _response3 = {
@@ -10998,7 +11049,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                           method: "PUT",
                           headers: myHeaders,
                           body: JSON.stringify({
-                            'guide_ids': _this4.listState
+                            'guide_ids': _this5.listState
                           })
                         };
                         var _response4 = {
@@ -11030,7 +11081,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                           method: "PUT",
                           headers: myHeaders,
                           body: JSON.stringify({
-                            'guide_ids': _this4.listState
+                            'guide_ids': _this5.listState
                           })
                         };
                         var _response5 = {
@@ -11062,7 +11113,7 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
                           method: "PUT",
                           headers: myHeaders,
                           body: JSON.stringify({
-                            'guide_ids': _this4.listState
+                            'guide_ids': _this5.listState
                           })
                         };
                         var _response6 = {
@@ -11107,14 +11158,16 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
 
               case 12:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     },
     //Estado sorting
     sorted_estado: function sorted_estado() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11139,6 +11192,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     //Evento Sorting
     sorted_evento: function sorted_evento() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11159,6 +11214,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     //Despacho Sorting
     sorted_despacho: function sorted_despacho() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11184,6 +11241,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     //Destino Sorting
     sorted_destino: function sorted_destino() {
       // Molestando
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11208,6 +11267,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     //Fecha Prog. Sorting
     sorted_fecha_prog: function sorted_fecha_prog() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11232,6 +11293,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     //Hora Entrega Sorting
     sorted_hora_ent: function sorted_hora_ent() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11256,6 +11319,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     // Mensajero Sorting
     sorted_mensajero: function sorted_mensajero() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11280,6 +11345,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     // Estado App Sorting
     sorted_estado_app: function sorted_estado_app() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11304,6 +11371,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     //Cliente Sorting
     sorted_cliente: function sorted_cliente() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11328,6 +11397,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     //Contato Sorting
     sorted_contacto: function sorted_contacto() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;
@@ -11352,6 +11423,8 @@ window.swal = sweetalert__WEBPACK_IMPORTED_MODULE_1___default.a;
     },
     //Cliente direccion
     sorted_direccion: function sorted_direccion() {
+      this.gate = true;
+
       if (this.sortedbyASC) {
         this.sortedData.sort(function (x, y) {
           return x[sortBy] > y[sortBy] ? -1 : 1;

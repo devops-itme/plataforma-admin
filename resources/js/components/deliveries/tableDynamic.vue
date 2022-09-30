@@ -122,11 +122,13 @@ export default {
             sortedbyASC: true,
             key: "",
             seleccion: "",
+            gate: ""
         }
     },
 
 mounted() {
     this.sortedData = this.guides;
+    this.loadByDefault();
   },
 
     computed: {
@@ -134,7 +136,48 @@ mounted() {
        guidess() {
         const search = this.search.toLowerCase().trim();
 
+        if(!this.gate){
+
             return this.guides.filter((tblItem) => {
+
+                const full_name =  tblItem?.get_order?.get_user?.name  + ' ' + tblItem?.get_order?.get_user?.last_name ;
+                if (tblItem.get_route != null){
+                if(this.search == 'leido'){
+            return (
+                tblItem.app_status == 1 ? 'Leido' : 'Pendiente'.toLowerCase().includes(search)
+                )
+                    }
+            if(this.search == 'pendiente'){
+            return (
+                tblItem.app_status == 0 ? 'Pendiente' : 'Leido'.toLowerCase().includes(search)
+                )
+                    }
+                if(this.search != 'leido' && this.search != 'pendiente' ){
+                return (
+
+                    tblItem?.get_status_matrix.name?.toLowerCase().includes(search) ||
+                    tblItem?.get_order?.created_at?.toLowerCase().includes(search) ||
+                    tblItem?.dispatched?.toLowerCase().includes(search) ||
+                    tblItem?.id.toString().includes(this.search) ||
+                    tblItem?.get_order?.schedule_date?.toLowerCase().includes(search) ||
+                    tblItem?.get_order?.schedule_time_range?.toLowerCase().includes(search) ||
+                    tblItem?.get_route?.get_messenger.name?.toLowerCase().includes(search) ||
+                    tblItem?.get_route?.get_messenger.name?.includes(search) ||
+                    full_name?.toLowerCase().includes(search) ||
+                    full_name?.includes(search) ||
+                    tblItem?.contact?.toLowerCase().includes(search) ||
+                    tblItem?.contact?.includes(search) ||
+                    tblItem?.address_name?.toLowerCase().includes(search) ||
+                    tblItem?.address_name?.includes(search)
+                )
+                    }
+                }
+            }).sort((a, b) => b?.updated_at?.localeCompare(a?.updated_at));
+
+        } else{
+
+               return this.guides.filter((tblItem) => {
+
                 const full_name =  tblItem?.get_order?.get_user?.name  + ' ' + tblItem?.get_order?.get_user?.last_name ;
                 if (tblItem.get_route != null){
                 if(this.search == 'leido'){
@@ -169,6 +212,7 @@ mounted() {
                 }
             })
         }
+       }
     },
 
     methods: {
@@ -176,6 +220,13 @@ mounted() {
        this.seleccion = event.target.value;
        this.listData = [];
     },
+
+    async  loadByDefault(){
+        this.gate = false;
+        console.log('lodByDefault');
+        console.log(this.gate);
+
+      },
 
     rowClick(data, index) {
             this.activeIndex = index;
@@ -594,6 +645,7 @@ if (state_select == 10){
 
    //Estado sorting
     sorted_estado(){
+        this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -607,6 +659,7 @@ if (state_select == 10){
 
      //Evento Sorting
     sorted_evento(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -620,6 +673,7 @@ if (state_select == 10){
 
          //Despacho Sorting
     sorted_despacho(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -633,6 +687,7 @@ if (state_select == 10){
 
     //Destino Sorting
     sorted_destino(){   // Molestando
+     this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -646,6 +701,7 @@ if (state_select == 10){
 
       //Fecha Prog. Sorting
     sorted_fecha_prog(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -660,6 +716,7 @@ if (state_select == 10){
 
   //Hora Entrega Sorting
     sorted_hora_ent(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -673,6 +730,7 @@ if (state_select == 10){
 
       // Mensajero Sorting
     sorted_mensajero(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -686,6 +744,7 @@ if (state_select == 10){
 
         // Estado App Sorting
     sorted_estado_app(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -700,6 +759,7 @@ if (state_select == 10){
 
 //Cliente Sorting
     sorted_cliente(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -713,6 +773,7 @@ if (state_select == 10){
 
 //Contato Sorting
     sorted_contacto(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
@@ -726,6 +787,7 @@ if (state_select == 10){
 
    //Cliente direccion
     sorted_direccion(){
+         this.gate = true;
         if (this.sortedbyASC) {
         this.sortedData.sort((x, y) => (x[sortBy] > y[sortBy] ? -1 : 1));
         this.sortedbyASC = false;
