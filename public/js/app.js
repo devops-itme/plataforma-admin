@@ -10177,11 +10177,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this3.gate = false;
-                console.log('lodByDefault');
-                console.log(_this3.contador);
+                _this3.gate = false; // console.log('lodByDefault');
+                // console.log(this.contador);
 
-              case 3:
+              case 1:
               case "end":
                 return _context.stop();
             }

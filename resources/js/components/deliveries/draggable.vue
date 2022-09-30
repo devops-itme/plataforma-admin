@@ -284,8 +284,8 @@ export default {
 
 async  loadByDefault(){
         this.gate = false;
-        console.log('lodByDefault');
-        console.log(this.contador);
+        // console.log('lodByDefault');
+        // console.log(this.contador);
 
       },
 
