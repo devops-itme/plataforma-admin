@@ -9091,6 +9091,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document.getElementById("novelty").value = "";
       document.getElementById("recipient_name").value = "";
       document.getElementById("additional_address").value = "";
+      document.getElementById("issue").value = "";
+      this.guide.issue = null;
       this.guide.novelty = null;
       this.guide.recipient_name = null;
       this.guide.additional_address = null;
