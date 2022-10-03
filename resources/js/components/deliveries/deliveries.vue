@@ -371,7 +371,7 @@
 
 <!-- HISTORIAL -->
         <modalHistory
-            v-show="showModalHistory"
+            v-if="showModalHistory"
             @close="showModalHistory = false">
         <div slot="header">
             <h5 class="modal-title" id="exampleModalLabel">Editar Historial</h5>
@@ -397,7 +397,7 @@
                     <label><strong>Seleccionar incidencia <span class="text-danger">*</span> </strong></label>
                 </div>
                 <div>
-                <select name="issue_id" v-model="guide.issue"   class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
+                <select name="issue" v-model="guide.issue"   class="form-control form-control-solid" style="margin-left:180%;width:290%" id="issue">
                         <option
                             v-for="issue in issues"
                             v-bind:key="issue.id"
@@ -420,7 +420,7 @@
                     <span class="form-text text-muted"></span>
                 </div>
                 <div class="form-group col-md-12">
-                    <label><strong>Dirección adicional <span class="text-danger">*</span></strong></label>
+                    <label><strong>Dirección adicional </strong></label>
                     <input name="additional_address" type="text" v-model="guide.additional_address" class="form-control form-control-solid" id="additional_address" />
                     <span class="form-text text-muted"></span>
                 </div>
@@ -431,7 +431,7 @@
                 </div>  -->
             <div class="d-flex ">
                 <div  style="width:200%;margin-left:185%;margin-top:1.5%">
-                    <button type="button" class="btn btn-primary"  v-on:click="updateGuideLog()">Guardar</button>
+                    <button type="button" class="btn btn-primary" id="save_button"  v-on:click="updateGuideLog()">Guardar</button>
                 </div>
                 <div  style="width:300%;margin-top:1.5%;margin-left:375%">
                     <button type="button" class="btn btn-danger"  v-on:click="clear()" >Limpiar</button>
@@ -459,7 +459,7 @@
                             <td>{{ guide_log.get_guide.dispatched }}</td>
                             <td>{{ guide_log.get_state.scope_id == 56 ? 'RECOGIDA' : 'ENTREGA'}}</td>
                             <td>{{ guide_log.get_state.name  }}</td>
-                            <td>{{ guide_log.get_guide.app_status ? 'Leido' : 'Pendiente' }}</td>
+                            <td>{{ guide_log.get_guide.app_status ? '-' : '-' }}</td>
                             <td v-if="guide_log.get_user_log.name != null">{{ guide_log.get_user_log.name + ' ' + guide_log.get_user_log.last_name }}</td>
                             <td v-if="guide_log.get_user_log.name == null">{{ guide_log.get_user_log.get_customer.tradename }}</td>
                             <td>{{ guide_log.created_at.slice(0, 10) }}</td>
@@ -471,8 +471,7 @@
             </div>
         </div>
         <div slot="footer">
-            <button id="cerrar" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Aceptar</button>
+            <button id="cerrar" type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="">Aceptar</button>
         </div>
         </modalHistory>
 
@@ -695,15 +694,24 @@ export default {
 
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
+                this.showModalHistory = false;
             }else{
+
                 this.showModalHistory = true;
+                if (this.guide.issue != '' || this.guide.novelty != '' ||  this.guide.additional_address != '' ){
+                this.guide.issue = '';
+                this.guide.novelty = '';
+                // console.log(this.guide.novelty);
+                this.guide.recipient_name = '';
+                this.guide.additional_address = '';
+                }
                 this.guide.id = this.showDataGuide.posting ?? 'No registra';
                 let id = this.showDataGuide.id;
-                this.guide.issue = this.showDataGuide.issue_id;
-                this.guide.novelty = this.showDataGuide.novelty ? this.showDataGuide.novelty : 'No registra' ;
+                // this.guide.issue = this.showDataGuide.issue_id;
+                // this.guide.novelty = this.showDataGuide.novelty ? this.showDataGuide.novelty : 'No registra' ;
                 // console.log(this.guide.novelty);
-                this.guide.recipient_name = this.showDataGuide.recipient_name ? this.showDataGuide.recipient_name : 'No registra' ;
-                this.guide.additional_address =  this.showDataGuide.additional_address ? this.showDataGuide.additional_address : 'No registra' ;
+                // this.guide.recipient_name = this.showDataGuide.recipient_name ? this.showDataGuide.recipient_name : 'No registra' ;
+                // this.guide.additional_address =  this.showDataGuide.additional_address ? this.showDataGuide.additional_address : 'No registra' ;
                 this.guide.status_matrix = this.showDataGuide.status_id;
                 let  response = await this.guideLogs(id);
 
@@ -829,10 +837,17 @@ export default {
             };
             let response = await this.requestUpdateGuideLog(requestOptions);
             if(response.state != 200){
+                if (response.message == 'El campo issue es obligatorio.'){
+                    alert('Debe seleccionar una incidencia');
+                }
+                if (response.message != 'El campo issue es obligatorio.'){
+                    alert(response.message);
+                }
+            }
+            if(response.state == 200){
                 alert(response.message);
-            }if(response.state == 200){
-                 alert(response.message);
                 document.getElementById('cerrar').click();
+                window.location.reload();
             }
         },
         async requestUpdateGuideLog(requestOptions){

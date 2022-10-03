@@ -398,7 +398,7 @@ class GuideController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    // 'issue_id' => 'required',
+                    'issue' => 'required',
                     'novelty' => 'required',
                     // 'additional_address' => 'required',
                     'recipient_name' => 'required',

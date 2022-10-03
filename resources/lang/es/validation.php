@@ -282,7 +282,10 @@ return [
         'number' => 'Movil',
         'from' => 'Desde',
         'to' => 'Hasta',
-        'day' => 'Día'
+        'day' => 'Día',
+        'novelty' => 'Novedades',
+        'recipient_name' => 'Nombre quién Entrega/Recibe'
+
     ],
 
 ];
