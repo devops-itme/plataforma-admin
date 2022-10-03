@@ -695,8 +695,9 @@ export default {
             if (!this.showGuide) {
                 return await error("Debe seleccionar una guía");
                 this.showModalHistory = false;
+                this.showModal = false;
             }else{
-
+                this.showModal = false;
                 this.showModalHistory = true;
                 if (this.guide.issue != '' || this.guide.novelty != '' ||  this.guide.additional_address != '' ){
                 this.guide.issue = '';

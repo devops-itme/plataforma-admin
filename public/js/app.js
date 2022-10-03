@@ -9033,7 +9033,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context6.prev = _context6.next) {
               case 0:
                 if (_this6.showGuide) {
-                  _context6.next = 7;
+                  _context6.next = 8;
                   break;
                 }
 
@@ -9043,7 +9043,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 3:
                 return _context6.abrupt("return", _context6.sent);
 
-              case 7:
+              case 8:
+                _this6.showModal = false;
                 _this6.showModalHistory = true;
 
                 if (_this6.guide.issue != '' || _this6.guide.novelty != '' || _this6.guide.additional_address != '') {
@@ -9062,10 +9063,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 // this.guide.additional_address =  this.showDataGuide.additional_address ? this.showDataGuide.additional_address : 'No registra' ;
 
                 _this6.guide.status_matrix = _this6.showDataGuide.status_id;
-                _context6.next = 14;
+                _context6.next = 16;
                 return _this6.guideLogs(id);
 
-              case 14:
+              case 16:
                 response = _context6.sent;
 
                 if (response != '') {
@@ -9076,7 +9077,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this6.guide_logs = response.data;
                 }
 
-              case 16:
+              case 18:
               case "end":
                 return _context6.stop();
             }
