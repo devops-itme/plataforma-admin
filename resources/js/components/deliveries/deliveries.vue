@@ -449,8 +449,8 @@
                             <th>Estado</th>
                             <th>Estado Web</th>
                             <th>Usuario creación</th>
-                            <th>Fecha creación</th>
-                            <th>Fecha modificación</th>
+                            <th>Fecha y hora creación</th>
+                            <th>Fecha y hora modificación</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -462,8 +462,8 @@
                             <td>{{ guide_log.get_guide.app_status ? '-' : '-' }}</td>
                             <td v-if="guide_log.get_user_log.name != null">{{ guide_log.get_user_log.name + ' ' + guide_log.get_user_log.last_name }}</td>
                             <td v-if="guide_log.get_user_log.name == null">{{ guide_log.get_user_log.get_customer.tradename }}</td>
-                            <td>{{ guide_log.created_at.slice(0, 10) }}</td>
-                            <td>{{ guide_log.updated_at.slice(0, 10) }}</td>
+                            <td>{{ dateTime(guide_log.created_at) }}</td>
+                            <td>{{ dateTime(guide_log.updated_at) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -538,8 +538,11 @@ export default {
     methods: {
         loadingEvt (){
             this.selected_filter_status = "";
-           $(`#myTab li:nth-child(1) a`).tab("show");
-       },
+            $(`#myTab li:nth-child(1) a`).tab("show");
+    },
+        dateTime(value) {
+        return moment(value).format("DD-MMM-YYYY , h:mm a" ,"America/Panama");
+    },
         async statusMatrix(scope) {
             //STATUS MATRIX
             let req = await fetch(`despacho/matriz_estados?scope_id=${scope}`);
@@ -556,8 +559,6 @@ export default {
             this.selected == 56?  this.tabs[1].name = "RECOGIDA EN PROCESO" : this.tabs[1].name = "ENTREGA EN PROCESO";
             this.selected == 56?  this.tabs[0].name = "POR RECOGER" : this.tabs[0].name = "POR ENTREGAR";
         },
-
-
         getGuide(data){
             this.showGuide = data;
             this.showDataGuide.type_order = data.get_order?.get_order_type.name;

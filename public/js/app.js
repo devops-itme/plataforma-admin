@@ -8759,6 +8759,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.selected_filter_status = "";
       $("#myTab li:nth-child(1) a").tab("show");
     },
+    dateTime: function dateTime(value) {
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(value).format("DD-MMM-YYYY , h:mm a", "America/Panama");
+    },
     statusMatrix: function statusMatrix(scope) {
       var _this2 = this;
 
@@ -16872,7 +16875,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sortableSelected {\n    background-color: #023E8A;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, "\n.sortableSelected {\r\n    background-color: #023E8A;\r\n    color: #fff;\n}\r\n", ""]);
 
 // exports
 
@@ -16891,7 +16894,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.active_row {\n    background: #2f45b5;\n    color: #ffff;\n}\n.active_list {\n    background: #287487;\n    color: #ffff;\n}\n", ""]);
+exports.push([module.i, "\n.active_row {\r\n    background: #2f45b5;\r\n    color: #ffff;\n}\n.active_list {\r\n    background: #287487;\r\n    color: #ffff;\n}\r\n", ""]);
 
 // exports
 
@@ -73249,9 +73252,9 @@ var render = function () {
                           _vm._v(" "),
                           _c("th", [_vm._v("Usuario creación")]),
                           _vm._v(" "),
-                          _c("th", [_vm._v("Fecha creación")]),
+                          _c("th", [_vm._v("Fecha y hora creación")]),
                           _vm._v(" "),
-                          _c("th", [_vm._v("Fecha modificación")]),
+                          _c("th", [_vm._v("Fecha y hora modificación")]),
                         ]),
                       ]),
                       _vm._v(" "),
@@ -73316,13 +73319,13 @@ var render = function () {
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
-                                  _vm._s(guide_log.created_at.slice(0, 10))
+                                  _vm._s(_vm.dateTime(guide_log.created_at))
                                 ),
                               ]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
-                                  _vm._s(guide_log.updated_at.slice(0, 10))
+                                  _vm._s(_vm.dateTime(guide_log.updated_at))
                                 ),
                               ]),
                             ])
