@@ -8694,6 +8694,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8761,6 +8770,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     dateTime: function dateTime(value) {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(value).format("DD-MMM-YYYY , h:mm a", "America/Panama");
+    },
+    get_novelty: function get_novelty(value) {
+      var json = JSON.parse(value);
+      return json.novelty;
+    },
+    get_additional_address: function get_additional_address(value) {
+      var json = JSON.parse(value);
+      return json.additional_address;
+    },
+    get_recipient_name: function get_recipient_name(value) {
+      var json = JSON.parse(value);
+      return json.recipient_name;
     },
     statusMatrix: function statusMatrix(scope) {
       var _this2 = this;
@@ -73255,6 +73276,12 @@ var render = function () {
                           _c("th", [_vm._v("Fecha y hora creación")]),
                           _vm._v(" "),
                           _c("th", [_vm._v("Fecha y hora modificación")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Novedades")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Nombre quién Entrega/Recibe")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Dirección adicional")]),
                         ]),
                       ]),
                       _vm._v(" "),
@@ -73328,6 +73355,52 @@ var render = function () {
                                   _vm._s(_vm.dateTime(guide_log.updated_at))
                                 ),
                               ]),
+                              _vm._v(" "),
+                              guide_log.url_document != null
+                                ? _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.get_novelty(guide_log.url_document)
+                                      )
+                                    ),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              guide_log.url_document == null
+                                ? _c("td", [_vm._v("No Registra")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              guide_log.url_document != null
+                                ? _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.get_recipient_name(
+                                          guide_log.url_document
+                                        )
+                                      )
+                                    ),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              guide_log.url_document == null
+                                ? _c("td", [_vm._v("No Registra")])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              guide_log.url_document != null
+                                ? _c("td", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.get_additional_address(
+                                          guide_log.url_document
+                                        )
+                                      )
+                                    ),
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              guide_log.url_document == null
+                                ? _c("td", [_vm._v("No Registra")])
+                                : _vm._e(),
                             ])
                           }
                         ),

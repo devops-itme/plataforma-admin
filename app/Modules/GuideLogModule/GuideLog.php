@@ -93,11 +93,11 @@ class GuideLog extends Model
             $guide  = Guide::find($request->guide_id);
             if($request->status_matrix_id == 10 || $request->status_matrix_id == 6){
                 $request->url_document = json_encode([
-                    'additional_address' =>$guide->additional_address ?? '',
-                    'additional_email' =>$guide->additional_email ?? '',
+                    'additional_address' =>$guide->additional_address ?? 'No registra',
+                    'additional_email' =>$guide->additional_email ?? 'No registra',
                     'additional_phone' =>$guide->additional_phone,
-                    'novelty' =>$guide->novelty ?? '',
-                    'recipient_name' =>$guide->recipient_name ?? '',
+                    'novelty' =>$guide->novelty ?? 'No registra',
+                    'recipient_name' =>$guide->recipient_name ?? 'No registra',
                 ]);
             }
             $guide_log = $this::create([

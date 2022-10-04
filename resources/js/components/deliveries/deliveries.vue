@@ -451,6 +451,9 @@
                             <th>Usuario creación</th>
                             <th>Fecha y hora creación</th>
                             <th>Fecha y hora modificación</th>
+                            <th>Novedades</th>
+                            <th>Nombre quién Entrega/Recibe</th>
+                            <th>Dirección adicional</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -464,6 +467,12 @@
                             <td v-if="guide_log.get_user_log.name == null">{{ guide_log.get_user_log.get_customer.tradename }}</td>
                             <td>{{ dateTime(guide_log.created_at) }}</td>
                             <td>{{ dateTime(guide_log.updated_at) }}</td>
+                            <td v-if = "guide_log.url_document != null">{{ get_novelty(guide_log.url_document) }}</td>
+                            <td v-if = "guide_log.url_document == null">No Registra</td>
+                            <td v-if = "guide_log.url_document != null">{{ get_recipient_name(guide_log.url_document) }}</td>
+                            <td v-if = "guide_log.url_document == null">No Registra</td>
+                            <td v-if = "guide_log.url_document != null">{{ get_additional_address(guide_log.url_document) }}</td>
+                            <td v-if = "guide_log.url_document == null">No Registra</td>
                         </tr>
                     </tbody>
                 </table>
@@ -543,6 +552,23 @@ export default {
         dateTime(value) {
         return moment(value).format("DD-MMM-YYYY , h:mm a" ,"America/Panama");
     },
+
+      get_novelty(value) {
+        let json = JSON.parse(value)
+        return  json.novelty ;
+    },
+
+      get_additional_address(value) {
+        let json = JSON.parse(value)
+        return  json.additional_address ;
+    },
+
+     get_recipient_name(value) {
+        let json = JSON.parse(value)
+        return  json.recipient_name ;
+    },
+
+
         async statusMatrix(scope) {
             //STATUS MATRIX
             let req = await fetch(`despacho/matriz_estados?scope_id=${scope}`);

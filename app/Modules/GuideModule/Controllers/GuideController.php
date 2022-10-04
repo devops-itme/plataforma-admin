@@ -423,11 +423,21 @@ class GuideController extends Controller
             $order = Order::where('id', $id_order)->firstOrFail();
             $guide_log = GuideLog::where('id', $id)->firstOrFail();
 
-            $guide_log->update([
-                'issue_id' => $issue_id,
-                'user_id' => Auth::user()->id,
-                'url_document' => ["novelty" => $request->novelty, "additional_address" => "$request->additional_address", "recipient_name" => $request->recipient_name]
-            ]);
+
+            if ($request->additional_address == null) {
+                $guide_log->update([
+                    'issue_id' => $issue_id,
+                    'user_id' => Auth::user()->id,
+                    'url_document' => ["novelty" => $request->novelty, "additional_address" => "No Registra", "recipient_name" => $request->recipient_name]
+                ]);
+            }else{
+                $guide_log->update([
+                    'issue_id' => $issue_id,
+                    'user_id' => Auth::user()->id,
+                    'url_document' => ["novelty" => $request->novelty, "additional_address" => $request->additional_address, "recipient_name" => $request->recipient_name]
+                ]);
+            }
+
 
             $guide_pack = Guide::where('order_id', $id_order)->get();
 
