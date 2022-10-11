@@ -29,6 +29,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     }
 });
 
+Route::any('{any}', function(){
+    return response()->json([
+        'status'    => 404,
+        'message'   => 'Ruta no encontrada.',
+    ], 404);
+})->where('any', '.*');
 
 
 
