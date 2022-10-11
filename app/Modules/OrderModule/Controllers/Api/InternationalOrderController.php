@@ -150,6 +150,7 @@ class InternationalOrderController extends Controller
 
     public function show($id)
     {
+        $user_id = Auth::user()->id;
 
         try {
         $query = DB::select(DB::raw("SELECT
@@ -180,7 +181,7 @@ class InternationalOrderController extends Controller
       on o.id = g.order_id
       JOIN users as u
       on u.id = o.user_id
-      WHERE g.state = '1' and g.external_id = $id and o.deleted_at is null"));
+      WHERE g.state = '1' and u.id = $user_id  and g.external_id = $id and o.deleted_at is null"));
 
         foreach ($query as $guide) {
             // dd($guide);
