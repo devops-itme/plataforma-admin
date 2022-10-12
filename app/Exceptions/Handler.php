@@ -52,15 +52,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        $header = null ;
+        $header = $request->headers->has('Postman-Token');
 
-        if ($request->expectsJson()) {
-            if ($exception instanceof NotFoundHttpException) {
+        if($header) {
                 return response()->json([
                     'status'    => 404,
                     'message'   => 'Ruta no encontrada.',
                 ], 404);
-            }
-        }
+    }
 
         return parent::render($request, $exception);
     }
