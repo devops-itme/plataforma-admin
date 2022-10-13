@@ -86,10 +86,10 @@ class InternationalOrderController extends Controller
 
             //  return json_encode($query,true);
             // return $this->respond(200,  $query, null, 'Ordenes Internacionales');
-            return response()->json(['state' => 200, 'data'=> $query ,'error' => null], 200);
+            return response()->json(['state' => 200, 'data' => $query, 'error' => null], 200);
         } catch (\Throwable $e) {
             // return $this->respond(500, null, [], 'Error del servidor');
-            return response()->json(['state' => 500, 'data'=> '','error' => 'Error del servidor'], 500);
+            return response()->json(['state' => 500, 'data' => '', 'error' => 'Error del servidor'], 500);
         }
     }
 
@@ -127,14 +127,13 @@ class InternationalOrderController extends Controller
                 $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
                 $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
                 $guide->historical[] = $tealca;
-
             }
             $guide->FechaTime = $guide->historical[0]['date'];
             $guide->Status = $guide->historical[0]['status'];
             $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
         }
 
-         return json_encode($query,true);
+        return json_encode($query, true);
         // return $this->respond(200,  $query, null, 'Ordenes Internacionales');
     }
 
@@ -153,7 +152,7 @@ class InternationalOrderController extends Controller
         $user_id = Auth::user()->id;
 
         try {
-        $query = DB::select(DB::raw("SELECT
+            $query = DB::select(DB::raw("SELECT
          g.external_id as external_id,
          g.pre_guide as pre_guide,
          g.branch_office as branch_office,
@@ -183,36 +182,34 @@ class InternationalOrderController extends Controller
       on u.id = o.user_id
       WHERE g.state = '1' and u.id = $user_id  and g.external_id = $id and o.deleted_at is null"));
 
-        foreach ($query as $guide) {
-            // dd($guide);
-            $Tealca = new Tealca();
-            $Tealca->login();
-            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+            foreach ($query as $guide) {
+                // dd($guide);
+                $Tealca = new Tealca();
+                $Tealca->login();
+                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-            $status_array = [
-                'Creacion' => 'VERIFICACION',
-                'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
-                'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
-                'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
-            ];
-            foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
-                $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                $guide->historical[] = $tealca;
+                $status_array = [
+                    'Creacion' => 'VERIFICACION',
+                    'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
+                    'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
+                    'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
+                ];
+                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                    $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
+                    $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                    $guide->historical[] = $tealca;
+                }
             }
+            //  return json_encode($query,true);
+
+            if (!isset($query[0])) {
+                return response()->json(['state' => 400, 'data' => 'Guia no encontrada', 'error' => 'Bad Request'], 400);
+            }
+
+            return response()->json($query[0]);
+        } catch (\Throwable $e) {
+            return response()->json(['state' => 500, 'data' => '', 'error' => 'Error del servidor'], 500);
         }
-        //  return json_encode($query,true);
-
-          if ( !isset($query[0]) ) {
-            return response()->json(['state' => 400, 'data'=> 'Guia no encontrada','error' => 'Bad Request'], 400);
-          }
-
-          return response()->json($query[0]);
-
-    } catch (\Throwable $e) {
-        return response()->json(['state' => 500, 'data'=> '','error' => 'Error del servidor'], 500);
-    }
-
     }
 
     public function store(Request $request)
@@ -305,7 +302,7 @@ class InternationalOrderController extends Controller
 
             if ($validator->fails()) {
                 // return $this->respond(400, null, $validator->errors(), "Solicitud incorrecta");
-                return response()->json(['state' => 400, 'data'=> $validator->errors(),'error' => 'Bad Request'], 400);
+                return response()->json(['state' => 400, 'data' => $validator->errors(), 'error' => 'Bad Request'], 400);
             }
 
             $user_id = $request->user_id;
@@ -385,12 +382,12 @@ class InternationalOrderController extends Controller
                 $response = $Tealca->requestCreateShipment($guide);
                 if ($response['state'] == 200) {
                     // return $this->respond(200, $response['data'], null, 'OK');
-                    return response()->json(['state' => 200, 'data'=> $response['data'],'error' => null], 200);
+                    return response()->json(['state' => 200, 'data' => $response['data'], 'error' => null], 200);
                 }
             }
         } catch (\Throwable $e) {
             // return $this->respond(500, null, $e->getMessage() . '. Line: ' . $e->getLine(), 'Error del servidor');
-            return response()->json(['state' => 500, 'data'=> '','error' => 'Error del servidor'], 500);
+            return response()->json(['state' => 500, 'data' => '', 'error' => 'Error del servidor'], 500);
         }
     }
 
@@ -412,12 +409,12 @@ class InternationalOrderController extends Controller
 
     public function getExportedDocumentsByAuth()
     {
-        $query =Document::where('user_id', Auth::user()->id)
-        ->get()
-        ->reverse()
-        ->values();
+        $query = Document::where('user_id', Auth::user()->id)
+            ->get()
+            ->reverse()
+            ->values();
 
-       return $this->respond(200, $query, null, 'Autenticacion exitosa');
+        return $this->respond(200, $query, null, 'Autenticacion exitosa');
     }
 
     public function exportGuide(Request $request)
@@ -441,5 +438,135 @@ class InternationalOrderController extends Controller
         }
 
         return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end), 'prueba.xls');
+    }
+
+
+    public function testing(Request $request) // Testing Connection API Guides
+    {
+
+        $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
+        $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
+
+        $user_id = Auth::user()->id;
+        $query_intro = null;
+        $query_prueba = null;
+        $key = false;
+
+
+        $query_intro =   DB::table('testing AS t')->select('t.id', 'guide_id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
+            ->where('t.external_id', '<>', null)
+            // ->where('g.state', '1')
+            ->join('orders as o', 'o.id', '=', 't.order_id')
+            ->join('users as u', 'u.id', '=', 'o.user_id')
+            ->whereBetween(DB::raw('DATE(t.created_at)'), [$fecha_begin, $fecha_end])
+            ->where('u.id', $user_id)
+            // ->limit(4)
+            ->get();
+
+        $query = DB::table('guides AS g')->select('g.id', 'order_id', 'g.external_id', 'g.contact', 'g.created_at')
+            ->where('g.external_id', '<>', null)
+            ->where('g.state', '1')
+            ->join('orders as o', 'o.id', '=', 'order_id')
+            ->join('users as u', 'u.id', '=', 'o.user_id')
+            ->where('o.deleted_at', null)
+            ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
+            ->where('u.id', $user_id)
+            // ->limit(4)
+            ->get();
+
+
+        foreach ($query as $guide) {
+
+            if (!$query_intro->isEmpty()) {
+                foreach ($query_intro as  $value) {
+                    if ($value->guide_id == $guide->id) {
+                        $key = true;
+                    }
+                    else{
+                        $key = false;
+                    }
+                }
+            }
+
+            if (!$key) {
+
+                $id = $guide->id;
+                $order_id = $guide->order_id;
+                $external_id = $guide->external_id;
+                $contact = $guide->contact;
+                $date = $guide->created_at;
+
+
+                $Tealca = new Tealca();
+                $Tealca->login();
+                $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+
+
+                $status_array = [
+                    'Creacion' => 'VERIFICACION',
+                    'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
+                    'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
+                    'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
+                ];
+                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                    $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
+                    $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                    $guide->historical[] = $tealca;
+                }
+                $guide->date_status = $guide->historical[0]['date'];
+                $guide->status = $guide->historical[0]['status'];
+                $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+
+
+
+                $query_prueba =   DB::table('testing AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
+                    ->where('t.guide_id', $id)
+                    ->where('t.external_id', '<>', null)
+                    // ->where('g.state', '1')
+                    ->join('orders as o', 'o.id', '=', 't.order_id')
+                    ->join('users as u', 'u.id', '=', 'o.user_id')
+                    ->whereBetween(DB::raw('DATE(t.created_at)'), [$fecha_begin, $fecha_end])
+                    ->where('u.id', $user_id)
+                    // ->limit(4)
+                    ->first();
+
+                if ($query_prueba == null) {
+                    if ($guide->status != 'VERIFICACION') {
+                        DB::table('testing')->insert(
+                            array(
+                                'guide_id'     =>   $id,
+                                'order_id'     =>   $order_id,
+                                'external_id'   => $external_id,
+                                'contact'   =>   $contact,
+                                'created_at'   =>   $date,
+                                'date_status'   =>   $guide->date_status,
+                                'status'   =>   $guide->status,
+                                'action'   =>   $guide->action
+
+                            )
+                        );
+                        $query_prueba = null;
+                    }
+                }
+            }
+        }
+
+
+
+            $query2 =   DB::table('testing AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
+            ->where('t.external_id', '<>', null)
+            // ->where('g.state', '1')
+            ->join('orders as o', 'o.id', '=', 't.order_id')
+            ->join('users as u', 'u.id', '=', 'o.user_id')
+            ->whereBetween(DB::raw('DATE(t.created_at)'), [$fecha_begin, $fecha_end])
+            ->where('u.id', $user_id)
+            // ->limit(4)
+            ->get();
+
+            $merged = $query2;
+            // ->merge($query);
+
+        // return response()->json(['state' => 200, 'data' => $query2, 'error' => null], 200);
+        return json_encode($merged, true);
     }
 }

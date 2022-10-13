@@ -26,6 +26,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('internationalOrder/getExportedDocumentsByUser', 'OrderModule\Controllers\Api\InternationalOrderController@getExportedDocumentsByUser');
     Route::get('internationalOrder/getExportedDocumentsbyAuth', 'OrderModule\Controllers\Api\InternationalOrderController@getExportedDocumentsByAuth');
     Route::post('web/export/order', 'OrderModule\Controllers\Api\InternationalOrderController@exportGuide')->name('internationalOrder.export');
+
+    Route::get('testing-data', 'OrderModule\Controllers\Api\InternationalOrderController@testing');
     }
 });
 
