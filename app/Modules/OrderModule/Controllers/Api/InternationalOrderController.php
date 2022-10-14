@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class InternationalOrderController extends Controller
@@ -451,9 +452,10 @@ class InternationalOrderController extends Controller
         $query_intro = null;
         $query_prueba = null;
         $key = false;
+        $tealca_data = null;
 
 
-        $query_intro =   DB::table('testing AS t')->select('t.id', 'guide_id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
+        $query_intro =   DB::table('tealca AS t')->select('t.id', 'guide_id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
             ->where('t.external_id', '<>', null)
             // ->where('g.state', '1')
             ->join('orders as o', 'o.id', '=', 't.order_id')
@@ -463,10 +465,10 @@ class InternationalOrderController extends Controller
             // ->limit(4)
             ->get();
 
-        $query = DB::table('guides AS g')->select('g.id', 'order_id', 'g.external_id', 'g.contact', 'g.created_at')
+        $query = DB::table('guides AS g')->select('g.id', 'g.order_id', 'g.external_id', 'g.contact', 'g.created_at')
             ->where('g.external_id', '<>', null)
             ->where('g.state', '1')
-            ->join('orders as o', 'o.id', '=', 'order_id')
+            ->join('orders as o', 'o.id', '=', 'g.order_id')
             ->join('users as u', 'u.id', '=', 'o.user_id')
             ->where('o.deleted_at', null)
             ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
@@ -479,14 +481,14 @@ class InternationalOrderController extends Controller
 
             if (!$query_intro->isEmpty()) {
                 foreach ($query_intro as  $value) {
-                    if ($value->guide_id == $guide->id) {
-                        $key = true;
-                    }
-                    else{
-                        $key = false;
+                    if ($value->guide_id == $guide->id  && $value->status == 'ENTREGADO') {
+                        $key = false;  // true
+                    } else {
+                        $key = true; // false
                     }
                 }
             }
+
 
             if (!$key) {
 
@@ -517,9 +519,12 @@ class InternationalOrderController extends Controller
                 $guide->status = $guide->historical[0]['status'];
                 $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
 
+                if ($guide->status != 'POD') {
+                    $tealca_data = $query;
+                }
 
 
-                $query_prueba =   DB::table('testing AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
+                $query_prueba =   DB::table('tealca AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
                     ->where('t.guide_id', $id)
                     ->where('t.external_id', '<>', null)
                     // ->where('g.state', '1')
@@ -530,9 +535,16 @@ class InternationalOrderController extends Controller
                     // ->limit(4)
                     ->first();
 
+                    $ldate = date('Y-m-d H:i:s');
+
+                    $today = Carbon::parse($ldate);
+                    $date_tealca = Carbon::parse($guide->date_status);
+
+                    $days = $today->diffInDays($date_tealca);
+
                 if ($query_prueba == null) {
-                    if ($guide->status != 'VERIFICACION') {
-                        DB::table('testing')->insert(
+                    if ($guide->status == 'POD' && $days >= 90) {  // POD
+                        DB::table('tealca')->insert(
                             array(
                                 'guide_id'     =>   $id,
                                 'order_id'     =>   $order_id,
@@ -551,9 +563,7 @@ class InternationalOrderController extends Controller
             }
         }
 
-
-
-            $query2 =   DB::table('testing AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
+        $query2 =   DB::table('tealca AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
             ->where('t.external_id', '<>', null)
             // ->where('g.state', '1')
             ->join('orders as o', 'o.id', '=', 't.order_id')
@@ -563,10 +573,8 @@ class InternationalOrderController extends Controller
             // ->limit(4)
             ->get();
 
-            $merged = $query2;
-            // ->merge($query);
+        $merged = $query2->merge($tealca_data);
 
-        // return response()->json(['state' => 200, 'data' => $query2, 'error' => null], 200);
         return json_encode($merged, true);
     }
 }
