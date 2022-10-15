@@ -176,7 +176,7 @@ class InternationalOrderController extends Controller
                         )
                     );
                 } else {
-                    DB::table('tealca')->update(
+                    DB::table('tealca')->where('external_id',$external_id)->update(
                         array(
                             'updated_at'   =>   $ldate,
                             'date_status'   =>   $guide->date_status,
