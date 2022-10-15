@@ -104,23 +104,23 @@ class InternationalOrderController extends Controller
 
         if ($request->has('begin') && $request->has('end')) {
             $query = DB::table('guides AS g')->select('g.id', 'g.order_id', 'g.external_id', 'g.contact', 'g.created_at')
-            ->where('g.external_id', '<>', null)
-            ->where('g.state', '1')
-            ->join('orders as o', 'o.id', '=', 'g.order_id')
-            ->join('users as u', 'u.id', '=', 'o.user_id')
-            ->where('o.deleted_at', null)
-            ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
-            ->where('u.id', $user_id)
-            ->get();
-        }else{
+                ->where('g.external_id', '<>', null)
+                ->where('g.state', '1')
+                ->join('orders as o', 'o.id', '=', 'g.order_id')
+                ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where('o.deleted_at', null)
+                ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
+                ->where('u.id', $user_id)
+                ->get();
+        } else {
             $query = DB::table('guides AS g')->select('g.id', 'g.order_id', 'g.external_id', 'g.contact', 'g.created_at')
-            ->where('g.external_id', '<>', null)
-            ->where('g.state', '1')
-            ->join('orders as o', 'o.id', '=', 'g.order_id')
-            ->join('users as u', 'u.id', '=', 'o.user_id')
-            ->where('o.deleted_at', null)
-            ->where('u.id', $user_id)
-            ->get();
+                ->where('g.external_id', '<>', null)
+                ->where('g.state', '1')
+                ->join('orders as o', 'o.id', '=', 'g.order_id')
+                ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->where('o.deleted_at', null)
+                ->where('u.id', $user_id)
+                ->get();
         }
 
         foreach ($query as $guide) {
@@ -146,44 +146,45 @@ class InternationalOrderController extends Controller
                 $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
                 $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
                 $guide->historical[] = $tealca;
-            }
-            $guide->date_status = $guide->historical[0]['date'];
-            $guide->status = $guide->historical[0]['status'];
-            $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+
+                $guide->date_status = $guide->historical[0]['date'];
+                $guide->status = $guide->historical[0]['status'];
+                $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
 
 
-            $query_prueba =   DB::table('tealca AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
-                ->where('t.guide_id', $id)
-                ->where('t.external_id', '<>', null)
-                ->join('orders as o', 'o.id', '=', 't.order_id')
-                ->join('users as u', 'u.id', '=', 'o.user_id')
-                ->where('u.id', $user_id)
-                ->first();
+                $query_prueba =   DB::table('tealca AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
+                    ->where('t.guide_id', $id)
+                    ->where('t.external_id', '<>', null)
+                    ->join('orders as o', 'o.id', '=', 't.order_id')
+                    ->join('users as u', 'u.id', '=', 'o.user_id')
+                    ->where('u.id', $user_id)
+                    ->first();
 
-            if ($query_prueba == null) {
+                if ($query_prueba == null) {
 
-                DB::table('tealca')->insert(
-                    array(
-                        'guide_id'     =>   $id,
-                        'order_id'     =>   $order_id,
-                        'external_id'   => $external_id,
-                        'contact'   =>   $contact,
-                        'created_at'   =>   $date,
-                        'updated_at'   =>   $ldate,
-                        'date_status'   =>   $guide->date_status,
-                        'status'   =>   $guide->status,
-                        'action'   =>   $guide->action
-                    )
-                );
-            } else {
-                DB::table('tealca')->update(
-                    array(
-                        'updated_at'   =>   $ldate,
-                        'date_status'   =>   $guide->date_status,
-                        'status'   =>   $guide->status
-                        // 'status'   =>   'ENTREGADO'
-                    )
-                );
+                    DB::table('tealca')->insert(
+                        array(
+                            'guide_id'     =>   $id,
+                            'order_id'     =>   $order_id,
+                            'external_id'   => $external_id,
+                            'contact'   =>   $contact,
+                            'created_at'   =>   $date,
+                            'updated_at'   =>   $ldate,
+                            'date_status'   =>   $guide->date_status,
+                            'status'   =>   $guide->status,
+                            'action'   =>   $guide->action
+                        )
+                    );
+                } else {
+                    DB::table('tealca')->update(
+                        array(
+                            'updated_at'   =>   $ldate,
+                            'date_status'   =>   $guide->date_status,
+                            'status'   =>   $guide->status
+                            // 'status'   =>   'ENTREGADO'
+                        )
+                    );
+                }
             }
         }
 
