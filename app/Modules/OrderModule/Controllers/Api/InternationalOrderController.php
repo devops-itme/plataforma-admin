@@ -101,6 +101,9 @@ class InternationalOrderController extends Controller
         $ldate = date('Y-m-d H:i:s');
         $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
+        $today = null;
+        $date_tealca = null;
+        $days = null;
 
         if ($request->has('begin') && $request->has('end')) {
             $query = DB::table('guides AS g')->select('g.id', 'g.order_id', 'g.external_id', 'g.contact', 'g.created_at')
@@ -160,8 +163,13 @@ class InternationalOrderController extends Controller
                     ->where('u.id', $user_id)
                     ->first();
 
-                if ($query_prueba == null) {
+                    $today = Carbon::parse($ldate);
+                    $date_tealca = Carbon::parse($guide->date_status);
 
+                    $days = $today->diffInDays($date_tealca);
+
+                if ($query_prueba == null) {
+                   if ($guide->status == 'POD' && $days >= 90) {  // POD
                     DB::table('tealca')->insert(
                         array(
                             'guide_id'     =>   $id,
@@ -174,17 +182,19 @@ class InternationalOrderController extends Controller
                             'status'   =>   $guide->status,
                             'action'   =>   $guide->action
                         )
-                    );
-                } else {
-                    DB::table('tealca')->where('external_id',$external_id)->update(
-                        array(
-                            'updated_at'   =>   $ldate,
-                            'date_status'   =>   $guide->date_status,
-                            'status'   =>   $guide->status
-                            // 'status'   =>   'ENTREGADO'
-                        )
-                    );
+                        );
+                    }
                 }
+                // else {
+                //     DB::table('tealca')->where('external_id',$external_id)->update(
+                //         array(
+                //             'updated_at'   =>   $ldate,
+                //             'date_status'   =>   $guide->date_status,
+                //             'status'   =>   $guide->status
+                //             // 'status'   =>   'ENTREGADO'
+                //         )
+                //     );
+                // }
             }
         }
 
