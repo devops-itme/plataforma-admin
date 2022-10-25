@@ -97,44 +97,23 @@ class InternationalOrderController extends Controller
     public function services(Request $request)
     {
         $user_id = Auth::user()->id;
-        $query_prueba = null;
-        $ldate = date('Y-m-d H:i:s');
+
         $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
-        $today = null;
-        $date_tealca = null;
-        $days = null;
 
-        if ($request->has('begin') && $request->has('end')) {
-            $query = DB::table('guides AS g')->select('g.id', 'g.order_id', 'g.external_id', 'g.contact', 'g.created_at')
-                ->where('g.external_id', '<>', null)
-                ->where('g.state', '1')
-                ->join('orders as o', 'o.id', '=', 'g.order_id')
-                ->join('users as u', 'u.id', '=', 'o.user_id')
-                ->where('o.deleted_at', null)
-                ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
-                ->where('u.id', $user_id)
-                ->get();
-        } else {
-            $query = DB::table('guides AS g')->select('g.id', 'g.order_id', 'g.external_id', 'g.contact', 'g.created_at')
-                ->where('g.external_id', '<>', null)
-                ->where('g.state', '1')
-                ->join('orders as o', 'o.id', '=', 'g.order_id')
-                ->join('users as u', 'u.id', '=', 'o.user_id')
-                ->where('o.deleted_at', null)
-                ->where('u.id', $user_id)
-                ->get();
-        }
+        $query = DB::table('guides as g')
+            ->select('g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
+            ->where('g.external_id', '<>', null)
+            ->where('g.country', '<>', 'PAN')
+            ->join('orders as o', 'o.id', '=', 'g.order_id')
+            ->join('users as u', 'u.id', '=', 'o.user_id')
+            ->where('o.deleted_at', null)
+            ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
+            ->where('u.id', $user_id)
+            ->get();
 
         foreach ($query as $guide) {
-            $query_prueba = null;
-
-            $id = $guide->id;
-            $order_id = $guide->order_id;
-            $external_id = $guide->external_id;
-            $contact = $guide->contact;
-            $date = $guide->created_at;
-
+            // dd($guide);
             $Tealca = new Tealca();
             $Tealca->login();
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
@@ -150,55 +129,13 @@ class InternationalOrderController extends Controller
                 $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
                 $guide->historical[] = $tealca;
 
-                $guide->date_status = $guide->historical[0]['date'];
-                $guide->status = $guide->historical[0]['status'];
-                $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
-
-
-                $query_prueba =   DB::table('tealca AS t')->select('t.id', 't.external_id', 't.contact', 't.created_at', 't.date_status', 't.status', 't.action')
-                    ->where('t.guide_id', $id)
-                    ->where('t.external_id', '<>', null)
-                    ->join('orders as o', 'o.id', '=', 't.order_id')
-                    ->join('users as u', 'u.id', '=', 'o.user_id')
-                    ->where('u.id', $user_id)
-                    ->first();
-
-                    $today = Carbon::parse($ldate);
-                    $date_tealca = Carbon::parse($guide->date_status);
-
-                    $days = $today->diffInDays($date_tealca);
-
-                if ($query_prueba == null) {
-                   if ($guide->status == 'POD' && $days >= 90) {  // POD
-                    DB::table('tealca')->insert(
-                        array(
-                            'guide_id'     =>   $id,
-                            'order_id'     =>   $order_id,
-                            'external_id'   => $external_id,
-                            'contact'   =>   $contact,
-                            'created_at'   =>   $date,
-                            'updated_at'   =>   $ldate,
-                            'date_status'   =>   $guide->date_status,
-                            'status'   =>   $guide->status,
-                            'action'   =>   $guide->action
-                        )
-                        );
-                    }
-                }
-                // else {
-                //     DB::table('tealca')->where('external_id',$external_id)->update(
-                //         array(
-                //             'updated_at'   =>   $ldate,
-                //             'date_status'   =>   $guide->date_status,
-                //             'status'   =>   $guide->status
-                //             // 'status'   =>   'ENTREGADO'
-                //         )
-                //     );
-                // }
             }
+            $guide->FechaTime = $guide->historical[0]['date'];
+            $guide->Status = $guide->historical[0]['status'];
+            $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
         }
 
-        return json_encode($query, true);
+         return json_encode($query,true);
         // return $this->respond(200,  $query, null, 'Ordenes Internacionales');
     }
 
