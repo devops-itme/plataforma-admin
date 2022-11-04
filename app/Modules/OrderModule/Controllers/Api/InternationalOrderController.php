@@ -102,9 +102,10 @@ class InternationalOrderController extends Controller
         $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
 
         $query = DB::table('guides as g')
-            ->select('g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
+            ->select('g.status_matrix_id', 'g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
             ->where('g.external_id', '<>', null)
             ->where('g.country', '<>', 'PAN')
+            ->whereRaw("DATEDIFF('" . Carbon::now() . "',g.created_at)  < 92 AND g.status_matrix_id != 10")
             ->join('orders as o', 'o.id', '=', 'g.order_id')
             ->join('users as u', 'u.id', '=', 'o.user_id')
             ->where('o.deleted_at', null)
