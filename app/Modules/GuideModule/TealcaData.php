@@ -73,7 +73,7 @@ class TealcaData extends Model
                 ]
             );
 
-            return $this->respond(200, $tealca, null, 'creada exitosamente');
+            return $this->respond(200, null, null, 'creada exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al crear');
         }
