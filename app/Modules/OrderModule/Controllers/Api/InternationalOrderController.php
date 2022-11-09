@@ -16,6 +16,7 @@ use App\Modules\OrderModule\Exports\OrdersExportServices;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use App\Modules\DocumentModule\Document;
+use App\Modules\GuideModule\TealcaData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -101,44 +102,29 @@ class InternationalOrderController extends Controller
         $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
 
-        $query = DB::table('guides as g')
-            ->select('g.status_matrix_id', 'g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
-            ->where('g.external_id', '<>', null)
-            ->where('g.country', '<>', 'PAN')
-            ->whereRaw("DATEDIFF('" . Carbon::now() . "',g.created_at)  < 92 AND g.status_matrix_id != 10")
-            ->join('orders as o', 'o.id', '=', 'g.order_id')
-            ->join('users as u', 'u.id', '=', 'o.user_id')
-            ->where('o.deleted_at', null)
-            ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
-            ->where('u.id', $user_id)
-            ->get();
+        $query = DB::table('tealca_datas as t')
+        ->select('t.id','t.external_id as external_id', 't.contact as contact', 't.date_status as FechaTime', 't.status as Status', 't.historical')
+        //->whereRaw("DATEDIFF('" . Carbon::now() . "',g.created_at)  < 92 AND g.status_matrix_id != 10")
+        ->join('orders as o', 'o.id', '=', 't.order_id')
+        ->join('users as u', 'u.id', '=', 'o.user_id')
+        ->where('o.deleted_at', null)
+        ->join('guides as g', 'g.id', '=', 't.guide_id')
+        ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
+        ->where('u.id', $user_id)
+        ->get();
+
 
         foreach ($query as $guide) {
-            // dd($guide);
-            $Tealca = new Tealca();
-            $Tealca->login();
-            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-            $status_array = [
-                'Creacion' => 'VERIFICACION',
-                'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
-                'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
-                'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
-            ];
-            foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
-                $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                $guide->historical[] = $tealca;
-
-            }
-            $guide->FechaTime = $guide->historical[0]['date'];
-            $guide->Status = $guide->historical[0]['status'];
             $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+            $guide->historical = json_decode($guide->historical);
+
         }
 
-         return json_encode($query,true);
-        // return $this->respond(200,  $query, null, 'Ordenes Internacionales');
+        return json_encode($query,true);
+
     }
+
 
     public function permissionsAccions(Request $request, $id)
     {
@@ -465,5 +451,58 @@ class InternationalOrderController extends Controller
 
         return json_encode($query2, true);
         return $this->respond(200,  $query2, null, 'Ordenes Internacionales');
+    }
+
+    public function updateGuideByTealca()
+    {
+        $query = DB::table('guides as g')
+        ->select('g.id', 'g.order_id','g.status_matrix_id', 'g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
+        ->where('g.external_id', '<>', null)
+        ->where('g.country', '<>', 'PAN')
+        //->whereRaw("DATEDIFF('" . Carbon::now() . "',g.created_at)  < 92 AND g.status_matrix_id != 10")
+        ->join('orders as o', 'o.id', '=', 'g.order_id')
+        ->join('users as u', 'u.id', '=', 'o.user_id')
+        ->where('o.deleted_at', null)
+        ->get();
+
+        foreach ($query as $guide) {
+
+            $Tealca = new Tealca();
+            $Tealca->login();
+            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+
+            $status_array = [
+                'Creacion' => 'VERIFICACION',
+                'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
+                'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
+                'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
+            ];
+            foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
+                $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                $guide->historical[] = $tealca;
+
+            }
+            $guide->FechaTime = $guide->historical[0]['date'];
+            $guide->Status = $guide->historical[0]['status'];
+            $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+
+            $request = new Request(array(
+                'guide_id' => $guide->id,
+                'order_id' => $guide->order_id,
+                'external_id' => $guide->external_id,
+                'contact' => $guide->contact,
+                'date_status' => $guide->FechaTime,
+                'status' => $guide->Status,
+                'historical' => current($guide->historical),
+                'action' => $guide->action,
+            ));
+
+            $tealca = new TealcaData();
+            $saveTealca = $tealca->saveTealca($request);
+
+        }
+
+        return $saveTealca;
     }
 }
