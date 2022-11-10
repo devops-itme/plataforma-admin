@@ -97,7 +97,7 @@ class InternationalOrderController extends Controller
 
     public function services(Request $request)
     {
-        $user_id = Auth::user()->id;
+        //$user_id = Auth::user()->id;
 
         $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
@@ -105,12 +105,11 @@ class InternationalOrderController extends Controller
         $query = DB::table('tealca_datas as t')
         ->select('t.id','t.external_id as external_id', 't.contact as contact', 't.date_status as FechaTime', 't.status as Status', 't.historical')
         //->whereRaw("DATEDIFF('" . Carbon::now() . "',g.created_at)  < 92 AND g.status_matrix_id != 10")
-        ->join('orders as o', 'o.id', '=', 't.order_id')
-        ->join('users as u', 'u.id', '=', 'o.user_id')
-        ->where('o.deleted_at', null)
-        ->join('guides as g', 'g.id', '=', 't.guide_id')
-        ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
-        ->where('u.id', $user_id)
+        //->join('orders as o', 'o.id', '=', 't.order_id')
+        //->where('o.deleted_at', null)
+        //->join('guides as g', 'g.id', '=', 't.guide_id')
+        //->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
+        //->where('u.id', $user_id)
         ->get();
 
 
@@ -459,6 +458,8 @@ class InternationalOrderController extends Controller
         ->select('g.id', 'g.order_id','g.status_matrix_id', 'g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
         ->where('g.external_id', '<>', null)
         ->where('g.country', '<>', 'PAN')
+        ->join('orders as o', 'o.id', '=', 'g.order_id')
+        ->where('o.deleted_at', null)
         ->get();
 
         //return $query;
