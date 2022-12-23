@@ -53,7 +53,11 @@ class InternationalOrderController extends Controller
     }
 
     public function importBatch(Request $request)
-    {
+    {   
+        $unique_phone = $request->unique_phone === 'true';
+        $customer_id = $request->customer_id;
+        $TealcaImport = new ShipmentTealcaImport($unique_phone,$customer_id);
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -64,11 +68,12 @@ class InternationalOrderController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
-        $unique_phone = $request->unique_phone === 'true';
-        $customer_id = $request->customer_id;
+        
         $file = $request->file('excel');
-        $excelResponse = Excel::import(new ShipmentTealcaImport($unique_phone,$customer_id), $file);
-        // dd($excelResponse);
+        $excelResponse = Excel::import($TealcaImport, $file);
+        if ($TealcaImport->getWrongRow() > 0) {
+            return redirect()->route('internationalOrders.index')->with('danger', 'Error en la fila '.$TealcaImport->getWrongRow().': ciudad no encontrada. Porfavor verifique e intente nuevamente.');
+        }
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
     }
 

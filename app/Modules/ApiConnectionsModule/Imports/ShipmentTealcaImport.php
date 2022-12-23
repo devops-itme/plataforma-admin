@@ -14,12 +14,14 @@ use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use App\Modules\ApiConnectionsModule\Models\Tealca;
 
 class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidation
 {
     use OrderTrait, GuideTrait;
 
     protected $unique_phone;
+    protected $wrongRow;
 
     public function __construct(bool $unique_phone = false,$user_id)
     {
@@ -124,6 +126,32 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         }
     }
 
+    public function validateCitiesDestination($rows){
+        
+        $Tealca = new Tealca();
+        $Tealca->login();
+        
+        $Tealca->getDestination();
+        $destinationCodes = $Tealca->getDestination()['data'];
+        
+        $arrayCodes = [];
+
+        foreach ($destinationCodes as $code) {
+            array_push($arrayCodes, $code['destinationCode']);
+        }
+        $cellNumber = 0;
+
+        foreach ($rows as $row) {
+            $response = in_array($row['ciudes'], $arrayCodes);
+            ++$cellNumber;
+            if ($response == false) {
+                $cellNumber = $cellNumber + 1;
+                $this->wrongRow = $cellNumber;
+                return $this->respond(500, null, null, 'En la fila: '.$cellNumber.' la ciudad es errónea');
+            }
+        }
+    }
+
 
     public function collection(Collection $rows)
     {
@@ -155,6 +183,12 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             $this->validateNamesContact($rows);
 
 
+        $cityValidation = $this->validateCitiesDestination($rows);
+        if ($cityValidation['state'] == 500) {
+            DB::rollBack();
+            return null;
+        }
+
 
         foreach ($rows as $row) {
             $guideResponse = $this->storeGuide(new Request(array(
@@ -182,6 +216,10 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             };
         }
         DB::commit();
+    }
+
+    public function getWrongRow(){
+        return $this->wrongRow;
     }
 
     public function rules(): array
