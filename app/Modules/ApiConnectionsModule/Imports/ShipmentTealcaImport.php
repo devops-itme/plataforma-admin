@@ -150,6 +150,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                 return $this->respond(500, null, null, 'En la fila: '.$cellNumber.' la ciudad es errónea');
             }
         }
+        return $this->respond(200, null, null, 'Importación exitosa');
     }
 
 
@@ -240,7 +241,8 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             "piezas" => 'required|numeric', //
             "kilos" => 'required|numeric', //
             "namecontact" => 'required|string', //
-            "observ" => 'nullable', //
+            "observ" => 'required|string', //
+
         ];
     }
 }
