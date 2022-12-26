@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
+use Illuminate\Support\Facades\Validator;
 
 class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidation
 {
@@ -22,6 +23,8 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
 
     protected $unique_phone;
     protected $wrongRow;
+    private $rows = 0;
+    
 
     public function __construct(bool $unique_phone = false,$user_id)
     {
@@ -153,9 +156,9 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         return $this->respond(200, null, null, 'Importación exitosa');
     }
 
-
     public function collection(Collection $rows)
-    {
+    {   
+        
         $order_type = ParameterValue::where('name', 'International')->first(['id'])->id;
         $order = Order::where('order_type', $order_type)->latest()->first(['id', 'order_number']);
         $lot_number = 'Lote_1';
@@ -182,13 +185,6 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         }
             $this->validateNamesDestination($rows);
             $this->validateNamesContact($rows);
-
-
-        $cityValidation = $this->validateCitiesDestination($rows);
-        if ($cityValidation['state'] == 500) {
-            DB::rollBack();
-            return null;
-        }
 
 
         foreach ($rows as $row) {
@@ -226,23 +222,24 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
     public function rules(): array
     {
         return [
-            "paisdes" => 'required|string|size:3', //
-            "ciudes" => 'required|string|size:3', //
-            "nomdes" => 'required|string', //
-            "dirdes" => 'required|string|max:200', //
-            "documenttypedes" => 'required|string', //
-            "documentnumberdes" => 'required|numeric', //
-            "teldes" => 'required|numeric', //
-            "email" => 'required|email', //
-            "oficinadeentrega" => 'required|string', //
-            "preguia" => 'required|numeric', //
-            "numfactura" => 'required|alpha_num', //
-            "declarado" => 'required|numeric', //
-            "piezas" => 'required|numeric', //
-            "kilos" => 'required|numeric', //
-            "namecontact" => 'required|string', //
-            "observ" => 'required|string', //
+            "paisdes" => 'required|string|size:3',
+            "ciudes" => 'required|string|size:3',
+            "nomdes" => 'required|string',
+            "dirdes" => 'required|string|max:200',
+            "documenttypedes" => 'required|string',
+            "documentnumberdes" => 'required|numeric',
+            "teldes" => 'required|numeric',
+            "email" => 'required|email',
+            "oficinadeentrega" => 'required|string',
+            "preguia" => 'required|numeric',
+            "numfactura" => 'required|alpha_num',
+            "declarado" => 'required|numeric',
+            "piezas" => 'required|numeric',
+            "kilos" => 'required|numeric',
+            "namecontact" => 'required|string',
+            "observ" => 'required|string',
 
         ];
     }
+
 }
