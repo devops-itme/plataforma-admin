@@ -186,6 +186,11 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             $this->validateNamesDestination($rows);
             $this->validateNamesContact($rows);
 
+        $validateCities = $this->validateCitiesDestination($rows);
+        if ($validateCities['state'] == 500) {
+            DB::rollBack();
+            return null;
+        }
 
         foreach ($rows as $row) {
             $guideResponse = $this->storeGuide(new Request(array(
