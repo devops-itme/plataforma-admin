@@ -27,7 +27,7 @@
                     <button class="btn btn-light-primary mr-2 px-6">
                 <i class="fas fa-plus"></i>
                 Crear Guía</button>
-            </a>
+                </a>
 
 
                 <form action="{{ route('shipments.assign', $order_id) }}" method="POST">
@@ -214,13 +214,15 @@
                                         <i class="far fa-folder-open"></i>
                                     </a>
                                     @if ( !isset($shipment->external_id))
-                                    <a href="{{ route('shipments.edit', $shipment->id,'edit') }}" class="btn btn-icon btn-light-success btn-sm mr-2" data-tooltip title="Editar">
+                                    <a href="{{ route('shipments.edit', $shipment->id,'edit') }}" class="btn btn-icon btn-light-success btn-sm mr-1" data-tooltip title="Editar">
                                         <i class="fad fa-edit"></i>
                                     </a>
+
                                     <button type="button" onclick="confirmDelete('/guias/'+{{ $shipment->id }})"
-                                        class="btn btn-icon btn-light-danger btn-sm mr-2" data-tooltip title="Eliminar">
+                                        class="btn btn-icon btn-light-danger btn-sm mr-1" data-tooltip title="Eliminar">
                                         <i class="fad fa-trash-alt"></i>
                                     </button>
+
                                     @endif
 
                                 </div>

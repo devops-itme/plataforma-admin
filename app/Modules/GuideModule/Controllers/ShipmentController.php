@@ -103,10 +103,14 @@ class ShipmentController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-
+    {   
         $dato_guide = Guide::find($id);
         $order_id = $dato_guide->order_id;
+        $findGuideNumber = Guide::where('external_id', $request->guideNumber)->get();
+        //dd($findGuideNumber);
+        if (count($findGuideNumber) > 0) {
+            return redirect()->route('shipments.index', ['order_id' => $order_id])->with('danger', 'Error: el número de guía indicado ya existe. Porfavor verifique e intente nuevamente');
+        }
 
         $request->guide_id = $id;
         $response = $this->updateGuide($request);
