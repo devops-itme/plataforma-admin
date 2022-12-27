@@ -40,10 +40,34 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Importar</button>
+                    <button type="submit" class="btn btn-primary" onclick="loadingAlert()">Importar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        function loadingAlert() {
+
+            Swal.fire({
+            title: '<h2>Cargando guías</h2>',
+            html: '<h3>Porfavor espere...</h3>',
+            allowOutsideClick: false,
+            buttons: false,
+            didOpen: () => {
+                Swal.showLoading()
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+            }).then((result) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ÉXITO',
+                    text: 'Guías cargadas correctamente',
+                    })
+            })
+        }
+</script>
