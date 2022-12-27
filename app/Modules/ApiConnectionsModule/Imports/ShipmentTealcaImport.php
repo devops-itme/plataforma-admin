@@ -190,7 +190,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         foreach ($rows as $row) {
             $guideResponse = $this->storeGuide(new Request(array(
                 'order_id' => $order_id,
-                'description' => $row['observ'],
+                'description' => $row['observ'] ?? null,
                 'address_name' => $row['dirdes'],
                 'country' => $row['paisdes'],
                 'city' => $row['ciudes'],
@@ -237,8 +237,6 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             "piezas" => 'required|numeric',
             "kilos" => 'required|numeric',
             "namecontact" => 'required|string',
-            "observ" => 'required|string',
-
         ];
     }
 
