@@ -32,7 +32,7 @@
 
                 <form action="{{ route('shipments.assign', $order_id) }}" method="POST">
                     @csrf
-                    <button type="submit" class="btn btn-primary mt-4">
+                    <button type="submit" class="btn btn-primary mt-4" onclick="loadingAlert()">
                         <span>Enviar lote</span>
                     </button>
                 </form>
@@ -241,6 +241,30 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
++<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        function loadingAlert() {
+
+            Swal.fire({
+            title: '<h2>Enviando lote</h2>',
+            html: '<h3>Porfavor espere, esto puede tomar varios minutos...</h3>',
+            allowOutsideClick: false,
+            buttons: false,
+            didOpen: () => {
+                Swal.showLoading()
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+            }).then((result) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ÉXITO',
+                    text: 'Guías cargadas correctamente',
+                    })
+            })
+        }
+</script>
 {{-- Styles Section --}}
 @section('styles')
 @endsection

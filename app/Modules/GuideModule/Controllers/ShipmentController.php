@@ -30,7 +30,8 @@ class ShipmentController extends Controller
         return view($this->path . 'index', compact('shipments', 'order_id'));
     }
     public function sendBatch($id)
-    {
+    {    
+        ini_set('max_execution_time', 600);
         $Guide = new Guide();
         $Tealca = new Tealca();
         $Tealca->login();
