@@ -166,18 +166,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-title">
-                    <h2 class="card-label">
-                        <hr width="545%" />
-                        Crear número de guía
-                        <hr width="545%" />
-                    </h2>
-                </div>
-                <div class="container mt-8">
-                    {{-- <input type="text" id="order_id" hidden name="order_id" value="{{$order_id ?? null}}"> --}}
-                    <label for="branch_off">Número de guía</label>
-                    <input type="number" class="form-control" name="guideNumber" id="guideNumber">
-            </div>
                 <div class="col-12 mt-5 text-center">
                     <button type="submit" class="btn btn-primary">Actualizar Guia</button>
                 </div>

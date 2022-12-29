@@ -124,7 +124,6 @@ trait GuideTrait
             }
             $guide->update([
                 // 'dispatched' => $request->dispatched,
-                'external_id' =>$request->guideNumber ?? $guide->external_id,
                 'branch_office' => $request->branch_office ?? $guide->branch_office,
                 'address_id' => $request->address_id ?? $guide->address_id,
                 'address_name' => $request->address_name ?? $guide->address_name,

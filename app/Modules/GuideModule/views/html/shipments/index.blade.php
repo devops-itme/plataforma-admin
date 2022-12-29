@@ -22,6 +22,13 @@
                     </span>Filtro
                 </button>
 
+                <button class="btn btn-light-primary mr-2 px-6"
+                    onclick="showHideAddGuidesContent()">
+                    <span class="svg-icon svg-icon-md">
+                        <i class="fad fa-upload"></i>
+                    </span>Importar nuevas guías
+                </button>
+                
 
                 <a href="{{ route('shipments.create',['order_id' => $order_id])}}">
                     <button class="btn btn-light-primary mr-2 px-6">
@@ -113,6 +120,14 @@
             </div>
         </div>
         <div class="card-body">
+                <div style="margin:0px auto; display: none;" class="mb-7" id="addGuidesContent">
+                    <h5>Cargar nuevas guías</h5>
+                    <form action="{{ route('internationalOrders.import.addGuides', $order_id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" id="excel" name ="excel" style="width: 70%; border: 1px solid rgb(4, 0, 231); padding: 5px; border-radius: 5px;">
+                        <button type="submit" class="btn btn-primary" style="width: 20%; margin-left: 6%;" onclick="loadingGuidesAlert()">Cargar</button>
+                    </form>
+                </div>
             <div class="mb-7">
                 <div class="form-filter" style="display:none">
                     <form action="{{ route('shipments.index') }}">
@@ -263,7 +278,37 @@
                     text: 'Guías cargadas correctamente',
                     })
             })
-        }
+        };
+
+        function showHideAddGuidesContent() {
+            var x = document.getElementById("addGuidesContent");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        };
+
+        function loadingGuidesAlert() {
+            Swal.fire({
+            title: '<h2>Cargando guías</h2>',
+            html: '<h3>Porfavor espere...</h3>',
+            allowOutsideClick: false,
+            buttons: false,
+            didOpen: () => {
+                Swal.showLoading()
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+            }).then((result) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'ÉXITO',
+                    text: 'Guías cargadas correctamente',
+                    })
+            })
+            }
 </script>
 {{-- Styles Section --}}
 @section('styles')

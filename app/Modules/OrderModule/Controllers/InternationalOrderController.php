@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
+use App\Modules\ApiConnectionsModule\Imports\GuidesToBatchImport;
 
 class InternationalOrderController extends Controller
 {
@@ -104,6 +105,56 @@ class InternationalOrderController extends Controller
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
     }
 
+    public function addGuidesToBatch(Request $request, $order_id)
+    {   //dd($request->all());
+        $unique_phone = $request->unique_phone === 'true';
+        $customer_id = $request->customer_id;
+        $file = $request->excel;
+        
+        $headings = (new HeadingRowImport)->toArray($file);
+        $TealcaImport = new GuidesToBatchImport($unique_phone, $customer_id, $order_id);
+        
+        $header = ["paisdes",
+                    "ciudes",
+                    "nomdes",
+                    "dirdes",
+                    "documenttypedes",
+                    "documentnumberdes",
+                    "teldes",
+                    "email",
+                    "oficinadeentrega",
+                    "preguia",
+                    "numfactura",
+                    "declarado",
+                    "piezas",
+                    "kilos",
+                    "namecontact",
+                    "observ"];
+        
+        
+        $missingColumns = array_diff($header, $headings[0][0]);
+        if (count($missingColumns) == 1) {
+            return redirect()->back()->with('danger', 'Error. No se encontró la columna '. implode($missingColumns). '.');
+        }
+        if (count($missingColumns) > 1) {
+            return redirect()->back()->with('danger', 'Error. No se encontraron las columnas '. implode(", ", $missingColumns). '.');
+        }
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'excel' => 'required|mimes:xlsx',
+            ]
+        );
+        if ($validator->fails()) {
+            return redirect()->back()->with('danger', $validator->errors()->first());
+        }
+
+        $excelResponse = Excel::import($TealcaImport, $file);
+        if ($TealcaImport->getWrongRow() > 0) {
+            return redirect()->back()->with('danger', 'Error en la fila '.$TealcaImport->getWrongRow().': ciudad no encontrada. Porfavor verifique e intente nuevamente.');
+        }
+        return redirect()->back()->with('success', 'Guías cargadas correctamente');
+    }
 
     public function exportBatch(Request $request)
     {

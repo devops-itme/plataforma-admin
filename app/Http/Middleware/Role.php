@@ -32,11 +32,11 @@ class Role
 
         //role _id of authenticated user
         $role_id = Auth::user()->role;
-
+        
         //allowed actions
         $premission = Permission::where('module_id', $module_id)->where('role_id', $role_id)->first(['id', 'actions']);
         $actions = $premission->actions ?? '';
-
+        
         //action name
         // $action = $request->route()->getActionMethod();
         $action = explode('.', $request->route()->getName())[1];

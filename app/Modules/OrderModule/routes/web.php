@@ -9,6 +9,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/ordenes', 'OrderModule\Controllers\OrderController')->names('orders');
         Route::resource('/ordenes-internacionales', 'OrderModule\Controllers\InternationalOrderController')->names('internationalOrders');
         Route::post('/importBatch', 'OrderModule\Controllers\InternationalOrderController@importBatch')->name('internationalOrders.import');
+        Route::post('/importBatch/add-guides/{order_id}', 'OrderModule\Controllers\InternationalOrderController@addGuidesToBatch')->name('internationalOrders.import.addGuides');
         Route::post('/exportBatch', 'OrderModule\Controllers\InternationalOrderController@exportBatch')->name('internationalOrders.export');
     });
     Route::get('/export_incidences', 'OrderModule\Controllers\InternationalOrderController@incidencesExport')->name('internationalOrders.incidencesExport');
