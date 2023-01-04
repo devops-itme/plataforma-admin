@@ -50,10 +50,11 @@ class Tealca
     {
         $weight = $guide->kg;
         $weight = floatval(str_replace(",",".",$weight));
+        
         $body = [
             "UserLogin" => env("TEALCA_USER"),
             "PickingNumber" => $guide->pre_guide,
-            "Observations" => $guide->description,
+            "Observations" => $guide->description ?? null,
             "TotalPieces" => $guide->pieces,
             "DeclaratedValueCurrency" => "USD",
             "IsSafeKeeping" => 0, //

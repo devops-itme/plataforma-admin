@@ -196,7 +196,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             $guideResponse = $this->storeGuide(new Request(array(
                 'order_id' => $order_id,
                 'description' => $row['observ'] ?? null,
-                'address_name' => $row['dirdes'],
+                'address_name' => trim($row['dirdes']),
                 'country' => $row['paisdes'],
                 'city' => $row['ciudes'],
                 'recipient_name' => $row['nomdes'],
