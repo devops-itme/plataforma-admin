@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
@@ -30,7 +31,7 @@ class AuthController extends Controller
     }
 
     public function Login(Request $request)
-    {
+    {   $userData = auth()->user();
         $is_numeric = is_numeric($request->user);
 
         $validator = Validator::make($request->all(), [
@@ -78,7 +79,8 @@ class AuthController extends Controller
     }
 
     public function signOut(Request $request)
-    {
+    {   
+        $userData = auth()->user();
         // $user = Auth::user();
         // $user->tokens()->delete();
         return $this->respond(200, null, null, 'Session cerrada con éxito');
@@ -303,7 +305,7 @@ class AuthController extends Controller
             }
             $user->fcm_token = $request->fcm_token ?? NULL;
             $user->save();
-
+            
             $token = $user->createToken('authToken')->plainTextToken;
             return $this->respond(200, $token, null, 'OK');
         } catch (\Exception $e) {

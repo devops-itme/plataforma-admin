@@ -5,6 +5,8 @@ namespace App\Modules\ApiConnectionsModule\Models;
 use App\Http\Controllers\Traits\RestActions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Modules\ApiConnectionsModule\Models\ApiSync;
+use Illuminate\Http\Client\RequestException;
 
 class Tealca
 {
@@ -47,20 +49,22 @@ class Tealca
     }
 
     public function requestCreateShipment($guide)
-    {
+    {   
+        $ApiSync = new ApiSync;
+        $userData = auth()->user();
         $weight = $guide->kg;
         $weight = floatval(str_replace(",",".",$weight));
         
         $body = [
             "UserLogin" => env("TEALCA_USER"),
             "PickingNumber" => $guide->pre_guide,
-            "Observations" => $guide->description ?? null,
-            "TotalPieces" => $guide->pieces,
+            "Observations" => $guide->description,
+            "TotalPieces" => (int)$guide->pieces,
             "DeclaratedValueCurrency" => "USD",
-            "IsSafeKeeping" => 0, //
-            "DeclaratedValue" => $guide->declared,
+            "IsSafeKeeping" => 0,
+            "DeclaratedValue" => (int)$guide->declared,
             "CustomerCode" => "2722",
-            "BUCodeSource" => "NN", //
+            "BUCodeSource" => "NN",
             // "ConsigneeCountry" =>  $guide->country,
             "ConsigneeCountry" =>  'VE',
             "ConsigneeCity" =>  $guide->city,
@@ -71,27 +75,28 @@ class Tealca
             "ConsigneeEmail" =>  $guide->email_contact,
             "ConsigneeName" =>  $guide->recipient_name,
             "ConsigneeIdentification" =>  $guide->document,
-            "ConsigneeTaxIdentTypeCode" => "V", //
-            "ShipperCountry" => "VE", //
-            "ShipperCity" => "CCS", //
-            "ShipperAddress" => "Direccion Remitente", //
+            "ConsigneeTaxIdentTypeCode" => "V",
+            "ShipperCountry" => "VE",
+            "ShipperCity" => "CCS",
+            "ShipperAddress" => "Direccion Remitente",
             "ShipperEmail" =>  $guide->email_contact,
-            "ShippingMethodID" => 10, //
-            "ShipperIdentification" => "3334441", //
-            "ShipperName" => "Remitente API 1", //
-            "ShipperPhoneCode" => "58", //
-            "ShipperPhone" => "4141234567", //
-            "ShipperTaxIdentTypeCode" => "V", //
-            "DeliveryTypeID" => 10, //
-            "MeasureUnitTypeID" => 30, //
-            "WeightUnitID" => 10, //
-            "PackageTypeID" => 20, //
+            "ShippingMethodID" => 10,
+            "ShipperIdentification" => "3334441",
+            "ShipperName" => "Remitente API 1",
+            "ShipperPhoneCode" => "58",
+            "ShipperPhone" => "4141234567",
+            "ShipperTaxIdentTypeCode" => "V",
+            "DeliveryTypeID" => 10,
+            "MeasureUnitTypeID" => 30,
+            "WeightUnitID" => 10,
+            "PackageTypeID" => 20,
             "ShipmentDetail" => array([
-                "PieceNumber" =>  $guide->pieces,
+                "PieceNumber" =>  (int)$guide->pieces,
                 "PhysicalWeight" =>  $weight
             ])
         ];
 
+        
         $createShipmentResponse = Http::withHeaders([
             'Authorization' =>  $this->token,
         ])->post(
@@ -99,7 +104,31 @@ class Tealca
             $body
         );
 
+        //dd($createShipmentResponse);
+        
         if ($createShipmentResponse->status() != 200) {
+            //dd($createShipmentResponse->json()['error'][0]);
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Tealca_Api",
+                array(
+                    'destination_url' => env("TEALCA_URL") . 'v1/Shipment/',
+                    'destination_action' => "generate_guide_number"
+                ),
+                array(
+                    'guide_data' => $body
+                ),
+                array(
+                    'response' => "failed_service",
+                    'response_error' => $createShipmentResponse->json()['error'],
+                    'response_status' => $createShipmentResponse->status(),
+                    'failed_guide_id' => $guide->id,
+                ),
+                "LOST"
+            );
             return $this->respond(500, $body, $createShipmentResponse->json(), 'Fallo en el servicio. Guía N° ' . $guide->id);
         };
 
@@ -107,6 +136,28 @@ class Tealca
         $external_id = explode(".", explode("'", $headers["Content-Disposition"][0])[2])[0];
         $guide->external_id = $external_id;
         $guide->save();
+
+        $ApiSync->ApiSaveLog(
+            "Multientrega_Admin",
+            array(
+                'origin_user' => $userData->email
+            ),
+            "Tealca_Api",
+            array(
+                'destination_url' => env("TEALCA_URL") . 'v1/Shipment/',
+                'destination_action' => "generate_guide_number"
+            ),
+            array(
+                'guide_data' => $body
+            ),
+            array(
+                'response' => "guide_generated",
+                'guide_id' => $guide->id,
+                'guide_number' => substr($guide->external_id, 1)
+            ),
+            "ACK"
+        );
+        
         return $this->respond(200, $guide, null, 'successful request');
     }
 

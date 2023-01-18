@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Http;
+use App\Modules\ApiConnectionsModule\Models\ApiSync;
 
 class LoginController extends Controller
 {
@@ -43,7 +45,7 @@ class LoginController extends Controller
     }
 
     protected function validateLogin(Request $request)
-    {
+    {   $ApiSync = new ApiSync;
         $request->validate([
             $this->username() => [
                 'required',
@@ -52,7 +54,9 @@ class LoginController extends Controller
             ],
             'password' => 'required|string',
         ], [
+            
             $this->username() . '.exists' => 'El usuario no esta activo'
+            
         ]);
 
         $message = 'Su rol se encuentra inhabilitado';
@@ -75,6 +79,25 @@ class LoginController extends Controller
                 [
                     'active.required' => $message
                 ]
+            );
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $request->email
+                ),
+                "Multientrega Admin",
+                array(
+                    'destination_action' => "login"
+                ),
+                array(
+                    null
+                ),
+                array(
+                    'response' => "user_inactive_or_disabled"
+                ),
+                "ACK"
+
             );
         }
     }

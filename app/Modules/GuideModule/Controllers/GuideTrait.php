@@ -7,6 +7,8 @@ use App\Http\Controllers\Traits\RestActions;
 use App\Modules\GuideModule\Guide;
 use App\Modules\OrderModule\Order;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Http;
+use App\Modules\ApiConnectionsModule\Models\ApiSync;
 
 use function PHPSTORM_META\map;
 
@@ -60,9 +62,32 @@ trait GuideTrait
         );
     }
     public function storeGuide($request)
-    {
+    {   
+        $ApiSync = new ApiSync;
+        $userData = auth()->user();
         $validator = $this->GuideValidate($request);
         if ($validator->fails()) {
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "create"
+                ),
+                array(
+                    'guide_data' => $request->all()
+                ),
+                array(
+                    'response' => "validation_error",
+                    'error' => $validator->errors()
+                ),
+                "ACK"
+            );
+            
             return $this->respond(400,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
@@ -106,20 +131,102 @@ trait GuideTrait
                 'return_last_destination' => $request->return_last_destination,
                 'boxes' => $request->boxes
             ]);
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "create"
+                ),
+                array(
+                    'guide_data' => $order
+                ),
+                array(
+                    'response' => "guide_created",
+                ),
+                "ACK"
+            );
+
             return $this->respond(200, $order, null, 'Guía creada exitosamente');
         } catch (\Exception $e) {
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "create"
+                ),
+                array(
+                    null
+                ),
+                array(
+                    'response' => "guide_not_created",
+                    'error' => $e->getMessage()
+                ),
+                "ACK"
+                
+            );
             return $this->respond(500, [], $e->getMessage(), 'Error al crear guía');
         }
     }
     public function updateGuide($request)
     {   
+        $ApiSync = new ApiSync;
+        $userData = auth()->user();
         $validator = $this->GuideValidate($request, null);
         if ($validator->fails()) {
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "update"
+                ),
+                array(
+                    'guide_data' => $request->all()
+                ),
+                array(
+                    'response' => "validation_error",
+                    'error' => $validator->errors()
+                ),
+                "ACK"
+            );
+            
             return $this->respond(500,  $validator->errors(), 'validation error', $validator->errors()->first());
         }
         try {
             $guide = Guide::find($request->guide_id);
             if (is_null($guide)) {
+                $ApiSync->ApiSaveLog(
+                    "Multientrega Admin",
+                    array(
+                        'origin_user' => $userData->email
+                    ),
+                    "Multientrega_DB",
+                    array(
+                        'destination_table' => "guides",
+                        'destination_action' => "update"
+                    ),
+                    array(
+                        'guide_data' => $guide
+                    ),
+                    array(
+                        'response' => "guide_not_found",
+                    ),
+                    "ACK"
+                );
                 return $this->respond(500, [], 'user not found', 'No se encontró la guía');
             }
             $guide->update([
@@ -162,8 +269,48 @@ trait GuideTrait
             ]);
             //order Closing Verification
             $this->orderClosingVerification($guide->order_id);
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "update"
+                ),
+                array(
+                    'guide_data' => $guide
+                ),
+                array(
+                    'response' => "guide_updated"
+                ),
+                "ACK"
+            );
             return $this->respond(200, $guide, null, 'Guía actualizada exitosamente');
         } catch (\Exception $e) {
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "update"
+                ),
+                array(
+                    'guide_data' => $request->all()
+                ),
+                array(
+                    'response' => "guide_not_created",
+                    'error' => $e->getMessage()
+                ),
+                "ACK"
+
+            );
             return $this->respond(500, [], $e->getMessage(), 'Error al actualizar guía');
         }
     }
@@ -196,15 +343,75 @@ trait GuideTrait
         }
     }
     public function deleteGuide($id)
-    {
+    {   
+        $ApiSync = new ApiSync;
+        $userData = auth()->user();
         try {
             $guide = Guide::find($id);
             if (is_null($guide)) {
+                
+                $ApiSync->ApiSaveLog(
+                    "Multientrega_Admin",
+                    array(
+                        'origin_user' => $userData->email
+                    ),
+                    "Multientrega_DB",
+                    array(
+                        'destination_table' => "guides",
+                        'destination_action' => "delete"
+                    ),
+                    array(
+                        'guide_data' => $guide
+                    ),
+                    array(
+                        'response' => "guide_not_found"
+                    ),
+                    "ACK"
+                );
+                
                 return $this->respond(500, [], 'user not found', 'No se encontró la guiá');
             }
             $guide->delete();
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "delete"
+                ),
+                array(
+                    'guide_data' => $guide
+                ),
+                array(
+                    'response' => "guide_deleted"
+                ),
+                "ACK"
+            );
             return $this->respond(200, $guide, null, 'Guía eliminada exitosamente');
         } catch (\Exception $e) {
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "delete"
+                ),
+                array(
+                    'guide_data' => $guide
+                ),
+                array(
+                    'response' => "guide_not_deleted",
+                    'error' => $e->getMessage()
+                ),
+                "ACK"
+            );
             return $this->respond(500, [], $e->getMessage(), 'Error al eliminar guía');
         }
     }
