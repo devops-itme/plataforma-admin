@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+Route::get('imporUsers', 'UserModule\Controllers\UserController@importWebUsers')->name('import.webUsers');
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role'], function () {
         Route::resource('usuarios', 'UserModule\Controllers\UserController')->names('users');

@@ -31,5 +31,14 @@
     "created": "creado",
     "updated": "actualizado",
     "deleted": "eliminado",
-    "There was an error on row :row. :message": "Hubo un error en la fila :row. :message"
+    "There was an error on row :row. :message": "Hubo un error en la fila :row. :message",
+    "logged_in_successfully": "Inicio de sesión exitóso",
+    "guide_created": "Guía creada",
+    "imported_batch": "Lote importado",
+    "failed_service": "Servicio fallido",
+    "guide_generated": "Guía generada",
+    "generate_guide_number": "Generar número de guía",
+    "update": "Actualizar",
+    "delete": "Eliminar"
+    
 }

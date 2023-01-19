@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class ApiSync
-{
+{   
+    use RestActions;
+
     public function ApiSaveLog(
         $origin = '', // plataforma, url, ip
         $origin_detail = [], // usuario, tabla, json
@@ -31,5 +33,15 @@ class ApiSync
                 'transaction_state' => $transaction_state
             ]
         );
+    }
+
+    public function apiGetLogs(){
+        $logs = Http::get( env("SYNCAPI_URL"). 'log/get-all' );
+
+        if ($logs->status() != 200) {
+            return $this->respond(500, null, null, "Ocurrió un fallo en el servicio");
+        }
+        
+        return $this->respond(500, $logs->json(), null, "Logs obtenidos correctamente");
     }
 }

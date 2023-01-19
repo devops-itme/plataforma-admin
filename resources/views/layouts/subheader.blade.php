@@ -215,7 +215,8 @@
                                     <li><a class="dropdown-item" href="{{ route('log.index') }}">Log de usuario</a>
                                     </li>
                                 @endif
-
+                                <li><a class="dropdown-item" href="{{ route('sync.index') }}">Log del sincronizador</a>
+                                </li>
                                  @can('StatusMatrix')
                                 <li><a class="dropdown-item" href="{{ route('statusMatrix.index') }}">Matriz de
                                         estados</a></li>

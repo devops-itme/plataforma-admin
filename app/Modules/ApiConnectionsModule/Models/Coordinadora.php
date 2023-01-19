@@ -3,28 +3,42 @@
 namespace App\Modules\ApiConnectionsModule\Models;
 
 use App\Http\Controllers\Traits\RestActions;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use SoapClient;
 
+
 class Coordinadora
-{
+{   
+    use RestActions;
+
     protected $urlGuides;
     protected $urlPickups;
     protected $client;
+    protected $urlCreateOrder;
+    //protected $clientDev;
+    protected $urlLogin;
+    //protected $clientLogin;
+    protected $token;
 
     public function __construct()
     {
         $this->urlGuides = 'https://sandbox.coordinadora.com/agw/ws/guias/1.6/server.php?wsdl';
         $this->urlPickups = 'https://sandbox.coordinadora.com/agw/ws/guias/1.6/server.php?wsdl';
+        $this->urlCreateOrder = 'https://apis-dev.coordiutil.com/fullfilment/pedidos/guardar';
+        //$this->clientDev = new SoapClient($this->urlDev, array("trace" => 1,"exceptions" => true));
         $this->clientGuides = new SoapClient($this->urlGuides, array("trace" => 1,"exceptions" => true));
         $this->clientPickups = new SoapClient($this->urlPickups, ["trace" => 1,"exceptions" => true]);
+
+        $this->urlLogin = 'https://apis-dev.coordiutil.com/fullfilment/clientes/autenticar';
+        //$this->clientLogin = new SoapClient($this->urlLogin, array("trace" => 1,"exceptions" => true));
     }
     
 
     public function testConnection(){
         try {
-            //$r = print_r(json_encode((array)$this->client->__getFunctions()));
+            $r = print_r(json_encode((array)$this->clientDev->__getFunctions()));
             /* $result = $this->client->Cotizador_ciudades([
                 "p" => null,
                 
@@ -42,12 +56,101 @@ class Coordinadora
             ]);
 
             
-            $json_data = json_encode((array) $result);
-            return $json_data;
+            //$json_data = json_encode((array) $result);
+            //return $json_data;
         //var_dump($result);
         } catch (SoapFault $fault) {
             trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
         }
+        
+    }
+
+    public function login()
+    {
+        $loginResponse = Http::post(
+            $this->urlLogin,
+            [
+                "usuario"  => "user",
+                "clave" =>  "password"
+            ]
+        );
+        if ($loginResponse->json()['isError'] == 1) {
+            return $this->respond(500, null, null, 'Fallo en el servicio: '.$loginResponse->json()['message'].'.');
+        }
+
+        return $this->respond(200, $loginResponse->json(), null, 'Autenticación realizada correctamente');
+    }
+
+    public function createOrder()
+    {
+
+    }
+
+    public function createOrderRequest()
+    //Items/productos del pedido
+    {   $details = [
+            "referencia" => "83550", //Codigo del producto
+            "unidades" => "1", //cantidad
+            "peso" => "0.41", //peso en KG
+            "alto" => "21.80", //alto en CM
+            "ancho" => "12.20", //ancho en CM
+            "largo" => "12.20", //largo en CM
+            "nombre_empaque" => "Nombre de prueba" //nombre del producto
+        ];
+
+        $body = [
+            "identificacion_cliente" => "123456789", //Obligatorio, máx: 15 caracteres
+            "nombres_cliente" => "usuario prueba", 
+            "apellidos cliente" => "prueba usuario", 
+            "direccion_cliente" => "calle 1 #3b-24",  //Obligatorio, mínimo 10 caracteres
+            "telefono_fijo_cliente" => "123456789", //Obligatorio, null en caso de no tenerlo
+            "codigo_ciudad_cliente" => "05001000", //Código DANE formateado a 8 digitos
+            
+            "identificacion_destinatario" => "22123455678", //Obligatorio, máx 15 caracteres
+            "nombres_destinatario" => "nombre destino", 
+            "apellidos_destinatario" => "apellido destino",
+            "direccion_destinatario" => "calle 2 #4c-56", //Obligatorio, minimo 10 caracteres
+            "telefono_fijo_destinatario" => "1234567", //Obligatorio
+            "telefono_celular_destinatario" => "12345567",
+            "codigo_ciudad_destinatario" => "0500100", //Código DANE formateado a 8 digitos
+            "nombre_ciudad_destinatario" => "MEDELLIN (ANT)", //Nombre textual de ciudad donde se va a entregar
+
+            "codigo_pedido" => "3345677", //Número único interno dentro del sistema que identifica el pedido
+            "numero_pedido" => "38273452", //Número externo para el cliente, puede ser igual al codigo y no lleva "-"
+            "fechahora_pedido" => "2020-01-01 09:47:19", //formato "yyyy-mm-dd hh:mm:ss"
+            "codigo_tienda" => "1", //Código númerico para diferenciar la tienda que envia el pedido. 1) pruebas, 2) tienda normal
+            "codigo_vendedor" => "0", //Se envia siempre 0
+            "es_pago_contra_entrega" => "N", // S) pago contra entrega, N) no es pago contra entrega. Validar que tenga este servicio activo
+            "es_entrega_mismo_dia" => "N", // S) aplica para entrega el mismo dia, N) servicio estándar. Debe ser contratado, y tiene restricciones
+            "total_coniva" => "57350.00", //Valor total incluyendo el iva
+            "valor_declarado" => "57350.00", //Valor total del pedido
+            "total_iva" => "8494.12", //Valor del iva
+
+            "nit_remitente" => "900800700", //Nit de la tienda
+            "nombre_remitente"=> "Mi tienda S.A", //Nombre de la tienda
+            "telefono_remitente" => "3605000", //Numero de telefono de la tienda
+            "detalle" => $details,
+
+        ];
+        //$url = 'https://apis-dev.coordiutil.com/fullfilment/pedidos/guardar';
+
+        try {
+            $createOrderResponse = Http::withHeaders([
+                'Authorization' =>  $this->token,
+                ])->post(
+                    $this->urlCreateOrder,
+                    $body
+            );
+
+            /* if ('guia no se crea') {
+                return $this->respond(500, null, null, 'Ocurrió un fallo en el servicio');
+            } */
+            return $this->respond(200, $createOrderResponse->json(), null, 'Guía creada correctamente');
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        
+
         
     }
 
