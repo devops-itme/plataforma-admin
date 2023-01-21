@@ -113,8 +113,13 @@
                             <td></td>
                             <td>{{ $log['origin'] }}</td>
                             @foreach ($log['origin_detail'] as $key => $originDetail)
+                            
                                 @if ($key == 'origin_user')
-                                    <td>Usuario: {{ $originDetail }}</td>
+                                    @if (is_string($originDetail) != true)
+                                        <td>--- ---</td>
+                                    @else
+                                    <td>Usuario: {{ $originDetail ?? 'No se registra usuario'}}</td>
+                                    @endif
                                 @endif
                             @endforeach
                             <td>{{ $log['destination'] }}</td>
