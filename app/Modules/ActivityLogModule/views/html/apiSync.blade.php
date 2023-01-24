@@ -93,6 +93,7 @@
                 <thead>
                     <tr {{-- style="text-align: center" --}}>
                         <th></th>
+                        <th scope="col">id</th>
                         <th scope="col">Origen</th>
                         <th scope="col">Detalle de origen</th>
                         <th scope="col">Destino</th>
@@ -111,12 +112,13 @@
                     @foreach ($logs as $log)
                         <tr {{-- style="text-align: center" --}}>
                             <td></td>
+                            <td>{{ $log['id'] }}</td>
                             <td>{{ $log['origin'] }}</td>
                             @foreach ($log['origin_detail'] as $key => $originDetail)
                             
                                 @if ($key == 'origin_user')
                                     @if (is_string($originDetail) != true)
-                                        <td>--- ---</td>
+                                        <td>No se registra usuario</td>
                                     @else
                                     <td>Usuario: {{ $originDetail ?? 'No se registra usuario'}}</td>
                                     @endif
@@ -131,6 +133,9 @@
                                     @if ($key == 'destination_table')
                                         Tabla: "{{ $destDetail }}" <br>
                                     @endif
+                                    @if ($key == 'destination_url')
+                                        Url: "{{ $destDetail }}" <br>
+                                    @endif
                                     {{-- @if ($key == 'destination_url')
                                         Url: {{ $destDetail }} <br>
                                     @endif --}}
@@ -141,7 +146,7 @@
                                     @if ($response == null)
                                         No registrada
                                     @endif
-                                    @if ($key == 'response')
+                                    @if ($key == 'response' && is_string($response) == true/*  &&  strlen($response) < 50 */ )
                                         {{ __($response) }} <br>
                                     @endif
                                     @if ($key == 'response_error')
