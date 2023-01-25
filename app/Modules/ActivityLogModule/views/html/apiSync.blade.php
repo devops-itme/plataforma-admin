@@ -89,109 +89,111 @@
                 </div>
             </div>
             <!--end::Search Form-->
-            <table class="table table-sm">
-                <thead>
-                    <tr {{-- style="text-align: center" --}}>
-                        <th></th>
-                        <th scope="col">id</th>
-                        <th scope="col">Origen</th>
-                        <th scope="col">Detalle de origen</th>
-                        <th scope="col">Destino</th>
-                        <th scope="col">Detalle de destino</th>
-                        <th scope="col">Respuesta obtenida</th>
-                        <th scope="col">Hora y fecha</th>
-                        <th scope="col">Estado</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (count($logs) == 0)
-                        <td>No se hallaron registros</td>
-                        
-                    @endif
-                    @foreach ($logs as $log)
+            <div style="overflow:auto">    
+                <table class="table table-sm"  style="width: 180%;">
+                    <thead>
                         <tr {{-- style="text-align: center" --}}>
-                            <td></td>
-                            <td>{{ $log['id'] }}</td>
-                            <td>{{ str_replace("_", " ", $log['origin']) }}</td>
-                            @foreach ($log['origin_detail'] as $key => $originDetail)
+                            <th></th>
+                            <th scope="col">id</th>
+                            <th scope="col">Origen</th>
+                            <th scope="col">Detalle de origen</th>
+                            <th scope="col" style="width: 200px">Destino</th>
+                            <th scope="col">Detalle de destino</th>
+                            <th scope="col">Respuesta obtenida</th>
+                            <th scope="col">Hora y fecha</th>
+                            <th scope="col">Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (count($logs) == 0)
+                            <td>No se hallaron registros</td>
                             
-                                @if ($key == 'origin_user')
-                                    @if (is_string($originDetail) != true)
-                                        <td>No se registra usuario</td>
-                                    @else
-                                    <td> <b>Usuario: </b> {{ $originDetail ?? 'No se registra usuario'}}</td>
-                                    @endif
-                                @endif
-                            @endforeach
-                            <td>{{ str_replace("_", " ", $log['destination']) }}</td>
-                            <td>
-                                   @foreach ($log['destination_detail'] as $key => $destDetail)
-                                   @if ($key == 'destination_action')
-                                      <b>Acción: </b> {{ str_replace("_", " ", __($destDetail)) }} <br>
-                                   @endif
-                                    @if ($key == 'destination_table')
-                                        <b>Tabla: </b>  "{{ $destDetail }}" <br>
-                                    @endif
-                                    @if ($key == 'destination_url')
-                                        <b>Url: </b>{{ $destDetail }}<br>
-                                    @endif
-                                    {{-- @if ($key == 'destination_url')
-                                        Url: {{ $destDetail }} <br>
-                                    @endif --}}
-                                   @endforeach
-                            </td>
-                            <td>
-                                @foreach ($log['response'] as $key => $response)
-                                    @if ($response == null)
-                                        No registrada
-                                    @endif
-                                    @if ($key == 'response' && is_string($response) == true/*  &&  strlen($response) < 50 */ )
-                                        {{ __($response) }} <br>
-                                    @endif
-                                    @if ($key == 'response_error')
-                                        <b>Error: </b> {{ __($response) }} <br>
-                                    @endif
-                                    {{-- @if ($key == 'guide_id')
-                                        Id de guía: {{ $response }} <br>
-                                    @endif --}}
-                                    @if ($key == 'guide_number')
-                                        <b>No. Guía: </b> {{ $response }} <br>
-                                    @endif
-                                    @if (is_string($response) != true)
-                                        @foreach ($response as $key => $resp)
-                                            @if ($key == 'message')
-                                                <b>Mensaje: </b> {{ $resp }}
-                                            @endif
-                                            @if ($key == 'order')
-                                                <b>Estado de pago: </b> {{ $resp['paymentStatus'] }} <br>
-                                                <b>Estado cumplimiento: </b> {{ $resp['fulfillmentStatus'] }} <br>
-                                                <b>Id: </b> {{ $resp['id'] }}
-                                            @endif
-                                        @endforeach
+                        @endif
+                        @foreach ($logs as $log)
+                            <tr {{-- style="text-align: center" --}}>
+                                <td></td>
+                                <td>{{ $log['id'] }}</td>
+                                <td>{{ str_replace("_", " ", $log['origin']) }}</td>
+                                @foreach ($log['origin_detail'] as $key => $originDetail)
+                                
+                                    @if ($key == 'origin_user')
+                                        @if (is_string($originDetail) != true)
+                                            <td>No se registra usuario</td>
+                                        @else
+                                        <td> <b>Usuario: </b> {{ $originDetail ?? 'No se registra usuario'}}</td>
+                                        @endif
                                     @endif
                                 @endforeach
-                            </td>
-                            <td>
-                                {{ date("h:m:s d-m-Y", strtotime($log['created_at'])) }} <br>
-                            </td>
-                            <td>
-                                @if ($log['transaction_state'] == 'ACK')
-                                    Recibido
-                                @endif
-
-                                @if ($log['transaction_state'] == 'ACK_pending')
-                                    Pendiente
-                                @endif
-
-                                @if ($log['transaction_state'] == 'LOST')
-                                    Perdido
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                                <td style="width: 12%;">{{ str_replace("_", " ", $log['destination']) }}</td>
+                                <td>
+                                       @foreach ($log['destination_detail'] as $key => $destDetail)
+                                       @if ($key == 'destination_action')
+                                          <b>Acción: </b> {{ str_replace("_", " ", __($destDetail)) }} <br>
+                                       @endif
+                                        @if ($key == 'destination_table')
+                                            <b>Tabla: </b>  "{{ $destDetail }}" <br>
+                                        @endif
+                                        @if ($key == 'destination_url')
+                                            <b>Url: </b>{{ $destDetail }}<br>
+                                        @endif
+                                        {{-- @if ($key == 'destination_url')
+                                            Url: {{ $destDetail }} <br>
+                                        @endif --}}
+                                       @endforeach
+                                </td>
+                                <td>
+                                    @foreach ($log['response'] as $key => $response)
+                                        @if ($response == null)
+                                            No registrada
+                                        @endif
+                                        @if ($key == 'response' && is_string($response) == true/*  &&  strlen($response) < 50 */ )
+                                            {{ __($response) }} <br>
+                                        @endif
+                                        @if ($key == 'response_error')
+                                            <b>Error: </b> {{ __($response) }} <br>
+                                        @endif
+                                        {{-- @if ($key == 'guide_id')
+                                            Id de guía: {{ $response }} <br>
+                                        @endif --}}
+                                        @if ($key == 'guide_number')
+                                            <b>No. Guía: </b> {{ $response }} <br>
+                                        @endif
+                                        @if (is_string($response) != true)
+                                            @foreach ($response as $key => $resp)
+                                                @if ($key == 'message')
+                                                    {{ $resp }}
+                                                @endif
+                                                @if ($key == 'order')
+                                                    <b>Estado de pago: </b> {{ $resp['paymentStatus'] }} <br>
+                                                    <b>Estado cumplimiento: </b> {{ $resp['fulfillmentStatus'] }} <br>
+                                                    <b>Id: </b> {{ $resp['id'] }}
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td>
+                                    {{ date("h:m:s d-m-Y", strtotime($log['created_at'])) }} <br>
+                                </td>
+                                <td>
+                                    @if ($log['transaction_state'] == 'ACK')
+                                        Recibido
+                                    @endif
+    
+                                    @if ($log['transaction_state'] == 'ACK_pending')
+                                        Pendiente
+                                    @endif
+    
+                                    @if ($log['transaction_state'] == 'LOST')
+                                        Perdido
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div style="margin-left: 30px;">
             {{$logs->appends(request()->input())->links()}}
