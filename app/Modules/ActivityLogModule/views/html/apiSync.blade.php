@@ -111,25 +111,25 @@
                     @foreach ($logs as $log)
                         <tr {{-- style="text-align: center" --}}>
                             <td></td>
-                            <td>{{ $log['origin'] }}</td>
+                            <td>{{ str_replace("_", " ", $log['origin']) }}</td>
                             @foreach ($log['origin_detail'] as $key => $originDetail)
                             
                                 @if ($key == 'origin_user')
                                     @if (is_string($originDetail) != true)
                                         <td>--- ---</td>
                                     @else
-                                    <td>Usuario: {{ $originDetail ?? 'No se registra usuario'}}</td>
+                                    <td> <b>Usuario: </b> {{ $originDetail ?? 'No se registra usuario'}}</td>
                                     @endif
                                 @endif
                             @endforeach
-                            <td>{{ $log['destination'] }}</td>
+                            <td>{{ str_replace("_", " ", $log['destination']) }}</td>
                             <td>
                                    @foreach ($log['destination_detail'] as $key => $destDetail)
                                    @if ($key == 'destination_action')
-                                       Acción: {{ __($destDetail) }} <br>
+                                      <b>Acción: </b> {{ str_replace("_", " ", __($destDetail)) }} <br>
                                    @endif
                                     @if ($key == 'destination_table')
-                                        Tabla: "{{ $destDetail }}" <br>
+                                        <b>Tabla: </b>  "{{ $destDetail }}" <br>
                                     @endif
                                     {{-- @if ($key == 'destination_url')
                                         Url: {{ $destDetail }} <br>
@@ -156,7 +156,7 @@
                                 @endforeach
                             </td>
                             <td>
-                                {{ date("h:m:s / d-m-Y", strtotime($log['created_at'])) }}
+                                {{ date("h:m:s d-m-Y", strtotime($log['created_at'])) }} <br>
                             </td>
                             <td>
                                 @if ($log['transaction_state'] == 'ACK')
@@ -176,6 +176,8 @@
                 </tbody>
             </table>
         </div>
-        {{$logs->appends(request()->input())->links()}}
+        <div style="margin-left: 30px;">
+            {{$logs->appends(request()->input())->links()}}
+        </div>
     </div>
 @endsection

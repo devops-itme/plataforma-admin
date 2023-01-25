@@ -39,6 +39,9 @@
     "guide_generated": "Guía generada",
     "generate_guide_number": "Generar número de guía",
     "update": "Actualizar",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "validation_error": "Error de validación",
+    "Create": "Crear",
+    "create_order": "Crear orden"
     
 }
