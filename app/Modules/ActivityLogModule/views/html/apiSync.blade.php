@@ -113,7 +113,7 @@
                         <tr {{-- style="text-align: center" --}}>
                             <td></td>
                             <td>{{ $log['id'] }}</td>
-                            <td>{{ $log['origin'] }}</td>
+                            <td>{{ str_replace("_", " ", $log['origin']) }}</td>
                             @foreach ($log['origin_detail'] as $key => $originDetail)
                             
                                 @if ($key == 'origin_user')
@@ -134,7 +134,7 @@
                                         <b>Tabla: </b>  "{{ $destDetail }}" <br>
                                     @endif
                                     @if ($key == 'destination_url')
-                                        Url: "{{ $destDetail }}" <br>
+                                        <b>Url: </b>{{ $destDetail }}<br>
                                     @endif
                                     {{-- @if ($key == 'destination_url')
                                         Url: {{ $destDetail }} <br>
@@ -150,13 +150,25 @@
                                         {{ __($response) }} <br>
                                     @endif
                                     @if ($key == 'response_error')
-                                        Error: {{ __($response) }} <br>
+                                        <b>Error: </b> {{ __($response) }} <br>
                                     @endif
                                     {{-- @if ($key == 'guide_id')
                                         Id de guía: {{ $response }} <br>
                                     @endif --}}
                                     @if ($key == 'guide_number')
-                                        No. Guía: {{ $response }} <br>
+                                        <b>No. Guía: </b> {{ $response }} <br>
+                                    @endif
+                                    @if (is_string($response) != true)
+                                        @foreach ($response as $key => $resp)
+                                            @if ($key == 'message')
+                                                <b>Mensaje: </b> {{ $resp }}
+                                            @endif
+                                            @if ($key == 'order')
+                                                <b>Estado de pago: </b> {{ $resp['paymentStatus'] }} <br>
+                                                <b>Estado cumplimiento: </b> {{ $resp['fulfillmentStatus'] }} <br>
+                                                <b>Id: </b> {{ $resp['id'] }}
+                                            @endif
+                                        @endforeach
                                     @endif
                                 @endforeach
                             </td>

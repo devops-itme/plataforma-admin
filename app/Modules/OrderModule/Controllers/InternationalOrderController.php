@@ -91,7 +91,7 @@ class InternationalOrderController extends Controller
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -103,8 +103,8 @@ class InternationalOrderController extends Controller
                     'payload_file_name' => $request->excel->getClientOriginalName()
                 ),
                 array(
-                    'response' => "missing_header",
-                    'missing_header' => implode($missingColumns)
+                    'response' => "error",
+                    'response_error' => "missing_header_".implode($missingColumns).""
                 ),
                 "ACK"
             );
@@ -115,7 +115,7 @@ class InternationalOrderController extends Controller
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -127,8 +127,8 @@ class InternationalOrderController extends Controller
                     'payload_file_name' => $request->excel->getClientOriginalName()
                 ),
                 array(
-                    'response' => "missing_header",
-                    'missing_header' => implode($missingColumns)
+                    'response' => "error",
+                    'response_error' => "missing_header_".implode($missingColumns).""
                 ),
                 "ACK"
             );
@@ -146,7 +146,7 @@ class InternationalOrderController extends Controller
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -159,7 +159,7 @@ class InternationalOrderController extends Controller
                 ),
                 array(
                     'response' => "validation_error",
-                    'wrong_row' => $validator->errors()->first()
+                    'response_error' => $validator->errors()->first()
                 ),
                 "ACK"
             );
@@ -184,8 +184,8 @@ class InternationalOrderController extends Controller
                     'payload_file_name' => $request->excel->getClientOriginalName()
                 ),
                 array(
-                    'response' => "wrong city",
-                    'wrong_row' => $TealcaImport->getWrongRow()
+                    'response' => "error",
+                    'response_error' =>"wrong_city_in_row_".$TealcaImport->getWrongRow().""
                 ),
                 "ACK"
             );
@@ -262,8 +262,8 @@ class InternationalOrderController extends Controller
                     'payload_file_name' => $request->excel->getClientOriginalName()
                 ),
                 array(
-                    'response' => "missing_header",
-                    'missing_header' => implode($missingColumns)
+                    'response' => "error",
+                    'response_error' => "missing_header_".implode($missingColumns).""
                 ),
                 "ACK"
             );
@@ -285,8 +285,8 @@ class InternationalOrderController extends Controller
                     'payload_file_name' => $request->excel->getClientOriginalName()
                 ),
                 array(
-                    'response' => "missing_header",
-                    'missing_header' => implode($missingColumns)
+                    'response' => "error",
+                    'response_error' => "missing_header_".implode($missingColumns).""
                 ),
                 "ACK"
             );
@@ -315,7 +315,7 @@ class InternationalOrderController extends Controller
                 ),
                 array(
                     'response' => "validation_error",
-                    'wrong_row' => $validator->errors()->first()
+                    'response_error' => "wrong_row_".$validator->errors()->first().""
                 ),
                 "ACK"
             );
@@ -342,8 +342,8 @@ class InternationalOrderController extends Controller
                     'payload_file_name' => $request->excel->getClientOriginalName()
                 ),
                 array(
-                    'response' => "wrong_city",
-                    'wrong_row' => $TealcaImport->getWrongRow()
+                    'response' => "error",
+                    'response_error' => "wrong_city_in_row_".$TealcaImport->getWrongRow().""
                 ),
                 "ACK"
             );

@@ -71,7 +71,7 @@ trait GuideTrait
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -83,7 +83,7 @@ trait GuideTrait
                 ),
                 array(
                     'response' => "validation_error",
-                    'error' => $validator->errors()
+                    'response_error' => $validator->errors()
                 ),
                 "ACK"
             );
@@ -135,7 +135,7 @@ trait GuideTrait
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -157,7 +157,7 @@ trait GuideTrait
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -169,7 +169,7 @@ trait GuideTrait
                 ),
                 array(
                     'response' => "guide_not_created",
-                    'error' => $e->getMessage()
+                    'response_error' => $e->getMessage()
                 ),
                 "ACK"
                 
@@ -187,7 +187,7 @@ trait GuideTrait
             $ApiSync->ApiSaveLog(
                 "Multientrega Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -199,7 +199,7 @@ trait GuideTrait
                 ),
                 array(
                     'response' => "validation_error",
-                    'error' => $validator->errors()
+                    'response_error' => $validator->errors()
                 ),
                 "ACK"
             );
@@ -212,7 +212,7 @@ trait GuideTrait
                 $ApiSync->ApiSaveLog(
                     "Multientrega Admin",
                     array(
-                        'origin_user' => $userData->email
+                        'origin_user' => $userData->email ?? null
                     ),
                     "Multientrega_DB",
                     array(
@@ -273,7 +273,7 @@ trait GuideTrait
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -294,7 +294,7 @@ trait GuideTrait
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -306,7 +306,7 @@ trait GuideTrait
                 ),
                 array(
                     'response' => "guide_not_created",
-                    'error' => $e->getMessage()
+                    'response_error' => $e->getMessage()
                 ),
                 "ACK"
 
@@ -353,7 +353,7 @@ trait GuideTrait
                 $ApiSync->ApiSaveLog(
                     "Multientrega_Admin",
                     array(
-                        'origin_user' => $userData->email
+                        'origin_user' => $userData->email ?? null
                     ),
                     "Multientrega_DB",
                     array(
@@ -375,7 +375,7 @@ trait GuideTrait
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -396,7 +396,7 @@ trait GuideTrait
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ?? null
                 ),
                 "Multientrega_DB",
                 array(
@@ -408,7 +408,7 @@ trait GuideTrait
                 ),
                 array(
                     'response' => "guide_not_deleted",
-                    'error' => $e->getMessage()
+                    'response_error' => $e->getMessage()
                 ),
                 "ACK"
             );

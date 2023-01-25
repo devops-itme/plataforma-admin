@@ -43,7 +43,7 @@ class LoginSuccessful
         $ApiSync->ApiSaveLog(
             "Multientrega_Admin",
             array(
-                'origin_user' => $userData->email
+                'origin_user' => $userData->email ?? null
             ),
             "Multientrega_Admin",
             array(

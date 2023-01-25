@@ -42,6 +42,8 @@
     "delete": "Eliminar",
     "validation_error": "Error de validación",
     "Create": "Crear",
-    "create_order": "Crear orden"
+    "create_order": "Crear orden",
+    "order_not_generated": "Orden no generada",
+    "order_created_successfully": "Orden creada exitósamente"
     
 }

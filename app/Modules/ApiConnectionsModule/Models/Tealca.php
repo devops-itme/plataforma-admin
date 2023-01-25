@@ -111,7 +111,7 @@ class Tealca
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
-                    'origin_user' => $userData->email
+                    'origin_user' => $userData->email ? null
                 ),
                 "Tealca_Api",
                 array(
@@ -140,7 +140,7 @@ class Tealca
         $ApiSync->ApiSaveLog(
             "Multientrega_Admin",
             array(
-                'origin_user' => $userData->email
+                'origin_user' => $userData->email ?? null
             ),
             "Tealca_Api",
             array(
