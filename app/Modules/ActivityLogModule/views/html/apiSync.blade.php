@@ -159,15 +159,30 @@
                                         @if ($key == 'guide_number')
                                             <b>No. Guía: </b> {{ $response }} <br>
                                         @endif
-                                        @if (is_string($response) != true)
+                                        @if (is_string($response) != true && $response != null)
                                             @foreach ($response as $key => $resp)
                                                 @if ($key == 'message')
-                                                    {{ $resp }}
+                                                    {{ $resp }} <br>
                                                 @endif
                                                 @if ($key == 'order')
-                                                    <b>Estado de pago: </b> {{ $resp['paymentStatus'] }} <br>
-                                                    <b>Estado cumplimiento: </b> {{ $resp['fulfillmentStatus'] }} <br>
+                                                    <b>Estado de pago: </b> {{ __($resp['paymentStatus']) }} <br>
+                                                    <b>Estado cumplimiento: </b> {{ __($resp['fulfillmentStatus']) }} <br>
                                                     <b>Id: </b> {{ $resp['id'] }}
+                                                @endif
+                                                @if ($key == 'success')
+                                                @endif
+                                                @if ($key == 'data')
+                                                    @foreach ($resp as $key => $data)
+                                                        @if ($key == 'id_order')
+                                                            <b>Referencia: </b> {{ $data }} <br>
+                                                        @endif
+                                                        @if ($key == 'user')
+                                                            <b>Nombre usuario: </b> {{ $data['name'] }} <br>
+                                                            @if ($response['success'] == true)
+                                                                <b>Estado: </b> Sesión iniciada correctamente  
+                                                            @endif
+                                                        @endif
+                                                    @endforeach
                                                 @endif
                                             @endforeach
                                         @endif
