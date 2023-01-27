@@ -94,7 +94,7 @@
                     <thead>
                         <tr {{-- style="text-align: center" --}}>
                             <th></th>
-                            <th scope="col">id</th>
+                            <th scope="col">ID</th>
                             <th scope="col">Origen</th>
                             <th scope="col">Detalle de origen</th>
                             <th scope="col" style="width: 200px">Destino</th>
@@ -121,7 +121,7 @@
                                         @if (is_string($originDetail) != true)
                                             <td>No se registra usuario</td>
                                         @else
-                                        <td> <b>Usuario: </b> {{ $originDetail ?? 'No se registra usuario'}}</td>
+                                        <td> <b>Usuario: </b> {{ __($originDetail) ?? 'No se registra usuario'}}</td>
                                         @endif
                                     @endif
                                 @endforeach
@@ -147,8 +147,13 @@
                                         @if ($response == null)
                                             No registrada
                                         @endif
-                                        @if ($key == 'response' && is_string($response) == true/*  &&  strlen($response) < 50 */ )
-                                            {{ __($response) }} <br>
+                                        @if ($key == 'response' && is_string($response) == true)
+                                            @if ($response == 'Exito')
+                                                Orden creada con éxito <br>
+                                            @else
+                                                {{ __($response) }} <br>
+                                            @endif
+                                            
                                         @endif
                                         @if ($key == 'response_error')
                                             <b>Error: </b> {{ __($response) }} <br>

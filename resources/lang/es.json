@@ -45,6 +45,8 @@
     "create_order": "Crear orden",
     "order_not_generated": "Orden no generada",
     "order_created_successfully": "Orden creada exitósamente",
-    "PAID": "pagado"
+    "PAID": "pagado",
+    "not_user":"Usuario inexistente",
+    "error_log_created": "Log de error creado"
     
 }
