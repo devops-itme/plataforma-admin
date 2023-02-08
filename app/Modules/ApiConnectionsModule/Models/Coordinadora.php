@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use PhpParser\Node\Stmt\TryCatch;
 use Soapclient;
+use App\Modules\ApiConnectionsModule\Models\ApiSync;
 
 
 class Coordinadora
@@ -52,7 +53,8 @@ class Coordinadora
 
     public function generateGuide(Request $request)
     {   
-        
+        $ApiSync = new ApiSync;
+        $userData = auth()->user();
         //Detalle de la guía
         $Agw_typeGuiaDetalle = array(
             [
@@ -147,17 +149,137 @@ class Coordinadora
                 "clave" => $this->password
             ]);
 
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email ?? $userData->mail ?? null
+                ),
+                "Coordinadora Api",
+                array(
+                    'destination_action' => "generate_guide"
+                ),
+                array(
+                    'data' => array(
+                        "codigo_remision" => $request->codigo_remision ?? null,
+                        "fecha" => $request->fecha ?? null,
+                        "id_cliente" => $this->id_client,
+                        "id_remitente" => $request->id_remitente ?? null,
+                        "nit_remitente" => $request->nit_remitente ?? null,
+                        "nombre_remitente" => $request->nombre_remitente ?? null,
+                        "direccion_remitente" => $request->direccion_remitente ?? null,
+                        "telefono_remitente" => $request->telefono_remitente ?? null,
+                        "ciudad_remitente" => $request->ciudad_remitente ?? null,
+                        "nit_destinatario" => $request->nit_destinatario ?? null,
+                        "div_destinatario" => $request->div_destinatario ?? null,
+                        "nombre_destinatario" => $request->nombre_destinatario,
+                        "direccion_destinatario" => $request->direccion_destinatario,
+                        "ciudad_destinatario" => $request->ciudad_destinatario,
+                        "telefono_destinatario" => $request->telefono_destinatario,
+                        "valor_declarado" => $request->valor_declarado,
+                        "codigo_cuenta" => $request->codigo_cuenta,
+                        "codigo_producto" => $request->codigo_producto,
+                        "nivel_servicio" => $request->nivel_servicio,
+                        "linea" => $request->linea ?? null,
+                        "contenido" => $request->contenido,
+                        "referencia" => $request->referencia,
+                        "observaciones" => $request->observaciones,
+                        "estado" => $request->estado,
+                        "detalle" => $request->detalle,
+                        "cuenta_contable" => $request->cuenta_contable ?? null,
+                        "centro_costos" => $request->centro_costos ?? null,
+                        "recaudos" => $request->recaudos,
+                        "margen_izquierdo" => $request->margen_izquierdo,
+                        "margen_superior" => $request->margen_derecho,
+                        "usuario_vmi" => "",
+                        "formato_impresion" => $request->formato_impresion ?? null,
+                        "atributo1_nombre" => $request->atributo1_nombre ?? null,
+                        "atributo1_valor" => $request->atributo1_valor ?? null,
+                        "notificaciones" => $request->notificaciones,
+                        "atributos_retorno" => $request->atributos_retorno,
+                        "nro_doc_radicados" => $request->nro_doc_radicados ?? null,
+                        "nro_sobre" => $request->nro_sobre ?? null,
+                        "codigo_vendedor" => $request->codigo_vendedor ?? null,
+                    )
+                ),
+                array(
+                    'response' => "guide_generated"
+                ),
+                "ACK"
+            );
+            
             return $this->respond(200, $result, null, "Petición procesada correctamente");
         } catch (\Throwable $e) {
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email ?? $userData->mail ?? null
+                ),
+                "Coordinadora Api",
+                array(
+                    'destination_action' => "generate_guide"
+                ),
+                array(
+                    'data' => array(
+                        "codigo_remision" => $request->codigo_remision ?? null,
+                        "fecha" => $request->fecha ?? null,
+                        "id_cliente" => $this->id_client,
+                        "id_remitente" => $request->id_remitente ?? null,
+                        "nit_remitente" => $request->nit_remitente ?? null,
+                        "nombre_remitente" => $request->nombre_remitente ?? null,
+                        "direccion_remitente" => $request->direccion_remitente ?? null,
+                        "telefono_remitente" => $request->telefono_remitente ?? null,
+                        "ciudad_remitente" => $request->ciudad_remitente ?? null,
+                        "nit_destinatario" => $request->nit_destinatario ?? null,
+                        "div_destinatario" => $request->div_destinatario ?? null,
+                        "nombre_destinatario" => $request->nombre_destinatario,
+                        "direccion_destinatario" => $request->direccion_destinatario,
+                        "ciudad_destinatario" => $request->ciudad_destinatario,
+                        "telefono_destinatario" => $request->telefono_destinatario,
+                        "valor_declarado" => $request->valor_declarado,
+                        "codigo_cuenta" => $request->codigo_cuenta,
+                        "codigo_producto" => $request->codigo_producto,
+                        "nivel_servicio" => $request->nivel_servicio,
+                        "linea" => $request->linea ?? null,
+                        "contenido" => $request->contenido,
+                        "referencia" => $request->referencia,
+                        "observaciones" => $request->observaciones,
+                        "estado" => $request->estado,
+                        "detalle" => $request->detalle,
+                        "cuenta_contable" => $request->cuenta_contable ?? null,
+                        "centro_costos" => $request->centro_costos ?? null,
+                        "recaudos" => $request->recaudos,
+                        "margen_izquierdo" => $request->margen_izquierdo,
+                        "margen_superior" => $request->margen_derecho,
+                        "usuario_vmi" => "",
+                        "formato_impresion" => $request->formato_impresion ?? null,
+                        "atributo1_nombre" => $request->atributo1_nombre ?? null,
+                        "atributo1_valor" => $request->atributo1_valor ?? null,
+                        "notificaciones" => $request->notificaciones,
+                        "atributos_retorno" => $request->atributos_retorno,
+                        "nro_doc_radicados" => $request->nro_doc_radicados ?? null,
+                        "nro_sobre" => $request->nro_sobre ?? null,
+                        "codigo_vendedor" => $request->codigo_vendedor ?? null,
+                    )
+                ),
+                array(
+                    'response' => "failed_service",
+                    'response_error' => $e->getMessage()
+                ),
+                "LOST"
+            );
+
             return $this->respond(500, null, $e->getMessage(), "Hubo un fallo en el servicio");
         }
             
     }
 
     public function printLabels(Request $request)
-    { 
+    {   
+        $ApiSync = new ApiSync;
+        $userData = auth()->user();
         try
-        {   //id_remision 6828594
+        {
             $referalCodes = array(
                 95352500003
             );
@@ -169,15 +291,61 @@ class Coordinadora
                         "clave" => $this->password
                     ]);
             
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email ?? $userData->mail ?? null
+                ),
+                "Coordinadora Api",
+                array(
+                    'destination_action' => "print_labels"
+                ),
+                array(
+                    'data' => array(
+                        "id_rotulo" => $request->id_rotulo,
+                        "codigos_remisiones" => $request->codigos_remisiones,
+                    )
+                ),
+                array(
+                    'response' => "printed_labels"
+                ),
+                "ACK"
+            );
+
             return $this->respond(200, $result, null, "Petición procesada correctamente");
 
         } catch(Exception $e) {
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email ?? $userData->mail ?? null
+                ),
+                "Coordinadora Api",
+                array(
+                    'destination_action' => "print_labels"
+                ),
+                array(
+                    'data' => array(
+                        "id_rotulo" => $request->id_rotulo,
+                        "codigos_remisiones" => $request->codigos_remisiones,
+                    )
+                ),
+                array(
+                    'response' => "failed_service",
+                    'response_error' => $e->getMessage()
+                ),
+                "LOST"
+            );
+
             return $this->respond(500, null, $e->getMessage(), "Hubo un fallo en el servicio");
         }
     }
 
     public function schedulePickup(Request $request)
     {   
+        $ApiSync = new ApiSync;
+        $userData = auth()->user();
         $p = "p";
         $body = array(
             "modalidad" => $request->modalidad, //1 = Cuenta Corriente, 2 = Flete Pago, 3 = Flete Contra Entrega, 4 = Flete al Cobro, 5 = Acuerdo Semanal, 6 = CC Int., 7 = FPI, 8 = CC/INT
@@ -224,13 +392,54 @@ class Coordinadora
                 $p => $body
             ]);
 
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email ?? $userData->mail ?? null
+                ),
+                "Coordinadora Api",
+                array(
+                    'destination_action' => "schedule_pickup"
+                ),
+                array(
+                    'data' => $body
+                ),
+                array(
+                    'response' => 'successfully_scheduled_pickup'
+                ),
+                "ACK"
+            );
+
             return $this->respond(200, $result, null, "Petición procesada correctamente");
         } catch(Exception $e){
+
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email ?? $userData->mail ?? null
+                ),
+                "Coordinadora Api",
+                array(
+                    'destination_action' => "schedule_pickup"
+                ),
+                array(
+                    'data' => $body
+                ),
+                array(
+                    'response' => 'failed_service',
+                    'response_error' => $e->getMessage()
+                ),
+                "LOST"
+            );
+
             return $this->respond(500, null, $e->getMessage(), "Hubo un fallo en el servicio");
         }
     }
 
     public function pickupTracking(Request $request){
+
+        $ApiSync = new ApiSync;
+        $userData = auth()->user();
         $p = "p";
         $body = array(
             "id_recogida" => $request->id_recogida,
@@ -246,8 +455,45 @@ class Coordinadora
                 $p => $body
             ]);
 
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email ?? $userData->mail ?? null
+                ),
+                "Coordinadora Api",
+                array(
+                    'destination_action' => "pickup_tracking"
+                ),
+                array(
+                    'data' => $body
+                ),
+                array(
+                    'response' => "request_processed_correctly"
+                ),
+                "ACK"
+            );
+
             return $this->respond(200, $result, null, "Petición procesada correctamente");
         } catch (\Throwable $e) {
+            $ApiSync->ApiSaveLog(
+                "Multientrega Admin",
+                array(
+                    'origin_user' => $userData->email ?? $userData->mail ?? null
+                ),
+                "Coordinadora Api",
+                array(
+                    'destination_action' => "pickup_tracking"
+                ),
+                array(
+                    'data' => $body
+                ),
+                array(
+                    'response' => "failed_service",
+                    'response_error' => $e->getMessage()
+                ),
+                "LOST"
+            );
+
             return $this->respond(500, null, $e->getMessage(), "Hubo un fallo en el servicio");
         }
     }
