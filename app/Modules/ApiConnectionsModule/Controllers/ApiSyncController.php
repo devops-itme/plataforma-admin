@@ -25,7 +25,7 @@ class ApiSyncController extends Controller
     public function index(Request $request)
     {   
         
-        $logsQuery = $this->ApiSync->apiGetLogs()['data']['data'];
+        $logsQuery = $this->ApiSync->apiGetLogs()['data'];
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $itemCollection = collect($logsQuery);
         $perPage = 15;
