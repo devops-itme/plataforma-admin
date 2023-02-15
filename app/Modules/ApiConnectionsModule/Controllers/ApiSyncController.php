@@ -26,6 +26,10 @@ class ApiSyncController extends Controller
     {   
         
         $logsQuery = $this->ApiSync->apiGetLogs()['data'];
+        if (!is_null($logsQuery)) {
+            $logsQuery = $this->ApiSync->apiGetLogs()['data']['data'];
+        }
+        
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $itemCollection = collect($logsQuery);
         $perPage = 15;

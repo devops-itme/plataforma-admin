@@ -107,7 +107,7 @@
                     </thead>
                     <tbody>
                         @if (count($logs) == 0)
-                            <td>No se hallaron registros</td>
+                            <td colspan="8">No se hallaron registros</td>
                             
                         @endif
                         @foreach ($logs as $log)
@@ -117,7 +117,7 @@
                                 <td>{{ str_replace("_", " ", $log['origin']) }}</td>
                                 @foreach ($log['origin_detail'] as $key => $originDetail)
                                 
-                                    @if ($key == 'origin_user')
+                                    @if ($key == 'origin_user' || $key == 'user')
                                         @if (is_string($originDetail) != true)
                                             <td>No se registra usuario</td>
                                         @else
