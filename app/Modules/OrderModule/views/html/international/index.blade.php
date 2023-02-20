@@ -116,6 +116,7 @@
     <table class="table table-sm">
         <thead>
             <tr>
+                <th scope="col">Proveedor</th>
                 <th scope="col">Número de lote</th>
                 <th scope="col">Cliente</th>
                 <th scope="col">Fecha y Hora de creación</th>
@@ -128,6 +129,15 @@
             @if (count($orders) > 0)
             @foreach ($orders as $order)
             <tr>
+                <td>
+                    @if ($order->description != null)
+                    Coordinadora
+                    @else
+                    Tealca
+                    @endif
+
+                </td>
+                
                 <th scope="row">{{ $order->order_number ?? 'No registra' }}</th>
                 <td>
                 @foreach ($customers as $customer)

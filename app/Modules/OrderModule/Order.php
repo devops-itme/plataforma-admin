@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\Contracts\Activity;
+use App\Modules\OrderModule\CoordinadoraOrder;
 
 class Order extends Model
 {
@@ -135,6 +136,11 @@ class Order extends Model
     public function getGuides()
     {
         return $this->hasMany(Guide::class, 'order_id');
+    }
+
+    public function getCoordinadoraGuides()
+    {
+        return $this->hasMany(CoordinadoraOrder::class, 'order_id');
     }
 
     public function getOrderType()
@@ -503,6 +509,7 @@ class Order extends Model
                 $guides->getGuideLogs()->delete();
                 $guides->delete();
             });
+            $order->getCoordinadoraGuides()->delete();
         });
     }
 }

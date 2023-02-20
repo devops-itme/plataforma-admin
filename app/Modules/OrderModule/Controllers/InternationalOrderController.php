@@ -20,6 +20,10 @@ use Maatwebsite\Excel\HeadingRowImport;
 use App\Modules\ApiConnectionsModule\Imports\GuidesToBatchImport;
 use Illuminate\Support\Facades\Http;
 use App\Modules\ApiConnectionsModule\Models\ApiSync;
+use App\Modules\ApiConnectionsModule\Models\Coordinadora;
+use App\Modules\OrderModule\CoordinadoraOrder;
+use App\Modules\ApiConnectionsModule\Imports\ShipmentCoordinadoraImport;
+use App\Modules\ApiConnectionsModule\Imports\ShipmentCoordinadoraImp;
 
 class InternationalOrderController extends Controller
 {
@@ -56,8 +60,28 @@ class InternationalOrderController extends Controller
     {
     }
 
+    public function importVendorBatch(Request $request)
+    {
+        return 1;
+    }
+
     public function importBatch(Request $request)
     {   
+        if ($request->country != null) {
+            $response = $this->importCoordinadoraBatch($request);
+            return $response;
+
+        } else {
+            $response = $this->importTealcaBatch($request);
+            return $response;
+        }
+        
+    }
+
+    public function importTealcaBatch(Request $request)
+    {
+        set_time_limit(3200);
+        
         $ApiSync = new ApiSync;
         //dd($request->excel->getClientOriginalName());
         $userData = auth()->user();
@@ -403,5 +427,49 @@ class InternationalOrderController extends Controller
         }
         $export = new TealcaInformExport($incidences);
         return Excel::download($export, 'Informe.xlsx');
+    }
+    
+    /***** COORDINADORA *****/
+
+    public function createCoordinadoraGuide(Request $request)
+    {
+        $CoordinadoraModel = new CoordinadoraModel();
+        $petition = $CoordinadoraModel->createCoordinadoraGuide($request);
+        return $petition;
+    }
+
+    public function getCoordinadoraGuide($id)
+    {
+        $CoordinadoraModel = new CoordinadoraModel();
+        $petition = $CoordinadoraModel->getCoordinadoraGuide($id);
+        return $petition;
+    }
+
+    public function updateCoordinadoraGuides(Request $request, $id)
+    {
+        $CoordinadoraModel = new CoordinadoraModel();
+        $petition = $CoordinadoraModel->updateCoordinadoraGuide($request, $id);
+        return $petition;
+    }
+
+    public function deleteCoordinadoraGuide($id)
+    {
+        $CoordinadoraModel = new CoordinadoraModel();
+        $petition = $CoordinadoraModel->deleteCoordinadoraGuide($id);
+        return $petition;
+    }
+
+    public function importCoordinadoraBatch(Request $request)
+    {
+        $customer_id = $request->customer_id;
+        $file = $request->file('excel');
+        $CoordinadoraImport = new ShipmentCoordinadoraImport($customer_id, $request->country);
+        $excelResponse = Excel::import($CoordinadoraImport, $file);
+        return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
+    }
+
+    public function addGuidesToBatchCoordinadora(Request $request, $order_id)
+    {
+        return 1;
     }
 }

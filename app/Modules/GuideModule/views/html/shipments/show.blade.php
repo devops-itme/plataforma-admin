@@ -47,7 +47,8 @@
         </div>
         @endif
 </div>
-<div class="card card-custom">
+
+<div class="card card-custom" id="TealcaContent">
     <div class="card-header" style="padding-bottom: 25px">
         <form class="row g-3" method="post" action="#">
             @csrf
@@ -227,6 +228,50 @@
             @endif
 
     </div>
+</div> 
+            @if ($history['state'] == 200)
+            <div class="card-body">
+                <hr>
+                <div class="table-responsive" style="overflow: auto;">
+                    <table class="table align-items-center text-center table-flush  table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Fecha - Hora</th>
+                                <th style="position: relative; left:-14.1em;" scope="col">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($info as $tracking)
+                            <tr>
+                                <td>{{ date('Y-m-d h:i:s', strtotime($tracking['date'])) }}</td>
+                                <td style="padding: 0 70% 0 0">
+                                    @switch($tracking['status'])
+                                    @case('Creacion')
+                                    <span class="badge badge-pill badge-success">VERIFICACION</span>
+                                    @break
+                                    @case('Recepcion desde plataforma')
+                                    <span class="badge badge-pill badge-success">RECEPTADO EN BODEGA</span>
+                                    @break
+                                    @case('Recepcion desde tienda')
+                                    <span class="badge badge-pill badge-success">RECEPCION EN SUCURSAL</span>
+                                    @break
+                                    @case('Despacho a tienda (tienda destino para entrega al cliente)')
+                                    <span class="badge badge-pill badge-success">DESPACHO A SUCURSAL</span>
+                                    @break
+                                    @default
+                                    <span class="badge badge-pill badge-success">{{$tracking['status']}}</span>
+                                    @endswitch
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @endif
+
+    </div>
 </div>
 </form>
 </div>
@@ -240,3 +285,13 @@
 {{-- Styles Section --}}
 @section('styles')
 @endsection
+
+<style>
+    th {
+        border-right: 1px solid rgb(0, 154, 201);
+        border-left: 1px solid rgb(0, 154, 201);
+    }
+    table {
+        text-align: center;
+    }
+</style>

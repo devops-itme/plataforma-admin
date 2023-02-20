@@ -9,6 +9,8 @@ use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Imports\ShipmentTealcaImport;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use App\Modules\BranchOfficeModule\BranchOffice;
+use App\Modules\OrderModule\CoordinadoraOrder;
+use App\Modules\OrderModule\CoordinadoraOrderDetail;
 use App\Modules\OrderModule\Order;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,11 +19,22 @@ class ShipmentController extends Controller
 {
     use RestActions, GuideTrait;
     protected $path = 'GuideModule.views.html.shipments.';
+    protected $CoordPath = 'GuideModule.views.html.coordinadora.';
+
     public function index(Request $request)
     {
         $order_id = 'order_id';
         $order_id = $request->order_id;
         $Guide = new Guide();
+        $Coordinadora = new CoordinadoraOrder();
+        $isCoordinadora = $this->isCoordinadoraBatch($order_id);
+        
+        if (!is_null($isCoordinadora)) {
+            $guides = $Coordinadora->getCoordinadoraGuidesByOrder($order_id)['data'];
+            
+            return view($this->CoordPath . 'index', compact('guides', 'order_id'));
+        }
+
         $response = $Guide->getGuidesByOrder($order_id, (request()->pagination ?? 15));
         if ($response['state'] != 200) {
             return redirect()->back()->with('warning', 'Orden no encontrada');
@@ -29,6 +42,7 @@ class ShipmentController extends Controller
         $shipments = $response['data'];
         return view($this->path . 'index', compact('shipments', 'order_id'));
     }
+
     public function sendBatch($id)
     {   
         set_time_limit(3600);
@@ -140,4 +154,99 @@ class ShipmentController extends Controller
         }
 
     }
+
+    public function isCoordinadoraBatch($order_id)
+    {
+        $findBatch = Order::where('id', $order_id)->where('description', '<>', null)->get()->first();
+        return $findBatch;
+    }
+
+    public function coordinadoraGuideDetails($order_id)
+    {
+        $Coordinadora = new CoordinadoraOrder();
+        $CoordinadoraDetails = new CoordinadoraOrderDetail();
+        $order = $Coordinadora->getCoordinadoraGuide($order_id)['data'];
+        $orderDetails = $CoordinadoraDetails->getGuideProducts($order_id)['data'];
+        
+        return view($this->CoordPath. 'showGuideDetail', compact('order', 'orderDetails'));
+    }
+
+    public function coordinadoraCreateGuideView($order_id)
+    {   
+        return view($this->CoordPath. 'create', ['order_id' => $order_id]);
+    }
+
+    public function coordinadoraAddGuide(Request $request)
+    {
+        $Coordinadora = new CoordinadoraOrder();
+        $storeGuidePetition = $Coordinadora->addGuideToBatch($request);
+        
+        //dd($storeGuidePetition);
+        if ($storeGuidePetition['state'] == 201) {
+            return redirect()->route('shipments.index', ['order_id' => $request->order_id])->with('success', $storeGuidePetition['message']);
+        }
+        if ($storeGuidePetition['state'] == 500) {
+            
+            return redirect()->back()->with('danger', $storeGuidePetition['error']);
+        }
+        
+    }
+
+    public function coordinadoraEditGuide($id)
+    {   
+        $orderDetails = new CoordinadoraOrderDetail();
+        $guide = CoordinadoraOrder::find($id);
+        $guideDetails = $orderDetails->getGuideProducts($id)['data'];
+        $order_id = $guide->id;
+        return view($this->CoordPath. 'editGuideDetail', compact('guide', 'order_id', 'guideDetails'));
+    }
+
+    public function coordinadoraUpdateGuide(Request $request, $order_id)
+    {
+        $Coordinadora = new CoordinadoraOrder();
+        $updateGuidePetition = $Coordinadora->updateCoordinadoraGuide($request, $order_id);
+        $findGuide = CoordinadoraOrderDetail::find($order_id);
+        $guide_id = $findGuide->guide_id;
+
+        $guide = $Coordinadora::find($guide_id);        
+        $batch_id = $guide->order_id;
+        
+        //dd($updateGuidePetition);
+        if ($updateGuidePetition['state'] == 200) {
+            return redirect()->route('shipments.index', ['order_id' => $batch_id])->with('success', $updateGuidePetition['message']);
+        }
+        if ($updateGuidePetition['state'] == 500) {
+            
+            return redirect()->back()->with('success', $updateGuidePetition['error']);
+        }
+    }
+
+    public function coordinadoraDeleteGuide($id)
+    {
+        $Coordinadora = new CoordinadoraOrder();
+        $guide = $Coordinadora::find($id);
+        $order_id = $guide->id ?? null;
+        $deleteGuidePetition = $Coordinadora->deleteCoordinadoraGuide($id);
+
+        
+        if ($response['state'] = 200) {
+            return redirect()->route('shipments.index', ['order_id' => $order_id])->with('success', $deleteGuidePetition['message']);
+        }
+        return redirect()->back()->with('danger', $response['message']);
+    }
+
+    public function coordinadoraDeleteProduct($id)
+    {
+        $Coordinadora = new CoordinadoraOrderDetail();
+        $product = $Coordinadora::find($id);
+        $order_id = $product->guide_id;
+        $deleteProductPetition = $Coordinadora->deleteProduct($id);
+
+        dd($deleteProductPetition);
+        if ($response['state'] = 200) {
+            return redirect()->back()->with('success', "Producto eliminado");
+        }
+        return redirect()->back()->with('danger', $response['message']);
+    }
+
 }
