@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Modules\OrderModule\CoordinadoraOrder;
 use App\Modules\OrderModule\CoordinadoraOrderDetail;
 
-class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow
+class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithValidation
 {
     use OrderTrait;
     
@@ -34,35 +34,6 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow
         $this->user_id = $user_id;
         $this->country = $country;
     }
-
-     
-
-    /* public function validateCitiesDestination($rows){
-        
-        $Tealca = new Tealca();
-        $Tealca->login();
-        
-        $Tealca->getDestination();
-        $destinationCodes = $Tealca->getDestination()['data'];
-        
-        $arrayCodes = [];
-
-        foreach ($destinationCodes as $code) {
-            array_push($arrayCodes, $code['destinationCode']);
-        }
-        $cellNumber = 0;
-
-        foreach ($rows as $row) {
-            $response = in_array($row['ciudes'], $arrayCodes);
-            ++$cellNumber;
-            if ($response == false) {
-                $cellNumber = $cellNumber + 1;
-                $this->wrongRow = $cellNumber;
-                return $this->respond(500, null, null, 'En la fila: '.$cellNumber.' la ciudad es errónea');
-            }
-        }
-        return $this->respond(200, null, null, 'Importación exitosa');
-    } */
 
     public function collection(Collection $rows)
     {   
@@ -97,7 +68,7 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow
         
         //dd($lot_number);
 
-        //DB::beginTransaction();
+        DB::beginTransaction();
         $orderResponse = $this->storeOrder(new Request(array(
             // 'user_id' => Auth::user()->id,
             'user_id' => $this->user_id,
@@ -131,9 +102,9 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow
                 "numero_pedido" => $row['numero_pedido'],
                 "es_entrega_mismo_dia" => $row['es_entrega_mismo_dia'],
                 "valor_declarado" => (double)$row['valor_declarado']
-            )));
+            )), $lot_number);
             //dd($guideResponse);
-            $orderDetailResponse =$CoordinadoraOrderDetail->createProduct(new Request(array(
+            $orderDetailResponse = $CoordinadoraOrderDetail->createProduct(new Request(array(
                 "referencia" => $row['referencia'],
                 "unidades" => $row['unidades'],
                 "peso" => $row['peso'],
@@ -142,13 +113,46 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow
                 "largo" => $row['largo'],
                 "nombre_paquete" => $row['nombre_paquete'],
             )), $guideResponse['data']['id']);
-            
-            /* if ($guideResponse['state'] == 500) {
+            //dd($orderDetailResponse);
+            if ($guideResponse['state'] != 201 || $orderDetailResponse['state'] != 201) {
                 DB::rollBack();
                 throw ValidationException::withMessages([$guideResponse['message']]);
-            }; */
+            };
         }
         DB::commit();
     }
+
+    public function rules(): array
+    {
+        return [
+            "identificacion_destinatario" => 'required|numeric|digits_between:1,15',
+            "nombres_destinatario" => 'required|string|max:100',
+            "apellidos_destinatario" => 'required|string|max:100',
+            "direccion_destinatario" => 'required|string|min:10|max:500',
+            "telefono_fijo_destinatario" => 'required|numeric|digits_between:10,20',
+            "telefono_celular_destinatario" => 'required|numeric|digits_between:10,20',
+            "codigo_ciudad_destinatario" => 'required|numeric|digits:8',
+            "nombre_ciudad_destinatario" => 'required|string|max:100',
+            "codigo_pedido" => 'required|numeric',
+            "numero_pedido" => 'required|numeric',
+            "es_entrega_mismo_dia" => 'required|string|size:1',
+            "valor_declarado" => 'required|numeric',
+
+            "referencia" => 'required|string|max:50',
+            "unidades" => 'required|numeric',
+            "peso" => 'required|numeric',
+            "alto" => 'required|numeric',
+            "ancho" => 'required|numeric',
+            "largo" => 'required|numeric',
+            "nombre_paquete" => 'required|string|max:500',
+        ];
+    }
+
+    public function customValidationMessages()
+{
+    return [
+        'es_entrega_mismo_dia.size' => 'el campo es_entrega_mismo_dia solo puede contener S o N (Si / No)',
+    ];
+}
 
 }

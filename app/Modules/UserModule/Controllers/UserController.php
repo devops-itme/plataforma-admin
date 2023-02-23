@@ -1696,14 +1696,11 @@ class UserController extends Controller
             DB::rollback();
             
             return redirect()->back()->with('danger', $e->getMessage());
-        }
-        
-
-        
+        } 
     }
 
     public function requestCreateUser($user)
-    {   
+    {
         $body = [
             "name" => $user['name'],
             "email" => $user['email'],
@@ -1719,4 +1716,4 @@ class UserController extends Controller
         $response = $createUserResponse->status();
         return $response;
     }
-}
+}  

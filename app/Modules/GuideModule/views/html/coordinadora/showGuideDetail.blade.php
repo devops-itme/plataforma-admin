@@ -153,7 +153,6 @@
                                 <th>Ancho (cm)</th>
                                 <th>Largo (cm)</th>
                                 <th>Nombre del empaque</th>
-                                <th>Opciones</th>
                             </tr>
                         </thead>
                         
@@ -169,7 +168,6 @@
                             <td>{{ $product->ancho }}</td>
                             <td>{{ $product->largo }}</td>
                             <td>{{ $product->nombre_paquete }}</td>
-                            <td>Editar, Eliminar</td>
                         </tbody>
                         @endforeach
                     </table>

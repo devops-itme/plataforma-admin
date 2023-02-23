@@ -137,6 +137,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         $Tealca->getDestination();
         $destinationCodes = $Tealca->getDestination()['data'];
         
+        
         $arrayCodes = [];
 
         foreach ($destinationCodes as $code) {

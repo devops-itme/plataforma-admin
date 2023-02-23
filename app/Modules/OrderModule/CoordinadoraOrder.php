@@ -9,6 +9,7 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Validator;
 use App\Modules\OrderModule\CoordinadoraOrderDetail;
+use App\Modules\OrderModule\Order;
 
 class CoordinadoraOrder extends Model
 {
@@ -162,7 +163,7 @@ class CoordinadoraOrder extends Model
         }
     }
 
-    public function createCoordinadoraGuideMassive(Request $request)
+    public function createCoordinadoraGuideMassive(Request $request, $lot_number)
     {
         $validate = $this->validateGuide($request);
 
@@ -170,10 +171,15 @@ class CoordinadoraOrder extends Model
             return $this->respond(500, null, $validate->errors()->first(), "Error de validación");
         }
 
-        $guide = $this->where('codigo_pedido', $request->codigo_pedido)->get()->first();
+        $getBatch = Order::where('order_number', $lot_number)->first();
+        $batch_id = $getBatch->id;
         
+        $guide = $this->where('codigo_pedido', $request->codigo_pedido)
+                 ->where('order_id', '=', $batch_id)
+                 ->get()->first();
+        //dd($guide);
         if (!is_null($guide)) {
-            return $this->respond(201, $guide, null, "Guía existente");
+            return $this->respond(201, $guide, null, "guía encontrada");
         }
         
         try {
@@ -298,6 +304,23 @@ class CoordinadoraOrder extends Model
             }
             $guide->delete();
             return $this->respond(200, $guide, null, "Guía eliminada correctamente");
+        } catch (\Throwable $th) {
+            return $this->respond(500, null, $th->getMessage(), "Ocurrió un error inesperado");
+        }
+    }
+
+    public function getAllGuideAndDetails($order_id)
+    {
+        try {
+            $guideData = $this->with('getGuideDetails')
+                        ->where('order_id', $order_id)
+                        ->get();
+            
+            if (count($guideData) == 0) {
+                return $this->respond(404, null, "guides not found", "No se encontraron guías");
+            }
+
+            return $this->respond(200, $guideData, null, "Guías obtenidas correctamente");
         } catch (\Throwable $th) {
             return $this->respond(500, null, $th->getMessage(), "Ocurrió un error inesperado");
         }

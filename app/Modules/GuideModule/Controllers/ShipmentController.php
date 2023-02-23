@@ -14,6 +14,7 @@ use App\Modules\OrderModule\CoordinadoraOrderDetail;
 use App\Modules\OrderModule\Order;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CoordinadoraGuidesExport;
 
 class ShipmentController extends Controller
 {
@@ -247,6 +248,29 @@ class ShipmentController extends Controller
             return redirect()->back()->with('success', "Producto eliminado");
         }
         return redirect()->back()->with('danger', $response['message']);
+    }
+
+    public function coordinadoraAddProduct(Request $request)
+    {
+        $Coordinadora = new CoordinadoraOrderDetail();
+        $guide_id = $request->guide_id;
+        $addProductPetition = $Coordinadora->createProduct($request, $guide_id);
+
+        dd($addProductPetition);
+        if ($addProductPetition['state'] == 201) {
+            return redirect()->back()->with('success', "Producto añadido");
+        }
+        return redirect()->back()->with('danger', $addProductPetition['error']);
+    }
+
+    public function coordinadoraGuidesExport($order_id)
+    {
+        $Coordinadora = new CoordinadoraOrder();
+        $batchData = Order::find($order_id);
+        $guidesData = $Coordinadora->getAllGuideAndDetails($order_id)['data'];
+        //return $guidesData;
+        return Excel::download(new CoordinadoraGuidesExport($guidesData, $batchData), 'reporteDeGuiasCoordinadora.xlsx');
+        
     }
 
 }

@@ -27,7 +27,11 @@
                         <i class="fad fa-upload"></i>
                     </span>Importar nuevas guías
                 </button> --}}
-                
+                <a href="{{ route('coordinadora.export',['order_id' => $order_id])}}">
+                    <button class="btn btn-light-primary mr-2 px-6">
+                <i class="fas fa-download"></i>
+                Exportar guías</button>
+                </a>
 
                 <a href="{{ route('coordinadora.create',['order_id' => $order_id])}}">
                     <button class="btn btn-light-primary mr-2 px-6">
