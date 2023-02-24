@@ -39,7 +39,7 @@ class CoordinadoraOrderDetail extends Model
         'alto',
         'ancho',
         'largo',
-        'nombre_paquete',
+        'nombre_empaque',
         'guide_id',
         'state'
     ];
@@ -55,7 +55,7 @@ class CoordinadoraOrderDetail extends Model
                 "alto" => 'required|numeric',
                 "ancho" => 'required|numeric',
                 "largo" => 'required|numeric',
-                "nombre_paquete" => 'required|string',
+                "nombre_empaque" => 'required|string',
             ]
         );
     }
@@ -76,7 +76,7 @@ class CoordinadoraOrderDetail extends Model
                 "alto" => $request->alto,
                 "ancho" => $request->ancho,
                 "largo" => $request->largo,
-                "nombre_paquete" => $request->nombre_paquete,
+                "nombre_empaque" => $request->nombre_empaque,
             ]);
             return $this->respond(201, $product, null, "Producto creado exitósamente");
         } catch (\Throwable $th) {
@@ -117,7 +117,7 @@ class CoordinadoraOrderDetail extends Model
                 "alto" => $request->alto ?? $product->alto,
                 "ancho" => $request->ancho ?? $product->ancho,
                 "largo" => $request->largo ?? $product->largo,
-                "nombre_paquete" => $request->nombre_paquete ?? $product->nombre_paquete,
+                "nombre_empaque" => $request->nombre_empaque ?? $product->nombre_empaque,
             ]);
 
             return $this->respond(200, $product, null, "Producto actualizado exitósamente");

@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+Route::get('/token', function () {
+    return csrf_token(); 
+});
+Route::post('/testCoordinadora', 'OrderModule\Controllers\CoordinadoraOrderDetailController@createGuide');
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role'], function () {
 

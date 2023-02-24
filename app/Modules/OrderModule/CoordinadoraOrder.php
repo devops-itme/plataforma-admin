@@ -153,7 +153,7 @@ class CoordinadoraOrder extends Model
                 "alto" => $request->alto,
                 "ancho" => $request->ancho,
                 "largo" => $request->largo,
-                "nombre_paquete" => $request->nombre_paquete,                
+                "nombre_empaque" => $request->nombre_empaque,                
             )), $guide->id);
 
             
@@ -224,7 +224,7 @@ class CoordinadoraOrder extends Model
     public function getCoordinadoraGuidesByOrder($order_id)
     {
         try {
-            $guides = $this::where('order_id', $order_id)->get();
+            $guides = $this::with('getGuideDetails')->where('order_id', $order_id)->get();
             return $this->respond(200, $guides, null, "Guías obtenidas correctamente");
         } catch (\Throwable $th) {
             return $this->respond(200, null, $th->getMessage(), "Ocurrió un error inesperado");
@@ -286,7 +286,7 @@ class CoordinadoraOrder extends Model
                 "alto" => $request->alto,
                 "ancho" => $request->ancho,
                 "largo" => $request->largo,
-                "nombre_paquete" => $request->nombre_paquete,                
+                "nombre_empaque" => $request->nombre_empaque,                
             )), $product_id);
             
             return $this->respond(200, $guide, null, "Guía actualizada correctamente");

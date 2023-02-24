@@ -15,6 +15,7 @@ use App\Modules\OrderModule\Order;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CoordinadoraGuidesExport;
+use App\Modules\OrderModule\CoordinadoraCities;
 
 class ShipmentController extends Controller
 {
@@ -46,7 +47,7 @@ class ShipmentController extends Controller
 
     public function sendBatch($id)
     {   
-        set_time_limit(3600);
+        //set_time_limit(3600);
         $Guide = new Guide();
         $Tealca = new Tealca();
         $Tealca->login();
@@ -174,11 +175,14 @@ class ShipmentController extends Controller
 
     public function coordinadoraCreateGuideView($order_id)
     {   
-        return view($this->CoordPath. 'create', ['order_id' => $order_id]);
+        
+        $cities = CoordinadoraCities::all();
+        return view($this->CoordPath. 'create', ['order_id' => $order_id, 'cities'=> $cities]);
     }
 
     public function coordinadoraAddGuide(Request $request)
-    {
+    {   
+        
         $Coordinadora = new CoordinadoraOrder();
         $storeGuidePetition = $Coordinadora->addGuideToBatch($request);
         
@@ -199,7 +203,8 @@ class ShipmentController extends Controller
         $guide = CoordinadoraOrder::find($id);
         $guideDetails = $orderDetails->getGuideProducts($id)['data'];
         $order_id = $guide->id;
-        return view($this->CoordPath. 'editGuideDetail', compact('guide', 'order_id', 'guideDetails'));
+        $cities = CoordinadoraCities::all();
+        return view($this->CoordPath. 'editGuideDetail', compact('guide', 'order_id', 'guideDetails', 'cities'));
     }
 
     public function coordinadoraUpdateGuide(Request $request, $order_id)
@@ -270,7 +275,6 @@ class ShipmentController extends Controller
         $guidesData = $Coordinadora->getAllGuideAndDetails($order_id)['data'];
         //return $guidesData;
         return Excel::download(new CoordinadoraGuidesExport($guidesData, $batchData), 'reporteDeGuiasCoordinadora.xlsx');
-        
+   
     }
-
 }

@@ -71,12 +71,13 @@
                 <div class="row mt-10">
                     <div class="col">
                         <label for="exampleInputPassword1">Ciudad del destinatario</label>
-                        <select name="nombre_ciudad_destinatario" id="" class="form-control" required>
+                        <select name="ciudad_destinatario" id="ciudad_destinatario" class="form-control" onchange="getCityCode(this.value)" required>
                             <option value="{{ $guide->nombre_ciudad_destinatario }}" selected>{{ $guide->nombre_ciudad_destinatario }}</option>
-                            <option value="Barranquilla">Barranquilla</option>
-                            <option value="Bogota">Bogota</option>
-                            <option value="Bucaramanga">Bucaramanga</option>
+                            @foreach ($cities as $city)
+                                <option value="{{ $city->codigo_ciudad }}">{{ $city->nombre_ciudad }}</option>
+                            @endforeach
                         </select>
+                        <input type="text" id="nombre_ciudad_destinatario" name="nombre_ciudad_destinatario" hidden>
                     </div>
                     <div class="col">
                         <label for="address_name">Dirección del destinatario</label>
@@ -169,7 +170,7 @@
                             <td><input value="{{ $product->alto }}" type="number" step="0.01" name="alto" id="alto" placeholder="Ej: 10.5" style="width: 100px;" class="form-control" required></td>
                             <td><input value="{{ $product->ancho }}" type="number" step="0.01" name="ancho" id="ancho" placeholder="Ej: 10.5" style="width: 100px;" class="form-control" required></td>
                             <td><input value="{{ $product->largo }}" type="number" step="0.01" name="largo" id="largo" placeholder="Ej: 10.5" style="width: 100px;" class="form-control" required></td>
-                            <td><input value="{{ $product->nombre_paquete }}" type="text" name="nombre_paquete" id="nombre_paquete" placeholder="Ej: tarjeta máster card" class="form-control" required></td>
+                            <td><input value="{{ $product->nombre_empaque }}" type="text" name="nombre_empaque" id="nombre_empaque" placeholder="Ej: tarjeta máster card" class="form-control" required></td>
                             <td>
                                 <button type="button" onclick="confirmDelete('/coordinadora/delete/product/'+{{ $product->id }})"
                                     class="btn btn-icon btn-light-danger btn-sm mr-1" data-tooltip title="Eliminar">
@@ -209,3 +210,11 @@
         text-align: center;
     }
 </style>
+<script>
+    function getCityCode(code){
+        document.getElementById("codigo_ciudad_destinatario").value = code;
+        var select = document.getElementById("ciudad_destinatario");
+        cityName = select.options[select.selectedIndex].innerText;
+        document.getElementById("nombre_ciudad_destinatario").value = cityName;
+    }
+</script>

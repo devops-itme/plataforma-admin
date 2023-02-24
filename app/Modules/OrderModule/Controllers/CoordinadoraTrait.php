@@ -88,7 +88,7 @@ trait CoordinadoraTrait
                 "alto" => 'required|string',
                 "ancho" => 'required|string',
                 "largo" => 'required|string',
-                "nombre_paquete" => 'required|string',
+                "nombre_empaque" => 'required|string',
             ]
         );
     }
@@ -183,7 +183,7 @@ trait CoordinadoraTrait
                 "alto" => $request->alto,
                 "ancho" => $request->ancho,
                 "largo" => $request->largo,
-                "nombre_paquete" => $request->nombre_paquete,
+                "nombre_empaque" => $request->nombre_empaque,
             ]);
             return $this->respond(201, $product, null, "Producto creado exitósamente");
         } catch (\Throwable $th) {

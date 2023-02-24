@@ -22,10 +22,10 @@ class CreateCoordinadoraGuidesTable extends Migration
             $table->string('direccion_destinatario', 500);
             $table->bigInteger('telefono_fijo_destinatario')->nullable();
             $table->bigInteger('telefono_celular_destinatario');
-            $table->bigInteger('codigo_ciudad_destinatario');
+            $table->string('codigo_ciudad_destinatario', 8);
             $table->string('nombre_ciudad_destinatario', 100);
-            $table->bigInteger('codigo_pedido');
-            $table->bigInteger('numero_pedido');
+            $table->string('codigo_pedido');
+            $table->string('numero_pedido');
             $table->string('fechahora_pedido', 100)->nullable();
             $table->string('codigo_tienda', 1);
             $table->string('es_entrega_mismo_dia', 1);

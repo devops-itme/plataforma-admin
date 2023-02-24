@@ -132,6 +132,26 @@
                     </div>
                 </div>
             </div>
+            <div class="container">
+                <div class="row mt-10">
+                    <div class="col">
+                        <label for="numguide">Estado de la guía</label>
+                        @if ($order->state == null)
+                            <input type="text" class="form-control" value="Sin registrar" disabled>
+                        @else
+                        <input type="text" class="form-control" value="Registrada" disabled>
+                        @endif
+                    </div>
+                    <div class="col">
+                        <label for="numfact">Estado del envío</label>
+                        @if ($order->status == null)
+                            <input type="text" class="form-control" value="Sin información registrada" disabled>
+                        @else
+                        <input type="text" class="form-control" value="{{ $order->status }}" disabled>
+                        @endif
+                    </div>
+                </div>
+            </div>
 
             <div class="card-title">
                 <h2 class="card-label">
@@ -167,7 +187,7 @@
                             <td>{{ $product->alto }}</td>
                             <td>{{ $product->ancho }}</td>
                             <td>{{ $product->largo }}</td>
-                            <td>{{ $product->nombre_paquete }}</td>
+                            <td>{{ $product->nombre_empaque }}</td>
                         </tbody>
                         @endforeach
                     </table>

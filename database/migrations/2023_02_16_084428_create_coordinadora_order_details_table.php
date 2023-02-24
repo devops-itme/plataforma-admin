@@ -23,7 +23,7 @@ class CreateCoordinadoraOrderDetailsTable extends Migration
             $table->float('alto')->nullable();
             $table->float('ancho')->nullable();
             $table->float('largo')->nullable();
-            $table->string('nombre_paquete', 500)->nullable();
+            $table->string('nombre_empaque', 500)->nullable();
             $table->boolean('state')->nullable();
             $table->timestamps();
             $table->softDeletes();

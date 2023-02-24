@@ -80,7 +80,7 @@ class InternationalOrderController extends Controller
 
     public function importTealcaBatch(Request $request)
     {
-        set_time_limit(3200);
+        //set_time_limit(3200);
         
         $ApiSync = new ApiSync;
         //dd($request->excel->getClientOriginalName());
@@ -464,9 +464,39 @@ class InternationalOrderController extends Controller
         $customer_id = $request->customer_id;
         $file = $request->file('excel');
         $CoordinadoraImport = new ShipmentCoordinadoraImport($customer_id, $request->country);
+        $headings = (new HeadingRowImport)->toArray($file);
+        
+        $header = [
+            "codigo_ciudad_destinatario",
+            "nombre_ciudad_destinatario",
+            "codigo_pedido",
+            "numero_pedido",
+            "es_entrega_mismo_dia",
+            "valor_declarado",
+            "referencia",
+            "unidades",
+            "peso",
+            "alto",
+            "ancho",
+            "largo",
+            "nombre_empaque"
+        ];
+        
+        
+        $missingColumns = array_diff($header, $headings[0][0]);
+        if (count($missingColumns) == 1) {
+            return redirect()->back()->with('danger', 'Error. No se encontró la columna '. implode($missingColumns). '.');
+        }
+        if (count($missingColumns) > 1) {
+            return redirect()->back()->with('danger', 'Error. No se encontraron las columnas '. implode(", ", $missingColumns). '.');
+        }
         $excelResponse = Excel::import($CoordinadoraImport, $file);
+        if ($CoordinadoraImport->getWrongRow() > 0) {
+            return redirect()->route('internationalOrders.index')->with('danger', 'Error en la fila '.$CoordinadoraImport->getWrongRow().': código de ciudad no encontrado. Porfavor verifique e intente nuevamente.');
+        }
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
     }
+
 
     public function addGuidesToBatchCoordinadora(Request $request, $order_id)
     {

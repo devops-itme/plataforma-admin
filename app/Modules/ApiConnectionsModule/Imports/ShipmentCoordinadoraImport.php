@@ -17,6 +17,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Facades\Validator;
 use App\Modules\OrderModule\CoordinadoraOrder;
 use App\Modules\OrderModule\CoordinadoraOrderDetail;
+use App\Modules\OrderModule\CoordinadoraCities;
 
 class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithValidation
 {
@@ -27,12 +28,33 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
     protected $country;
     protected $user_id;
     protected $guide_id;
+    protected $wrongRow;
     
 
     public function __construct($user_id, $country)
     {
         $this->user_id = $user_id;
         $this->country = $country;
+    }
+
+    public function validateCityCode($rows)
+    {
+
+        $cellNumber = 0;
+
+        foreach ($rows as $row) {
+            if (strlen($row['codigo_ciudad_destinatario']) == 7) {
+                $row['codigo_ciudad_destinatario'] = '0'.$row['codigo_ciudad_destinatario'];
+            }
+            $validateCity = CoordinadoraCities::where('codigo_ciudad', $row['codigo_ciudad_destinatario'])->first();
+            ++$cellNumber;
+            if (is_null($validateCity)) {
+                $cellNumber = $cellNumber + 1;
+                $this->wrongRow = $cellNumber;
+                return $this->respond(500, null, null, 'En la fila: '.$cellNumber.' el código de la ciudad indicado no existe. Por favor revise e intente nuevamente.');
+            }
+        }
+        return $this->respond(200, null, null, 'Códigos validados correctamente');
     }
 
     public function collection(Collection $rows)
@@ -69,6 +91,12 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
         //dd($lot_number);
 
         DB::beginTransaction();
+        $validateCities = $this->validateCityCode($rows);
+        if ($validateCities['state'] == 500) {
+            DB::rollBack();
+            return null;
+        }
+
         $orderResponse = $this->storeOrder(new Request(array(
             // 'user_id' => Auth::user()->id,
             'user_id' => $this->user_id,
@@ -87,7 +115,9 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
         $CoordinadoraOrderDetail = new CoordinadoraOrderDetail();
         
         foreach ($rows as $row) {
-            
+            if (strlen($row['codigo_ciudad_destinatario']) == 7) {
+                $row['codigo_ciudad_destinatario'] = '0'.$row['codigo_ciudad_destinatario'];
+            }
             $guideResponse = $CoordinadoraOrder->createCoordinadoraGuideMassive(new Request(array(
                 "order_id" => $order_id,
                 "identificacion_destinatario" => $row['identificacion_destinatario'],
@@ -111,7 +141,7 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
                 "alto" => $row['alto'],
                 "ancho" => $row['ancho'],
                 "largo" => $row['largo'],
-                "nombre_paquete" => $row['nombre_paquete'],
+                "nombre_empaque" => $row['nombre_empaque'],
             )), $guideResponse['data']['id']);
             //dd($orderDetailResponse);
             if ($guideResponse['state'] != 201 || $orderDetailResponse['state'] != 201) {
@@ -120,6 +150,10 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
             };
         }
         DB::commit();
+    }
+
+    public function getWrongRow(){
+        return $this->wrongRow;
     }
 
     public function rules(): array
@@ -131,7 +165,7 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
             "direccion_destinatario" => 'required|string|min:10|max:500',
             "telefono_fijo_destinatario" => 'required|numeric|digits_between:10,20',
             "telefono_celular_destinatario" => 'required|numeric|digits_between:10,20',
-            "codigo_ciudad_destinatario" => 'required|numeric|digits:8',
+            "codigo_ciudad_destinatario" => 'required|numeric|digits_between:7,8',
             "nombre_ciudad_destinatario" => 'required|string|max:100',
             "codigo_pedido" => 'required|numeric',
             "numero_pedido" => 'required|numeric',
@@ -144,13 +178,14 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
             "alto" => 'required|numeric',
             "ancho" => 'required|numeric',
             "largo" => 'required|numeric',
-            "nombre_paquete" => 'required|string|max:500',
+            "nombre_empaque" => 'required|string|max:500',
         ];
     }
 
     public function customValidationMessages()
 {
     return [
+        'codigo_ciudad_destinatario.digits_between' => 'El código de la ciudad debe tener 8 dígitos, salvo si el dígito inicial es cero (0), en cuyo caso debe tener 7.',
         'es_entrega_mismo_dia.size' => 'el campo es_entrega_mismo_dia solo puede contener S o N (Si / No)',
     ];
 }

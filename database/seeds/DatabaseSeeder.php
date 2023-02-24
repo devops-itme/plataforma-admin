@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             CorregimientoSeeder::class,
             NeighborhoodSeeder::class,
             CustomerSeeder::class,
+            CoordinadoraCitiesSeeder::class,
         ]);
     }
 }

@@ -5,9 +5,8 @@
             <th style="text-align: center">DETALLES DEL PAQUETE</th>
         </tr>
         <tr>
-            <th rowspan="2" style="text-align: center"> Número de Guía</th>
             <th colspan="8" style="text-align: center">Datos del destinatario</th>
-            <th colspan="7" style="text-align: center">Datos de la guía</th>
+            <th colspan="8" style="text-align: center">Datos de la guía</th>
             <th style="text-align: center" rowspan="2">Referencia del paquete</th>
             <th style="text-align: center" rowspan="2">Unidades</th>
             <th style="text-align: center" rowspan="2">Peso (kg)</th>
@@ -23,14 +22,15 @@
             <th style="text-align: center">Dirección</th>
             <th style="text-align: center">Teléfono fijo</th>
             <th style="text-align: center">Teléfono celular</th>
-            <th style="text-align: center">Código de ciudad</th>
-            <th style="text-align: center">Nombre de ciudad</th>
+            <th style="text-align: center">Código de la ciudad</th>
+            <th style="text-align: center">Nombre de la ciudad</th>
             <th style="text-align: center">Código del pedido</th>
-            <th style="text-align: center">Número el pedido</th>
+            <th style="text-align: center">Número del pedido</th>
             <th style="text-align: center">Fecha y hora de envío</th>
             <th style="text-align: center">Entrega mismo día</th>
             <th style="text-align: center">Valor declarado</th>
-            <th style="text-align: center">Estado</th>
+            <th style="text-align: center">Estado de registro</th>
+            <th style="text-align: center">Estado del envío</th>
             <th style="text-align: center">Fecha de creación</th>
         </tr>
     </thead>
@@ -38,7 +38,6 @@
     <tbody>
         @foreach ($guideData as $index => $guide)
             <tr>
-                <td style="text-align: center">{{ $guide->external_id ?? "No registra" }}</td>
                 <td style="text-align: center">{{ $guide->identificacion_destinatario }}</td>
                 <td style="text-align: center">{{ $guide->nombres_destinatario }}</td>
                 <td style="text-align: center">{{ $guide->apellidos_destinatario }}</td>
@@ -58,7 +57,14 @@
                     @endif
                 </td>
                 <td style="text-align: center">$ {{ $guide->valor_declarado }}</td>
-                <td style="text-align: center">{{ $guide->status ?? "No registra" }}</td>
+                <td style="text-align: center">
+                    @if ($guide->state == null)
+                        Sin registrar
+                    @else
+                        Registrada
+                    @endif
+                </td>
+                <td style="text-align: center">{{ $guide->status ?? "Sin información registrada" }}</td>
                 <td style="text-align: center">{{ $guide->created_at }}</td>
                 <td style="text-align: center">{{ $guide->getGuideDetails[0]->referencia ?? "---" }}</td>
                 <td style="text-align: center">{{ $guide->getGuideDetails[0]->unidades ?? "---" }}</td>
@@ -66,7 +72,7 @@
                 <td style="text-align: center">{{ $guide->getGuideDetails[0]->alto ?? "---" }}</td>
                 <td style="text-align: center">{{ $guide->getGuideDetails[0]->ancho ?? "---" }}</td>
                 <td style="text-align: center">{{ $guide->getGuideDetails[0]->largo ?? "---" }}</td>
-                <td style="text-align: center">{{ $guide->getGuideDetails[0]->nombre_paquete ?? "---" }}</td>
+                <td style="text-align: center">{{ $guide->getGuideDetails[0]->nombre_empaque ?? "---" }}</td>
             </tr>
                 @foreach ($guide->getGuideDetails as $key => $product)
                     @if($key!==0)
@@ -78,7 +84,7 @@
                             <td style="text-align: center">{{ $product->alto }}</td>
                             <td style="text-align: center">{{ $product->ancho }}</td>
                             <td style="text-align: center">{{ $product->largo }}</td>
-                            <td style="text-align: center">{{ $product->nombre_paquete }}</td>
+                            <td style="text-align: center">{{ $product->nombre_empaque }}</td>
                         </tr>
                     @endif
                 @endforeach

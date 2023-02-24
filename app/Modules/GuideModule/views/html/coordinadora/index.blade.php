@@ -40,12 +40,12 @@
                 </a>
 
 
-                {{-- <form action="{{ route('shipments.assign', $order_id) }}" method="POST">
+                <form action="{{ route('coordinadora.send.batch', $order_id) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-primary mt-4" onclick="loadingAlert()">
                         <span>Enviar lote</span>
                     </button>
-                </form> --}}
+                </form>
 
                 <!--begin::Dropdown-->
                 <div class="dropdown dropdown-inline mr-2">
@@ -204,11 +204,11 @@
                 <thead class="">
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">NO. GUIA</th>
+                        <th scope="col">ESTADO</th>
                         <th scope="col">CLIENTE</th>
                         <th scope="col">FECHA - HORA</th>
                         <th scope="col">CONTACTO</th>
-                        <th scope="col">ESTADO</th>
+{{--                         <th scope="col">ESTADO DE ENVÍO</th> --}}
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -216,22 +216,28 @@
                     @foreach ($guides as $guide)
                         <tr>
                             <td>{{ $guide->id }}</td>
-                            <th>{{ $guide->external_id ?? 'No registrada' }}</th>
+                            <th>
+                                @if ($guide->state == null)
+                                    Sin registrar
+                                @else
+                                    Registrada
+                                @endif
+                            </th>
                             <td>{{ $guide->nombres_destinatario .' '. $guide->apellidos_destinatario ?? 'No registra' }}</td>
                             <td>{{ format_date(date('Y-n-d', strtotime($guide->created_at))) }}
                                 <b>{{ date('g:i a', strtotime($guide->created_at)) }}</b>
                             </td>
                             <td>{{ $guide->nombres_destinatario .' '. $guide->apellidos_destinatario ?? 'No registra' }}</td>
-                            <td>
+{{--                             <td>
                                 {{ $guide->getOrder->getStatusMatrix->name ?? 'No registra' }}
-                            </td>
+                            </td> --}}
                             <td>
                                 <div class="d-flex justify-content-around aling-items-center flex-wrap flex-row">
                                     <a href="{{ route('coordinadora.shipments.show.detail', $guide->id) }}" class="btn btn-icon btn-light-primary btn-sm mr-2" data-tooltip
                                         title="Detalle">
                                         <i class="far fa-folder-open"></i>
                                     </a>
-                                    @if ( !isset($guide->external_id))
+                                    @if ( !isset($guide->state))
                                     <a href="{{ route('coordinadora.edit', $guide->id) }}" class="btn btn-icon btn-light-success btn-sm mr-1" data-tooltip title="Editar">
                                         <i class="fad fa-edit"></i>
                                     </a>
