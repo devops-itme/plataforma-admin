@@ -2,9 +2,11 @@
 
 @section('content')
 <div class="container">
+    @include('layouts.alerts')
     <div class="row align-items-center">
         <div class="col-lg-4">
             <div class="row">
+                
                 <div class="col-md-6">
                     <!--begin::Stats Widget 25-->
                     <div class="card card-custom gutter-b" style="background-color: #023e8a !important;">

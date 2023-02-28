@@ -16,6 +16,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/coordinadora/delete/product/{id}', 'GuideModule\Controllers\ShipmentController@coordinadoraDeleteProduct')->name('coordinadora.delete.product');
     Route::post('/coordinadora/product/store/{guide_id}', 'GuideModule\Controllers\ShipmentController@coordinadoraAddProduct')->name('coordinadora.product.add');
     Route::get('/coordinadora/export/{order_id}', 'GuideModule\Controllers\ShipmentController@coordinadoraGuidesExport')->name('coordinadora.export');
+    Route::get('/coordinadora/guides-template', 'GuideModule\Controllers\ShipmentController@coordinadoraGuidesTemplate')->name('coordinadora.import.template');
+    
 
 
     Route::post('validateGuide', 'GuideModule\Controllers\GuideController@validateGuide');

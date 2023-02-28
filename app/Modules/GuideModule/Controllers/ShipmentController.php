@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CoordinadoraGuidesExport;
 use App\Modules\OrderModule\CoordinadoraCities;
+use App\Exports\CoordinadoraGuidesTemplate;
 
 class ShipmentController extends Controller
 {
@@ -276,5 +277,10 @@ class ShipmentController extends Controller
         //return $guidesData;
         return Excel::download(new CoordinadoraGuidesExport($guidesData, $batchData), 'reporteDeGuiasCoordinadora.xlsx');
    
+    }
+
+    public function coordinadoraGuidesTemplate()
+    {
+        return Excel::download(new CoordinadoraGuidesTemplate(), 'PlantillaDeGuiasCoordinadora.xlsx');
     }
 }
