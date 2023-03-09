@@ -22,7 +22,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     /**
      * @return \Illuminate\Support\Collection
      */
-
+    
     public function map($guide): array
     {
         return [
@@ -86,13 +86,11 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
 
     public function collection()
     {
-
-
+        
+        //set_time_limit(3600);
         $from = request()->from;
         $to = request()->to;
-        $name = request()->name;
-
-        // dd($name);
+        $name = request()->number;
 
         if (!isset($vector)) {
             $vector = null;
@@ -141,39 +139,46 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                    switch ($tracking['status']) {
-                        case 'Creacion':
-                            $order1->Status = 'VERIFICACION';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Recepcion desde plataforma':
-                            $order1->Status = 'RECEPTADO A BODEGA';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Recepcion desde tienda':
-                            $order1->Status = 'RECEPCION EN SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                            $order1->Status = 'DESPACHO A SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        default:
-                            $order1->Status = $tracking['status'];
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
+                if ($guideTracking['state'] != 200) {
+                    $order1->Status = 'ERROR AL CONSULTAR';
+                    $order1->Fecha = 'ERROR AL CONSULTAR';
+                    $vector[] = $order1;
+                } else {
+                    foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                        switch ($tracking['status']) {
+                            case 'Creacion':
+                                $order1->Status = 'VERIFICACION';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Recepcion desde plataforma':
+                                $order1->Status = 'RECEPTADO A BODEGA';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Recepcion desde tienda':
+                                $order1->Status = 'RECEPCION EN SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                                $order1->Status = 'DESPACHO A SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            default:
+                                $order1->Status = $tracking['status'];
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                        }
+                        break;
                     }
-                    break;
                 }
+                
             }
         }
 
@@ -217,40 +222,47 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 $Tealca = new Tealca();
                 $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
-
-                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                    switch ($tracking['status']) {
-                        case 'Creacion':
-                            $order1->Status = 'VERIFICACION';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Recepcion desde plataforma':
-                            $order1->Status = 'RECEPTADO A BODEGA';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Recepcion desde tienda':
-                            $order1->Status = 'RECEPCION EN SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                            $order1->Status = 'DESPACHO A SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        default:
-                            $order1->Status = $tracking['status'];
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
+                
+                if ($guideTracking['state'] != 200) {
+                    $order1->Status = 'ERROR AL CONSULTAR';
+                    $order1->Fecha = 'ERROR AL CONSULTAR';
+                    $vector[] = $order1;
+                } else {
+                    foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                        switch ($tracking['status']) {
+                            case 'Creacion':
+                                $order1->Status = 'VERIFICACION';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Recepcion desde plataforma':
+                                $order1->Status = 'RECEPTADO A BODEGA';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Recepcion desde tienda':
+                                $order1->Status = 'RECEPCION EN SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                                $order1->Status = 'DESPACHO A SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            default:
+                                $order1->Status = $tracking['status'];
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                        }
+                        break;
                     }
-                    break;
                 }
+
             }
         }
 
@@ -297,39 +309,46 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                    switch ($tracking['status']) {
-                        case 'Creacion':
-                            $order1->Status = 'VERIFICACION';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Recepcion desde plataforma':
-                            $order1->Status = 'RECEPTADO A BODEGA';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Recepcion desde tienda':
-                            $order1->Status = 'RECEPCION EN SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                            $order1->Status = 'DESPACHO A SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        default:
-                            $order1->Status = $tracking['status'];
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
+                if ($guideTracking['state'] != 200) {
+                    $order1->Status = 'ERROR AL CONSULTAR';
+                    $order1->Fecha = 'ERROR AL CONSULTAR';
+                    $vector[] = $order1;
+                } else {
+                    foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                        switch ($tracking['status']) {
+                            case 'Creacion':
+                                $order1->Status = 'VERIFICACION';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Recepcion desde plataforma':
+                                $order1->Status = 'RECEPTADO A BODEGA';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Recepcion desde tienda':
+                                $order1->Status = 'RECEPCION EN SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                                $order1->Status = 'DESPACHO A SUCURSAL';
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                                break;
+    
+                            default:
+                                $order1->Status = $tracking['status'];
+                                $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                                $vector[] = $order1;
+                        }
+                        break;
                     }
-                    break;
                 }
+                
             }
         }
 

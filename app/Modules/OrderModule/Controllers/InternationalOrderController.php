@@ -111,7 +111,7 @@ class InternationalOrderController extends Controller
         
         $missingColumns = array_diff($header, $headings[0][0]);
         if (count($missingColumns) == 1) {
-
+            //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
@@ -135,7 +135,7 @@ class InternationalOrderController extends Controller
             return redirect()->back()->with('danger', 'Error. No se encontró la columna '. implode($missingColumns). '.');
         }
         if (count($missingColumns) > 1) {
-            
+            //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
@@ -167,6 +167,7 @@ class InternationalOrderController extends Controller
             ]
         );
         if ($validator->fails()) {
+            //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
@@ -192,7 +193,7 @@ class InternationalOrderController extends Controller
 
         $excelResponse = Excel::import($TealcaImport, $file);
         if ($TealcaImport->getWrongRow() > 0) {
-
+            //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
@@ -215,7 +216,7 @@ class InternationalOrderController extends Controller
             );
             return redirect()->route('internationalOrders.index')->with('danger', 'Error en la fila '.$TealcaImport->getWrongRow().': ciudad no encontrada. Porfavor verifique e intente nuevamente.');
         }
-
+        //$ApiSync->authenticate();
         $ApiSync->ApiSaveLog(
             "Multientrega_Admin",
             array(
@@ -271,6 +272,7 @@ class InternationalOrderController extends Controller
         
         $missingColumns = array_diff($header, $headings[0][0]);
         if (count($missingColumns) == 1) {
+            //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
@@ -294,6 +296,7 @@ class InternationalOrderController extends Controller
             return redirect()->back()->with('danger', 'Error. No se encontró la columna '. implode($missingColumns). '.');
         }
         if (count($missingColumns) > 1) {
+            //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
@@ -323,6 +326,7 @@ class InternationalOrderController extends Controller
             ]
         );
         if ($validator->fails()) {
+            //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
@@ -348,6 +352,7 @@ class InternationalOrderController extends Controller
 
         $excelResponse = Excel::import($TealcaImport, $file);
         if ($TealcaImport->getWrongRow() > 0) {
+            //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
                 "Multientrega_Admin",
                 array(
@@ -374,6 +379,7 @@ class InternationalOrderController extends Controller
             return redirect()->back()->with('danger', 'Error en la fila '.$TealcaImport->getWrongRow().': ciudad no encontrada. Porfavor verifique e intente nuevamente.');
         }
 
+        //$ApiSync->authenticate();
         $ApiSync->ApiSaveLog(
             "Multientrega_Admin",
             array(
@@ -398,7 +404,11 @@ class InternationalOrderController extends Controller
     }
 
     public function exportBatch(Request $request)
-    {
+    {   
+        /* $from = $request->from;
+        $to = $request->to;
+        $name = $request->batch_name; */
+        //dd($request->all());
         return  Excel::download(new OrdersExport(), 'Órdenes Internacionales.xlsx');
     }
 
