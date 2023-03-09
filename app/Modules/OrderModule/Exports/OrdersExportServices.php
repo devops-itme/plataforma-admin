@@ -136,25 +136,34 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
                 ->whereBetween(DB::raw('DATE(g.created_at)'), [$date_start, $date_end])
                 ->where('u.id', $this->user_id)
                 ->get();
-
+                
                 foreach ($guides as $guide) {
-                    // dd($guide);
+                    
                     $Tealca = new Tealca();
                     $Tealca->login();
                     $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
-                    $status_array = [
-                        'Creacion' => 'VERIFICACION',
-                        'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
-                        'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
-                        'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
-                    ];
-                    foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                        $guide->Status= $status_array[$tracking['status']] ??  $tracking['status'];
-                        $guide->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                    if($guideTracking['state'] != 200){
+
+                        $guide->Status= 'GUIA NO ENCONTRADA';
+                        $guide->Fecha =  date("Y-m-d H:i:s");
                         $vector[]= $guide;
-                        break;
+
+                    }else{
+                        $status_array = [
+                            'Creacion' => 'VERIFICACION',
+                            'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
+                            'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
+                            'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
+                        ];
+                        foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                            $guide->Status= $status_array[$tracking['status']] ??  $tracking['status'];
+                            $guide->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $vector[]= $guide;
+                            break;
+                        }
                     }
+                    
                 }
         }
 
