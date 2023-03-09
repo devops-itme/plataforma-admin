@@ -22,18 +22,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     /**
      * @return \Illuminate\Support\Collection
      */
-
-    protected $from;
-    protected $to;
-    protected $number;
-
-    public function __construct($start, $end, $batch_number)
-    {
-        $this->from = $start;
-        $this->to = $end;
-        $this->number = $batch_number;
-    }
-
+    
     public function map($guide): array
     {
         return [
@@ -99,15 +88,9 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     {
         
         //set_time_limit(3600);
-        /* $from = request()->from;
+        $from = request()->from;
         $to = request()->to;
-        $name = request()->number; */
-
-        $from = $this->from;
-        $to = $this->to;
-        $name = $this->number;
-
-        
+        $name = request()->number;
 
         if (!isset($vector)) {
             $vector = null;

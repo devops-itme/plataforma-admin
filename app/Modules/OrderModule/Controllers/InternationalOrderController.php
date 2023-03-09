@@ -405,11 +405,11 @@ class InternationalOrderController extends Controller
 
     public function exportBatch(Request $request)
     {   
-        $from = $request->from;
+        /* $from = $request->from;
         $to = $request->to;
-        $name = $request->batch_name;
+        $name = $request->batch_name; */
         //dd($request->all());
-        return  Excel::download(new OrdersExport($from, $to, $name), 'Órdenes Internacionales.xlsx');
+        return  Excel::download(new OrdersExport(), 'Órdenes Internacionales.xlsx');
     }
 
 
