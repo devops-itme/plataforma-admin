@@ -22,7 +22,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     /**
      * @return \Illuminate\Support\Collection
      */
-    
+
     public function map($guide): array
     {
         return [
@@ -90,7 +90,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         //set_time_limit(3600);
         $from = request()->from;
         $to = request()->to;
-        $name = request()->number;
+        $name = request()->name2;
 
         if (!isset($vector)) {
             $vector = null;
