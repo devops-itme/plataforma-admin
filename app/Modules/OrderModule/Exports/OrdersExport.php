@@ -90,7 +90,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         //set_time_limit(3600);
         $from = request()->from;
         $to = request()->to;
-        $name = request()->name2;
+        $name = request()->name;
 
         if (!isset($vector)) {
             $vector = null;
