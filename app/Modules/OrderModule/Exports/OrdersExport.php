@@ -90,7 +90,9 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         //set_time_limit(3600);
         $from = request()->from;
         $to = request()->to;
-        $name = request()->name;
+        $name = request()->number;
+
+        
 
         if (!isset($vector)) {
             $vector = null;
@@ -266,7 +268,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             }
         }
 
-        if ($from == null and $to == null and $name != null) {
+        if ($from == false and $to == false and $name == true) {
             // dd($name);
             $guides = DB::table('guides AS g')
                 ->select(
