@@ -90,7 +90,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         //set_time_limit(3600);
         $from = request()->from;
         $to = request()->to;
-        $name = request()->name;
+        $name = request()->number;
 
         
 
@@ -301,7 +301,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->join('users as u', 'u.id', '=', 'o.user_id')
                 ->where('o.deleted_at', null)
                 // ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
-                ->where(DB::raw('o.order_number'), 'like', '%' . $name . '%')
+                ->where(DB::raw('o.order_number', 'like', '%' . $name . '%'))
                 ->get();
 
             foreach ($guides as $guide) {
