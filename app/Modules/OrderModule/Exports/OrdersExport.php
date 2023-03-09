@@ -266,7 +266,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             }
         }
 
-        if ($from == false and $to == false and $name == true) {
+        if ($from == null and $to == null and $name != null) {
             // dd($name);
             $guides = DB::table('guides AS g')
                 ->select(
