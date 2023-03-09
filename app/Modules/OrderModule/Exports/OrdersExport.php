@@ -301,9 +301,9 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->join('users as u', 'u.id', '=', 'o.user_id')
                 ->where('o.deleted_at', null)
                 // ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
-                ->where(DB::raw('o.order_number', 'like', '%' . $name . '%'))
+                ->where('o.order_number', 'like', '%'.$name.'%')
                 ->get();
-
+            
             foreach ($guides as $guide) {
                 // dd($guide);
                 $order1 = $guide;
