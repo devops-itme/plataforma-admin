@@ -209,16 +209,13 @@ class ShipmentController extends Controller
     }
 
     public function coordinadoraUpdateGuide(Request $request, $order_id)
-    {
+    {   
         $Coordinadora = new CoordinadoraOrder();
         $updateGuidePetition = $Coordinadora->updateCoordinadoraGuide($request, $order_id);
-        $findGuide = CoordinadoraOrderDetail::find($order_id);
-        $guide_id = $findGuide->guide_id;
+        $findGuide = $Coordinadora::find($order_id);
+       
+        $batch_id = $findGuide->order_id;
 
-        $guide = $Coordinadora::find($guide_id);        
-        $batch_id = $guide->order_id;
-        
-        //dd($updateGuidePetition);
         if ($updateGuidePetition['state'] == 200) {
             return redirect()->route('shipments.index', ['order_id' => $batch_id])->with('success', $updateGuidePetition['message']);
         }

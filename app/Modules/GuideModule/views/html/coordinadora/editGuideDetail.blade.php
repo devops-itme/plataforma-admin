@@ -6,7 +6,7 @@
 {{-- Content --}}
 @section('content')
 @include('layouts.breadCrumbs')
-
+@include('layouts.alerts')
 <div class="card card-custom">
     <div class="card-header">
         <div class="card-title">
@@ -77,7 +77,7 @@
                                 <option value="{{ $city->codigo_ciudad }}">{{ $city->nombre_ciudad }}</option>
                             @endforeach
                         </select>
-                        <input type="text" id="nombre_ciudad_destinatario" name="nombre_ciudad_destinatario" hidden>
+                        <input type="text" id="nombre_ciudad_destinatario" name="nombre_ciudad_destinatario" value="{{ $guide->nombre_ciudad_destinatario }}">
                     </div>
                     <div class="col">
                         <label for="address_name">Dirección del destinatario</label>
