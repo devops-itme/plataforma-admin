@@ -417,10 +417,10 @@ class InternationalOrderController extends Controller
     {
         $guides = Guide::select('id', 'external_id', 'contact')->where('external_id', '<>', null)
             ->where('state', '1')->get();
-        $incidences = [];
+            $incidences = [];
+        $Tealca = new Tealca();
+        $Tealca->login();
         foreach ($guides as $guide) {
-            $Tealca = new Tealca();
-            $Tealca->login();
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
             // $statuses = json_decode($guideTracking)->tracking;
             $statuses = $guideTracking['data'][0]['tracking'][0];

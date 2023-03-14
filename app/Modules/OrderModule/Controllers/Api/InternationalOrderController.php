@@ -67,10 +67,11 @@ class InternationalOrderController extends Controller
                 // ->limit(4)
                 ->get();
 
+            $Tealca = new Tealca();
+            $Tealca->login();
+
             foreach ($query as $guide) {
                 // dd($guide);
-                $Tealca = new Tealca();
-                $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
                 $status_array = [
@@ -170,10 +171,10 @@ class InternationalOrderController extends Controller
       on u.id = o.user_id
       WHERE g.state = '1' and u.id = $user_id  and g.external_id = $id and o.deleted_at is null"));
 
+    $Tealca = new Tealca();
+    $Tealca->login();
             foreach ($query as $guide) {
                 // dd($guide);
-                $Tealca = new Tealca();
-                $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
                 $status_array = [
@@ -463,10 +464,10 @@ class InternationalOrderController extends Controller
         ->get();
 
         //return $query;
+        $Tealca = new Tealca();
+        $Tealca->login();
         foreach ($query as $guide) {
 
-            $Tealca = new Tealca();
-            $Tealca->login();
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
             if($guideTracking['state'] != 500){

@@ -137,10 +137,10 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
                 ->where('u.id', $this->user_id)
                 ->get();
                 
+                $Tealca = new Tealca();
+                $Tealca->login();
                 foreach ($guides as $guide) {
                     
-                    $Tealca = new Tealca();
-                    $Tealca->login();
                     $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
                     if($guideTracking['state'] != 200){

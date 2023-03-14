@@ -134,11 +134,12 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->whereBetween(DB::raw('DATE(g.created_at)'), [request()->from, request()->to])
                 ->get();
 
+            $Tealca = new Tealca();
+            $Tealca->login();
+
             foreach ($guides as $guide) {
                 // dd($guide);
                 $order1 = $guide;
-                $Tealca = new Tealca();
-                $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
                 if ($guideTracking['state'] != 200) {
@@ -218,11 +219,12 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 //    ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
                 ->get();
 
+            $Tealca = new Tealca();
+            $Tealca->login();
+
             foreach ($guides as $guide) {
                 // dd($guide);
                 $order1 = $guide;
-                $Tealca = new Tealca();
-                $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
                 
                 if ($guideTracking['state'] != 200) {
@@ -304,11 +306,12 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->where('o.order_number', 'like', '%'.$name.'%')
                 ->get();
             
+            $Tealca = new Tealca();
+            $Tealca->login();
+            
             foreach ($guides as $guide) {
                 // dd($guide);
                 $order1 = $guide;
-                $Tealca = new Tealca();
-                $Tealca->login();
                 $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
 
                 if ($guideTracking['state'] != 200) {
