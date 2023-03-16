@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Validator;
 use App\Modules\OrderModule\CoordinadoraOrderDetail;
 use App\Modules\OrderModule\Order;
+use App\Modules\ApiConnectionsModule\Models\Coordinadora;
 
 class CoordinadoraOrder extends Model
 {
@@ -324,6 +325,31 @@ class CoordinadoraOrder extends Model
         } catch (\Throwable $th) {
             return $this->respond(500, null, $th->getMessage(), "Ocurrió un error inesperado");
         }
+    }
+
+    public function updateGuideStatus($order_id)
+    {
+        $Coordinadora = new Coordinadora;
+        $guides = $this->getAllGuideAndDetails($order_id)['data'];
+        $Coordinadora->authenticate();
+        try {
+            foreach ($guides as $guide) {
+                $getStatusPetition = $Coordinadora->getGuideStatus($guide);
+                if ($getStatusPetition['state'] != 200) {
+                    return $this->respond(500, null, null, 'Ocurrió un fallo en el servicio: '.$getStatusPetition['message'].'');
+                }
+                $guideStatus = $getStatusPetition['data']['pedidos'][0]['estado_transporte'];
+                $guide->update([
+                    'status' => $guideStatus ?? null
+                ]);
+            }
+
+            return $this->respond(200, null, null, "Guías actualizadas correctamente");
+        } catch (\Throwable $th) {
+            return $this->respond(600, null, $th->getMessage(), "Ocurrió un error inesperado");
+        }
+        
+
     }
 
     public static function boot()

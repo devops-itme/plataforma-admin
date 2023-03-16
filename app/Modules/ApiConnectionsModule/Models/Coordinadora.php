@@ -65,6 +65,7 @@ class Coordinadora
 
     public function generateGuide($request)
     {   
+        
         $body = [
             "identificacion_cliente" => (string) $request->identificacion_destinatario,
             "nombres_cliente"=> $request->nombres_destinatario,
@@ -113,13 +114,34 @@ class Coordinadora
         $request->state = 1;
         $request->fechahora_pedido = now();
         $request->save();
-        /* $findGuide = CoordinadoraOrder::find($request->id)->first();
-        $findGuide->update([
-            'state' => 1
-        ]); */
-        //dd($generateOrderPetition->json()['mensaje']);
+        
         return $this->respond(200, $generateOrderPetition->json(), null, "Guías generadas exitósamente");
     }
 
+    public function getGuideStatus($guide)
+    {   
+        try {
+            $body = [
+                "campoConsulta" => "id_usuario",
+                "id" => "90009000",
+                "campoBusqueda" => "numero_pedido",
+                "busqueda" => $guide->numero_pedido
+            ];
+    
+            $getStatusPetition = Http::withHeaders([
+                'Authorization' =>  'Bearer '.$this->token.'',
+            ])->post(
+                env("COORD_URL") . 'pedidos/obtener_lista_pedidos',
+                $body
+            );
+            if (count($getStatusPetition['pedidos']) == 0) {
+                return $this->respond(404, null, null, 'No se encontraron datos de la guía número: '.$guide->numero_pedido.'');
+            }
+            return $this->respond(200, $getStatusPetition->json(), null, "Datos obtenidos correctamente");
+        } catch (\Throwable $th) {
+            return $this->respond(500, null, $th->getMessage(), "Ocurrió un error inesperado");
+        }
+        
+    }
    
 }

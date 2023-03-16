@@ -26,12 +26,12 @@
             <th style="text-align: center">Nombre de la ciudad</th>
             <th style="text-align: center">Código del pedido</th>
             <th style="text-align: center">Número del pedido</th>
-            <th style="text-align: center">Fecha y hora de envío</th>
             <th style="text-align: center">Entrega mismo día</th>
             <th style="text-align: center">Valor declarado</th>
             <th style="text-align: center">Estado de registro</th>
             <th style="text-align: center">Estado del envío</th>
             <th style="text-align: center">Fecha de creación</th>
+            <th style="text-align: center">Fecha y hora de envío</th>
         </tr>
     </thead>
 
@@ -48,24 +48,24 @@
                 <td style="text-align: center">{{ $guide->nombre_ciudad_destinatario }}</td>
                 <td style="text-align: center">{{ $guide->codigo_pedido }}</td>
                 <td style="text-align: center">{{ $guide->numero_pedido }}</td>
-                <td style="text-align: center">{{ $guide->fechahora_pedido ?? "No registra" }}</td>
                 <td style="text-align: center">
                     @if ($guide->es_entrega_mismo_dia == "N")
-                        No
+                    No
                     @else
-                        Si
+                    Si
                     @endif
                 </td>
                 <td style="text-align: center">$ {{ $guide->valor_declarado }}</td>
                 <td style="text-align: center">
                     @if ($guide->state == null)
-                        Sin registrar
+                    Sin registrar
                     @else
-                        Registrada
+                    Registrada
                     @endif
                 </td>
                 <td style="text-align: center">{{ $guide->status ?? "Sin información registrada" }}</td>
                 <td style="text-align: center">{{ $guide->created_at }}</td>
+                <td style="text-align: center">{{ $guide->fechahora_pedido ?? "No registra" }}</td>
                 <td style="text-align: center">{{ $guide->getGuideDetails[0]->referencia ?? "---" }}</td>
                 <td style="text-align: center">{{ $guide->getGuideDetails[0]->unidades ?? "---" }}</td>
                 <td style="text-align: center">{{ $guide->getGuideDetails[0]->peso ?? "---" }}</td>
