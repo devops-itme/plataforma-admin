@@ -26,7 +26,7 @@ class CoordinadoraGuidesTemplate implements FromView, ShouldAutoSize, WithEvents
         return [
             AfterSheet::class    => function(AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:S1')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-                $event->sheet->getStyle('A1:S1')->getFill()->applyFromArray(['fillType' => 'solid','rotation' => 0, 'color' => ['rgb' => 'D7BDE2'],]);
+                $event->sheet->getStyle('A1:S1')->getFill()->applyFromArray(['fillType' => 'solid','rotation' => 0, 'color' => ['rgb' => '1E90FF'],]);
                 
                 $event->sheet->getStyle('A1:S1')->applyFromArray([
                     'font' =>[

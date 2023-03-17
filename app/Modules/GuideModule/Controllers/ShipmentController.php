@@ -17,6 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CoordinadoraGuidesExport;
 use App\Modules\OrderModule\CoordinadoraCities;
 use App\Exports\CoordinadoraGuidesTemplate;
+use App\Modules\ApiConnectionsModule\Models\Coordinadora;
 
 class ShipmentController extends Controller
 {
@@ -270,11 +271,13 @@ class ShipmentController extends Controller
     }
 
     public function coordinadoraGuidesExport($order_id)
-    {
-        $Coordinadora = new CoordinadoraOrder();
+    {   
+        $CoordinadoraOrder = new CoordinadoraOrder();
+        $updateGuidesStatus = $CoordinadoraOrder->updateGuideStatus($order_id);
+        
+        
         $batchData = Order::find($order_id);
-        $guidesData = $Coordinadora->getAllGuideAndDetails($order_id)['data'];
-        //return $guidesData;
+        $guidesData = $CoordinadoraOrder->getAllGuideAndDetails($order_id)['data'];
         return Excel::download(new CoordinadoraGuidesExport($guidesData, $batchData), 'reporteDeGuiasCoordinadora.xlsx');
    
     }
