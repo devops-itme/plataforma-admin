@@ -98,8 +98,6 @@ class InternationalOrderController extends Controller
 
     public function services(Request $request)
     {
-        $i = 1;
-        return response()->json($i);
         $user_id = Auth::user()->id;
 
         $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
