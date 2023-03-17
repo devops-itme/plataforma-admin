@@ -13,7 +13,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 Route::get('order/webview/paguelo-facil/response', 'OrderModule\Controllers\Api\OrderController@responseViewPagueloFacil')->name('order.webview.response');
 Route::get('sendPushNotification', 'OrderModule\Controllers\Api\OrderController@sendPushNotification')->name('order.sendPushNotification');
-Route::get('internationalOrder/updateGuideByTealca', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealca');
+
+//UPDATE TEALCA DATAS
+Route::get('internationalOrder/updateTealcaByGuide', 'OrderModule\Controllers\Api\InternationalOrderController@updateTealcaDataByGuide');
+Route::get('internationalOrder/update/tealca/day', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealcaDay');
+Route::get('internationalOrder/update/tealca/month', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealcaMonth');
+Route::get('internationalOrder/update/tealca/month/old', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealcaMonthOld');
 
 //INTERNATIONAL ORDER
 Route::middleware(['auth:sanctum'])->group(function () {

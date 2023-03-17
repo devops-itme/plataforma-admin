@@ -163,18 +163,23 @@ class Tealca
 
     public function requestOrderStatus($guide)
     {
-        $trackingResponse = Http::withHeaders([
-            'Authorization' =>  $this->token,
-        ])->get(
-            env("TEALCA_URL") . 'Tracking?shipment=' . $guide
-        );
-
-        if ($trackingResponse->status() != 200 || empty($trackingResponse)) {
-            return $this->respond(500, null, $trackingResponse, 'Fallo en el servicio. Guía N° ' . $guide);
-        };
-
-
-        return $this->respond(200, $trackingResponse->json(), null, 'successful request');
+        try {
+            $trackingResponse = Http::withHeaders([
+                'Authorization' =>  $this->token,
+            ])->get(
+                env("TEALCA_URL") . 'Tracking?shipment=' . $guide
+            );
+    
+            if ($trackingResponse->status() != 200 || empty($trackingResponse)) {
+                return $this->respond(500, null, $trackingResponse, 'Fallo en el servicio. Guía N° ' . $guide);
+            };
+    
+    
+            return $this->respond(200, $trackingResponse->json(), null, 'successful request');
+        } catch (\Throwable $th) {
+            return $this->respond(500, null, null, 'Error');
+        }
+        
     }
 
     public function getDestination()

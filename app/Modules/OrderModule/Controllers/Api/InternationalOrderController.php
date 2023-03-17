@@ -121,8 +121,17 @@ class InternationalOrderController extends Controller
 
         }
 
-        return json_encode($query,true);
+        $can = count($query);
+        $data['data'] = $query;
+        $data['input'] = [
+        "draw" =>'1',
+        "length" =>'10',
+        "start" =>'0'
+        ];
+        $data['recordsFiltered'] = $can;
+        $data['recordsTotal'] = $can;
 
+        return $data;
     }
 
 
@@ -453,43 +462,65 @@ class InternationalOrderController extends Controller
         return $this->respond(200,  $query2, null, 'Ordenes Internacionales');
     }
 
-    public function updateGuideByTealca()
+    public function updateTealcaDataByGuide()
     {
+        $Tealca = new Tealca();
+        $Tealca->login();
+
         $query = DB::table('guides as g')
         ->select('g.id', 'g.order_id','g.status_matrix_id', 'g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
         ->where('g.external_id', '<>', null)
         ->where('g.country', '<>', 'PAN')
         ->join('orders as o', 'o.id', '=', 'g.order_id')
         ->where('o.deleted_at', null)
+        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 3 MONTH)'))
         ->get();
 
         //return $query;
-        $Tealca = new Tealca();
-        $Tealca->login();
         foreach ($query as $guide) {
 
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
-
+            
             if($guideTracking['state'] != 500){
 
-                $status_array = [
-                    'Creacion' => 'VERIFICACION',
-                    'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
-                    'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
-                    'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
-                ];
                 foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                    $tealca['status'] = $status_array[$tracking['status']] ??  $tracking['status'];
-                    $tealca['date'] = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                    $guide->historical[] = $tealca;
+                    switch ($tracking['status']) {
+                        case 'Creacion':
+                            $guide->Status = 'VERIFICACION';
+                            $guide->FechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->historical[] = $tracking;
+                            break;
 
+                        case 'Recepcion desde plataforma':
+                            $guide->Status = 'RECEPTADO A BODEGA';
+                            $guide->FechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->historical[] = $tracking;
+                            break;
+
+                        case 'Recepcion desde tienda':
+                            $guide->Status = 'RECEPCION EN SUCURSAL';
+                            $guide->FechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->historical[] = $tracking;
+                            break;
+
+                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                            $guide->Status = 'DESPACHO A SUCURSAL';
+                            $guide->FechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->historical[] = $tracking;
+                            break;
+
+                        default:
+                            $guide->Status = $tracking['status'];
+                            $guide->FechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->historical[] = $tracking;
+                    }
+                    break;
                 }
-                $guide->FechaTime = $guide->historical[0]['date'];
-                $guide->Status = $guide->historical[0]['status'];
+                
                 $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
 
                 $request = new Request(array(
-                    'guide_id' => $guide->id,
+                    'id' => $guide->id,
                     'order_id' => $guide->order_id,
                     'external_id' => $guide->external_id,
                     'contact' => $guide->contact,
@@ -498,15 +529,249 @@ class InternationalOrderController extends Controller
                     'historical' => current($guide->historical),
                     'action' => $guide->action,
                 ));
-
+                
+                $tealca = new TealcaData();
+                $saveTealca = $tealca->saveTealca($request);
+                
+            }else{
+                $request = new Request(array(
+                    'id' => $guide->id,
+                    'order_id' => $guide->order_id,
+                    'external_id' => $guide->external_id,
+                    'contact' => $guide->contact,
+                    'date_status' => '0000-00-00',
+                    'status' => 'NCT',
+                    'historical' => 'No consultado',
+                ));
 
                 $tealca = new TealcaData();
                 $saveTealca = $tealca->saveTealca($request);
+            }
+            
+        }
+        
+        return 'Tealca datas updated';
+    }
 
+    public function updateGuideByTealcaDay()
+    {
+        $Tealca = new Tealca();
+        $Tealca->login();
+
+        $query = DB::table('tealca_datas as t')
+        ->select('t.id','t.external_id as external_id', 't.contact as contact', 't.date_status as FechaTime', 't.status as Status', 't.historical')
+        ->where('t.status', '<>', 'POD')
+        ->where('t.deleted_at', null)
+        ->join('guides as g', 'g.id', '=', 't.guide_id')
+        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 3 DAY)'))
+        ->get();
+
+        
+        foreach ($query as $guide) {
+
+            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+            
+            if($guideTracking['state'] != 500){
+
+                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                    switch ($tracking['status']) {
+                        case 'Creacion':
+                            $guide->NewStatus = 'VERIFICACION';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Recepcion desde plataforma':
+                            $guide->NewStatus = 'RECEPTADO A BODEGA';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Recepcion desde tienda':
+                            $guide->NewStatus = 'RECEPCION EN SUCURSAL';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                            $guide->NewStatus = 'DESPACHO A SUCURSAL';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        default:
+                            $guide->NewStatus = $tracking['status'];
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                    }
+                    break;
+                }
+                
+                $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+
+                $request = new Request(array(
+                    'external_id' => $guide->external_id,
+                    'date_status' => $guide->NewFechaTime,
+                    'status' => $guide->NewStatus,
+                    'historical' => current($guide->NewHistorical),
+                    'action' => $guide->action,
+                ));
+                
+                $tealca = new TealcaData();
+                $saveTealca = $tealca->saveTealca($request);
+                
             }
 
         }
-        return $saveTealca;
+        
+        return 'Update by Day';
+    }
 
+    public function updateGuideByTealcaMonth()
+    {
+        $Tealca = new Tealca();
+        $Tealca->login();
+
+        $query = DB::table('tealca_datas as t')
+        ->select('t.id','t.external_id as external_id', 't.contact as contact', 't.date_status as FechaTime', 't.status as Status', 't.historical')
+        ->where('t.status','NCT')
+        ->where('t.deleted_at', null)
+        ->join('guides as g', 'g.id', '=', 't.guide_id')
+        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 3 MONTH)'))
+        ->get();
+
+        foreach ($query as $guide) {
+
+            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+            
+            if($guideTracking['state'] != 500){
+
+                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                    switch ($tracking['status']) {
+                        case 'Creacion':
+                            $guide->NewStatus = 'VERIFICACION';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Recepcion desde plataforma':
+                            $guide->NewStatus = 'RECEPTADO A BODEGA';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Recepcion desde tienda':
+                            $guide->NewStatus = 'RECEPCION EN SUCURSAL';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                            $guide->NewStatus = 'DESPACHO A SUCURSAL';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        default:
+                            $guide->NewStatus = $tracking['status'];
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                    }
+                    break;
+                }
+                
+                $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+
+                $request = new Request(array(
+                    'external_id' => $guide->external_id,
+                    'date_status' => $guide->NewFechaTime,
+                    'status' => $guide->NewStatus,
+                    'historical' => current($guide->NewHistorical),
+                    'action' => $guide->action,
+                ));
+                
+                $tealca = new TealcaData();
+                $saveTealca = $tealca->saveTealca($request);
+                
+            }
+
+        }
+       
+        return 'Update by months';
+       
+    }
+
+    public function updateGuideByTealcaMonthOld()
+    {
+        $Tealca = new Tealca();
+        $Tealca->login();
+
+        $query = DB::table('tealca_datas as t')
+        ->select('t.id','t.external_id as external_id', 't.contact as contact', 't.date_status as FechaTime', 't.status as Status', 't.historical')
+        ->where('t.status', '<>', 'POD')
+        ->where('t.deleted_at', null)
+        ->join('guides as g', 'g.id', '=', 't.guide_id')
+        ->where('g.created_at','<', DB::raw('DATE_SUB(NOW(), INTERVAL 3 MONTH)'))
+        ->get();
+
+        foreach ($query as $guide) {
+
+            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+            
+            if($guideTracking['state'] != 500){
+
+                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                    switch ($tracking['status']) {
+                        case 'Creacion':
+                            $guide->NewStatus = 'VERIFICACION';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Recepcion desde plataforma':
+                            $guide->NewStatus = 'RECEPTADO A BODEGA';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Recepcion desde tienda':
+                            $guide->NewStatus = 'RECEPCION EN SUCURSAL';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
+                            $guide->NewStatus = 'DESPACHO A SUCURSAL';
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                            break;
+
+                        default:
+                            $guide->NewStatus = $tracking['status'];
+                            $guide->NewFechaTime = date('Y/m/d H:i:s', strtotime($tracking['date']));
+                            $guide->NewHistorical[] = $tracking;
+                    }
+                    break;
+                }
+                
+                $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+
+                $request = new Request(array(
+                    'external_id' => $guide->external_id,
+                    'date_status' => $guide->NewFechaTime,
+                    'status' => $guide->NewStatus,
+                    'historical' => current($guide->NewHistorical),
+                    'action' => $guide->action,
+                ));
+                
+                $tealca = new TealcaData();
+                $saveTealca = $tealca->saveTealca($request);
+                
+            }
+
+        }
+       
+        return 'Update by Last months';
+       
     }
 }

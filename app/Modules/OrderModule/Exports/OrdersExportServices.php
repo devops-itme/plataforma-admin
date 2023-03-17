@@ -104,70 +104,45 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
 
         if ($date_start and $date_end) {
 
-            $guides = DB::table('guides AS g')
-                ->select(
-                    'external_id',
-                    DB::raw("DATE_FORMAT(g.created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
-                    'g.branch_office', //Origen
-                    'invoice_contact',
-                    'recipient_name',
-                    'g.document_type',
-                    'document',
-                    'email_contact',
-                    'g.address_name',
-                    'city',
-                    'phone_contact',
-                    'country',
-                    'pieces',
-                    'kg',
-                    'declared',
-                    'g.dispatched', // Factura
-                    'pre_guide', //Guia
-                    'contact',
-                    'g.description',
-                    'novelty',
-                    'delivery_office',
-                )
-                ->where('external_id', '<>', null)
-                ->where('country', '<>', 'PAN')
-                ->join('orders as o', 'o.id', '=', 'g.order_id')
-                ->join('users as u', 'u.id', '=', 'o.user_id')
-                ->where('o.deleted_at', null)
-                ->whereBetween(DB::raw('DATE(g.created_at)'), [$date_start, $date_end])
-                ->where('u.id', $this->user_id)
-                ->get();
+            $guides = DB::table('tealca_datas as t')
+            ->select(
+                'g.external_id',
+                DB::raw("DATE_FORMAT(g.created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
+                'g.branch_office', //Origen
+                'g.invoice_contact',
+                'g.recipient_name',
+                'g.document_type',
+                'g.document',
+                'g.email_contact',
+                'g.address_name',
+                'g.city',
+                'g.phone_contact',
+                'g.country',
+                'g.pieces',
+                'g.kg',
+                'g.declared',
+                'g.dispatched', // Factura
+                'g.pre_guide', //Guia
+                'g.contact',
+                'g.description',
+                'g.novelty',
+                'g.delivery_office',
+                't.status',
+                't.date_status',
+            )
+            ->where('g.external_id', '<>', null)
+            ->where('country', '<>', 'PAN')
+            ->join('guides as g', 'g.id', '=', 't.guide_id')
+            ->join('orders as o', 'o.id', '=', 'g.order_id')
+            ->join('users as u', 'u.id', '=', 'o.user_id')
+            ->where('o.deleted_at', null)
+            ->whereBetween(DB::raw('DATE(g.created_at)'), [$date_start, $date_end])
+            ->where('u.id', $this->user_id)
+            ->get();
                 
-                $Tealca = new Tealca();
-                $Tealca->login();
-                foreach ($guides as $guide) {
-                    
-                    $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
-
-                    if($guideTracking['state'] != 200){
-
-                        $guide->Status= 'GUIA NO ENCONTRADA';
-                        $guide->Fecha =  date("Y-m-d H:i:s");
-                        $vector[]= $guide;
-
-                    }else{
-                        $status_array = [
-                            'Creacion' => 'VERIFICACION',
-                            'Recepcion desde plataforma' => 'RECEPTADO A BODEGA',
-                            'Recepcion desde tienda' => 'RECEPCION EN SUCURSAL',
-                            'Despacho a tienda(tienda destino para entrega al cliente)' => 'DESPACHO A SUCURSAL',
-                        ];
-                        foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                            $guide->Status= $status_array[$tracking['status']] ??  $tracking['status'];
-                            $guide->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[]= $guide;
-                            break;
-                        }
-                    }
-                    
-                }
         }
 
-        return collect($vector);
+        return collect($guides);
     }
 
 

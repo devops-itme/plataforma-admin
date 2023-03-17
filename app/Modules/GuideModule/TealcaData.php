@@ -55,25 +55,38 @@ class TealcaData extends Model
     }
 
     public function saveTealca($request)
-    {
+    {   
         try {
-
-            $tealca = TealcaData::updateOrCreate(
-                [
-                    'guide_id' => $request->guide_id,
-                ],
-                [
-                    'guide_id' => $request->guide_id,
-                    'order_id' => $request->order_id,
-                    'external_id' => $request->external_id,
-                    'contact' => $request->contact,
+            $query = $this::where('external_id', $request->external_id)->get();
+            
+            if(count($query) > 0){
+                $update = TealcaData::where('external_id', $request->external_id)
+                ->update([
                     'date_status' => $request->date_status,
                     'status' => $request->status,
                     'historical' => json_encode($request->historical),
-                ]
-            );
+                ]);
+                
+                return $this->respond(200, $update, null, 'actualizada exitosamente');
+            }else{
 
-            return $this->respond(200, null, null, 'creada exitosamente');
+                $tealca = TealcaData::create(
+                    [
+                        'guide_id' => $request->id,
+                        'order_id' => $request->order_id,
+                        'external_id' => $request->external_id,
+                        'contact' => $request->contact,
+                        'date_status' => $request->date_status,
+                        'status' => $request->status,
+                        'historical' => json_encode($request->historical),
+                    ]
+                );
+
+                return $this->respond(200, $tealca, null, 'creada exitosamente');
+            }
+            
+
+           
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al crear');
         }
