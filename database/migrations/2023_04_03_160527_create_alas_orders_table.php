@@ -61,6 +61,9 @@ class CreateAlasOrdersTable extends Migration
             $table->string('dangerous_goods')->nullable();
             $table->string('second_life')->nullable();
             $table->string('origin_location_id_numeric', 50)->nullable();
+            $table->string('udpro_id', 50)->nullable();
+            $table->boolean('state')->nullable();
+            $table->string('status', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
