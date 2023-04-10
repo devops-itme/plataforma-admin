@@ -19,6 +19,7 @@ class CreateCoordinadoraCitiesTable extends Migration
             $table->string('departamento', 100);
             $table->string('acepta_pago_contra_entrega', 10);
             $table->string('codigo_ciudad', 8);
+            $table->string('pais', 100);
             $table->timestamps();
             $table->softDeletes();
         });
