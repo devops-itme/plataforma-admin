@@ -1,7 +1,7 @@
 <table>
     <thead>
         <tr>
-            <th colspan="16" style="text-align: center">REPORTE DE GUÍAS COORDINADORA (Lote {{ $batch->order_number }})</th>
+            <th colspan="16" style="text-align: center">REPORTE DE GUÍAS COORDINADORA (Lote {{ $batch->order_number ?? 'ORDENES' }})</th>
             <th style="text-align: center">DETALLES DEL PAQUETE</th>
         </tr>
         <tr>

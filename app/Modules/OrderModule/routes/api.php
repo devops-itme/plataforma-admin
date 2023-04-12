@@ -19,20 +19,21 @@ Route::get('internationalOrder/updateTealcaByGuide', 'OrderModule\Controllers\Ap
 Route::get('internationalOrder/update/tealca/day', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealcaDay');
 Route::get('internationalOrder/update/tealca/month', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealcaMonth');
 Route::get('internationalOrder/update/tealca/month/old', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealcaMonthOld');
-Route::get('internationalOrder/services', 'OrderModule\Controllers\Api\InternationalOrderController@services')->name('internationalOrder.services');
-Route::get('internationalOrder/detail/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@show')->name('internationalOrder.detail');
+
+
 Route::get('internationalOrder/detail/coordinadora/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@showDataCoordinadora')->name('internationalOrder.detail.coordinadora');
+
 //INTERNATIONAL ORDER
 Route::middleware(['auth:sanctum'])->group(function () {
     if (auth('sanctum')->check()) {
             // Route::resource('internationalOrders', 'OrderModule\Controllers\Api\InternationalOrderController')->names('internationalOrder');
     Route::get('internationalOrder/index', 'OrderModule\Controllers\Api\InternationalOrderController@index')->name('internationalOrder.index');
-    
+    Route::get('internationalOrder/services', 'OrderModule\Controllers\Api\InternationalOrderController@services')->name('internationalOrder.services');
     Route::post('internationalOrder/create', 'OrderModule\Controllers\Api\InternationalOrderController@store')->name('internationalOrder.create');
-   
+    Route::get('internationalOrder/detail/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@show')->name('internationalOrder.detail');
     Route::get('internationalOrder/getExportedDocumentsByUser', 'OrderModule\Controllers\Api\InternationalOrderController@getExportedDocumentsByUser');
     Route::get('internationalOrder/getExportedDocumentsbyAuth', 'OrderModule\Controllers\Api\InternationalOrderController@getExportedDocumentsByAuth');
-    Route::post('web/export/order', 'OrderModule\Controllers\Api\InternationalOrderController@exportGuide')->name('internationalOrder.export');
+    Route::post('web/export/order/{value}', 'OrderModule\Controllers\Api\InternationalOrderController@exportGuide')->name('internationalOrder.export');
 
     Route::get('testing-data', 'OrderModule\Controllers\Api\InternationalOrderController@testing');
     }

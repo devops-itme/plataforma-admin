@@ -13,6 +13,7 @@ use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\OrderModule\Exports\OrdersExportServices;
+use App\Exports\CoordinadoraGuidesExport;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use App\Modules\DocumentModule\Document;
@@ -99,7 +100,7 @@ class InternationalOrderController extends Controller
     public function services(Request $request) 
     {
         
-        $user_id = 33;
+        $user_id = Auth::user()->id;
 
         $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
@@ -146,7 +147,7 @@ class InternationalOrderController extends Controller
 
     public function show($id)
     {
-        $user_id = 33;
+        $user_id = Auth::user()->id;
 
         try {
             $query = DB::select(DB::raw("SELECT
@@ -448,27 +449,64 @@ class InternationalOrderController extends Controller
         return $this->respond(200, $query, null, 'Autenticacion exitosa');
     }
 
-    public function exportGuide(Request $request)
+    public function exportGuide(Request $request, $value)
     {
         $fecha_begin = date('Y-m-d 00:00:00', ((int)$request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ((int)$request->end / 1000));
         $name = ('IO_' . Auth::user()->email . '_from_' . $fecha_begin . '_to_' . $fecha_end . '.xls');
-        $response = Excel::store(
-            new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end),
-            $name,
-            's3'
-        );
-        if ($response == 1) {
-            $DocumentModule = new Document();
-            $DocumentModule->saveDocument(new Request(array(
-                'user_id' => Auth::user()->id,
-                'url' => $name,
-                'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
-                'active' => 1,
-            )));
-        }
 
-        return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end), 'prueba.xls');
+        if($value == 'TEALCA'){
+
+            $response = Excel::store(
+                new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end, $value),
+                $name,
+                's3'
+            );
+            if ($response == 1) {
+                $DocumentModule = new Document();
+                $DocumentModule->saveDocument(new Request(array(
+                    'user_id' => Auth::user()->id,
+                    'url' => $name,
+                    'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
+                    'active' => 1,
+                )));
+            }
+    
+            return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end, $value), 'prueba.xls');
+
+        }else if($value == 'COORDINADORA'){
+
+            $guidesData = DB::table('coordinadora_guides AS cg')
+            ->join('coordinadora_order_details as cod', 'cod.guide_id','=','cg.id')
+            ->whereBetween(DB::raw('DATE(cg.created_at)'), [$fecha_begin, $fecha_end])
+            ->get();
+            
+            try {
+
+                $response = Excel::store(
+                    new CoordinadoraGuidesExport($guidesData, []),
+                    $name,
+                    's3'
+                );
+                if ($response == 1) {
+                    $DocumentModule = new Document();
+                    $DocumentModule->saveDocument(new Request(array(
+                        'user_id' => Auth::user()->id,
+                        'url' => $name,
+                        'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
+                        'active' => 1,
+                    )));
+                }
+        
+                return Excel::download(new CoordinadoraGuidesExport($guidesData, []), 'prueba.xls');
+                
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+            
+        }
+       
+        
     }
 
 
