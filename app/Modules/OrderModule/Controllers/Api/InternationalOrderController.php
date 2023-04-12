@@ -14,6 +14,7 @@ use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\OrderModule\Exports\OrdersExportServices;
 use App\Exports\CoordinadoraGuidesExport;
+use App\Modules\OrderModule\CoordinadoraOrder;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use App\Modules\DocumentModule\Document;
@@ -451,6 +452,7 @@ class InternationalOrderController extends Controller
 
     public function exportGuide(Request $request, $value)
     {
+        
         $fecha_begin = date('Y-m-d 00:00:00', ((int)$request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ((int)$request->end / 1000));
         $name = ('IO_' . Auth::user()->email . '_from_' . $fecha_begin . '_to_' . $fecha_end . '.xls');
@@ -483,25 +485,14 @@ class InternationalOrderController extends Controller
             
             try {
 
-                $response = Excel::store(
-                    new CoordinadoraGuidesExport($guidesData, []),
-                    $name,
-                    's3'
-                );
-                if ($response == 1) {
-                    $DocumentModule = new Document();
-                    $DocumentModule->saveDocument(new Request(array(
-                        'user_id' => Auth::user()->id,
-                        'url' => $name,
-                        'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
-                        'active' => 1,
-                    )));
-                }
-        
+                $CoordinadoraOrder = new CoordinadoraOrder();
+                $guidesData = $CoordinadoraOrder->getAllGuideAndDetailsBetweenDate($fecha_begin, $fecha_end)['data'];
+                
                 return Excel::download(new CoordinadoraGuidesExport($guidesData, []), 'prueba.xls');
                 
             } catch (\Throwable $th) {
-                //throw $th;
+                //rethrow $th;
+                return $th->getMessage();
             }
             
         }
