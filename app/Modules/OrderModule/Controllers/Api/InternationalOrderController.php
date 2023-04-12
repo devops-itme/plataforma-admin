@@ -477,17 +477,27 @@ class InternationalOrderController extends Controller
             return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end, $value), 'prueba.xls');
 
         }else if($value == 'COORDINADORA'){
-
-            $guidesData = DB::table('coordinadora_guides AS cg')
-            ->join('coordinadora_order_details as cod', 'cod.guide_id','=','cg.id')
-            ->whereBetween(DB::raw('DATE(cg.created_at)'), [$fecha_begin, $fecha_end])
-            ->get();
             
             try {
 
                 $CoordinadoraOrder = new CoordinadoraOrder();
                 $guidesData = $CoordinadoraOrder->getAllGuideAndDetailsBetweenDate($fecha_begin, $fecha_end)['data'];
                 
+                $response = Excel::store(
+                    new CoordinadoraGuidesExport($guidesData, []),
+                    $name,
+                    's3'
+                );
+                if ($response == 1) {
+                    $DocumentModule = new Document();
+                    $DocumentModule->saveDocument(new Request(array(
+                        'user_id' => Auth::user()->id,
+                        'url' => $name,
+                        'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
+                        'active' => 1,
+                    )));
+                }
+        
                 return Excel::download(new CoordinadoraGuidesExport($guidesData, []), 'prueba.xls');
                 
             } catch (\Throwable $th) {
