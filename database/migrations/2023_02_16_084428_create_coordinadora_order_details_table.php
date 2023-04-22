@@ -19,10 +19,10 @@ class CreateCoordinadoraOrderDetailsTable extends Migration
             $table->foreign('guide_id')->references('id')->on('coordinadora_guides');
             $table->string('referencia', 50)->nullable();
             $table->integer('unidades')->nullable();
-            $table->float('peso')->nullable();
-            $table->float('alto')->nullable();
-            $table->float('ancho')->nullable();
-            $table->float('largo')->nullable();
+            $table->float('peso', 12, 2)->nullable();
+            $table->float('alto', 12, 2)->nullable();
+            $table->float('ancho', 12, 2)->nullable();
+            $table->float('largo', 12, 2)->nullable();
             $table->string('nombre_empaque', 500)->nullable();
             $table->boolean('state')->nullable();
             $table->timestamps();

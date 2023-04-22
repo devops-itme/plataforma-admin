@@ -29,7 +29,7 @@ class CreateCoordinadoraGuidesTable extends Migration
             $table->string('fechahora_pedido', 100)->nullable();
             $table->string('codigo_tienda', 1);
             $table->string('es_entrega_mismo_dia', 1);
-            $table->float('valor_declarado');
+            $table->float('valor_declarado', 12, 2);
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->boolean('state')->nullable();
