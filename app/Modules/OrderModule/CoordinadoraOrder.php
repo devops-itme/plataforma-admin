@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Modules\OrderModule\CoordinadoraOrderDetail;
 use App\Modules\OrderModule\Order;
 use App\Modules\ApiConnectionsModule\Models\Coordinadora;
+use Illuminate\Support\Facades\DB;
 
 class CoordinadoraOrder extends Model
 {
@@ -315,6 +316,23 @@ class CoordinadoraOrder extends Model
         try {
             $guideData = $this->with('getGuideDetails')
                         ->where('order_id', $order_id)
+                        ->get();
+            
+            if (count($guideData) == 0) {
+                return $this->respond(404, null, "guides not found", "No se encontraron guías");
+            }
+
+            return $this->respond(200, $guideData, null, "Guías obtenidas correctamente");
+        } catch (\Throwable $th) {
+            return $this->respond(500, null, $th->getMessage(), "Ocurrió un error inesperado");
+        }
+    }
+
+    public function getAllGuideAndDetailsBetweenDate($begin, $end)
+    {
+        try {
+            $guideData = $this->with('getGuideDetails')
+                        ->whereBetween(DB::raw('DATE(created_at)'), [$begin, $end])
                         ->get();
             
             if (count($guideData) == 0) {

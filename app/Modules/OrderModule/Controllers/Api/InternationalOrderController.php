@@ -13,6 +13,8 @@ use App\Modules\OrderModule\Order;
 use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\StatusMatrixModule\StatusMatrix;
 use App\Modules\OrderModule\Exports\OrdersExportServices;
+use App\Exports\CoordinadoraGuidesExport;
+use App\Modules\OrderModule\CoordinadoraOrder;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use App\Modules\DocumentModule\Document;
@@ -96,30 +98,29 @@ class InternationalOrderController extends Controller
         }
     }
 
-    public function services(Request $request)
+    public function services(Request $request) 
     {
+        
         $user_id = Auth::user()->id;
 
         $fecha_begin = date('Y-m-d 00:00:00', ($request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ($request->end / 1000));
 
-        $query = DB::table('tealca_datas as t')
-        ->select('t.id','t.external_id as external_id', 't.contact as contact', 't.date_status as FechaTime', 't.status as Status', 't.historical')
+        $query = DB::table('international_guides as ig')
+        ->select('ig.id as id', 'ig.country as country', 'ig.id_guide as external_id', 'ig.contact as contact', 'ig.last_status_date as FechaTime', 'ig.status as Status')
         //->whereRaw("DATEDIFF('" . Carbon::now() . "',g.created_at)  < 92 AND g.status_matrix_id != 10")
-        ->join('orders as o', 'o.id', '=', 't.order_id')
+        ->join('orders as o', 'o.id', '=', 'ig.order_id')
         ->join('users as u', 'u.id', '=', 'o.user_id')
-        ->join('guides as g', 'g.id', '=', 't.guide_id')
-        ->whereBetween(DB::raw('DATE(g.created_at)'), [$fecha_begin, $fecha_end])
+        ->whereBetween(DB::raw('DATE(ig.create_date)'), [$fecha_begin, $fecha_end])
         ->where('u.id', $user_id)
         ->get();
 
+        /* foreach ($query as $guide) {
 
-        foreach ($query as $guide) {
+            $guide->action = 
+            //$guide->historical = json_decode($guide->historical);
 
-            $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
-            $guide->historical = json_decode($guide->historical);
-
-        }
+        } */
 
         $can = count($query);
         $data['data'] = $query;
@@ -206,8 +207,42 @@ class InternationalOrderController extends Controller
 
             return response()->json($query[0]);
         } catch (\Throwable $e) {
-            return response()->json(['state' => 500, 'data' => '', 'error' => 'Error del servidor'], 500);
+            return response()->json(['state' => 500, 'data' => '', 'error' => $e->getMessage()], 500);
         }
+    }
+
+    public function showDataCoordinadora($id){
+        
+        try {
+           
+            $query = DB::table('coordinadora_guides')
+            ->select(
+                'id as id', 
+                'nombres_destinatario as name', 
+                'apellidos_destinatario as last_name', 
+                'direccion_destinatario as address_name',
+                'telefono_fijo_destinatario as phone',
+                'telefono_celular_destinatario as cell_phone',
+                'nombre_ciudad_destinatario as city_name',
+                'codigo_pedido as codigo_pedido',
+                'fechahora_pedido as date',
+                'valor_declarado as declared_value',
+                'order_id as order_id',
+                'status as status'
+            )
+            ->where('codigo_pedido',$id)
+            ->get();
+            
+            if(count($query) > 0){
+                return response()->json($query[0]);
+            }else{
+                return response()->json($query);
+            }
+           
+        } catch (\Throwable $e) {
+            return response()->json(['state' => 500, 'data' => '', 'error' => $e->getMessage()], 500);
+        }
+      
     }
 
     public function store(Request $request)
@@ -415,27 +450,64 @@ class InternationalOrderController extends Controller
         return $this->respond(200, $query, null, 'Autenticacion exitosa');
     }
 
-    public function exportGuide(Request $request)
+    public function exportGuide(Request $request, $value)
     {
+        
         $fecha_begin = date('Y-m-d 00:00:00', ((int)$request->begin / 1000));
         $fecha_end = date('Y-m-d 23:59:59', ((int)$request->end / 1000));
         $name = ('IO_' . Auth::user()->email . '_from_' . $fecha_begin . '_to_' . $fecha_end . '.xls');
-        $response = Excel::store(
-            new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end),
-            $name,
-            's3'
-        );
-        if ($response == 1) {
-            $DocumentModule = new Document();
-            $DocumentModule->saveDocument(new Request(array(
-                'user_id' => Auth::user()->id,
-                'url' => $name,
-                'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
-                'active' => 1,
-            )));
-        }
 
-        return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end), 'prueba.xls');
+        if($value == 'TEALCA'){
+
+            $response = Excel::store(
+                new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end, $value),
+                $name,
+                's3'
+            );
+            if ($response == 1) {
+                $DocumentModule = new Document();
+                $DocumentModule->saveDocument(new Request(array(
+                    'user_id' => Auth::user()->id,
+                    'url' => $name,
+                    'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
+                    'active' => 1,
+                )));
+            }
+    
+            return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end, $value), 'prueba.xls');
+
+        }else if($value == 'COORDINADORA'){
+            
+            try {
+
+                $CoordinadoraOrder = new CoordinadoraOrder();
+                $guidesData = $CoordinadoraOrder->getAllGuideAndDetailsBetweenDate($fecha_begin, $fecha_end)['data'];
+                
+                $response = Excel::store(
+                    new CoordinadoraGuidesExport($guidesData, []),
+                    $name,
+                    's3'
+                );
+                if ($response == 1) {
+                    $DocumentModule = new Document();
+                    $DocumentModule->saveDocument(new Request(array(
+                        'user_id' => Auth::user()->id,
+                        'url' => $name,
+                        'data' => json_encode(array('init_date' => $fecha_begin, 'end_date' => $fecha_end)),
+                        'active' => 1,
+                    )));
+                }
+        
+                return Excel::download(new CoordinadoraGuidesExport($guidesData, []), 'prueba.xls');
+                
+            } catch (\Throwable $th) {
+                //rethrow $th;
+                return $th->getMessage();
+            }
+            
+        }
+       
+        
     }
 
 
@@ -463,7 +535,7 @@ class InternationalOrderController extends Controller
     }
 
     public function updateTealcaDataByGuide()
-    {
+    {    
         $Tealca = new Tealca();
         $Tealca->login();
 
@@ -473,9 +545,11 @@ class InternationalOrderController extends Controller
         ->where('g.country', '<>', 'PAN')
         ->join('orders as o', 'o.id', '=', 'g.order_id')
         ->where('o.deleted_at', null)
+        ->whereNotBetween('o.id', [277,349])
         ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 3 MONTH)'))
         ->get();
 
+        //dd($query);
         //return $query;
         foreach ($query as $guide) {
 

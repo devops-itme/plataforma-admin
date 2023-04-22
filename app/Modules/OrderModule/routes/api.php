@@ -20,6 +20,9 @@ Route::get('internationalOrder/update/tealca/day', 'OrderModule\Controllers\Api\
 Route::get('internationalOrder/update/tealca/month', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealcaMonth');
 Route::get('internationalOrder/update/tealca/month/old', 'OrderModule\Controllers\Api\InternationalOrderController@updateGuideByTealcaMonthOld');
 
+
+Route::get('internationalOrder/detail/coordinadora/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@showDataCoordinadora')->name('internationalOrder.detail.coordinadora');
+
 //INTERNATIONAL ORDER
 Route::middleware(['auth:sanctum'])->group(function () {
     if (auth('sanctum')->check()) {
@@ -30,7 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('internationalOrder/detail/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@show')->name('internationalOrder.detail');
     Route::get('internationalOrder/getExportedDocumentsByUser', 'OrderModule\Controllers\Api\InternationalOrderController@getExportedDocumentsByUser');
     Route::get('internationalOrder/getExportedDocumentsbyAuth', 'OrderModule\Controllers\Api\InternationalOrderController@getExportedDocumentsByAuth');
-    Route::post('web/export/order', 'OrderModule\Controllers\Api\InternationalOrderController@exportGuide')->name('internationalOrder.export');
+    Route::post('web/export/order/{value}', 'OrderModule\Controllers\Api\InternationalOrderController@exportGuide')->name('internationalOrder.export');
 
     Route::get('testing-data', 'OrderModule\Controllers\Api\InternationalOrderController@testing');
     }
