@@ -23,12 +23,10 @@ class CoordinadoraController extends Controller
 
 
     public function generateGuides(/* Request $request, */ $order_id){
-        
         $Coordinadora = new Coordinadora();
         $Order = new CoordinadoraOrder();
         $guidesData = $Order->getCoordinadoraGuidesByOrder($order_id)['data'];
         
-        return 1;
         $Coordinadora->authenticate();
         foreach ($guidesData as $guide) {
             $sendGuide = $Coordinadora->generateGuide($guide);
@@ -42,6 +40,29 @@ class CoordinadoraController extends Controller
         $getToken = $Coordinadora->authenticate();
         $petition = $Coordinadora->generateGuide($request);
         return $petition; */
+    }
+
+    public function generateGuidesByCoor($order_id){
+        
+        try {
+            
+            $Coordinadora = new Coordinadora();
+            $Order = new CoordinadoraOrder();
+            $guidesData = $Order->getCoordinadoraGuidesByOrder($order_id)['data'];
+            
+            $Coordinadora->authenticate();
+            foreach ($guidesData as $guide) {
+                $sendGuide = $Coordinadora->generateGuide($guide);
+                
+                if ($sendGuide['state'] != 200) {
+                    return redirect()->back()->with('success', 'Hubo un fallo: '.$sendGuide['error'].'');
+                }
+            }
+            return $this->respond(200,null,'Enviado exitosamente', 'Enviado');
+        } catch (\Throwable $th) {
+            return $this->respond(500,null,$th->getMessage(), 'Error');
+        }
+        
     }
 
     public function getMethods(){

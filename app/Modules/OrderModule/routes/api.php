@@ -24,7 +24,7 @@ Route::get('internationalOrder/update/tealca/month/old', 'OrderModule\Controller
 Route::get('internationalOrder/detail/coordinadora/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@showDataCoordinadora')->name('internationalOrder.detail.coordinadora');
 
 // SEND GUIDE FOR COOORDINADORA
-Route::get('send/guide/coordinadora/{id}', 'ApiConnectionsModule\Controllers\CoordinadoraController@generateGuides');
+Route::get('send/guide/coordinadora/{id}', 'ApiConnectionsModule\Controllers\CoordinadoraController@generateGuidesByCoor');
 //END
 
 //INTERNATIONAL ORDER
