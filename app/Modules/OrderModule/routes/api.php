@@ -23,6 +23,10 @@ Route::get('internationalOrder/update/tealca/month/old', 'OrderModule\Controller
 
 Route::get('internationalOrder/detail/coordinadora/{id}', 'OrderModule\Controllers\Api\InternationalOrderController@showDataCoordinadora')->name('internationalOrder.detail.coordinadora');
 
+// SEND GUIDE FOR COOORDINADORA
+Route::get('send/guide/coordinadora/{id}', 'ApiConnectionsModule\Controllers\CoordinadoraController@generateGuides');
+//END
+
 //INTERNATIONAL ORDER
 Route::middleware(['auth:sanctum'])->group(function () {
     if (auth('sanctum')->check()) {
@@ -39,12 +43,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     }
 });
 
-/* Route::any('{any}', function(){
+Route::any('{any}', function(){
     return response()->json([
         'status'    => 404,
         'message'   => 'Ruta no encontrada.',
     ], 404);
-})->where('any', '.*'); */
+})->where('any', '.*');
 
 
 
