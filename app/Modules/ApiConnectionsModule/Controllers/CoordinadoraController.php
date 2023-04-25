@@ -23,11 +23,12 @@ class CoordinadoraController extends Controller
 
 
     public function generateGuides(/* Request $request, */ $order_id){
-        return $order_id;
-        /* $Coordinadora = new Coordinadora();
+        
+        $Coordinadora = new Coordinadora();
         $Order = new CoordinadoraOrder();
         $guidesData = $Order->getCoordinadoraGuidesByOrder($order_id)['data'];
         
+        return 1;
         $Coordinadora->authenticate();
         foreach ($guidesData as $guide) {
             $sendGuide = $Coordinadora->generateGuide($guide);
@@ -36,7 +37,7 @@ class CoordinadoraController extends Controller
                 return redirect()->back()->with('success', 'Hubo un fallo: '.$sendGuide['error'].'');
             }
         }
-        return redirect()->back()->with('success', 'Guías enviadas correctamente'); */
+        return redirect()->back()->with('success', 'Guías enviadas correctamente');
        /*  $Coordinadora = new Coordinadora;
         $getToken = $Coordinadora->authenticate();
         $petition = $Coordinadora->generateGuide($request);
