@@ -55,7 +55,7 @@ class CoordinadoraController extends Controller
                 $sendGuide = $Coordinadora->generateGuide($guide);
                 
                 if ($sendGuide['state'] != 200) {
-                    return redirect()->back()->with('success', 'Hubo un fallo: '.$sendGuide['error'].'');
+                    return $this->respond(500, null, $sendGuide['error'], 'Error');
                 }
             }
             return $this->respond(200,null,'Enviado exitosamente', 'Enviado');
