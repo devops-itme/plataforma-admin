@@ -109,16 +109,13 @@ class Coordinadora
 
         if ($generateOrderPetition->json()['mensaje'] != "ok") {
             return $this->respond(500, null, $generateOrderPetition->json()['mensaje'], "Hubo un fallo en el servicio");
-        }else{
-            $request->state = 1;
-            $request->fechahora_pedido = now();
-            $request->save();
-            return $this->respond(200, $generateOrderPetition->json(), null, "Guías generadas exitósamente");
         }
 
+        $request->state = 1;
+        $request->fechahora_pedido = now();
+        $request->save();
         
-        
-        
+        return $this->respond(200, $generateOrderPetition->json(), null, "Guías generadas exitósamente");
     }
 
     public function getGuideStatus($guide)
