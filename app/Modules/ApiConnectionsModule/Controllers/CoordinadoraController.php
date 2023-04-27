@@ -49,19 +49,18 @@ class CoordinadoraController extends Controller
             $Coordinadora = new Coordinadora();
             $Order = new CoordinadoraOrder();
             $guidesData = $Order->getCoordinadoraGuidesByOrder($order_id)['data'];
-            $data = [];
             
             $Coordinadora->authenticate();
 
             foreach ($guidesData as $guide) {
-
+                
                 $sendGuide = $Coordinadora->generateGuide($guide);
-                $data = $sendGuide['data'];
-                if ($sendGuide['state'] == 200) {
-                    return $this->respond(500, $sendGuide['data'], $sendGuide['error'], 'Error');
+                
+                if ($sendGuide['state'] != 200) {
+                    return $this->respond(500, null, $sendGuide['error'], 'Error');
                 }
             }
-            return $this->respond(200,$data,'Enviado exitosamente', 'Enviado');
+            return $this->respond(200,null,'Enviado exitosamente', 'Enviado');
         } catch (\Throwable $th) {
             return $this->respond(500,null,$th->getMessage(), 'Error');
         }
