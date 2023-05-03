@@ -128,6 +128,7 @@ class CoordinadoraOrder extends Model
         }
 
         try {
+            DB::beginTransaction();
             $guide = $this::create([
                 "external_id" => null,
                 "order_id" => $request->order_id,
@@ -158,7 +159,12 @@ class CoordinadoraOrder extends Model
                 "nombre_empaque" => $request->nombre_empaque,                
             )), $guide->id);
 
+            if ($guideDetail['state'] != 201) {
+                DB::rollBack();
+                return $this->respond(500, null, $guideDetail['error'], "Oucrrió un error al crear la guía");
+            }
             
+            DB::commit();
             return $this->respond(201, $guide, null, "Guía creada exitósamente");
         } catch (\Throwable $th) {
             return $this->respond(500, null, $th->getMessage(), "Ocurrió un error inesperado");

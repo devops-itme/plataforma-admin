@@ -153,7 +153,7 @@
                                 <th style="width: 100px;">Ancho (cm)</th>
                                 <th style="width: 100px;">Largo (cm)</th>
                                 <th>Nombre del empaque</th>
-                                <th>Opciones</th>
+                                {{-- <th>Opciones</th> --}}
                             </tr>
                         </thead>
             
@@ -164,8 +164,8 @@
                             <td><input type="number" step="0.01" name="alto" id="alto" placeholder="Ej: 10.5" style="width: 100px;" class="form-control" required></td>
                             <td><input type="number" step="0.01" name="ancho" id="ancho" placeholder="Ej: 10.5" style="width: 100px;" class="form-control" required></td>
                             <td><input type="number" step="0.01" name="largo" id="largo" placeholder="Ej: 10.5" style="width: 100px;" class="form-control" required></td>
-                            <td><input type="text" name="nombre_empaque" id="nombre_empaque" placeholder="Ej: tarjeta máster card" class="form-control" required></td>
-                            <td>Eliminar</td>
+                            <td><input type="text" name="nombre_empaque" id="nombre_empaque" placeholder="Aqui solo debe indicar Bolsa o Caja" class="form-control" required></td>
+                            {{-- <td>Eliminar</td> --}}
                         </tbody>
                     </table>
                     <div class="col-12 mt-5 text-center">

@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\RestActions;
 use App\Modules\ParameterValueModule\ParameterValue;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class CoordinadoraOrderDetail extends Model
 {
@@ -55,7 +56,11 @@ class CoordinadoraOrderDetail extends Model
                 "alto" => 'required|numeric',
                 "ancho" => 'required|numeric',
                 "largo" => 'required|numeric',
-                "nombre_empaque" => 'required|string',
+                "nombre_empaque" => [
+                    'required',
+                    'string',
+                    Rule::in(['Bolsa', 'Caja']),
+                ],
             ]
         );
     }

@@ -178,7 +178,7 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
             "alto" => 'required|numeric',
             "ancho" => 'required|numeric',
             "largo" => 'required|numeric',
-            "nombre_empaque" => 'required|string|max:500',
+            "nombre_empaque" => 'required|string|max:500|in:Bolsa,Caja',
         ];
     }
 
@@ -187,6 +187,7 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
     return [
         'codigo_ciudad_destinatario.digits_between' => 'El código de la ciudad debe tener 8 dígitos, salvo si el dígito inicial es cero (0), en cuyo caso debe tener 7.',
         'es_entrega_mismo_dia.size' => 'el campo es_entrega_mismo_dia solo puede contener S o N (Si / No)',
+        'nombre_empaque.in' => 'El campo nombre_empaque solo puede tener el valor Bolsa o Caja'
     ];
 }
 
