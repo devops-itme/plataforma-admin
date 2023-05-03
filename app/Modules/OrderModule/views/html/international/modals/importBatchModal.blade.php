@@ -19,11 +19,12 @@
                         </select>
                         <br>
                         <label id="countryLabel" style="display: none" for="">Pais: <span class="text-danger">*</span></label>
-                            <select style="display: none" id="country" name="country" class="form-control">
+                            <input type="text" style="display: none" id="country" name="country" class="form-control" value="Colombia" readonly>
+                            {{-- <select style="display: none" id="country" name="country" class="form-control">
                                 <option value="0" selected disabled>Seleccione el pais</option>
                                 <option value="Colombia">Colombia</option>
                                 <option value="Venezuela">Venezuela</option>
-                            </select>
+                            </select> --}}
                     </div>
                     <div style="display: none" id="tealcaContent">
                         <div class="form-group col-md-3">
