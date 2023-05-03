@@ -483,6 +483,10 @@ class InternationalOrderController extends Controller
                 $CoordinadoraOrder = new CoordinadoraOrder();
                 $guidesData = $CoordinadoraOrder->getAllGuideAndDetailsBetweenDate($fecha_begin, $fecha_end)['data'];
                 
+                foreach($guidesData as $item){
+                    $updateGuidesStatus = $CoordinadoraOrder->updateGuideStatus($item->order_id);
+                }
+                
                 $response = Excel::store(
                     new CoordinadoraGuidesExport($guidesData, []),
                     $name,

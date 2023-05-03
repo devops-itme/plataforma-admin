@@ -42,6 +42,31 @@ class CoordinadoraController extends Controller
         return $petition; */
     }
 
+    public function generateGuidesByCoor($order_id){
+        
+        try {
+            
+            $Coordinadora = new Coordinadora();
+            $Order = new CoordinadoraOrder();
+            $guidesData = $Order->getCoordinadoraGuidesByOrder($order_id)['data'];
+            
+            $Coordinadora->authenticate();
+
+            foreach ($guidesData as $guide) {
+                
+                $sendGuide = $Coordinadora->generateGuide($guide);
+                
+                if ($sendGuide['state'] != 200) {
+                    return $this->respond(500, null, $sendGuide['error'], 'Error');
+                }
+            }
+            return $this->respond(200,null,'Enviado exitosamente', 'Enviado');
+        } catch (\Throwable $th) {
+            return $this->respond(500,null,$th->getMessage(), 'Error');
+        }
+        
+    }
+
     public function getMethods(){
         $Coordinadora = new Coordinadora;
         $petition = $Coordinadora->getMethods();
