@@ -234,7 +234,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             "dirdes" => 'required|string|max:200',
             "documenttypedes" => 'required|string',
             "documentnumberdes" => 'required|numeric',
-            "teldes" => 'required|numeric',
+            "teldes" => 'required|numeric|max:99999999999',
             "email" => 'required|email',
             "oficinadeentrega" => 'required|string',
             "preguia" => 'required|numeric',
@@ -243,6 +243,14 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             "piezas" => 'required|numeric',
             "kilos" => 'required|numeric',
             "namecontact" => 'required|string',
+        ];
+    }
+
+    public function customValidationMessages()
+    {
+        return [
+            'teldes.max' => 'El teléfono no puede exceder los 11 dígitos',
+            
         ];
     }
 
