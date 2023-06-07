@@ -8,3 +8,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('guides', 'GuideModule\Controllers\Api\GuideController')->names('guides-api');
     Route::put('guide/changeStatus', 'GuideModule\Controllers\Api\GuideController@changeStatus');
 });
+
+Route::get('tealca/destination', 'GuideModule\Controllers\ShipmentController@getDestinationTealca');
+Route::get('tealca/stores', 'GuideModule\Controllers\ShipmentController@getTiendasTealca');

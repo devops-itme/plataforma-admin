@@ -286,4 +286,24 @@ class ShipmentController extends Controller
     {
         return Excel::download(new CoordinadoraGuidesTemplate(), 'PlantillaDeGuiasCoordinadora.xlsx');
     }
+
+    public function getDestinationTealca(){
+
+        $Tealca = new Tealca();
+        $Tealca->login();
+
+        $destination = $Tealca->getDestination();
+
+        return response()->json($destination);
+    }
+
+    public function getTiendasTealca(){
+
+        $Tealca = new Tealca();
+        $Tealca->login();
+        
+        $tiendas = $Tealca->getTiendas();
+
+        return response()->json($tiendas);
+    }
 }
