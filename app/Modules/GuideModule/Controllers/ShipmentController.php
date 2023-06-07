@@ -294,7 +294,7 @@ class ShipmentController extends Controller
 
         $destination = $Tealca->getDestination();
 
-        return $this->respond(200, $destination, null, 'Destinos tealca');
+        return response()->json($destination);
     }
 
     public function getTiendasTealca(){
@@ -304,6 +304,6 @@ class ShipmentController extends Controller
         
         $tiendas = $Tealca->getTiendas();
 
-        return $this->respond(200, $tiendas, null, 'Tiendas tealca');
+        return response()->json($tiendas);
     }
 }
