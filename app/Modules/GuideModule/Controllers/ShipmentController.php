@@ -294,7 +294,7 @@ class ShipmentController extends Controller
 
         $destination = $Tealca->getDestination();
 
-        return response()->json($destination);
+        return $destination;
     }
 
     public function getTiendasTealca(){
@@ -304,6 +304,6 @@ class ShipmentController extends Controller
         
         $tiendas = $Tealca->getTiendas();
 
-        return response()->json($tiendas);
+        return $tiendas;
     }
 }
