@@ -458,6 +458,26 @@ class Order extends Model
         }
     }
 
+    public function storeOrder($request)
+    {   
+        
+        try {
+        
+            $order = $this::create([
+                'order_number' => $request->order_number,
+                'user_id' => $request->user_id ?? 1,
+                'order_type' => $request->order_type,
+                'customer_user_id' => $request->user_id ?? 1,
+                'creator_user_id' => $request->user_id ?? 1,
+                'status_matrix_id' => 1
+            ]);
+
+            return $this->respond(200, $order, null, 'Orden creada exitosamente');
+        } catch (\Exception $e) {
+            return $this->respond(500, [], $e->getMessage(), 'Error al crear orden');
+        }
+    }
+
     public function generateOrderNumber()
     {
         $order_type = ParameterValue::where('name', 'International')->first(['id'])->id;
