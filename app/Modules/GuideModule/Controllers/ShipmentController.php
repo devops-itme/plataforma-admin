@@ -378,7 +378,7 @@ class ShipmentController extends Controller
             return $guideResponse;
         }
         $guides = $guideResponse['data'];
-        return $this->respond(200, $guides, 'error', 'Error al crear guia');
+        return $this->respond(500, $guides, 'error', 'Error al crear guia');
         foreach ($guides as $guide) {
             if ($guide->external_id != NULL) {
                 continue;
