@@ -323,10 +323,10 @@ class ShipmentController extends Controller
 
             $OrderModel = new Order();
             $orderResponse = $OrderModel->storeOrder(new Request(array(
-                'user_id' => Auth::user()->id,
+                'user_id' => 33,
                 'order_number' => $lot_number,
                 'order_type' => $order_type,
-                'creator_user_id' => Auth::user()->id,
+                'creator_user_id' => 1,
             )));
             if ($orderResponse['state'] != 200) {
                 return 0;
