@@ -50,7 +50,6 @@ class Tealca
 
     public function requestCreateShipment($guide)
     {   
-        return $guide;
         $ApiSync = new ApiSync;
         $userData = auth()->user();
         $weight = $guide->kg;
