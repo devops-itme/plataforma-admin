@@ -374,7 +374,7 @@ class ShipmentController extends Controller
         $Tealca = new Tealca();
         $Tealca->login();
         $guideResponse = $Guide->getGuidesByOrder($id, false);
-        return $guideResponse;
+        return dd($guideResponse);
         if ($guideResponse['state'] != 200) {
             return $guideResponse;
         }
