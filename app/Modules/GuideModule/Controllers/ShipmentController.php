@@ -352,7 +352,7 @@ class ShipmentController extends Controller
                 'email_contact' => $request->email_tlc,
             )));
         
-            if ($response['state'] = 200) {
+            if ($response['state'] != 200) {
                 return $this->respond(500, $response['message'], 'error', 'Error al crear guia');
             }
 
