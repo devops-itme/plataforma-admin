@@ -52,7 +52,7 @@ class Tealca
     {   
         $ApiSync = new ApiSync;
         $userData = auth()->user();
-        $weight = $guide->kg;
+        $weight = $guide['kg'];
         $weight = floatval(str_replace(",",".",$weight));
         
         $body = [
