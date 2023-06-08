@@ -374,12 +374,11 @@ class ShipmentController extends Controller
         $Tealca = new Tealca();
         $Tealca->login();
         $guideResponse = $Guide->getGuidesByOrder($id, false);
-        return dd($guideResponse);
         if ($guideResponse['state'] != 200) {
             return $guideResponse;
         }
         $guides = $guideResponse['data'];
-        
+        return $this->respond(200, $guides, 'error', 'Error al crear guia');
         foreach ($guides as $guide) {
             if ($guide->external_id != NULL) {
                 continue;
