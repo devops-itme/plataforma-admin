@@ -11,3 +11,4 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 Route::get('tealca/destination', 'GuideModule\Controllers\ShipmentController@getDestinationTealca');
 Route::get('tealca/stores', 'GuideModule\Controllers\ShipmentController@getTiendasTealca');
+Route::post('tealca/create/send', 'GuideModule\Controllers\ShipmentController@storeGuideByservice');

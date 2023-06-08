@@ -12,11 +12,13 @@ use App\Modules\BranchOfficeModule\BranchOffice;
 use App\Modules\OrderModule\CoordinadoraOrder;
 use App\Modules\OrderModule\CoordinadoraOrderDetail;
 use App\Modules\OrderModule\Order;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CoordinadoraGuidesExport;
 use App\Modules\OrderModule\CoordinadoraCities;
 use App\Exports\CoordinadoraGuidesTemplate;
+use App\Modules\ParameterValueModule\ParameterValue;
 use App\Modules\ApiConnectionsModule\Models\Coordinadora;
 
 class ShipmentController extends Controller
@@ -305,5 +307,88 @@ class ShipmentController extends Controller
         $tiendas = $Tealca->getTiendas();
 
         return response()->json($tiendas);
+    }
+
+    public function storeGuideByservice(Request $request){
+
+        try {
+
+            $order_type = ParameterValue::where('name', 'International')->first(['id'])->id;
+            $order = Order::where('order_type', $order_type)->latest()->first(['id', 'order_number']);
+            $lot_number = 'Lote_1';
+            if (!is_null($order)) {
+                $last_batch = explode('_', $order->order_number)[1];
+                $lot_number = 'Lote_' . ($last_batch + 1);
+            }
+
+            $OrderModel = new Order();
+            $orderResponse = $OrderModel->storeOrder(new Request(array(
+                'user_id' => Auth::user()->id,
+                'order_number' => $lot_number,
+                'order_type' => $order_type,
+                'creator_user_id' => Auth::user()->id,
+            )));
+            if ($orderResponse['state'] != 200) {
+                return 0;
+            };
+            $order_id = $orderResponse['data']['id'];
+
+            $response = $this->storeGuide(new Request(array(
+                'order_id' => $order_id,
+                'description' => $request->description_tlc,
+                'address_name' => $request->address_tlc,
+                'country' => $request->contry_code_tlc,
+                'city' => $request->city_code_tlc,
+                'recipient_name' => $request->name_destinatario_tlc,
+                'document_type' => $request->type_document_tlc,
+                'document' => $request->document_number_tlc,
+                'delivery_office' => $request->stores_tlc,
+                'invoice_number' => $request->invoice_number_tlc,
+                'declared' => $request->value_tlc,
+                'pieces' => $request->part_tlc,
+                'kg' => $request->kg_tlc,
+                'contact' => $request->contact_name_tlc,
+                'phone_contact' => $request->phone_tlc,
+                'email_contact' => $request->email_tlc,
+            )));
+        
+            if ($response['state'] = 200) {
+                return $this->respond(500, $response['message'], 'error', 'Error al crear guia');
+            }
+
+            $sendBatch = $this->sendBatchByservice($order_id);
+            if ($sendBatch['state'] = 200) {
+                return $this->respond(500, $response['message'], 'error', 'Error al crear guia');
+            }
+            return $this->respond(200, $response['message'], null, 'Orden creada y enviada');
+            
+        } catch (\Throwable $th) {
+            return $this->respond(500, [], $th->getMessage(), 'Error');
+        }
+
+    }
+
+    public function sendBatchByservice($id){
+
+        $Guide = new Guide();
+        $Tealca = new Tealca();
+        $Tealca->login();
+        $guideResponse = $Guide->getGuidesByOrder($id, false);
+        if ($guideResponse['state'] != 200) {
+            return $guideResponse;
+        }
+        $guides = $guideResponse['data'];
+        
+        foreach ($guides as $guide) {
+            if ($guide->external_id != NULL) {
+                continue;
+            }
+            $response = $Tealca->requestCreateShipment($guide);
+            if ($response['state'] != 200) {
+                return $this->respond(500, $response['message'], 'error', 'Error al crear guia');
+            }
+        }
+        return $this->respond(200, $response['message'], null, 'Lote subido correctamente');
+        
     }
 }
