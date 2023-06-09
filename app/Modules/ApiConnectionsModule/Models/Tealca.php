@@ -123,7 +123,7 @@ class Tealca
                 ),
                 array(
                     'response' => "failed_service",
-                    'response_error' => $createShipmentResponse->json()['error'],
+                    'response_error' => $createShipmentResponse->json()['error'] ?? 0,
                     'response_status' => $createShipmentResponse->status(),
                     'failed_guide_id' => $guide->id,
                 ),
