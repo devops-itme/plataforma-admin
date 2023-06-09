@@ -96,6 +96,7 @@ class Tealca
             ])
         ];
 
+        //return $this->respond(500, $body, 'error error', 'Fallo en el servicio. Guía N°');
         
         $createShipmentResponse = Http::withHeaders([
             'Authorization' =>  $this->token,
@@ -104,7 +105,6 @@ class Tealca
             $body
         );
 
-        
         
         if ($createShipmentResponse->status() != 200) {
             //dd($createShipmentResponse->json()['error'][0]);
@@ -123,7 +123,7 @@ class Tealca
                 ),
                 array(
                     'response' => "failed_service",
-                    'response_error' => $createShipmentResponse->json()['error'],
+                    'response_error' => $createShipmentResponse->json()['error'] ?? 0,
                     'response_status' => $createShipmentResponse->status(),
                     'failed_guide_id' => $guide->id,
                 ),
