@@ -67,7 +67,8 @@ class InternationalOrderController extends Controller
 
     public function importBatch(Request $request)
     {   
-        if ($request->country != null) {
+        //dd($request->all());
+        if ($request->provider == 2) {
             $response = $this->importCoordinadoraBatch($request);
             return $response;
 
