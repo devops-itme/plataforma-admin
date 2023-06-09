@@ -96,6 +96,7 @@ class Tealca
             ])
         ];
 
+        return $this->respond(500, $body, 'error error', 'Fallo en el servicio. Guía N°');
         
         $createShipmentResponse = Http::withHeaders([
             'Authorization' =>  $this->token,
