@@ -11,6 +11,8 @@ class CodeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $code;
+
     /**
      * Create a new message instance.
      *
@@ -28,6 +30,10 @@ class CodeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.codeMail', ['code' => $this->code]);
+        return $this->view('mails.codeMail')
+                ->subject('Código de verificación')
+                ->with([
+                    'message' =>$this->code,
+                ]);
     }
 }
