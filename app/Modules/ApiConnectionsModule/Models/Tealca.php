@@ -50,7 +50,6 @@ class Tealca
 
     public function requestCreateShipment($guide)
     {   
-        return $this->respond(500, $guide, 'error value', 'Fallo en el servicio. Guía N° ');
         $ApiSync = new ApiSync;
         $userData = auth()->user();
         $weight = $guide->kg;
