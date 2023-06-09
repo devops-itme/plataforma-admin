@@ -377,12 +377,15 @@ class ShipmentController extends Controller
         if ($guideResponse['state'] != 200) {
             return $guideResponse;
         }
-        $guide = $guideResponse['data'];
+        $guides = $guideResponse['data'];
         
-        $response = $Tealca->requestCreateShipment((object)$guide);
-        if ($response['state'] != 200) {
-            return $this->respond(500, $response, $response['message'], 'Error al crear guia');
+        foreach($guides as $guide){
+            $response = $Tealca->requestCreateShipment($guide);
+            if ($response['state'] != 200) {
+                return $this->respond(500, $response, $response['message'], 'Error al crear guia');
+            }
         }
+        
         return $this->respond(200, $response['message'], null, 'Lote subido correctamente');
         
     }
