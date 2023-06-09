@@ -105,7 +105,6 @@ class Tealca
             $body
         );
 
-        return $this->respond(500, $body, $createShipmentResponse->json(), 'Fallo en el servicio. Guía N° ' . $guide->id);
         
         if ($createShipmentResponse->status() != 200) {
             //dd($createShipmentResponse->json()['error'][0]);
