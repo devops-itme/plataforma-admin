@@ -135,6 +135,31 @@ class InternationalOrderController extends Controller
         return $data;
     }
 
+    public function getOrderNotSend(){
+
+        $query = DB::table('guides as g')
+        ->select('g.id', 'g.order_id','g.status_matrix_id', 'g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
+        ->where('g.external_id', null)
+        ->where('g.country', '<>', 'PAN')
+        ->join('orders as o', 'o.id', '=', 'g.order_id')
+        ->where('o.deleted_at', null)
+        ->whereNotBetween('o.id', [277,349])
+        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 3 MONTH)'))
+        ->get();
+
+        $can = count($query);
+        $data['data'] = $query;
+        $data['input'] = [
+        "draw" =>'1',
+        "length" =>'10',
+        "start" =>'0'
+        ];
+        $data['recordsFiltered'] = $can;
+        $data['recordsTotal'] = $can;
+
+        return $data;
+    }
+
 
     public function permissionsAccions(Request $request, $id)
     {
