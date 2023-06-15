@@ -664,7 +664,7 @@ class InternationalOrderController extends Controller
         ->select('t.id','t.external_id as external_id', 't.contact as contact', 't.date_status as FechaTime', 't.status as Status', 't.historical')
         ->where('t.status', '<>', 'POD')
         ->where('t.deleted_at', null)
-        ->join('guides as g', 'g.id', '=', 't.guide_id')
+        ->leftJoin('guides as g', 'g.id', '=', 't.guide_id')
         ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 3 DAY)'))
         ->get();
 
