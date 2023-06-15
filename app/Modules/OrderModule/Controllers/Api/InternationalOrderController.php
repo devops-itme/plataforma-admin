@@ -138,7 +138,6 @@ class InternationalOrderController extends Controller
     public function getOrderNotSend(){
 
         $query = DB::table('guides as g')
-        ->select('g.id', 'g.order_id','g.status_matrix_id', 'g.external_id as external_id', 'g.contact as contact', 'g.created_at as AppEventDate')
         ->where('g.external_id', null)
         ->where('g.country', '<>', 'PAN')
         ->join('orders as o', 'o.id', '=', 'g.order_id')
