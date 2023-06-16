@@ -5,6 +5,7 @@ namespace App\Modules\GuideModule\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\RestActions;
+use App\Http\Controllers\Traits\TealcaByGuide;
 use App\Modules\GuideModule\Guide;
 use App\Modules\ApiConnectionsModule\Imports\ShipmentTealcaImport;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
@@ -23,7 +24,7 @@ use App\Modules\ApiConnectionsModule\Models\Coordinadora;
 
 class ShipmentController extends Controller
 {
-    use RestActions, GuideTrait;
+    use RestActions, GuideTrait, TealcaByGuide;
     protected $path = 'GuideModule.views.html.shipments.';
     protected $CoordPath = 'GuideModule.views.html.coordinadora.';
 
@@ -353,13 +354,15 @@ class ShipmentController extends Controller
             )));
         
             if ($response['state'] != 200) {
-                return $this->respond(500, $response['message'], 'error', 'Error al crear guia');
+                return $this->respond(500, $response, $response['message'], 'Error al crear guia');
             }
 
             $sendBatch = $this->sendBatchByservice($order_id);
             if ($sendBatch['state'] != 200) {
-                return $this->respond(500, $sendBatch, $response['message'], 'Error al enviar guia');
+                return $this->respond(500, $sendBatch, $sendBatch['message'], 'Orden creada pero no Enviada.');
             }
+            $save_tealca_data = $this->updateTealcaDataByGuide();
+            
             return $this->respond(200, $response['message'], null, 'Orden creada y enviada');
             
         } catch (\Throwable $th) {
@@ -382,7 +385,7 @@ class ShipmentController extends Controller
         foreach($guides as $guide){
             $response = $Tealca->requestCreateShipment($guide);
             if ($response['state'] != 200) {
-                return $this->respond(500, $response, $response['message'], 'Error al crear guia');
+                return $this->respond(500, $response, $response['message'], 'Error al enviar Orden');
             }
         }
         
