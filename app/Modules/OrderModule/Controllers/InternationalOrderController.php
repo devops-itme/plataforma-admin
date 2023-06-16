@@ -192,7 +192,8 @@ class InternationalOrderController extends Controller
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
 
-        $excelResponse = Excel::import($TealcaImport, $file);
+        try {
+            $excelResponse = Excel::import($TealcaImport, $file);
         if ($TealcaImport->getWrongRow() > 0) {
             //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
@@ -237,7 +238,11 @@ class InternationalOrderController extends Controller
             ),
             "ACK"
         );
-        return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
+            return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
+        } catch (\Throwable $th) {
+            return redirect()->route('internationalOrders.index')->with('success', $th->getMessage());
+        }
+        
     }
 
 
