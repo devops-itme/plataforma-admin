@@ -68,6 +68,9 @@ class AuthController extends Controller
             if ($user->state != 1) {
                 return $this->respond(401,  null, 'Unauthorized', 'Usuario inactivo');
             }
+            if ($user->code_confirmed != 1) {
+                return $this->respond(401,  null, 'Unauthorized', 'Usuario no verificado');
+            }
             $user->fcm_token = $request->fcm_token ?? NULL;
             $user->save();
 
@@ -239,12 +242,14 @@ class AuthController extends Controller
                 }
             };
             $saveCustomerResponse = $this->saveCustomer($request->merge(['user_id' => $user_id]));
+            
             if ($saveCustomerResponse['state'] == 200) {
                 $randomCode = rand(100000, 999999);
                 $user = User::where('id', $user_id)->first();
                 $user->code = $randomCode;
                 $user->code_confirmed = 0;
                 $user->update();
+                
                 send_sms($user->phone, 'Su código de verificación es:' . $randomCode);
                 Mail::to($user->email)
                     ->send(new CodeMail($randomCode));
