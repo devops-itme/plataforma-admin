@@ -72,14 +72,171 @@ class InternationalOrderController extends Controller
             $response = $this->importCoordinadoraBatch($request);
             return $response;
 
-        } else {
+        }
+        
+        $ApiSync = new ApiSync;
+        //dd($request->excel->getClientOriginalName());
+        $userData = auth()->user();
+        $unique_phone = $request->unique_phone === 'true';
+        $customer_id = $request->customer_id;
+        $file = $request->file('excel');
+        $headings = (new HeadingRowImport)->toArray($file);
+        $TealcaImport = new ShipmentTealcaImport($unique_phone,$customer_id);
+        
+        $header = ["paisdes",
+                    "ciudes",
+                    "nomdes",
+                    "dirdes",
+                    "documenttypedes",
+                    "documentnumberdes",
+                    "teldes",
+                    "email",
+                    "oficinadeentrega",
+                    "preguia",
+                    "numfactura",
+                    "declarado",
+                    "piezas",
+                    "kilos",
+                    "namecontact",
+                    "observ"];
+        
+        
+        $missingColumns = array_diff($header, $headings[0][0]);
+        if (count($missingColumns) == 1) {
+            //$ApiSync->authenticate();
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email ?? null
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "create"
+                ),
+                array(
+                    'payload_action' => "import_batch",
+                    'payload_file_name' => $request->excel->getClientOriginalName()
+                ),
+                array(
+                    'response' => "error",
+                    'response_error' => "missing_header_".implode($missingColumns).""
+                ),
+                "ACK"
+            );
+            return redirect()->back()->with('danger', 'Error. No se encontró la columna '. implode($missingColumns). '.');
+        }
+        if (count($missingColumns) > 1) {
+            //$ApiSync->authenticate();
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email ?? null
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "create"
+                ),
+                array(
+                    'payload_action' => "import_batch",
+                    'payload_file_name' => $request->excel->getClientOriginalName()
+                ),
+                array(
+                    'response' => "error",
+                    'response_error' => "missing_header_".implode($missingColumns).""
+                ),
+                "ACK"
+            );
+            return redirect()->back()->with('danger', 'Error. No se encontraron las columnas '. implode(", ", $missingColumns). '.');
+        }
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'customer_id' => 'required',
+                'excel' => 'required|mimes:xlsx',
+            ]
+        );
+        if ($validator->fails()) {
+            //$ApiSync->authenticate();
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email ?? null
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "create"
+                ),
+                array(
+                    'payload_action' => "import_batch",
+                    'payload_file_name' => $request->excel->getClientOriginalName()
+                ),
+                array(
+                    'response' => "validation_error",
+                    'response_error' => $validator->errors()->first()
+                ),
+                "ACK"
+            );
+            return redirect()->back()->with('danger', $validator->errors()->first());
+        }
+
+        $excelResponse = Excel::import($TealcaImport, $file);
+        if ($TealcaImport->getWrongRow() > 0) {
+            //$ApiSync->authenticate();
+            $ApiSync->ApiSaveLog(
+                "Multientrega_Admin",
+                array(
+                    'origin_user' => $userData->email
+                ),
+                "Multientrega_DB",
+                array(
+                    'destination_table' => "guides",
+                    'destination_action' => "create"
+                ),
+                array(
+                    'payload_action' => "import_batch",
+                    'payload_file_name' => $request->excel->getClientOriginalName()
+                ),
+                array(
+                    'response' => "error",
+                    'response_error' =>"wrong_city_in_row_".$TealcaImport->getWrongRow().""
+                ),
+                "ACK"
+            );
+            return redirect()->route('internationalOrders.index')->with('danger', 'Error en la fila '.$TealcaImport->getWrongRow().': ciudad no encontrada. Porfavor verifique e intente nuevamente.');
+        }
+        //$ApiSync->authenticate();
+        $ApiSync->ApiSaveLog(
+            "Multientrega_Admin",
+            array(
+                'origin_user' => $userData->email
+            ),
+            "Multientrega_DB",
+            array(
+                'destination_table' => "guides",
+                'destination_action' => "create"
+            ),
+            array(
+                'payload_action' => "import_batch",
+                'payload_file_name' => $request->excel->getClientOriginalName()
+            ),
+            array(
+                'response' => "imported_batch",
+            ),
+            "ACK"
+        );
+        return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
+        /*  else {
             $response = $this->importTealcaBatch($request);
             return $response;
-        }
+        } */
         
     }
 
-    public function importTealcaBatch(Request $request)
+    /* public function importTealcaBatch(Request $request)
     {
         //set_time_limit(3200);
         
@@ -238,7 +395,7 @@ class InternationalOrderController extends Controller
             "ACK"
         );
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
-    }
+    } */
 
 
     //Import guides to batch
