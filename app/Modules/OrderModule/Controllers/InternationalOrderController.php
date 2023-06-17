@@ -24,6 +24,7 @@ use App\Modules\ApiConnectionsModule\Models\Coordinadora;
 use App\Modules\OrderModule\CoordinadoraOrder;
 use App\Modules\ApiConnectionsModule\Imports\ShipmentCoordinadoraImport;
 use App\Modules\ApiConnectionsModule\Imports\ShipmentCoordinadoraImp;
+use Illuminate\Support\Facades\Log;
 
 class InternationalOrderController extends Controller
 {
@@ -67,12 +68,14 @@ class InternationalOrderController extends Controller
 
     public function importBatch(Request $request)
     {   
+        Log::debug("Entro a import batch");
         //dd($request->all());
         if ($request->provider == 2) {
             $response = $this->importCoordinadoraBatch($request);
             return $response;
 
         } else {
+            Log::debug("entro al else batch");
             $response = $this->importTealcaBatch($request);
             return $response;
         }
@@ -82,7 +85,7 @@ class InternationalOrderController extends Controller
     public function importTealcaBatch(Request $request)
     {
         //set_time_limit(3200);
-        
+        Log::debug("Entro a importTealcaBatch");
         $ApiSync = new ApiSync;
         //dd($request->excel->getClientOriginalName());
         $userData = auth()->user();
@@ -109,7 +112,7 @@ class InternationalOrderController extends Controller
                     "namecontact",
                     "observ"];
         
-        
+                    Log::debug("paso instanciamiento de parametros");
         $missingColumns = array_diff($header, $headings[0][0]);
         if (count($missingColumns) == 1) {
             //$ApiSync->authenticate();
@@ -159,7 +162,7 @@ class InternationalOrderController extends Controller
             );
             return redirect()->back()->with('danger', 'Error. No se encontraron las columnas '. implode(", ", $missingColumns). '.');
         }
-
+        Log::debug("paso validaciones de datos vacios");
         $validator = Validator::make(
             $request->all(),
             [
@@ -191,8 +194,9 @@ class InternationalOrderController extends Controller
             );
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
-
+        Log::debug("paso validtor");
         $excelResponse = Excel::import($TealcaImport, $file);
+        Log::debug("pasó import()");
         if ($TealcaImport->getWrongRow() > 0) {
             //$ApiSync->authenticate();
             $ApiSync->ApiSaveLog(
@@ -237,6 +241,7 @@ class InternationalOrderController extends Controller
             ),
             "ACK"
         );
+        Log::debug("paso retorno exitoso");
         return redirect()->route('internationalOrders.index')->with('success', 'Lote creado correctamente');
     }
 
