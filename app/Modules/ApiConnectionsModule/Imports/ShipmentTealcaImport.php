@@ -170,7 +170,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             $last_batch = explode('_', $order->order_number)[1];
             $lot_number = 'Lote_' . ($last_batch + 1);
         }
-        dd($lot_number);
+        
         DB::beginTransaction();
         $orderResponse = $this->storeOrder(new Request(array(
             // 'user_id' => Auth::user()->id,
@@ -179,7 +179,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             'order_type' => $order_type,
             'creator_user_id' => Auth::user()->id,
         )));
-        dd($orderResponse);
+        
         if ($orderResponse['state'] != 200) {
             return 0;
         };
