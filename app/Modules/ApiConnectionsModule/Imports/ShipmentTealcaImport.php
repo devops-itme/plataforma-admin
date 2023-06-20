@@ -176,6 +176,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             'order_type' => $order_type,
             'creator_user_id' => Auth::user()->id,
         )));
+        dd($orderResponse);
         if ($orderResponse['state'] != 200) {
             return 0;
         };
