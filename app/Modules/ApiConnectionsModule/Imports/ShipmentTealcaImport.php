@@ -161,8 +161,10 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
     {   
         
         $order_type = ParameterValue::where('name', 'International')->first(['id'])->id;
-        $order = Order::where('order_type', $order_type)->latest()->first(['id', 'order_number']);
-        dd($order);
+        $order = Order::where('order_type', $order_type)
+        ->where('order_number', 'like', '%Lote%')
+        ->latest()->first(['id', 'order_number']);
+        
         $lot_number = 'Lote_1';
         if (!is_null($order)) {
             $last_batch = explode('_', $order->order_number)[1];
