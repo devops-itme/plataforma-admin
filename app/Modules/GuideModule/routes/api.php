@@ -7,6 +7,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('guide/markAsRead', 'GuideModule\Controllers\Api\GuideController@markAsRead');
     Route::resource('guides', 'GuideModule\Controllers\Api\GuideController')->names('guides-api');
     Route::put('guide/changeStatus', 'GuideModule\Controllers\Api\GuideController@changeStatus');
+    Route::get('guide/service/get/{id}', 'GuideModule\Controllers\ShipmentController@getGuideService')->name('service.guide.get');
 });
 
 Route::get('tealca/destination', 'GuideModule\Controllers\ShipmentController@getDestinationTealca');

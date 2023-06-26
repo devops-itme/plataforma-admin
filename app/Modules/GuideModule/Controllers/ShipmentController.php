@@ -162,6 +162,20 @@ class ShipmentController extends Controller
 
     }
 
+    public function getGuideService($id)
+    {   
+        try {
+            $guide = Guide::find($id);
+            if (is_null($guide)) {
+                return response()->json(['success' => false, 'message' => "Guia no encontrada"], 404);
+            }
+            return response()->json(['success' => true, 'message' => "Guia encontrada", 'data' => $guide], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => "Ocurrió un error inesperado", 'error' => $th->getMessage()], 200);
+        }
+        
+    }
+
     public function isCoordinadoraBatch($order_id)
     {
         $findBatch = Order::where('id', $order_id)->where('description', '<>', null)->get()->first();
