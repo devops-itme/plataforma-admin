@@ -165,7 +165,7 @@ class ShipmentController extends Controller
     public function getGuideService($id)
     {   
         try {
-            $guide = Guide::find($id);
+            $guide = Guide::where('order_id', $id)->first();
             if (is_null($guide)) {
                 return response()->json(['success' => false, 'message' => "Guia no encontrada"], 404);
             }
