@@ -198,7 +198,7 @@ class AuthController extends Controller
             $user->code_confirmed = 0;
             $user->update();
 
-            send_sms($user->phone, 'Su código de verificación es:' . $randomCode);
+            /* send_sms($user->phone, 'Su código de verificación es:' . $randomCode); */
             Mail::to($user->email)
                 ->send(new CodeMail($randomCode));
             return $this->respond(200, $randomCode, null, 'Código de verificación generado con éxito');
