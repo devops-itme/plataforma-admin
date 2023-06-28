@@ -94,10 +94,9 @@ class ShipmentController extends Controller
                 return response()->json(['success' => false, 'message' => "ocurrió un error", 'error' =>$response['message']], 500);
             }
         }
+        $callTealcaSincronizer = $this->updateTealcaDataByGuide();
         return response()->json(['success' => true, 'message' => "Orden enviada correctamente"], 200);
     }
-
-    
     public function create(Request $request)
     {
         $order_id = $request->order_id;
