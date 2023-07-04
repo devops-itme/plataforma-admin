@@ -73,6 +73,30 @@ class ShipmentController extends Controller
         }
         return redirect()->route('shipments.index', ['order_id' => $id])->with('success', 'Lote subido correctamente');
     }
+
+    public function sendBatchService($id)
+    {
+        $Guide = new Guide();
+        $Tealca = new Tealca();
+        $Tealca->login();
+        $guideResponse = $Guide->getGuidesByOrder($id, false);
+        if ($guideResponse['state'] != 200) {
+            return $guideResponse;
+        }
+        $guides = $guideResponse['data'];
+        
+        foreach ($guides as $guide) {
+            if ($guide->external_id != NULL) {
+                continue;
+            }
+            $response = $Tealca->requestCreateShipment($guide);
+            if ($response['state'] != 200) {
+                return response()->json(['success' => false, 'message' => "ocurrió un error", 'error' =>$response['message']], 500);
+            }
+        }
+        $callTealcaSincronizer = $this->updateTealcaDataByGuide();
+        return response()->json(['success' => true, 'message' => "Orden enviada correctamente"], 200);
+    }
     public function create(Request $request)
     {
         $order_id = $request->order_id;
