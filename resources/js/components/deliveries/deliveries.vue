@@ -210,6 +210,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12 mb-2">
+                    <div class="font-weight-bolder mb-1">Descripción:</div>
+                    <div class="line-height-x1" v-if="showDataGuide" v-text="showDataGuide.description ? showDataGuide.description: 'No registra'" ></div>
+                </div>
             </div>
            </div>
         </div>
@@ -620,6 +624,7 @@ export default {
             this.showDataGuide.issue_id = data?.get_issue?.get_issue?.id ?? 'No registra';
             this.showDataGuide.schedule_time_range = data.get_order.schedule_time_range;
             this.showDataGuide.logs = this.guide_logs;
+            this.showDataGuide.description = data?.description;
         },
         async getGuides(type, changeType = true) {
             this.guides2 = [];
