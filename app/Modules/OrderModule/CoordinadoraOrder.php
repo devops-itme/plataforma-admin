@@ -76,8 +76,8 @@ class CoordinadoraOrder extends Model
                 "telefono_celular_destinatario" => 'required|numeric',
                 "codigo_ciudad_destinatario" => 'required|numeric',
                 "nombre_ciudad_destinatario" => 'required|string',
-                "codigo_pedido" => 'numeric',
-                "numero_pedido" => 'numeric',
+                "codigo_pedido" => 'string',
+                "numero_pedido" => 'string',
                 "es_entrega_mismo_dia" => 'string|size:1',
                 "valor_declarado" => 'numeric',
             ]

@@ -146,7 +146,7 @@ class ShipmentCoordinadoraImport implements ToCollection, WithHeadingRow, WithVa
             //dd($orderDetailResponse);
             if ($guideResponse['state'] != 201 || $orderDetailResponse['state'] != 201) {
                 DB::rollBack();
-                throw ValidationException::withMessages([$guideResponse['message']]);
+                throw ValidationException::withMessages([$guideResponse['message'], $orderDetailResponse['message']]);
             };
         }
         DB::commit();

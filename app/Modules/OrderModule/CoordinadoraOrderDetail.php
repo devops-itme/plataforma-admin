@@ -50,7 +50,7 @@ class CoordinadoraOrderDetail extends Model
         return Validator::make(
             $request->all(),
             [
-                "referencia" => 'required|string',
+                "referencia" => 'required',
                 "unidades" => 'required|numeric',
                 "peso" => 'required|numeric',
                 "alto" => 'required|numeric',
