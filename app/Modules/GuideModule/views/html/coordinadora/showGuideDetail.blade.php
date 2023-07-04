@@ -92,11 +92,11 @@
                 <div class="row mt-10">
                     <div class="col">
                         <label for="numguide">Código del pedido</label>
-                        <input type="number" class="form-control" value="{{ $order->codigo_pedido }}" id="numdguia" placeholder="N° de Guía" name="pre_guide" disabled>
+                        <input type="text" class="form-control" value="{{ $order->codigo_pedido }}" id="numdguia" placeholder="N° de Guía" name="pre_guide" disabled>
                     </div>
                     <div class="col">
                         <label for="numguide">Número del pedido</label>
-                        <input type="number" class="form-control" value="{{ $order->numero_pedido }}" id="numdguia" placeholder="N° de Guía" name="pre_guide" disabled>
+                        <input type="text" class="form-control" value="{{ $order->numero_pedido }}" id="numdguia" placeholder="N° de Guía" name="pre_guide" disabled>
                     </div>
                 </div>
             </div>
