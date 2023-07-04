@@ -18,7 +18,7 @@
         <th style="text-align: center">alto</th>
         <th style="text-align: center">ancho</th>
         <th style="text-align: center">largo</th>
-        <th style="text-align: center">nombre_paquete</th>
+        <th style="text-align: center">nombre_empaque</th>
     </thead>
 
     <tbody>

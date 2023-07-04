@@ -94,8 +94,8 @@ class Coordinadora
             "valor_declarado"=> $request->valor_declarado,
             "total_iva"=> $request->valor_declarado,
             "nit_remitente"=> $request->nit_remitente,
-            "nombre_remitente"=> $request->nombre_remitente,
-            "telefono_remitente"=> $request->telefono_remitente,
+            "nombre_remitente"=> "InvestCapital",
+            "telefono_remitente"=> "3",
             "detalle"=> $request->getGuideDetails
         ];
 
