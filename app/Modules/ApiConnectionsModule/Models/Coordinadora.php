@@ -123,7 +123,7 @@ class Coordinadora
         try {
             $body = [
                 "campoConsulta" => "id_usuario",
-                "id" => "90009000",
+                "id" => env("COORD_IDTIENDA"),
                 "campoBusqueda" => "numero_pedido",
                 "busqueda" => $guide->numero_pedido
             ];
