@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Facades\Log;
+
 if (!function_exists('format_date')) {
     function format_date($date)
     {
@@ -53,6 +55,8 @@ if (!function_exists('format_hour')) {
 if (!function_exists('sendCustomNotifications')) {
     function sendCustomNotifications($title = 'Notificación', $message = 'Nueva notificación', $data = [], $userToken)
     {
+        Log::info('primer inicio');
+
         try {
             $data = [
                 "to" => $userToken,
@@ -63,13 +67,15 @@ if (!function_exists('sendCustomNotifications')) {
                 "data" => $data
             ];
 
+            Log::info($data);
+
             $dataString = json_encode($data, JSON_FORCE_OBJECT);
 
             $headers = [
                 'Authorization: key=' . env('FCM_KEY'),
                 'Content-Type: application/json',
             ];
-
+            Log::info($headers);
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
@@ -80,9 +86,11 @@ if (!function_exists('sendCustomNotifications')) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
             $response = curl_exec($ch);
+            Log::info($response);
 
             return $response;
         } catch (\Throwable $th) {
+            Log::error($th->getMessage());
             return $th->getMessage();
         }
     }
