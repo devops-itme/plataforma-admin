@@ -73,6 +73,13 @@ class CoordinadoraController extends Controller
         return $petition;
     }
 
+    public function updateGuideStatus($order_id)
+    {
+        $Coordinadora = new CoordinadoraOrder();
+        $petition = $Coordinadora->updateGuideStatus($order_id);
+        return $petition;
+    }
+
     /* public function token()
     {
         return csrf_token(); 
