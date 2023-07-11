@@ -574,7 +574,7 @@ class InternationalOrderController extends Controller
         ->join('orders as o', 'o.id', '=', 'g.order_id')
         ->where('o.deleted_at', null)
         ->whereNotBetween('o.id', [277,349])
-        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 3 MONTH)'))
+        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 10 DAY)'))
         ->get();
 
         //dd($query);
