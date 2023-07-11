@@ -71,6 +71,7 @@ class ShipmentController extends Controller
                 return redirect()->back()->with('danger', $response['message']);
             }
         }
+        $callTealcaSincronizer = $this->updateTealcaDataByGuide();
         return redirect()->route('shipments.index', ['order_id' => $id])->with('success', 'Lote subido correctamente');
     }
 
