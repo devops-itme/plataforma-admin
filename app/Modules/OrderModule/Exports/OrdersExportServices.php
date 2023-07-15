@@ -121,7 +121,7 @@ class OrdersExportServices extends DefaultValueBinder implements FromCollection,
                 'g.pieces',
                 'g.kg',
                 'g.declared',
-                'g.dispatched', // Factura
+                'g.invoice_number', // Factura
                 'g.pre_guide', //Guia
                 'g.contact',
                 'g.description',
