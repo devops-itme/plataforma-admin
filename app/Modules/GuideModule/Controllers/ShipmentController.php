@@ -390,6 +390,7 @@ class ShipmentController extends Controller
                 'contact' => $request->contact_name_tlc,
                 'phone_contact' => $request->phone_tlc,
                 'email_contact' => $request->email_tlc,
+                'pre_guide' => $request->guide_number_tlc
             )));
         
             if ($response['state'] != 200) {
