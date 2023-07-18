@@ -481,7 +481,7 @@ class InternationalOrderController extends Controller
         $fecha_end = date('Y-m-d 23:59:59', ((int)$request->end / 1000));
         $name = ('IO_' . Auth::user()->email . '_from_' . $fecha_begin . '_to_' . $fecha_end . '.xls');
 
-        if($value == 'TEALCA'){
+        if($value == 'Venezuela'){
 
             $response = Excel::store(
                 new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end, $value),
@@ -500,7 +500,7 @@ class InternationalOrderController extends Controller
     
             return Excel::download(new OrdersExportServices(Auth::user()->id, $fecha_begin, $fecha_end, $value), 'prueba.xls');
 
-        }else if($value == 'COORDINADORA'){
+        }else if($value == 'Colombia'){
             
             try {
 
