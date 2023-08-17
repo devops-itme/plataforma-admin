@@ -460,13 +460,12 @@ class OrderController extends Controller
                     $item->getRoute->messenger_user_id == Auth()->user()->id ? array_push($guide_arr, $item) : '';
                 }
             }
-            Log::info("****************************************************************");
-            Log::info("Contenido de guide_arr: " . json_encode($guide_arr));
+
             //if request order id return guides by
             if ($request->order_id) {
                 $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
-                //Log::info("****************************************************************");
-                //Log::info("GuidesList: {$guides_list}");
+                Log::info("****************************************************************");
+                Log::info("GuidesList: {$guides_list}");
                 $data = GuideResource::collection($guides_list);
                 //Log::info("****************************************************************");
                 //Log::info("DataGuideResource: {$data}");
