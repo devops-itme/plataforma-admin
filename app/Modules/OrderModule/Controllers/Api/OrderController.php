@@ -461,7 +461,7 @@ class OrderController extends Controller
                 }
             }
             Log::info("****************************************************************");
-            Log::info("Guide_arr: {$guide_arr}");
+            Log::info("Guide_arr: " . json_encode($guide_arr));
             //if request order id return guides by
             if ($request->order_id) {
                 $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
