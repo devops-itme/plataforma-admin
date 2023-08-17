@@ -380,7 +380,7 @@ class OrderController extends Controller
                     $query->where('name', 'pickup');
                 });
             })->orderBy('created_at', 'ASC')->get();
-            Log::info("GuideLog: {$GuideLog_pickup}");
+            
 
             foreach ($GuideLog_pickup as $key => $item) {
                 array_push($guide_pickup, $item);
@@ -464,7 +464,9 @@ class OrderController extends Controller
             //if request order id return guides by
             if ($request->order_id) {
                 $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
+                Log::info("***** GuidesList: {$guides_list} *****");
                 $data = GuideResource::collection($guides_list);
+                Log::info("DataGuideResource: {$data} *****");
                 return $this->respond(200, $data, null, 'Guías');
             }
 
