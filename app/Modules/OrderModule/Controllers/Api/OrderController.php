@@ -451,7 +451,6 @@ class OrderController extends Controller
             });
 
             $new_guides = $guides_delivery_arr->merge($guides_pickup_arr);
-            dd($new_guides);
             $guides = $new_guides->whereIn('status_matrix_id', $state);
 
             $guide_arr = [];
@@ -464,6 +463,7 @@ class OrderController extends Controller
             //if request order id return guides by
             if ($request->order_id) {
                 $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
+                dd($guides_list);
                 $data = GuideResource::collection($guides_list);
                 return $this->respond(200, $data, null, 'Guías');
             }
