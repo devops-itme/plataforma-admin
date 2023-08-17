@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Log;
 
 class OrderController extends Controller
 {
@@ -379,7 +380,7 @@ class OrderController extends Controller
                     $query->where('name', 'pickup');
                 });
             })->orderBy('created_at', 'ASC')->get();
-
+            Log::info("GuideLog: {$GuideLog_pickup}");
 
             foreach ($GuideLog_pickup as $key => $item) {
                 array_push($guide_pickup, $item);
