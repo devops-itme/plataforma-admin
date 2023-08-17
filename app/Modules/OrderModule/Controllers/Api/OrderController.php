@@ -386,7 +386,8 @@ class OrderController extends Controller
                 array_push($guide_pickup, $item);
             }
             $guide_pickup_new = array_values(array_column($guide_pickup, null, "guide_id"));
-
+            Log::info("-------------------------");
+            var_dump($guide_pickup_new);
             $guides_pickup_arr = collect($guide_pickup_new)->map(function ($item) use ($GuideLog_pickup) {
                 $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
                 $data_guide_log2 = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->last();
