@@ -380,20 +380,17 @@ class OrderController extends Controller
                     $query->where('name', 'pickup');
                 });
             })->orderBy('created_at', 'ASC')->get();
-            
 
             foreach ($GuideLog_pickup as $key => $item) {
                 array_push($guide_pickup, $item);
             }
             $guide_pickup_new = array_values(array_column($guide_pickup, null, "guide_id"));
-            Log::info("-------------------------");
-            
+
             $guides_pickup_arr = collect($guide_pickup_new)->map(function ($item) use ($GuideLog_pickup) {
                 $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
-                dd($data_guide_log);
                 $data_guide_log2 = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->last();
+                dd($data_guide_log2);
                 $item->getGuide->status_matrix_id = $item->status_matrix_id;
-                return 0;
                 if ($data_guide_log) {
                     $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->get();
                     $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
@@ -467,9 +464,6 @@ class OrderController extends Controller
             //if request order id return guides by
             if ($request->order_id) {
                 $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
-                $test = collect($guide_arr);
-                Log::info("----------------------------------");
-                Log::info("Test: {$test}");
                 $data = GuideResource::collection($guides_list);
                 return $this->respond(200, $data, null, 'Guías');
             }
