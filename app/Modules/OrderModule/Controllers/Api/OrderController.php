@@ -460,10 +460,11 @@ class OrderController extends Controller
                 }
             }
 
+            dd($guide_arr);
             //if request order id return guides by
             if ($request->order_id) {
                 $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
-                dd($guides_list);
+                //dd($guides_list);
                 $data = GuideResource::collection($guides_list);
                 return $this->respond(200, $data, null, 'Guías');
             }
