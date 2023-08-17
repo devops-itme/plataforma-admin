@@ -389,8 +389,8 @@ class OrderController extends Controller
             $guides_pickup_arr = collect($guide_pickup_new)->map(function ($item) use ($GuideLog_pickup) {
                 $data_guide_log = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->first();
                 $data_guide_log2 = $GuideLog_pickup->where('guide_id', $item->getGuide->id)->last();
-                dd($data_guide_log2);
                 $item->getGuide->status_matrix_id = $item->status_matrix_id;
+                dd($item);
                 if ($data_guide_log) {
                     $documents = GuidanceDocument::where('guide_id', $item->getGuide->id)->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->get();
                     $route = Route::where('guide_id', $item->getGuide->id)->with('getMessenger.getMessenger')->orderBy('created_at', 'DESC')->whereBetween('created_at', [date($data_guide_log->created_at), date($data_guide_log2->created_at)])->first();
