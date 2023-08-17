@@ -406,7 +406,6 @@ class OrderController extends Controller
                         $item->getGuide->additional_address =  json_decode($Issue[0]->url_document)->additional_address ?? '';
                     }
                 }
-                dd($item);
                 return $item->getGuide;
             });
 
@@ -421,7 +420,7 @@ class OrderController extends Controller
                     $query->where('name', 'delivery');
                 });
             })->orderBy('created_at', 'ASC')->get();
-
+            
             foreach ($GuideLog_delivery as $key => $item) {
                 array_push($guide_delivery, $item);
             }
@@ -452,7 +451,7 @@ class OrderController extends Controller
             });
 
             $new_guides = $guides_delivery_arr->merge($guides_pickup_arr);
-
+            dd($new_guides);
             $guides = $new_guides->whereIn('status_matrix_id', $state);
 
             $guide_arr = [];
