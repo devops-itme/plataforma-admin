@@ -464,7 +464,7 @@ class OrderController extends Controller
             if ($request->order_id) {
                 $guides_list = collect($guide_arr)->whereIn('order_id', $request->order_id);
                 $data = GuideResource::collection($guides_list);
-                dd(get_type($data));
+                dd(gettype($data));
                 return $this->respond(200, $data, null, 'Guías');
             }
 
