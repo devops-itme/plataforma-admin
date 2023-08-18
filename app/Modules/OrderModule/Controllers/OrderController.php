@@ -218,7 +218,7 @@ class OrderController extends Controller
         })->get();
         $zones = Zone::get();
         $rates = Rate::get();
-        dd($order);
+        dd($order->getAddress->name);
         return view($this->path . 'show.index', compact('customers', 'order', 'order_type', 'transport_type', 'payment_method', 'customer_document_type', 'customer_addresses', 'zones', 'rates'));
     }
     // public function show($id)
