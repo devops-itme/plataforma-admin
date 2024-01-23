@@ -196,8 +196,10 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         if (!$this->unique_phone) {
             $this->validatePhones($rows);
         }
-            $this->validateNamesDestination($rows);
-            $this->validateNamesContact($rows);
+        $a = $this->validateNamesDestination($rows);
+        $b = $this->validateNamesContact($rows);
+        Log::info("validateNames " . json_encode($a));
+        Log::info("validateNamesContact" . json_encode($b));
 
         $validateCities = $this->validateCitiesDestination($rows);
         if ($validateCities['state'] == 500) {
