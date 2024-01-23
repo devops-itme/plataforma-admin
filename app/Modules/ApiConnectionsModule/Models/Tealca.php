@@ -190,12 +190,13 @@ class Tealca
             env("TEALCA_URL") . 'v1/Destinations'
         );
 
-        if ($destination->status() != 200) {
+        return $destination;
+        /* if ($destination->status() != 200) {
             return $this->respond(500, null, $destination, 'Fallo en el servicio. Guía N° ');
         };
 
 
-        return $this->respond(200, $destination->json(), null, 'successful request');
+        return $this->respond(200, $destination->json(), null, 'successful request'); */
     }
 
     public function getTiendas()
