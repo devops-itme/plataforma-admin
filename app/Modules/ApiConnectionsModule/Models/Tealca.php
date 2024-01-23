@@ -183,7 +183,9 @@ class Tealca
     }
 
     public function getDestination()
-    {
+    {   
+        Log::info("token: " . $this->token);
+        Logg::info("url: " . env("TEALCA_URL"));
         $destination = Http::withHeaders([
             'Authorization' => $this->token,
         ])->get(
