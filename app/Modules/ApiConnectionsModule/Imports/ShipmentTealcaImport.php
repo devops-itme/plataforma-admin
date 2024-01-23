@@ -196,10 +196,8 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         if (!$this->unique_phone) {
             $this->validatePhones($rows);
         }
-        $a = $this->validateNamesDestination($rows);
-        $b = $this->validateNamesContact($rows);
-        Log::info("validateNames " . json_encode($a));
-        Log::info("validateNamesContact" . json_encode($b));
+            $this->validateNamesDestination($rows);
+            $this->validateNamesContact($rows);
 
         $validateCities = $this->validateCitiesDestination($rows);
         if ($validateCities['state'] == 500) {
@@ -228,12 +226,11 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                 'phone_contact' => $row['teldes'],
                 'email_contact' => $row['email'],
             )));
+            Log::info("guiaResponse: " . json_encode($guideResponse));
             if ($guideResponse['state'] != 200) {
                 DB::rollBack();
-                Log::info("entró validator guia: " . json_encode($guideResponse));
                 throw ValidationException::withMessages([$guideResponse['message']]);
             };
-            Log::info("pedido: " . json_encode($guideResponse));
         }
         DB::commit();
     }
