@@ -876,4 +876,31 @@ class InternationalOrderController extends Controller
         return 'Update by Last months';
        
     }
+
+    public function getGuidesByReference(Request $request) {
+        $invoiceNumber = $request->numero_factura;
+        $guideNumber = $request->numero_guia; 
+        try {
+            if ($request->pais === 'Venezuela') {
+                $query = DB::table('guides')
+                ->when($guideNumber, function($query, $guideNumber){
+                    return $query->orWhere('guides.external_id', $guideNumber);
+                })
+                ->when($invoiceNumber, function($query, $invoiceNumber){
+                    return $query->orWhere('guides.invoice_number', $invoiceNumber);
+                })
+                ->get();
+            
+            } else {
+                $query = DB::table('coordinadora_guides')
+                ->where('codigo_pedido', $request->numero_guia)
+                ->get();
+            }
+            
+            return $query;
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+        
+    }
 }
