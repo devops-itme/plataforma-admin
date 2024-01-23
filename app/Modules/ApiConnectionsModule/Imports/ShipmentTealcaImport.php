@@ -140,7 +140,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             Log::info("entró destinationCodes: " . json_encode($destinationCodes));
             
             $arrayCodes = [];
-            if (count($destinationCodes) >= 1) {
+            if (!is_null($destinationCodes)) {
                 foreach ($destinationCodes as $code) {
                     array_push($arrayCodes, $code['destinationCode']);
                 }
