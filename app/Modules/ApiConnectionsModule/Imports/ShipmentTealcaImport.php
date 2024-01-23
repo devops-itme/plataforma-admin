@@ -133,21 +133,26 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
     public function validateCitiesDestination($rows){
 
             $Tealca = new Tealca();
-            $a = $Tealca->login();
-            Log::info("Login: " . json_encode($a));
+            $Tealca->login();
             
-            $destinationCodes = $Tealca->getDestination();
-            Log::info("destinationCodes" . json_encode($destinationCodes));
+            $destinationCodes = $Tealca->getDestination()['data'];
             
             $arrayCodes = [];
             
-                foreach ($destinationCodes as $code) {
-                    array_push($arrayCodes, $code['destinationCode']);
-                }
-                Log::info("lleno array: " . json_encode($arrayCodes));
+            if (!$destinationCodes) {
+                throw ValidationException::withMessages(
+                    $message = [
+                        'Ocurrió un error en el servicio'
+                    ]
+                );
+            }
+            foreach ($destinationCodes as $code) {
+                array_push($arrayCodes, $code['destinationCode']);
+            }
+
             
             $cellNumber = 0;
-            Log::info("codes: " . json_encode($arrayCodes));
+            
             foreach ($rows as $row) {
                 $response = in_array($row['ciudes'], $arrayCodes);
                 ++$cellNumber;
@@ -183,29 +188,26 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             'order_type' => $order_type,
             'creator_user_id' => Auth::user()->id,
         )));
-        Log::info("order: " . json_encode($orderResponse));
+        
         if ($orderResponse['state'] != 200) {
             return 0;
         };
         $order_id = $orderResponse['data']['id'];
-        Log::info("paso Order_id: " . $order_id);
+        
         if (!$this->unique_phone) {
             $this->validatePhones($rows);
         }
             $this->validateNamesDestination($rows);
-            Log::info("paso validateNames");
+            
             $this->validateNamesContact($rows);
-            Log::info("paso validateNamesContact");
+            
         $validateCities = $this->validateCitiesDestination($rows);
         if ($validateCities['state'] == 500) {
             DB::rollBack();
             return null;
-            Log::info("Entro a validatorCities " . json_encode($validateCities));
         }
-        Log::info("Paso validatorCities: " . json_encode($validateCities));
 
         foreach ($rows as $row) {
-            Log::info("entró a foreach");
             $guideResponse = $this->storeGuide(new Request(array(
                 'order_id' => $order_id,
                 'description' => $row['observ'] ?? null,
@@ -225,8 +227,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                 'phone_contact' => $row['teldes'],
                 'email_contact' => $row['email'],
             )));
-            Log::info("pasó foreach");
-            Log::info("guiaResponse: " . json_encode($guideResponse));
+            
             if ($guideResponse['state'] != 200) {
                 DB::rollBack();
                 throw ValidationException::withMessages([$guideResponse['message']]);

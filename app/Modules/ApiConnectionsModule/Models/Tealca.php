@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use App\Modules\ApiConnectionsModule\Models\ApiSync;
 use Illuminate\Http\Client\RequestException;
 use Log;
+use GuzzleHttp\Client;
 
 class Tealca
 {
@@ -16,7 +17,6 @@ class Tealca
     protected $userName;
     protected $roleName;
     protected $token;
-    protected $authToken;
 
     public function login()
     {
@@ -33,7 +33,6 @@ class Tealca
         $this->userName = $loginResponse->json()['userName'];
         $this->roleName = $loginResponse->json()['roleName'];
         $this->token = 'Bearer ' .  $loginResponse->json()['token'];
-        $this->authToken = $loginResponse->json()['token'];
 
         return $this->respond(200, $loginResponse->json(), null, 'successful login');
     }
@@ -186,20 +185,22 @@ class Tealca
     }
 
     public function getDestination()
-    {   
-        $destination = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->authToken,
-        ])->get(
-            env("TEALCA_URL") . 'v1/Destinations'
-        );
-
-        return $destination->json();
-        /* if ($destination->status() != 200) {
-            return $this->respond(500, null, $destination, 'Fallo en el servicio. Guía N° ');
-        };
-
-
-        return $this->respond(200, $destination->json(), null, 'successful request'); */
+    {
+        try {
+            $destination = Http::withHeaders([
+                'Authorization' =>  $this->token,
+            ])->get(
+                env("TEALCA_URL") . 'v1/Destinations'
+            );
+            
+            if ($destination->status() != 200) {
+                return $this->respond(500, null, $destination, 'Fallo en el servicio');
+            };
+            
+            return $this->respond(200, $destination->json(), null, 'successful request');
+        } catch (\Throwable $th) {
+            return $this->respond(200, null, $th->getMessage(), 'Ocurrió un error inesperado');
+        }
     }
 
     public function getTiendas()
