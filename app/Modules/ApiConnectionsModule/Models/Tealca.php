@@ -185,15 +185,13 @@ class Tealca
 
     public function getDestination()
     {   
-        Log::info("token: " . $this->token);
-        Log::info("url: " . env("TEALCA_URL"));
         $destination = Http::withHeaders([
             'Authorization' => $this->token,
         ])->get(
             env("TEALCA_URL") . 'v1/Destinations'
         );
 
-        return $destination->status();
+        return $destination->json();
         /* if ($destination->status() != 200) {
             return $this->respond(500, null, $destination, 'Fallo en el servicio. Guía N° ');
         };
