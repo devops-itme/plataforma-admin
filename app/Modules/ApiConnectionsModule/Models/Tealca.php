@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Modules\ApiConnectionsModule\Models\ApiSync;
 use Illuminate\Http\Client\RequestException;
+use Log;
 
 class Tealca
 {
