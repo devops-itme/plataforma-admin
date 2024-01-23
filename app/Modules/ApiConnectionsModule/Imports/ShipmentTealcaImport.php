@@ -203,6 +203,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
         if ($validateCities['state'] == 500) {
             DB::rollBack();
             return null;
+            Log::info("Entro a validatorCities " . json_encode($validateCities));
         }
 
         foreach ($rows as $row) {
