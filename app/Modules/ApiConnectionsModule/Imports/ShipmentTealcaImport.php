@@ -133,7 +133,8 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
     public function validateCitiesDestination($rows){
 
             $Tealca = new Tealca();
-            $Tealca->login();
+            $a = $Tealca->login();
+            Log::info("Login: " . json_encode($a));
             
             $destinationCodes = $Tealca->getDestination();
             Log::info("destinationCodes" . json_encode($destinationCodes));
