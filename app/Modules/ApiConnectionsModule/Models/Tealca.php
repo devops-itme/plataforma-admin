@@ -16,6 +16,7 @@ class Tealca
     protected $userName;
     protected $roleName;
     protected $token;
+    protected $authToken;
 
     public function login()
     {
@@ -32,6 +33,7 @@ class Tealca
         $this->userName = $loginResponse->json()['userName'];
         $this->roleName = $loginResponse->json()['roleName'];
         $this->token = 'Bearer ' .  $loginResponse->json()['token'];
+        $this->authToken = $loginResponse->json()['token'];
 
         return $this->respond(200, $loginResponse->json(), null, 'successful login');
     }
@@ -186,7 +188,7 @@ class Tealca
     public function getDestination()
     {   
         $destination = Http::withHeaders([
-            'Authorization' => $this->token,
+            'Authorization' => 'Bearer ' . $this->authToken,
         ])->get(
             env("TEALCA_URL") . 'v1/Destinations'
         );
