@@ -228,6 +228,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             )));
             if ($guideResponse['state'] != 200) {
                 DB::rollBack();
+                Log::info("entró validator guia: " . json_encode($guideResponse));
                 throw ValidationException::withMessages([$guideResponse['message']]);
             };
             Log::info("pedido: " . json_encode($guideResponse));
