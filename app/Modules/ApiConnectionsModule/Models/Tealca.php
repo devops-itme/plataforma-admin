@@ -185,7 +185,7 @@ class Tealca
     public function getDestination()
     {
         $destination = Http::withHeaders([
-            'Authorization' =>  $this->token,
+            'Authorization' => 'Bearer ' . $this->token,
         ])->get(
             env("TEALCA_URL") . 'v1/Destinations'
         );

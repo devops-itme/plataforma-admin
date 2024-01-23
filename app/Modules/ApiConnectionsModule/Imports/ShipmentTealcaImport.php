@@ -131,30 +131,37 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
 
     public function validateCitiesDestination($rows){
         
-        $Tealca = new Tealca();
-        $Tealca->login();
-        
-        $Tealca->getDestination();
-        $destinationCodes = $Tealca->getDestination()['data'];
-        
-        
-        $arrayCodes = [];
-
-        foreach ($destinationCodes as $code) {
-            array_push($arrayCodes, $code['destinationCode']);
-        }
-        $cellNumber = 0;
-
-        foreach ($rows as $row) {
-            $response = in_array($row['ciudes'], $arrayCodes);
-            ++$cellNumber;
-            if ($response == false) {
-                $cellNumber = $cellNumber + 1;
-                $this->wrongRow = $cellNumber;
-                return $this->respond(500, null, null, 'En la fila: '.$cellNumber.' la ciudad es errónea');
+        try {
+            $Tealca = new Tealca();
+            $Tealca->login();
+            
+            $Tealca->getDestination();
+            $destinationCodes = $Tealca->getDestination()['data'];
+            
+            
+            $arrayCodes = [];
+            if (count($destinationCodes) >= 1) {
+                foreach ($destinationCodes as $code) {
+                    array_push($arrayCodes, $code['destinationCode']);
+                }
+            } else {
+                return $this->respond(500, null, null, 'Ocurrió un error consultando las ciudades');
             }
-        }
+            $cellNumber = 0;
+
+            foreach ($rows as $row) {
+                $response = in_array($row['ciudes'], $arrayCodes);
+                ++$cellNumber;
+                if ($response == false) {
+                    $cellNumber = $cellNumber + 1;
+                    $this->wrongRow = $cellNumber;
+                    return $this->respond(500, null, null, 'En la fila: '.$cellNumber.' la ciudad es errónea');
+                }
+            }
         return $this->respond(200, null, null, 'Importación exitosa');
+        } catch (\Throwable $th) {
+            return $this->respond(500, null, $th->getMessage(), 'Ocurrió un error inesperado');
+        }
     }
 
     public function collection(Collection $rows)
