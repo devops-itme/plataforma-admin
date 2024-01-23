@@ -136,16 +136,16 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             $Tealca->login();
             
             $Tealca->getDestination();
-            $destinationCodes = $Tealca->getDestination()['data'];
+            $destinationCodes = $Tealca->getDestination();
             Log::info("entró destinationCodes: " . json_encode($destinationCodes));
             
             $arrayCodes = [];
-            if (!$destinationCodes->isEmpty()) {
+
                 foreach ($destinationCodes as $code) {
                     array_push($arrayCodes, $code['destinationCode']);
                 }
                 Log::info("lleno array: " . json_encode($arrayCodes));
-            } 
+
             $cellNumber = 0;
             Log::info("codes: " . json_encode($arrayCodes));
             foreach ($rows as $row) {
