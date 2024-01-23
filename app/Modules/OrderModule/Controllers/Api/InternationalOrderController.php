@@ -889,11 +889,13 @@ class InternationalOrderController extends Controller
                 ->when($invoiceNumber, function($query, $invoiceNumber){
                     return $query->orWhere('guides.invoice_number', $invoiceNumber);
                 })
+                ->where('deleted_at', null)
                 ->get();
             
             } else {
                 $query = DB::table('coordinadora_guides')
                 ->where('codigo_pedido', $request->numero_guia)
+                ->where('deleted_at', null)
                 ->get();
             }
             
