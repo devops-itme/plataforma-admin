@@ -190,7 +190,7 @@ class Tealca
             env("TEALCA_URL") . 'v1/Destinations'
         );
 
-        return $destination;
+        return $destination->json();
         /* if ($destination->status() != 200) {
             return $this->respond(500, null, $destination, 'Fallo en el servicio. Guía N° ');
         };
