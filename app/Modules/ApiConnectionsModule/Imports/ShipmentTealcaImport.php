@@ -131,8 +131,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
     }
 
     public function validateCitiesDestination($rows){
-        
-        try {
+
             $Tealca = new Tealca();
             $Tealca->login();
             
@@ -159,9 +158,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                 }
             }
         return $this->respond(200, null, null, 'Importación exitosa');
-        } catch (\Throwable $th) {
-            return $this->respond(500, null, $th->getMessage(), 'Ocurrió un error inesperado');
-        }
+        
     }
 
     public function collection(Collection $rows)
