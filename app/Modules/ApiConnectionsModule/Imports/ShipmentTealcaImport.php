@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use Illuminate\Support\Facades\Validator;
+use Log;
 
 class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidation
 {
@@ -148,7 +149,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                 return $this->respond(500, null, null, 'Ocurrió un error consultando las ciudades');
             }
             $cellNumber = 0;
-
+            Log::info("codes: " . json_encode($arrayCodes));
             foreach ($rows as $row) {
                 $response = in_array($row['ciudes'], $arrayCodes);
                 ++$cellNumber;
@@ -186,7 +187,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
             'order_type' => $order_type,
             'creator_user_id' => Auth::user()->id,
         )));
-        
+        Log::info("order: " . json_encode($orderResponse));
         if ($orderResponse['state'] != 200) {
             return 0;
         };
@@ -228,6 +229,7 @@ class ShipmentTealcaImport implements ToCollection, WithHeadingRow, WithValidati
                 DB::rollBack();
                 throw ValidationException::withMessages([$guideResponse['message']]);
             };
+            Log::info("pedido: " . json_encode($guideResponse));
         }
         DB::commit();
     }
