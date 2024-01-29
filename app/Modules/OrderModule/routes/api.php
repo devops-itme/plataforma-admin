@@ -52,6 +52,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         'message'   => 'Ruta no encontrada.',
     ], 404);
 })->where('any', '.*'); */
+//hola
 
 
 
