@@ -88,7 +88,7 @@ class Tealca
             "ShipperPhoneCode" => "58",
             "ShipperPhone" => "4141234567",
             "ShipperTaxIdentTypeCode" => "V",
-            "DeliveryTypeID" => 10,
+            "DeliveryTypeID" => 20,
             "MeasureUnitTypeID" => 30,
             "WeightUnitID" => 10,
             "PackageTypeID" => 20,
