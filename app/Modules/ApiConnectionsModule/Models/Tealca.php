@@ -106,8 +106,6 @@ class Tealca
             env("TEALCA_URL") . 'v1/Shipment/',
             $body
         );
-
-        dd($body);
         
         if ($createShipmentResponse->status() != 200) {
             //dd($createShipmentResponse->json()['error'][0]);
