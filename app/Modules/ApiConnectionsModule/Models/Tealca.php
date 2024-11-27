@@ -107,7 +107,7 @@ class Tealca
             $body
         );
 
-        dd($createShipmentResponse);
+        dd($body);
         
         if ($createShipmentResponse->status() != 200) {
             //dd($createShipmentResponse->json()['error'][0]);
