@@ -195,7 +195,12 @@ class InternationalOrderController extends Controller
             return redirect()->back()->with('danger', $validator->errors()->first());
         }
         //Log::debug("paso validtor");
+    
+        ini_set('memory_limit', '-1');
+        set_time_limit(3200);
+
         $excelResponse = Excel::import($TealcaImport, $file);
+        
         //Log::debug("pasó import()");
         if ($TealcaImport->getWrongRow() > 0) {
             //$ApiSync->authenticate();
@@ -221,6 +226,9 @@ class InternationalOrderController extends Controller
             );
             return redirect()->route('internationalOrders.index')->with('danger', 'Error en la fila '.$TealcaImport->getWrongRow().': ciudad no encontrada. Porfavor verifique e intente nuevamente.');
         }
+
+        unset($TealcaImport);
+        gc_collect_cycles();
         //$ApiSync->authenticate();
         $ApiSync->ApiSaveLog(
             "Multientrega_Admin",
