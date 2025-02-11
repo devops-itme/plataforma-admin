@@ -878,20 +878,30 @@ class InternationalOrderController extends Controller
     }
 
     public function getGuidesByReference(Request $request) {
+        
         $invoiceNumber = $request->numero_factura;
-        $guideNumber = $request->numero_guia; 
+        $guideNumber = $request->numero_guia;
+        $orderId = null;
+        
+        if ($invoiceNumber) {
+            $getOrderId = DB::table('guides')->where('invoice_number', $invoiceNumber)->first();
+            $orderId = $getOrderId->id;
+        }
+
         try {
-            if ($request->pais === 'Venezuela') {
-                $query = DB::table('guides')
-                ->when($guideNumber, function($query, $guideNumber){
-                    return $query->orWhere('guides.external_id', $guideNumber);
-                })
-                ->when($invoiceNumber, function($query, $invoiceNumber){
-                    return $query->orWhere('guides.invoice_number', $invoiceNumber);
-                })
-                ->where('deleted_at', null)
-                ->get();
             
+            if ($request->pais === 'Venezuela') {
+                $query = DB::table('guides AS g')
+                ->join('tealca_datas AS td', 'g.id', '=', 'td.guide_id')
+                ->when($guideNumber, function($query, $guideNumber){
+                    return $query->orWhere('td.external_id', $guideNumber);
+                })
+                ->when($orderId, function($query, $orderId){
+                    return $query->orWhere('td.guide_id', $orderId);
+                })
+                ->where('td.deleted_at', null)
+                ->get();
+                
             } else {
                 $query = DB::table('coordinadora_guides')
                 ->where('codigo_pedido', $request->numero_guia)
