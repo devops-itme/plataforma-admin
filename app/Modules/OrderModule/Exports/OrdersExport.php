@@ -19,6 +19,17 @@ use Illuminate\Support\Facades\DB;
 
 class OrdersExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize, WithColumnFormatting
 {
+    protected $from;
+    protected $to;
+    protected $name;
+
+    public function __construct($from, $to, $name)
+    {
+        $this->from = $from;
+        $this->to = $to;
+        $this->name = $name;
+    }
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -88,15 +99,11 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
     {
         
         //set_time_limit(3600);
-        $from = request()->from;
-        $to = request()->to;
-        $name = request()->name;
+        $from = $this->from;
+        $to = $this->to;
+        $name = $this->name;
 
-        
-
-        if (!isset($vector)) {
-            $vector = null;
-        }
+        $vector = [];
 
         if ($from and $to) {
 
@@ -131,7 +138,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                 ->join('users as u', 'u.id', '=', 'o.user_id')
                 ->where('o.deleted_at', null)
                 // ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
-                ->whereBetween(DB::raw('DATE(g.created_at)'), [request()->from, request()->to])
+                ->whereBetween(DB::raw('DATE(g.created_at)'), [$from, $to])
                 ->get();
 
             $Tealca = new Tealca();
