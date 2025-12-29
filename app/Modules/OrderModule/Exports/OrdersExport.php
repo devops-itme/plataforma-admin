@@ -147,14 +147,19 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             $order1 = $guide;
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
             
-            dd($guideTracking);
+            // dd($guideTracking);
 
             if ($guideTracking['state'] != 200) {
                 $order1->Status = 'ERROR AL CONSULTAR';
                 $order1->Fecha = 'ERROR AL CONSULTAR';
                 $vector[] = $order1;
             } else {
-                foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
+                if (empty($guideTracking['data'][0]['tracking'])) {
+                    $order1->Status = 'SIN INFORMACION';
+                    $order1->Fecha = 'SIN INFORMACION';
+                    $vector[] = $order1;
+                } else {
+                    foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
                     switch ($tracking['status']) {
                         case 'Creacion':
                             $order1->Status = 'VERIFICACION';
@@ -186,6 +191,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
                             $vector[] = $order1;
                     }
                     break;
+                }
                 }
             }
             
