@@ -135,7 +135,7 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
         }
 
         // DEBUG: Ver qué consulta se ejecuta y cuántos resultados trae
-        dd($query->toSql(), $query->getBindings(), $query->get()->count());
+        // dd($query->toSql(), $query->getBindings(), $query->get()->count());
 
         $guides = $query->get();
 
@@ -146,6 +146,8 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             // dd($guide);
             $order1 = $guide;
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
+            
+            dd($guideTracking);
 
             if ($guideTracking['state'] != 200) {
                 $order1->Status = 'ERROR AL CONSULTAR';
