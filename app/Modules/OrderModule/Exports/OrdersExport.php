@@ -134,6 +134,9 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
             $query->where('o.order_number', 'like', '%' . $name . '%');
         }
 
+        // DEBUG: Ver qué consulta se ejecuta y cuántos resultados trae
+        dd($query->toSql(), $query->getBindings(), $query->get()->count());
+
         $guides = $query->get();
 
         $Tealca = new Tealca();
