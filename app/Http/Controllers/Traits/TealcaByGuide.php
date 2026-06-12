@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 
 trait TealcaByGuide
 {
-    public function updateTealcaDataByGuide()
+    public function updateTealcaDataByGuide($limit = 500)
     {    
+        $limit = max(1, min((int) $limit, 1000));
+
         $Tealca = new Tealca();
         $Tealca->login();
 
@@ -19,13 +21,20 @@ trait TealcaByGuide
         ->where('g.external_id', '<>', null)
         ->where('g.country', '<>', 'PAN')
         ->join('orders as o', 'o.id', '=', 'g.order_id')
+        ->leftJoin('tealca_datas as t', function ($join) {
+            $join->on('t.guide_id', '=', 'g.id')->whereNull('t.deleted_at');
+        })
         ->where('o.deleted_at', null)
+        ->whereNull('t.id')
         ->whereNotBetween('o.id', [277,349])
-        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 10 DAY)'))
+        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'))
+        ->orderBy('g.created_at', 'ASC')
+        ->limit($limit)
         ->get();
 
         //dd($query);
         //return $query;
+        $processed = 0;
         foreach ($query as $guide) {
 
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
@@ -90,9 +99,14 @@ trait TealcaByGuide
 
             $tealca = new TealcaData();
             $saveTealca = $tealca->saveTealca($request);
+            $processed++;
             
         }
         
-        return 'Tealca datas updated';
+        return [
+            'message' => 'Tealca datas updated',
+            'processed' => $processed,
+            'limit' => $limit,
+        ];
     }
 }

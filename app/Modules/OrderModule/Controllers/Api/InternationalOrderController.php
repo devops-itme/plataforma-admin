@@ -562,8 +562,11 @@ class InternationalOrderController extends Controller
         return $this->respond(200,  $query2, null, 'Ordenes Internacionales');
     }
 
-    public function updateTealcaDataByGuide()
+    public function updateTealcaDataByGuide(Request $request)
     {    
+        $limit = (int) $request->get('limit', 500);
+        $limit = max(1, min($limit, 1000));
+
         $Tealca = new Tealca();
         $Tealca->login();
 
@@ -572,13 +575,20 @@ class InternationalOrderController extends Controller
         ->where('g.external_id', '<>', null)
         ->where('g.country', '<>', 'PAN')
         ->join('orders as o', 'o.id', '=', 'g.order_id')
+        ->leftJoin('tealca_datas as t', function ($join) {
+            $join->on('t.guide_id', '=', 'g.id')->whereNull('t.deleted_at');
+        })
         ->where('o.deleted_at', null)
+        ->whereNull('t.id')
         ->whereNotBetween('o.id', [277,349])
-        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 2 MONTH)'))
+        ->where('g.created_at','>=', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'))
+        ->orderBy('g.created_at', 'ASC')
+        ->limit($limit)
         ->get();
 
         //dd($query);
         //return $query;
+        $processed = 0;
         foreach ($query as $guide) {
 
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
@@ -643,10 +653,15 @@ class InternationalOrderController extends Controller
 
             $tealca = new TealcaData();
             $saveTealca = $tealca->saveTealca($request);
+            $processed++;
             
         }
         
-        return 'Tealca datas updated';
+        return [
+            'message' => 'Tealca datas updated',
+            'processed' => $processed,
+            'limit' => $limit,
+        ];
     }
 
     public function updateGuideByTealcaDay()
