@@ -8,17 +8,28 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use App\Modules\GuideModule\Guide;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use App\Modules\ApiConnectionsModule\Models\Tealca;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 
-class OrdersExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize, WithColumnFormatting
+class OrdersExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, WithColumnFormatting
 {
+    protected $from;
+    protected $to;
+    protected $name;
+
+    public function __construct($from = null, $to = null, $name = null)
+    {
+        $this->from = $from ?: Carbon::now()->subWeek()->toDateString();
+        $this->to = $to ?: Carbon::now()->toDateString();
+        $this->name = $name;
+    }
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -86,118 +97,54 @@ class OrdersExport extends DefaultValueBinder implements FromCollection, WithHea
 
     public function collection()
     {
-        
-        //set_time_limit(3600);
-        $from = request()->from;
-        $to = request()->to;
-        $name = request()->name;
+        $from = $this->from;
+        $to = $this->to;
+        $name = $this->name;
 
-        $vector = [];
-
-        $query = DB::table('guides AS g')
+        $query = DB::table('tealca_datas as t')
             ->select(
-                'external_id',
-                'pre_guide',
+                'g.external_id',
+                'g.pre_guide',
                 DB::raw("DATE_FORMAT(g.created_at, '%Y/%m/%d %H:%i:%s') as formatted_dob"),
                 'g.branch_office', //Origen
-                'invoice_contact',
-                'recipient_name',
+                'g.invoice_contact',
+                'g.recipient_name',
                 'g.document_type',
-                'document',
-                'email_contact',
+                'g.document',
+                'g.email_contact',
                 'g.address_name',
-                'city',
-                'phone_contact',
-                'country',
-                'pieces',
-                'kg',
-                'declared',
-                'invoice_number', //Guia
+                'g.city',
+                'g.phone_contact',
+                'g.country',
+                'g.pieces',
+                'g.kg',
+                'g.declared',
+                'g.invoice_number', //Guia
                 'g.dispatched', // Factura
-                'contact',
+                'g.contact',
                 'g.description',
-                'novelty',
-                'delivery_office',
+                'g.novelty',
+                'g.delivery_office',
+                't.status',
+                't.date_status'
             )
-            ->where('external_id', '<>', null)
-            ->where('country', '<>', 'PAN')
+            ->where('g.external_id', '<>', null)
+            ->where('g.country', '<>', 'PAN')
+            ->whereNull('t.deleted_at')
+            ->whereNull('g.deleted_at')
+            ->join('guides as g', 'g.id', '=', 't.guide_id')
             ->join('orders as o', 'o.id', '=', 'g.order_id')
             ->join('users as u', 'u.id', '=', 'o.user_id')
             ->where('o.deleted_at', null);
-            // ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME')
+            // ->where(DB::raw('concat(u.name," ",u.last_name)'), '<>', 'Admin ME');
 
-        if ($from && $to) {
-            $query->whereBetween(DB::raw('DATE(g.created_at)'), [$from, $to]);
-        }
+        $query->whereBetween(DB::raw('DATE(g.created_at)'), [$from, $to]);
 
         if ($name) {
             $query->where('o.order_number', 'like', '%' . $name . '%');
         }
 
-        // DEBUG: Ver qué consulta se ejecuta y cuántos resultados trae
-        // dd($query->toSql(), $query->getBindings(), $query->get()->count());
-
-        $guides = $query->get();
-
-        $Tealca = new Tealca();
-        $Tealca->login();
-
-        foreach ($guides as $guide) {
-            // dd($guide);
-            $order1 = $guide;
-            $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
-            
-            // dd($guideTracking);
-
-            if ($guideTracking['state'] != 200) {
-                $order1->Status = 'ERROR AL CONSULTAR';
-                $order1->Fecha = 'ERROR AL CONSULTAR';
-                $vector[] = $order1;
-            } else {
-                if (empty($guideTracking['data'][0]['tracking'])) {
-                    $order1->Status = 'SIN INFORMACION';
-                    $order1->Fecha = 'SIN INFORMACION';
-                    $vector[] = $order1;
-                } else {
-                    foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
-                    switch ($tracking['status']) {
-                        case 'Creacion':
-                            $order1->Status = 'VERIFICACION';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Recepcion desde plataforma':
-                            $order1->Status = 'RECEPTADO A BODEGA';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Recepcion desde tienda':
-                            $order1->Status = 'RECEPCION EN SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        case 'Despacho a tienda(tienda destino para entrega al cliente)':
-                            $order1->Status = 'DESPACHO A SUCURSAL';
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                            break;
-
-                        default:
-                            $order1->Status = $tracking['status'];
-                            $order1->Fecha = date('Y/m/d H:i:s', strtotime($tracking['date']));
-                            $vector[] = $order1;
-                    }
-                    break;
-                }
-                }
-            }
-            
-        }
-        //dd(collect($vector));
-        return collect($vector);
+        return $query->orderBy('g.created_at', 'DESC')->get();
     }
 
 
