@@ -29,8 +29,16 @@ trait TealcaByGuide
         foreach ($query as $guide) {
 
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
-            
-            if($guideTracking['state'] != 500){
+            $guide->Status = 'NCT';
+            $guide->FechaTime = '0000-00-00';
+            $guide->historical = ['No consultado'];
+
+            if (
+                $guideTracking['state'] != 500
+                && isset($guideTracking['data'][0]['tracking'])
+                && is_array($guideTracking['data'][0]['tracking'])
+                && count($guideTracking['data'][0]['tracking']) > 0
+            ) {
 
                 foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
                     switch ($tracking['status']) {
@@ -65,37 +73,23 @@ trait TealcaByGuide
                     }
                     break;
                 }
-                
-                $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
-
-                $request = new Request(array(
-                    'id' => $guide->id,
-                    'order_id' => $guide->order_id,
-                    'external_id' => $guide->external_id,
-                    'contact' => $guide->contact,
-                    'date_status' => $guide->FechaTime,
-                    'status' => $guide->Status,
-                    'historical' => current($guide->historical),
-                    'action' => $guide->action,
-                ));
-                
-                $tealca = new TealcaData();
-                $saveTealca = $tealca->saveTealca($request);
-                
-            }else{
-                $request = new Request(array(
-                    'id' => $guide->id,
-                    'order_id' => $guide->order_id,
-                    'external_id' => $guide->external_id,
-                    'contact' => $guide->contact,
-                    'date_status' => '0000-00-00',
-                    'status' => 'NCT',
-                    'historical' => 'No consultado',
-                ));
-
-                $tealca = new TealcaData();
-                $saveTealca = $tealca->saveTealca($request);
             }
+
+            $guide->action = '<a href="javascript:;" class="ml-2 details" name="details" data-toggle="modal" (click)="open()" data-target="#myModal" data-placement="left" title="Detalles" id="' . $guide->external_id . '"><i class="fa fa-eye fa-lg text-info" aria-hidden="true"></i></a>';
+
+            $request = new Request(array(
+                'id' => $guide->id,
+                'order_id' => $guide->order_id,
+                'external_id' => $guide->external_id,
+                'contact' => $guide->contact,
+                'date_status' => $guide->FechaTime,
+                'status' => $guide->Status,
+                'historical' => current($guide->historical),
+                'action' => $guide->action,
+            ));
+
+            $tealca = new TealcaData();
+            $saveTealca = $tealca->saveTealca($request);
             
         }
         
