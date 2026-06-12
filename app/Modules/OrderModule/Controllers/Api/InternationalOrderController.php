@@ -667,7 +667,12 @@ class InternationalOrderController extends Controller
 
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
             
-            if($guideTracking['state'] != 500){
+            if (
+                $guideTracking['state'] != 500
+                && isset($guideTracking['data'][0]['tracking'])
+                && is_array($guideTracking['data'][0]['tracking'])
+                && count($guideTracking['data'][0]['tracking']) > 0
+            ) {
 
                 foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
                     switch ($tracking['status']) {
@@ -740,7 +745,12 @@ class InternationalOrderController extends Controller
 
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
             
-            if($guideTracking['state'] != 500){
+            if (
+                $guideTracking['state'] != 500
+                && isset($guideTracking['data'][0]['tracking'])
+                && is_array($guideTracking['data'][0]['tracking'])
+                && count($guideTracking['data'][0]['tracking']) > 0
+            ) {
 
                 foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
                     switch ($tracking['status']) {
@@ -814,7 +824,12 @@ class InternationalOrderController extends Controller
 
             $guideTracking = $Tealca->requestOrderStatus($guide->external_id);
             
-            if($guideTracking['state'] != 500){
+            if (
+                $guideTracking['state'] != 500
+                && isset($guideTracking['data'][0]['tracking'])
+                && is_array($guideTracking['data'][0]['tracking'])
+                && count($guideTracking['data'][0]['tracking']) > 0
+            ) {
 
                 foreach ($guideTracking['data'][0]['tracking'] as $tracking) {
                     switch ($tracking['status']) {
