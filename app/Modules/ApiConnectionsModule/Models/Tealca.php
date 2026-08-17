@@ -133,8 +133,11 @@ class Tealca
             return $this->respond(500, $body, $createShipmentResponse->json(), 'Fallo en el servicio. Guía N° ' . $guide->id);
         };
 
-        $headers = $createShipmentResponse->headers();
-        $external_id = explode(".", explode("'", $headers["Content-Disposition"][0])[2])[0];
+        $headerContent = $createShipmentResponse->header('Content-Disposition');
+        if (empty($headerContent)) {
+            return $this->respond(500, $body, null, 'Fallo en el servicio. No se recibió el número de guía de Tealca. Guía N° ' . $guide->id);
+        }
+        $external_id = explode(".", explode("'", $headerContent)[2])[0];
         $guide->external_id = $external_id;
         $guide->save();
 
